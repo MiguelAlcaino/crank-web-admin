@@ -1,5 +1,5 @@
 {
-  "name": "crank-web",
+  "name": "crank-web-admin",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
