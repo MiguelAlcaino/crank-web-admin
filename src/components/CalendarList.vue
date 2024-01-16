@@ -38,6 +38,8 @@ const endDate = ref<Date>(dayjs(Date()).endOf('week').toDate())
 const weekDays = ref<WeekDays[]>([])
 const userCanSyncClasses = ref<boolean>(false)
 
+const selectedClassId = ref<string | null>(null)
+
 const emits = defineEmits<{
   (e: 'selectClass', classId: string | null): void
 }>()
@@ -53,7 +55,7 @@ defineExpose({
 })
 
 async function getCalendarClasses(resetSelectedClass: boolean = true): Promise<void> {
-  if (resetSelectedClass) emits('selectClass', null)
+  if (resetSelectedClass) selectClass(null)
 
   weekDays.value = []
 
@@ -112,6 +114,11 @@ function goToNextWeek(): void {
 
   getCalendarClasses()
 }
+
+function selectClass(classId: string | null): void {
+  selectedClassId.value = classId
+  emits('selectClass', classId)
+}
 </script>
 
 <template>
@@ -145,7 +152,8 @@ function goToNextWeek(): void {
           v-for="c in wd.classes"
           :key="c.id"
           style="cursor: pointer"
-          @click="emits('selectClass', c.id)"
+          @click="selectClass(c.id)"
+          :class="{ selectedClass: c.id === selectedClassId }"
         >
           <div>
             <time>{{ dayjs(c.startWithNoTimeZone).format('h:mm A') }}</time>
@@ -236,5 +244,9 @@ function goToNextWeek(): void {
   padding: 8px;
   padding-left: 0;
   padding-right: 0;
+}
+
+.selectedClass {
+  background-color: #ff7f61 !important;
 }
 </style>
