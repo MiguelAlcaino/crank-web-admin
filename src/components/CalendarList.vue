@@ -153,11 +153,7 @@ function goToNextWeek(): void {
               c.name
             }}</desc>
             <span>
-              <b>
-                {{
-                  '(' + (c.totalBooked + c.totalUnderMaintenanceSpots) + '/' + c.maxCapacity + ')'
-                }}
-              </b>
+              {{ '(' + (c.totalBooked + c.totalUnderMaintenanceSpots) + '/' + c.maxCapacity + ')' }}
             </span>
           </div>
         </div>
@@ -240,9 +236,5 @@ function goToNextWeek(): void {
   padding: 8px;
   padding-left: 0;
   padding-right: 0;
-}
-
-span {
-  font-family: 'Avenir', sans-serif !important;
 }
 </style>
