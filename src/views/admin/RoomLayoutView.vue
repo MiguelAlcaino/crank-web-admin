@@ -628,4 +628,3 @@ td.highlighted {
   --slider-handle-ring-color: #ff7f61;
 }
 </style>
-<style src="@vueform/slider/themes/default.css"></style>

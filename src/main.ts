@@ -25,6 +25,7 @@ import { faLeftLong, faStepBackward, faStepForward } from '@fortawesome/free-sol
 library.add(faStepBackward, faStepForward, faLeftLong)
 
 import 'vue3-simple-typeahead/dist/vue3-simple-typeahead.css'
+import '@vueform/slider/themes/default.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import './assets/main.css'
