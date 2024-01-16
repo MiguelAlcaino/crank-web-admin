@@ -3,11 +3,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
-import VueApexCharts from 'vue3-apexcharts'
-
 import Popper from 'vue3-popper'
-import VueDatePicker from '@vuepic/vue-datepicker'
-import '@vuepic/vue-datepicker/dist/main.css'
 
 import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
 import ContextMenu from '@imengyu/vue3-context-menu'
@@ -64,9 +60,7 @@ async function startApp() {
     .use(router)
     .use(SimpleTypeahead)
     .use(ContextMenu)
-    .use(VueApexCharts)
     .component('Popper', Popper)
-    .component('VueDatePicker', VueDatePicker)
 
   try {
     await authService.startRefreshTokenTimer()

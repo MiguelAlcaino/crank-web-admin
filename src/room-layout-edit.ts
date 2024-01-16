@@ -13,6 +13,7 @@ import { appStore } from './stores/appStorage'
 import SimpleTypeahead from 'vue3-simple-typeahead'
 import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
 import ContextMenu from '@imengyu/vue3-context-menu'
+import '@vueform/slider/themes/default.css'
 
 startApp()
 
