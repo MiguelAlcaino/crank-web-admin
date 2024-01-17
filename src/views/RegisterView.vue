@@ -42,7 +42,7 @@ const currentDate = ref(new Date())
 const passwordIsVisible = ref(true)
 const confirmPasswordIsVisible = ref(true)
 const userListUrl = ref<string | null>(null)
-const defaultPassword = 'crank123';
+const defaultPassword = 'crank123'
 
 const formData = reactive({
   location: SiteEnum.Dubai,
@@ -307,15 +307,15 @@ async function goToUserList() {
               <i v-else class="bi bi-eye-fill"></i>
             </span>
           </div>
-          <small
-            v-for="error in v$.password.$errors"
-            :key="error.$uid"
-            class="form-text"
-            style="color: red"
-          >
-            {{ error.$message }}
-          </small>
         </div>
+        <small
+          v-for="error in v$.password.$errors"
+          :key="error.$uid"
+          class="form-text"
+          style="color: red"
+        >
+          {{ error.$message }}
+        </small>
       </div>
       <!-- confirm Password -->
       <div class="col-md-6 mb-3">
@@ -340,15 +340,15 @@ async function goToUserList() {
               <i v-else class="bi bi-eye-fill"></i>
             </span>
           </div>
-          <small
-            v-for="error in v$.confirmPassword.$errors"
-            :key="error.$uid"
-            class="form-text"
-            style="color: red"
-          >
-            {{ error.$message }}
-          </small>
         </div>
+        <small
+          v-for="error in v$.confirmPassword.$errors"
+          :key="error.$uid"
+          class="form-text"
+          style="color: red"
+        >
+          {{ error.$message }}
+        </small>
       </div>
     </div>
     <hr />
