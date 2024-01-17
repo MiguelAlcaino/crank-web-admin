@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { ApolloError, gql } from '@apollo/client'
 import type {
   BookUserIntoClassInput,
   CalendarClassesParams,
@@ -9,6 +9,7 @@ import type {
   CheckoutUserInClass,
   Class,
   ClassInfo,
+  Country,
   DisableEnableSpotInput,
   DisableEnableSpotResult,
   DisableEnableSpotResultUnion,
@@ -19,6 +20,7 @@ import type {
   EditRoomLayoutInput,
   EnrollmentInfoInterface,
   IdentifiableUser,
+  RegisterUserInput,
   RemoveUserFromWaitlistInput,
   RemoveUserFromWaitlistUnion,
   RoomLayout,
@@ -958,5 +960,87 @@ export class ApiService {
     })
 
     return result.data.syncAllClasses as Class[]
+  }
+
+  async getCountries(): Promise<Country[]> {
+    const COUNTRIES_QUERY = gql`
+      query Countries {
+        countries {
+          name
+          code
+        }
+      }
+    `
+    try {
+      const queryResult = await this.anonymousApiClient.query({
+        query: COUNTRIES_QUERY
+      })
+
+      return queryResult.data.countries as Country[]
+    } catch (error) {
+      return []
+    }
+  }
+
+  async getCountry(countryCode: string): Promise<Country | null> {
+    const COUNTRY_QUERY = gql`
+      query country($countryCode: String!) {
+        country(countryCode: $countryCode) {
+          name
+          code
+          states {
+            name
+            code
+          }
+        }
+      }
+    `
+    try {
+      const queryResult = await this.anonymousApiClient.query({
+        query: COUNTRY_QUERY,
+        variables: {
+          countryCode: countryCode
+        }
+      })
+
+      return queryResult.data.country as Country
+    } catch (error) {
+      return null
+    }
+  }
+
+  async registerUser(site: SiteEnum, input: RegisterUserInput): Promise<string> {
+    const REGISTER_USER_MUTATION = gql`
+      mutation registerUser($site: SiteEnum!, $input: RegisterUserInput!) {
+        registerUser(site: $site, input: $input) {
+          email
+        }
+      }
+    `
+
+    try {
+      await this.anonymousApiClient.mutate({
+        mutation: REGISTER_USER_MUTATION,
+        variables: {
+          site: site,
+          input: input
+        }
+      })
+      return 'SuccessRegistration'
+    } catch (error) {
+      if (error instanceof ApolloError) {
+        if (error.graphQLErrors[0].message === 'register.user_already_registered') {
+          return 'RegisterUserAlreadyRegisteredException'
+        } else if (error.graphQLErrors[0].message === 'minimum_password_length_is_four_chars') {
+          return 'MinimumPasswordLengthException'
+        } else if (error.graphQLErrors[0].message === 'password_must_contain_letter_or_number') {
+          return 'PasswordMustContainLetterOrNumberException'
+        } else {
+          return 'UnknownError'
+        }
+      } else {
+        return 'UnknownError'
+      }
+    }
   }
 }

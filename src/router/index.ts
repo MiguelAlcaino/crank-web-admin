@@ -26,6 +26,11 @@ const router = createRouter({
       component: BookingCalendarView
     },
     {
+      path: '/user/create',
+      name: 'user_create',
+      component: () => import('../views/RegisterView.vue')
+    },
+    {
       path: '/admin/class/:id',
       name: 'admin_class',
       component: () => import('../views/admin/AdminClass.vue')
