@@ -30,6 +30,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import { VueTelInput } from 'vue-tel-input'
 import 'vue-tel-input/vue-tel-input.css'
 import { getFormattedPhoneNumber } from '@/utils/utility-functions'
+import { ValidationError } from '@/utils/errors/saveUserErrors'
 
 const isSaving = ref(false)
 const isLoggingIn = ref(false)
@@ -184,24 +185,17 @@ const submitForm = async () => {
     }
 
     isSaving.value = true
-    const response = await apiService.registerUser(formData.location!, input)
-    isSaving.value = false
-
-    if (response === 'SuccessRegistration') {
-      successModalIsVisible.value = true
-    } else {
-      if (response === 'PasswordMustContainLetterOrNumberException') {
-        errorMessage.value = 'The password must contain a letter and a number.'
-      } else if (response === 'MinimumPasswordLengthException') {
-        errorMessage.value = 'The password must contain at least 8 characters.'
-      } else if (response === 'RegisterUserAlreadyRegisteredException') {
-        errorMessage.value =
-          'Your email address is already registered with us. Please login directly to your account.'
+    try {
+      const userId = await apiService.registerIdentifiableUser(formData.location!, input)
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        errorMessage.value = error.message
       } else {
         errorMessage.value = ERROR_UNKNOWN
       }
-
       errorModalIsVisible.value = true
+    } finally {
+      isSaving.value = false
     }
   } else {
     console.error('error form')
