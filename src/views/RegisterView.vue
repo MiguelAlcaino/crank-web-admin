@@ -18,9 +18,6 @@ import { required, email, minLength, sameAs, maxLength, helpers } from '@vuelida
 import { GenderEnum, type RegisterUserInput, SiteEnum } from '@/gql/graphql'
 
 import type { ApiService } from '@/services/apiService'
-import { authService } from '@/services/authService'
-import { appStore } from '@/stores/appStorage'
-import router from '@/router'
 import ModalComponent from '@/components/ModalComponent.vue'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import dayjs from 'dayjs'
@@ -42,13 +39,18 @@ const countries = ref([] as Country[])
 const countryStates = ref([] as State[])
 const currentDate = ref(new Date())
 
+const passwordIsVisible = ref(true)
+const confirmPasswordIsVisible = ref(true)
+const userListUrl = ref<string | null>(null)
+const defaultPassword = 'crank123';
+
 const formData = reactive({
   location: SiteEnum.Dubai,
   firstName: '',
   lastName: '',
   email: '',
-  password: '',
-  confirmPassword: '',
+  password: defaultPassword,
+  confirmPassword: defaultPassword,
   gender: '',
   birthdate: null as Date | null,
   country: 'AE',
@@ -150,6 +152,11 @@ const v$ = useVuelidate(rules, formData)
 const apiService = inject<ApiService>('gqlApiService')!
 
 onMounted(() => {
+  let _userListUrl = inject<string | undefined>('userListUrl')
+  if (_userListUrl) {
+    userListUrl.value = _userListUrl
+  }
+
   getCountries()
   getCountryStates('AE')
 })
@@ -219,17 +226,11 @@ function onChangeCountry() {
   getCountryStates(formData.country)
 }
 
-//TODO: do you have to auto login? what happens if it fails?
-async function login() {
-  isLoggingIn.value = true
+async function goToUserList() {
+  successModalIsVisible.value = false
 
-  try {
-    await authService.login(formData.email, formData.password, appStore().site)
-    await router.push({ name: 'calendar' })
-  } catch (error) {
-    console.log(error)
-  } finally {
-    isLoggingIn.value = false
+  if (userListUrl.value) {
+    window.location.href = userListUrl.value
   }
 }
 </script>
@@ -286,44 +287,68 @@ async function login() {
       <!-- password -->
       <div class="col-md-6 mb-3">
         <label for="passwordRegistration" class="input-label">Password *</label>
-        <input
-          id="passwordRegistration"
-          class="form-control"
-          v-model="formData.password"
-          type="password"
-          placeholder="Password"
-          maxlength="50"
-          required
-        />
-        <small
-          v-for="error in v$.password.$errors"
-          :key="error.$uid"
-          class="form-text"
-          style="color: red"
-        >
-          {{ error.$message }}
-        </small>
+        <div class="input-group">
+          <input
+            id="passwordRegistration"
+            class="form-control"
+            v-model="formData.password"
+            :type="passwordIsVisible ? 'text' : 'password'"
+            placeholder="Password"
+            maxlength="50"
+            required
+          />
+          <div
+            class="input-group-prepend"
+            @click="passwordIsVisible = !passwordIsVisible"
+            style="cursor: pointer"
+          >
+            <span class="input-group-text" id="passwordEye" style="background-color: transparent">
+              <i v-if="passwordIsVisible" class="bi bi-eye-slash-fill"></i>
+              <i v-else class="bi bi-eye-fill"></i>
+            </span>
+          </div>
+          <small
+            v-for="error in v$.password.$errors"
+            :key="error.$uid"
+            class="form-text"
+            style="color: red"
+          >
+            {{ error.$message }}
+          </small>
+        </div>
       </div>
       <!-- confirm Password -->
       <div class="col-md-6 mb-3">
         <label for="confirmPasswordRegistration" class="input-label">Confirm Password *</label>
-        <input
-          id="confirmPasswordRegistration"
-          class="form-control"
-          v-model="formData.confirmPassword"
-          type="password"
-          placeholder="Confirm Password"
-          maxlength="50"
-          required
-        />
-        <small
-          v-for="error in v$.confirmPassword.$errors"
-          :key="error.$uid"
-          class="form-text"
-          style="color: red"
-        >
-          {{ error.$message }}
-        </small>
+        <div class="input-group">
+          <input
+            id="confirmPasswordRegistration"
+            class="form-control"
+            v-model="formData.confirmPassword"
+            :type="confirmPasswordIsVisible ? 'text' : 'password'"
+            placeholder="Confirm Password"
+            maxlength="50"
+            required
+          />
+          <div
+            class="input-group-prepend"
+            @click="confirmPasswordIsVisible = !confirmPasswordIsVisible"
+            style="cursor: pointer"
+          >
+            <span class="input-group-text" id="passwordEye" style="background-color: transparent">
+              <i v-if="confirmPasswordIsVisible" class="bi bi-eye-slash-fill"></i>
+              <i v-else class="bi bi-eye-fill"></i>
+            </span>
+          </div>
+          <small
+            v-for="error in v$.confirmPassword.$errors"
+            :key="error.$uid"
+            class="form-text"
+            style="color: red"
+          >
+            {{ error.$message }}
+          </small>
+        </div>
       </div>
     </div>
     <hr />
@@ -721,7 +746,7 @@ async function login() {
     message="Your account has been successfully created."
     :cancel-text="null"
     :closable="false"
-    @on-ok="login()"
+    @on-ok="goToUserList()"
     :ok-loading="isLoggingIn"
   >
   </ModalComponent>
