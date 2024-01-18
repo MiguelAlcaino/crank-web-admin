@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { ApolloError, gql } from '@apollo/client'
 import type {
   BookUserIntoClassInput,
   CalendarClassesParams,
@@ -9,6 +9,7 @@ import type {
   CheckoutUserInClass,
   Class,
   ClassInfo,
+  Country,
   DisableEnableSpotInput,
   DisableEnableSpotResult,
   DisableEnableSpotResultUnion,
@@ -19,6 +20,7 @@ import type {
   EditRoomLayoutInput,
   EnrollmentInfoInterface,
   IdentifiableUser,
+  RegisterUserInput,
   RemoveUserFromWaitlistInput,
   RemoveUserFromWaitlistUnion,
   RoomLayout,
@@ -29,6 +31,8 @@ import type {
 import type { SiteSetting } from '@/gql/graphql'
 import type { ApolloClient } from '@apollo/client/core'
 import dayjs from 'dayjs'
+import { ValidationError } from '@/utils/errors/saveUserErrors'
+import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
 export class ApiService {
   authApiClient: ApolloClient<any>
@@ -958,5 +962,90 @@ export class ApiService {
     })
 
     return result.data.syncAllClasses as Class[]
+  }
+
+  async getCountries(): Promise<Country[]> {
+    const COUNTRIES_QUERY = gql`
+      query Countries {
+        countries {
+          name
+          code
+        }
+      }
+    `
+    try {
+      const queryResult = await this.anonymousApiClient.query({
+        query: COUNTRIES_QUERY
+      })
+
+      return queryResult.data.countries as Country[]
+    } catch (error) {
+      return []
+    }
+  }
+
+  async getCountry(countryCode: string): Promise<Country | null> {
+    const COUNTRY_QUERY = gql`
+      query country($countryCode: String!) {
+        country(countryCode: $countryCode) {
+          name
+          code
+          states {
+            name
+            code
+          }
+        }
+      }
+    `
+    try {
+      const queryResult = await this.anonymousApiClient.query({
+        query: COUNTRY_QUERY,
+        variables: {
+          countryCode: countryCode
+        }
+      })
+
+      return queryResult.data.country as Country
+    } catch (error) {
+      return null
+    }
+  }
+
+  async registerIdentifiableUser(site: SiteEnum, input: RegisterUserInput): Promise<string> {
+    const mutation = gql`
+      mutation registerUser($site: SiteEnum!, $input: RegisterUserInput!) {
+        registerIdentifiableUser(site: $site, input: $input) {
+          id
+        }
+      }
+    `
+    try {
+      const result = await this.authApiClient.mutate({
+        mutation: mutation,
+        variables: {
+          site: site,
+          input: input
+        }
+      })
+
+      const registerIdentifiableUser = result.data.registerIdentifiableUser as IdentifiableUser
+      return registerIdentifiableUser.id!
+    } catch (error) {
+      if (error instanceof ApolloError) {
+        if (error.graphQLErrors[0].message === 'register.user_already_registered') {
+          throw new ValidationError(
+            'Your email address is already registered with us. Please login directly to your account.'
+          )
+        } else if (error.graphQLErrors[0].message === 'minimum_password_length_is_four_chars') {
+          throw new ValidationError('The password must contain at least 8 characters.')
+        } else if (error.graphQLErrors[0].message === 'password_must_contain_letter_or_number') {
+          throw new ValidationError('The password must contain a letter and a number.')
+        } else {
+          throw error
+        }
+      } else {
+        throw error
+      }
+    }
   }
 }

@@ -11,6 +11,7 @@
       Admin Room Layout</RouterLink
     >
     <br />
-    <RouterLink key="calendar" to="/calendar"> Calendar</RouterLink>
+    <RouterLink key="/user/create" to="/user/create"> Create User</RouterLink>
+    <br />
   </main>
 </template>

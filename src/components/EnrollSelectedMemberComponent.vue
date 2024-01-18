@@ -20,6 +20,7 @@ import ModalComponent from '@/components/ModalComponent.vue'
 import {
   ERROR_CLASS_IS_FULL,
   ERROR_CLIENT_IS_ALREADY_BOOKED_ADMIN,
+  ERROR_CLIENT_IS_ALREADY_ON_WAITLIST,
   ERROR_CLIENT_IS_OUTSIDE_SCHEDULING_WINDOW,
   ERROR_UNKNOWN,
   ERROR_WAITLIST_FULL_ERROR
@@ -100,6 +101,8 @@ async function bookUserIntoClass(
       errorMessage.value = ERROR_CLIENT_IS_ALREADY_BOOKED_ADMIN
     } else if (response == 'WaitlistFullError') {
       errorMessage.value = ERROR_WAITLIST_FULL_ERROR
+    } else if (response === 'ClientIsAlreadyOnWaitlistError') {
+      errorMessage.value = ERROR_CLIENT_IS_ALREADY_ON_WAITLIST
     } else {
       errorMessage.value = ERROR_UNKNOWN
     }
