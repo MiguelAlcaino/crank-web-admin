@@ -776,6 +776,7 @@ export class ApiService {
           maxCapacity
           totalBooked
           totalUnderMaintenanceSpots
+          showAsDisabled
         }
       }
     `
