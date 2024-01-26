@@ -1,5 +1,4 @@
 <script lang="ts">
-// TODO: Add total number of spots and enrolled
 interface Class {
   id: string
   name: string
@@ -7,6 +6,7 @@ interface Class {
   maxCapacity: number
   totalBooked: number
   totalUnderMaintenanceSpots: number
+  showAsDisabled: boolean
 }
 
 interface WeekDays {
@@ -87,7 +87,8 @@ async function getCalendarClasses(resetSelectedClass: boolean = true): Promise<v
         startWithNoTimeZone: calendarClass.startWithNoTimeZone,
         maxCapacity: calendarClass.maxCapacity,
         totalBooked: calendarClass.totalBooked,
-        totalUnderMaintenanceSpots: calendarClass.totalUnderMaintenanceSpots
+        totalUnderMaintenanceSpots: calendarClass.totalUnderMaintenanceSpots,
+        showAsDisabled: calendarClass.showAsDisabled
       })
     }
   } catch (error) {
@@ -153,7 +154,7 @@ function selectClass(classId: string | null): void {
           :key="c.id"
           style="cursor: pointer"
           @click="selectClass(c.id)"
-          :class="{ selectedClass: c.id === selectedClassId }"
+          :class="{ selectedClass: c.id === selectedClassId, disabledClass: c.showAsDisabled }"
         >
           <div>
             <time>{{ dayjs(c.startWithNoTimeZone).format('h:mm A') }}</time>
@@ -248,5 +249,9 @@ function selectClass(classId: string | null): void {
 
 .selectedClass {
   background-color: #ff7f61 !important;
+}
+
+.disabledClass {
+  background-color: #bdbdbd !important;
 }
 </style>

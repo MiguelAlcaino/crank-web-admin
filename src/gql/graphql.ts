@@ -26,7 +26,7 @@ export type AcceptLateCancelledSpotInClassResultUnion = AcceptLateCancelledSpotI
 
 export type AcceptLateCancelledSpotInClassSuccess = {
   __typename: 'AcceptLateCancelledSpotInClassSuccess'
-  code: Scalars['String']
+  success: Scalars['Boolean']
 }
 
 export type AddedToWaitlistSuccess = {
@@ -150,6 +150,7 @@ export type Class = {
   isSubstitute: Scalars['Boolean']
   maxCapacity: Scalars['Int']
   name: Scalars['String']
+  showAsDisabled: Scalars['Boolean']
   start: Scalars['DateTime']
   /** Same as start but without timezone. If start is 2023-11-04T10:15:00+04:00 then this value will be 2023-11-04T10:15:00 */
   startWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']
@@ -733,7 +734,7 @@ export type RejectLateCancelledSpotInClassInput = {
 
 export type RejectLateCancelledSpotInClassSuccess = {
   __typename: 'RejectLateCancelledSpotInClassSuccess'
-  code: Scalars['String']
+  success: Scalars['Boolean']
 }
 
 export type RemoveCurrentUserFromWaitlistInput = {
@@ -944,6 +945,7 @@ export type ValidateResetPasswordTokenInput = {
 
 export type WaitlistEntry = EnrollmentInfoInterface & {
   __typename: 'WaitlistEntry'
+  canBeTurnedIntoEnrollment: Scalars['Boolean']
   enrollmentDateTime: Scalars['DateTime']
   enrollmentDateTimeWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']
   enrollmentStatus: EnrollmentStatusEnum
@@ -1380,6 +1382,7 @@ export type GetCalendarClassesForListQuery = {
     maxCapacity: number
     totalBooked: number
     totalUnderMaintenanceSpots: number
+    showAsDisabled: boolean
   }>
 }
 
@@ -1547,7 +1550,7 @@ export type RegisterUserMutationVariables = Exact<{
 
 export type RegisterUserMutation = {
   __typename: 'Mutation'
-  registerUser?: { __typename: 'User'; email: string } | null
+  registerIdentifiableUser?: { __typename: 'IdentifiableUser'; id?: string | null } | null
 }
 
 export const SiteSettingsDocument = {
@@ -3132,7 +3135,8 @@ export const GetCalendarClassesForListDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'startWithNoTimeZone' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'maxCapacity' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'totalBooked' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalUnderMaintenanceSpots' } }
+                { kind: 'Field', name: { kind: 'Name', value: 'totalUnderMaintenanceSpots' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'showAsDisabled' } }
               ]
             }
           }
@@ -3647,7 +3651,7 @@ export const RegisterUserDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'registerUser' },
+            name: { kind: 'Name', value: 'registerIdentifiableUser' },
             arguments: [
               {
                 kind: 'Argument',
@@ -3662,7 +3666,7 @@ export const RegisterUserDocument = {
             ],
             selectionSet: {
               kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'email' } }]
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }]
             }
           }
         ]
