@@ -53,7 +53,7 @@ const documents = {
     types.EditEnrollmentDocument,
   '\n      mutation swapSpot($site: SiteEnum!, $input: EditEnrollmentInput!) {\n        swapSpot(site: $site, input: $input) {\n          __typename\n          ... on SwapSpotSuccess {\n            __typename\n          }\n          ... on TryToSwitchToSameSpotError {\n            __typename\n            code\n          }\n        }\n      }\n    ':
     types.SwapSpotDocument,
-  '\n      query getCalendarClassesForList($site: SiteEnum!, $params: CalendarClassesParams) {\n        calendarClasses(site: $site, params: $params) {\n          id\n          name\n          startWithNoTimeZone\n          maxCapacity\n          totalBooked\n          totalUnderMaintenanceSpots\n        }\n      }\n    ':
+  '\n      query getCalendarClassesForList($site: SiteEnum!, $params: CalendarClassesParams) {\n        calendarClasses(site: $site, params: $params) {\n          id\n          name\n          startWithNoTimeZone\n          maxCapacity\n          totalBooked\n          totalUnderMaintenanceSpots\n          showAsDisabled\n        }\n      }\n    ':
     types.GetCalendarClassesForListDocument,
   '\n      query getUser($id: ID!) {\n        user(id: $id) {\n          id\n          user {\n            firstName\n            lastName\n            email\n            leaderboardUsername\n            weight\n            gender\n            birthdate\n            country {\n              code\n              name\n            }\n            state {\n              code\n              name\n            }\n            city\n            address1\n            address2\n            zipCode\n            phone\n            emergencyContactName\n            emergencyContactPhone\n            emergencyContactRelationship\n            hideMetrics\n            existsInSites\n          }\n        }\n      }\n    ':
     types.GetUserDocument,
@@ -67,7 +67,7 @@ const documents = {
     types.CountriesDocument,
   '\n      query country($countryCode: String!) {\n        country(countryCode: $countryCode) {\n          name\n          code\n          states {\n            name\n            code\n          }\n        }\n      }\n    ':
     types.CountryDocument,
-  '\n      mutation registerUser($site: SiteEnum!, $input: RegisterUserInput!) {\n        registerUser(site: $site, input: $input) {\n          email\n        }\n      }\n    ':
+  '\n      mutation registerUser($site: SiteEnum!, $input: RegisterUserInput!) {\n        registerIdentifiableUser(site: $site, input: $input) {\n          id\n        }\n      }\n    ':
     types.RegisterUserDocument
 }
 
@@ -209,8 +209,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n      query getCalendarClassesForList($site: SiteEnum!, $params: CalendarClassesParams) {\n        calendarClasses(site: $site, params: $params) {\n          id\n          name\n          startWithNoTimeZone\n          maxCapacity\n          totalBooked\n          totalUnderMaintenanceSpots\n        }\n      }\n    '
-): (typeof documents)['\n      query getCalendarClassesForList($site: SiteEnum!, $params: CalendarClassesParams) {\n        calendarClasses(site: $site, params: $params) {\n          id\n          name\n          startWithNoTimeZone\n          maxCapacity\n          totalBooked\n          totalUnderMaintenanceSpots\n        }\n      }\n    ']
+  source: '\n      query getCalendarClassesForList($site: SiteEnum!, $params: CalendarClassesParams) {\n        calendarClasses(site: $site, params: $params) {\n          id\n          name\n          startWithNoTimeZone\n          maxCapacity\n          totalBooked\n          totalUnderMaintenanceSpots\n          showAsDisabled\n        }\n      }\n    '
+): (typeof documents)['\n      query getCalendarClassesForList($site: SiteEnum!, $params: CalendarClassesParams) {\n        calendarClasses(site: $site, params: $params) {\n          id\n          name\n          startWithNoTimeZone\n          maxCapacity\n          totalBooked\n          totalUnderMaintenanceSpots\n          showAsDisabled\n        }\n      }\n    ']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -251,8 +251,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n      mutation registerUser($site: SiteEnum!, $input: RegisterUserInput!) {\n        registerUser(site: $site, input: $input) {\n          email\n        }\n      }\n    '
-): (typeof documents)['\n      mutation registerUser($site: SiteEnum!, $input: RegisterUserInput!) {\n        registerUser(site: $site, input: $input) {\n          email\n        }\n      }\n    ']
+  source: '\n      mutation registerUser($site: SiteEnum!, $input: RegisterUserInput!) {\n        registerIdentifiableUser(site: $site, input: $input) {\n          id\n        }\n      }\n    '
+): (typeof documents)['\n      mutation registerUser($site: SiteEnum!, $input: RegisterUserInput!) {\n        registerIdentifiableUser(site: $site, input: $input) {\n          id\n        }\n      }\n    ']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}
