@@ -432,13 +432,12 @@ async function swapSpot(newSpotNumber: number) {
       <h4>
         {{ classInfo?.class?.name }} - {{ classInfo?.class.instructorName }} ({{
           dayjs(classInfo?.class.startWithNoTimeZone).format('DD/MM/YYYY')
-        }}) | Total Signed In : {{ totalSignedIn }} | ClassID:
-        {{ classInfo?.class.id }}
+        }})
       </h4>
-      <h4>
+      <h5>
         Time : {{ dayjs(classInfo?.class.startWithNoTimeZone).format('hh:mm A') }} | Duration :
         {{ classInfo?.class?.duration }} mins
-      </h4>
+      </h5>
     </div>
   </div>
   <h6 v-html="classInfo?.class?.description"></h6>
@@ -565,7 +564,8 @@ async function swapSpot(newSpotNumber: number) {
         type="button"
         @on-click="clickCancelMembersReservation"
         class="mr-1"
-      ></DefaultButtonComponent>
+      >
+      </DefaultButtonComponent>
       <!-- CHANGE SPOT button -->
       <DefaultButtonComponent
         text="CHANGE SPOT"
@@ -599,7 +599,8 @@ async function swapSpot(newSpotNumber: number) {
         text="Cancel"
         type="button"
         @on-click="spotAction = SpotActionEnum.none"
-      ></DefaultButtonComponent>
+      >
+      </DefaultButtonComponent>
 
       <!-- Check In - Out button -->
       <CheckInCheckOutUserInClass
