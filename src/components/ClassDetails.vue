@@ -474,13 +474,12 @@ async function checkWaitlistIsEnable() {
           <h4>
             {{ classInfo?.class?.name }} - {{ classInfo?.class.instructorName }} ({{
               dayjs(classInfo?.class.startWithNoTimeZone).format('DD/MM/YYYY')
-            }}) | Total Signed In : {{ totalSignedIn }} | ClassID:
-            {{ classInfo?.class.id }}
+            }})
           </h4>
-          <h4>
+          <h5>
             Time : {{ dayjs(classInfo?.class.startWithNoTimeZone).format('hh:mm A') }} | Duration :
             {{ classInfo?.class?.duration }} mins
-          </h4>
+          </h5>
         </div>
         <div class="col-md-2">
           <SyncClassButton
@@ -624,7 +623,8 @@ async function checkWaitlistIsEnable() {
             type="button"
             @on-click="clickCancelMembersReservation"
             class="mr-1"
-          ></DefaultButtonComponent>
+          >
+          </DefaultButtonComponent>
           <!-- CHANGE SPOT button -->
           <DefaultButtonComponent
             text="CHANGE SPOT"
@@ -659,7 +659,8 @@ async function checkWaitlistIsEnable() {
             text="Cancel"
             type="button"
             @on-click="spotAction = SpotActionEnum.none"
-          ></DefaultButtonComponent>
+          >
+          </DefaultButtonComponent>
 
           <!-- Check In - Out button -->
           <CheckInCheckOutUserInClass
