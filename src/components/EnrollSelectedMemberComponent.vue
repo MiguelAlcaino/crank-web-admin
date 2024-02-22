@@ -91,7 +91,12 @@ async function bookUserIntoClass(
 
     emits('afterEnrolling')
   } else if (response === 'PaymentRequiredError') {
-    paymentRequiredErrorModalIsVisible.value = true
+    if (props.isWaitlistBooking) {
+      errorMessage.value = 'This client has no credits in his account.'
+      errorModalIsVisible.value = true
+    } else {
+      paymentRequiredErrorModalIsVisible.value = true
+    }
   } else {
     if (response == 'ClassIsFullError') {
       errorMessage.value = ERROR_CLASS_IS_FULL
