@@ -125,7 +125,8 @@ const rules = computed(() => {
       minLength: helpers.withMessage(
         'Valid mobile number is required to redeem the trial package through an SMS validation code',
         minLength(7)
-      )
+      ),
+      lengthUAEphone: helpers.withMessage('Invalid Mobile Number', lengthUAEphone)
     },
     emergencyContactName: {
       required: helpers.withMessage('Emergency Contact Name is required', required)
@@ -147,6 +148,9 @@ const rules = computed(() => {
 
 const validateUAEphone = (phone: string) =>
   phone.startsWith('+971') ? getFormattedPhoneNumber(phone).startsWith('+9715') : true
+
+const lengthUAEphone = (phone: string) =>
+  phone.startsWith('+971') ? getFormattedPhoneNumber(phone).length === 13 : true
 
 const v$ = useVuelidate(rules, formData)
 const apiService = inject<ApiService>('gqlApiService')!
@@ -753,6 +757,7 @@ async function goToUserList() {
 </template>
 
 <style lang="css" scoped src="bootstrap/dist/css/bootstrap.min.css"></style>
+
 <style lang="css" scoped src="@/assets/main.css"></style>
 
 <style scoped>
