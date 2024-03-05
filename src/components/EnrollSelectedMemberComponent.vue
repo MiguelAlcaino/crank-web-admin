@@ -18,6 +18,7 @@ import { inject, ref } from 'vue'
 
 import ModalComponent from '@/components/ModalComponent.vue'
 import {
+  ERROR_BOOKING_OVERLAPS_ANOTHER_ONE,
   ERROR_CLASS_IS_FULL,
   ERROR_CLIENT_IS_ALREADY_BOOKED_ADMIN,
   ERROR_CLIENT_IS_ALREADY_ON_WAITLIST,
@@ -104,6 +105,8 @@ async function bookUserIntoClass(
       errorMessage.value = ERROR_CLIENT_IS_OUTSIDE_SCHEDULING_WINDOW
     } else if (response === 'ClientIsAlreadyBookedError') {
       errorMessage.value = ERROR_CLIENT_IS_ALREADY_BOOKED_ADMIN
+    } else if (response === 'BookingOverlapsAnotherOneError') {
+      errorMessage.value = ERROR_BOOKING_OVERLAPS_ANOTHER_ONE
     } else if (response == 'WaitlistFullError') {
       errorMessage.value = ERROR_WAITLIST_FULL_ERROR
     } else if (response === 'ClientIsAlreadyOnWaitlistError') {
