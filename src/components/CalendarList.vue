@@ -24,6 +24,7 @@ import { inject, onMounted, ref } from 'vue'
 import ModalComponent from '@/components/ModalComponent.vue'
 import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIndicator.vue'
 import SyncAllClassesButton from '@/components/SyncAllClassesButton.vue'
+import SiteSelector from '@/components/SiteSelector.vue'
 import { Role } from '@/utils/userRoles'
 import { authService } from '@/services/authService'
 
@@ -120,9 +121,19 @@ function selectClass(classId: string | null): void {
   selectedClassId.value = classId
   emits('selectClass', classId)
 }
+
+function onAfterChangingSite(): void {
+  getCalendarClasses()
+}
 </script>
 
 <template>
+  <div class="row ml-1">
+    <div class="col-lg-3 col-md-3 col-sm-4 ml-auto mr-3">
+      <SiteSelector @after-changing-site="onAfterChangingSite"></SiteSelector>
+    </div>
+  </div>
+  <hr />
   <div class="ReservationClassList">
     <div id="DateRangeSection">
       <div style="display: flex; justify-content: space-between; width: 100%">

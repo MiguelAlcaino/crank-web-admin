@@ -8,9 +8,15 @@ import type { SiteEnum } from '@/gql/graphql'
 import { appStore } from '@/stores/appStorage'
 import type { Role } from '@/utils/userRoles'
 
+export interface AdminSite {
+  serviceKey: string
+  name: string
+}
+
 interface JwtTokenPayload {
   exp: number
   roles: string[]
+  adminSites: AdminSite[]
 }
 
 export const authService = {
@@ -99,5 +105,18 @@ export const authService = {
     }
 
     return false
+  },
+  getAvailableSites(): AdminSite[] {
+    const token = useAuthenticationStore().token
+
+    if (token) {
+      const decoded = jwt_decode<JwtTokenPayload>(token)
+
+      const adminSites = decoded.adminSites as AdminSite[]
+
+      if (adminSites) return adminSites
+    }
+
+    return []
   }
 }
