@@ -129,7 +129,7 @@ function onAfterChangingSite(): void {
 
 <template>
   <div class="row ml-1">
-    <div class="col-lg-3 col-md-3 col-sm-4 ml-auto mr-3">
+    <div class="col-lg-7 col-md-10 col-sm-12 ml-auto mr-3">
       <SiteSelector @after-changing-site="onAfterChangingSite"></SiteSelector>
     </div>
   </div>
