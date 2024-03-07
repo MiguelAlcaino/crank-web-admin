@@ -44,6 +44,7 @@ export type BookClassResultUnion =
   | AddedToWaitlistSuccess
   | BookClassSuccess
   | BookedButInOtherSpotError
+  | BookingOverlapsAnotherOneError
   | ClassIsFullError
   | ClientIsAlreadyBookedError
   | ClientIsAlreadyOnWaitlistError
@@ -83,6 +84,11 @@ export type BookedButInOtherSpotError = Error & {
   code: Scalars['String']
   givenSpot: Scalars['Int']
   requiredSpot: Scalars['Int']
+}
+
+export type BookingOverlapsAnotherOneError = Error & {
+  __typename: 'BookingOverlapsAnotherOneError'
+  code: Scalars['String']
 }
 
 export type BookingWindow = {
@@ -687,6 +693,7 @@ export type QueryRoomLayoutArgs = {
 }
 
 export type QueryRoomLayoutsArgs = {
+  params?: InputMaybe<RoomLayoutsInput>
   site: SiteEnum
 }
 
@@ -795,6 +802,11 @@ export type RoomLayoutInput = {
   matrix: Array<IconPositionInput>
   name: Scalars['String']
   rows: Scalars['Int']
+}
+
+export type RoomLayoutsInput = {
+  /** Amount of usable spots in the class */
+  usersCapacity?: InputMaybe<Scalars['Int']>
 }
 
 export enum SiteEnum {
@@ -1071,6 +1083,7 @@ export type ClassInfoAdminQuery = {
       startWithNoTimeZone: any
       duration: number
       waitListAvailable: boolean
+      maxCapacity: number
     }
     roomLayout?: {
       __typename: 'RoomLayout'
@@ -1179,6 +1192,7 @@ export type BookUserIntoClassMutation = {
     | { __typename: 'AddedToWaitlistSuccess' }
     | { __typename: 'BookClassSuccess' }
     | { __typename: 'BookedButInOtherSpotError' }
+    | { __typename: 'BookingOverlapsAnotherOneError' }
     | { __typename: 'ClassIsFullError' }
     | { __typename: 'ClientIsAlreadyBookedError' }
     | { __typename: 'ClientIsAlreadyOnWaitlistError' }
@@ -1891,7 +1905,8 @@ export const ClassInfoAdminDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'start' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'startWithNoTimeZone' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'duration' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'waitListAvailable' } }
+                      { kind: 'Field', name: { kind: 'Name', value: 'waitListAvailable' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'maxCapacity' } }
                     ]
                   }
                 },

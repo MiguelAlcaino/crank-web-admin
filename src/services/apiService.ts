@@ -25,6 +25,7 @@ import type {
   RemoveUserFromWaitlistUnion,
   RoomLayout,
   RoomLayoutInput,
+  RoomLayoutsInput,
   SiteEnum,
   SwapSpotResultUnion
 } from '@/gql/graphql'
@@ -184,6 +185,7 @@ export class ApiService {
             startWithNoTimeZone
             duration
             waitListAvailable
+            maxCapacity
           }
           roomLayout {
             id
@@ -469,10 +471,11 @@ export class ApiService {
     return result.data.editClass as EditClassResultUnion
   }
 
-  async roomLayouts(site: SiteEnum): Promise<RoomLayout[] | null> {
+  async roomLayouts(site: SiteEnum, userCapacity: number): Promise<RoomLayout[] | null> {
+    const params = { usersCapacity: userCapacity } as RoomLayoutsInput
     const query = gql`
-      query roomLayouts($site: SiteEnum!) {
-        roomLayouts(site: $site) {
+      query roomLayouts($site: SiteEnum!, $params: RoomLayoutsInput) {
+        roomLayouts(site: $site, params: $params) {
           id
           name
         }
@@ -483,6 +486,7 @@ export class ApiService {
         query: query,
         variables: {
           site: site,
+          params: params,
           query: query
         },
         fetchPolicy: 'network-only'

@@ -35,6 +35,7 @@ interface Class {
   startWithNoTimeZone: Date
   duration: number
   waitListAvailable: boolean
+  maxCapacity: number
 }
 
 interface EnrollmentInfo {
@@ -497,8 +498,10 @@ async function checkWaitlistIsEnable() {
             v-if="classInfo"
             :class-id="classId"
             :room-layout-id="classInfo?.roomLayout?.id"
+            :max-capacity="classInfo?.class?.maxCapacity"
             @after-changing-room-layout="getClassInfo()"
-          ></ChangeLayoutClass>
+          >
+          </ChangeLayoutClass>
           &nbsp;
           <ViewWaitlistEntries :class-id="classId"></ViewWaitlistEntries>
           &nbsp;
