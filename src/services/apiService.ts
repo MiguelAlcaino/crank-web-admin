@@ -471,8 +471,8 @@ export class ApiService {
     return result.data.editClass as EditClassResultUnion
   }
 
-  async roomLayouts(site: SiteEnum, userCapacity: number): Promise<RoomLayout[] | null> {
-    const params = { usersCapacity: userCapacity } as RoomLayoutsInput
+  async roomLayouts(site: SiteEnum, userCapacity?: number | null): Promise<RoomLayout[] | null> {
+    const params = userCapacity ? ({ usersCapacity: userCapacity } as RoomLayoutsInput) : undefined
     const query = gql`
       query roomLayouts($site: SiteEnum!, $params: RoomLayoutsInput) {
         roomLayouts(site: $site, params: $params) {

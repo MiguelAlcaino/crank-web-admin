@@ -33,7 +33,7 @@ const documents = {
     types.RemoveUserFromClassDocument,
   '\n      mutation editClass($input: EditClassInput!) {\n        editClass(input: $input) {\n          __typename\n          ... on EditClassSuccessResult {\n            __typename\n            updated\n          }\n        }\n      }\n    ':
     types.EditClassDocument,
-  '\n      query roomLayouts($site: SiteEnum!) {\n        roomLayouts(site: $site) {\n          id\n          name\n        }\n      }\n    ':
+  '\n      query roomLayouts($site: SiteEnum!, $params: RoomLayoutsInput) {\n        roomLayouts(site: $site, params: $params) {\n          id\n          name\n        }\n      }\n    ':
     types.RoomLayoutsDocument,
   '\n      query roomLayout($site: SiteEnum!, $id: ID!) {\n        roomLayout(site: $site, id: $id) {\n          id\n          name\n          columns\n          rows\n          matrix {\n            x\n            y\n            icon\n            ... on BookableSpot {\n              spotNumber\n            }\n          }\n        }\n      }\n    ':
     types.RoomLayoutDocument,
@@ -149,8 +149,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n      query roomLayouts($site: SiteEnum!) {\n        roomLayouts(site: $site) {\n          id\n          name\n        }\n      }\n    '
-): (typeof documents)['\n      query roomLayouts($site: SiteEnum!) {\n        roomLayouts(site: $site) {\n          id\n          name\n        }\n      }\n    ']
+  source: '\n      query roomLayouts($site: SiteEnum!, $params: RoomLayoutsInput) {\n        roomLayouts(site: $site, params: $params) {\n          id\n          name\n        }\n      }\n    '
+): (typeof documents)['\n      query roomLayouts($site: SiteEnum!, $params: RoomLayoutsInput) {\n        roomLayouts(site: $site, params: $params) {\n          id\n          name\n        }\n      }\n    ']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

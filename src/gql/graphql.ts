@@ -1227,6 +1227,7 @@ export type EditClassMutation = {
 
 export type RoomLayoutsQueryVariables = Exact<{
   site: SiteEnum
+  params?: InputMaybe<RoomLayoutsInput>
 }>
 
 export type RoomLayoutsQuery = {
@@ -2392,6 +2393,11 @@ export const RoomLayoutsDocument = {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
           }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'params' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'RoomLayoutsInput' } }
         }
       ],
       selectionSet: {
@@ -2405,6 +2411,11 @@ export const RoomLayoutsDocument = {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'site' },
                 value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'params' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'params' } }
               }
             ],
             selectionSet: {
