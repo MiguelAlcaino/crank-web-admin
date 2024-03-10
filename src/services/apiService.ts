@@ -25,6 +25,7 @@ import type {
   RemoveUserFromWaitlistUnion,
   RoomLayout,
   RoomLayoutInput,
+  RoomLayoutsInput,
   SiteEnum,
   SwapSpotResultUnion
 } from '@/gql/graphql'
@@ -32,7 +33,6 @@ import type { SiteSetting } from '@/gql/graphql'
 import type { ApolloClient } from '@apollo/client/core'
 import dayjs from 'dayjs'
 import { ValidationError } from '@/utils/errors/saveUserErrors'
-import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
 export class ApiService {
   authApiClient: ApolloClient<any>
@@ -185,6 +185,7 @@ export class ApiService {
             duration
             waitListAvailable
             showAsDisabled
+            maxCapacity
           }
           roomLayout {
             id
@@ -470,10 +471,11 @@ export class ApiService {
     return result.data.editClass as EditClassResultUnion
   }
 
-  async roomLayouts(site: SiteEnum): Promise<RoomLayout[] | null> {
+  async roomLayouts(site: SiteEnum, userCapacity?: number | null): Promise<RoomLayout[] | null> {
+    const params = userCapacity ? ({ usersCapacity: userCapacity } as RoomLayoutsInput) : undefined
     const query = gql`
-      query roomLayouts($site: SiteEnum!) {
-        roomLayouts(site: $site) {
+      query roomLayouts($site: SiteEnum!, $params: RoomLayoutsInput) {
+        roomLayouts(site: $site, params: $params) {
           id
           name
         }
@@ -484,6 +486,7 @@ export class ApiService {
         query: query,
         variables: {
           site: site,
+          params: params,
           query: query
         },
         fetchPolicy: 'network-only'

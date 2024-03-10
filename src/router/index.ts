@@ -31,11 +31,6 @@ const router = createRouter({
       component: () => import('../views/RegisterView.vue')
     },
     {
-      path: '/admin/class/:id',
-      name: 'admin_class',
-      component: () => import('../views/admin/AdminClass.vue')
-    },
-    {
       path: '/admin/calendar-class',
       name: 'admin_calendar_class',
       component: () => import('../views/admin/AdminClassView.vue')

@@ -27,7 +27,7 @@ const roomLayouts = ref<RoomLayout[]>([])
 async function getRoomLayouts() {
   isLoading.value = true
 
-  roomLayouts.value = (await apiService.roomLayouts(appStore().site)) as RoomLayout[]
+  roomLayouts.value = (await apiService.roomLayouts(appStore().site, null)) as RoomLayout[]
 
   isLoading.value = false
 }
@@ -46,7 +46,8 @@ function onClickDeleteLayout(roomLayout: RoomLayout) {
         text="New Rom Layout"
         @on-click="router.push('/admin/room-layout/create')"
         type="button"
-      ></DefaultButtonComponent>
+      >
+      </DefaultButtonComponent>
     </div>
   </div>
   <br />
@@ -79,7 +80,9 @@ function onClickDeleteLayout(roomLayout: RoomLayout) {
             </td>
           </tr>
           <tr v-if="!isLoading && roomLayouts?.length === 0">
-            <td colspan="3" class="text-center"><p>NO DATA AVAILABLE IN TABLE</p></td>
+            <td colspan="3" class="text-center">
+              <p>NO DATA AVAILABLE IN TABLE</p>
+            </td>
           </tr>
           <tr v-if="isLoading">
             <td colspan="3" class="text-center">loading...</td>

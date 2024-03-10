@@ -36,6 +36,7 @@ interface Class {
   duration: number
   waitListAvailable: boolean
   showAsDisabled: boolean
+  maxCapacity: number
 }
 
 interface EnrollmentInfo {
@@ -474,8 +475,8 @@ async function checkWaitlistIsEnable() {
         <div class="col-md-10">
           <h4>
             {{ classInfo?.class?.name }} - {{ classInfo?.class.instructorName }} ({{
-              dayjs(classInfo?.class.startWithNoTimeZone).format('DD/MM/YYYY')
-            }})
+      dayjs(classInfo?.class.startWithNoTimeZone).format('DD/MM/YYYY')
+    }})
           </h4>
           <h5>
             Time : {{ dayjs(classInfo?.class.startWithNoTimeZone).format('hh:mm A') }} | Duration :
@@ -483,32 +484,22 @@ async function checkWaitlistIsEnable() {
           </h5>
         </div>
         <div class="col-md-2">
-          <SyncClassButton
-            v-if="classInfo?.class.id && userCanSyncClasses"
-            :class-id="classInfo?.class.id"
-            @after-sync-class="getClassInfo()"
-          ></SyncClassButton>
+          <SyncClassButton v-if="classInfo?.class.id && userCanSyncClasses" :class-id="classInfo?.class.id"
+            @after-sync-class="getClassInfo()"></SyncClassButton>
         </div>
       </div>
 
       <!-- Change Layout Class and View Waitlist Entries Options -->
       <div class="row" v-if="userCanModifyClass">
         <div class="col-md-12">
-          <ChangeLayoutClass
-            v-if="classInfo"
-            :class-id="classId"
-            :room-layout-id="classInfo?.roomLayout?.id"
-            @after-changing-room-layout="getClassInfo()"
-          ></ChangeLayoutClass>
+          <ChangeLayoutClass v-if="classInfo" :class-id="classId" :room-layout-id="classInfo?.roomLayout?.id"
+            :max-capacity="classInfo?.class?.maxCapacity" @after-changing-room-layout="getClassInfo()">
+          </ChangeLayoutClass>
           &nbsp;
           <ViewWaitlistEntries :class-id="classId"></ViewWaitlistEntries>
           &nbsp;
-          <SetOnHoldSpots
-            v-if="classInfo"
-            :class-id="classId"
-            @after-set-on-hold-spots="getClassInfo()"
-            :on-hold-spots="classInfo?.onHoldSpots"
-          ></SetOnHoldSpots>
+          <SetOnHoldSpots v-if="classInfo" :class-id="classId" @after-set-on-hold-spots="getClassInfo()"
+            :on-hold-spots="classInfo?.onHoldSpots"></SetOnHoldSpots>
         </div>
       </div>
 
@@ -516,18 +507,11 @@ async function checkWaitlistIsEnable() {
       <div class="row" v-if="classInfo !== null && waitListAvailable === true">
         <div class="col-md-12">
           <hr />
-          <EnrollSelectedMemberComponent
-            :class-id="classId"
-            v-if="
-              classInfo !== null &&
-              waitListAvailable === true &&
-              classInfo?.class?.showAsDisabled === false
-            "
-            @after-enrolling="getClassInfo()"
-            :spot-number="null"
-            enrollButtonText="ADD TO WAITLIST"
-            :is-waitlist-booking="true"
-          >
+          <EnrollSelectedMemberComponent :class-id="classId" v-if="classInfo !== null &&
+      waitListAvailable === true &&
+      classInfo?.class?.showAsDisabled === false
+      " @after-enrolling="getClassInfo()" :spot-number="null" enrollButtonText="ADD TO WAITLIST"
+            :is-waitlist-booking="true">
           </EnrollSelectedMemberComponent>
         </div>
       </div>
@@ -535,77 +519,44 @@ async function checkWaitlistIsEnable() {
       <hr />
       <br />
       <!-- Matrix -->
-      <SpotMatrix
-        v-if="
-          classInfo !== null &&
-          classInfo.roomLayout !== null &&
-          classInfo.roomLayout?.matrix !== null
-        "
-        :matrix="classInfo.roomLayout!.matrix!"
-        :show-user-in-spots="true"
-        :selectedSpotNumber="selectedSpot?.spotNumber"
-        @click-spot="spotClicked"
-        :enrollments="enrollments"
-        :spot-action="spotAction"
-        :spot-selection-is-disabled="!userCanModifyClass"
-      >
+      <SpotMatrix v-if="classInfo !== null &&
+      classInfo.roomLayout !== null &&
+      classInfo.roomLayout?.matrix !== null
+      " :matrix="classInfo.roomLayout!.matrix!" :show-user-in-spots="true"
+        :selectedSpotNumber="selectedSpot?.spotNumber" @click-spot="spotClicked" :enrollments="enrollments"
+        :spot-action="spotAction" :spot-selection-is-disabled="!userCanModifyClass">
       </SpotMatrix>
 
       <!-- Enroll without matrix option -->
-      <EnrollSelectedMemberComponent
-        :class-id="classId"
-        v-if="
-          classInfo !== null &&
-          classInfo.roomLayout === null &&
-          classInfo.enrollments !== null &&
-          waitListAvailable === false &&
-          userCanModifyClass
-        "
-        @after-enrolling="afterEnrollingUser()"
-        :spot-number="null"
-        enrollButtonText="BOOK"
-        :is-waitlist-booking="false"
-      >
+      <EnrollSelectedMemberComponent :class-id="classId" v-if="classInfo !== null &&
+      classInfo.roomLayout === null &&
+      classInfo.enrollments !== null &&
+      waitListAvailable === false &&
+      userCanModifyClass
+      " @after-enrolling="afterEnrollingUser()" :spot-number="null" enrollButtonText="BOOK"
+        :is-waitlist-booking="false">
       </EnrollSelectedMemberComponent>
 
       <!-- List enrollments -->
-      <AdminBookedUsersList
-        v-if="classInfo !== null && classInfo.roomLayout === null && classInfo.enrollments !== null"
-        :enrollments="enrollments"
-        :isLoading="false"
-        @after-cancel-member-reservation="afterEnrollingUser()"
-        :show-edit-options="userCanModifyClass"
-      >
+      <AdminBookedUsersList v-if="classInfo !== null && classInfo.roomLayout === null && classInfo.enrollments !== null"
+        :enrollments="enrollments" :isLoading="false" @after-cancel-member-reservation="afterEnrollingUser()"
+        :show-edit-options="userCanModifyClass">
       </AdminBookedUsersList>
 
       <div v-if="userCanModifyClass">
         <!-- Select empty spot options -->
         <div v-if="selectedSpot?.isBooked === false && selectedSpot.enabled === true">
           <h2>Choose an action :</h2>
-          <DefaultButtonComponent
-            text="ASSIGN CLIENT"
-            type="button"
-            @on-click="spotAction = SpotActionEnum.asignUserToSpot"
-            class="mr-1"
-          ></DefaultButtonComponent>
-          <DefaultButtonComponent
-            text="Put under maintenance"
-            type="button"
-            @on-click="clickPutUnderMaintenance"
-            class="mr-1"
-            :is-loading="isEnablingDisablingSpot"
-          ></DefaultButtonComponent>
+          <DefaultButtonComponent text="ASSIGN CLIENT" type="button"
+            @on-click="spotAction = SpotActionEnum.asignUserToSpot" class="mr-1"></DefaultButtonComponent>
+          <DefaultButtonComponent text="Put under maintenance" type="button" @on-click="clickPutUnderMaintenance"
+            class="mr-1" :is-loading="isEnablingDisablingSpot"></DefaultButtonComponent>
         </div>
         <!-- Select under manteince spot options -->
         <div v-if="selectedSpot.enabled === false">
           <h2>Spot is under maintenance</h2>
-          <DefaultButtonComponent
-            text="Recover from maintenance"
-            type="button"
-            @on-click="clickRecoverFromMaintenance"
-            class="mr-1"
-            :is-loading="isEnablingDisablingSpot"
-          ></DefaultButtonComponent>
+          <DefaultButtonComponent text="Recover from maintenance" type="button" @on-click="clickRecoverFromMaintenance"
+            class="mr-1" :is-loading="isEnablingDisablingSpot"></DefaultButtonComponent>
         </div>
 
         <!-- Select booked spot options -->
@@ -613,96 +564,55 @@ async function checkWaitlistIsEnable() {
           <h2>
             Spot is reserved for -
             {{
-              (selectedSpot.identifiableUser?.user?.firstName ?? '') +
-              ' ' +
-              (selectedSpot.identifiableUser?.user?.lastName ?? '')
-            }}
+      (selectedSpot.identifiableUser?.user?.firstName ?? '') +
+      ' ' +
+      (selectedSpot.identifiableUser?.user?.lastName ?? '')
+    }}
           </h2>
           <!-- CANCEL BOOKING Button -->
-          <DefaultButtonComponent
-            v-if="
-              spotAction !== SpotActionEnum.changeMemberSpot &&
-              spotAction !== SpotActionEnum.swapSpot
-            "
-            text="CANCEL BOOKING"
-            type="button"
-            @on-click="clickCancelMembersReservation"
-            class="mr-1"
-          >
+          <DefaultButtonComponent v-if="spotAction !== SpotActionEnum.changeMemberSpot &&
+      spotAction !== SpotActionEnum.swapSpot
+      " text="CANCEL BOOKING" type="button" @on-click="clickCancelMembersReservation" class="mr-1">
           </DefaultButtonComponent>
           <!-- CHANGE SPOT button -->
-          <DefaultButtonComponent
-            text="CHANGE SPOT"
-            :is-loading="changingMemberSpot"
-            type="button"
+          <DefaultButtonComponent text="CHANGE SPOT" :is-loading="changingMemberSpot" type="button"
             :disabled="spotAction === SpotActionEnum.changeMemberSpot"
-            @on-click="spotAction = SpotActionEnum.changeMemberSpot"
-            v-if="spotAction !== SpotActionEnum.swapSpot"
-            class="mr-1"
-          >
+            @on-click="spotAction = SpotActionEnum.changeMemberSpot" v-if="spotAction !== SpotActionEnum.swapSpot"
+            class="mr-1">
           </DefaultButtonComponent>
 
           <!-- Swap Spot Button -->
-          <DefaultButtonComponent
-            type="button"
-            text="Swap Spot"
-            :is-loading="changingMemberSpot"
-            :disabled="spotAction === SpotActionEnum.swapSpot"
-            v-if="spotAction !== SpotActionEnum.changeMemberSpot"
-            @on-click="spotAction = SpotActionEnum.swapSpot"
-            class="mr-1"
-          >
+          <DefaultButtonComponent type="button" text="Swap Spot" :is-loading="changingMemberSpot"
+            :disabled="spotAction === SpotActionEnum.swapSpot" v-if="spotAction !== SpotActionEnum.changeMemberSpot"
+            @on-click="spotAction = SpotActionEnum.swapSpot" class="mr-1">
           </DefaultButtonComponent>
 
           <!-- Cancel button  -->
-          <DefaultButtonComponent
-            v-if="
-              spotAction === SpotActionEnum.changeMemberSpot ||
-              spotAction === SpotActionEnum.swapSpot
-            "
-            :disabled="changingMemberSpot"
-            text="Cancel"
-            type="button"
-            @on-click="spotAction = SpotActionEnum.none"
-          >
+          <DefaultButtonComponent v-if="spotAction === SpotActionEnum.changeMemberSpot ||
+      spotAction === SpotActionEnum.swapSpot
+      " :disabled="changingMemberSpot" text="Cancel" type="button" @on-click="spotAction = SpotActionEnum.none">
           </DefaultButtonComponent>
 
           <!-- Check In - Out button -->
-          <CheckInCheckOutUserInClass
-            v-if="
-              selectedSpot.enrollmentId != null &&
-              selectedSpot.isCheckedIn != null &&
-              spotAction !== SpotActionEnum.changeMemberSpot &&
-              spotAction !== SpotActionEnum.swapSpot
-            "
-            :enrollment-id="selectedSpot.enrollmentId"
-            :is-checked-in="selectedSpot.isCheckedIn"
-            @after-check-in-check-out="getClassInfo()"
-          ></CheckInCheckOutUserInClass>
-          <UserProfile
-            v-if="
-              selectedSpot.identifiableUser?.id &&
-              spotAction !== SpotActionEnum.changeMemberSpot &&
-              spotAction !== SpotActionEnum.swapSpot
-            "
-            :user-id="selectedSpot.identifiableUser?.id"
-          ></UserProfile>
+          <CheckInCheckOutUserInClass v-if="selectedSpot.enrollmentId != null &&
+      selectedSpot.isCheckedIn != null &&
+      spotAction !== SpotActionEnum.changeMemberSpot &&
+      spotAction !== SpotActionEnum.swapSpot
+      " :enrollment-id="selectedSpot.enrollmentId" :is-checked-in="selectedSpot.isCheckedIn"
+            @after-check-in-check-out="getClassInfo()"></CheckInCheckOutUserInClass>
+          <UserProfile v-if="selectedSpot.identifiableUser?.id &&
+      spotAction !== SpotActionEnum.changeMemberSpot &&
+      spotAction !== SpotActionEnum.swapSpot
+      " :user-id="selectedSpot.identifiableUser?.id"></UserProfile>
         </div>
 
         <div v-if="spotAction === SpotActionEnum.asignUserToSpot">
           <hr />
-          <EnrollSelectedMemberComponent
-            v-if="
-              classInfo !== null &&
-              selectedSpot.spotNumber !== null &&
-              selectedSpot.spotNumber !== undefined
-            "
-            :class-id="classId"
-            :spot-number="selectedSpot.spotNumber!"
-            enrollButtonText="Assign"
-            @after-enrolling="afterEnrollingUser()"
-            :is-waitlist-booking="false"
-          ></EnrollSelectedMemberComponent>
+          <EnrollSelectedMemberComponent v-if="classInfo !== null &&
+      selectedSpot.spotNumber !== null &&
+      selectedSpot.spotNumber !== undefined
+      " :class-id="classId" :spot-number="selectedSpot.spotNumber!" enrollButtonText="Assign"
+            @after-enrolling="afterEnrollingUser()" :is-waitlist-booking="false"></EnrollSelectedMemberComponent>
         </div>
       </div>
     </div>
@@ -710,46 +620,23 @@ async function checkWaitlistIsEnable() {
 
   <!----------------------------- Modals ----------------------------->
   <!-- ERROR modal -->
-  <ModalComponent
-    title="ERROR"
-    :message="errorModalData.message"
-    :closable="false"
-    v-if="errorModalData.isVisible"
-    @on-ok="errorModalData.isVisible = false"
-    :cancel-text="null"
-  >
+  <ModalComponent title="ERROR" :message="errorModalData.message" :closable="false" v-if="errorModalData.isVisible"
+    @on-ok="errorModalData.isVisible = false" :cancel-text="null">
   </ModalComponent>
 
-  <ModalComponent
-    v-if="confirmModalCancelReservationData.isVisible"
-    title="CANCEL BOOKING"
-    message="Are you sure you want to proceed?"
-    :ok-loading="confirmModalCancelReservationData.isLoading"
-    @on-cancel="confirmModalCancelReservationData.isVisible = false"
-    @on-ok="removeUserFromClass()"
-    :closable="false"
-  >
+  <ModalComponent v-if="confirmModalCancelReservationData.isVisible" title="CANCEL BOOKING"
+    message="Are you sure you want to proceed?" :ok-loading="confirmModalCancelReservationData.isLoading"
+    @on-cancel="confirmModalCancelReservationData.isVisible = false" @on-ok="removeUserFromClass()" :closable="false">
   </ModalComponent>
 
-  <ModalComponent
-    v-if="confirmModalLateCancelReservationData.isVisible"
-    title="Warning"
-    :message="ERROR_LATE_CANCELLATION_REQUIRED"
-    :isLoading="confirmModalLateCancelReservationData.isLoading"
-    @on-cancel="confirmModalLateCancelReservationData.isVisible = false"
-    ok-text="CONFIRM"
-    @on-ok="confirmLateCancelation()"
-    :closable="false"
-  >
+  <ModalComponent v-if="confirmModalLateCancelReservationData.isVisible" title="Warning"
+    :message="ERROR_LATE_CANCELLATION_REQUIRED" :isLoading="confirmModalLateCancelReservationData.isLoading"
+    @on-cancel="confirmModalLateCancelReservationData.isVisible = false" ok-text="CONFIRM"
+    @on-ok="confirmLateCancelation()" :closable="false">
   </ModalComponent>
 
-  <ModalComponent
-    :title="successModalData.title"
-    :message="successModalData.message"
-    :closable="false"
-    @on-ok="successModalData.isVisible = false"
-    v-if="successModalData.isVisible"
-  >
+  <ModalComponent :title="successModalData.title" :message="successModalData.message" :closable="false"
+    @on-ok="successModalData.isVisible = false" v-if="successModalData.isVisible">
   </ModalComponent>
 </template>
 

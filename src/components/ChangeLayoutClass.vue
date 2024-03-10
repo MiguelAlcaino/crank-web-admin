@@ -20,6 +20,7 @@ const apiService = inject<ApiService>('gqlApiService')!
 const props = defineProps<{
   classId: string
   roomLayoutId?: string
+  maxCapacity: number
 }>()
 
 const emits = defineEmits<{
@@ -49,7 +50,10 @@ async function getRoomLayouts() {
   roomLayouts.value = []
 
   isLoading.value = true
-  roomLayouts.value = (await apiService.roomLayouts(appStore().site)) as RoomLayout[]
+  roomLayouts.value = (await apiService.roomLayouts(
+    appStore().site,
+    props.maxCapacity
+  )) as RoomLayout[]
   isLoading.value = false
 
   const currentRoomLayout = roomLayouts.value.find((x) => x.id === props.roomLayoutId)
