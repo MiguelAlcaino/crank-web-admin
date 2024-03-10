@@ -33,7 +33,6 @@ import type { SiteSetting } from '@/gql/graphql'
 import type { ApolloClient } from '@apollo/client/core'
 import dayjs from 'dayjs'
 import { ValidationError } from '@/utils/errors/saveUserErrors'
-import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
 export class ApiService {
   authApiClient: ApolloClient<any>
@@ -185,6 +184,7 @@ export class ApiService {
             startWithNoTimeZone
             duration
             waitListAvailable
+            showAsDisabled
             maxCapacity
           }
           roomLayout {

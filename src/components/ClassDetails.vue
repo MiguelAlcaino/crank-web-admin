@@ -35,6 +35,7 @@ interface Class {
   startWithNoTimeZone: Date
   duration: number
   waitListAvailable: boolean
+  showAsDisabled: boolean
   maxCapacity: number
 }
 
@@ -520,7 +521,11 @@ async function checkWaitlistIsEnable() {
           <hr />
           <EnrollSelectedMemberComponent
             :class-id="classId"
-            v-if="classInfo !== null && waitListAvailable === true"
+            v-if="
+              classInfo !== null &&
+              waitListAvailable === true &&
+              classInfo?.class?.showAsDisabled === false
+            "
             @after-enrolling="getClassInfo()"
             :spot-number="null"
             enrollButtonText="ADD TO WAITLIST"
