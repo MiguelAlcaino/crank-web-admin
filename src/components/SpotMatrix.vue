@@ -163,8 +163,10 @@ function getMatrixOfSpotPositions(matrix: Array<BookableSpot | IconPosition>): S
           if (spotInfo.spotNumber && props.enrollments) {
             for (let index = 0; index < props.enrollments.length; index++) {
               const enrollment = props.enrollments[index]
-              isCheckedIn = enrollment.isCheckedIn
+
               if (enrollment.spotInfo?.spotNumber === spotInfo.spotNumber) {
+                isCheckedIn = enrollment.isCheckedIn
+
                 user = enrollment.identifiableUser?.user
                 break
               }
@@ -245,6 +247,7 @@ function onClickSpotAdmin(spotNumber: number) {
 td.class-position {
   padding: 5px;
 }
+
 .table {
   width: 15%;
 }
