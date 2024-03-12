@@ -199,15 +199,6 @@ function getMatrixOfSpotPositions(matrix: Array<BookableSpot | IconPosition>): S
   return sortedRows
 }
 
-function isSpotForAdmin(spot: SpotPosition): boolean {
-  return (
-    props.showUserInSpots &&
-    spot.spotInfo !== undefined &&
-    spot.user !== undefined &&
-    spot.positionType === BOOKABLE_SPOT_KEY
-  )
-}
-
 function onClickSpotAdmin(spotNumber: number) {
   emits('clickSpot', {
     spotNumber: spotNumber
@@ -222,8 +213,9 @@ function onClickSpotAdmin(spotNumber: number) {
         <tr v-for="(colRow, rowKey) in spotsTable" :key="rowKey" class="text-center">
           <td class="class-position" v-for="(spot, columnKey) in colRow" :key="columnKey">
             <admin-bookable-spot-position
-              v-if="isSpotForAdmin(spot)"
-              :spot-info="spot.spotInfo!"
+              v-if="spot.positionType === BOOKABLE_SPOT_KEY"        
+              :spot-number="spot.spotInfo?.spotNumber ?? 0"
+              :is-booked="spot.spotInfo?.isBooked ?? false"              
               :user="spot.user!"
               :enabled="spot.enabled!"
               @click-spot="onClickSpotAdmin"
