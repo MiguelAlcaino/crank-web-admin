@@ -3,11 +3,20 @@ import { onMounted, ref, watch } from 'vue'
 import IconPositionNotBookable from '@/components/icons/IconPositionNotBookable.vue'
 import AdminBookableSpotPosition from '@/components/AdminBookableSpotPosition.vue'
 
+enum PositionIconEnum {
+  Empty = 'empty',
+  Fan = 'fan',
+  Instructor = 'instructor',
+  Speaker = 'speaker',
+  Spot = 'spot',
+  Tv = 'tv'
+}
+
 interface SpotPosition {
   x: number
   y: number
   positionType: string
-  positionIcon: string
+  icon: PositionIconEnum
   spotInfo?: SpotInfo
   user?: User | null
   enabled?: boolean
@@ -18,7 +27,7 @@ interface ClassPositionInterface {
   __typename?: string
   x: number
   y: number
-  icon: string
+  icon: PositionIconEnum
 }
 
 interface BookableSpotClickedEvent {
@@ -126,7 +135,7 @@ function newSpotPosition(
       x: classPosition.x,
       y: classPosition.y,
       positionType: BOOKABLE_SPOT_KEY,
-      positionIcon: classPosition.icon,
+      icon: classPosition.icon,
       spotInfo: classPosition.spotInfo,
       user: user,
       enabled: classPosition.enabled,
@@ -137,7 +146,7 @@ function newSpotPosition(
     x: classPosition.x,
     y: classPosition.y,
     positionType: ICON_POSITION_KEY,
-    positionIcon: classPosition.icon
+    icon: classPosition.icon
   }
 }
 
@@ -213,9 +222,9 @@ function onClickSpotAdmin(spotNumber: number) {
         <tr v-for="(colRow, rowKey) in spotsTable" :key="rowKey" class="text-center">
           <td class="class-position" v-for="(spot, columnKey) in colRow" :key="columnKey">
             <admin-bookable-spot-position
-              v-if="spot.positionType === BOOKABLE_SPOT_KEY"        
+              v-if="spot.positionType === BOOKABLE_SPOT_KEY"
               :spot-number="spot.spotInfo?.spotNumber ?? 0"
-              :is-booked="spot.spotInfo?.isBooked ?? false"              
+              :is-booked="spot.spotInfo?.isBooked ?? false"
               :user="spot.user!"
               :enabled="spot.enabled!"
               @click-spot="onClickSpotAdmin"
@@ -226,7 +235,7 @@ function onClickSpotAdmin(spotNumber: number) {
             />
             <icon-position-not-bookable
               v-else-if="spot.positionType === ICON_POSITION_KEY"
-              :iconName="spot.positionIcon"
+              :icon="spot.icon"
             />
           </td>
         </tr>
