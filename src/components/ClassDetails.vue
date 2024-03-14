@@ -6,7 +6,7 @@ interface BookableSpotClickedEvent {
 
 interface ClassInfo {
   class: Class
-  enrollments: Array<EnrollmentInfo>
+  enrollments: EnrollmentInfo[]
   roomLayout?: RoomLayout
   onHoldSpots: number
 }

@@ -15,7 +15,6 @@ enum PositionIconEnum {
 interface SpotPosition {
   x: number
   y: number
-  positionType: string
   icon: PositionIconEnum
   spotInfo?: SpotInfo
   user?: User | null
@@ -134,7 +133,6 @@ function newSpotPosition(
     return {
       x: classPosition.x,
       y: classPosition.y,
-      positionType: BOOKABLE_SPOT_KEY,
       icon: classPosition.icon,
       spotInfo: classPosition.spotInfo,
       user: user,
@@ -145,7 +143,6 @@ function newSpotPosition(
   return {
     x: classPosition.x,
     y: classPosition.y,
-    positionType: ICON_POSITION_KEY,
     icon: classPosition.icon
   }
 }
@@ -222,7 +219,7 @@ function onClickSpotAdmin(spotNumber: number) {
         <tr v-for="(colRow, rowKey) in spotsTable" :key="rowKey" class="text-center">
           <td class="class-position" v-for="(spot, columnKey) in colRow" :key="columnKey">
             <admin-bookable-spot-position
-              v-if="spot.positionType === BOOKABLE_SPOT_KEY"
+              v-if="spot.icon === PositionIconEnum.Spot"
               :spot-number="spot.spotInfo?.spotNumber ?? 0"
               :is-booked="spot.spotInfo?.isBooked ?? false"
               :user="spot.user!"
@@ -233,10 +230,7 @@ function onClickSpotAdmin(spotNumber: number) {
               :spot-action="spotAction"
               :spot-selection-is-disabled="spotSelectionIsDisabled"
             />
-            <icon-position-not-bookable
-              v-else-if="spot.positionType === ICON_POSITION_KEY"
-              :icon="spot.icon"
-            />
+            <icon-position-not-bookable v-else :icon="spot.icon" />
           </td>
         </tr>
       </tbody>
