@@ -106,71 +106,6 @@ export class ApiService {
     return queryResult.data.calendarClasses as Class[]
   }
 
-  async getClassInfo(site: SiteEnum, id: string): Promise<ClassInfo | null> {
-    const CLASS_INFO_QUERY = gql`
-      query classInfo($site: SiteEnum!, $id: ID!) {
-        classInfo(site: $site, id: $id) {
-          class {
-            id
-            name
-            description
-            instructorName
-            start
-            startWithNoTimeZone
-            duration
-            waitListAvailable
-          }
-          roomLayout {
-            id
-            name
-            matrix {
-              __typename
-              x
-              y
-              icon
-              ... on BookableSpot {
-                enabled
-                spotNumber
-                spotInfo {
-                  spotNumber
-                  isBooked
-                }
-              }
-            }
-          }
-          enrollments(status: active) {
-            id
-            enrollmentStatus
-            enrollmentDateTime
-            ... on EnrollmentInfo {
-              isCheckedIn
-              spotNumber
-              spotInfo {
-                __typename
-                isBooked
-                spotNumber
-              }
-            }
-          }
-        }
-      }
-    `
-    try {
-      const queryResult = await this.authApiClient.query({
-        query: CLASS_INFO_QUERY,
-        variables: {
-          site: site,
-          id: id
-        },
-        fetchPolicy: 'network-only'
-      })
-
-      return queryResult.data.classInfo as ClassInfo
-    } catch (error) {
-      return null
-    }
-  }
-
   async getClassInfoAdmin(site: SiteEnum, id: string): Promise<ClassInfo | null> {
     const CLASS_INFO_QUERY = gql`
       query classInfoAdmin($site: SiteEnum!, $id: ID!) {
@@ -191,17 +126,12 @@ export class ApiService {
             id
             name
             matrix {
-              __typename
               x
               y
               icon
               ... on BookableSpot {
                 enabled
                 spotNumber
-                spotInfo {
-                  spotNumber
-                  isBooked
-                }
               }
             }
           }
@@ -212,22 +142,15 @@ export class ApiService {
             identifiableUser {
               id
               user {
-                __typename
                 firstName
                 lastName
                 email
                 leaderboardUsername
               }
             }
-
             ... on EnrollmentInfo {
               isCheckedIn
               spotNumber
-              spotInfo {
-                __typename
-                isBooked
-                spotNumber
-              }
             }
           }
           onHoldSpots
@@ -902,10 +825,6 @@ export class ApiService {
               ... on BookableSpot {
                 enabled
                 spotNumber
-                spotInfo {
-                  spotNumber
-                  isBooked
-                }
               }
             }
           }
@@ -927,11 +846,6 @@ export class ApiService {
             ... on EnrollmentInfo {
               isCheckedIn
               spotNumber
-              spotInfo {
-                __typename
-                isBooked
-                spotNumber
-              }
             }
           }
           onHoldSpots

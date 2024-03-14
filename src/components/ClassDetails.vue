@@ -6,7 +6,7 @@ interface BookableSpotClickedEvent {
 
 interface ClassInfo {
   class: Class
-  enrollments: Array<EnrollmentInfo>
+  enrollments: EnrollmentInfo[]
   roomLayout?: RoomLayout
   onHoldSpots: number
 }
@@ -23,8 +23,6 @@ interface ClassPosition {
   icon: PositionIconEnum
   spotNumber?: number
   enabled?: boolean
-  /** @deprecated Array of booked spots should be returned by other query to reduce complexity of creating SpotInfo instances. */
-  spotInfo?: SpotInfo
 }
 
 interface Class {
@@ -45,15 +43,7 @@ interface EnrollmentInfo {
   id: string
   isCheckedIn?: boolean
   identifiableUser?: IdentifiableUser
-  /** @deprecated Array of booked spots should be returned by other query to reduce complexity of creating SpotInfo instances. */
-  spotInfo?: SpotInfo
   spotNumber?: number
-}
-
-interface SpotInfo {
-  /** @deprecated Array of booked spots should be returned by other query to reduce complexity of creating SpotInfo instances. */
-  isBooked: boolean
-  spotNumber: number
 }
 
 interface IdentifiableUser {

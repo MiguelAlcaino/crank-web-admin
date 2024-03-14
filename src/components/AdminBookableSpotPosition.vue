@@ -4,11 +4,6 @@ interface User {
   lastName: string
 }
 
-interface BookableSpot {
-  spotNumber: number
-  isBooked: boolean
-}
-
 enum SpotActionEnum {
   none,
   asignUserToSpot,
@@ -17,7 +12,8 @@ enum SpotActionEnum {
 }
 
 interface Props {
-  spotInfo: BookableSpot
+  spotNumber: number
+  isBooked: boolean
   user: User | null
   enabled: boolean
   selected: boolean
@@ -37,17 +33,14 @@ const emits = defineEmits<{
 }>()
 
 function selectSpot() {
-  emits('clickSpot', props.spotInfo.spotNumber)
+  emits('clickSpot', props.spotNumber)
 }
 </script>
 
 <template>
   <div v-if="spotAction === SpotActionEnum.changeMemberSpot">
-    <div
-      v-if="spotInfo?.isBooked"
-      :class="['changeMemberSpot-bookedSpot', selected ? 'selectedSpot' : '']"
-    >
-      {{ spotInfo.spotNumber + (isCheckedIn === true ? '✓' : '') }}
+    <div v-if="isBooked" :class="['changeMemberSpot-bookedSpot', selected ? 'selectedSpot' : '']">
+      {{ spotNumber + (isCheckedIn === true ? '✓' : '') }}
       <br />
       {{ user?.firstName }} {{ user?.lastName }}
     </div>
@@ -56,42 +49,42 @@ function selectSpot() {
       :class="['changeMemberSpot-spotAvailable']"
       @click="spotSelectionIsDisabled ? null : selectSpot()"
     >
-      {{ spotInfo.spotNumber }}
+      {{ spotNumber }}
     </div>
     <div v-else :class="['changeMemberSpot-disabledSpot']">
-      {{ spotInfo.spotNumber }}
+      {{ spotNumber }}
     </div>
   </div>
   <div v-else-if="spotAction === SpotActionEnum.swapSpot">
     <div
-      v-if="spotInfo?.isBooked"
+      v-if="isBooked"
       @click="selected ? null : spotSelectionIsDisabled ? null : selectSpot()"
       :class="[
         'changeMemberSpot-bookedSpot',
         selected ? 'selectedSpot' : 'swapMemberSpot-bookedSpot'
       ]"
     >
-      {{ spotInfo.spotNumber + (isCheckedIn === true ? '✓' : '') }}
+      {{ spotNumber + (isCheckedIn === true ? '✓' : '') }}
       <br />
       {{ user?.firstName }} {{ user?.lastName }}
     </div>
     <div v-else-if="enabled" :class="['empty-spot-not-selectable']">
-      {{ spotInfo.spotNumber }}
+      {{ spotNumber }}
     </div>
     <div v-else :class="['changeMemberSpot-disabledSpot']">
-      {{ spotInfo.spotNumber }}
+      {{ spotNumber }}
     </div>
   </div>
   <div v-else>
     <div
-      v-if="spotInfo?.isBooked"
+      v-if="isBooked"
       @click="spotSelectionIsDisabled ? null : selectSpot()"
       :class="[
         spotSelectionIsDisabled ? 'spotEnabledNotClickable' : 'enabledSpot',
         selected ? 'selectedSpot' : ''
       ]"
     >
-      {{ spotInfo.spotNumber + (isCheckedIn === true ? '✓' : '') }}
+      {{ spotNumber + (isCheckedIn === true ? '✓' : '') }}
       <br />
       {{ user?.firstName }} {{ user?.lastName }}
     </div>
@@ -103,7 +96,7 @@ function selectSpot() {
       ]"
       @click="spotSelectionIsDisabled ? null : selectSpot()"
     >
-      {{ spotInfo.spotNumber }}
+      {{ spotNumber }}
     </div>
     <div
       v-else
@@ -113,7 +106,7 @@ function selectSpot() {
       ]"
       @click="spotSelectionIsDisabled ? null : selectSpot()"
     >
-      {{ spotInfo.spotNumber }}
+      {{ spotNumber }}
     </div>
   </div>
 </template>
