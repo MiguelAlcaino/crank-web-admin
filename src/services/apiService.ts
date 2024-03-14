@@ -126,17 +126,12 @@ export class ApiService {
             id
             name
             matrix {
-              __typename
               x
               y
               icon
               ... on BookableSpot {
                 enabled
                 spotNumber
-                spotInfo {
-                  spotNumber
-                  isBooked
-                }
               }
             }
           }
@@ -147,22 +142,15 @@ export class ApiService {
             identifiableUser {
               id
               user {
-                __typename
                 firstName
                 lastName
                 email
                 leaderboardUsername
               }
             }
-
             ... on EnrollmentInfo {
               isCheckedIn
               spotNumber
-              spotInfo {
-                __typename
-                isBooked
-                spotNumber
-              }
             }
           }
           onHoldSpots
@@ -837,10 +825,6 @@ export class ApiService {
               ... on BookableSpot {
                 enabled
                 spotNumber
-                spotInfo {
-                  spotNumber
-                  isBooked
-                }
               }
             }
           }
@@ -862,11 +846,6 @@ export class ApiService {
             ... on EnrollmentInfo {
               isCheckedIn
               spotNumber
-              spotInfo {
-                __typename
-                isBooked
-                spotNumber
-              }
             }
           }
           onHoldSpots
