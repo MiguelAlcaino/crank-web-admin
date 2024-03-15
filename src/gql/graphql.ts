@@ -571,7 +571,6 @@ export type MutationRemoveUserFromWaitlistArgs = {
 
 export type MutationRequestPasswordLinkArgs = {
   input?: InputMaybe<RequestPasswordLinkInput>
-  site: SiteEnum
 }
 
 export type MutationResetPasswordForCurrentUserArgs = {
@@ -834,6 +833,12 @@ export type RoomLayoutsInput = {
   usersCapacity?: InputMaybe<Scalars['Int']>
 }
 
+export type SimpleSiteUser = {
+  __typename: 'SimpleSiteUser'
+  externalUserId: Scalars['ID']
+  site: SiteEnum
+}
+
 export enum SiteEnum {
   AbuDhabi = 'abu_dhabi',
   Dubai = 'dubai'
@@ -921,6 +926,7 @@ export type User = {
   emergencyContactPhone: Scalars['String']
   emergencyContactRelationship?: Maybe<Scalars['String']>
   enrollmentInClass?: Maybe<EnrollmentInfoInterface>
+  /** @deprecated Use siteUsers instead */
   existsInSites: Array<SiteEnum>
   firstName: Scalars['String']
   gender?: Maybe<GenderEnum>
@@ -928,6 +934,7 @@ export type User = {
   lastName: Scalars['String']
   leaderboardUsername?: Maybe<Scalars['String']>
   phone: Scalars['String']
+  siteUsers: Array<SimpleSiteUser>
   state?: Maybe<State>
   weight?: Maybe<Scalars['Float']>
   zipCode: Scalars['String']
@@ -1013,28 +1020,6 @@ export type SiteSettingsQueryVariables = Exact<{
 export type SiteSettingsQuery = {
   __typename: 'Query'
   siteSettings: { __typename: 'SiteSetting'; siteDateTimeNow?: any | null }
-}
-
-export type CalendarClassesQueryVariables = Exact<{
-  site: SiteEnum
-  params?: InputMaybe<CalendarClassesParams>
-}>
-
-export type CalendarClassesQuery = {
-  __typename: 'Query'
-  calendarClasses: Array<{
-    __typename: 'Class'
-    id: string
-    name: string
-    description: string
-    instructorName: string
-    isSubstitute: boolean
-    start: any
-    startWithNoTimeZone: any
-    duration: number
-    waitListAvailable: boolean
-    bookingWindow: { __typename: 'BookingWindow'; startDateTime: any; endDateTime: any }
-  }>
 }
 
 export type ClassInfoAdminQueryVariables = Exact<{
@@ -1567,6 +1552,53 @@ export type RegisterUserMutation = {
   registerIdentifiableUser?: { __typename: 'IdentifiableSiteUser'; id?: string | null } | null
 }
 
+export type EditUserMutationVariables = Exact<{
+  input: EditUserInput
+}>
+
+export type EditUserMutation = {
+  __typename: 'Mutation'
+  editUser?: {
+    __typename: 'IdentifiableUser'
+    id?: string | null
+    user?: {
+      __typename: 'User'
+      firstName: string
+      lastName: string
+      email: string
+      leaderboardUsername?: string | null
+      weight?: number | null
+      gender?: GenderEnum | null
+      birthdate?: any | null
+      city: string
+      address1: string
+      address2?: string | null
+      zipCode: string
+      phone: string
+      emergencyContactName: string
+      emergencyContactPhone: string
+      emergencyContactRelationship?: string | null
+      hideMetrics?: boolean | null
+      doesExistInSite: boolean
+      existsInSites: Array<SiteEnum>
+      country: { __typename: 'Country'; code: string; name: string }
+      state?: { __typename: 'State'; code: string; name: string } | null
+    } | null
+  } | null
+}
+
+export type RequestPasswordLinkMutationVariables = Exact<{
+  input?: InputMaybe<RequestPasswordLinkInput>
+}>
+
+export type RequestPasswordLinkMutation = {
+  __typename: 'Mutation'
+  requestPasswordLink?:
+    | { __typename: 'ResetPasswordLinkSentSuccessfully'; status: boolean }
+    | { __typename: 'TooManyResetPasswordLinkRequestsError'; availableAgainAt?: any | null }
+    | null
+}
+
 export const SiteSettingsDocument = {
   kind: 'Document',
   definitions: [
@@ -1607,77 +1639,6 @@ export const SiteSettingsDocument = {
     }
   ]
 } as unknown as DocumentNode<SiteSettingsQuery, SiteSettingsQueryVariables>
-export const CalendarClassesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'calendarClasses' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'params' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'CalendarClassesParams' } }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'calendarClasses' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'params' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'params' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'instructorName' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'isSubstitute' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'start' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'startWithNoTimeZone' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'duration' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'waitListAvailable' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'bookingWindow' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'startDateTime' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'endDateTime' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<CalendarClassesQuery, CalendarClassesQueryVariables>
 export const ClassInfoAdminDocument = {
   kind: 'Document',
   definitions: [
@@ -3251,7 +3212,6 @@ export const SyncClassDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'x' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'y' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'icon' } },
@@ -3311,10 +3271,6 @@ export const SyncClassDocument = {
                                     selectionSet: {
                                       kind: 'SelectionSet',
                                       selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: '__typename' }
-                                        },
                                         {
                                           kind: 'Field',
                                           name: { kind: 'Name', value: 'firstName' }
@@ -3536,3 +3492,169 @@ export const RegisterUserDocument = {
     }
   ]
 } as unknown as DocumentNode<RegisterUserMutation, RegisterUserMutationVariables>
+export const EditUserDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'editUser' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'EditUserInput' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'editUser' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'user' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'firstName' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'lastName' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'leaderboardUsername' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'gender' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'birthdate' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'country' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'code' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'state' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'code' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+                          ]
+                        }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'city' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'address1' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'address2' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'zipCode' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'phone' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'emergencyContactName' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'emergencyContactPhone' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'emergencyContactRelationship' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'hideMetrics' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'doesExistInSite' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'site' },
+                            value: { kind: 'EnumValue', value: 'dubai' }
+                          }
+                        ]
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'existsInSites' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<EditUserMutation, EditUserMutationVariables>
+export const RequestPasswordLinkDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'requestPasswordLink' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'RequestPasswordLinkInput' } }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'requestPasswordLink' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'TooManyResetPasswordLinkRequestsError' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'availableAgainAt' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'ResetPasswordLinkSentSuccessfully' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'status' } }]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<RequestPasswordLinkMutation, RequestPasswordLinkMutationVariables>
