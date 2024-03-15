@@ -12,7 +12,8 @@ const apiService = inject<ApiService>('gqlApiService')!
 
 import DefaultButtonComponent from '@/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
-import { ERROR_UNKNOWN, SUCCESS_RESET_PASSWORD_LINK_SENT } from '@/utils/errorMessages'
+import { ERROR_UNKNOWN } from '@/utils/errorMessages'
+import { SUCCESS_RESET_PASSWORD_LINK_SENT } from '@/utils/successMessages'
 
 const props = defineProps<{
   email: string
