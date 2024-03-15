@@ -316,13 +316,12 @@ export class ApiService {
     isPaymentRequired?: boolean | null,
     isWaitlistBooking?: boolean | null
   ): Promise<string> {
-
     const input = {
       classId: classId,
       spotNumber: spotNumber,
       siteUserId: siteUserId,
       isPaymentRequired: isPaymentRequired,
-      isWaitlistBooking: isWaitlistBooking,
+      isWaitlistBooking: isWaitlistBooking
     } as BookUserIntoClassInput
 
     if (spotNumber) input.spotNumber = spotNumber
@@ -517,10 +516,7 @@ export class ApiService {
     }
   }
 
-  async getClassWaitlistEntries(
-    site: SiteEnum,
-    classId: string
-  ): Promise<WaitlistEntry[] | null> {
+  async getClassWaitlistEntries(site: SiteEnum, classId: string): Promise<WaitlistEntry[] | null> {
     const query = gql`
       query classWaitlistEntries($site: SiteEnum!, $id: ID!) {
         classInfo(site: $site, id: $id) {

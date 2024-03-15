@@ -1,5 +1,4 @@
 <script lang="ts">
-
 interface IdentifiableSiteUser {
   id: string
   identifiableUser: IdentifiableUser
@@ -137,7 +136,10 @@ async function onInputEventHandler(event: any) {
 
   isLoading.value = true
 
-  identifiableSiteUsers.value = (await apiService.searchSiteUser(appStore().site, event.input)) as IdentifiableSiteUser[]
+  identifiableSiteUsers.value = (await apiService.searchSiteUser(
+    appStore().site,
+    event.input
+  )) as IdentifiableSiteUser[]
 
   isLoading.value = false
 }
@@ -145,7 +147,13 @@ async function onInputEventHandler(event: any) {
 function onBlurEventHandler(event: any) {}
 
 function itemProjectionFunction(item: IdentifiableSiteUser) {
-  return item.identifiableUser?.user?.firstName + ' ' + item.identifiableUser?.user?.lastName + ' - ' + item.identifiableUser?.user?.email
+  return (
+    item.identifiableUser?.user?.firstName +
+    ' ' +
+    item.identifiableUser?.user?.lastName +
+    ' - ' +
+    item.identifiableUser?.user?.email
+  )
 }
 </script>
 
@@ -173,7 +181,11 @@ function itemProjectionFunction(item: IdentifiableSiteUser) {
       <button
         class="btn btn-primary"
         type="button"
-        :disabled="selectedIdentifiableSiteUser === null || selectedIdentifiableSiteUser === undefined || isLoading"
+        :disabled="
+          selectedIdentifiableSiteUser === null ||
+          selectedIdentifiableSiteUser === undefined ||
+          isLoading
+        "
         @click="onClickEnrollSelectedMember()"
       >
         {{ props.enrollButtonText }}
@@ -196,7 +208,9 @@ function itemProjectionFunction(item: IdentifiableSiteUser) {
     ok-text="Yes"
     @on-cancel="paymentRequiredErrorModalIsVisible = false"
     :ok-loading="isLoading"
-    @on-ok="bookUserIntoClass(props.classId, selectedIdentifiableSiteUser?.id!, props.spotNumber, false)"
+    @on-ok="
+      bookUserIntoClass(props.classId, selectedIdentifiableSiteUser?.id!, props.spotNumber, false)
+    "
   >
   </ModalComponent>
 
