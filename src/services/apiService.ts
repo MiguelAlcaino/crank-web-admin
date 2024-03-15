@@ -827,7 +827,6 @@ export class ApiService {
             id
             name
             matrix {
-              __typename
               x
               y
               icon
@@ -846,7 +845,6 @@ export class ApiService {
               identifiableUser {
                 id
                 user {
-                  __typename
                   firstName
                   lastName
                   email
