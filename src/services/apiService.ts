@@ -17,8 +17,7 @@ import type {
   EditClassResultUnion,
   EditEnrollmentInput,
   EditEnrollmentResultUnion,
-  EditRoomLayoutInput,
-  EnrollmentInfoInterface,
+  EditRoomLayoutInput,  
   IdentifiableSiteUser,
   IdentifiableUser,
   RegisterUserInput,
@@ -66,46 +65,6 @@ export class ApiService {
     } catch (error) {
       return null
     }
-  }
-
-  async getCalendarClasses(site: SiteEnum, startDate: Date, endDate: Date): Promise<Class[]> {
-    const CALENDAR_CLASSES_QUERY = gql`
-      query calendarClasses($site: SiteEnum!, $params: CalendarClassesParams) {
-        calendarClasses(site: $site, params: $params) {
-          id
-          name
-          description
-          instructorName
-          isSubstitute
-          start
-          startWithNoTimeZone
-          duration
-          waitListAvailable
-          bookingWindow {
-            startDateTime
-            endDateTime
-          }
-        }
-      }
-    `
-
-    const stgStartDate = dayjs(startDate).format('YYYY-MM-DD')
-    const stgEndDate = dayjs(endDate).format('YYYY-MM-DD')
-
-    const params: CalendarClassesParams = {
-      startDate: stgStartDate,
-      endDate: stgEndDate
-    }
-
-    const queryResult = await this.anonymousApiClient.query({
-      query: CALENDAR_CLASSES_QUERY,
-      variables: {
-        site: site,
-        params: params
-      }
-    })
-
-    return queryResult.data.calendarClasses as Class[]
   }
 
   async getClassInfoAdmin(site: SiteEnum, id: string): Promise<ClassInfo | null> {
