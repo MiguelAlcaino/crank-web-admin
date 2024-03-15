@@ -19,6 +19,7 @@ import type {
   EditEnrollmentResultUnion,
   EditRoomLayoutInput,
   EnrollmentInfoInterface,
+  IdentifiableSiteUser,
   IdentifiableUser,
   RegisterUserInput,
   RemoveUserFromWaitlistInput,
@@ -27,7 +28,8 @@ import type {
   RoomLayoutInput,
   RoomLayoutsInput,
   SiteEnum,
-  SwapSpotResultUnion
+  SwapSpotResultUnion,
+  WaitlistEntry
 } from '@/gql/graphql'
 import type { SiteSetting } from '@/gql/graphql'
 import type { ApolloClient } from '@apollo/client/core'
@@ -139,15 +141,19 @@ export class ApiService {
             id
             enrollmentStatus
             enrollmentDateTime
-            identifiableUser {
+            identifiableSiteUser {
               id
-              user {
-                firstName
-                lastName
-                email
-                leaderboardUsername
+              identifiableUser {
+                id
+                user {
+                  firstName
+                  lastName
+                  email
+                  leaderboardUsername
+                }
               }
             }
+
             ... on EnrollmentInfo {
               isCheckedIn
               spotNumber
@@ -269,17 +275,20 @@ export class ApiService {
     }
   }
 
-  async searchUser(site: SiteEnum, query: string): Promise<IdentifiableUser[] | []> {
+  async searchSiteUser(site: SiteEnum, query: string): Promise<IdentifiableSiteUser[]> {
     if (query.length < 3) return []
 
     const SEARCH_USER_QUERY = gql`
-      query searchUser($site: SiteEnum!, $query: String) {
-        searchUser(site: $site, query: $query) {
+      query searchSiteUser($site: SiteEnum!, $query: String) {
+        searchSiteUser(site: $site, query: $query) {
           id
-          user {
-            firstName
-            lastName
-            email
+          identifiableUser {
+            id
+            user {
+              firstName
+              lastName
+              email
+            }
           }
         }
       }
@@ -294,25 +303,26 @@ export class ApiService {
         fetchPolicy: 'network-only'
       })
 
-      return queryResult.data.searchUser as IdentifiableUser[]
+      return queryResult.data.searchSiteUser as IdentifiableSiteUser[]
     } catch (error) {
-      return []
+      return [] as IdentifiableSiteUser[]
     }
   }
 
   async bookUserIntoClass(
     classId: string,
-    userId: string,
+    siteUserId: string,
     spotNumber?: number | null,
     isPaymentRequired?: boolean | null,
     isWaitlistBooking?: boolean | null
   ): Promise<string> {
+
     const input = {
       classId: classId,
       spotNumber: spotNumber,
-      userId: userId,
+      siteUserId: siteUserId,
       isPaymentRequired: isPaymentRequired,
-      isWaitlistBooking: isWaitlistBooking
+      isWaitlistBooking: isWaitlistBooking,
     } as BookUserIntoClassInput
 
     if (spotNumber) input.spotNumber = spotNumber
@@ -510,7 +520,7 @@ export class ApiService {
   async getClassWaitlistEntries(
     site: SiteEnum,
     classId: string
-  ): Promise<EnrollmentInfoInterface[] | null> {
+  ): Promise<WaitlistEntry[] | null> {
     const query = gql`
       query classWaitlistEntries($site: SiteEnum!, $id: ID!) {
         classInfo(site: $site, id: $id) {
@@ -518,11 +528,14 @@ export class ApiService {
             id
             enrollmentStatus
             enrollmentDateTime
-            identifiableUser {
+            identifiableSiteUser {
               id
-              user {
-                firstName
-                lastName
+              identifiableUser {
+                id
+                user {
+                  firstName
+                  lastName
+                }
               }
             }
           }
@@ -542,7 +555,7 @@ export class ApiService {
 
     const classInfo = queryResult.data.classInfo as ClassInfo
 
-    return classInfo.enrollments
+    return classInfo.enrollments as WaitlistEntry[]
   }
 
   async removeUserFromWaitlist(waitlistEntryId: string): Promise<RemoveUserFromWaitlistUnion> {
@@ -832,14 +845,17 @@ export class ApiService {
             id
             enrollmentStatus
             enrollmentDateTime
-            identifiableUser {
+            identifiableSiteUser {
               id
-              user {
-                __typename
-                firstName
-                lastName
-                email
-                leaderboardUsername
+              identifiableUser {
+                id
+                user {
+                  __typename
+                  firstName
+                  lastName
+                  email
+                  leaderboardUsername
+                }
               }
             }
 

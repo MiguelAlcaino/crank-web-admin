@@ -38,12 +38,17 @@ interface Class {
 }
 
 interface EnrollmentInfo {
-  enrollmentDateTime: Date
-  enrollmentStatus: EnrollmentStatusEnum
   id: string
+  enrollmentStatus: EnrollmentStatusEnum
+  identifiableSiteUser?: IdentifiableSiteUser | null
+  enrollmentDateTime: Date
   isCheckedIn?: boolean
-  identifiableUser?: IdentifiableUser
-  spotNumber?: number
+  spotNumber?: number | null
+}
+
+interface IdentifiableSiteUser {
+  id: string
+  identifiableUser: IdentifiableUser
 }
 
 interface IdentifiableUser {
@@ -261,10 +266,10 @@ async function spotClicked(event: BookableSpotClickedEvent) {
               isCheckedIn = enrollment.isCheckedIn
               if (
                 classPosition.spotNumber === enrollment.spotNumber &&
-                enrollment.identifiableUser
+                enrollment.identifiableSiteUser?.identifiableUser
               ) {
                 isBooked = true
-                identifiableUser = enrollment.identifiableUser
+                identifiableUser = enrollment.identifiableSiteUser?.identifiableUser
                 enrollmentId = enrollment.id
                 break
               }

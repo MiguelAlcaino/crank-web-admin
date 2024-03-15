@@ -1,9 +1,14 @@
 <script lang="ts">
 interface EnrollmentInfo {
   id: string
-  enrollmentStatus?: EnrollmentStatusEnum
-  identifiableUser?: IdentifiableUser
+  enrollmentStatus: EnrollmentStatusEnum
+  identifiableSiteUser?: IdentifiableSiteUser | null
   isCheckedIn?: boolean
+}
+
+interface IdentifiableSiteUser {
+  id: string
+  identifiableUser: IdentifiableUser
 }
 
 interface IdentifiableUser {
@@ -103,8 +108,8 @@ async function removeUserFromClass(enrollmentId: string, lateCancel: boolean) {
       </thead>
       <tbody>
         <tr v-for="(item, index) in enrollments" v-bind:key="item.id" v-bind:index="index">
-          <td>{{ item.identifiableUser?.user?.firstName }}</td>
-          <td>{{ item.identifiableUser?.user?.lastName }}</td>
+          <td>{{ item.identifiableSiteUser?.identifiableUser?.user?.firstName }}</td>
+          <td>{{ item.identifiableSiteUser?.identifiableUser?.user?.lastName }}</td>
           <td v-if="showEditOptions">
             <CheckInCheckOutUserInClass
               v-if="item.id != null && item.isCheckedIn != null"
@@ -124,8 +129,8 @@ async function removeUserFromClass(enrollmentId: string, lateCancel: boolean) {
           </td>
           <td v-if="showEditOptions">
             <UserProfile
-              v-if="item.identifiableUser?.id"
-              :user-id="item.identifiableUser?.id"
+              v-if="item.identifiableSiteUser?.identifiableUser?.id"
+              :user-id="item.identifiableSiteUser?.identifiableUser?.id"
             ></UserProfile>
           </td>
         </tr>
