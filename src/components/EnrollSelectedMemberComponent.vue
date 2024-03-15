@@ -1,7 +1,12 @@
 <script lang="ts">
+interface IdentifiableSiteUser {
+  id: string
+  identifiableUser: IdentifiableUser
+}
+
 interface IdentifiableUser {
-  id?: string | null
-  user?: User | null
+  id?: string
+  user?: User
 }
 
 interface User {
@@ -41,9 +46,9 @@ const emits = defineEmits<{
   (e: 'afterEnrolling'): void
 }>()
 
-const users = ref<IdentifiableUser[]>([])
+const identifiableSiteUsers = ref<IdentifiableSiteUser[]>([])
 const isLoading = ref<boolean>(false)
-const selectedUser = ref<IdentifiableUser | null>(null)
+const selectedIdentifiableSiteUser = ref<IdentifiableSiteUser | null>(null)
 const errorModalIsVisible = ref<boolean>(false)
 const errorMessage = ref<string>('')
 const successModalIsVisible = ref<boolean>(false)
@@ -53,7 +58,7 @@ const paymentRequiredErrorModalIsVisible = ref<boolean>(false)
 const refSimpleTypeahead = ref()
 
 function onClickEnrollSelectedMember() {
-  bookUserIntoClass(props.classId, selectedUser.value!.id!, props.spotNumber, true)
+  bookUserIntoClass(props.classId, selectedIdentifiableSiteUser.value!.id!, props.spotNumber, true)
 }
 
 async function bookUserIntoClass(
@@ -75,15 +80,15 @@ async function bookUserIntoClass(
   isLoading.value = false
 
   if (response === 'BookClassSuccess') {
-    users.value = []
-    selectedUser.value = null
+    identifiableSiteUsers.value = []
+    selectedIdentifiableSiteUser.value = null
     refSimpleTypeahead.value?.clearInput()
     paymentRequiredErrorModalIsVisible.value = false
 
     emits('afterEnrolling')
   } else if (response === 'AddedToWaitlistSuccess') {
-    users.value = []
-    selectedUser.value = null
+    identifiableSiteUsers.value = []
+    selectedIdentifiableSiteUser.value = null
     refSimpleTypeahead.value?.clearInput()
     paymentRequiredErrorModalIsVisible.value = false
 
@@ -119,27 +124,36 @@ async function bookUserIntoClass(
   }
 }
 
-function selectItemEventHandler(item: IdentifiableUser) {
-  selectedUser.value = item
+function selectItemEventHandler(item: IdentifiableSiteUser) {
+  selectedIdentifiableSiteUser.value = item
 }
 
 async function onInputEventHandler(event: any) {
-  users.value = []
-  selectedUser.value = null
+  identifiableSiteUsers.value = []
+  selectedIdentifiableSiteUser.value = null
 
   if (event.input.length < 3) return
 
   isLoading.value = true
 
-  users.value = await apiService.searchUser(appStore().site, event.input)
+  identifiableSiteUsers.value = (await apiService.searchSiteUser(
+    appStore().site,
+    event.input
+  )) as IdentifiableSiteUser[]
 
   isLoading.value = false
 }
 
 function onBlurEventHandler(event: any) {}
 
-function itemProjectionFunction(item: any) {
-  return item.user?.firstName + ' ' + item.user?.lastName + ' - ' + item.user?.email
+function itemProjectionFunction(item: IdentifiableSiteUser) {
+  return (
+    item.identifiableUser?.user?.firstName +
+    ' ' +
+    item.identifiableUser?.user?.lastName +
+    ' - ' +
+    item.identifiableUser?.user?.email
+  )
 }
 </script>
 
@@ -150,7 +164,7 @@ function itemProjectionFunction(item: any) {
         id="typeahead_users"
         class="custom-select"
         placeholder="Please enter 3 or more characters"
-        :items="users"
+        :items="identifiableSiteUsers"
         :minInputLength="3"
         @selectItem="selectItemEventHandler"
         @onInput="onInputEventHandler"
@@ -167,7 +181,11 @@ function itemProjectionFunction(item: any) {
       <button
         class="btn btn-primary"
         type="button"
-        :disabled="selectedUser === null || selectedUser === undefined || isLoading"
+        :disabled="
+          selectedIdentifiableSiteUser === null ||
+          selectedIdentifiableSiteUser === undefined ||
+          isLoading
+        "
         @click="onClickEnrollSelectedMember()"
       >
         {{ props.enrollButtonText }}
@@ -190,7 +208,9 @@ function itemProjectionFunction(item: any) {
     ok-text="Yes"
     @on-cancel="paymentRequiredErrorModalIsVisible = false"
     :ok-loading="isLoading"
-    @on-ok="bookUserIntoClass(props.classId, selectedUser?.id!, props.spotNumber, false)"
+    @on-ok="
+      bookUserIntoClass(props.classId, selectedIdentifiableSiteUser?.id!, props.spotNumber, false)
+    "
   >
   </ModalComponent>
 

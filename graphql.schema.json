@@ -306,19 +306,7 @@
             "deprecationReason": null
           },
           {
-            "name": "spotNumber",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "userId",
+            "name": "siteUserId",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -328,6 +316,18 @@
                 "name": "ID",
                 "ofType": null
               }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "spotNumber",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -2157,6 +2157,69 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "EditUserInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "siteUserInput",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "SiteUserInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "userDataInput",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "UserInput",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "userId",
+            "description": "This is not the same ID as the IdentifiableUser. This is the ID of the user not linked to any site",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "Enrollment",
         "description": null,
@@ -2269,12 +2332,12 @@
             "deprecationReason": null
           },
           {
-            "name": "identifiableUser",
+            "name": "identifiableSiteUser",
             "description": null,
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "IdentifiableUser",
+              "name": "IdentifiableSiteUser",
               "ofType": null
             },
             "isDeprecated": false,
@@ -2402,12 +2465,12 @@
             "deprecationReason": null
           },
           {
-            "name": "identifiableUser",
+            "name": "identifiableSiteUser",
             "description": null,
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "IdentifiableUser",
+              "name": "IdentifiableSiteUser",
               "ofType": null
             },
             "isDeprecated": false,
@@ -2884,6 +2947,41 @@
           }
         ],
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "IdentifiableSiteUser",
+        "description": null,
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "identifiableUser",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "IdentifiableUser",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -3594,6 +3692,35 @@
             "deprecationReason": null
           },
           {
+            "name": "editUser",
+            "description": "Edits a user",
+            "args": [
+              {
+                "name": "input",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "EditUserInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "IdentifiableUser",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "enableSpot",
             "description": "Enabled a spot in a class",
             "args": [
@@ -3657,7 +3784,7 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "IdentifiableUser",
+              "name": "IdentifiableSiteUser",
               "ofType": null
             },
             "isDeprecated": false,
@@ -4838,7 +4965,7 @@
             "deprecationReason": null
           },
           {
-            "name": "searchUser",
+            "name": "searchSiteUser",
             "description": "Returns the matched users given the query provided",
             "args": [
               {
@@ -4871,7 +4998,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "IdentifiableUser",
+                "name": "IdentifiableSiteUser",
                 "ofType": null
               }
             },
@@ -4903,6 +5030,35 @@
                 "name": "SiteSetting",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "siteUser",
+            "description": "Returns a user in a specific site",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "IdentifiableSiteUser",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -5821,10 +5977,65 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "siteTimezone",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "SiteUserInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "externalID",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "site",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "SiteEnum",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -7048,12 +7259,12 @@
             "deprecationReason": null
           },
           {
-            "name": "identifiableUser",
+            "name": "identifiableSiteUser",
             "description": null,
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "IdentifiableUser",
+              "name": "IdentifiableSiteUser",
               "ofType": null
             },
             "isDeprecated": false,

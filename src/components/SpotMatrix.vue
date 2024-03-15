@@ -41,12 +41,17 @@ interface User {
 }
 
 interface EnrollmentInfo {
-  identifiableUser?: IdentifiableUser | null
-  enrollmentDateTime: Date
-  enrollmentStatus: EnrollmentStatusEnum
   id: string
+  enrollmentStatus: EnrollmentStatusEnum
+  identifiableSiteUser?: IdentifiableSiteUser | null
+  enrollmentDateTime: Date
   isCheckedIn?: boolean
   spotNumber?: number | null
+}
+
+interface IdentifiableSiteUser {
+  id: string
+  identifiableUser: IdentifiableUser
 }
 
 interface IdentifiableUser {
@@ -158,7 +163,7 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
               if (enrollment.spotNumber === classPosition.spotNumber) {
                 isCheckedIn = enrollment.isCheckedIn
 
-                user = enrollment.identifiableUser?.user
+                user = enrollment.identifiableSiteUser?.identifiableUser?.user
                 break
               }
             }

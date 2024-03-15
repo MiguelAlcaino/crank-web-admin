@@ -1,6 +1,11 @@
 <script lang="ts">
 interface WaitlistEntry {
   id: string
+  identifiableSiteUser?: IdentifiableSiteUser | null
+}
+
+interface IdentifiableSiteUser {
+  id: string
   identifiableUser: IdentifiableUser
 }
 
@@ -136,10 +141,14 @@ function showConfirmModal(waitlistEntry: WaitlistEntry) {
                         {{ index + 1 }}
                       </td>
                       <td class="text-center align-middle">
-                        {{ item.identifiableUser?.user?.firstName.toUpperCase() }}
+                        {{
+                          item.identifiableSiteUser?.identifiableUser.user?.firstName.toUpperCase()
+                        }}
                       </td>
                       <td class="text-center align-middle">
-                        {{ item.identifiableUser?.user?.lastName.toUpperCase() }}
+                        {{
+                          item.identifiableSiteUser?.identifiableUser.user?.lastName.toUpperCase()
+                        }}
                       </td>
                       <td class="text-center align-middle">
                         <DefaultButtonComponent
