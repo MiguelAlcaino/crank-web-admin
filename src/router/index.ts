@@ -25,6 +25,11 @@ const router = createRouter({
       component: () => import('../views/RegisterView.vue')
     },
     {
+      path: '/user/edit/:id',
+      name: 'user_edit',
+      component: () => import('../views/ProfileView.vue')
+    },
+    {
       path: '/admin/calendar-class',
       name: 'admin_calendar_class',
       component: () => import('../views/admin/AdminClassView.vue')
