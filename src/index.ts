@@ -1,3 +1,3 @@
-import { startApp as startRegisterUserAppImported } from '@/register-user'
+import{startRegisterUserApp} from '@/start-app-functions'
 
-export {startRegisterUserAppImported}
+export {startRegisterUserApp}
