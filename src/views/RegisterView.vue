@@ -157,7 +157,7 @@ const v$ = useVuelidate(rules, formData)
 const apiService = inject<ApiService>('gqlApiService')!
 
 onMounted(() => {
-  let _urlAfterSubmit = inject<string | undefined>('userListUrl')
+  let _urlAfterSubmit = inject<string | undefined>('url-after-submit')
   if (_urlAfterSubmit) {
     urlAfterSubmit.value = _urlAfterSubmit
   }
