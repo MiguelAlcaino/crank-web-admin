@@ -43,6 +43,7 @@ const passwordIsVisible = ref(true)
 const confirmPasswordIsVisible = ref(true)
 const urlAfterSubmit = ref<string | null>(null)
 const defaultPassword = 'crank123'
+const userId= ref<string | null>(null)
 
 const formData = reactive({
   location: SiteEnum.Dubai,
@@ -197,7 +198,7 @@ const submitForm = async () => {
 
     isSaving.value = true
     try {
-      const userId = await apiService.registerIdentifiableUser(formData.location!, input)
+      userId.value = await apiService.registerIdentifiableUser(formData.location!, input)
     } catch (error) {
       if (error instanceof ValidationError) {
         errorMessage.value = error.message
@@ -234,7 +235,7 @@ async function goToUrlAfterSubmit() {
   successModalIsVisible.value = false
 
   if (urlAfterSubmit.value) {
-    window.location.href = urlAfterSubmit.value
+    window.location.href = urlAfterSubmit.value + userId.value
   }
 }
 </script>
