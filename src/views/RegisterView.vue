@@ -41,8 +41,9 @@ const currentDate = ref(new Date())
 
 const passwordIsVisible = ref(true)
 const confirmPasswordIsVisible = ref(true)
-const userListUrl = ref<string | null>(null)
+const urlAfterSubmit = ref<string | null>(null)
 const defaultPassword = 'crank123'
+const userId= ref<string | null>(null)
 
 const formData = reactive({
   location: SiteEnum.Dubai,
@@ -156,9 +157,9 @@ const v$ = useVuelidate(rules, formData)
 const apiService = inject<ApiService>('gqlApiService')!
 
 onMounted(() => {
-  let _userListUrl = inject<string | undefined>('userListUrl')
-  if (_userListUrl) {
-    userListUrl.value = _userListUrl
+  let _urlAfterSubmit = inject<string | undefined>('userListUrl')
+  if (_urlAfterSubmit) {
+    urlAfterSubmit.value = _urlAfterSubmit
   }
 
   getCountries()
@@ -197,7 +198,7 @@ const submitForm = async () => {
 
     isSaving.value = true
     try {
-      const userId = await apiService.registerIdentifiableUser(formData.location!, input)
+      userId.value = await apiService.registerIdentifiableUser(formData.location!, input)
     } catch (error) {
       if (error instanceof ValidationError) {
         errorMessage.value = error.message
@@ -230,11 +231,11 @@ function onChangeCountry() {
   getCountryStates(formData.country)
 }
 
-async function goToUserList() {
+async function goToUrlAfterSubmit() {
   successModalIsVisible.value = false
 
-  if (userListUrl.value) {
-    window.location.href = userListUrl.value
+  if (urlAfterSubmit.value) {
+    window.location.href = urlAfterSubmit.value + userId.value
   }
 }
 </script>
@@ -750,7 +751,7 @@ async function goToUserList() {
     message="Your account has been successfully created."
     :cancel-text="null"
     :closable="false"
-    @on-ok="goToUserList()"
+    @on-ok="goToUrlAfterSubmit()"
     :ok-loading="isLoggingIn"
   >
   </ModalComponent>

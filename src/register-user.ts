@@ -25,9 +25,11 @@ async function startApp() {
   const token = selection?.dataset.token as string
   const gqlUrl = selection?.dataset.gqlUrl as string
   const appDiv = selection?.dataset.appDiv as string
+  const urlAfterSubmit = selection?.dataset.urlAfterSubmit as string
 
   const app = createApp({
     setup() {
+      provide('url-after-submit', urlAfterSubmit)
       provide(
         'gqlApiService',
         new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
