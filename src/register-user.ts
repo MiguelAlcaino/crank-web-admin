@@ -19,7 +19,13 @@ import RegisterView from '@/views/RegisterView.vue'
 /* add icons to the library */
 library.add(faStepBackward, faStepForward, faLeftLong)
 
-export const startRegisterUserApp = async function startApp(token: string, gqlUrl: string, appDiv: string, urlAfterSubmit: string) {
+startApp()
+async function startApp() {
+  const selection = <HTMLElement | null>document.querySelector('#vue-app-parameters')
+  const token = selection?.dataset.token as string
+  const gqlUrl = selection?.dataset.gqlUrl as string
+  const urlAfterSubmit = selection?.dataset.urlAfterSubmit as string
+  const appDiv = selection?.dataset.appDiv as string
   const app = createApp({
     setup() {
       provide('url-after-submit', urlAfterSubmit)
