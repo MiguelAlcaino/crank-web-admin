@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [vue()],
   build: {
     lib: {
-      entry: fileURLToPath(new URL('./src/register-user.ts', import.meta.url)),
+      entry: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
       name: "crank-web-admin",
       fileName: 'crank-web-admin'
     },

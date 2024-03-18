@@ -12060,7 +12060,7 @@ const Uk = /* @__PURE__ */ id(Ik, [["render", jk]]), Ko = GO({
     {
       path: "/admin/calendar-class",
       name: "admin_calendar_class",
-      component: () => import("./AdminClassView.8e5ee614.js")
+      component: () => import("./AdminClassView.67fcf489.js")
     },
     {
       path: "/admin/room-layout/list",
@@ -12070,12 +12070,12 @@ const Uk = /* @__PURE__ */ id(Ik, [["render", jk]]), Ko = GO({
     {
       path: "/admin/room-layout/create",
       name: "admin_room_layout_create",
-      component: () => import("./RoomLayoutView.38023237.js")
+      component: () => import("./RoomLayoutView.3b37eb34.js")
     },
     {
       path: "/admin/room-layout/edit/:id",
       name: "admin_room_layout_edit",
-      component: () => import("./RoomLayoutView.38023237.js")
+      component: () => import("./RoomLayoutView.3b37eb34.js")
     }
   ]
 });
@@ -35821,7 +35821,7 @@ function xu(e) {
 function bF(e) {
   return e != null && e !== "" && !isNaN(Number(e.toString()));
 }
-const Ct = (e) => (Yc("data-v-294fbce6"), e = e(), Wc(), e), $F = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("h1", null, "Registration", -1)), wF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("h3", null, "Location", -1)), _F = ["onSubmit"], EF = { class: "form-row" }, OF = { class: "col-md-6 mb-3" }, kF = ["value"], CF = ["value"], SF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("hr", null, null, -1)), xF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("h3", null, "Profile Information", -1)), NF = { class: "form-row" }, TF = { class: "col-md-6 mb-3" }, DF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("label", {
+const Ct = (e) => (Yc("data-v-cd28a84d"), e = e(), Wc(), e), $F = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("h1", null, "Registration", -1)), wF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("h3", null, "Location", -1)), _F = ["onSubmit"], EF = { class: "form-row" }, OF = { class: "col-md-6 mb-3" }, kF = ["value"], CF = ["value"], SF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("hr", null, null, -1)), xF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("h3", null, "Profile Information", -1)), NF = { class: "form-row" }, TF = { class: "col-md-6 mb-3" }, DF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("label", {
   for: "emailRegistration",
   class: "input-label"
 }, "Email *", -1)), AF = { class: "form-row" }, PF = { class: "col-md-6 mb-3" }, IF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("label", {
@@ -36518,7 +36518,7 @@ const Ct = (e) => (Yc("data-v-294fbce6"), e = e(), Wc(), e), $F = /* @__PURE__ *
     ], 64));
   }
 });
-const n_ = /* @__PURE__ */ id(KL, [["__scopeId", "data-v-294fbce6"]]), JL = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const n_ = /* @__PURE__ */ id(KL, [["__scopeId", "data-v-cd28a84d"]]), JL = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: n_
 }, Symbol.toStringTag, { value: "Module" }));

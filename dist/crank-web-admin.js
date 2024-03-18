@@ -1,4 +1,4 @@
-import { a5 as s } from "./register-user.3de4e2ed.js";
+import { a5 as s } from "./index.f1d45c49.js";
 export {
   s as startRegisterUserApp
 };
