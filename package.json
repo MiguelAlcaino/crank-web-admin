@@ -5,10 +5,7 @@
   "main": "./dist/crank-web-admin.umd.cjs",
   "module": "./dist/crank-web-admin.js",
    "exports": {
-     ".": {
-       "import": "./dist/crank-web-admin.js",
-       "require": "./dist/crank-web-admin.umd.cjs"
-     }
+     ".": "./dist/crank-web-admin.js"
    },
   "version": "0.0.0",
   "scripts": {
