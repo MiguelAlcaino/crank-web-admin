@@ -235,7 +235,8 @@ async function goToUrlAfterSubmit() {
   successModalIsVisible.value = false
 
   if (urlAfterSubmit.value) {
-    window.location.href = urlAfterSubmit.value + userId.value
+    const receivedUrl = urlAfterSubmit.value;
+    window.location.href = receivedUrl.replace('REPLACE_ID', userId.value!)
   }
 }
 </script>
