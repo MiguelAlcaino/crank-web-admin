@@ -12060,7 +12060,7 @@ const Uk = /* @__PURE__ */ id(Ik, [["render", jk]]), Ko = GO({
     {
       path: "/admin/calendar-class",
       name: "admin_calendar_class",
-      component: () => import("./AdminClassView.8aba133e.js")
+      component: () => import("./AdminClassView.8e5ee614.js")
     },
     {
       path: "/admin/room-layout/list",
@@ -12070,12 +12070,12 @@ const Uk = /* @__PURE__ */ id(Ik, [["render", jk]]), Ko = GO({
     {
       path: "/admin/room-layout/create",
       name: "admin_room_layout_create",
-      component: () => import("./RoomLayoutView.bbdab533.js")
+      component: () => import("./RoomLayoutView.38023237.js")
     },
     {
       path: "/admin/room-layout/edit/:id",
       name: "admin_room_layout_edit",
-      component: () => import("./RoomLayoutView.bbdab533.js")
+      component: () => import("./RoomLayoutView.38023237.js")
     }
   ]
 });
@@ -35821,7 +35821,7 @@ function xu(e) {
 function bF(e) {
   return e != null && e !== "" && !isNaN(Number(e.toString()));
 }
-const Ct = (e) => (Yc("data-v-7ef04c23"), e = e(), Wc(), e), $F = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("h1", null, "Registration", -1)), wF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("h3", null, "Location", -1)), _F = ["onSubmit"], EF = { class: "form-row" }, OF = { class: "col-md-6 mb-3" }, kF = ["value"], CF = ["value"], SF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("hr", null, null, -1)), xF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("h3", null, "Profile Information", -1)), NF = { class: "form-row" }, TF = { class: "col-md-6 mb-3" }, DF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("label", {
+const Ct = (e) => (Yc("data-v-294fbce6"), e = e(), Wc(), e), $F = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("h1", null, "Registration", -1)), wF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("h3", null, "Location", -1)), _F = ["onSubmit"], EF = { class: "form-row" }, OF = { class: "col-md-6 mb-3" }, kF = ["value"], CF = ["value"], SF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("hr", null, null, -1)), xF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("h3", null, "Profile Information", -1)), NF = { class: "form-row" }, TF = { class: "col-md-6 mb-3" }, DF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("label", {
   for: "emailRegistration",
   class: "input-label"
 }, "Email *", -1)), AF = { class: "form-row" }, PF = { class: "col-md-6 mb-3" }, IF = /* @__PURE__ */ Ct(() => /* @__PURE__ */ Y("label", {
@@ -36036,7 +36036,7 @@ const Ct = (e) => (Yc("data-v-7ef04c23"), e = e(), Wc(), e), $F = /* @__PURE__ *
         };
         t.value = !0;
         try {
-          p.value = await $.registerIdentifiableUser(h.location, O);
+          p.value = await $.registerIdentifiableUser(h.location, O), r.value = !0;
         } catch (R) {
           R instanceof Qu ? i.value = R.message : i.value = vT, a.value = !0;
         } finally {
@@ -36509,7 +36509,7 @@ const Ct = (e) => (Yc("data-v-7ef04c23"), e = e(), Wc(), e), $F = /* @__PURE__ *
       r.value ? (U(), nt(B1, {
         key: 1,
         title: "SUCCESS",
-        message: "Your account has been successfully created.",
+        message: "The account has been successfully created.",
         "cancel-text": null,
         closable: !1,
         onOnOk: C[22] || (C[22] = (O) => k()),
@@ -36518,7 +36518,7 @@ const Ct = (e) => (Yc("data-v-7ef04c23"), e = e(), Wc(), e), $F = /* @__PURE__ *
     ], 64));
   }
 });
-const n_ = /* @__PURE__ */ id(KL, [["__scopeId", "data-v-7ef04c23"]]), JL = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const n_ = /* @__PURE__ */ id(KL, [["__scopeId", "data-v-294fbce6"]]), JL = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: n_
 }, Symbol.toStringTag, { value: "Module" }));
@@ -36534,7 +36534,7 @@ const NV = async function(t, n, r, a) {
     render: () => cs(n_)
   });
   i.use(N5()).use(Ko).use(tT).use(Hk), vr().setSession(t), i.mount(r);
-}, TV = "chao";
+};
 export {
   uo as $,
   EV as A,
@@ -36571,7 +36571,6 @@ export {
   M$ as a3,
   fu as a4,
   NV as a5,
-  TV as a6,
   Y as b,
   G as c,
   Ft as d,
