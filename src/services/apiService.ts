@@ -17,17 +17,22 @@ import type {
   EditClassResultUnion,
   EditEnrollmentInput,
   EditEnrollmentResultUnion,
-  EditRoomLayoutInput,  
+  EditRoomLayoutInput,
+  EditUserInput,
+  EditUserResultUnion,
   IdentifiableSiteUser,
   IdentifiableUser,
   RegisterUserInput,
   RemoveUserFromWaitlistInput,
   RemoveUserFromWaitlistUnion,
+  RequestPasswordLinkInput,
+  ResetPasswordLinkResultUnion,
   RoomLayout,
   RoomLayoutInput,
   RoomLayoutsInput,
   SiteEnum,
   SwapSpotResultUnion,
+  UserInput,
   WaitlistEntry
 } from '@/gql/graphql'
 import type { SiteSetting } from '@/gql/graphql'
@@ -934,6 +939,63 @@ export class ApiService {
       } else {
         throw error
       }
+    }
+  }
+
+  async editUser(userId: string, userDataInput: UserInput): Promise<EditUserResultUnion> {
+    const input: EditUserInput = { userId: userId, userDataInput: userDataInput } as EditUserInput
+
+    const mutation = gql`
+      mutation editUser($input: EditUserInput!) {
+        editUser(input: $input) {
+          ... on IdentifiableUser {
+            id
+            user {
+              email
+            }
+          }
+        }
+      }
+    `
+    const result = await this.authApiClient.mutate({
+      mutation: mutation,
+      variables: {
+        input: input
+      },
+      fetchPolicy: 'no-cache'
+    })
+
+    return result.data.editUser as EditUserResultUnion
+  }
+
+  async requestPasswordLink(email: string): Promise<ResetPasswordLinkResultUnion | null> {
+    const input = { email: email } as RequestPasswordLinkInput
+
+    const muration = gql`
+      mutation requestPasswordLink($input: RequestPasswordLinkInput) {
+        requestPasswordLink(input: $input) {
+          ... on TooManyResetPasswordLinkRequestsError {
+            availableAgainAt
+          }
+          ... on ResetPasswordLinkSentSuccessfully {
+            status
+          }
+        }
+      }
+    `
+
+    try {
+      const result = await this.authApiClient.mutate({
+        mutation: muration,
+        variables: {
+          input: input
+        },
+        fetchPolicy: 'network-only'
+      })
+
+      return result.data.requestPasswordLink as ResetPasswordLinkResultUnion
+    } catch (error) {
+      return null
     }
   }
 }
