@@ -43,7 +43,7 @@ const passwordIsVisible = ref(true)
 const confirmPasswordIsVisible = ref(true)
 const urlAfterSubmit = ref<string | null>(null)
 const defaultPassword = 'crank123'
-const userId= ref<string | null>(null)
+const userId = ref<string | null>(null)
 
 const formData = reactive({
   location: SiteEnum.Dubai,
@@ -235,7 +235,7 @@ async function goToUrlAfterSubmit() {
   successModalIsVisible.value = false
 
   if (urlAfterSubmit.value) {
-    const receivedUrl = urlAfterSubmit.value;
+    const receivedUrl = urlAfterSubmit.value
     window.location.href = receivedUrl.replace('REPLACE_ID', userId.value!)
   }
 }
