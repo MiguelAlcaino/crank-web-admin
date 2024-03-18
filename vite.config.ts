@@ -8,20 +8,13 @@ import { Config } from './src/model/Config'
 export default defineConfig({
   plugins: [vue()],
   build: {
+    lib: {
+      entry: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
+      name: "crank-web-admin",
+      fileName: 'crank-web-admin'
+    },
     rollupOptions: {
-      input: {
-        main: fileURLToPath(new URL('./index.html', import.meta.url)),
-        roomLAyoutCreate: fileURLToPath(new URL('./room-layout-create.html', import.meta.url)),
-        roomLayoutEdit: fileURLToPath(new URL('./room-layout-edit.html', import.meta.url)),
-        adminClassView: fileURLToPath(new URL('./admin-class-view.html', import.meta.url)),
-        registerView: fileURLToPath(new URL('./register-user.html', import.meta.url))
-      },
-      output: {
-        entryFileNames: 'app-[name].js',
-        assetFileNames: 'app-[name].css',
-        chunkFileNames: 'chunk-[name].js',
-        manualChunks: undefined
-      }
+
     }
   },
   resolve: {

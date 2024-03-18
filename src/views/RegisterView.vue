@@ -157,7 +157,7 @@ const v$ = useVuelidate(rules, formData)
 const apiService = inject<ApiService>('gqlApiService')!
 
 onMounted(() => {
-  let _urlAfterSubmit = inject<string | undefined>('userListUrl')
+  let _urlAfterSubmit = inject<string | undefined>('url-after-submit')
   if (_urlAfterSubmit) {
     urlAfterSubmit.value = _urlAfterSubmit
   }
@@ -199,6 +199,9 @@ const submitForm = async () => {
     isSaving.value = true
     try {
       userId.value = await apiService.registerIdentifiableUser(formData.location!, input)
+
+      successModalIsVisible.value = true
+
     } catch (error) {
       if (error instanceof ValidationError) {
         errorMessage.value = error.message
@@ -749,7 +752,7 @@ async function goToUrlAfterSubmit() {
   <ModalComponent
     v-if="successModalIsVisible"
     title="SUCCESS"
-    message="Your account has been successfully created."
+    message="The account has been successfully created."
     :cancel-text="null"
     :closable="false"
     @on-ok="goToUrlAfterSubmit()"
