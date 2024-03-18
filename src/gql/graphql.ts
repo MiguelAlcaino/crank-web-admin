@@ -299,6 +299,8 @@ export type EditUserInput = {
   userId: Scalars['ID']
 }
 
+export type EditUserResultUnion = IdentifiableUser | OtherUserHasThisExternalIdError
+
 export type Enrollment = {
   __typename: 'Enrollment'
   class: Class
@@ -384,6 +386,7 @@ export type IdentifiableSiteUser = {
   __typename: 'IdentifiableSiteUser'
   id?: Maybe<Scalars['ID']>
   identifiableUser?: Maybe<IdentifiableUser>
+  siteUserInfo?: Maybe<SimpleSiteUser>
 }
 
 export type IdentifiableUser = {
@@ -430,7 +433,7 @@ export type Mutation = {
   /** Edits a room layout */
   editRoomLayout: RoomLayout
   /** Edits a user */
-  editUser?: Maybe<IdentifiableUser>
+  editUser?: Maybe<EditUserResultUnion>
   /** Enabled a spot in a class */
   enableSpot?: Maybe<DisableEnableSpotResultUnion>
   /** Registers a new user and returns an IdentifiableUser type */
@@ -598,6 +601,12 @@ export type MutationUpdateCurrentUserArgs = {
 export type MutationUpdateCurrentUserPasswordArgs = {
   input: UpdateCurrentUserPasswordInput
   site: SiteEnum
+}
+
+export type OtherUserHasThisExternalIdError = Error & {
+  __typename: 'OtherUserHasThisExternalIdError'
+  code: Scalars['String']
+  siteUser: IdentifiableSiteUser
 }
 
 export type PasswordsDontMatchError = Error & {
@@ -851,7 +860,7 @@ export type SiteSetting = {
 }
 
 export type SiteUserInput = {
-  externalID: Scalars['ID']
+  externalUserId: Scalars['ID']
   site: SiteEnum
 }
 
@@ -1550,41 +1559,6 @@ export type RegisterUserMutationVariables = Exact<{
 export type RegisterUserMutation = {
   __typename: 'Mutation'
   registerIdentifiableUser?: { __typename: 'IdentifiableSiteUser'; id?: string | null } | null
-}
-
-export type EditUserMutationVariables = Exact<{
-  input: EditUserInput
-}>
-
-export type EditUserMutation = {
-  __typename: 'Mutation'
-  editUser?: {
-    __typename: 'IdentifiableUser'
-    id?: string | null
-    user?: {
-      __typename: 'User'
-      firstName: string
-      lastName: string
-      email: string
-      leaderboardUsername?: string | null
-      weight?: number | null
-      gender?: GenderEnum | null
-      birthdate?: any | null
-      city: string
-      address1: string
-      address2?: string | null
-      zipCode: string
-      phone: string
-      emergencyContactName: string
-      emergencyContactPhone: string
-      emergencyContactRelationship?: string | null
-      hideMetrics?: boolean | null
-      doesExistInSite: boolean
-      existsInSites: Array<SiteEnum>
-      country: { __typename: 'Country'; code: string; name: string }
-      state?: { __typename: 'State'; code: string; name: string } | null
-    } | null
-  } | null
 }
 
 export type RequestPasswordLinkMutationVariables = Exact<{
@@ -3492,110 +3466,6 @@ export const RegisterUserDocument = {
     }
   ]
 } as unknown as DocumentNode<RegisterUserMutation, RegisterUserMutationVariables>
-export const EditUserDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'editUser' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'EditUserInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'editUser' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'user' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'firstName' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'lastName' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'leaderboardUsername' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'gender' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'birthdate' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'country' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'code' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'state' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'code' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
-                          ]
-                        }
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'city' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'address1' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'address2' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'zipCode' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'phone' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'emergencyContactName' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'emergencyContactPhone' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'emergencyContactRelationship' }
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'hideMetrics' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'doesExistInSite' },
-                        arguments: [
-                          {
-                            kind: 'Argument',
-                            name: { kind: 'Name', value: 'site' },
-                            value: { kind: 'EnumValue', value: 'dubai' }
-                          }
-                        ]
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'existsInSites' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<EditUserMutation, EditUserMutationVariables>
 export const RequestPasswordLinkDocument = {
   kind: 'Document',
   definitions: [

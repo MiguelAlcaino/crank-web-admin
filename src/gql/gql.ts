@@ -65,8 +65,6 @@ const documents = {
     types.CountryDocument,
   '\n      mutation registerUser($site: SiteEnum!, $input: RegisterUserInput!) {\n        registerIdentifiableUser(site: $site, input: $input) {\n          id\n        }\n      }\n    ':
     types.RegisterUserDocument,
-  '\n      mutation editUser($input: EditUserInput!) {\n        editUser(input: $input) {\n          id\n          user {\n            firstName\n            lastName\n            email\n            leaderboardUsername\n            weight\n            gender\n            birthdate\n            country {\n              code\n              name\n            }\n            state {\n              code\n              name\n            }\n            city\n            address1\n            address2\n            zipCode\n            phone\n            emergencyContactName\n            emergencyContactPhone\n            emergencyContactRelationship\n            hideMetrics\n            doesExistInSite(site: dubai)\n            existsInSites\n          }\n        }\n      }\n    ':
-    types.EditUserDocument,
   '\n      mutation requestPasswordLink($input: RequestPasswordLinkInput) {\n        requestPasswordLink(input: $input) {\n          ... on TooManyResetPasswordLinkRequestsError {\n            availableAgainAt\n          }\n          ... on ResetPasswordLinkSentSuccessfully {\n            status\n          }\n        }\n      }\n    ':
     types.RequestPasswordLinkDocument
 }
@@ -241,12 +239,6 @@ export function graphql(
 export function graphql(
   source: '\n      mutation registerUser($site: SiteEnum!, $input: RegisterUserInput!) {\n        registerIdentifiableUser(site: $site, input: $input) {\n          id\n        }\n      }\n    '
 ): (typeof documents)['\n      mutation registerUser($site: SiteEnum!, $input: RegisterUserInput!) {\n        registerIdentifiableUser(site: $site, input: $input) {\n          id\n        }\n      }\n    ']
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: '\n      mutation editUser($input: EditUserInput!) {\n        editUser(input: $input) {\n          id\n          user {\n            firstName\n            lastName\n            email\n            leaderboardUsername\n            weight\n            gender\n            birthdate\n            country {\n              code\n              name\n            }\n            state {\n              code\n              name\n            }\n            city\n            address1\n            address2\n            zipCode\n            phone\n            emergencyContactName\n            emergencyContactPhone\n            emergencyContactRelationship\n            hideMetrics\n            doesExistInSite(site: dubai)\n            existsInSites\n          }\n        }\n      }\n    '
-): (typeof documents)['\n      mutation editUser($input: EditUserInput!) {\n        editUser(input: $input) {\n          id\n          user {\n            firstName\n            lastName\n            email\n            leaderboardUsername\n            weight\n            gender\n            birthdate\n            country {\n              code\n              name\n            }\n            state {\n              code\n              name\n            }\n            city\n            address1\n            address2\n            zipCode\n            phone\n            emergencyContactName\n            emergencyContactPhone\n            emergencyContactRelationship\n            hideMetrics\n            doesExistInSite(site: dubai)\n            existsInSites\n          }\n        }\n      }\n    ']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

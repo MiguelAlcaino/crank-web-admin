@@ -2220,6 +2220,27 @@
         "possibleTypes": null
       },
       {
+        "kind": "UNION",
+        "name": "EditUserResultUnion",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": [
+          {
+            "kind": "OBJECT",
+            "name": "IdentifiableUser",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "OtherUserHasThisExternalIdError",
+            "ofType": null
+          }
+        ]
+      },
+      {
         "kind": "OBJECT",
         "name": "Enrollment",
         "description": null,
@@ -2670,6 +2691,11 @@
           },
           {
             "kind": "OBJECT",
+            "name": "OtherUserHasThisExternalIdError",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
             "name": "PasswordsDontMatchError",
             "ofType": null
           },
@@ -2974,6 +3000,18 @@
             "type": {
               "kind": "OBJECT",
               "name": "IdentifiableUser",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "siteUserInfo",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "SimpleSiteUser",
               "ofType": null
             },
             "isDeprecated": false,
@@ -3713,8 +3751,8 @@
               }
             ],
             "type": {
-              "kind": "OBJECT",
-              "name": "IdentifiableUser",
+              "kind": "UNION",
+              "name": "EditUserResultUnion",
               "ofType": null
             },
             "isDeprecated": false,
@@ -4249,6 +4287,55 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OtherUserHasThisExternalIdError",
+        "description": null,
+        "fields": [
+          {
+            "name": "code",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "siteUser",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "IdentifiableSiteUser",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Error",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -6030,7 +6117,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "externalID",
+            "name": "externalUserId",
             "description": null,
             "type": {
               "kind": "NON_NULL",
