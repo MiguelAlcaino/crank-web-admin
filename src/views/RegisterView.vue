@@ -727,7 +727,7 @@ async function goToUserList() {
     <div class="form-row justify-content-md-center">
       <div class="col-md-2 mb-3">
         <button class="btn btn-primary btn-block" type="submit" :disabled="isSaving">
-          Next <span class="spinner-border spinner-border-sm" v-if="isSaving"></span>
+          Register<span class="spinner-border spinner-border-sm" v-if="isSaving"></span>
         </button>
       </div>
     </div>
