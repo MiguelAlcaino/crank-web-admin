@@ -1,9 +1,9 @@
 import {
   startCalendarApp,
-  startRegisterUserApp,
+  startCustomerCreateApp,
   startRoomLayoutCreateApp,
   startRoomLayoutEditApp
 } from '@/start-app-functions'
 
-export { startRegisterUserApp, startRoomLayoutCreateApp, startRoomLayoutEditApp, startCalendarApp }
+export { startCustomerCreateApp, startRoomLayoutCreateApp, startRoomLayoutEditApp, startCalendarApp }
 
