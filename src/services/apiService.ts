@@ -30,6 +30,7 @@ import type {
   RoomLayout,
   RoomLayoutInput,
   RoomLayoutsInput,
+  SimpleSiteUser,
   SiteEnum,
   SiteUserInput,
   SwapSpotResultUnion,
@@ -947,14 +948,8 @@ export class ApiService {
     }
   }
 
-  async editUser(
-    userId: string,
-    userDataInput: UserInput,
-    siteUserInput?: SiteUserInput[]
-  ): Promise<EditUserResultUnion> {
+  async editUser(userId: string, userDataInput: UserInput): Promise<EditUserResultUnion> {
     const input: EditUserInput = { userId: userId, userDataInput: userDataInput } as EditUserInput
-
-    if (siteUserInput) input.siteUserInput = siteUserInput
 
     const mutation = gql`
       mutation editUser($input: EditUserInput!) {
@@ -1008,5 +1003,84 @@ export class ApiService {
     } catch (error) {
       return null
     }
+  }
+
+  async getUserSites(id: string): Promise<SimpleSiteUser[]> {
+    const query = gql`
+      query getUserSites($id: ID!) {
+        user(id: $id) {
+          id
+          user {
+            siteUsers {
+              externalUserId
+              site
+            }
+          }
+        }
+      }
+    `
+
+    const queryResult = await this.authApiClient.query({
+      query: query,
+      fetchPolicy: 'no-cache',
+      variables: {
+        id: id
+      }
+    })
+
+    const identifiableUser = queryResult.data.user as IdentifiableUser
+
+    return identifiableUser.user?.siteUsers as SimpleSiteUser[]
+  }
+
+  async editUserSites(
+    userId: string,
+    simpleSiteUsers: SimpleSiteUser[]
+  ): Promise<EditUserResultUnion> {
+    const siteUserInput = [] as SiteUserInput[]
+
+    for (let index = 0; index < simpleSiteUsers.length; index++) {
+      siteUserInput.push({
+        externalUserId: simpleSiteUsers[index].externalUserId,
+        site: simpleSiteUsers[index].site
+      } as SiteUserInput)
+    }
+
+    const input = { userId: userId, siteUserInput: siteUserInput } as EditUserInput
+
+    const mutation = gql`
+      mutation editUserSites($input: EditUserInput!) {
+        editUser(input: $input) {
+          ... on IdentifiableUser {
+            id
+            user {
+              email
+            }
+          }
+          ... on OtherUserHasThisExternalIdError {
+            siteUser {
+              siteUserInfo {
+                externalUserId
+                site
+              }
+              identifiableUser {
+                user {
+                  email
+                }
+              }
+            }
+          }
+        }
+      }
+    `
+    const result = await this.authApiClient.mutate({
+      mutation: mutation,
+      variables: {
+        input: input
+      },
+      fetchPolicy: 'no-cache'
+    })
+
+    return result.data.editUser as EditUserResultUnion
   }
 }

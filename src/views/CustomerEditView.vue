@@ -67,6 +67,7 @@ import type { ApiService } from '@/services/apiService'
 
 import ModalComponent from '@/components/ModalComponent.vue'
 import ResetUserPassword from '@/components/ResetUserPassword.vue'
+import ExternalUserIds from '@/components/ExternalUserIds.vue'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import dayjs from 'dayjs'
 
@@ -94,6 +95,7 @@ const currentDate = ref(new Date())
 const userEmail = ref<string>('')
 
 const userId = ref<string>('')
+const siteUsers = ref<SimpleSiteUser[]>([])
 
 const formData = reactive({
   firstName: '',
@@ -202,6 +204,7 @@ async function getUser(): Promise<void> {
   isLoading.value = true
   try {
     const identifiableUser = (await apiService.getUser(userId.value)) as IdentifiableUser
+    siteUsers.value = identifiableUser.user?.siteUsers as SimpleSiteUser[]
 
     if (identifiableUser.user !== null && identifiableUser.user !== undefined) {
       userEmail.value = identifiableUser.user.email
@@ -315,6 +318,7 @@ function onChangeCountry() {
       &nbsp;
       <!-- TODO: Implement ChangeUserPassword component -->
       <!-- <ChangeUserPassword :user-id="userId"></ChangeUserPassword> -->
+      <ExternalUserIds :userId="userId"></ExternalUserIds>
     </div>
     <hr />
 
