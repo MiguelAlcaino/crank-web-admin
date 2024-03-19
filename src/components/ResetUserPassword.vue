@@ -8,12 +8,12 @@ import type {
 
 import type { ApiService } from '@/services/apiService'
 
-const apiService = inject<ApiService>('gqlApiService')!
-
 import DefaultButtonComponent from '@/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import { SUCCESS_RESET_PASSWORD_LINK_SENT } from '@/utils/successMessages'
+
+const apiService = inject<ApiService>('gqlApiService')!
 
 const props = defineProps<{
   email: string
