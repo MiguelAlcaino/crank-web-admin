@@ -1,6 +1,13 @@
 {
   "name": "crank-web-admin",
   "type": "module",
+  "files": ["dist"],
+  "main": "./dist/crank-web-admin.umd.cjs",
+  "module": "./dist/crank-web-admin.js",
+  "exports": {
+    ".": "./dist/crank-web-admin.js",
+    "./dist/style.css": "./dist/style.css"
+  },
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
