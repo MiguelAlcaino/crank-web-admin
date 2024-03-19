@@ -16,6 +16,7 @@ import RegisterView from '@/views/RegisterView.vue'
 import RoomLayoutView from '@/views/admin/RoomLayoutView.vue'
 import { SiteEnum } from '@/gql/graphql'
 import { appStore } from '@/stores/appStorage'
+import AdminClassView from '@/views/admin/AdminClassView.vue'
 
 export const startRegisterUserApp = async function(urlAfterSubmit: string, gqlUrl: string, token: string, appDiv: string) {
   const app = createApp({
@@ -79,6 +80,35 @@ export const startRoomLayoutEditApp = async function(gqlUrl: string, token: stri
   })
 
   app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
+  useAuthenticationStore().setSession(token)
+
+  if (site) {
+    if (site === SiteEnum.Dubai.toString()) {
+      appStore().setSite(SiteEnum.Dubai)
+    } else if (site === SiteEnum.AbuDhabi) {
+      appStore().setSite(SiteEnum.AbuDhabi)
+    } else {
+      throw Error
+    }
+  } else {
+    throw Error
+  }
+
+  app.mount(appDiv)
+}
+
+export const startCalendarApp = async function(gqlUrl: string, token: string, site: string, appDiv: string) {
+  const app = createApp({
+    setup() {
+      provide(
+        'gqlApiService',
+        new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
+      )
+    },
+    render: () => h(AdminClassView)
+  })
+
+  app.use(createPinia()).use(router).use(SimpleTypeahead)
   useAuthenticationStore().setSession(token)
 
   if (site) {
