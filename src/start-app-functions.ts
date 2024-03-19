@@ -50,7 +50,7 @@ export const startCustomerEditApp = async function (
 ) {
   const app = createApp({
     setup() {
-      provide('user-id', userId)
+      provide('userId', userId)
       provide(
         'gqlApiService',
         new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
