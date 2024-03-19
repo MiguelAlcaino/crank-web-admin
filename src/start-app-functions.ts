@@ -13,6 +13,9 @@ import { newAnonymousClient, newAuthenticatedApolloClient } from '@/services/gra
 import { useAuthenticationStore } from '@/stores/authToken'
 import SimpleTypeahead from 'vue3-simple-typeahead'
 import RegisterView from '@/views/RegisterView.vue'
+import RoomLayoutView from '@/views/admin/RoomLayoutView.vue'
+import { SiteEnum } from '@/gql/graphql'
+import { appStore } from '@/stores/appStorage'
 
 export const startRegisterUserApp = async function(urlAfterSubmit: string, gqlUrl: string, token: string, appDiv: string) {
   const app = createApp({
@@ -28,6 +31,36 @@ export const startRegisterUserApp = async function(urlAfterSubmit: string, gqlUr
 
   app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
   useAuthenticationStore().setSession(token)
+
+  app.mount(appDiv)
+}
+
+export const startRoomLayoutCreateApp = async function(gqlUrl: string, token: string, site: string, roomLayoutListUrl: string, appDiv: string) {
+  const app = createApp({
+    setup() {
+      provide('roomLayoutListUrl', roomLayoutListUrl)
+      provide(
+        'gqlApiService',
+        new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
+      )
+    },
+    render: () => h(RoomLayoutView)
+  })
+
+  app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
+  useAuthenticationStore().setSession(token)
+
+  if (site) {
+    if (site === SiteEnum.Dubai.toString()) {
+      appStore().setSite(SiteEnum.Dubai)
+    } else if (site === SiteEnum.AbuDhabi) {
+      appStore().setSite(SiteEnum.AbuDhabi)
+    } else {
+      throw Error
+    }
+  } else {
+    throw Error
+  }
 
   app.mount(appDiv)
 }
