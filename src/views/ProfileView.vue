@@ -258,9 +258,15 @@ const submitForm = async () => {
 
     try {
       isSaving.value = true
-      const response = await apiService.editUser(userId.value, input)
+      const editUserResultUnion = await apiService.editUser(userId.value, input)
 
-      successModalIsVisible.value = true
+      if(editUserResultUnion.__typename === 'IdentifiableUser') {
+        successModalIsVisible.value = true
+      } else {
+        errorModalMessage.value = ERROR_UNKNOWN
+        errorModalIsVisible.value = true
+      }
+
     } catch (error) {
       errorModalMessage.value = ERROR_UNKNOWN
       errorModalIsVisible.value = true
