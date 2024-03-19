@@ -22,7 +22,7 @@ const router = createRouter({
     {
       path: '/user/create',
       name: 'user_create',
-      component: () => import('../views/RegisterView.vue')
+      component: () => import('../views/CustomerCreateView.vue')
     },
     {
       path: '/user/edit/:id',

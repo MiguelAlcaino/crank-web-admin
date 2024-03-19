@@ -12,7 +12,7 @@ import { ApiService } from '@/services/apiService'
 import { newAnonymousClient, newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { useAuthenticationStore } from '@/stores/authToken'
 import SimpleTypeahead from 'vue3-simple-typeahead'
-import RegisterView from '@/views/RegisterView.vue'
+import CustomerCreateView from '@/views/CustomerCreateView.vue'
 import RoomLayoutView from '@/views/RoomLayoutView.vue'
 import { SiteEnum } from '@/gql/graphql'
 import { appStore } from '@/stores/appStorage'
@@ -27,7 +27,7 @@ export const startRegisterUserApp = async function(urlAfterSubmit: string, gqlUr
         new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
       )
     },
-    render: () => h(RegisterView)
+    render: () => h(CustomerCreateView)
   })
 
   app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
