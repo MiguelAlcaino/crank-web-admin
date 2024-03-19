@@ -294,7 +294,7 @@ export type EditRoomLayoutInput = {
 
 export type EditUserInput = {
   siteUserInput?: InputMaybe<Array<SiteUserInput>>
-  userDataInput: UserInput
+  userDataInput?: InputMaybe<UserInput>
   /** This is not the same ID as the IdentifiableUser. This is the ID of the user not linked to any site */
   userId: Scalars['ID']
 }
@@ -1418,6 +1418,7 @@ export type GetUserQuery = {
       existsInSites: Array<SiteEnum>
       country: { __typename: 'Country'; code: string; name: string }
       state?: { __typename: 'State'; code: string; name: string } | null
+      siteUsers: Array<{ __typename: 'SimpleSiteUser'; externalUserId: string; site: SiteEnum }>
     } | null
   } | null
 }
@@ -1561,6 +1562,22 @@ export type RegisterUserMutation = {
   registerIdentifiableUser?: { __typename: 'IdentifiableSiteUser'; id?: string | null } | null
 }
 
+export type EditUserMutationVariables = Exact<{
+  input: EditUserInput
+}>
+
+export type EditUserMutation = {
+  __typename: 'Mutation'
+  editUser?:
+    | {
+        __typename: 'IdentifiableUser'
+        id?: string | null
+        user?: { __typename: 'User'; email: string } | null
+      }
+    | { __typename: 'OtherUserHasThisExternalIdError' }
+    | null
+}
+
 export type RequestPasswordLinkMutationVariables = Exact<{
   input?: InputMaybe<RequestPasswordLinkInput>
 }>
@@ -1570,6 +1587,52 @@ export type RequestPasswordLinkMutation = {
   requestPasswordLink?:
     | { __typename: 'ResetPasswordLinkSentSuccessfully'; status: boolean }
     | { __typename: 'TooManyResetPasswordLinkRequestsError'; availableAgainAt?: any | null }
+    | null
+}
+
+export type GetUserSitesQueryVariables = Exact<{
+  id: Scalars['ID']
+}>
+
+export type GetUserSitesQuery = {
+  __typename: 'Query'
+  user?: {
+    __typename: 'IdentifiableUser'
+    id?: string | null
+    user?: {
+      __typename: 'User'
+      siteUsers: Array<{ __typename: 'SimpleSiteUser'; externalUserId: string; site: SiteEnum }>
+    } | null
+  } | null
+}
+
+export type EditUserSitesMutationVariables = Exact<{
+  input: EditUserInput
+}>
+
+export type EditUserSitesMutation = {
+  __typename: 'Mutation'
+  editUser?:
+    | {
+        __typename: 'IdentifiableUser'
+        id?: string | null
+        user?: { __typename: 'User'; email: string } | null
+      }
+    | {
+        __typename: 'OtherUserHasThisExternalIdError'
+        siteUser: {
+          __typename: 'IdentifiableSiteUser'
+          siteUserInfo?: {
+            __typename: 'SimpleSiteUser'
+            externalUserId: string
+            site: SiteEnum
+          } | null
+          identifiableUser?: {
+            __typename: 'IdentifiableUser'
+            user?: { __typename: 'User'; email: string } | null
+          } | null
+        }
+      }
     | null
 }
 
@@ -3033,7 +3096,18 @@ export const GetUserDocument = {
                         name: { kind: 'Name', value: 'emergencyContactRelationship' }
                       },
                       { kind: 'Field', name: { kind: 'Name', value: 'hideMetrics' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'existsInSites' } }
+                      { kind: 'Field', name: { kind: 'Name', value: 'existsInSites' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'siteUsers' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'externalUserId' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'site' } }
+                          ]
+                        }
+                      }
                     ]
                   }
                 }
@@ -3466,6 +3540,68 @@ export const RegisterUserDocument = {
     }
   ]
 } as unknown as DocumentNode<RegisterUserMutation, RegisterUserMutationVariables>
+export const EditUserDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'editUser' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'EditUserInput' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'editUser' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'IdentifiableUser' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'user' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'email' } }]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<EditUserMutation, EditUserMutationVariables>
 export const RequestPasswordLinkDocument = {
   kind: 'Document',
   definitions: [
@@ -3528,3 +3664,181 @@ export const RequestPasswordLinkDocument = {
     }
   ]
 } as unknown as DocumentNode<RequestPasswordLinkMutation, RequestPasswordLinkMutationVariables>
+export const GetUserSitesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getUserSites' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'user' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'user' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'siteUsers' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'externalUserId' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'site' } }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<GetUserSitesQuery, GetUserSitesQueryVariables>
+export const EditUserSitesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'editUserSites' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'EditUserInput' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'editUser' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'IdentifiableUser' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'user' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'email' } }]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'OtherUserHasThisExternalIdError' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'siteUser' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'siteUserInfo' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'externalUserId' }
+                                  },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'site' } }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'identifiableUser' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'user' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        { kind: 'Field', name: { kind: 'Name', value: 'email' } }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<EditUserSitesMutation, EditUserSitesMutationVariables>

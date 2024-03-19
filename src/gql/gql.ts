@@ -51,7 +51,7 @@ const documents = {
     types.SwapSpotDocument,
   '\n      query getCalendarClassesForList($site: SiteEnum!, $params: CalendarClassesParams) {\n        calendarClasses(site: $site, params: $params) {\n          id\n          name\n          startWithNoTimeZone\n          maxCapacity\n          totalBooked\n          totalUnderMaintenanceSpots\n          showAsDisabled\n        }\n      }\n    ':
     types.GetCalendarClassesForListDocument,
-  '\n      query getUser($id: ID!) {\n        user(id: $id) {\n          id\n          user {\n            firstName\n            lastName\n            email\n            leaderboardUsername\n            weight\n            gender\n            birthdate\n            country {\n              code\n              name\n            }\n            state {\n              code\n              name\n            }\n            city\n            address1\n            address2\n            zipCode\n            phone\n            emergencyContactName\n            emergencyContactPhone\n            emergencyContactRelationship\n            hideMetrics\n            existsInSites\n          }\n        }\n      }\n    ':
+  '\n      query getUser($id: ID!) {\n        user(id: $id) {\n          id\n          user {\n            firstName\n            lastName\n            email\n            leaderboardUsername\n            weight\n            gender\n            birthdate\n            country {\n              code\n              name\n            }\n            state {\n              code\n              name\n            }\n            city\n            address1\n            address2\n            zipCode\n            phone\n            emergencyContactName\n            emergencyContactPhone\n            emergencyContactRelationship\n            hideMetrics\n            existsInSites\n            siteUsers {\n              externalUserId\n              site\n            }\n          }\n        }\n      }\n    ':
     types.GetUserDocument,
   '\n      query classWaitlistIsEnabled($site: SiteEnum!, $id: ID!) {\n        classInfo(site: $site, id: $id) {\n          class {\n            waitListAvailable\n          }\n        }\n      }\n    ':
     types.ClassWaitlistIsEnabledDocument,
@@ -65,8 +65,14 @@ const documents = {
     types.CountryDocument,
   '\n      mutation registerUser($site: SiteEnum!, $input: RegisterUserInput!) {\n        registerIdentifiableUser(site: $site, input: $input) {\n          id\n        }\n      }\n    ':
     types.RegisterUserDocument,
+  '\n      mutation editUser($input: EditUserInput!) {\n        editUser(input: $input) {\n          ... on IdentifiableUser {\n            id\n            user {\n              email\n            }\n          }\n        }\n      }\n    ':
+    types.EditUserDocument,
   '\n      mutation requestPasswordLink($input: RequestPasswordLinkInput) {\n        requestPasswordLink(input: $input) {\n          ... on TooManyResetPasswordLinkRequestsError {\n            availableAgainAt\n          }\n          ... on ResetPasswordLinkSentSuccessfully {\n            status\n          }\n        }\n      }\n    ':
-    types.RequestPasswordLinkDocument
+    types.RequestPasswordLinkDocument,
+  '\n      query getUserSites($id: ID!) {\n        user(id: $id) {\n          id\n          user {\n            siteUsers {\n              externalUserId\n              site\n            }\n          }\n        }\n      }\n    ':
+    types.GetUserSitesDocument,
+  '\n      mutation editUserSites($input: EditUserInput!) {\n        editUser(input: $input) {\n          ... on IdentifiableUser {\n            id\n            user {\n              email\n            }\n          }\n          ... on OtherUserHasThisExternalIdError {\n              siteUser {\n                siteUserInfo {\n                  externalUserId\n                  site\n                }        \n                identifiableUser {\n                  user {\n                    email\n                  }\n                }\n              }\n            }\n        }\n      }\n    ':
+    types.EditUserSitesDocument
 }
 
 /**
@@ -201,8 +207,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n      query getUser($id: ID!) {\n        user(id: $id) {\n          id\n          user {\n            firstName\n            lastName\n            email\n            leaderboardUsername\n            weight\n            gender\n            birthdate\n            country {\n              code\n              name\n            }\n            state {\n              code\n              name\n            }\n            city\n            address1\n            address2\n            zipCode\n            phone\n            emergencyContactName\n            emergencyContactPhone\n            emergencyContactRelationship\n            hideMetrics\n            existsInSites\n          }\n        }\n      }\n    '
-): (typeof documents)['\n      query getUser($id: ID!) {\n        user(id: $id) {\n          id\n          user {\n            firstName\n            lastName\n            email\n            leaderboardUsername\n            weight\n            gender\n            birthdate\n            country {\n              code\n              name\n            }\n            state {\n              code\n              name\n            }\n            city\n            address1\n            address2\n            zipCode\n            phone\n            emergencyContactName\n            emergencyContactPhone\n            emergencyContactRelationship\n            hideMetrics\n            existsInSites\n          }\n        }\n      }\n    ']
+  source: '\n      query getUser($id: ID!) {\n        user(id: $id) {\n          id\n          user {\n            firstName\n            lastName\n            email\n            leaderboardUsername\n            weight\n            gender\n            birthdate\n            country {\n              code\n              name\n            }\n            state {\n              code\n              name\n            }\n            city\n            address1\n            address2\n            zipCode\n            phone\n            emergencyContactName\n            emergencyContactPhone\n            emergencyContactRelationship\n            hideMetrics\n            existsInSites\n            siteUsers {\n              externalUserId\n              site\n            }\n          }\n        }\n      }\n    '
+): (typeof documents)['\n      query getUser($id: ID!) {\n        user(id: $id) {\n          id\n          user {\n            firstName\n            lastName\n            email\n            leaderboardUsername\n            weight\n            gender\n            birthdate\n            country {\n              code\n              name\n            }\n            state {\n              code\n              name\n            }\n            city\n            address1\n            address2\n            zipCode\n            phone\n            emergencyContactName\n            emergencyContactPhone\n            emergencyContactRelationship\n            hideMetrics\n            existsInSites\n            siteUsers {\n              externalUserId\n              site\n            }\n          }\n        }\n      }\n    ']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -243,8 +249,26 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
+  source: '\n      mutation editUser($input: EditUserInput!) {\n        editUser(input: $input) {\n          ... on IdentifiableUser {\n            id\n            user {\n              email\n            }\n          }\n        }\n      }\n    '
+): (typeof documents)['\n      mutation editUser($input: EditUserInput!) {\n        editUser(input: $input) {\n          ... on IdentifiableUser {\n            id\n            user {\n              email\n            }\n          }\n        }\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
   source: '\n      mutation requestPasswordLink($input: RequestPasswordLinkInput) {\n        requestPasswordLink(input: $input) {\n          ... on TooManyResetPasswordLinkRequestsError {\n            availableAgainAt\n          }\n          ... on ResetPasswordLinkSentSuccessfully {\n            status\n          }\n        }\n      }\n    '
 ): (typeof documents)['\n      mutation requestPasswordLink($input: RequestPasswordLinkInput) {\n        requestPasswordLink(input: $input) {\n          ... on TooManyResetPasswordLinkRequestsError {\n            availableAgainAt\n          }\n          ... on ResetPasswordLinkSentSuccessfully {\n            status\n          }\n        }\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n      query getUserSites($id: ID!) {\n        user(id: $id) {\n          id\n          user {\n            siteUsers {\n              externalUserId\n              site\n            }\n          }\n        }\n      }\n    '
+): (typeof documents)['\n      query getUserSites($id: ID!) {\n        user(id: $id) {\n          id\n          user {\n            siteUsers {\n              externalUserId\n              site\n            }\n          }\n        }\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n      mutation editUserSites($input: EditUserInput!) {\n        editUser(input: $input) {\n          ... on IdentifiableUser {\n            id\n            user {\n              email\n            }\n          }\n          ... on OtherUserHasThisExternalIdError {\n              siteUser {\n                siteUserInfo {\n                  externalUserId\n                  site\n                }        \n                identifiableUser {\n                  user {\n                    email\n                  }\n                }\n              }\n            }\n        }\n      }\n    '
+): (typeof documents)['\n      mutation editUserSites($input: EditUserInput!) {\n        editUser(input: $input) {\n          ... on IdentifiableUser {\n            id\n            user {\n              email\n            }\n          }\n          ... on OtherUserHasThisExternalIdError {\n              siteUser {\n                siteUserInfo {\n                  externalUserId\n                  site\n                }        \n                identifiableUser {\n                  user {\n                    email\n                  }\n                }\n              }\n            }\n        }\n      }\n    ']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}

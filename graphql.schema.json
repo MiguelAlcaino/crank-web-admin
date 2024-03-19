@@ -2186,13 +2186,9 @@
             "name": "userDataInput",
             "description": null,
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "INPUT_OBJECT",
-                "name": "UserInput",
-                "ofType": null
-              }
+              "kind": "INPUT_OBJECT",
+              "name": "UserInput",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
