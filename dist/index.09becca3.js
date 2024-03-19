@@ -12065,7 +12065,7 @@ const t8 = /* @__PURE__ */ Wr(Qk, [["render", e8]]), $o = uO({
     {
       path: "/admin/calendar-class",
       name: "admin_calendar_class",
-      component: () => import("./AdminClassView.e22db780.js")
+      component: () => import("./AdminClassView.92c85bf0.js")
     },
     {
       path: "/admin/room-layout/list",
@@ -37831,7 +37831,7 @@ const Ej = /* @__PURE__ */ Wr(wj, [["__scopeId", "data-v-30490417"]]), Sj = { cl
 }, Wj = async function(e, t, n, r) {
   const o = Is({
     setup() {
-      dr("user-id", n), dr(
+      dr("userId", n), dr(
         "gqlApiService",
         new pu(mu(e), hu(e))
       );
