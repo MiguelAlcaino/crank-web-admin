@@ -31,6 +31,7 @@ import type {
   RoomLayoutInput,
   RoomLayoutsInput,
   SiteEnum,
+  SiteUserInput,
   SwapSpotResultUnion,
   UserInput,
   WaitlistEntry
@@ -732,6 +733,10 @@ export class ApiService {
             emergencyContactRelationship
             hideMetrics
             existsInSites
+            siteUsers {
+              externalUserId
+              site
+            }
           }
         }
       }
@@ -942,8 +947,14 @@ export class ApiService {
     }
   }
 
-  async editUser(userId: string, userDataInput: UserInput): Promise<EditUserResultUnion> {
+  async editUser(
+    userId: string,
+    userDataInput: UserInput,
+    siteUserInput?: SiteUserInput[]
+  ): Promise<EditUserResultUnion> {
     const input: EditUserInput = { userId: userId, userDataInput: userDataInput } as EditUserInput
+
+    if (siteUserInput) input.siteUserInput = siteUserInput
 
     const mutation = gql`
       mutation editUser($input: EditUserInput!) {

@@ -15,6 +15,11 @@ interface IdentifiableUser {
   user?: User
 }
 
+interface SimpleSiteUser {
+  site: SiteEnum
+  externalUserId: string
+}
+
 interface User {
   address1: string
   address2?: string
@@ -35,15 +40,21 @@ interface User {
   state?: State
   weight?: number
   zipCode: string
+  siteUsers: SimpleSiteUser[]
 }
 
-export enum GenderEnum {
+enum GenderEnum {
   /** Feminine */
   F = 'F',
   /** Masculine */
   M = 'M',
   /** Not defined */
   N = 'N'
+}
+
+enum SiteEnum {
+  AbuDhabi = 'abu_dhabi',
+  Dubai = 'dubai'
 }
 </script>
 
