@@ -13,10 +13,10 @@ import { newAnonymousClient, newAuthenticatedApolloClient } from '@/services/gra
 import { useAuthenticationStore } from '@/stores/authToken'
 import SimpleTypeahead from 'vue3-simple-typeahead'
 import RegisterView from '@/views/RegisterView.vue'
-import RoomLayoutView from '@/views/admin/RoomLayoutView.vue'
+import RoomLayoutView from '@/views/RoomLayoutView.vue'
 import { SiteEnum } from '@/gql/graphql'
 import { appStore } from '@/stores/appStorage'
-import AdminClassView from '@/views/admin/AdminClassView.vue'
+import AdminClassView from '@/views/AdminClassView.vue'
 
 export const startRegisterUserApp = async function(urlAfterSubmit: string, gqlUrl: string, token: string, appDiv: string) {
   const app = createApp({
