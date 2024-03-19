@@ -13,6 +13,7 @@ import { newAnonymousClient, newAuthenticatedApolloClient } from '@/services/gra
 import { useAuthenticationStore } from '@/stores/authToken'
 import SimpleTypeahead from 'vue3-simple-typeahead'
 import CustomerCreateView from '@/views/CustomerCreateView.vue'
+import CustomerEditView from '@/views/CustomerEditView.vue'
 import RoomLayoutView from '@/views/RoomLayoutView.vue'
 import { SiteEnum } from '@/gql/graphql'
 import { appStore } from '@/stores/appStorage'
@@ -28,6 +29,24 @@ export const startCustomerCreateApp = async function(urlAfterSubmit: string, gql
       )
     },
     render: () => h(CustomerCreateView)
+  })
+
+  app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
+  useAuthenticationStore().setSession(token)
+
+  app.mount(appDiv)
+}
+
+export const startCustomerEditApp = async function(gqlUrl: string, token: string, userId: string, appDiv: string) {
+  const app = createApp({
+    setup() {
+      provide('user-id', userId)
+      provide(
+        'gqlApiService',
+        new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
+      )
+    },
+    render: () => h(CustomerEditView)
   })
 
   app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
