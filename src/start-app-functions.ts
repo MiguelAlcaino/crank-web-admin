@@ -64,3 +64,34 @@ export const startRoomLayoutCreateApp = async function(gqlUrl: string, token: st
 
   app.mount(appDiv)
 }
+
+export const startRoomLayoutEditApp = async function(gqlUrl: string, token: string, site: string, roomLayoutId: string, roomLayoutListUrl: string, appDiv: string) {
+  const app = createApp({
+    setup() {
+      provide('roomLayoutId', roomLayoutId)
+      provide('roomLayoutListUrl', roomLayoutListUrl)
+      provide(
+        'gqlApiService',
+        new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
+      )
+    },
+    render: () => h(RoomLayoutView)
+  })
+
+  app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
+  useAuthenticationStore().setSession(token)
+
+  if (site) {
+    if (site === SiteEnum.Dubai.toString()) {
+      appStore().setSite(SiteEnum.Dubai)
+    } else if (site === SiteEnum.AbuDhabi) {
+      appStore().setSite(SiteEnum.AbuDhabi)
+    } else {
+      throw Error
+    }
+  } else {
+    throw Error
+  }
+
+  app.mount(appDiv)
+}

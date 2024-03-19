@@ -1,4 +1,4 @@
-import {startRegisterUserApp} from '@/start-app-functions'
-import {startRoomLayoutCreateApp} from '@/start-app-functions'
+import { startRegisterUserApp, startRoomLayoutCreateApp, startRoomLayoutEditApp } from '@/start-app-functions'
 
-export {startRegisterUserApp, startRoomLayoutCreateApp}
+export { startRegisterUserApp, startRoomLayoutCreateApp, startRoomLayoutEditApp }
+
