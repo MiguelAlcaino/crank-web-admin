@@ -12,13 +12,19 @@ import { ApiService } from '@/services/apiService'
 import { newAnonymousClient, newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { useAuthenticationStore } from '@/stores/authToken'
 import SimpleTypeahead from 'vue3-simple-typeahead'
-import RegisterView from '@/views/RegisterView.vue'
-import RoomLayoutView from '@/views/admin/RoomLayoutView.vue'
+import CustomerCreateView from '@/views/CustomerCreateView.vue'
+import CustomerEditView from '@/views/CustomerEditView.vue'
+import RoomLayoutView from '@/views/RoomLayoutView.vue'
 import { SiteEnum } from '@/gql/graphql'
 import { appStore } from '@/stores/appStorage'
-import AdminClassView from '@/views/admin/AdminClassView.vue'
+import AdminClassView from '@/views/AdminClassView.vue'
 
-export const startRegisterUserApp = async function(urlAfterSubmit: string, gqlUrl: string, token: string, appDiv: string) {
+export const startCustomerCreateApp = async function (
+  urlAfterSubmit: string,
+  gqlUrl: string,
+  token: string,
+  appDiv: string
+) {
   const app = createApp({
     setup() {
       provide('url-after-submit', urlAfterSubmit)
@@ -27,7 +33,7 @@ export const startRegisterUserApp = async function(urlAfterSubmit: string, gqlUr
         new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
       )
     },
-    render: () => h(RegisterView)
+    render: () => h(CustomerCreateView)
   })
 
   app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
@@ -36,7 +42,36 @@ export const startRegisterUserApp = async function(urlAfterSubmit: string, gqlUr
   app.mount(appDiv)
 }
 
-export const startRoomLayoutCreateApp = async function(gqlUrl: string, token: string, site: string, roomLayoutListUrl: string, appDiv: string) {
+export const startCustomerEditApp = async function (
+  gqlUrl: string,
+  token: string,
+  userId: string,
+  appDiv: string
+) {
+  const app = createApp({
+    setup() {
+      provide('user-id', userId)
+      provide(
+        'gqlApiService',
+        new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
+      )
+    },
+    render: () => h(CustomerEditView)
+  })
+
+  app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
+  useAuthenticationStore().setSession(token)
+
+  app.mount(appDiv)
+}
+
+export const startRoomLayoutCreateApp = async function (
+  gqlUrl: string,
+  token: string,
+  site: string,
+  roomLayoutListUrl: string,
+  appDiv: string
+) {
   const app = createApp({
     setup() {
       provide('roomLayoutListUrl', roomLayoutListUrl)
@@ -66,7 +101,14 @@ export const startRoomLayoutCreateApp = async function(gqlUrl: string, token: st
   app.mount(appDiv)
 }
 
-export const startRoomLayoutEditApp = async function(gqlUrl: string, token: string, site: string, roomLayoutId: string, roomLayoutListUrl: string, appDiv: string) {
+export const startRoomLayoutEditApp = async function (
+  gqlUrl: string,
+  token: string,
+  site: string,
+  roomLayoutId: string,
+  roomLayoutListUrl: string,
+  appDiv: string
+) {
   const app = createApp({
     setup() {
       provide('roomLayoutId', roomLayoutId)
@@ -97,7 +139,12 @@ export const startRoomLayoutEditApp = async function(gqlUrl: string, token: stri
   app.mount(appDiv)
 }
 
-export const startCalendarApp = async function(gqlUrl: string, token: string, site: string, appDiv: string) {
+export const startCalendarApp = async function (
+  gqlUrl: string,
+  token: string,
+  site: string,
+  appDiv: string
+) {
   const app = createApp({
     setup() {
       provide(

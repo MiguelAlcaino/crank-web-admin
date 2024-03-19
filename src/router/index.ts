@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 
 import { authService } from '@/services/authService'
-import RoomLayoutListView from '@/views/admin/RoomLayoutListView.vue'
+import RoomLayoutListView from '@/views/RoomLayoutListView.vue'
 import HomeView from '@/views/HomeView.vue'
 
 const router = createRouter({
@@ -22,12 +22,17 @@ const router = createRouter({
     {
       path: '/user/create',
       name: 'user_create',
-      component: () => import('../views/RegisterView.vue')
+      component: () => import('../views/CustomerCreateView.vue')
+    },
+    {
+      path: '/user/edit/:id',
+      name: 'user_edit',
+      component: () => import('../views/CustomerEditView.vue')
     },
     {
       path: '/admin/calendar-class',
       name: 'admin_calendar_class',
-      component: () => import('../views/admin/AdminClassView.vue')
+      component: () => import('../views/AdminClassView.vue')
     },
     {
       path: '/admin/room-layout/list',
@@ -37,12 +42,12 @@ const router = createRouter({
     {
       path: '/admin/room-layout/create',
       name: 'admin_room_layout_create',
-      component: () => import('../views/admin/RoomLayoutView.vue')
+      component: () => import('../views/RoomLayoutView.vue')
     },
     {
       path: '/admin/room-layout/edit/:id',
       name: 'admin_room_layout_edit',
-      component: () => import('../views/admin/RoomLayoutView.vue')
+      component: () => import('../views/RoomLayoutView.vue')
     }
   ]
 })

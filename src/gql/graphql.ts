@@ -299,6 +299,8 @@ export type EditUserInput = {
   userId: Scalars['ID']
 }
 
+export type EditUserResultUnion = IdentifiableUser | OtherUserHasThisExternalIdError
+
 export type Enrollment = {
   __typename: 'Enrollment'
   class: Class
@@ -384,6 +386,7 @@ export type IdentifiableSiteUser = {
   __typename: 'IdentifiableSiteUser'
   id?: Maybe<Scalars['ID']>
   identifiableUser?: Maybe<IdentifiableUser>
+  siteUserInfo?: Maybe<SimpleSiteUser>
 }
 
 export type IdentifiableUser = {
@@ -430,7 +433,7 @@ export type Mutation = {
   /** Edits a room layout */
   editRoomLayout: RoomLayout
   /** Edits a user */
-  editUser?: Maybe<IdentifiableUser>
+  editUser?: Maybe<EditUserResultUnion>
   /** Enabled a spot in a class */
   enableSpot?: Maybe<DisableEnableSpotResultUnion>
   /** Registers a new user and returns an IdentifiableUser type */
@@ -571,7 +574,6 @@ export type MutationRemoveUserFromWaitlistArgs = {
 
 export type MutationRequestPasswordLinkArgs = {
   input?: InputMaybe<RequestPasswordLinkInput>
-  site: SiteEnum
 }
 
 export type MutationResetPasswordForCurrentUserArgs = {
@@ -599,6 +601,12 @@ export type MutationUpdateCurrentUserArgs = {
 export type MutationUpdateCurrentUserPasswordArgs = {
   input: UpdateCurrentUserPasswordInput
   site: SiteEnum
+}
+
+export type OtherUserHasThisExternalIdError = Error & {
+  __typename: 'OtherUserHasThisExternalIdError'
+  code: Scalars['String']
+  siteUser: IdentifiableSiteUser
 }
 
 export type PasswordsDontMatchError = Error & {
@@ -834,6 +842,12 @@ export type RoomLayoutsInput = {
   usersCapacity?: InputMaybe<Scalars['Int']>
 }
 
+export type SimpleSiteUser = {
+  __typename: 'SimpleSiteUser'
+  externalUserId: Scalars['ID']
+  site: SiteEnum
+}
+
 export enum SiteEnum {
   AbuDhabi = 'abu_dhabi',
   Dubai = 'dubai'
@@ -846,7 +860,7 @@ export type SiteSetting = {
 }
 
 export type SiteUserInput = {
-  externalID: Scalars['ID']
+  externalUserId: Scalars['ID']
   site: SiteEnum
 }
 
@@ -921,6 +935,7 @@ export type User = {
   emergencyContactPhone: Scalars['String']
   emergencyContactRelationship?: Maybe<Scalars['String']>
   enrollmentInClass?: Maybe<EnrollmentInfoInterface>
+  /** @deprecated Use siteUsers instead */
   existsInSites: Array<SiteEnum>
   firstName: Scalars['String']
   gender?: Maybe<GenderEnum>
@@ -928,6 +943,7 @@ export type User = {
   lastName: Scalars['String']
   leaderboardUsername?: Maybe<Scalars['String']>
   phone: Scalars['String']
+  siteUsers: Array<SimpleSiteUser>
   state?: Maybe<State>
   weight?: Maybe<Scalars['Float']>
   zipCode: Scalars['String']
@@ -1013,28 +1029,6 @@ export type SiteSettingsQueryVariables = Exact<{
 export type SiteSettingsQuery = {
   __typename: 'Query'
   siteSettings: { __typename: 'SiteSetting'; siteDateTimeNow?: any | null }
-}
-
-export type CalendarClassesQueryVariables = Exact<{
-  site: SiteEnum
-  params?: InputMaybe<CalendarClassesParams>
-}>
-
-export type CalendarClassesQuery = {
-  __typename: 'Query'
-  calendarClasses: Array<{
-    __typename: 'Class'
-    id: string
-    name: string
-    description: string
-    instructorName: string
-    isSubstitute: boolean
-    start: any
-    startWithNoTimeZone: any
-    duration: number
-    waitListAvailable: boolean
-    bookingWindow: { __typename: 'BookingWindow'; startDateTime: any; endDateTime: any }
-  }>
 }
 
 export type ClassInfoAdminQueryVariables = Exact<{
@@ -1567,6 +1561,18 @@ export type RegisterUserMutation = {
   registerIdentifiableUser?: { __typename: 'IdentifiableSiteUser'; id?: string | null } | null
 }
 
+export type RequestPasswordLinkMutationVariables = Exact<{
+  input?: InputMaybe<RequestPasswordLinkInput>
+}>
+
+export type RequestPasswordLinkMutation = {
+  __typename: 'Mutation'
+  requestPasswordLink?:
+    | { __typename: 'ResetPasswordLinkSentSuccessfully'; status: boolean }
+    | { __typename: 'TooManyResetPasswordLinkRequestsError'; availableAgainAt?: any | null }
+    | null
+}
+
 export const SiteSettingsDocument = {
   kind: 'Document',
   definitions: [
@@ -1607,77 +1613,6 @@ export const SiteSettingsDocument = {
     }
   ]
 } as unknown as DocumentNode<SiteSettingsQuery, SiteSettingsQueryVariables>
-export const CalendarClassesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'calendarClasses' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'params' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'CalendarClassesParams' } }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'calendarClasses' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'params' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'params' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'instructorName' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'isSubstitute' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'start' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'startWithNoTimeZone' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'duration' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'waitListAvailable' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'bookingWindow' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'startDateTime' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'endDateTime' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<CalendarClassesQuery, CalendarClassesQueryVariables>
 export const ClassInfoAdminDocument = {
   kind: 'Document',
   definitions: [
@@ -3251,7 +3186,6 @@ export const SyncClassDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'x' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'y' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'icon' } },
@@ -3311,10 +3245,6 @@ export const SyncClassDocument = {
                                     selectionSet: {
                                       kind: 'SelectionSet',
                                       selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: '__typename' }
-                                        },
                                         {
                                           kind: 'Field',
                                           name: { kind: 'Name', value: 'firstName' }
@@ -3536,3 +3466,65 @@ export const RegisterUserDocument = {
     }
   ]
 } as unknown as DocumentNode<RegisterUserMutation, RegisterUserMutationVariables>
+export const RequestPasswordLinkDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'requestPasswordLink' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'RequestPasswordLinkInput' } }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'requestPasswordLink' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'TooManyResetPasswordLinkRequestsError' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'availableAgainAt' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'ResetPasswordLinkSentSuccessfully' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'status' } }]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<RequestPasswordLinkMutation, RequestPasswordLinkMutationVariables>

@@ -55,6 +55,7 @@ import type { UserInput } from '@/gql/graphql'
 import type { ApiService } from '@/services/apiService'
 
 import ModalComponent from '@/components/ModalComponent.vue'
+import ResetUserPassword from '@/components/ResetUserPassword.vue'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import dayjs from 'dayjs'
 
@@ -62,10 +63,14 @@ import { VueTelInput } from 'vue-tel-input'
 import 'vue-tel-input/vue-tel-input.css'
 import { getFormattedPhoneNumber } from '@/utils/utility-functions'
 import { SUCCESS_UPDATE_PROFILE } from '@/utils/successMessages'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 
 const isSaving = ref(false)
 const successModalIsVisible = ref(false)
 const errorModalIsVisible = ref(false)
+const errorModalMessage = ref('')
 const weightInputMessageIsVisible = ref(false)
 const isLoading = ref(false)
 
@@ -74,6 +79,8 @@ const countryStates = ref([] as State[])
 
 const currentDate = ref(new Date())
 const userEmail = ref<string>('')
+
+const userId = ref<string>('')
 
 const formData = reactive({
   firstName: '',
@@ -164,15 +171,24 @@ const v$ = useVuelidate(rules, formData)
 const apiService = inject<ApiService>('gqlApiService')!
 
 onMounted(() => {
+  userId.value = geUserId()
   getCountries()
   getUser()
 })
 
+function geUserId(): string {
+  let userId = inject<string | undefined>('userId')
+  if (userId) {
+    return userId as string
+  }
+
+  return route.params.id as string
+}
+
 async function getUser(): Promise<void> {
   isLoading.value = true
   try {
-    //TODO: COMPLETE GET USER
-    const identifiableUser = (await apiService.getUser('1')) as IdentifiableUser
+    const identifiableUser = (await apiService.getUser(userId.value)) as IdentifiableUser
 
     if (identifiableUser.user !== null && identifiableUser.user !== undefined) {
       userEmail.value = identifiableUser.user.email
@@ -239,16 +255,23 @@ const submitForm = async () => {
       weight: formData.weight,
       zipCode: '0000'
     }
-    //TODO: COMPLETE UPDATE USER
-    isSaving.value = true
-    //const response = await apiService.updateCurrentUser(input)
-    isSaving.value = false
 
-    // if (response === 'UpdateProfileSuccess') {
-    //   successModalIsVisible.value = true
-    // } else {
-    //   errorModalIsVisible.value = true
-    // }
+    try {
+      isSaving.value = true
+      const editUserResultUnion = await apiService.editUser(userId.value, input)
+
+      if (editUserResultUnion.__typename === 'IdentifiableUser') {
+        successModalIsVisible.value = true
+      } else {
+        errorModalMessage.value = ERROR_UNKNOWN
+        errorModalIsVisible.value = true
+      }
+    } catch (error) {
+      errorModalMessage.value = ERROR_UNKNOWN
+      errorModalIsVisible.value = true
+    } finally {
+      isSaving.value = false
+    }
   } else {
     console.error('error form')
   }
@@ -275,9 +298,10 @@ function onChangeCountry() {
   <hr />
   <form @submit.prevent="submitForm" autocomplete="off">
     <div class="field">
-      <RouterLink class="btn btn-primary" :to="{ name: 'change_password' }"
-        >Change Password</RouterLink
-      >
+      <ResetUserPassword :email="userEmail"></ResetUserPassword>
+      &nbsp;
+      <!-- TODO: Implement ChangeUserPassword component -->
+      <!-- <ChangeUserPassword :user-id="userId"></ChangeUserPassword> -->
     </div>
     <hr />
 
@@ -691,7 +715,7 @@ function onChangeCountry() {
   <!-- Error Modal -->
   <ModalComponent
     title="Error"
-    :message="ERROR_UNKNOWN"
+    :message="errorModalMessage"
     :closable="false"
     v-if="errorModalIsVisible"
     @on-ok="errorModalIsVisible = false"
