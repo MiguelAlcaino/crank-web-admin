@@ -6,5 +6,10 @@ import {
   startRoomLayoutEditApp
 } from '@/start-app-functions'
 
-export { startCustomerCreateApp, startRoomLayoutCreateApp, startRoomLayoutEditApp, startCalendarApp, startCustomerEditApp }
-
+export {
+  startCustomerCreateApp,
+  startRoomLayoutCreateApp,
+  startRoomLayoutEditApp,
+  startCalendarApp,
+  startCustomerEditApp
+}

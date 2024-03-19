@@ -19,7 +19,12 @@ import { SiteEnum } from '@/gql/graphql'
 import { appStore } from '@/stores/appStorage'
 import AdminClassView from '@/views/AdminClassView.vue'
 
-export const startCustomerCreateApp = async function(urlAfterSubmit: string, gqlUrl: string, token: string, appDiv: string) {
+export const startCustomerCreateApp = async function (
+  urlAfterSubmit: string,
+  gqlUrl: string,
+  token: string,
+  appDiv: string
+) {
   const app = createApp({
     setup() {
       provide('url-after-submit', urlAfterSubmit)
@@ -37,7 +42,12 @@ export const startCustomerCreateApp = async function(urlAfterSubmit: string, gql
   app.mount(appDiv)
 }
 
-export const startCustomerEditApp = async function(gqlUrl: string, token: string, userId: string, appDiv: string) {
+export const startCustomerEditApp = async function (
+  gqlUrl: string,
+  token: string,
+  userId: string,
+  appDiv: string
+) {
   const app = createApp({
     setup() {
       provide('user-id', userId)
@@ -55,7 +65,13 @@ export const startCustomerEditApp = async function(gqlUrl: string, token: string
   app.mount(appDiv)
 }
 
-export const startRoomLayoutCreateApp = async function(gqlUrl: string, token: string, site: string, roomLayoutListUrl: string, appDiv: string) {
+export const startRoomLayoutCreateApp = async function (
+  gqlUrl: string,
+  token: string,
+  site: string,
+  roomLayoutListUrl: string,
+  appDiv: string
+) {
   const app = createApp({
     setup() {
       provide('roomLayoutListUrl', roomLayoutListUrl)
@@ -85,7 +101,14 @@ export const startRoomLayoutCreateApp = async function(gqlUrl: string, token: st
   app.mount(appDiv)
 }
 
-export const startRoomLayoutEditApp = async function(gqlUrl: string, token: string, site: string, roomLayoutId: string, roomLayoutListUrl: string, appDiv: string) {
+export const startRoomLayoutEditApp = async function (
+  gqlUrl: string,
+  token: string,
+  site: string,
+  roomLayoutId: string,
+  roomLayoutListUrl: string,
+  appDiv: string
+) {
   const app = createApp({
     setup() {
       provide('roomLayoutId', roomLayoutId)
@@ -116,7 +139,12 @@ export const startRoomLayoutEditApp = async function(gqlUrl: string, token: stri
   app.mount(appDiv)
 }
 
-export const startCalendarApp = async function(gqlUrl: string, token: string, site: string, appDiv: string) {
+export const startCalendarApp = async function (
+  gqlUrl: string,
+  token: string,
+  site: string,
+  appDiv: string
+) {
   const app = createApp({
     setup() {
       provide(

@@ -201,7 +201,6 @@ const submitForm = async () => {
       userId.value = await apiService.registerIdentifiableUser(formData.location!, input)
 
       successModalIsVisible.value = true
-
     } catch (error) {
       if (error instanceof ValidationError) {
         errorMessage.value = error.message
