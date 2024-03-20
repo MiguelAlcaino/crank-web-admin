@@ -89,6 +89,7 @@ export class ApiService {
             waitListAvailable
             showAsDisabled
             maxCapacity
+            isSubstitute
           }
           roomLayout {
             id

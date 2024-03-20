@@ -35,6 +35,7 @@ interface Class {
   waitListAvailable: boolean
   showAsDisabled: boolean
   maxCapacity: number
+  isSubstitute: boolean
 }
 
 interface EnrollmentInfo {
@@ -469,9 +470,12 @@ async function checkWaitlistIsEnable() {
       <div class="row">
         <div class="col-md-10">
           <h4>
-            {{ classInfo?.class?.name }} - {{ classInfo?.class.instructorName }} ({{
-              dayjs(classInfo?.class.startWithNoTimeZone).format('DD/MM/YYYY')
-            }})
+            {{ classInfo?.class?.name }} -
+            {{
+              classInfo?.class?.instructorName +
+              (classInfo?.class?.isSubstitute ? ' (Substitute)' : '')
+            }}
+            ({{ dayjs(classInfo?.class.startWithNoTimeZone).format('DD/MM/YYYY') }})
           </h4>
           <h5>
             Time : {{ dayjs(classInfo?.class.startWithNoTimeZone).format('hh:mm A') }} | Duration :
