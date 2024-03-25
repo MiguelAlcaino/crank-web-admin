@@ -8,6 +8,7 @@ interface ClassSchedule {
   starts: string
   ends: string
   roomLayout: string
+  maxCapacity: number
 }
 </script>
 
@@ -19,6 +20,8 @@ const checked = ref(false)
 const indeterminate = ref(false)
 const setOfCheckedId = ref<Set<number>>(new Set())
 
+const enableUpdateRoomLayout = ref(false)
+
 const classSchedules = ref<ClassSchedule[]>([
   {
     id: 343,
@@ -28,7 +31,8 @@ const classSchedules = ref<ClassSchedule[]>([
     dayOfTheWeek: 'Sunday',
     starts: '2023-11-24 10:00:00',
     ends: '2024-11-24 10:45:00',
-    roomLayout: '2 spots layout'
+    roomLayout: '2 spots layout',
+    maxCapacity: 2
   },
   {
     id: 344,
@@ -38,7 +42,8 @@ const classSchedules = ref<ClassSchedule[]>([
     dayOfTheWeek: 'Sunday',
     starts: '2023-11-24 10:00:00',
     ends: '2024-11-24 10:45:00',
-    roomLayout: '2 spots layout'
+    roomLayout: '2 spots layout',
+    maxCapacity: 2
   },
   {
     id: 345,
@@ -48,7 +53,8 @@ const classSchedules = ref<ClassSchedule[]>([
     dayOfTheWeek: 'Sunday',
     starts: '2023-11-24 10:00:00',
     ends: '2024-11-24 10:45:00',
-    roomLayout: '2 spots layout'
+    roomLayout: '2 spots layout',
+    maxCapacity: 2
   },
   {
     id: 346,
@@ -58,7 +64,8 @@ const classSchedules = ref<ClassSchedule[]>([
     dayOfTheWeek: 'Sunday',
     starts: '2023-11-24 10:00:00',
     ends: '2024-11-24 10:45:00',
-    roomLayout: '2 spots layout'
+    roomLayout: '2 spots layout',
+    maxCapacity: 3
   },
   {
     id: 347,
@@ -68,7 +75,8 @@ const classSchedules = ref<ClassSchedule[]>([
     dayOfTheWeek: 'Sunday',
     starts: '2023-11-24 10:00:00',
     ends: '2024-11-24 10:45:00',
-    roomLayout: '2 spots layout'
+    roomLayout: '2 spots layout',
+    maxCapacity: 2
   },
   {
     id: 348,
@@ -78,7 +86,8 @@ const classSchedules = ref<ClassSchedule[]>([
     dayOfTheWeek: 'Sunday',
     starts: '2023-11-24 10:00:00',
     ends: '2024-11-24 10:45:00',
-    roomLayout: '2 spots layout'
+    roomLayout: '2 spots layout',
+    maxCapacity: 2
   },
   {
     id: 349,
@@ -88,7 +97,8 @@ const classSchedules = ref<ClassSchedule[]>([
     dayOfTheWeek: 'Sunday',
     starts: '2023-11-24 10:00:00',
     ends: '2024-11-24 10:45:00',
-    roomLayout: '2 spots layout'
+    roomLayout: '2 spots layout',
+    maxCapacity: 2
   }
 ])
 
@@ -107,19 +117,31 @@ function refreshCheckedStatus(): void {
 
   indeterminate.value =
     listOfEnabledData.some(({ id }) => setOfCheckedId.value.has(id)) && !checked.value
+
+  refreshEnableUpdateRoomLayout()
 }
 
-function onItemChecked(id: number, event: any): void {
-  const checked = event.target.checked as boolean
+function onItemChecked(id: number, event: Event): void {
+  const checked = (event.target as any).checked as boolean
 
   updateCheckedSet(id, checked)
   refreshCheckedStatus()
 }
 
-function onAllChecked(): void {
-  classSchedules.value.forEach(({ id }) => updateCheckedSet(id, checked.value))
+function onAllChecked(event: Event): void {
+  const checked = (event.target as any).checked as boolean
+
+  classSchedules.value.forEach(({ id }) => updateCheckedSet(id, checked))
 
   refreshCheckedStatus()
+}
+
+function refreshEnableUpdateRoomLayout(): void {
+  var maxCapacity = classSchedules.value
+    .filter((item) => setOfCheckedId.value.has(item.id))
+    .map((item) => item.maxCapacity)
+
+  enableUpdateRoomLayout.value = maxCapacity.every((val, i, arr) => val === arr[0])
 }
 </script>
 
@@ -137,7 +159,7 @@ function onAllChecked(): void {
                   id="checkboxSelectAll"
                   v-model="checked"
                   :indeterminate="indeterminate"
-                  @change="onAllChecked()"
+                  @change="onAllChecked($event)"
                 />
                 <label class="custom-control-label" for="checkboxSelectAll"></label>
               </div>
@@ -145,6 +167,7 @@ function onAllChecked(): void {
             <th class="text-center">ID</th>
             <th class="text-center">MB Id</th>
             <th class="text-center">Class</th>
+            <th class="text-center">Capacity</th>
             <th class="text-center">Instructor</th>
             <th class="text-center">Day of the Week</th>
             <th class="text-center">Starts</th>
@@ -169,6 +192,7 @@ function onAllChecked(): void {
             <td class="text-center">{{ item.id }}</td>
             <td class="text-center">{{ item.mbId }}</td>
             <td class="text-center">{{ item.class }}</td>
+            <td class="text-center">{{ item.maxCapacity }}</td>
             <td class="text-center">{{ item.instructor }}</td>
             <td class="text-center">{{ item.dayOfTheWeek }}</td>
             <td class="text-center">{{ item.starts }}</td>
@@ -188,6 +212,7 @@ function onAllChecked(): void {
     </div>
   </div>
   {{ setOfCheckedId }}
+  {{ enableUpdateRoomLayout }}
 </template>
 
 <style scoped>
