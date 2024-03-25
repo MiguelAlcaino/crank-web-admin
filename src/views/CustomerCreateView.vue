@@ -760,10 +760,6 @@ async function goToUrlAfterSubmit() {
   </ModalComponent>
 </template>
 
-<style lang="css" scoped src="bootstrap/dist/css/bootstrap.min.css"></style>
-
-<style lang="css" scoped src="@/assets/main.css"></style>
-
 <style scoped>
 h3 {
   color: #737373;
