@@ -48,6 +48,11 @@ const router = createRouter({
       path: '/admin/room-layout/edit/:id',
       name: 'admin_room_layout_edit',
       component: () => import('../views/RoomLayoutView.vue')
+    },
+    {
+      path: '/class-schedules',
+      name: 'class_schedules',
+      component: () => import('../views/ClassSchedulesView.vue')
     }
   ]
 })

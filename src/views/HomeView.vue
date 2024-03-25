@@ -13,5 +13,7 @@
     <br />
     <RouterLink key="/user/create" to="/user/create"> Create User</RouterLink>
     <br />
+    <RouterLink key="/class-schedules" to="/class-schedules"> Class Schedules</RouterLink>
+    <br />
   </main>
 </template>
