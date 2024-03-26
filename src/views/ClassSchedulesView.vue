@@ -49,9 +49,16 @@ const confirmModalIsVisible = ref<boolean>(false)
 const errorModalIsVisible = ref<boolean>(false)
 const successModalIsVisible = ref<boolean>(false)
 
+const urlSyncAll = ref<string>('#')
+
 const isSaving = ref(false)
 
 onMounted(() => {
+  let _urlSyncAll = inject<any | undefined>('url-sync-all')
+  if (_urlSyncAll) {
+    urlSyncAll.value = _urlSyncAll
+  }
+
   getAvailableClassTypes()
   getRoomLayouts()
   getClassSchedules()
@@ -214,6 +221,11 @@ async function onClickConfirm() {
 </script>
 
 <template>
+  <div class="row">
+    <div class="col-12" style="text-align: right">
+      <a :href="urlSyncAll" class="btn btn-primary">Sync All</a>
+    </div>
+  </div>
   <div class="row">
     <div class="col-6 col-sm-6 col-md-6 col-lg-5 col-xl-3">
       <select
