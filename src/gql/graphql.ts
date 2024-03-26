@@ -189,6 +189,18 @@ export type ClassPositionInterface = {
   y: Scalars['Int']
 }
 
+export type ClassSchedule = {
+  __typename: 'ClassSchedule'
+  capacity: Scalars['Int']
+  dayOfWeek: Scalars['String']
+  end: Scalars['DateTime']
+  id: Scalars['ID']
+  instructorName: Scalars['String']
+  roomLayout?: Maybe<RoomLayout>
+  start: Scalars['DateTime']
+  type: Scalars['String']
+}
+
 export type ClassStat = {
   __typename: 'ClassStat'
   /** Amount of chart points adjusted to the amount of the requested ones. Values for each points are the average of each interval */
@@ -452,6 +464,8 @@ export type Mutation = {
   requestPasswordLink?: Maybe<ResetPasswordLinkResultUnion>
   /** Resets the current user's password */
   resetPasswordForCurrentUser?: Maybe<ResetPasswordForCurrentUserUnion>
+  /** Sets a room layout for a list of class schedules */
+  setRoomLayoutForClassSchedules: Array<ClassSchedule>
   /** Swaps a spot in a class */
   swapSpot?: Maybe<SwapSpotResultUnion>
   /** Sync all classes */
@@ -580,6 +594,10 @@ export type MutationResetPasswordForCurrentUserArgs = {
   input?: InputMaybe<ResetPasswordForCurrentUserInput>
 }
 
+export type MutationSetRoomLayoutForClassSchedulesArgs = {
+  input: SetRoomLayoutForClassSchedulesInput
+}
+
 export type MutationSwapSpotArgs = {
   input: EditEnrollmentInput
   site: SiteEnum
@@ -646,10 +664,14 @@ export type Purchase = {
 
 export type Query = {
   __typename: 'Query'
+  /** Returns a list of all the available class types for a given site */
+  availableClassTypes: Array<Scalars['String']>
   /** Get next classes */
   calendarClasses: Array<Class>
   /** Get a single class information */
   classInfo?: Maybe<ClassInfo>
+  /** Returns a list of all the class schedules for a given site */
+  classSchedules: Array<ClassSchedule>
   /** Returns the list of all available countries */
   countries?: Maybe<Array<Maybe<Country>>>
   /** Returns a specific country by a given country code */
@@ -680,6 +702,10 @@ export type Query = {
   user?: Maybe<IdentifiableUser>
 }
 
+export type QueryAvailableClassTypesArgs = {
+  site?: InputMaybe<SiteEnum>
+}
+
 export type QueryCalendarClassesArgs = {
   params?: InputMaybe<CalendarClassesParams>
   site: SiteEnum
@@ -687,6 +713,10 @@ export type QueryCalendarClassesArgs = {
 
 export type QueryClassInfoArgs = {
   id: Scalars['ID']
+  site: SiteEnum
+}
+
+export type QueryClassSchedulesArgs = {
   site: SiteEnum
 }
 
@@ -823,6 +853,7 @@ export type ResetPasswordSuccess = {
 
 export type RoomLayout = {
   __typename: 'RoomLayout'
+  capacity: Scalars['Int']
   columns: Scalars['Int']
   id: Scalars['ID']
   matrix?: Maybe<Array<ClassPositionInterface>>
@@ -840,6 +871,11 @@ export type RoomLayoutInput = {
 export type RoomLayoutsInput = {
   /** Amount of usable spots in the class */
   usersCapacity?: InputMaybe<Scalars['Int']>
+}
+
+export type SetRoomLayoutForClassSchedulesInput = {
+  classSchedulesIds: Array<Scalars['ID']>
+  roomLayoutId: Scalars['ID']
 }
 
 export type SimpleSiteUser = {
@@ -1053,6 +1089,7 @@ export type ClassInfoAdminQuery = {
       waitListAvailable: boolean
       showAsDisabled: boolean
       maxCapacity: number
+      isSubstitute: boolean
     }
     roomLayout?: {
       __typename: 'RoomLayout'
@@ -1211,7 +1248,7 @@ export type RoomLayoutsQueryVariables = Exact<{
 
 export type RoomLayoutsQuery = {
   __typename: 'Query'
-  roomLayouts: Array<{ __typename: 'RoomLayout'; id: string; name: string }>
+  roomLayouts: Array<{ __typename: 'RoomLayout'; id: string; name: string; capacity: number }>
 }
 
 export type RoomLayoutQueryVariables = Exact<{
@@ -1636,6 +1673,31 @@ export type EditUserSitesMutation = {
     | null
 }
 
+export type ClassSchedulesQueryVariables = Exact<{
+  site: SiteEnum
+}>
+
+export type ClassSchedulesQuery = {
+  __typename: 'Query'
+  classSchedules: Array<{
+    __typename: 'ClassSchedule'
+    id: string
+    instructorName: string
+    dayOfWeek: string
+    start: any
+    end: any
+    type: string
+    capacity: number
+    roomLayout?: { __typename: 'RoomLayout'; id: string; name: string } | null
+  }>
+}
+
+export type AvailableClassTypesQueryVariables = Exact<{
+  site: SiteEnum
+}>
+
+export type AvailableClassTypesQuery = { __typename: 'Query'; availableClassTypes: Array<string> }
+
 export const SiteSettingsDocument = {
   kind: 'Document',
   definitions: [
@@ -1737,7 +1799,8 @@ export const ClassInfoAdminDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'duration' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'waitListAvailable' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'showAsDisabled' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'maxCapacity' } }
+                      { kind: 'Field', name: { kind: 'Name', value: 'maxCapacity' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'isSubstitute' } }
                     ]
                   }
                 },
@@ -2250,7 +2313,8 @@ export const RoomLayoutsDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'capacity' } }
               ]
             }
           }
@@ -3842,3 +3906,98 @@ export const EditUserSitesDocument = {
     }
   ]
 } as unknown as DocumentNode<EditUserSitesMutation, EditUserSitesMutationVariables>
+export const ClassSchedulesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'classSchedules' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'classSchedules' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'site' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'instructorName' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'dayOfWeek' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'start' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'end' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'capacity' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'roomLayout' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<ClassSchedulesQuery, ClassSchedulesQueryVariables>
+export const AvailableClassTypesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'availableClassTypes' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'availableClassTypes' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'site' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<AvailableClassTypesQuery, AvailableClassTypesQueryVariables>
