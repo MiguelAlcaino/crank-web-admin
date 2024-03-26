@@ -40,10 +40,12 @@ const enableUpdateRoomLayout = ref(false)
 const roomLayouts = ref<RoomLayout[]>([])
 const filteredRoomLayouts = ref<RoomLayout[]>([])
 const selectedRoomLayoutId = ref<string | null>('-1')
-const classSchedules = ref<ClassSchedule[]>([])
+var allClassSchedules: ClassSchedule[] = []
 const filteredClassSchedules = ref<ClassSchedule[]>([])
 const types = ref<string[]>([])
 const typeFilterSelected = ref<string | null>(null)
+const capacities = ref<number[]>([])
+const capacityFilterSelected = ref<number | null>(null)
 
 const confirmModalIsVisible = ref<boolean>(false)
 const errorModalIsVisible = ref<boolean>(false)
@@ -75,11 +77,12 @@ async function getAvailableClassTypes() {
 async function getClassSchedules() {
   isLoading.value = true
 
-  classSchedules.value = (await apiService.classSchedules(
+  allClassSchedules = (await apiService.classSchedules(
     appStore().site
   )) as unknown as ClassSchedule[]
 
-  filteredClassSchedules.value = classSchedules.value
+  filteredClassSchedules.value = allClassSchedules
+  capacities.value = extractDifferentCapacities(filteredClassSchedules.value)
 
   isLoading.value = false
 }
@@ -103,7 +106,7 @@ function updateCheckedSet(id: string, checked: boolean): void {
 }
 
 function refreshCheckedStatus(): void {
-  const listOfEnabledData = classSchedules.value
+  const listOfEnabledData = filteredClassSchedules.value
 
   checked.value = listOfEnabledData.every(({ id }) => setOfCheckedId.value.has(id))
 
@@ -124,13 +127,13 @@ function onItemChecked(id: string, event: Event): void {
 function onAllChecked(event: Event): void {
   const checked = (event.target as any).checked as boolean
 
-  classSchedules.value.forEach(({ id }) => updateCheckedSet(id, checked))
+  filteredClassSchedules.value.forEach(({ id }) => updateCheckedSet(id, checked))
 
   refreshCheckedStatus()
 }
 
 function refreshEnableUpdateRoomLayout(): void {
-  var maxCapacity = classSchedules.value
+  var maxCapacity = filteredClassSchedules.value
     .filter((item) => setOfCheckedId.value.has(item.id))
     .map((item) => item.capacity)
 
@@ -138,7 +141,7 @@ function refreshEnableUpdateRoomLayout(): void {
 }
 
 function filterRoomLayouts(): void {
-  const capacities = classSchedules.value
+  const capacities = allClassSchedules
     .filter((item) => setOfCheckedId.value.has(item.id))
     .map((item) => item.capacity)
 
@@ -162,19 +165,13 @@ function filterRoomLayouts(): void {
   }
 }
 
-function onTypeFilterChange() {
-  if (typeFilterSelected.value === null) {
-    filteredClassSchedules.value = classSchedules.value
-    return
-  }
+function onFilterChange() {
+  setOfCheckedId.value.clear()
+  checked.value = false
+  indeterminate.value = false
 
-  filteredClassSchedules.value = classSchedules.value.filter(
-    (item) => item.type === typeFilterSelected.value
-  )
-}
-
-function onClickUpdateSelected() {
-  confirmModalIsVisible.value = true
+  filterRoomLayouts()
+  applyFilters()
 }
 
 async function onClickConfirm() {
@@ -191,7 +188,7 @@ async function onClickConfirm() {
 
     let tempClassSchedule: ClassSchedule[] = []
 
-    for (const item of classSchedules.value) {
+    for (const item of allClassSchedules) {
       if (classScheduleIds.includes(item.id)) {
         const index = classSchedulesUpdated.findIndex((x) => x.id === item.id)
 
@@ -203,9 +200,9 @@ async function onClickConfirm() {
       }
     }
 
-    classSchedules.value = tempClassSchedule
+    allClassSchedules = tempClassSchedule
 
-    onTypeFilterChange()
+    applyFilters()
 
     selectedRoomLayoutId.value = '-1'
     setOfCheckedId.value.clear()
@@ -217,6 +214,30 @@ async function onClickConfirm() {
     isSaving.value = false
     confirmModalIsVisible.value = false
   }
+}
+
+function applyFilters() {
+  filteredClassSchedules.value = allClassSchedules
+
+  if (typeFilterSelected.value) {
+    filteredClassSchedules.value = filteredClassSchedules.value.filter(
+      (item) => item.type === typeFilterSelected.value
+    )
+  }
+
+  if (capacityFilterSelected.value) {
+    filteredClassSchedules.value = filteredClassSchedules.value.filter(
+      (item) => item.capacity === capacityFilterSelected.value
+    )
+  }
+}
+
+function extractDifferentCapacities(items: ClassSchedule[]) {
+  const capacities = items.map((item) => item.capacity)
+
+  return capacities.filter((value, index, self) => {
+    return self.indexOf(value) === index
+  })
 }
 </script>
 
@@ -233,7 +254,7 @@ async function onClickConfirm() {
         v-model="typeFilterSelected"
         id="typeFilter"
         required
-        @change="onTypeFilterChange"
+        @change="onFilterChange"
       >
         <option :value="null">Type filter (none selected)</option>
         <option v-for="(item, index) in types" :key="index" :value="item">
@@ -241,9 +262,23 @@ async function onClickConfirm() {
         </option>
       </select>
     </div>
+    <div class="col-6 col-sm-6 col-md-6 col-lg-5 col-xl-3">
+      <select
+        class="custom-select"
+        v-model="capacityFilterSelected"
+        id="capacityFilter"
+        required
+        @change="onFilterChange"
+      >
+        <option :value="null">Capacity filter (none selected)</option>
+        <option v-for="(item, index) in capacities" :key="index" :value="item">
+          {{ item }}
+        </option>
+      </select>
+    </div>
   </div>
   <br />
-  <div class="row">
+  <div class="row" v-if="setOfCheckedId.size > 0">
     <div class="col-6 col-sm-6 col-md-6 col-lg-5 col-xl-3">
       <select
         class="custom-select"
@@ -262,7 +297,7 @@ async function onClickConfirm() {
       <DefaultButtonComponent
         text="Update Selected"
         type="button"
-        @on-click="onClickUpdateSelected"
+        @on-click="confirmModalIsVisible = true"
         :disabled="
           !enableUpdateRoomLayout || setOfCheckedId.size === 0 || selectedRoomLayoutId === '-1'
         "
@@ -326,9 +361,16 @@ async function onClickConfirm() {
               <td class="text-center">{{ dayjs(item.end).format('DD/MM/YYYY h:mm A') }}</td>
               <td class="text-center">{{ item?.roomLayout?.name }}</td>
             </tr>
-            <tr v-if="!isLoading && classSchedules?.length === 0">
+            <tr v-if="!isLoading && filteredClassSchedules?.length === 0">
               <td colspan="9" class="text-center">
-                <p>NO DATA AVAILABLE IN TABLE</p>
+                <p>
+                  {{
+                    'NO DATA AVAILABLE IN TABLE' +
+                    (capacityFilterSelected || typeFilterSelected
+                      ? ' WITHIN THE FILTERED RANGE'
+                      : '')
+                  }}
+                </p>
               </td>
             </tr>
             <tr v-if="isLoading">
