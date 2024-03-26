@@ -162,6 +162,7 @@ const spotAction = ref<SpotActionEnum>(SpotActionEnum.none)
 const userCanModifyClass = ref<boolean>(false)
 const userCanSyncClasses = ref<boolean>(false)
 const waitListAvailable = ref<boolean>(false)
+const userCanCheckInCheckOut = ref<boolean>(false)
 
 const errorModalData = ref<{
   title: string
@@ -212,11 +213,15 @@ const successModalData = ref<{
 })
 
 onMounted(() => {
+  setPermissionsByRole()
   getClassInfo()
+})
 
+function setPermissionsByRole() {
   userCanModifyClass.value = authService.userHasRole(Role.ROLE_STAFF)
   userCanSyncClasses.value = authService.userHasRole(Role.ROLE_SUPER_ADMIN)
-})
+  userCanCheckInCheckOut.value = authService.userHasRole(Role.ROLE_INSTRUCTOR)
+}
 
 async function getClassInfo() {
   if (props.classId === null) return
@@ -550,7 +555,7 @@ async function checkWaitlistIsEnable() {
         @click-spot="spotClicked"
         :enrollments="enrollments"
         :spot-action="spotAction"
-        :spot-selection-is-disabled="!userCanModifyClass"
+        :spot-selection-is-disabled="!userCanModifyClass && !userCanCheckInCheckOut"
       >
       </SpotMatrix>
 
@@ -578,6 +583,7 @@ async function checkWaitlistIsEnable() {
         :isLoading="false"
         @after-cancel-member-reservation="afterEnrollingUser()"
         :show-edit-options="userCanModifyClass"
+        :user-can-check-in-check-out="userCanCheckInCheckOut"
       >
       </AdminBookedUsersList>
 
@@ -669,46 +675,49 @@ async function checkWaitlistIsEnable() {
             @on-click="spotAction = SpotActionEnum.none"
           >
           </DefaultButtonComponent>
-
-          <!-- Check In - Out button -->
-          <CheckInCheckOutUserInClass
-            v-if="
-              selectedSpot.enrollmentId != null &&
-              selectedSpot.isCheckedIn != null &&
-              spotAction !== SpotActionEnum.changeMemberSpot &&
-              spotAction !== SpotActionEnum.swapSpot
-            "
-            :enrollment-id="selectedSpot.enrollmentId"
-            :is-checked-in="selectedSpot.isCheckedIn"
-            @after-check-in-check-out="getClassInfo()"
-          ></CheckInCheckOutUserInClass>
-          <UserProfile
-            v-if="
-              selectedSpot.identifiableUser?.id &&
-              spotAction !== SpotActionEnum.changeMemberSpot &&
-              spotAction !== SpotActionEnum.swapSpot
-            "
-            :user-id="selectedSpot.identifiableUser?.id"
-          ></UserProfile>
-        </div>
-
-        <div v-if="spotAction === SpotActionEnum.asignUserToSpot">
-          <hr />
-          <EnrollSelectedMemberComponent
-            v-if="
-              classInfo !== null &&
-              selectedSpot.spotNumber !== null &&
-              selectedSpot.spotNumber !== undefined
-            "
-            :class-id="classId"
-            :spot-number="selectedSpot.spotNumber!"
-            enrollButtonText="Assign"
-            @after-enrolling="afterEnrollingUser()"
-            :is-waitlist-booking="false"
-          ></EnrollSelectedMemberComponent>
         </div>
       </div>
 
+      <!-- Check In - Out button -->
+      <CheckInCheckOutUserInClass
+        v-if="
+          userCanCheckInCheckOut &&
+          selectedSpot.enrollmentId != null &&
+          selectedSpot.isCheckedIn != null &&
+          spotAction !== SpotActionEnum.changeMemberSpot &&
+          spotAction !== SpotActionEnum.swapSpot
+        "
+        :enrollment-id="selectedSpot.enrollmentId"
+        :is-checked-in="selectedSpot.isCheckedIn"
+        @after-check-in-check-out="getClassInfo()"
+      ></CheckInCheckOutUserInClass>
+
+      <UserProfile
+        v-if="
+          selectedSpot.identifiableUser?.id &&
+          spotAction !== SpotActionEnum.changeMemberSpot &&
+          spotAction !== SpotActionEnum.swapSpot
+        "
+        :user-id="selectedSpot.identifiableUser?.id"
+      ></UserProfile>
+
+      <div v-if="userCanModifyClass && spotAction === SpotActionEnum.asignUserToSpot">
+        <hr />
+        <EnrollSelectedMemberComponent
+          v-if="
+            classInfo !== null &&
+            selectedSpot.spotNumber !== null &&
+            selectedSpot.spotNumber !== undefined
+          "
+          :class-id="classId"
+          :spot-number="selectedSpot.spotNumber!"
+          enrollButtonText="Assign"
+          @after-enrolling="afterEnrollingUser()"
+          :is-waitlist-booking="false"
+        ></EnrollSelectedMemberComponent>
+      </div>
+
+      <br />
       <br />
       <div
         class="row"

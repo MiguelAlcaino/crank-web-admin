@@ -34,6 +34,7 @@ interface Props {
   enrollments: EnrollmentInfo[]
   isLoading: boolean
   showEditOptions?: boolean
+  userCanCheckInCheckOut: boolean
 }
 </script>
 
@@ -102,9 +103,9 @@ async function removeUserFromClass(enrollmentId: string, lateCancel: boolean) {
         <tr>
           <th>FIRST NAME</th>
           <th>LAST NAME</th>
-          <th v-if="showEditOptions">SIGN IN</th>
+          <th v-if="userCanCheckInCheckOut">SIGN IN</th>
           <th v-if="showEditOptions">CANCEL RESERVATION</th>
-          <th v-if="showEditOptions">VIEW PROFILE</th>
+          <th>VIEW PROFILE</th>
           <th></th>
         </tr>
       </thead>
@@ -112,7 +113,7 @@ async function removeUserFromClass(enrollmentId: string, lateCancel: boolean) {
         <tr v-for="(item, index) in enrollments" v-bind:key="item.id" v-bind:index="index">
           <td>{{ item.identifiableSiteUser?.identifiableUser?.user?.firstName }}</td>
           <td>{{ item.identifiableSiteUser?.identifiableUser?.user?.lastName }}</td>
-          <td v-if="showEditOptions">
+          <td v-if="userCanCheckInCheckOut">
             <CheckInCheckOutUserInClass
               v-if="item.id != null && item.isCheckedIn != null"
               :enrollment-id="item.id"
@@ -129,7 +130,7 @@ async function removeUserFromClass(enrollmentId: string, lateCancel: boolean) {
               CANCEL BOOKING
             </button>
           </td>
-          <td v-if="showEditOptions">
+          <td>
             <UserProfile
               v-if="item.identifiableSiteUser?.identifiableUser?.id"
               :user-id="item.identifiableSiteUser?.identifiableUser?.id"
