@@ -20,6 +20,7 @@ interface Props {
   isCheckedIn?: boolean
   spotAction?: SpotActionEnum
   spotSelectionIsDisabled?: boolean
+  isBookedForFree?: boolean | null
 }
 </script>
 
@@ -81,7 +82,9 @@ function selectSpot() {
       @click="spotSelectionIsDisabled ? null : selectSpot()"
       :class="[
         spotSelectionIsDisabled ? 'spotEnabledNotClickable' : 'enabledSpot',
-        selected ? 'selectedSpot' : ''
+        selected ? 'selectedSpot' : '',
+        isBookedForFree && !selected ? 'isBookedForFree' : '',
+        isBookedForFree && selected ? 'isBookedForFreeSelected' : ''
       ]"
     >
       {{ spotNumber + (isCheckedIn === true ? '✓' : '') }}
@@ -244,5 +247,13 @@ function selectSpot() {
   font-weight: 400;
   font-size: 9px;
   cursor: pointer;
+}
+
+.isBookedForFree {
+  border: 2px solid #ffd903 !important;
+}
+
+.isBookedForFreeSelected {
+  border: 2px dashed #ffd903 !important;
 }
 </style>

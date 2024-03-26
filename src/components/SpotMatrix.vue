@@ -20,6 +20,7 @@ interface SpotPosition {
   enabled?: boolean
   isCheckedIn?: boolean
   spotNumber?: number | null
+  isBookedForFree?: boolean | null
 }
 
 interface ClassPosition {
@@ -47,6 +48,7 @@ interface EnrollmentInfo {
   enrollmentDateTime: Date
   isCheckedIn?: boolean
   spotNumber?: number | null
+  isBookedForFree?: boolean | null
 }
 
 interface IdentifiableSiteUser {
@@ -118,7 +120,8 @@ watch(
 function newSpotPosition(
   classPosition: ClassPosition,
   user: User | null | undefined,
-  isCheckedIn?: boolean
+  isCheckedIn: boolean,
+  isBookedForFree: boolean
 ): SpotPosition {
   if (classPosition.icon === PositionIconEnum.Spot) {
     return {
@@ -128,7 +131,8 @@ function newSpotPosition(
       spotNumber: classPosition.spotNumber,
       user: user,
       enabled: classPosition.enabled!,
-      isCheckedIn: isCheckedIn
+      isCheckedIn: isCheckedIn,
+      isBookedForFree: isBookedForFree
     }
   }
   return {
@@ -142,7 +146,8 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
   let rows: Array<Array<SpotPosition>> = []
   let classPosition: ClassPosition
   let user: User | null | undefined
-  let isCheckedIn: boolean | undefined
+  let isCheckedIn: boolean
+  let isBookedForFree: boolean
 
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix.length; j++) {
@@ -154,6 +159,7 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
 
         user = null
         isCheckedIn = false
+        isBookedForFree = false
 
         if (classPosition.icon === PositionIconEnum.Spot) {
           if (classPosition.spotNumber && props.enrollments) {
@@ -161,7 +167,8 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
               const enrollment = props.enrollments[index]
 
               if (enrollment.spotNumber === classPosition.spotNumber) {
-                isCheckedIn = enrollment.isCheckedIn
+                isCheckedIn = enrollment.isCheckedIn ?? false
+                isBookedForFree = enrollment.isBookedForFree ?? false
 
                 user = enrollment.identifiableSiteUser?.identifiableUser?.user
                 break
@@ -170,7 +177,7 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
           }
         }
 
-        rows[i].push(newSpotPosition(classPosition, user, isCheckedIn))
+        rows[i].push(newSpotPosition(classPosition, user, isCheckedIn, isBookedForFree))
       }
     }
   }
@@ -219,6 +226,7 @@ function onClickSpotAdmin(spotNumber: number) {
               :is-checked-in="spot.isCheckedIn"
               :spot-action="spotAction"
               :spot-selection-is-disabled="spotSelectionIsDisabled"
+              :is-booked-for-free="spot.isBookedForFree"
             />
             <icon-position-not-bookable v-else :icon="spot.icon" />
           </td>
