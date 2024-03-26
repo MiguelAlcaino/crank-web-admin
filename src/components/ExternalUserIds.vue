@@ -182,7 +182,7 @@ function onClickSuccessModalOk() {
                         </td>
                       </tr>
                       <tr v-if="isLoading">
-                        <td colspan="2" class="text-center">loading...</td>
+                        <td colspan="2" class="text-center">LOADING...</td>
                       </tr>
                     </tbody>
                   </table>
