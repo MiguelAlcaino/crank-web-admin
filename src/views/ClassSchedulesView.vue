@@ -1,108 +1,93 @@
 <script lang="ts">
 interface ClassSchedule {
-  id: number
-  mbId: string
-  class: string
-  instructor: string
-  dayOfTheWeek: string
-  starts: string
-  ends: string
-  roomLayout: string
-  maxCapacity: number
+  id: string
+  type: string
+  instructorName: string
+  dayOfWeek: string
+  start: Date
+  end: Date
+  roomLayout: RoomLayout
+  capacity: number
+}
+
+interface RoomLayout {
+  id: string
+  name: string
+  capacity: number
 }
 </script>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { appStore } from '@/stores/appStorage'
+import { inject, onMounted, ref } from 'vue'
+import dayjs from 'dayjs'
+
+import DefaultButtonComponent from '@/components/DefaultButtonComponent.vue'
+import ModalComponent from '@/components/ModalComponent.vue'
+
+import type { ApiService } from '@/services/apiService'
+import { ERROR_UNKNOWN } from '@/utils/errorMessages'
+
+const apiService = inject<ApiService>('gqlApiService')!
 
 const isLoading = ref(false)
 const checked = ref(false)
 const indeterminate = ref(false)
-const setOfCheckedId = ref<Set<number>>(new Set())
+const setOfCheckedId = ref<Set<string>>(new Set())
 
 const enableUpdateRoomLayout = ref(false)
 
-const classSchedules = ref<ClassSchedule[]>([
-  {
-    id: 343,
-    mbId: '1',
-    class: 'Ride',
-    instructor: 'Miguel teacher',
-    dayOfTheWeek: 'Sunday',
-    starts: '2023-11-24 10:00:00',
-    ends: '2024-11-24 10:45:00',
-    roomLayout: '2 spots layout',
-    maxCapacity: 2
-  },
-  {
-    id: 344,
-    mbId: '2',
-    class: 'Shape',
-    instructor: 'Miguel teacher',
-    dayOfTheWeek: 'Sunday',
-    starts: '2023-11-24 10:00:00',
-    ends: '2024-11-24 10:45:00',
-    roomLayout: '2 spots layout',
-    maxCapacity: 2
-  },
-  {
-    id: 345,
-    mbId: '3',
-    class: 'Ride',
-    instructor: 'Miguel teacher',
-    dayOfTheWeek: 'Sunday',
-    starts: '2023-11-24 10:00:00',
-    ends: '2024-11-24 10:45:00',
-    roomLayout: '2 spots layout',
-    maxCapacity: 2
-  },
-  {
-    id: 346,
-    mbId: '4',
-    class: 'Ride',
-    instructor: 'Miguel teacher',
-    dayOfTheWeek: 'Sunday',
-    starts: '2023-11-24 10:00:00',
-    ends: '2024-11-24 10:45:00',
-    roomLayout: '2 spots layout',
-    maxCapacity: 3
-  },
-  {
-    id: 347,
-    mbId: '5',
-    class: 'Ride',
-    instructor: 'Miguel teacher',
-    dayOfTheWeek: 'Sunday',
-    starts: '2023-11-24 10:00:00',
-    ends: '2024-11-24 10:45:00',
-    roomLayout: '2 spots layout',
-    maxCapacity: 2
-  },
-  {
-    id: 348,
-    mbId: '6',
-    class: 'Ride',
-    instructor: 'Miguel teacher',
-    dayOfTheWeek: 'Sunday',
-    starts: '2023-11-24 10:00:00',
-    ends: '2024-11-24 10:45:00',
-    roomLayout: '2 spots layout',
-    maxCapacity: 2
-  },
-  {
-    id: 349,
-    mbId: '7',
-    class: 'Ride',
-    instructor: 'Miguel teacher',
-    dayOfTheWeek: 'Sunday',
-    starts: '2023-11-24 10:00:00',
-    ends: '2024-11-24 10:45:00',
-    roomLayout: '2 spots layout',
-    maxCapacity: 2
-  }
-])
+const roomLayouts = ref<RoomLayout[]>([])
+const filteredRoomLayouts = ref<RoomLayout[]>([])
+const selectedRoomLayoutId = ref<string | null>('-1')
+const classSchedules = ref<ClassSchedule[]>([])
+const filteredClassSchedules = ref<ClassSchedule[]>([])
+const types = ref<string[]>([])
+const typeFilterSelected = ref<string | null>(null)
 
-function updateCheckedSet(id: number, checked: boolean): void {
+const confirmModalIsVisible = ref<boolean>(false)
+const errorModalIsVisible = ref<boolean>(false)
+const successModalIsVisible = ref<boolean>(false)
+
+const isSaving = ref(false)
+
+onMounted(() => {
+  getAvailableClassTypes()
+  getRoomLayouts()
+  getClassSchedules()
+})
+
+async function getAvailableClassTypes() {
+  isLoading.value = true
+
+  types.value = (await apiService.availableClassTypes(appStore().site)) as string[]
+
+  isLoading.value = false
+}
+
+async function getClassSchedules() {
+  isLoading.value = true
+
+  classSchedules.value = (await apiService.classSchedules(
+    appStore().site
+  )) as unknown as ClassSchedule[]
+
+  filteredClassSchedules.value = classSchedules.value
+
+  isLoading.value = false
+}
+
+async function getRoomLayouts() {
+  isLoading.value = true
+
+  roomLayouts.value = (await apiService.roomLayouts(appStore().site, null)) as RoomLayout[]
+
+  filteredRoomLayouts.value = roomLayouts.value
+
+  isLoading.value = false
+}
+
+function updateCheckedSet(id: string, checked: boolean): void {
   if (checked) {
     setOfCheckedId.value.add(id)
   } else {
@@ -119,9 +104,10 @@ function refreshCheckedStatus(): void {
     listOfEnabledData.some(({ id }) => setOfCheckedId.value.has(id)) && !checked.value
 
   refreshEnableUpdateRoomLayout()
+  filterRoomLayouts()
 }
 
-function onItemChecked(id: number, event: Event): void {
+function onItemChecked(id: string, event: Event): void {
   const checked = (event.target as any).checked as boolean
 
   updateCheckedSet(id, checked)
@@ -139,80 +125,243 @@ function onAllChecked(event: Event): void {
 function refreshEnableUpdateRoomLayout(): void {
   var maxCapacity = classSchedules.value
     .filter((item) => setOfCheckedId.value.has(item.id))
-    .map((item) => item.maxCapacity)
+    .map((item) => item.capacity)
 
   enableUpdateRoomLayout.value = maxCapacity.every((val, i, arr) => val === arr[0])
+}
+
+function filterRoomLayouts(): void {
+  const capacities = classSchedules.value
+    .filter((item) => setOfCheckedId.value.has(item.id))
+    .map((item) => item.capacity)
+
+  const distinctCapacities = capacities.filter((value, index, self) => {
+    return self.indexOf(value) === index
+  })
+
+  if (distinctCapacities.length === 0) {
+    filteredRoomLayouts.value = roomLayouts.value
+    return
+  }
+
+  if (distinctCapacities.length > 1) {
+    filteredRoomLayouts.value = []
+  }
+
+  if (distinctCapacities.length === 1) {
+    filteredRoomLayouts.value = roomLayouts.value.filter(
+      (item) => item.capacity === distinctCapacities[0]
+    )
+  }
+}
+
+function onTypeFilterChange() {
+  if (typeFilterSelected.value === null) {
+    filteredClassSchedules.value = classSchedules.value
+    return
+  }
+
+  filteredClassSchedules.value = classSchedules.value.filter(
+    (item) => item.type === typeFilterSelected.value
+  )
+}
+
+function onClickUpdateSelected() {
+  confirmModalIsVisible.value = true
+}
+
+async function onClickConfirm() {
+  try {
+    isSaving.value = true
+
+    const classScheduleIds = Array.from(setOfCheckedId.value)
+    const roomLayoutId = selectedRoomLayoutId.value
+
+    const classSchedulesUpdated = (await apiService.setRoomLayoutForClassSchedules(
+      classScheduleIds,
+      roomLayoutId!
+    )) as unknown as ClassSchedule[]
+
+    let tempClassSchedule: ClassSchedule[] = []
+
+    for (const item of classSchedules.value) {
+      if (classScheduleIds.includes(item.id)) {
+        const index = classSchedulesUpdated.findIndex((x) => x.id === item.id)
+
+        if (classSchedulesUpdated[index]) {
+          tempClassSchedule.push(classSchedulesUpdated[index])
+        }
+      } else {
+        tempClassSchedule.push(item)
+      }
+    }
+
+    classSchedules.value = tempClassSchedule
+
+    onTypeFilterChange()
+
+    selectedRoomLayoutId.value = '-1'
+    setOfCheckedId.value.clear()
+
+    successModalIsVisible.value = true
+  } catch (error) {
+    errorModalIsVisible.value = true
+  } finally {
+    isSaving.value = false
+    confirmModalIsVisible.value = false
+  }
 }
 </script>
 
 <template>
   <div class="row">
-    <div class="col-12">
-      <table class="table">
-        <thead>
-          <tr>
-            <th class="text-center">
-              <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  id="checkboxSelectAll"
-                  v-model="checked"
-                  :indeterminate="indeterminate"
-                  @change="onAllChecked($event)"
-                />
-                <label class="custom-control-label" for="checkboxSelectAll"></label>
-              </div>
-            </th>
-            <th class="text-center">ID</th>
-            <th class="text-center">MB Id</th>
-            <th class="text-center">Class</th>
-            <th class="text-center">Capacity</th>
-            <th class="text-center">Instructor</th>
-            <th class="text-center">Day of the Week</th>
-            <th class="text-center">Starts</th>
-            <th class="text-center">Ends</th>
-            <th class="text-center">Room Layout</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in classSchedules" v-bind:key="item.id" v-bind:index="index">
-            <td class="text-center">
-              <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  :id="'checkboxSelect' + item.id"
-                  v-bind:checked="setOfCheckedId.has(item.id)"
-                  @change="onItemChecked(item.id, $event)"
-                />
-                <label class="custom-control-label" :for="'checkboxSelect' + item.id"></label>
-              </div>
-            </td>
-            <td class="text-center">{{ item.id }}</td>
-            <td class="text-center">{{ item.mbId }}</td>
-            <td class="text-center">{{ item.class }}</td>
-            <td class="text-center">{{ item.maxCapacity }}</td>
-            <td class="text-center">{{ item.instructor }}</td>
-            <td class="text-center">{{ item.dayOfTheWeek }}</td>
-            <td class="text-center">{{ item.starts }}</td>
-            <td class="text-center">{{ item.ends }}</td>
-            <td class="text-center">{{ item.roomLayout }}</td>
-          </tr>
-          <tr v-if="!isLoading && classSchedules?.length === 0">
-            <td colspan="9" class="text-center">
-              <p>NO DATA AVAILABLE IN TABLE</p>
-            </td>
-          </tr>
-          <tr v-if="isLoading">
-            <td colspan="9" class="text-center">loading...</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="col-6 col-sm-6 col-md-6 col-lg-5 col-xl-3">
+      <select
+        class="custom-select"
+        v-model="typeFilterSelected"
+        id="typeFilter"
+        required
+        @change="onTypeFilterChange"
+      >
+        <option :value="null">Type filter (none selected)</option>
+        <option v-for="(item, index) in types" :key="index" :value="item">
+          {{ item }}
+        </option>
+      </select>
     </div>
   </div>
-  {{ setOfCheckedId }}
-  {{ enableUpdateRoomLayout }}
+  <br />
+  <div class="row">
+    <div class="col-6 col-sm-6 col-md-6 col-lg-5 col-xl-3">
+      <select
+        class="custom-select"
+        v-model="selectedRoomLayoutId"
+        id="countryRegistration"
+        required
+      >
+        <option value="-1">Select a room layout</option>
+        <option :value="null">-- NO ROOM LAYOUT --</option>
+        <option v-for="(item, index) in filteredRoomLayouts" :key="index" :value="item.id">
+          {{ item.name }}
+        </option>
+      </select>
+    </div>
+    <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-4">
+      <DefaultButtonComponent
+        text="Update Selected"
+        type="button"
+        @on-click="onClickUpdateSelected"
+        :disabled="
+          !enableUpdateRoomLayout || setOfCheckedId.size === 0 || selectedRoomLayoutId === '-1'
+        "
+      ></DefaultButtonComponent>
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-sm table-hover">
+          <thead>
+            <tr>
+              <th class="text-center">
+                <div class="custom-control custom-checkbox">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    id="checkboxSelectAll"
+                    v-model="checked"
+                    :indeterminate="indeterminate"
+                    @change="onAllChecked($event)"
+                  />
+                  <label class="custom-control-label" for="checkboxSelectAll"></label>
+                </div>
+              </th>
+              <th class="text-center">ID</th>
+              <th class="text-center">Class</th>
+              <th class="text-center">Capacity</th>
+              <th class="text-center">Instructor</th>
+              <th class="text-center">Day of the Week</th>
+              <th class="text-center">Starts</th>
+              <th class="text-center">Ends</th>
+              <th class="text-center">Room Layout</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(item, index) in filteredClassSchedules"
+              v-bind:key="item.id"
+              v-bind:index="index"
+            >
+              <td class="text-center">
+                <div class="custom-control custom-checkbox">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    :id="'checkboxSelect' + item.id"
+                    v-bind:checked="setOfCheckedId.has(item.id)"
+                    @change="onItemChecked(item.id, $event)"
+                  />
+                  <label class="custom-control-label" :for="'checkboxSelect' + item.id"></label>
+                </div>
+              </td>
+              <td class="text-center">{{ item.id }}</td>
+              <td class="text-center">{{ item.type }}</td>
+              <td class="text-center">{{ item.capacity }}</td>
+              <td class="text-center">{{ item.instructorName }}</td>
+              <td class="text-center">{{ item.dayOfWeek }}</td>
+              <td class="text-center">{{ dayjs(item.start).format('DD/MM/YYYY h:mm A') }}</td>
+              <td class="text-center">{{ dayjs(item.end).format('DD/MM/YYYY h:mm A') }}</td>
+              <td class="text-center">{{ item?.roomLayout?.name }}</td>
+            </tr>
+            <tr v-if="!isLoading && classSchedules?.length === 0">
+              <td colspan="9" class="text-center">
+                <p>NO DATA AVAILABLE IN TABLE</p>
+              </td>
+            </tr>
+            <tr v-if="isLoading">
+              <td colspan="9" class="text-center">LOADING...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Modal -->
+  <ModalComponent
+    v-if="confirmModalIsVisible"
+    title="CONFIRM"
+    message="ARE YOU SURE YOU WANT TO PROCEED?"
+    cancel-text="No"
+    ok-text="Yes"
+    :ok-loading="isSaving"
+    :cancel-disabled="isSaving"
+    @on-cancel="confirmModalIsVisible = false"
+    @on-ok="onClickConfirm()"
+  >
+  </ModalComponent>
+
+  <!-- Error Modal -->
+  <ModalComponent
+    v-if="errorModalIsVisible"
+    title="Error"
+    :message="ERROR_UNKNOWN"
+    :cancel-text="null"
+    @on-ok="errorModalIsVisible = false"
+  >
+  </ModalComponent>
+
+  <!-- SUCCESS Modal -->
+  <ModalComponent
+    title="SUCCESS"
+    message="THE CLASS SCHEDULES HAVE BEEN UPDATED SUCCESSFULLY"
+    :closable="false"
+    @on-ok="successModalIsVisible = false"
+    v-if="successModalIsVisible"
+    :cancel-text="null"
+  >
+  </ModalComponent>
 </template>
 
 <style scoped>
