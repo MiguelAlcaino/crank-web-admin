@@ -708,6 +708,23 @@ async function checkWaitlistIsEnable() {
           ></EnrollSelectedMemberComponent>
         </div>
       </div>
+
+      <br />
+      <div
+        class="row"
+        v-if="
+          classInfo !== null &&
+          classInfo.roomLayout !== null &&
+          classInfo.roomLayout?.matrix !== null
+        "
+      >
+        <div class="col-12" style="text-align: center">
+          <div class="matrixSpotsLegend">
+            <hr style="border: none; height: 2px; background-color: #ffd903; max-width: 20px" />
+            <small>Not Paid</small>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -763,5 +780,14 @@ async function checkWaitlistIsEnable() {
   min-height: 300px;
   box-shadow: 0 0 2px 0 #888;
   padding: 30px;
+}
+
+.matrixSpotsLegend {
+  padding-top: 50px;
+  background-color: #f8f8f8;
+  min-height: 20px;
+  box-shadow: 0 0 2px 0 #888;
+  padding: 30px;
+  font-family: 'Avenir', sans-serif;
 }
 </style>

@@ -210,30 +210,28 @@ function onClickSpotAdmin(spotNumber: number) {
 </script>
 
 <template>
-  <div>
-    <table class="table table-sm table-borderless" style="margin: 0 auto; margin-bottom: 35px">
-      <tbody>
-        <tr v-for="(colRow, rowKey) in spotsTable" :key="rowKey" class="text-center">
-          <td class="class-position" v-for="(spot, columnKey) in colRow" :key="columnKey">
-            <admin-bookable-spot-position
-              v-if="spot.icon === PositionIconEnum.Spot"
-              :spot-number="spot.spotNumber ?? 0"
-              :is-booked="spot.user ? true : false"
-              :user="spot.user!"
-              :enabled="spot.enabled!"
-              @click-spot="onClickSpotAdmin"
-              :selected="props.selectedSpotNumber === spot?.spotNumber"
-              :is-checked-in="spot.isCheckedIn"
-              :spot-action="spotAction"
-              :spot-selection-is-disabled="spotSelectionIsDisabled"
-              :is-booked-for-free="spot.isBookedForFree"
-            />
-            <icon-position-not-bookable v-else :icon="spot.icon" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <table class="table table-sm table-borderless" style="margin: 0 auto; margin-bottom: 35px">
+    <tbody>
+      <tr v-for="(colRow, rowKey) in spotsTable" :key="rowKey" class="text-center">
+        <td class="class-position" v-for="(spot, columnKey) in colRow" :key="columnKey">
+          <admin-bookable-spot-position
+            v-if="spot.icon === PositionIconEnum.Spot"
+            :spot-number="spot.spotNumber ?? 0"
+            :is-booked="spot.user ? true : false"
+            :user="spot.user!"
+            :enabled="spot.enabled!"
+            @click-spot="onClickSpotAdmin"
+            :selected="props.selectedSpotNumber === spot?.spotNumber"
+            :is-checked-in="spot.isCheckedIn"
+            :spot-action="spotAction"
+            :spot-selection-is-disabled="spotSelectionIsDisabled"
+            :is-booked-for-free="spot.isBookedForFree"
+          />
+          <icon-position-not-bookable v-else :icon="spot.icon" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <style scoped>
