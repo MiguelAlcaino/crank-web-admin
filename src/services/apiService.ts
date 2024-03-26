@@ -126,6 +126,7 @@ export class ApiService {
             ... on EnrollmentInfo {
               isCheckedIn
               spotNumber
+              isBookedForFree
             }
           }
           onHoldSpots

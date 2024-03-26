@@ -45,6 +45,7 @@ interface EnrollmentInfo {
   enrollmentDateTime: Date
   isCheckedIn?: boolean
   spotNumber?: number | null
+  isBookedForFree?: boolean | null
 }
 
 interface IdentifiableSiteUser {

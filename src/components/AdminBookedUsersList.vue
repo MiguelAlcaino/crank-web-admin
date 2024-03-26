@@ -4,6 +4,7 @@ interface EnrollmentInfo {
   enrollmentStatus: EnrollmentStatusEnum
   identifiableSiteUser?: IdentifiableSiteUser | null
   isCheckedIn?: boolean
+  isBookedForFree?: boolean | null
 }
 
 interface IdentifiableSiteUser {
@@ -104,6 +105,7 @@ async function removeUserFromClass(enrollmentId: string, lateCancel: boolean) {
           <th v-if="showEditOptions">SIGN IN</th>
           <th v-if="showEditOptions">CANCEL RESERVATION</th>
           <th v-if="showEditOptions">VIEW PROFILE</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -132,6 +134,9 @@ async function removeUserFromClass(enrollmentId: string, lateCancel: boolean) {
               v-if="item.identifiableSiteUser?.identifiableUser?.id"
               :user-id="item.identifiableSiteUser?.identifiableUser?.id"
             ></UserProfile>
+          </td>
+          <td>
+            <span v-if="item.isBookedForFree === true" class="badge badge-warning">Not paid</span>
           </td>
         </tr>
         <tr v-if="!isLoading && enrollments.length === 0">
