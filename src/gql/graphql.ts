@@ -326,6 +326,7 @@ export type EnrollmentInfo = EnrollmentInfoInterface & {
   enrollmentStatus: EnrollmentStatusEnum
   id: Scalars['ID']
   identifiableSiteUser?: Maybe<IdentifiableSiteUser>
+  isBookedForFree: Scalars['Boolean']
   isCheckedIn: Scalars['Boolean']
   /** @deprecated Use spotNumber instead. */
   spotInfo?: Maybe<SpotInfo>
@@ -875,7 +876,7 @@ export type RoomLayoutsInput = {
 
 export type SetRoomLayoutForClassSchedulesInput = {
   classSchedulesIds: Array<Scalars['ID']>
-  roomLayoutId: Scalars['ID']
+  roomLayoutId?: InputMaybe<Scalars['ID']>
 }
 
 export type SimpleSiteUser = {
@@ -1697,6 +1698,25 @@ export type AvailableClassTypesQueryVariables = Exact<{
 }>
 
 export type AvailableClassTypesQuery = { __typename: 'Query'; availableClassTypes: Array<string> }
+
+export type SetRoomLayoutForClassSchedulesMutationVariables = Exact<{
+  input: SetRoomLayoutForClassSchedulesInput
+}>
+
+export type SetRoomLayoutForClassSchedulesMutation = {
+  __typename: 'Mutation'
+  setRoomLayoutForClassSchedules: Array<{
+    __typename: 'ClassSchedule'
+    id: string
+    instructorName: string
+    dayOfWeek: string
+    start: any
+    end: any
+    type: string
+    capacity: number
+    roomLayout?: { __typename: 'RoomLayout'; id: string; name: string; capacity: number } | null
+  }>
+}
 
 export const SiteSettingsDocument = {
   kind: 'Document',
@@ -4001,3 +4021,69 @@ export const AvailableClassTypesDocument = {
     }
   ]
 } as unknown as DocumentNode<AvailableClassTypesQuery, AvailableClassTypesQueryVariables>
+export const SetRoomLayoutForClassSchedulesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'setRoomLayoutForClassSchedules' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'SetRoomLayoutForClassSchedulesInput' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'setRoomLayoutForClassSchedules' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'instructorName' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'dayOfWeek' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'start' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'end' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'roomLayout' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'capacity' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'capacity' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  SetRoomLayoutForClassSchedulesMutation,
+  SetRoomLayoutForClassSchedulesMutationVariables
+>

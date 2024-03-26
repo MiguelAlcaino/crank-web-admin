@@ -76,7 +76,9 @@ const documents = {
   '\n      query classSchedules($site: SiteEnum!) {\n        classSchedules(site: $site) {\n          id\n          instructorName\n          dayOfWeek\n          start\n          end\n          type\n          capacity\n          roomLayout {\n            id\n            name\n          }\n        }\n      }\n    ':
     types.ClassSchedulesDocument,
   '\n      query availableClassTypes($site: SiteEnum!) {\n        availableClassTypes(site: $site)\n      }\n    ':
-    types.AvailableClassTypesDocument
+    types.AvailableClassTypesDocument,
+  '\n      mutation setRoomLayoutForClassSchedules($input: SetRoomLayoutForClassSchedulesInput!) {\n        setRoomLayoutForClassSchedules(input: $input) {\n          id\n          instructorName\n          dayOfWeek\n          start\n          end\n          type\n          roomLayout {\n            id\n            name\n            capacity\n          }\n          capacity\n        }\n      }\n    ':
+    types.SetRoomLayoutForClassSchedulesDocument
 }
 
 /**
@@ -285,6 +287,12 @@ export function graphql(
 export function graphql(
   source: '\n      query availableClassTypes($site: SiteEnum!) {\n        availableClassTypes(site: $site)\n      }\n    '
 ): (typeof documents)['\n      query availableClassTypes($site: SiteEnum!) {\n        availableClassTypes(site: $site)\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n      mutation setRoomLayoutForClassSchedules($input: SetRoomLayoutForClassSchedulesInput!) {\n        setRoomLayoutForClassSchedules(input: $input) {\n          id\n          instructorName\n          dayOfWeek\n          start\n          end\n          type\n          roomLayout {\n            id\n            name\n            capacity\n          }\n          capacity\n        }\n      }\n    '
+): (typeof documents)['\n      mutation setRoomLayoutForClassSchedules($input: SetRoomLayoutForClassSchedulesInput!) {\n        setRoomLayoutForClassSchedules(input: $input) {\n          id\n          instructorName\n          dayOfWeek\n          start\n          end\n          type\n          roomLayout {\n            id\n            name\n            capacity\n          }\n          capacity\n        }\n      }\n    ']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}
