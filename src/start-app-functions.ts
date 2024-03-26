@@ -18,6 +18,7 @@ import RoomLayoutView from '@/views/RoomLayoutView.vue'
 import { SiteEnum } from '@/gql/graphql'
 import { appStore } from '@/stores/appStorage'
 import AdminClassView from '@/views/AdminClassView.vue'
+import ClassSchedulesView from './views/ClassSchedulesView.vue'
 
 export const startCustomerCreateApp = async function (
   urlAfterSubmit: string,
@@ -156,6 +157,42 @@ export const startCalendarApp = async function (
   })
 
   app.use(createPinia()).use(router).use(SimpleTypeahead)
+  useAuthenticationStore().setSession(token)
+
+  if (site) {
+    if (site === SiteEnum.Dubai.toString()) {
+      appStore().setSite(SiteEnum.Dubai)
+    } else if (site === SiteEnum.AbuDhabi) {
+      appStore().setSite(SiteEnum.AbuDhabi)
+    } else {
+      throw Error
+    }
+  } else {
+    throw Error
+  }
+
+  app.mount(appDiv)
+}
+
+export const startClassScheduleApp = async function (
+  urlSyncAll: string,
+  gqlUrl: string,
+  token: string,
+  site: string,
+  appDiv: string
+) {
+  const app = createApp({
+    setup() {
+      provide('url-sync-all', urlSyncAll)
+      provide(
+        'gqlApiService',
+        new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
+      )
+    },
+    render: () => h(ClassSchedulesView)
+  })
+
+  app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
   useAuthenticationStore().setSession(token)
 
   if (site) {
