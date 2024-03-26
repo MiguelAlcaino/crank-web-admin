@@ -9,6 +9,7 @@ import type {
   CheckoutUserInClass,
   Class,
   ClassInfo,
+  ClassSchedule,
   Country,
   DisableEnableSpotInput,
   DisableEnableSpotResult,
@@ -30,6 +31,7 @@ import type {
   RoomLayout,
   RoomLayoutInput,
   RoomLayoutsInput,
+  SetRoomLayoutForClassSchedulesInput,
   SimpleSiteUser,
   SiteEnum,
   SiteUserInput,
@@ -377,6 +379,7 @@ export class ApiService {
         roomLayouts(site: $site, params: $params) {
           id
           name
+          capacity
         }
       }
     `
@@ -1083,5 +1086,99 @@ export class ApiService {
     })
 
     return result.data.editUser as EditUserResultUnion
+  }
+
+  async classSchedules(site: SiteEnum): Promise<ClassSchedule[]> {
+    const query = gql`
+      query classSchedules($site: SiteEnum!) {
+        classSchedules(site: $site) {
+          id
+          instructorName
+          dayOfWeek
+          start
+          end
+          type
+          capacity
+          roomLayout {
+            id
+            name
+          }
+        }
+      }
+    `
+    try {
+      const queryResult = await this.authApiClient.query({
+        query: query,
+        variables: {
+          site: site,
+          query: query
+        },
+        fetchPolicy: 'network-only'
+      })
+
+      return queryResult.data.classSchedules as ClassSchedule[]
+    } catch (error) {
+      return [] as ClassSchedule[]
+    }
+  }
+
+  async availableClassTypes(site: SiteEnum): Promise<string[]> {
+    const query = gql`
+      query availableClassTypes($site: SiteEnum!) {
+        availableClassTypes(site: $site)
+      }
+    `
+    try {
+      const queryResult = await this.authApiClient.query({
+        query: query,
+        variables: {
+          site: site,
+          query: query
+        },
+        fetchPolicy: 'network-only'
+      })
+
+      return queryResult.data.availableClassTypes as string[]
+    } catch (error) {
+      return [] as string[]
+    }
+  }
+
+  async setRoomLayoutForClassSchedules(
+    classSchedulesIds: string[],
+    roomLayoutId: string
+  ): Promise<ClassSchedule[]> {
+    const input = {
+      classSchedulesIds: classSchedulesIds,
+      roomLayoutId: roomLayoutId
+    } as SetRoomLayoutForClassSchedulesInput
+
+    const mutation = gql`
+      mutation setRoomLayoutForClassSchedules($input: SetRoomLayoutForClassSchedulesInput!) {
+        setRoomLayoutForClassSchedules(input: $input) {
+          id
+          instructorName
+          dayOfWeek
+          start
+          end
+          type
+          roomLayout {
+            id
+            name
+            capacity
+          }
+          capacity
+        }
+      }
+    `
+    const result = await this.authApiClient.mutate({
+      mutation: mutation,
+      variables: {
+        input: input
+      },
+      fetchPolicy: 'no-cache'
+    })
+
+    return result.data.setRoomLayoutForClassSchedules as ClassSchedule[]
   }
 }

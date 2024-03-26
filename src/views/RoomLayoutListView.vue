@@ -85,7 +85,7 @@ function onClickDeleteLayout(roomLayout: RoomLayout) {
             </td>
           </tr>
           <tr v-if="isLoading">
-            <td colspan="3" class="text-center">loading...</td>
+            <td colspan="3" class="text-center">LOADING...</td>
           </tr>
         </tbody>
       </table>
