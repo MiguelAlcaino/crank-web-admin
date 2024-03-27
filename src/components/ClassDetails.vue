@@ -587,96 +587,107 @@ async function checkWaitlistIsEnable() {
       >
       </AdminBookedUsersList>
 
-      <div v-if="userCanModifyClass">
-        <!-- Select empty spot options -->
-        <div v-if="selectedSpot?.isBooked === false && selectedSpot.enabled === true">
-          <h2>Choose an action :</h2>
-          <DefaultButtonComponent
-            text="ASSIGN CLIENT"
-            type="button"
-            @on-click="spotAction = SpotActionEnum.asignUserToSpot"
-            class="mr-1"
-          ></DefaultButtonComponent>
-          <DefaultButtonComponent
-            text="Put under maintenance"
-            type="button"
-            @on-click="clickPutUnderMaintenance"
-            class="mr-1"
-            :is-loading="isEnablingDisablingSpot"
-          ></DefaultButtonComponent>
-        </div>
-        <!-- Select under manteince spot options -->
-        <div v-if="selectedSpot.enabled === false">
-          <h2>Spot is under maintenance</h2>
-          <DefaultButtonComponent
-            text="Recover from maintenance"
-            type="button"
-            @on-click="clickRecoverFromMaintenance"
-            class="mr-1"
-            :is-loading="isEnablingDisablingSpot"
-          ></DefaultButtonComponent>
-        </div>
-
-        <!-- Select booked spot options -->
-        <div v-if="selectedSpot?.isBooked === true">
-          <h2>
-            Spot is reserved for -
-            {{
-              (selectedSpot.identifiableUser?.user?.firstName ?? '') +
-              ' ' +
-              (selectedSpot.identifiableUser?.user?.lastName ?? '')
-            }}
-          </h2>
-          <!-- CANCEL BOOKING Button -->
-          <DefaultButtonComponent
-            v-if="
-              spotAction !== SpotActionEnum.changeMemberSpot &&
-              spotAction !== SpotActionEnum.swapSpot
-            "
-            text="CANCEL BOOKING"
-            type="button"
-            @on-click="clickCancelMembersReservation"
-            class="mr-1"
-          >
-          </DefaultButtonComponent>
-          <!-- CHANGE SPOT button -->
-          <DefaultButtonComponent
-            text="CHANGE SPOT"
-            :is-loading="changingMemberSpot"
-            type="button"
-            :disabled="spotAction === SpotActionEnum.changeMemberSpot"
-            @on-click="spotAction = SpotActionEnum.changeMemberSpot"
-            v-if="spotAction !== SpotActionEnum.swapSpot"
-            class="mr-1"
-          >
-          </DefaultButtonComponent>
-
-          <!-- Swap Spot Button -->
-          <DefaultButtonComponent
-            type="button"
-            text="Swap Spot"
-            :is-loading="changingMemberSpot"
-            :disabled="spotAction === SpotActionEnum.swapSpot"
-            v-if="spotAction !== SpotActionEnum.changeMemberSpot"
-            @on-click="spotAction = SpotActionEnum.swapSpot"
-            class="mr-1"
-          >
-          </DefaultButtonComponent>
-
-          <!-- Cancel button  -->
-          <DefaultButtonComponent
-            v-if="
-              spotAction === SpotActionEnum.changeMemberSpot ||
-              spotAction === SpotActionEnum.swapSpot
-            "
-            :disabled="changingMemberSpot"
-            text="Cancel"
-            type="button"
-            @on-click="spotAction = SpotActionEnum.none"
-          >
-          </DefaultButtonComponent>
-        </div>
+      <!-- Select empty spot options -->
+      <div
+        v-if="
+          userCanModifyClass && selectedSpot?.isBooked === false && selectedSpot.enabled === true
+        "
+      >
+        <h2>Choose an action :</h2>
+        <DefaultButtonComponent
+          text="ASSIGN CLIENT"
+          type="button"
+          @on-click="spotAction = SpotActionEnum.asignUserToSpot"
+          class="mr-1"
+        ></DefaultButtonComponent>
+        <DefaultButtonComponent
+          text="Put under maintenance"
+          type="button"
+          @on-click="clickPutUnderMaintenance"
+          class="mr-1"
+          :is-loading="isEnablingDisablingSpot"
+        ></DefaultButtonComponent>
       </div>
+      <!-- Select under manteince spot options -->
+      <div v-if="userCanModifyClass && selectedSpot.enabled === false">
+        <h2>Spot is under maintenance</h2>
+        <DefaultButtonComponent
+          text="Recover from maintenance"
+          type="button"
+          @on-click="clickRecoverFromMaintenance"
+          class="mr-1"
+          :is-loading="isEnablingDisablingSpot"
+        ></DefaultButtonComponent>
+      </div>
+
+      <!-- Select booked spot options -->
+      <h2 v-if="userCanModifyClass && selectedSpot?.isBooked === true">
+        Spot is reserved for -
+        {{
+          (selectedSpot.identifiableUser?.user?.firstName ?? '') +
+          ' ' +
+          (selectedSpot.identifiableUser?.user?.lastName ?? '')
+        }}
+      </h2>
+      <!-- CANCEL BOOKING Button -->
+      <DefaultButtonComponent
+        v-if="
+          userCanModifyClass &&
+          selectedSpot?.isBooked === true &&
+          spotAction !== SpotActionEnum.changeMemberSpot &&
+          spotAction !== SpotActionEnum.swapSpot
+        "
+        text="CANCEL BOOKING"
+        type="button"
+        @on-click="clickCancelMembersReservation"
+        class="mr-1"
+      >
+      </DefaultButtonComponent>
+      <!-- CHANGE SPOT button -->
+      <DefaultButtonComponent
+        text="CHANGE SPOT"
+        :is-loading="changingMemberSpot"
+        type="button"
+        :disabled="spotAction === SpotActionEnum.changeMemberSpot"
+        @on-click="spotAction = SpotActionEnum.changeMemberSpot"
+        v-if="
+          userCanModifyClass &&
+          selectedSpot?.isBooked === true &&
+          spotAction !== SpotActionEnum.swapSpot
+        "
+        class="mr-1"
+      >
+      </DefaultButtonComponent>
+
+      <!-- Swap Spot Button -->
+      <DefaultButtonComponent
+        type="button"
+        text="Swap Spot"
+        :is-loading="changingMemberSpot"
+        :disabled="spotAction === SpotActionEnum.swapSpot"
+        v-if="
+          userCanModifyClass &&
+          selectedSpot?.isBooked === true &&
+          spotAction !== SpotActionEnum.changeMemberSpot
+        "
+        @on-click="spotAction = SpotActionEnum.swapSpot"
+        class="mr-1"
+      >
+      </DefaultButtonComponent>
+
+      <!-- Cancel button  -->
+      <DefaultButtonComponent
+        v-if="
+          userCanModifyClass &&
+          selectedSpot?.isBooked === true &&
+          (spotAction === SpotActionEnum.changeMemberSpot || spotAction === SpotActionEnum.swapSpot)
+        "
+        :disabled="changingMemberSpot"
+        text="Cancel"
+        type="button"
+        @on-click="spotAction = SpotActionEnum.none"
+      >
+      </DefaultButtonComponent>
 
       <!-- Check In - Out button -->
       <CheckInCheckOutUserInClass
