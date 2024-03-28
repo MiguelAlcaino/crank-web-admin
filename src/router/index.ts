@@ -53,6 +53,11 @@ const router = createRouter({
       path: '/class-schedules',
       name: 'class_schedules',
       component: () => import('../views/ClassSchedulesView.vue')
+    },
+    {
+      path: '/customer-profile',
+      name: 'customer_profile',
+      component: () => import('../views/CustomerProfileView.vue')
     }
   ]
 })
