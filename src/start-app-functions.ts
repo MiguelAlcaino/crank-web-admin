@@ -19,6 +19,7 @@ import { SiteEnum } from '@/gql/graphql'
 import { appStore } from '@/stores/appStorage'
 import AdminClassView from '@/views/AdminClassView.vue'
 import ClassSchedulesView from './views/ClassSchedulesView.vue'
+import VueApexCharts from 'vue3-apexcharts'
 
 export const startCustomerCreateApp = async function (
   urlAfterSubmit: string,
@@ -156,7 +157,7 @@ export const startCalendarApp = async function (
     render: () => h(AdminClassView)
   })
 
-  app.use(createPinia()).use(router).use(SimpleTypeahead)
+  app.use(createPinia()).use(router).use(VueApexCharts).use(SimpleTypeahead)
   useAuthenticationStore().setSession(token)
 
   if (site) {
@@ -206,6 +207,29 @@ export const startClassScheduleApp = async function (
   } else {
     throw Error
   }
+
+  app.mount(appDiv)
+}
+
+export const startCustomerProfileApp = async function (
+  gqlUrl: string,
+  token: string,
+  userId: string,
+  appDiv: string
+) {
+  const app = createApp({
+    setup() {
+      provide('userId', userId)
+      provide(
+        'gqlApiService',
+        new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
+      )
+    },
+    render: () => h(CustomerEditView)
+  })
+
+  app.use(createPinia()).use(router).use(SimpleTypeahead).use(VueApexCharts).use(ContextMenu)
+  useAuthenticationStore().setSession(token)
 
   app.mount(appDiv)
 }

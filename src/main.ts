@@ -35,6 +35,7 @@ import { Config } from '@/model/Config'
 import SimpleTypeahead from 'vue3-simple-typeahead'
 import { appStore } from './stores/appStorage'
 import { SiteEnum } from './gql/graphql'
+import VueApexCharts from 'vue3-apexcharts'
 
 startApp()
 
@@ -60,6 +61,7 @@ async function startApp() {
     .use(router)
     .use(SimpleTypeahead)
     .use(ContextMenu)
+    .use(VueApexCharts)
     .component('Popper', Popper)
 
   try {

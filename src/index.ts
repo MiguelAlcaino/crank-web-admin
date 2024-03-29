@@ -4,7 +4,8 @@ import {
   startCustomerEditApp,
   startRoomLayoutCreateApp,
   startRoomLayoutEditApp,
-  startClassScheduleApp
+  startClassScheduleApp,
+  startCustomerProfileApp
 } from '@/start-app-functions'
 
 export {
@@ -13,5 +14,6 @@ export {
   startRoomLayoutEditApp,
   startCalendarApp,
   startCustomerEditApp,
-  startClassScheduleApp
+  startClassScheduleApp,
+  startCustomerProfileApp
 }

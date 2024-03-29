@@ -695,12 +695,18 @@ export type Query = {
   roomLayouts: Array<RoomLayout>
   /** Returns the matched users given the query provided */
   searchSiteUser?: Maybe<Array<Maybe<IdentifiableSiteUser>>>
+  /** Returns a single workout stat */
+  singleWorkoutStat?: Maybe<ClassStat>
   /** Settings of a site */
   siteSettings: SiteSetting
   /** Returns a user in a specific site */
   siteUser?: Maybe<IdentifiableSiteUser>
   /** Returns a user */
   user?: Maybe<IdentifiableUser>
+  /** Returns the ranking of a user in a specific class */
+  userRankingInClass?: Maybe<UserInClassRanking>
+  /** Returns a list of workhout stats */
+  userWorkoutStats: Array<Maybe<ClassStat>>
 }
 
 export type QueryAvailableClassTypesArgs = {
@@ -762,6 +768,10 @@ export type QuerySearchSiteUserArgs = {
   site?: InputMaybe<SiteEnum>
 }
 
+export type QuerySingleWorkoutStatArgs = {
+  enrollmentId: Scalars['ID']
+}
+
 export type QuerySiteSettingsArgs = {
   site?: InputMaybe<SiteEnum>
 }
@@ -772,6 +782,16 @@ export type QuerySiteUserArgs = {
 
 export type QueryUserArgs = {
   id: Scalars['ID']
+}
+
+export type QueryUserRankingInClassArgs = {
+  classId: Scalars['ID']
+  userId: Scalars['ID']
+}
+
+export type QueryUserWorkoutStatsArgs = {
+  site: SiteEnum
+  userId: Scalars['ID']
 }
 
 export type RegisterUserInput = {
@@ -1113,6 +1133,7 @@ export type ClassInfoAdminQuery = {
           __typename: 'EnrollmentInfo'
           isCheckedIn: boolean
           spotNumber?: number | null
+          isBookedForFree: boolean
           id: string
           enrollmentStatus: EnrollmentStatusEnum
           enrollmentDateTime: any
@@ -1718,6 +1739,25 @@ export type SetRoomLayoutForClassSchedulesMutation = {
   }>
 }
 
+export type CurrentUserWorkoutStatsQueryVariables = Exact<{
+  site: SiteEnum
+}>
+
+export type CurrentUserWorkoutStatsQuery = {
+  __typename: 'Query'
+  currentUserWorkoutStats: Array<{
+    __typename: 'ClassStat'
+    totalEnergy?: number | null
+    enrollment: {
+      __typename: 'Enrollment'
+      enrollmentInfo:
+        | { __typename: 'EnrollmentInfo'; spotNumber?: number | null; id: string }
+        | { __typename: 'WaitlistEntry'; id: string }
+      class: { __typename: 'Class'; name: string; start: any; duration: number }
+    }
+  } | null>
+}
+
 export const SiteSettingsDocument = {
   kind: 'Document',
   definitions: [
@@ -1929,7 +1969,8 @@ export const ClassInfoAdminDocument = {
                           kind: 'SelectionSet',
                           selections: [
                             { kind: 'Field', name: { kind: 'Name', value: 'isCheckedIn' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } }
+                            { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'isBookedForFree' } }
                           ]
                         }
                       }
@@ -4087,3 +4128,89 @@ export const SetRoomLayoutForClassSchedulesDocument = {
   SetRoomLayoutForClassSchedulesMutation,
   SetRoomLayoutForClassSchedulesMutationVariables
 >
+export const CurrentUserWorkoutStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'currentUserWorkoutStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'currentUserWorkoutStats' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'site' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'enrollment' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'enrollmentInfo' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            {
+                              kind: 'InlineFragment',
+                              typeCondition: {
+                                kind: 'NamedType',
+                                name: { kind: 'Name', value: 'EnrollmentInfo' }
+                              },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'class' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'start' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'duration' } }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalEnergy' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<CurrentUserWorkoutStatsQuery, CurrentUserWorkoutStatsQueryVariables>

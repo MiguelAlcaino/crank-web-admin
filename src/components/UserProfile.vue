@@ -50,9 +50,10 @@ export enum GenderEnum {
 import { inject, ref } from 'vue'
 import dayjs from 'dayjs'
 
+import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIndicator.vue'
+import CustomerWorkoutSummary from '@/components/CustomerWorkoutSummary.vue'
 import DefaultButtonComponent from '@/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
-import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIndicator.vue'
 
 import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
@@ -60,6 +61,8 @@ const apiService = inject<ApiService>('gqlApiService')!
 
 const props = defineProps<{
   userId: string
+  classId?: string | null
+  enrollmentId?: string | null
 }>()
 
 const isLoading = ref<boolean>(false)
@@ -94,7 +97,7 @@ async function getUser(userId: string) {
   <transition name="modal" v-if="modalIsVisible">
     <div class="modal-mask">
       <div class="modal-wrapper">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
           <div class="modal-content">
             <div class="modal-header border-0">
               <h5 class="modal-title">
@@ -224,6 +227,13 @@ async function getUser(userId: string) {
                   </div>
                 </div>
               </div>
+              <hr />
+              <CustomerWorkoutSummary
+                v-if="userId && classId && enrollmentId"
+                :user-id="userId"
+                :class-id="classId"
+                :enrollment-id="enrollmentId"
+              ></CustomerWorkoutSummary>
             </div>
             <div class="modal-footer border-0">
               <DefaultButtonComponent

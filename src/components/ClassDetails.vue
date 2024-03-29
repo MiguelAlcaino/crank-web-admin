@@ -710,6 +710,8 @@ async function checkWaitlistIsEnable() {
           spotAction !== SpotActionEnum.swapSpot
         "
         :user-id="selectedSpot.identifiableUser?.id"
+        :enrollment-id="selectedSpot.enrollmentId"
+        :class-id="classId"
       ></UserProfile>
 
       <div v-if="userCanModifyClass && spotAction === SpotActionEnum.asignUserToSpot">

@@ -10,6 +10,7 @@ import type {
   Class,
   ClassInfo,
   ClassSchedule,
+  ClassStat,
   Country,
   DisableEnableSpotInput,
   DisableEnableSpotResult,
@@ -36,6 +37,7 @@ import type {
   SiteEnum,
   SiteUserInput,
   SwapSpotResultUnion,
+  UserInClassRanking,
   UserInput,
   WaitlistEntry
 } from '@/gql/graphql'
@@ -1181,5 +1183,116 @@ export class ApiService {
     })
 
     return result.data.setRoomLayoutForClassSchedules as ClassSchedule[]
+  }
+
+  async userWorkoutStats(site: SiteEnum, userId: string): Promise<ClassStat[]> {
+    console.log('userWorkoutStats', site, userId)
+    const query = gql`
+      query userWorkoutStats($site: SiteEnum!, $userId: ID!) {
+        userWorkoutStats(site: $site, userId: $userId) {
+          enrollment {
+            enrollmentInfo {
+              id
+              ... on EnrollmentInfo {
+                spotNumber
+              }
+            }
+            class {
+              id
+              name
+              start
+              duration
+            }
+          }
+          totalEnergy
+        }
+      }
+    `
+
+    const queryResult = await this.authApiClient.query({
+      query: query,
+      variables: {
+        site: site,
+        userId: userId
+      }
+    })
+
+    return queryResult.data.userWorkoutStats as ClassStat[]
+  }
+
+  async singleWorkoutStat(enrollmentId: string): Promise<ClassStat> {
+    const query = gql`
+      query singleWorkoutStat($enrollmentId: ID!) {
+        singleWorkoutStat(enrollmentId: $enrollmentId) {
+          enrollment {
+            enrollmentInfo {
+              id
+              ... on EnrollmentInfo {
+                spotNumber
+              }
+            }
+            class {
+              id
+              name
+              start
+              duration
+              instructorName
+            }
+          }
+          averagePower
+          highPower
+          averageRpm
+          highRpm
+          totalEnergy
+          calories
+          distance
+          adjustedChartPoints(amountOfPoints: 62) {
+            time
+            rpm
+            power
+          }
+        }
+      }
+    `
+
+    const queryResult = await this.authApiClient.query({
+      query: query,
+      variables: {
+        enrollmentId: enrollmentId
+      }
+    })
+
+    return queryResult.data.singleWorkoutStat as ClassStat
+  }
+
+  async userRankingInClass(userId: string, classId: string): Promise<UserInClassRanking> {
+    const query = gql`
+      query userRankingInClass($userId: ID!, $classId: ID!) {
+        userRankingInClass(userId: $userId, classId: $classId) {
+          totalRanking {
+            positionInRanking
+            totalMembersInRanking
+          }
+          genderRanking {
+            gender
+            ranking {
+              positionInRanking
+              totalMembersInRanking
+            }
+          }
+        }
+      }
+    `
+
+    const queryResult = await this.authApiClient.query({
+      query: query,
+      variables: {
+        userId: userId,
+        classId: classId
+      },
+      fetchPolicy: 'no-cache'
+    })
+
+    return queryResult.data.userRankingInClass as UserInClassRanking
   }
 }
