@@ -10,6 +10,7 @@ import type {
   Class,
   ClassInfo,
   ClassSchedule,
+  ClassStat,
   Country,
   DisableEnableSpotInput,
   DisableEnableSpotResult,
@@ -1181,5 +1182,39 @@ export class ApiService {
     })
 
     return result.data.setRoomLayoutForClassSchedules as ClassSchedule[]
+  }
+
+  async userWorkoutStats(site: SiteEnum, userId: string): Promise<ClassStat[]> {
+    console.log('userWorkoutStats', site, userId)
+    const query = gql`
+      query userWorkoutStats($site: SiteEnum!, $userId: ID!) {
+        userWorkoutStats(site: $site, userId: $userId) {
+          enrollment {
+            enrollmentInfo {
+              id
+              ... on EnrollmentInfo {
+                spotNumber
+              }
+            }
+            class {
+              name
+              start
+              duration
+            }
+          }
+          totalEnergy
+        }
+      }
+    `
+
+    const queryResult = await this.authApiClient.query({
+      query: query,
+      variables: {
+        site: site,
+        userId: userId
+      }
+    })
+
+    return queryResult.data.userWorkoutStats as ClassStat[]
   }
 }
