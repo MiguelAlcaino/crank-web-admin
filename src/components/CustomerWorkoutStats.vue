@@ -10,6 +10,7 @@ interface Enrollment {
 }
 
 interface Class {
+  id: string
   duration: number
   name: string
   start: Date
@@ -29,6 +30,7 @@ import router from '@/router'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import ModalComponent from '@/components/ModalComponent.vue'
 import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIndicator.vue'
+import CustomerWorkoutSummary from '@/components/CustomerWorkoutSummary.vue'
 import type { ApiService } from '@/services/apiService'
 import { appStore } from '@/stores/appStorage'
 
@@ -89,11 +91,7 @@ async function getUserWorkoutStats() {
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="(item, index) in classStats"
-              :key="index"
-              @click="router.push('workout-summary/' + item.enrollment.enrollmentInfo.id)"
-            >
+            <tr v-for="(item, index) in classStats" :key="index">
               <td>{{ item.enrollment.class.name }}</td>
               <td class="text-center">{{ item.enrollment.enrollmentInfo.spotNumber }}</td>
               <td class="text-center">
@@ -101,7 +99,13 @@ async function getUserWorkoutStats() {
               </td>
               <td class="text-center">{{ item.enrollment.class.duration }} mins.</td>
               <td class="text-center">{{ item.totalEnergy?.toFixed(1) ?? '0' }}</td>
-              <td class="text-center"></td>
+              <td class="text-center">
+                <CustomerWorkoutSummary
+                  :enrollment-id="item.enrollment.enrollmentInfo.id"
+                  :class-id="item.enrollment.class.id"
+                  :user-id="userId"
+                ></CustomerWorkoutSummary>
+              </td>
             </tr>
             <tr v-if="classStats?.length === 0 && !isLoading">
               <td colspan="6" class="text-center">
@@ -132,14 +136,8 @@ async function getUserWorkoutStats() {
 <style lang="css" scoped src="@/assets/main.css"></style>
 
 <style scoped>
-tr {
-  cursor: pointer;
-}
-tr:hover {
-  background-color: #dadada !important;
-}
-
-p {
+p,
+td {
   font-family: 'Avenir', sans-serif;
 }
 </style>

@@ -51,9 +51,8 @@ import { inject, onMounted, ref } from 'vue'
 import dayjs from 'dayjs'
 import { useRoute } from 'vue-router'
 
-import DefaultButtonComponent from '@/components/DefaultButtonComponent.vue'
+import CustomerWorkoutStats from '@/components/CustomerWorkoutStats.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
-import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIndicator.vue'
 
 import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
@@ -61,14 +60,13 @@ import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 const route = useRoute()
 const apiService = inject<ApiService>('gqlApiService')!
 
-//31735
-const userId = ref<string>('31735')
+const userId = ref<string>('')
 const isLoading = ref<boolean>(false)
 const errorModalIsVisible = ref<boolean>(false)
 const identifiableUser = ref<IdentifiableUser | null>(null)
 
 onMounted(() => {
-  //userId.value = getUserId()
+  userId.value = getUserId()
   getUser(userId.value)
 })
 
@@ -94,12 +92,7 @@ async function getUser(userId: string) {
 </script>
 
 <template>
-  <div class="row" v-if="isLoading">
-    <div class="col-12 text-center">
-      <CrankCircularProgressIndicator text="Loading..."></CrankCircularProgressIndicator>
-    </div>
-  </div>
-  <div class="row" v-else>
+  <div class="row">
     <div class="col-12">
       <h5>Email: {{ identifiableUser?.user?.email }}</h5>
       <hr />
@@ -203,6 +196,22 @@ async function getUser(userId: string) {
       </div>
     </div>
   </div>
+
+  <hr />
+  <div class="row">
+    <div class="col-12">
+      <CustomerWorkoutStats v-if="userId" :user-id="userId"></CustomerWorkoutStats>
+    </div>
+  </div>
+
+  <ModalComponent
+    title="ERROR"
+    :message="ERROR_UNKNOWN"
+    :closable="false"
+    v-if="errorModalIsVisible"
+    @on-ok="errorModalIsVisible = false"
+  >
+  </ModalComponent>
 </template>
 
 <style scoped></style>

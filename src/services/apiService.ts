@@ -37,6 +37,7 @@ import type {
   SiteEnum,
   SiteUserInput,
   SwapSpotResultUnion,
+  UserInClassRanking,
   UserInput,
   WaitlistEntry
 } from '@/gql/graphql'
@@ -1197,6 +1198,7 @@ export class ApiService {
               }
             }
             class {
+              id
               name
               start
               duration
@@ -1216,5 +1218,81 @@ export class ApiService {
     })
 
     return queryResult.data.userWorkoutStats as ClassStat[]
+  }
+
+  async singleWorkoutStat(enrollmentId: string): Promise<ClassStat> {
+    const query = gql`
+      query singleWorkoutStat($enrollmentId: ID!) {
+        singleWorkoutStat(enrollmentId: $enrollmentId) {
+          enrollment {
+            enrollmentInfo {
+              id
+              ... on EnrollmentInfo {
+                spotNumber
+              }
+            }
+            class {
+              id
+              name
+              start
+              duration
+              instructorName
+            }
+          }
+          averagePower
+          highPower
+          averageRpm
+          highRpm
+          totalEnergy
+          calories
+          distance
+          adjustedChartPoints(amountOfPoints: 62) {
+            time
+            rpm
+            power
+          }
+        }
+      }
+    `
+
+    const queryResult = await this.authApiClient.query({
+      query: query,
+      variables: {
+        enrollmentId: enrollmentId
+      }
+    })
+
+    return queryResult.data.singleWorkoutStat as ClassStat
+  }
+
+  async userRankingInClass(userId: string, classId: string): Promise<UserInClassRanking> {
+    const query = gql`
+      query userRankingInClass($userId: ID!, $classId: ID!) {
+        userRankingInClass(userId: $userId, classId: $classId) {
+          totalRanking {
+            positionInRanking
+            totalMembersInRanking
+          }
+          genderRanking {
+            gender
+            ranking {
+              positionInRanking
+              totalMembersInRanking
+            }
+          }
+        }
+      }
+    `
+
+    const queryResult = await this.authApiClient.query({
+      query: query,
+      variables: {
+        userId: userId,
+        classId: classId
+      },
+      fetchPolicy: 'no-cache'
+    })
+
+    return queryResult.data.userRankingInClass as UserInClassRanking
   }
 }

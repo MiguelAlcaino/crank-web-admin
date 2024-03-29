@@ -16,7 +16,7 @@ interface Props {
 </script>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 
 import { secondsToMMSS } from '@/utils/utility-functions'
 
@@ -24,12 +24,9 @@ const props = withDefaults(defineProps<Props>(), {
   chartPoints: () => []
 })
 
-watch(
-  () => props.chartPoints,
-  (chartPoints) => {
-    updateChart(chartPoints)
-  }
-)
+onMounted(() => {
+  updateChart(props.chartPoints)
+})
 
 const chartOptions = ref({
   chart: {
@@ -93,7 +90,7 @@ function updateChart(chartPoints?: ChartPoint[]) {
     :options="chartOptions"
     :series="series"
     width="100%"
-    height="600"
+    height="500"
   ></apexchart>
 </template>
 

@@ -22,11 +22,11 @@ enum GenderEnum {
 
 <script setup lang="ts">
 import type { ApiService } from '@/services/apiService'
-import { appStore } from '@/stores/appStorage'
 import { inject, ref, watch } from 'vue'
 
 const props = defineProps<{
-  classId?: string
+  classId: string
+  userId: string
 }>()
 
 watch(
@@ -49,9 +49,10 @@ async function getCurrentUserRankingInClass(classId?: string) {
 
   if (classId) {
     isLoading.value = true
-    userInClassRanking.value = (await apiService.getCurrentUserRankingInClass(appStore().site, {
-      classId: props.classId
-    })) as UserInClassRanking
+    userInClassRanking.value = (await apiService.userRankingInClass(
+      props.classId,
+      props.userId
+    )) as UserInClassRanking
     isLoading.value = false
   }
 
