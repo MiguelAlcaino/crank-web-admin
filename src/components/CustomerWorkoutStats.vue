@@ -26,11 +26,10 @@ interface EnrollmentInfo {
 import { inject, onMounted, ref } from 'vue'
 import dayjs from 'dayjs'
 
-import router from '@/router'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import ModalComponent from '@/components/ModalComponent.vue'
 import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIndicator.vue'
-import CustomerWorkoutSummary from '@/components/CustomerWorkoutSummary.vue'
+import CustomerWorkoutSummaryModal from '@/components/CustomerWorkoutSummaryModal.vue'
 import type { ApiService } from '@/services/apiService'
 import { appStore } from '@/stores/appStorage'
 
@@ -100,11 +99,11 @@ async function getUserWorkoutStats() {
               <td class="text-center">{{ item.enrollment.class.duration }} mins.</td>
               <td class="text-center">{{ item.totalEnergy?.toFixed(1) ?? '0' }}</td>
               <td class="text-center">
-                <CustomerWorkoutSummary
+                <CustomerWorkoutSummaryModal
                   :enrollment-id="item.enrollment.enrollmentInfo.id"
                   :class-id="item.enrollment.class.id"
                   :user-id="userId"
-                ></CustomerWorkoutSummary>
+                ></CustomerWorkoutSummaryModal>
               </td>
             </tr>
             <tr v-if="classStats?.length === 0 && !isLoading">
