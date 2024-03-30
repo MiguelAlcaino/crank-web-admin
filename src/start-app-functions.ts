@@ -15,6 +15,7 @@ import SimpleTypeahead from 'vue3-simple-typeahead'
 import CustomerCreateView from '@/views/CustomerCreateView.vue'
 import CustomerEditView from '@/views/CustomerEditView.vue'
 import RoomLayoutView from '@/views/RoomLayoutView.vue'
+import CustomerProfileView from '@/views/CustomerProfileView.vue'
 import { SiteEnum } from '@/gql/graphql'
 import { appStore } from '@/stores/appStorage'
 import AdminClassView from '@/views/AdminClassView.vue'
@@ -225,7 +226,7 @@ export const startCustomerProfileApp = async function (
         new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
       )
     },
-    render: () => h(CustomerEditView)
+    render: () => h(CustomerProfileView)
   })
 
   app.use(createPinia()).use(router).use(SimpleTypeahead).use(VueApexCharts).use(ContextMenu)
