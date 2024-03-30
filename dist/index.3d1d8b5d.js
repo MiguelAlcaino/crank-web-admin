@@ -7,7 +7,7 @@ function hi(A, e) {
     t[n[a]] = !0;
   return e ? (a) => !!t[a.toLowerCase()] : (a) => !!t[a];
 }
-const _t = process.env.NODE_ENV !== "production" ? Object.freeze({}) : {}, xs = process.env.NODE_ENV !== "production" ? Object.freeze([]) : [], On = () => {
+const St = process.env.NODE_ENV !== "production" ? Object.freeze({}) : {}, xs = process.env.NODE_ENV !== "production" ? Object.freeze([]) : [], On = () => {
 }, oy = () => !1, rw = /^on[^a-z]/, zs = (A) => rw.test(A), Cc = (A) => A.startsWith("onUpdate:"), Et = Object.assign, _f = (A, e) => {
   const t = A.indexOf(e);
   t > -1 && A.splice(t, 1);
@@ -375,7 +375,7 @@ class vy {
         return Dw;
     }
     const f = Reflect.get(e, t, n);
-    return (Es(t) ? my.has(t) : $w(t)) || (a || Mn(e, "get", t), s) ? f : Ct(f) ? l && $f(t) ? f : f.value : lt(f) ? a ? Nf(f) : dn(f) : f;
+    return (Es(t) ? my.has(t) : $w(t)) || (a || Mn(e, "get", t), s) ? f : wt(f) ? l && $f(t) ? f : f.value : lt(f) ? a ? Nf(f) : dn(f) : f;
   }
 }
 class yy extends vy {
@@ -384,9 +384,9 @@ class yy extends vy {
   }
   set(e, t, n, a) {
     let s = e[t];
-    if (Gr(s) && Ct(s) && !Ct(n))
+    if (Gr(s) && wt(s) && !wt(n))
       return !1;
-    if (!this._shallow && (!Xo(n) && !Gr(n) && (s = je(s), n = je(n)), !be(e) && Ct(s) && !Ct(n)))
+    if (!this._shallow && (!Xo(n) && !Gr(n) && (s = je(s), n = je(n)), !be(e) && wt(s) && !wt(n)))
       return s.value = n, !0;
     const l = be(e) && $f(t) ? Number(t) < e.length : it(e, t), f = Reflect.set(e, t, n, a);
     return e === je(a) && (l ? qi(n, s) && Hr(e, "set", t, n, s) : Hr(e, "add", t, n)), f;
@@ -731,7 +731,7 @@ function du(A, e) {
     newValue: e
   }) : fs(t));
 }
-function Ct(A) {
+function wt(A) {
   return !!(A && A.__v_isRef === !0);
 }
 function yA(A) {
@@ -741,7 +741,7 @@ function _y(A) {
   return Sy(A, !0);
 }
 function Sy(A, e) {
-  return Ct(A) ? A : new Ww(A, e);
+  return wt(A) ? A : new Ww(A, e);
 }
 class Ww {
   constructor(e, t) {
@@ -759,7 +759,7 @@ function Xw(A) {
   du(A, process.env.NODE_ENV !== "production" ? A.value : void 0);
 }
 function gA(A) {
-  return Ct(A) ? A.value : A;
+  return wt(A) ? A.value : A;
 }
 function Gw(A) {
   return Fe(A) ? A() : gA(A);
@@ -768,7 +768,7 @@ const qw = {
   get: (A, e, t) => gA(Reflect.get(A, e, t)),
   set: (A, e, t, n) => {
     const a = A[e];
-    return Ct(a) && !Ct(t) ? (a.value = t, !0) : Reflect.set(A, e, t, n);
+    return wt(a) && !wt(t) ? (a.value = t, !0) : Reflect.set(A, e, t, n);
   }
 };
 function Lf(A) {
@@ -824,11 +824,11 @@ class Jw {
   }
 }
 function Hi(A, e, t) {
-  return Ct(A) ? A : Fe(A) ? new Jw(A) : lt(A) && arguments.length > 1 ? $y(A, e, t) : yA(A);
+  return wt(A) ? A : Fe(A) ? new Jw(A) : lt(A) && arguments.length > 1 ? $y(A, e, t) : yA(A);
 }
 function $y(A, e, t) {
   const n = A[e];
-  return Ct(n) ? n : new Zw(A, e, t);
+  return wt(n) ? n : new Zw(A, e, t);
 }
 class AI {
   constructor(e, t, n, a) {
@@ -925,7 +925,7 @@ function iI(A) {
   }), t.length > 3 && e.push(" ..."), e;
 }
 function Ey(A, e, t) {
-  return Ht(e) ? (e = JSON.stringify(e), t ? e : [`${A}=${e}`]) : typeof e == "number" || typeof e == "boolean" || e == null ? t ? e : [`${A}=${e}`] : Ct(e) ? (e = Ey(A, je(e.value), !0), t ? e : [`${A}=Ref<`, e, ">"]) : Fe(e) ? [`${A}=fn${e.name ? `<${e.name}>` : ""}`] : (e = je(e), t ? e : [`${A}=`, e]);
+  return Ht(e) ? (e = JSON.stringify(e), t ? e : [`${A}=${e}`]) : typeof e == "number" || typeof e == "boolean" || e == null ? t ? e : [`${A}=${e}`] : wt(e) ? (e = Ey(A, je(e.value), !0), t ? e : [`${A}=Ref<`, e, ">"]) : Fe(e) ? [`${A}=fn${e.name ? `<${e.name}>` : ""}`] : (e = je(e), t ? e : [`${A}=`, e]);
 }
 function Ff(A, e) {
   process.env.NODE_ENV !== "production" && A !== void 0 && (typeof A != "number" ? XA(`${e} is not a valid number - got ${JSON.stringify(A)}.`) : isNaN(A) && XA(`${e} is NaN - the duration expression might be incorrect.`));
@@ -1248,7 +1248,7 @@ function xI(A, e, t) {
 function CI(A, e, ...t) {
   if (A.isUnmounted)
     return;
-  const n = A.vnode.props || _t;
+  const n = A.vnode.props || St;
   if (process.env.NODE_ENV !== "production") {
     const {
       emitsOptions: m,
@@ -1269,7 +1269,7 @@ function CI(A, e, ...t) {
   let a = t;
   const s = e.startsWith("update:"), l = s && e.slice(7);
   if (l && l in n) {
-    const m = `${l === "modelValue" ? "model" : l}Modifiers`, { number: y, trim: C } = n[m] || _t;
+    const m = `${l === "modelValue" ? "model" : l}Modifiers`, { number: y, trim: C } = n[m] || St;
     C && (a = t.map((S) => Ht(S) ? S.trim() : S)), y && (a = t.map(Ic));
   }
   if (process.env.NODE_ENV !== "production" && xI(A, e, a), process.env.NODE_ENV !== "production") {
@@ -1320,10 +1320,10 @@ function Ry(A, e, t = !1) {
 function hu(A, e) {
   return !A || !zs(e) ? !1 : (e = e.slice(2).replace(/Once$/, ""), it(A, e[0].toLowerCase() + e.slice(1)) || it(A, Zn(e)) || it(A, e));
 }
-let an = null, fu = null;
+let sn = null, fu = null;
 function Jo(A) {
-  const e = an;
-  return an = A, fu = A && A.type.__scopeId || null, e;
+  const e = sn;
+  return sn = A, fu = A && A.type.__scopeId || null, e;
 }
 function vn(A) {
   fu = A;
@@ -1332,7 +1332,7 @@ function yn() {
   fu = null;
 }
 const wI = (A) => Ne;
-function Ne(A, e = an, t) {
+function Ne(A, e = sn, t) {
   if (!e || A._n)
     return A;
   const n = (...a) => {
@@ -1520,7 +1520,7 @@ function Ly(A) {
   return Xf($I, A);
 }
 function Xf(A, e, t = !0, n = !1) {
-  const a = an || rn;
+  const a = sn || an;
   if (a) {
     const s = a.type;
     if (A === Pc) {
@@ -1937,7 +1937,7 @@ function Je(A, e, t) {
     "`watch(fn, options?)` signature has been moved to a separate API. Use `watchEffect(fn, options?)` instead. `watch` now only supports `watch(source, cb, options?) signature."
   ), Il(A, e, t);
 }
-function Il(A, e, { immediate: t, deep: n, flush: a, onTrack: s, onTrigger: l } = _t) {
+function Il(A, e, { immediate: t, deep: n, flush: a, onTrack: s, onTrigger: l } = St) {
   var f;
   process.env.NODE_ENV !== "production" && !e && (t !== void 0 && XA(
     'watch() "immediate" option is only respected when using the watch(source, callback, options?) signature.'
@@ -1950,10 +1950,10 @@ function Il(A, e, { immediate: t, deep: n, flush: a, onTrack: s, onTrigger: l } 
       B,
       "A watch source can only be a getter/effect function, a ref, a reactive object, or an array of these types."
     );
-  }, h = ou() === ((f = rn) == null ? void 0 : f.scope) ? rn : null;
+  }, h = ou() === ((f = an) == null ? void 0 : f.scope) ? an : null;
   let m, y = !1, C = !1;
-  if (Ct(A) ? (m = () => A.value, y = Xo(A)) : mr(A) ? (m = () => A, n = !0) : be(A) ? (C = !0, y = A.some((B) => mr(B) || Xo(B)), m = () => A.map((B) => {
-    if (Ct(B))
+  if (wt(A) ? (m = () => A.value, y = Xo(A)) : mr(A) ? (m = () => A, n = !0) : be(A) ? (C = !0, y = A.some((B) => mr(B) || Xo(B)), m = () => A.map((B) => {
+    if (wt(B))
       return B.value;
     if (mr(B))
       return wa(B);
@@ -2017,7 +2017,7 @@ function LI(A, e, t) {
   const n = this.proxy, a = Ht(A) ? A.includes(".") ? Hy(n, A) : () => n[A] : A.bind(n, n);
   let s;
   Fe(e) ? s = e : (s = e.handler, t = e);
-  const l = rn;
+  const l = an;
   Ji(this);
   const f = Il(a, s.bind(n), t);
   return l ? Ji(l) : zi(), f;
@@ -2034,7 +2034,7 @@ function Hy(A, e) {
 function wa(A, e) {
   if (!lt(A) || A.__v_skip || (e = e || /* @__PURE__ */ new Set(), e.has(A)))
     return A;
-  if (e.add(A), Ct(A))
+  if (e.add(A), wt(A))
     wa(A.value, e);
   else if (be(A))
     for (let t = 0; t < A.length; t++)
@@ -2052,12 +2052,12 @@ function Uy(A) {
   sw(A) && XA("Do not use built-in directive ids as custom directive id: " + A);
 }
 function Xe(A, e) {
-  const t = an;
+  const t = sn;
   if (t === null)
     return process.env.NODE_ENV !== "production" && XA("withDirectives can only be used inside render functions."), A;
   const n = xu(t) || t.proxy, a = A.dirs || (A.dirs = []);
   for (let s = 0; s < e.length; s++) {
-    let [l, f, p, h = _t] = e[s];
+    let [l, f, p, h = St] = e[s];
     l && (Fe(l) && (l = {
       mounted: l,
       updated: l
@@ -2094,7 +2094,7 @@ function qf() {
     isUnmounting: !1,
     leavingVNodes: /* @__PURE__ */ new Map()
   };
-  return wt(() => {
+  return It(() => {
     A.isMounted = !0;
   }), Gs(() => {
     A.isUnmounting = !0;
@@ -2333,7 +2333,7 @@ function VI(A) {
       return h;
     },
     setup() {
-      const S = rn;
+      const S = an;
       if (h)
         return () => Zu(h, S);
       const I = (E) => {
@@ -2454,7 +2454,7 @@ const Xs = (A) => A.type.__isKeepAlive, BI = {
     const M = () => {
       F != null && a.set(F, Ad(t.subTree));
     };
-    return wt(M), yu(M), Gs(() => {
+    return It(M), yu(M), Gs(() => {
       a.forEach((E) => {
         const { subTree: T, suspense: Y } = t, B = Ad(T);
         if (E.type === B.type && E.key === B.key) {
@@ -2493,7 +2493,7 @@ function Wy(A, e) {
 function Xy(A, e) {
   Gy(A, "da", e);
 }
-function Gy(A, e, t = rn) {
+function Gy(A, e, t = an) {
   const n = A.__wdc || (A.__wdc = () => {
     let a = t;
     for (; a; ) {
@@ -2526,7 +2526,7 @@ function Ju(A) {
 function Ad(A) {
   return A.shapeFlag & 128 ? A.ssContent : A;
 }
-function mu(A, e, t = rn, n = !1) {
+function mu(A, e, t = an, n = !1) {
   if (t) {
     const a = t[A] || (t[A] = []), s = e.__weh || (e.__weh = (...l) => {
       if (t.isUnmounted)
@@ -2543,12 +2543,12 @@ function mu(A, e, t = rn, n = !1) {
     );
   }
 }
-const fi = (A) => (e, t = rn) => (!Os || A === "sp") && mu(A, (...n) => e(...n), t), vu = fi("bm"), wt = fi("m"), Kf = fi("bu"), yu = fi("u"), Gs = fi("bum"), aa = fi("um"), qy = fi("sp"), Qy = fi(
+const fi = (A) => (e, t = an) => (!Os || A === "sp") && mu(A, (...n) => e(...n), t), vu = fi("bm"), It = fi("m"), Kf = fi("bu"), yu = fi("u"), Gs = fi("bum"), aa = fi("um"), qy = fi("sp"), Qy = fi(
   "rtg"
 ), Ky = fi(
   "rtc"
 );
-function Zy(A, e = rn) {
+function Zy(A, e = an) {
   mu("ec", A, e);
 }
 function fe(A, e, t, n) {
@@ -2595,13 +2595,13 @@ function tr(A, e) {
   return A;
 }
 function $e(A, e, t = {}, n, a) {
-  if (an.isCE || an.parent && Sa(an.parent) && an.parent.isCE)
+  if (sn.isCE || sn.parent && Sa(sn.parent) && sn.parent.isCE)
     return e !== "default" && (t.name = e), te("slot", t, n && n());
   let s = A[e];
   process.env.NODE_ENV !== "production" && s && s.length > 1 && (XA(
     "SSR-optimized slot function detected in a non-SSR-optimized render function. You need to mark this component with $dynamic-slots in the parent template."
   ), s = () => []), s && s._c && (s._d = !1), X();
-  const l = s && Jy(s(t)), f = Ae(
+  const l = s && Jy(s(t)), f = JA(
     HA,
     {
       key: t.key || l && l.key || `_${e}`
@@ -2637,7 +2637,7 @@ const th = (A) => A ? xb(A) ? xu(A) || A.proxy : th(A.parent) : null, $a = /* @_
   $forceUpdate: (A) => A.f || (A.f = () => xl(A.update)),
   $nextTick: (A) => A.n || (A.n = Rn.bind(A.proxy)),
   $watch: (A) => LI.bind(A)
-}), Zf = (A) => A === "_" || A === "$", ed = (A, e) => A !== _t && !A.__isScriptSetup && it(A, e), Oo = {
+}), Zf = (A) => A === "_" || A === "$", ed = (A, e) => A !== St && !A.__isScriptSetup && it(A, e), Oo = {
   get({ _: A }, e) {
     const { ctx: t, setupState: n, data: a, props: s, accessCache: l, type: f, appContext: p } = A;
     if (process.env.NODE_ENV !== "production" && e === "__isVue")
@@ -2659,11 +2659,11 @@ const th = (A) => A ? xb(A) ? xu(A) || A.proxy : th(A.parent) : null, $a = /* @_
       else {
         if (ed(n, e))
           return l[e] = 1, n[e];
-        if (a !== _t && it(a, e))
+        if (a !== St && it(a, e))
           return l[e] = 2, a[e];
         if ((h = A.propsOptions[0]) && it(h, e))
           return l[e] = 3, s[e];
-        if (t !== _t && it(t, e))
+        if (t !== St && it(t, e))
           return l[e] = 4, t[e];
         nh && (l[e] = 0);
       }
@@ -2674,21 +2674,21 @@ const th = (A) => A ? xb(A) ? xu(A) || A.proxy : th(A.parent) : null, $a = /* @_
       return e === "$attrs" ? (Mn(A, "get", e), process.env.NODE_ENV !== "production" && Dc()) : process.env.NODE_ENV !== "production" && e === "$slots" && Mn(A, "get", e), m(A);
     if ((y = f.__cssModules) && (y = y[e]))
       return y;
-    if (t !== _t && it(t, e))
+    if (t !== St && it(t, e))
       return l[e] = 4, t[e];
     if (C = p.config.globalProperties, it(C, e))
       return C[e];
-    process.env.NODE_ENV !== "production" && an && (!Ht(e) || e.indexOf("__v") !== 0) && (a !== _t && Zf(e[0]) && it(a, e) ? XA(
+    process.env.NODE_ENV !== "production" && sn && (!Ht(e) || e.indexOf("__v") !== 0) && (a !== St && Zf(e[0]) && it(a, e) ? XA(
       `Property ${JSON.stringify(
         e
       )} must be accessed via $data because it starts with a reserved character ("$" or "_") and is not proxied on the render context.`
-    ) : A === an && XA(
+    ) : A === sn && XA(
       `Property ${JSON.stringify(e)} was accessed during render but is not defined on instance.`
     ));
   },
   set({ _: A }, e, t) {
     const { data: n, setupState: a, ctx: s } = A;
-    return ed(a, e) ? (a[e] = t, !0) : process.env.NODE_ENV !== "production" && a.__isScriptSetup && it(a, e) ? (XA(`Cannot mutate <script setup> binding "${e}" from Options API.`), !1) : n !== _t && it(n, e) ? (n[e] = t, !0) : it(A.props, e) ? (process.env.NODE_ENV !== "production" && XA(`Attempting to mutate prop "${e}". Props are readonly.`), !1) : e[0] === "$" && e.slice(1) in A ? (process.env.NODE_ENV !== "production" && XA(
+    return ed(a, e) ? (a[e] = t, !0) : process.env.NODE_ENV !== "production" && a.__isScriptSetup && it(a, e) ? (XA(`Cannot mutate <script setup> binding "${e}" from Options API.`), !1) : n !== St && it(n, e) ? (n[e] = t, !0) : it(A.props, e) ? (process.env.NODE_ENV !== "production" && XA(`Attempting to mutate prop "${e}". Props are readonly.`), !1) : e[0] === "$" && e.slice(1) in A ? (process.env.NODE_ENV !== "production" && XA(
       `Attempting to mutate public property "${e}". Properties starting with $ are reserved and readonly.`
     ), !1) : (process.env.NODE_ENV !== "production" && e in A.appContext.config.globalProperties ? Object.defineProperty(s, e, {
       enumerable: !0,
@@ -2700,7 +2700,7 @@ const th = (A) => A ? xb(A) ? xu(A) || A.proxy : th(A.parent) : null, $a = /* @_
     _: { data: A, setupState: e, accessCache: t, ctx: n, appContext: a, propsOptions: s }
   }, l) {
     let f;
-    return !!t[l] || A !== _t && it(A, l) || ed(e, l) || (f = s[0]) && it(f, l) || it(n, l) || it($a, l) || it(a.config.globalProperties, l);
+    return !!t[l] || A !== St && it(A, l) || ed(e, l) || (f = s[0]) && it(f, l) || it(n, l) || it($a, l) || it(a.config.globalProperties, l);
   },
   defineProperty(A, e, t) {
     return t.get != null ? A._.accessCache[e] = 0 : it(t, "value") && this.set(A, e, t.value, null), Reflect.defineProperty(A, e, t);
@@ -2974,14 +2974,14 @@ function o2(A) {
   if (p) {
     const aA = Fe(p) ? p.call(t) : p;
     Reflect.ownKeys(aA).forEach((R) => {
-      ln(R, aA[R]);
+      en(R, aA[R]);
     });
   }
   m && jp(m, A, "c");
   function cA(aA, R) {
     be(R) ? R.forEach((rA) => aA(rA.bind(t))) : R && aA(R.bind(t));
   }
-  if (cA(vu, y), cA(wt, C), cA(Kf, S), cA(yu, I), cA(Wy, O), cA(Xy, F), cA(Zy, oA), cA(Ky, eA), cA(Qy, tA), cA(Gs, E), cA(aa, Y), cA(qy, G), be(Z))
+  if (cA(vu, y), cA(It, C), cA(Kf, S), cA(yu, I), cA(Wy, O), cA(Xy, F), cA(Zy, oA), cA(Ky, eA), cA(Qy, tA), cA(Gs, E), cA(aa, Y), cA(qy, G), be(Z))
     if (Z.length) {
       const aA = A.exposed || (A.exposed = {});
       Z.forEach((R) => {
@@ -3003,7 +3003,7 @@ function l2(A, e, t = On) {
       a.from || n,
       a.default,
       !0
-    ) : s = At(a.from || n) : s = At(a), Ct(s) ? Object.defineProperty(e, n, {
+    ) : s = At(a.from || n) : s = At(a), wt(s) ? Object.defineProperty(e, n, {
       enumerable: !0,
       configurable: !0,
       get: () => s.value,
@@ -3237,17 +3237,17 @@ function f2(A, e) {
   };
 }
 let tl = null;
-function ln(A, e) {
-  if (!rn)
+function en(A, e) {
+  if (!an)
     process.env.NODE_ENV !== "production" && XA("provide() can only be used inside setup().");
   else {
-    let t = rn.provides;
-    const n = rn.parent && rn.parent.provides;
-    n === t && (t = rn.provides = Object.create(n)), t[A] = e;
+    let t = an.provides;
+    const n = an.parent && an.parent.provides;
+    n === t && (t = an.provides = Object.create(n)), t[A] = e;
   }
 }
 function At(A, e, t = !1) {
-  const n = rn || an;
+  const n = an || sn;
   if (n || tl) {
     const a = n ? n.parent == null ? n.vnode.appContext && n.vnode.appContext.provides : n.parent.provides : tl._context.provides;
     if (a && A in a)
@@ -3259,7 +3259,7 @@ function At(A, e, t = !1) {
     process.env.NODE_ENV !== "production" && XA("inject() can only be used inside setup() or functional components.");
 }
 function g2() {
-  return !!(rn || an || tl);
+  return !!(an || sn || tl);
 }
 function p2(A, e, t, n = !1) {
   const a = {}, s = {};
@@ -3338,7 +3338,7 @@ function nb(A, e, t, n) {
       a && it(a, m = er(p)) ? !s || !s.includes(m) ? t[m] = h : (f || (f = {}))[m] = h : hu(A.emitsOptions, p) || (!(p in n) || h !== n[p]) && (n[p] = h, l = !0);
     }
   if (s) {
-    const p = je(t), h = f || _t;
+    const p = je(t), h = f || St;
     for (let m = 0; m < s.length; m++) {
       const y = s[m];
       t[y] = ih(
@@ -3392,7 +3392,7 @@ function rb(A, e, t = !1) {
     for (let m = 0; m < s.length; m++) {
       process.env.NODE_ENV !== "production" && !Ht(s[m]) && XA("props must be strings when using array syntax.", s[m]);
       const y = er(s[m]);
-      Xp(y) && (l[y] = _t);
+      Xp(y) && (l[y] = St);
     }
   else if (s) {
     process.env.NODE_ENV !== "production" && !lt(s) && XA("invalid props options", s);
@@ -3490,7 +3490,7 @@ function w2(...A) {
 const ab = (A) => A[0] === "_" || A === "$stable", Ag = (A) => be(A) ? A.map(Kn) : [Kn(A)], I2 = (A, e, t) => {
   if (e._n)
     return e;
-  const n = Ne((...a) => (process.env.NODE_ENV !== "production" && rn && XA(
+  const n = Ne((...a) => (process.env.NODE_ENV !== "production" && an && XA(
     `Slot "${A}" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead.`
   ), Ag(e(...a))), t);
   return n._c = !1, n;
@@ -3528,7 +3528,7 @@ const ab = (A) => A[0] === "_" || A === "$stable", Ag = (A) => be(A) ? A.map(Kn)
   wc(A.slots, bu, 1);
 }, _2 = (A, e, t) => {
   const { vnode: n, slots: a } = A;
-  let s = !0, l = _t;
+  let s = !0, l = St;
   if (n.shapeFlag & 32) {
     const f = e._;
     f ? process.env.NODE_ENV !== "production" && Ui ? (Et(a, e), Hr(A, "set", "$slots")) : t && f === 1 ? s = !1 : (Et(a, e), !t && f === 1 && delete a._) : (s = !e.$stable, sb(e, a)), l = e;
@@ -3560,11 +3560,11 @@ function Tc(A, e, t, n, a = !1) {
     );
     return;
   }
-  const h = e && e.r, m = f.refs === _t ? f.refs = {} : f.refs, y = f.setupState;
-  if (h != null && h !== p && (Ht(h) ? (m[h] = null, it(y, h) && (y[h] = null)) : Ct(h) && (h.value = null)), Fe(p))
+  const h = e && e.r, m = f.refs === St ? f.refs = {} : f.refs, y = f.setupState;
+  if (h != null && h !== p && (Ht(h) ? (m[h] = null, it(y, h) && (y[h] = null)) : wt(h) && (h.value = null)), Fe(p))
     Ur(p, f, 12, [l, m]);
   else {
-    const C = Ht(p), S = Ct(p);
+    const C = Ht(p), S = wt(p);
     if (C || S) {
       const I = () => {
         if (A.f) {
@@ -3965,7 +3965,7 @@ function ub(A, e) {
           le,
           re,
           ae,
-          YA
+          VA
         ) : process.env.NODE_ENV !== "production" && XA("Invalid VNode type:", KA, `(${typeof KA})`);
     }
     ve != null && FA && Tc(ve, uA && uA.ref, ne, fA || uA, !fA);
@@ -4114,7 +4114,7 @@ function ub(A, e) {
     const re = fA.el = uA.el;
     let { patchFlag: ae, dynamicChildren: KA, dirs: ve } = fA;
     ae |= uA.patchFlag & 16;
-    const pe = uA.props || _t, Ce = fA.props || _t;
+    const pe = uA.props || St, Ce = fA.props || St;
     let Pe;
     NA && fa(NA, !1), (Pe = Ce.onVnodeBeforeUpdate) && Qn(Pe, NA, fA, uA), ve && Nr(fA, uA, NA, "beforeUpdate"), NA && fa(NA, !0), process.env.NODE_ENV !== "production" && Ui && (ae = 0, le = !1, KA = null);
     const SA = FA && fA.type !== "foreignObject";
@@ -4195,7 +4195,7 @@ function ub(A, e) {
     }
   }, j = (uA, fA, NA, UA, FA, ne, le) => {
     if (NA !== UA) {
-      if (NA !== _t)
+      if (NA !== St)
         for (const re in NA)
           !$o(re) && !(re in UA) && s(
             uA,
@@ -4283,7 +4283,7 @@ function ub(A, e) {
       UA,
       FA
     );
-    if (process.env.NODE_ENV !== "production" && re.type.__hmrId && uI(re), process.env.NODE_ENV !== "production" && (Eo(uA), Ai(re, "mount")), Xs(uA) && (re.ctx.renderer = YA), process.env.NODE_ENV !== "production" && Ai(re, "init"), Cb(re), process.env.NODE_ENV !== "production" && ei(re, "init"), re.asyncDep) {
+    if (process.env.NODE_ENV !== "production" && re.type.__hmrId && uI(re), process.env.NODE_ENV !== "production" && (Eo(uA), Ai(re, "mount")), Xs(uA) && (re.ctx.renderer = VA), process.env.NODE_ENV !== "production" && Ai(re, "init"), Cb(re), process.env.NODE_ENV !== "production" && ei(re, "init"), re.asyncDep) {
       if (FA && FA.registerDep(re, aA), !uA.el) {
         const ae = re.subTree = te(cn);
         M(null, ae, fA, NA);
@@ -4332,9 +4332,9 @@ function ub(A, e) {
       } else {
         let ve;
         const { el: pe, props: Ce } = fA, { bm: Pe, m: SA, parent: PA } = uA, hA = Sa(fA);
-        if (fa(uA, !1), Pe && Mi(Pe), !hA && (ve = Ce && Ce.onVnodeBeforeMount) && Qn(ve, PA, fA), fa(uA, !0), pe && qA) {
+        if (fa(uA, !1), Pe && Mi(Pe), !hA && (ve = Ce && Ce.onVnodeBeforeMount) && Qn(ve, PA, fA), fa(uA, !0), pe && GA) {
           const q = () => {
-            process.env.NODE_ENV !== "production" && Ai(uA, "render"), uA.subTree = tc(uA), process.env.NODE_ENV !== "production" && ei(uA, "render"), process.env.NODE_ENV !== "production" && Ai(uA, "hydrate"), qA(
+            process.env.NODE_ENV !== "production" && Ai(uA, "render"), uA.subTree = tc(uA), process.env.NODE_ENV !== "production" && ei(uA, "render"), process.env.NODE_ENV !== "production" && Ai(uA, "hydrate"), GA(
               pe,
               uA.subTree,
               uA,
@@ -4593,7 +4593,7 @@ function ub(A, e) {
       return;
     }
     if (KA & 64) {
-      le.move(uA, fA, NA, YA);
+      le.move(uA, fA, NA, VA);
       return;
     }
     if (le === HA) {
@@ -4649,7 +4649,7 @@ function ub(A, e) {
         fA,
         NA,
         FA,
-        YA,
+        VA,
         UA
       ) : KA && (ne !== HA || pe > 0 && pe & 64) ? wA(
         KA,
@@ -4667,7 +4667,7 @@ function ub(A, e) {
     if (fA === HA) {
       process.env.NODE_ENV !== "production" && uA.patchFlag > 0 && uA.patchFlag & 2048 && FA && !FA.persisted ? uA.children.forEach((le) => {
         le.type === cn ? a(le.el) : MA(le);
-      }) : JA(NA, UA);
+      }) : Ae(NA, UA);
       return;
     }
     if (fA === ji) {
@@ -4682,7 +4682,7 @@ function ub(A, e) {
       re ? re(uA.el, ne, ae) : ae();
     } else
       ne();
-  }, JA = (uA, fA) => {
+  }, Ae = (uA, fA) => {
     let NA;
     for (; uA !== fA; )
       NA = C(uA), a(uA), uA = NA;
@@ -4698,7 +4698,7 @@ function ub(A, e) {
       mA(uA[le], fA, NA, UA, FA);
   }, DA = (uA) => uA.shapeFlag & 6 ? DA(uA.component.subTree) : uA.shapeFlag & 128 ? uA.suspense.next() : C(uA.anchor || uA.el), RA = (uA, fA, NA) => {
     uA == null ? fA._vnode && mA(fA._vnode, null, null, !0) : O(fA._vnode || null, uA, fA, null, null, null, NA), Rp(), Ec(), fA._vnode = uA;
-  }, YA = {
+  }, VA = {
     p: O,
     um: mA,
     m: vA,
@@ -4710,9 +4710,9 @@ function ub(A, e) {
     n: DA,
     o: A
   };
-  let $A, qA;
-  return e && ([$A, qA] = e(
-    YA
+  let $A, GA;
+  return e && ([$A, GA] = e(
+    VA
   )), {
     render: RA,
     hydrate: $A,
@@ -4964,7 +4964,7 @@ function dA(A, e, t, n, a, s) {
     )
   );
 }
-function Ae(A, e, t, n, a) {
+function JA(A, e, t, n, a) {
   return pb(
     te(
       A,
@@ -4987,12 +4987,12 @@ function T2(A) {
   lh = A;
 }
 const N2 = (...A) => vb(
-  ...lh ? lh(A, an) : A
+  ...lh ? lh(A, sn) : A
 ), bu = "__vInternal", mb = ({ key: A }) => A != null ? A : null, nc = ({
   ref: A,
   ref_key: e,
   ref_for: t
-}) => (typeof A == "number" && (A = "" + A), A != null ? Ht(A) || Ct(A) || Fe(A) ? { i: an, r: A, k: e, f: !!t } : A : null);
+}) => (typeof A == "number" && (A = "" + A), A != null ? Ht(A) || wt(A) || Fe(A) ? { i: sn, r: A, k: e, f: !!t } : A : null);
 function D(A, e = null, t = null, n = 0, a = null, s = A === HA ? 0 : 1, l = !1, f = !1) {
   const p = {
     __v_isVNode: !0,
@@ -5020,7 +5020,7 @@ function D(A, e = null, t = null, n = 0, a = null, s = A === HA ? 0 : 1, l = !1,
     dynamicProps: a,
     dynamicChildren: null,
     appContext: null,
-    ctx: an
+    ctx: sn
   };
   return f ? (eg(p, t), s & 128 && A.normalize(p)) : t && (p.shapeFlag |= Ht(t) ? 8 : 16), process.env.NODE_ENV !== "production" && p.key !== p.key && XA("VNode created with invalid key (NaN). VNode type:", p.type), La > 0 && !l && Jn && (p.patchFlag > 0 || s & 6) && p.patchFlag !== 32 && Jn.push(p), p;
 }
@@ -5103,7 +5103,7 @@ function M2(A, e) {
   return t.staticCount = e, t;
 }
 function IA(A = "", e = !1) {
-  return e ? (X(), Ae(cn, null, A)) : te(cn, null, A);
+  return e ? (X(), JA(cn, null, A)) : te(cn, null, A);
 }
 function Kn(A) {
   return A == null || typeof A == "boolean" ? te(cn) : be(A) ? te(
@@ -5130,10 +5130,10 @@ function eg(A, e) {
     } else {
       t = 32;
       const a = e._;
-      !a && !(bu in e) ? e._ctx = an : a === 3 && an && (an.slots._ === 1 ? e._ = 1 : (e._ = 2, A.patchFlag |= 1024));
+      !a && !(bu in e) ? e._ctx = sn : a === 3 && sn && (sn.slots._ === 1 ? e._ = 1 : (e._ = 2, A.patchFlag |= 1024));
     }
   else
-    Fe(e) ? (e = { default: e, _ctx: an }, t = 32) : (e = String(e), n & 64 ? (t = 16, e = [Ie(e)]) : t = 8);
+    Fe(e) ? (e = { default: e, _ctx: sn }, t = 32) : (e = String(e), n & 64 ? (t = 16, e = [Ie(e)]) : t = 8);
   A.children = e, A.shapeFlag |= t;
 }
 function mn(...A) {
@@ -5190,15 +5190,15 @@ function bb(A, e, t) {
     emitsOptions: Ry(n, a),
     emit: null,
     emitted: null,
-    propsDefaults: _t,
+    propsDefaults: St,
     inheritAttrs: n.inheritAttrs,
-    ctx: _t,
-    data: _t,
-    props: _t,
-    attrs: _t,
-    slots: _t,
-    refs: _t,
-    setupState: _t,
+    ctx: St,
+    data: St,
+    props: St,
+    attrs: St,
+    slots: St,
+    refs: St,
+    setupState: St,
     setupContext: null,
     attrsProxy: null,
     slotsProxy: null,
@@ -5226,16 +5226,16 @@ function bb(A, e, t) {
   };
   return process.env.NODE_ENV !== "production" ? s.ctx = zI(s) : s.ctx = { _: s }, s.root = e ? e.root : s, s.emit = CI.bind(null, s), A.ce && A.ce(s), s;
 }
-let rn = null;
-const nr = () => rn || an;
+let an = null;
+const nr = () => an || sn;
 let tg, is, Jp = "__VUE_INSTANCE_SETTERS__";
-(is = _c()[Jp]) || (is = _c()[Jp] = []), is.push((A) => rn = A), tg = (A) => {
+(is = _c()[Jp]) || (is = _c()[Jp] = []), is.push((A) => an = A), tg = (A) => {
   is.length > 1 ? is.forEach((e) => e(A)) : is[0](A);
 };
 const Ji = (A) => {
   tg(A), A.scope.on();
 }, zi = () => {
-  rn && rn.scope.off(), tg(null);
+  an && an.scope.off(), tg(null);
 }, F2 = /* @__PURE__ */ hi("slot,component");
 function ch(A, e) {
   const t = e.isNativeTag || oy;
@@ -5380,7 +5380,7 @@ function Ib(A) {
   const e = (t) => {
     if (process.env.NODE_ENV !== "production" && (A.exposed && XA("expose() should be called only once per setup()."), t != null)) {
       let n = typeof t;
-      n === "object" && (be(t) ? n = "array" : Ct(t) && (n = "ref")), n !== "object" && XA(
+      n === "object" && (be(t) ? n = "array" : wt(t) && (n = "ref")), n !== "object" && XA(
         `expose() should be passed a plain object, received ${n}.`
       );
     }
@@ -5466,7 +5466,7 @@ function $b() {
     return;
   const A = { style: "color:#3ba776" }, e = { style: "color:#0b1bc9" }, t = { style: "color:#b62e24" }, n = { style: "color:#9d288c" }, a = {
     header(y) {
-      return lt(y) ? y.__isVue ? ["div", A, "VueInstance"] : Ct(y) ? [
+      return lt(y) ? y.__isVue ? ["div", A, "VueInstance"] : wt(y) ? [
         "div",
         {},
         ["span", A, m(y)],
@@ -5503,7 +5503,7 @@ function $b() {
   };
   function s(y) {
     const C = [];
-    y.type.props && y.props && C.push(l("props", je(y.props))), y.setupState !== _t && C.push(l("setup", y.setupState)), y.data !== _t && C.push(l("data", je(y.data)));
+    y.type.props && y.props && C.push(l("props", je(y.props))), y.setupState !== St && C.push(l("setup", y.setupState)), y.data !== St && C.push(l("data", je(y.data)));
     const S = p(y, "computed");
     S && C.push(l("computed", S));
     const I = p(y, "inject");
@@ -6093,12 +6093,12 @@ function vk(A = "$style") {
   {
     const e = nr();
     if (!e)
-      return process.env.NODE_ENV !== "production" && XA("useCssModule must be called inside setup()"), _t;
+      return process.env.NODE_ENV !== "production" && XA("useCssModule must be called inside setup()"), St;
     const t = e.type.__cssModules;
     if (!t)
-      return process.env.NODE_ENV !== "production" && XA("Current instance does not have CSS modules injected."), _t;
+      return process.env.NODE_ENV !== "production" && XA("Current instance does not have CSS modules injected."), St;
     const n = t[A];
-    return n || (process.env.NODE_ENV !== "production" && XA(`Current instance does not have CSS module named "${A}".`), _t);
+    return n || (process.env.NODE_ENV !== "production" && XA(`Current instance does not have CSS module named "${A}".`), St);
   }
 }
 function yk(A) {
@@ -6115,7 +6115,7 @@ function yk(A) {
     const a = A(e.proxy);
     gh(e.subTree, a), t(a);
   };
-  Yy(n), wt(() => {
+  Yy(n), It(() => {
     const a = new MutationObserver(n);
     a.observe(e.subTree.el.parentNode, { childList: !0 }), aa(() => a.disconnect());
   });
@@ -6538,7 +6538,7 @@ const Nk = () => {
   isProxy: Go,
   isReactive: mr,
   isReadonly: Gr,
-  isRef: Ct,
+  isRef: wt,
   isShallow: Xo,
   markRaw: gr,
   onScopeDispose: Pf,
@@ -6578,7 +6578,7 @@ const Nk = () => {
   cloneVNode: br,
   compatUtils: G2,
   computed: jA,
-  createBlock: Ae,
+  createBlock: JA,
   createCommentVNode: IA,
   createElementBlock: dA,
   createElementVNode: D,
@@ -6621,7 +6621,7 @@ const Nk = () => {
   onBeforeUpdate: Kf,
   onDeactivated: Xy,
   onErrorCaptured: Zy,
-  onMounted: wt,
+  onMounted: It,
   onRenderTracked: Ky,
   onRenderTriggered: Qy,
   onServerPrefetch: qy,
@@ -6629,7 +6629,7 @@ const Nk = () => {
   onUpdated: yu,
   openBlock: X,
   popScopeId: yn,
-  provide: ln,
+  provide: en,
   pushScopeId: vn,
   queuePostFlushCb: Ko,
   registerRuntimeCompiler: B2,
@@ -7334,7 +7334,7 @@ function n1(A, e) {
     if (!(t in A))
       continue;
     const a = A[t];
-    Fa(a) && Fa(n) && !Ct(n) && !mr(n) ? A[t] = n1(a, n) : A[t] = n;
+    Fa(a) && Fa(n) && !wt(n) && !mr(n) ? A[t] = n1(a, n) : A[t] = n;
   }
   return A;
 }
@@ -7359,7 +7359,7 @@ function yh(A, e) {
     if (!e.hasOwnProperty(t))
       continue;
     const n = e[t], a = A[t];
-    Fa(a) && Fa(n) && A.hasOwnProperty(t) && !Ct(n) && !mr(n) ? A[t] = yh(a, n) : A[t] = n;
+    Fa(a) && Fa(n) && A.hasOwnProperty(t) && !wt(n) && !mr(n) ? A[t] = yh(a, n) : A[t] = n;
   }
   return A;
 }
@@ -7369,7 +7369,7 @@ function s_(A) {
 }
 const { assign: hr } = Object;
 function Cm(A) {
-  return !!(Ct(A) && A.effect);
+  return !!(wt(A) && A.effect);
 }
 function wm(A, e, t, n) {
   const { state: a, actions: s, getters: l } = e, f = t.state.value[A];
@@ -7488,8 +7488,8 @@ function bh(A, e, t = {}, n, a, s) {
   const oA = n._e.run(() => (l = Df(), l.run(() => e())));
   for (const G in oA) {
     const Z = oA[G];
-    if (Ct(Z) && !Cm(Z) || mr(Z))
-      process.env.NODE_ENV !== "production" && a ? Xl(O.value, G, Hi(oA, G)) : s || (I && s_(Z) && (Ct(Z) ? Z.value = I[G] : yh(Z, I[G])), n.state.value[A][G] = Z), process.env.NODE_ENV !== "production" && B.state.push(G);
+    if (wt(Z) && !Cm(Z) || mr(Z))
+      process.env.NODE_ENV !== "production" && a ? Xl(O.value, G, Hi(oA, G)) : s || (I && s_(Z) && (wt(Z) ? Z.value = I[G] : yh(Z, I[G])), n.state.value[A][G] = Z), process.env.NODE_ENV !== "production" && B.state.push(G);
     else if (typeof Z == "function") {
       const Q = process.env.NODE_ENV !== "production" && a ? Z : Y(G, Z);
       oA[G] = Q, process.env.NODE_ENV !== "production" && (B.actions[G] = Z), f.actions[G] = Z;
@@ -7594,7 +7594,7 @@ const ri = typeof window < "u";
 function o_(A) {
   return A.__esModule || A[Symbol.toStringTag] === "Module";
 }
-const kt = Object.assign;
+const _t = Object.assign;
 function sd(A, e) {
   const t = {};
   for (const n in e) {
@@ -7779,7 +7779,7 @@ function C_(A, e, t, n) {
   }
   function m() {
     const { history: C } = window;
-    !C.state || C.replaceState(kt({}, C.state, { scroll: ku() }), "");
+    !C.state || C.replaceState(_t({}, C.state, { scroll: ku() }), "");
   }
   function y() {
     for (const C of s)
@@ -7825,7 +7825,7 @@ function w_(A) {
     }
   }
   function l(p, h) {
-    const m = kt({}, e.state, $m(
+    const m = _t({}, e.state, $m(
       a.value.back,
       p,
       a.value.forward,
@@ -7834,7 +7834,7 @@ function w_(A) {
     s(p, m, !0), n.value = p;
   }
   function f(p, h) {
-    const m = kt(
+    const m = _t(
       {},
       a.value,
       e.state,
@@ -7848,7 +7848,7 @@ function w_(A) {
 history.replaceState(history.state, '', url)
 
 You can find more information at https://next.router.vuejs.org/guide/migration/#usage-of-history-state.`), s(m.current, m, !0);
-    const y = kt({}, $m(n.value, p, null), { position: m.position + 1 }, h);
+    const y = _t({}, $m(n.value, p, null), { position: m.position + 1 }, h);
     s(p, y, !1), n.value = p;
   }
   return {
@@ -7864,7 +7864,7 @@ function I_(A) {
   function n(s, l = !0) {
     l || t.pauseListeners(), history.go(s);
   }
-  const a = kt({
+  const a = _t({
     location: "",
     base: A,
     go: n,
@@ -7920,10 +7920,10 @@ while being at
   }
 };
 function Ms(A, e) {
-  return process.env.NODE_ENV !== "production" ? kt(new Error(__[A](e)), {
+  return process.env.NODE_ENV !== "production" ? _t(new Error(__[A](e)), {
     type: A,
     [Ch]: !0
-  }, e) : kt(new Error(), {
+  }, e) : _t(new Error(), {
     type: A,
     [Ch]: !0
   }, e);
@@ -7949,7 +7949,7 @@ const Dm = "[^/]+?", E_ = {
   end: !0
 }, D_ = /[.+*?^${}()[\]/\\]/g;
 function P_(A, e) {
-  const t = kt({}, E_, e), n = [];
+  const t = _t({}, E_, e), n = [];
   let a = t.start ? "^" : "";
   const s = [];
   for (const h of A) {
@@ -8131,7 +8131,7 @@ function L_(A, e, t) {
     for (const l of n.keys)
       s.has(l.name) && dt(`Found duplicated params with name "${l.name}" for path "${A.path}". Only the last one will be available on "$route.params".`), s.add(l.name);
   }
-  const a = kt(n, {
+  const a = _t(n, {
     record: A,
     parent: e,
     children: [],
@@ -8154,7 +8154,7 @@ function F_(A, e) {
     if ("alias" in m) {
       const T = typeof m.alias == "string" ? [m.alias] : m.alias;
       for (const Y of T)
-        F.push(kt({}, I, {
+        F.push(_t({}, I, {
           components: C ? C.record.components : I.components,
           path: Y,
           aliasOf: C ? C.record : I
@@ -8210,7 +8210,7 @@ See more at https://next.router.vuejs.org/guide/migration/#removed-star-or-catch
         const E = Object.keys(m.params || {}).filter((T) => !C.keys.find((Y) => Y.name === T));
         E.length && dt(`Discarded invalid param(s) "${E.join('", "')}" when navigating. See https://github.com/vuejs/router/blob/main/packages/router/CHANGELOG.md#414-2022-08-22 for more details.`);
       }
-      O = C.record.name, S = kt(
+      O = C.record.name, S = _t(
         Om(
           y.params,
           C.keys.filter((E) => !E.optional).map((E) => E.name)
@@ -8225,7 +8225,7 @@ See more at https://next.router.vuejs.org/guide/migration/#removed-star-or-catch
           location: m,
           currentLocation: y
         });
-      O = C.record.name, S = kt({}, y.params, m.params), I = C.stringify(S);
+      O = C.record.name, S = _t({}, y.params, m.params), I = C.stringify(S);
     }
     const F = [];
     let M = C;
@@ -8282,7 +8282,7 @@ function Tm(A) {
   return !1;
 }
 function Y_(A) {
-  return A.reduce((e, t) => kt(e, t.meta), {});
+  return A.reduce((e, t) => _t(e, t.meta), {});
 }
 function Nm(A, e) {
   const t = {};
@@ -8581,7 +8581,7 @@ const Vm = (A, e, t) => A != null ? A : e != null ? e : t, hS = /* @__PURE__ */ 
         h++;
       return h;
     }), f = jA(() => a.value.matched[l.value]);
-    ln(Rm, jA(() => l.value + 1)), ln(aS, f), ln(kh, a);
+    en(Rm, jA(() => l.value + 1)), en(aS, f), en(kh, a);
     const p = yA();
     return Je(() => [p.value, f.value, A.name], ([h, m, y], [C, S, I]) => {
       m && (m.instances[y] = h, S && S !== m && h && h === C && (m.leaveGuards.size || (m.leaveGuards = S.leaveGuards), m.updateGuards.size || (m.updateGuards = S.updateGuards))), h && m && (!S || !ea(m, S) || !C) && (m.enterCallbacks[y] || []).forEach((O) => O(h));
@@ -8589,7 +8589,7 @@ const Vm = (A, e, t) => A != null ? A : e != null ? e : t, hS = /* @__PURE__ */ 
       const h = a.value, m = A.name, y = f.value, C = y && y.components[m];
       if (!C)
         return Bm(t.default, { Component: C, route: h });
-      const S = y.props[m], I = S ? S === !0 ? h.params : typeof S == "function" ? S(h) : S : null, F = cr(C, kt({}, I, e, {
+      const S = y.props[m], I = S ? S === !0 ? h.params : typeof S == "function" ? S(h) : S : null, F = cr(C, _t({}, I, e, {
         onVnodeUnmounted: (M) => {
           M.component.isUnmounted && (y.instances[m] = null);
         },
@@ -8632,7 +8632,7 @@ Use slot props instead:
   }
 }
 function lo(A, e) {
-  const t = kt({}, A, {
+  const t = _t({}, A, {
     matched: A.matched.map((n) => IS(n, ["instances", "children", "aliasOf"]))
   });
   return {
@@ -8902,8 +8902,8 @@ function kS(A) {
   ri && A.scrollBehavior && "scrollRestoration" in history && (history.scrollRestoration = "manual");
   const m = sd.bind(null, (wA) => "" + wA), y = sd.bind(null, nS), C = sd.bind(null, ol);
   function S(wA, DA) {
-    let RA, YA;
-    return o1(wA) ? (RA = e.getRecordMatcher(wA), YA = DA) : YA = wA, e.addRoute(YA, RA);
+    let RA, VA;
+    return o1(wA) ? (RA = e.getRecordMatcher(wA), VA = DA) : VA = wA, e.addRoute(VA, RA);
   }
   function I(wA) {
     const DA = e.getRecordMatcher(wA);
@@ -8916,9 +8916,9 @@ function kS(A) {
     return !!e.getRecordMatcher(wA);
   }
   function M(wA, DA) {
-    if (DA = kt({}, DA || p.value), typeof wA == "string") {
+    if (DA = _t({}, DA || p.value), typeof wA == "string") {
       const fA = od(t, wA, DA.path), NA = e.resolve({ path: fA.path }, DA), UA = a.createHref(fA.fullPath);
-      return process.env.NODE_ENV !== "production" && (UA.startsWith("//") ? dt(`Location "${wA}" resolved to "${UA}". A resolved location cannot start with multiple slashes.`) : NA.matched.length || dt(`No match found for location with path "${wA}"`)), kt(fA, NA, {
+      return process.env.NODE_ENV !== "production" && (UA.startsWith("//") ? dt(`Location "${wA}" resolved to "${UA}". A resolved location cannot start with multiple slashes.`) : NA.matched.length || dt(`No match found for location with path "${wA}"`)), _t(fA, NA, {
         params: C(NA.params),
         hash: ol(fA.hash),
         redirectedFrom: void 0,
@@ -8927,34 +8927,34 @@ function kS(A) {
     }
     let RA;
     if ("path" in wA)
-      process.env.NODE_ENV !== "production" && "params" in wA && !("name" in wA) && Object.keys(wA.params).length && dt(`Path "${wA.path}" was passed with params but they will be ignored. Use a named route alongside params instead.`), RA = kt({}, wA, {
+      process.env.NODE_ENV !== "production" && "params" in wA && !("name" in wA) && Object.keys(wA.params).length && dt(`Path "${wA.path}" was passed with params but they will be ignored. Use a named route alongside params instead.`), RA = _t({}, wA, {
         path: od(t, wA.path, DA.path).path
       });
     else {
-      const fA = kt({}, wA.params);
+      const fA = _t({}, wA.params);
       for (const NA in fA)
         fA[NA] == null && delete fA[NA];
-      RA = kt({}, wA, {
+      RA = _t({}, wA, {
         params: y(fA)
       }), DA.params = y(DA.params);
     }
-    const YA = e.resolve(RA, DA), $A = wA.hash || "";
-    process.env.NODE_ENV !== "production" && $A && !$A.startsWith("#") && dt(`A \`hash\` should always start with the character "#". Replace "${$A}" with "#${$A}".`), YA.params = m(C(YA.params));
-    const qA = u_(n, kt({}, wA, {
+    const VA = e.resolve(RA, DA), $A = wA.hash || "";
+    process.env.NODE_ENV !== "production" && $A && !$A.startsWith("#") && dt(`A \`hash\` should always start with the character "#". Replace "${$A}" with "#${$A}".`), VA.params = m(C(VA.params));
+    const GA = u_(n, _t({}, wA, {
       hash: AS($A),
-      path: YA.path
-    })), uA = a.createHref(qA);
-    return process.env.NODE_ENV !== "production" && (uA.startsWith("//") ? dt(`Location "${wA}" resolved to "${uA}". A resolved location cannot start with multiple slashes.`) : YA.matched.length || dt(`No match found for location with path "${"path" in wA ? wA.path : wA}"`)), kt({
-      fullPath: qA,
+      path: VA.path
+    })), uA = a.createHref(GA);
+    return process.env.NODE_ENV !== "production" && (uA.startsWith("//") ? dt(`Location "${wA}" resolved to "${uA}". A resolved location cannot start with multiple slashes.`) : VA.matched.length || dt(`No match found for location with path "${"path" in wA ? wA.path : wA}"`)), _t({
+      fullPath: GA,
       hash: $A,
       query: n === Mm ? iS(wA.query) : wA.query || {}
-    }, YA, {
+    }, VA, {
       redirectedFrom: void 0,
       href: uA
     });
   }
   function E(wA) {
-    return typeof wA == "string" ? od(t, wA, p.value.path) : kt({}, wA);
+    return typeof wA == "string" ? od(t, wA, p.value.path) : _t({}, wA);
   }
   function T(wA, DA) {
     if (h !== wA)
@@ -8967,31 +8967,31 @@ function kS(A) {
     return tA(wA);
   }
   function B(wA) {
-    return Y(kt(E(wA), { replace: !0 }));
+    return Y(_t(E(wA), { replace: !0 }));
   }
   function eA(wA) {
     const DA = wA.matched[wA.matched.length - 1];
     if (DA && DA.redirect) {
       const { redirect: RA } = DA;
-      let YA = typeof RA == "function" ? RA(wA) : RA;
-      if (typeof YA == "string" && (YA = YA.includes("?") || YA.includes("#") ? YA = E(YA) : { path: YA }, YA.params = {}), process.env.NODE_ENV !== "production" && !("path" in YA) && !("name" in YA))
+      let VA = typeof RA == "function" ? RA(wA) : RA;
+      if (typeof VA == "string" && (VA = VA.includes("?") || VA.includes("#") ? VA = E(VA) : { path: VA }, VA.params = {}), process.env.NODE_ENV !== "production" && !("path" in VA) && !("name" in VA))
         throw dt(`Invalid redirect found:
-${JSON.stringify(YA, null, 2)}
+${JSON.stringify(VA, null, 2)}
  when navigating to "${wA.fullPath}". A redirect must contain a name or path. This will break in production.`), new Error("Invalid redirect");
-      return kt({
+      return _t({
         query: wA.query,
         hash: wA.hash,
-        params: "path" in YA ? {} : wA.params
-      }, YA);
+        params: "path" in VA ? {} : wA.params
+      }, VA);
     }
   }
   function tA(wA, DA) {
-    const RA = h = M(wA), YA = p.value, $A = wA.state, qA = wA.force, uA = wA.replace === !0, fA = eA(RA);
+    const RA = h = M(wA), VA = p.value, $A = wA.state, GA = wA.force, uA = wA.replace === !0, fA = eA(RA);
     if (fA)
       return tA(
-        kt(E(fA), {
-          state: typeof fA == "object" ? kt({}, $A, fA.state) : $A,
-          force: qA,
+        _t(E(fA), {
+          state: typeof fA == "object" ? _t({}, $A, fA.state) : $A,
+          force: GA,
           replace: uA
         }),
         DA || RA
@@ -8999,27 +8999,27 @@ ${JSON.stringify(YA, null, 2)}
     const NA = RA;
     NA.redirectedFrom = DA;
     let UA;
-    return !qA && km(n, YA, RA) && (UA = Ms(16, { to: NA, from: YA }), pA(
-      YA,
-      YA,
+    return !GA && km(n, VA, RA) && (UA = Ms(16, { to: NA, from: VA }), pA(
+      VA,
+      VA,
       !0,
       !1
-    )), (UA ? Promise.resolve(UA) : Z(NA, YA)).catch((FA) => Jr(FA) ? Jr(FA, 2) ? FA : W(FA) : R(FA, NA, YA)).then((FA) => {
+    )), (UA ? Promise.resolve(UA) : Z(NA, VA)).catch((FA) => Jr(FA) ? Jr(FA, 2) ? FA : W(FA) : R(FA, NA, VA)).then((FA) => {
       if (FA) {
         if (Jr(FA, 2))
-          return process.env.NODE_ENV !== "production" && km(n, M(FA.to), NA) && DA && (DA._count = DA._count ? DA._count + 1 : 1) > 30 ? (dt(`Detected a possibly infinite redirection in a navigation guard when going from "${YA.fullPath}" to "${NA.fullPath}". Aborting to avoid a Stack Overflow.
+          return process.env.NODE_ENV !== "production" && km(n, M(FA.to), NA) && DA && (DA._count = DA._count ? DA._count + 1 : 1) > 30 ? (dt(`Detected a possibly infinite redirection in a navigation guard when going from "${VA.fullPath}" to "${NA.fullPath}". Aborting to avoid a Stack Overflow.
  Are you always returning a new location within a navigation guard? That would lead to this error. Only return when redirecting or aborting, that should fix this. This might break in production if not fixed.`), Promise.reject(new Error("Infinite redirect in navigation guard"))) : tA(
-            kt({
+            _t({
               replace: uA
             }, E(FA.to), {
-              state: typeof FA.to == "object" ? kt({}, $A, FA.to.state) : $A,
-              force: qA
+              state: typeof FA.to == "object" ? _t({}, $A, FA.to.state) : $A,
+              force: GA
             }),
             DA || NA
           );
       } else
-        FA = j(NA, YA, !0, uA, $A);
-      return Q(NA, YA, FA), FA;
+        FA = j(NA, VA, !0, uA, $A);
+      return Q(NA, VA, FA), FA;
     });
   }
   function oA(wA, DA) {
@@ -9032,9 +9032,9 @@ ${JSON.stringify(YA, null, 2)}
   }
   function Z(wA, DA) {
     let RA;
-    const [YA, $A, qA] = _S(wA, DA);
-    RA = ld(YA.reverse(), "beforeRouteLeave", wA, DA);
-    for (const fA of YA)
+    const [VA, $A, GA] = _S(wA, DA);
+    RA = ld(VA.reverse(), "beforeRouteLeave", wA, DA);
+    for (const fA of VA)
       fA.leaveGuards.forEach((NA) => {
         RA.push(Di(NA, wA, DA));
       });
@@ -9053,7 +9053,7 @@ ${JSON.stringify(YA, null, 2)}
       return RA.push(uA), EA(RA);
     }).then(() => {
       RA = [];
-      for (const fA of qA)
+      for (const fA of GA)
         if (fA.beforeEnter)
           if (sr(fA.beforeEnter))
             for (const NA of fA.beforeEnter)
@@ -9061,7 +9061,7 @@ ${JSON.stringify(YA, null, 2)}
           else
             RA.push(Di(fA.beforeEnter, wA, DA));
       return RA.push(uA), EA(RA);
-    }).then(() => (wA.matched.forEach((fA) => fA.enterCallbacks = {}), RA = ld(qA, "beforeRouteEnter", wA, DA), RA.push(uA), EA(RA))).then(() => {
+    }).then(() => (wA.matched.forEach((fA) => fA.enterCallbacks = {}), RA = ld(GA, "beforeRouteEnter", wA, DA), RA.push(uA), EA(RA))).then(() => {
       RA = [];
       for (const fA of l.list())
         RA.push(Di(fA, wA, DA));
@@ -9069,48 +9069,48 @@ ${JSON.stringify(YA, null, 2)}
     }).catch((fA) => Jr(fA, 8) ? fA : Promise.reject(fA));
   }
   function Q(wA, DA, RA) {
-    f.list().forEach((YA) => G(() => YA(wA, DA, RA)));
+    f.list().forEach((VA) => G(() => VA(wA, DA, RA)));
   }
-  function j(wA, DA, RA, YA, $A) {
-    const qA = T(wA, DA);
-    if (qA)
-      return qA;
+  function j(wA, DA, RA, VA, $A) {
+    const GA = T(wA, DA);
+    if (GA)
+      return GA;
     const uA = DA === Ci, fA = ri ? history.state : {};
-    RA && (YA || uA ? a.replace(wA.fullPath, kt({
+    RA && (VA || uA ? a.replace(wA.fullPath, _t({
       scroll: uA && fA && fA.scroll
     }, $A)) : a.push(wA.fullPath, $A)), p.value = wA, pA(wA, DA, RA, uA), W();
   }
   let J;
   function sA() {
     J || (J = a.listen((wA, DA, RA) => {
-      if (!JA.listening)
+      if (!Ae.listening)
         return;
-      const YA = M(wA), $A = eA(YA);
+      const VA = M(wA), $A = eA(VA);
       if ($A) {
-        tA(kt($A, { replace: !0 }), YA).catch(Fo);
+        tA(_t($A, { replace: !0 }), VA).catch(Fo);
         return;
       }
-      h = YA;
-      const qA = p.value;
-      ri && y_(Sm(qA.fullPath, RA.delta), ku()), Z(YA, qA).catch((uA) => Jr(uA, 12) ? uA : Jr(uA, 2) ? (tA(
+      h = VA;
+      const GA = p.value;
+      ri && y_(Sm(GA.fullPath, RA.delta), ku()), Z(VA, GA).catch((uA) => Jr(uA, 12) ? uA : Jr(uA, 2) ? (tA(
         uA.to,
-        YA
+        VA
       ).then((fA) => {
         Jr(fA, 20) && !RA.delta && RA.type === sl.pop && a.go(-1, !1);
-      }).catch(Fo), Promise.reject()) : (RA.delta && a.go(-RA.delta, !1), R(uA, YA, qA))).then((uA) => {
+      }).catch(Fo), Promise.reject()) : (RA.delta && a.go(-RA.delta, !1), R(uA, VA, GA))).then((uA) => {
         uA = uA || j(
-          YA,
-          qA,
+          VA,
+          GA,
           !1
-        ), uA && (RA.delta && !Jr(uA, 8) ? a.go(-RA.delta, !1) : RA.type === sl.pop && Jr(uA, 20) && a.go(-1, !1)), Q(YA, qA, uA);
+        ), uA && (RA.delta && !Jr(uA, 8) ? a.go(-RA.delta, !1) : RA.type === sl.pop && Jr(uA, 20) && a.go(-1, !1)), Q(VA, GA, uA);
       }).catch(Fo);
     }));
   }
   let nA = oo(), cA = oo(), aA;
   function R(wA, DA, RA) {
     W(wA);
-    const YA = cA.list();
-    return YA.length ? YA.forEach(($A) => $A(wA, DA, RA)) : (process.env.NODE_ENV !== "production" && dt("uncaught error during route navigation:"), console.error(wA)), Promise.reject(wA);
+    const VA = cA.list();
+    return VA.length ? VA.forEach(($A) => $A(wA, DA, RA)) : (process.env.NODE_ENV !== "production" && dt("uncaught error during route navigation:"), console.error(wA)), Promise.reject(wA);
   }
   function rA() {
     return aA && p.value !== Ci ? Promise.resolve() : new Promise((wA, DA) => {
@@ -9120,16 +9120,16 @@ ${JSON.stringify(YA, null, 2)}
   function W(wA) {
     return aA || (aA = !wA, sA(), nA.list().forEach(([DA, RA]) => wA ? RA(wA) : DA()), nA.reset()), wA;
   }
-  function pA(wA, DA, RA, YA) {
+  function pA(wA, DA, RA, VA) {
     const { scrollBehavior: $A } = A;
     if (!ri || !$A)
       return Promise.resolve();
-    const qA = !RA && b_(Sm(wA.fullPath, 0)) || (YA || !RA) && history.state && history.state.scroll || null;
-    return Rn().then(() => $A(wA, DA, qA)).then((uA) => uA && v_(uA)).catch((uA) => R(uA, wA, DA));
+    const GA = !RA && b_(Sm(wA.fullPath, 0)) || (VA || !RA) && history.state && history.state.scroll || null;
+    return Rn().then(() => $A(wA, DA, GA)).then((uA) => uA && v_(uA)).catch((uA) => R(uA, wA, DA));
   }
   const vA = (wA) => a.go(wA);
   let mA;
-  const MA = /* @__PURE__ */ new Set(), JA = {
+  const MA = /* @__PURE__ */ new Set(), Ae = {
     currentRoute: p,
     listening: !0,
     addRoute: S,
@@ -9163,16 +9163,16 @@ ${JSON.stringify(YA, null, 2)}
           enumerable: !0
         });
       wA.provide(cg, DA), wA.provide(ug, Tf(RA)), wA.provide(kh, p);
-      const YA = wA.unmount;
+      const VA = wA.unmount;
       MA.add(wA), wA.unmount = function() {
-        MA.delete(wA), MA.size < 1 && (h = Ci, J && J(), J = null, p.value = Ci, mA = !1, aA = !1), YA();
+        MA.delete(wA), MA.size < 1 && (h = Ci, J && J(), J = null, p.value = Ci, mA = !1, aA = !1), VA();
       }, (process.env.NODE_ENV !== "production" || !1) && ri && mS(wA, DA, e);
     }
   };
   function EA(wA) {
     return wA.reduce((DA, RA) => DA.then(() => G(RA)), Promise.resolve());
   }
-  return JA;
+  return Ae;
 }
 function _S(A, e) {
   const t = [], n = [], a = [], s = Math.max(e.matched.length, A.matched.length);
@@ -9778,7 +9778,7 @@ function Eh(A) {
     set: (W) => {
       tA.value = !0;
       const pA = gA(n), vA = gA(m);
-      vA && (vA[a] = E[a]), Ct(pA[a]) ? pA[a].value = W : pA[a] = W;
+      vA && (vA[a] = E[a]), wt(pA[a]) ? pA[a].value = W : pA[a] = W;
     }
   }) : null;
   a && F.$autoDirty && Je(M, () => {
@@ -9792,7 +9792,7 @@ function Eh(A) {
     return (l.value || {})[W];
   }
   function rA() {
-    Ct(m) ? m.value = E : Object.keys(E).length === 0 ? Object.keys(m).forEach((W) => {
+    wt(m) ? m.value = E : Object.keys(E).length === 0 ? Object.keys(m).forEach((W) => {
       delete m[W];
     }) : Object.assign(m, E);
   }
@@ -9869,9 +9869,9 @@ function A$(A) {
   }
   t.__vuelidateRemoveInstances = [].concat(t.__vuelidateRemoveInstances || [], f);
   const p = At(jm, []);
-  ln(jm, t.__vuelidateInjectInstances);
+  en(jm, t.__vuelidateInjectInstances);
   const h = At(zm, []);
-  return ln(zm, t.__vuelidateRemoveInstances), {
+  return en(zm, t.__vuelidateRemoveInstances), {
     childResults: s,
     sendValidationResultsToParent: p,
     removeValidationResultsFromParent: h
@@ -9926,7 +9926,7 @@ function kl(A, e) {
       });
     }), n = m.validationsConfig || n;
   } else {
-    const F = Ct(A) || BS(A) ? A : dn(A || {});
+    const F = wt(A) || BS(A) ? A : dn(A || {});
     Je(F, (M) => {
       y.value = Eh({
         validations: M,
@@ -9951,7 +9951,7 @@ var oc = /* @__PURE__ */ ((A) => (A.F = "F", A.M = "M", A.N = "N", A))(oc || {})
 const e$ = ["type", "disabled"], t$ = {
   key: 0,
   class: "spinner-border spinner-border-sm"
-}, St = /* @__PURE__ */ Me({
+}, Ct = /* @__PURE__ */ Me({
   __name: "DefaultButtonComponent",
   props: {
     text: {},
@@ -10100,12 +10100,12 @@ var P1 = { exports: {} };
       }, nA.valueOf = function() {
         return this.$d.getTime();
       }, nA.startOf = function(cA, aA) {
-        var R = this, rA = !!Q.u(aA) || aA, W = Q.p(cA), pA = function(RA, YA) {
-          var $A = Q.w(R.$u ? Date.UTC(R.$y, YA, RA) : new Date(R.$y, YA, RA), R);
+        var R = this, rA = !!Q.u(aA) || aA, W = Q.p(cA), pA = function(RA, VA) {
+          var $A = Q.w(R.$u ? Date.UTC(R.$y, VA, RA) : new Date(R.$y, VA, RA), R);
           return rA ? $A : $A.endOf(h);
-        }, vA = function(RA, YA) {
-          return Q.w(R.toDate()[RA].apply(R.toDate("s"), (rA ? [0, 0, 0, 0] : [23, 59, 59, 999]).slice(YA)), R);
-        }, mA = this.$W, MA = this.$M, JA = this.$D, EA = "set" + (this.$u ? "UTC" : "");
+        }, vA = function(RA, VA) {
+          return Q.w(R.toDate()[RA].apply(R.toDate("s"), (rA ? [0, 0, 0, 0] : [23, 59, 59, 999]).slice(VA)), R);
+        }, mA = this.$W, MA = this.$M, Ae = this.$D, EA = "set" + (this.$u ? "UTC" : "");
         switch (W) {
           case S:
             return rA ? pA(1, 0) : pA(31, 11);
@@ -10113,7 +10113,7 @@ var P1 = { exports: {} };
             return rA ? pA(1, MA) : pA(0, MA + 1);
           case m:
             var wA = this.$locale().weekStart || 0, DA = (mA < wA ? mA + 7 : mA) - wA;
-            return pA(rA ? JA - DA : JA + (6 - DA), MA);
+            return pA(rA ? Ae - DA : Ae + (6 - DA), MA);
           case h:
           case I:
             return vA(EA + "Hours", 0);
@@ -10144,8 +10144,8 @@ var P1 = { exports: {} };
         var R, rA = this;
         cA = Number(cA);
         var W = Q.p(aA), pA = function(MA) {
-          var JA = Z(rA);
-          return Q.w(JA.date(JA.date() + Math.round(MA * cA)), rA);
+          var Ae = Z(rA);
+          return Q.w(Ae.date(Ae.date() + Math.round(MA * cA)), rA);
         };
         if (W === y)
           return this.set(y, this.$M + cA);
@@ -10163,17 +10163,17 @@ var P1 = { exports: {} };
         var aA = this, R = this.$locale();
         if (!this.isValid())
           return R.invalidDate || O;
-        var rA = cA || "YYYY-MM-DDTHH:mm:ssZ", W = Q.z(this), pA = this.$H, vA = this.$m, mA = this.$M, MA = R.weekdays, JA = R.months, EA = R.meridiem, wA = function(YA, $A, qA, uA) {
-          return YA && (YA[$A] || YA(aA, rA)) || qA[$A].slice(0, uA);
-        }, DA = function(YA) {
-          return Q.s(pA % 12 || 12, YA, "0");
-        }, RA = EA || function(YA, $A, qA) {
-          var uA = YA < 12 ? "AM" : "PM";
-          return qA ? uA.toLowerCase() : uA;
+        var rA = cA || "YYYY-MM-DDTHH:mm:ssZ", W = Q.z(this), pA = this.$H, vA = this.$m, mA = this.$M, MA = R.weekdays, Ae = R.months, EA = R.meridiem, wA = function(VA, $A, GA, uA) {
+          return VA && (VA[$A] || VA(aA, rA)) || GA[$A].slice(0, uA);
+        }, DA = function(VA) {
+          return Q.s(pA % 12 || 12, VA, "0");
+        }, RA = EA || function(VA, $A, GA) {
+          var uA = VA < 12 ? "AM" : "PM";
+          return GA ? uA.toLowerCase() : uA;
         };
-        return rA.replace(M, function(YA, $A) {
-          return $A || function(qA) {
-            switch (qA) {
+        return rA.replace(M, function(VA, $A) {
+          return $A || function(GA) {
+            switch (GA) {
               case "YY":
                 return String(aA.$y).slice(-2);
               case "YYYY":
@@ -10183,9 +10183,9 @@ var P1 = { exports: {} };
               case "MM":
                 return Q.s(mA + 1, 2, "0");
               case "MMM":
-                return wA(R.monthsShort, mA, JA, 3);
+                return wA(R.monthsShort, mA, Ae, 3);
               case "MMMM":
-                return wA(JA, mA);
+                return wA(Ae, mA);
               case "D":
                 return aA.$D;
               case "DD":
@@ -10224,23 +10224,23 @@ var P1 = { exports: {} };
                 return W;
             }
             return null;
-          }(YA) || W.replace(":", "");
+          }(VA) || W.replace(":", "");
         });
       }, nA.utcOffset = function() {
         return 15 * -Math.round(this.$d.getTimezoneOffset() / 15);
       }, nA.diff = function(cA, aA, R) {
-        var rA, W = this, pA = Q.p(aA), vA = Z(cA), mA = (vA.utcOffset() - this.utcOffset()) * n, MA = this - vA, JA = function() {
+        var rA, W = this, pA = Q.p(aA), vA = Z(cA), mA = (vA.utcOffset() - this.utcOffset()) * n, MA = this - vA, Ae = function() {
           return Q.m(W, vA);
         };
         switch (pA) {
           case S:
-            rA = JA() / 12;
+            rA = Ae() / 12;
             break;
           case y:
-            rA = JA();
+            rA = Ae();
             break;
           case C:
-            rA = JA() / 3;
+            rA = Ae() / 3;
             break;
           case m:
             rA = (MA - mA) / 6048e5;
@@ -10409,7 +10409,7 @@ const pt = i1({
             e.value ? (X(), dA("small", m$, " Incorrect Login ")) : IA("", !0),
             D("div", v$, [
               D("div", y$, [
-                te(St, {
+                te(Ct, {
                   class: "btn-block",
                   type: "submit",
                   text: "Login"
@@ -10422,12 +10422,12 @@ const pt = i1({
     ]));
   }
 });
-const tn = (A, e) => {
+const nn = (A, e) => {
   const t = A.__vccOpts || A;
   for (const [n, a] of e)
     t[n] = a;
   return t;
-}, x$ = /* @__PURE__ */ tn(b$, [["__scopeId", "data-v-b4311356"]]);
+}, x$ = /* @__PURE__ */ nn(b$, [["__scopeId", "data-v-b4311356"]]);
 function O1(A, e) {
   return function() {
     return A.apply(e, arguments);
@@ -11776,22 +11776,22 @@ hn.getAdapter = q1.getAdapter;
 hn.HttpStatusCode = R3;
 hn.default = hn;
 const dc = hn, {
-  Axios: dW,
+  Axios: gW,
   AxiosError: L3,
-  CanceledError: hW,
-  isCancel: fW,
-  CancelToken: gW,
-  VERSION: pW,
-  all: mW,
-  Cancel: vW,
-  isAxiosError: yW,
-  spread: bW,
-  toFormData: xW,
-  AxiosHeaders: CW,
-  HttpStatusCode: wW,
-  formToJSON: IW,
-  getAdapter: kW,
-  mergeConfig: _W
+  CanceledError: pW,
+  isCancel: mW,
+  CancelToken: vW,
+  VERSION: yW,
+  all: bW,
+  Cancel: xW,
+  isAxiosError: CW,
+  spread: wW,
+  toFormData: IW,
+  AxiosHeaders: kW,
+  HttpStatusCode: _W,
+  formToJSON: SW,
+  getAdapter: $W,
+  mergeConfig: EW
 } = dc;
 class F3 extends Error {
 }
@@ -11943,7 +11943,7 @@ const Ea = {
   __name: "RoomLayoutListView",
   setup(A) {
     const e = At("gqlApiService");
-    wt(() => {
+    It(() => {
       a();
     });
     const t = yA(!1), n = yA([]);
@@ -11959,7 +11959,7 @@ const Ea = {
         B3,
         D("div", Y3, [
           D("div", H3, [
-            te(St, {
+            te(Ct, {
               text: "New Rom Layout",
               onOnClick: f[0] || (f[0] = (h) => gA(or).push("/admin/room-layout/create")),
               type: "button"
@@ -12049,7 +12049,7 @@ function mE(A, e) {
     pE
   ]);
 }
-const vE = /* @__PURE__ */ tn(cE, [["render", mE]]), or = kS({
+const vE = /* @__PURE__ */ nn(cE, [["render", mE]]), or = kS({
   history: I_(),
   routes: [
     {
@@ -12075,7 +12075,7 @@ const vE = /* @__PURE__ */ tn(cE, [["render", mE]]), or = kS({
     {
       path: "/admin/calendar-class",
       name: "admin_calendar_class",
-      component: () => import("./AdminClassView.9aef1cf3.js")
+      component: () => import("./AdminClassView.eae46aa2.js")
     },
     {
       path: "/admin/room-layout/list",
@@ -12095,12 +12095,12 @@ const vE = /* @__PURE__ */ tn(cE, [["render", mE]]), or = kS({
     {
       path: "/class-schedules",
       name: "class_schedules",
-      component: () => Promise.resolve().then(() => sW)
+      component: () => Promise.resolve().then(() => cW)
     },
     {
-      path: "/customer-profile",
+      path: "/customer-profile/:id",
       name: "customer_profile",
-      component: () => import("./CustomerProfileView.00095c29.js")
+      component: () => import("./CustomerProfileView.023c0d8c.js")
     }
   ]
 });
@@ -12967,7 +12967,7 @@ const yE = /* @__PURE__ */ r$(Mk);
         var mA = T(vA, "number");
         return typeof mA == "bigint" ? mA : aA(mA);
       }, aA = function(vA) {
-        var mA, MA, JA, EA, wA, DA, RA, YA, $A = T(vA, "number");
+        var mA, MA, Ae, EA, wA, DA, RA, VA, $A = T(vA, "number");
         if (E($A))
           throw J("Cannot convert a Symbol value to a number");
         if (typeof $A == "string" && $A.length > 2) {
@@ -12978,19 +12978,19 @@ const yE = /* @__PURE__ */ r$(Mk);
             switch (nA($A, 1)) {
               case 66:
               case 98:
-                JA = 2, EA = 49;
+                Ae = 2, EA = 49;
                 break;
               case 79:
               case 111:
-                JA = 8, EA = 55;
+                Ae = 8, EA = 55;
                 break;
               default:
                 return +$A;
             }
             for (wA = sA($A, 2), DA = wA.length, RA = 0; RA < DA; RA++)
-              if (YA = nA(wA, RA), YA < 48 || YA > EA)
+              if (VA = nA(wA, RA), VA < 48 || VA > EA)
                 return NaN;
-            return parseInt(wA, JA);
+            return parseInt(wA, Ae);
           }
         }
         return +$A;
@@ -13195,12 +13195,12 @@ const yE = /* @__PURE__ */ r$(Mk);
         return (0, h.openBlock)(), (0, h.createElementBlock)("svg", W, vA);
       }
       var MA = s(3744);
-      const JA = {}, EA = (0, MA.Z)(JA, [["render", mA]]), wA = EA;
-      var DA = { class: "mx-right-arrow", "aria-hidden": "true", viewBox: "0 0 1024 1024" }, RA = (0, h.createElementVNode)("path", { d: "M307.018 49.445c11.517 0 23.032 4.394 31.819 13.18L756.404 480.18c8.439 8.438 13.181 19.885 13.181 31.82s-4.741 23.38-13.181 31.82L338.838 961.376c-17.574 17.573-46.065 17.573-63.64-0.001-17.573-17.573-17.573-46.065 0.001-63.64L660.944 512 275.198 126.265c-17.574-17.573-17.574-46.066-0.001-63.64C283.985 53.839 295.501 49.445 307.018 49.445z" }, null, -1), YA = [RA];
+      const Ae = {}, EA = (0, MA.Z)(Ae, [["render", mA]]), wA = EA;
+      var DA = { class: "mx-right-arrow", "aria-hidden": "true", viewBox: "0 0 1024 1024" }, RA = (0, h.createElementVNode)("path", { d: "M307.018 49.445c11.517 0 23.032 4.394 31.819 13.18L756.404 480.18c8.439 8.438 13.181 19.885 13.181 31.82s-4.741 23.38-13.181 31.82L338.838 961.376c-17.574 17.573-46.065 17.573-63.64-0.001-17.573-17.573-17.573-46.065 0.001-63.64L660.944 512 275.198 126.265c-17.574-17.573-17.574-46.066-0.001-63.64C283.985 53.839 295.501 49.445 307.018 49.445z" }, null, -1), VA = [RA];
       function $A(kA, QA) {
-        return (0, h.openBlock)(), (0, h.createElementBlock)("svg", DA, YA);
+        return (0, h.openBlock)(), (0, h.createElementBlock)("svg", DA, VA);
       }
-      const qA = {}, uA = (0, MA.Z)(qA, [["render", $A]]), fA = uA, NA = (0, h.defineComponent)({ name: "ContextMenuItem", components: { VNodeRender: tA, ContextMenuIconCheck: wA, ContextMenuIconRight: fA }, props: { disabled: { type: Boolean, default: !1 }, hidden: { type: Boolean, default: !1 }, customRender: { type: Function, default: null }, customClass: { type: String, default: "" }, clickHandler: { type: Function, default: null }, label: { type: [String, Object, Function], default: "" }, icon: { type: [String, Object, Function], default: "" }, iconFontClass: { type: String, default: "iconfont" }, checked: { type: Boolean, default: !1 }, shortcut: { type: String, default: "" }, svgIcon: { type: String, default: "" }, svgProps: { type: Object, default: null }, preserveIconWidth: { type: Boolean, default: !0 }, showRightArrow: { type: Boolean, default: !1 }, hasChildren: { type: Boolean, default: !1 }, clickClose: { type: Boolean, default: !0 }, clickableWhenHasChildren: { type: Boolean, default: !1 }, rawMenuItem: { type: Object, default: void 0 } }, emits: ["click", "subMenuOpen", "subMenuClose"], setup: function(kA, QA) {
+      const GA = {}, uA = (0, MA.Z)(GA, [["render", $A]]), fA = uA, NA = (0, h.defineComponent)({ name: "ContextMenuItem", components: { VNodeRender: tA, ContextMenuIconCheck: wA, ContextMenuIconRight: fA }, props: { disabled: { type: Boolean, default: !1 }, hidden: { type: Boolean, default: !1 }, customRender: { type: Function, default: null }, customClass: { type: String, default: "" }, clickHandler: { type: Function, default: null }, label: { type: [String, Object, Function], default: "" }, icon: { type: [String, Object, Function], default: "" }, iconFontClass: { type: String, default: "iconfont" }, checked: { type: Boolean, default: !1 }, shortcut: { type: String, default: "" }, svgIcon: { type: String, default: "" }, svgProps: { type: Object, default: null }, preserveIconWidth: { type: Boolean, default: !0 }, showRightArrow: { type: Boolean, default: !1 }, hasChildren: { type: Boolean, default: !1 }, clickClose: { type: Boolean, default: !0 }, clickableWhenHasChildren: { type: Boolean, default: !1 }, rawMenuItem: { type: Object, default: void 0 } }, emits: ["click", "subMenuOpen", "subMenuClose"], setup: function(kA, QA) {
         var ge = (0, h.toRefs)(kA), Te = ge.clickHandler, at = ge.clickClose, ot = ge.clickableWhenHasChildren, Ke = ge.disabled, qe = ge.hidden, et = ge.label, Ut = ge.icon, z = ge.iconFontClass, r = ge.showRightArrow, i = ge.shortcut, o = ge.hasChildren, c = (0, h.ref)(!1), u = (0, h.ref)(!1), d = (0, h.ref)(), g = (0, h.inject)("globalHasSlot"), v = (0, h.inject)("globalRenderSlot"), x = (0, h.inject)("globalTheme"), w = (0, h.inject)("globalIconFontClass"), k = (0, h.inject)("globalClickCloseClassName"), _ = (0, h.inject)("globalIgnoreClickClassName"), P = (0, h.inject)("globalCloseMenu"), N = (0, h.inject)("menuContext"), L = { showSubMenu: function() {
           return c.value ? (N.markActiveMenuItem(L, !0), !0) : !!o.value && (AA(), !0);
         }, isDisabledOrHidden: function() {
@@ -13379,17 +13379,17 @@ const yE = /* @__PURE__ */ r$(Mk);
           $.value = { x: (U = (K = CA[0]) !== null && K !== void 0 ? K : ge.xOffset) !== null && U !== void 0 ? U : 0, y: (lA = (xA = CA[1]) !== null && xA !== void 0 ? xA : ge.yOffset) !== null && lA !== void 0 ? lA : 0 }, c(_), (0, h.nextTick)(function() {
             var TA = r.value;
             if (TA && i.value) {
-              var WA, VA, ce, ye, De, Ye, Qe = QA.container, He = (WA = qe == null ? void 0 : qe()) !== null && WA !== void 0 ? WA : 0, bA = (VA = et == null ? void 0 : et()) !== null && VA !== void 0 ? VA : 0, _A = typeof QA.adjustPadding == "number" ? QA.adjustPadding : (ce = (ye = QA.adjustPadding) === null || ye === void 0 ? void 0 : ye.x) !== null && ce !== void 0 ? ce : 0, LA = typeof QA.adjustPadding == "number" ? QA.adjustPadding : (De = (Ye = QA.adjustPadding) === null || Ye === void 0 ? void 0 : Ye.y) !== null && De !== void 0 ? De : 0, GA = bA > 0 ? LA : 0, he = document.documentElement.scrollHeight, ue = document.documentElement.scrollWidth, Ee = Math.min(ue, Qe.offsetWidth), de = Math.min(he, Qe.offsetHeight), Rt = F(TA, Qe), jt = O(TA, Qe);
+              var WA, BA, ce, ye, De, Ye, Qe = QA.container, He = (WA = qe == null ? void 0 : qe()) !== null && WA !== void 0 ? WA : 0, bA = (BA = et == null ? void 0 : et()) !== null && BA !== void 0 ? BA : 0, _A = typeof QA.adjustPadding == "number" ? QA.adjustPadding : (ce = (ye = QA.adjustPadding) === null || ye === void 0 ? void 0 : ye.x) !== null && ce !== void 0 ? ce : 0, LA = typeof QA.adjustPadding == "number" ? QA.adjustPadding : (De = (Ye = QA.adjustPadding) === null || Ye === void 0 ? void 0 : Ye.y) !== null && De !== void 0 ? De : 0, qA = bA > 0 ? LA : 0, he = document.documentElement.scrollHeight, ue = document.documentElement.scrollWidth, Ee = Math.min(ue, Qe.offsetWidth), de = Math.min(he, Qe.offsetHeight), Rt = F(TA, Qe), jt = O(TA, Qe);
               kA.direction.includes("l") ? $.value.x -= TA.offsetWidth + _A : kA.direction.includes("r") ? $.value.x += He + _A : ($.value.x += He / 2, $.value.x -= (TA.offsetWidth + _A) / 2), kA.direction.includes("t") ? $.value.y -= TA.offsetHeight + 2 * LA : kA.direction.includes("b") ? $.value.y -= LA : $.value.y -= (TA.offsetHeight + LA) / 2, z.value && (0, h.nextTick)(function() {
                 Rt = F(TA, Qe), jt = O(TA, Qe);
                 var Lt = Rt + TA.offsetWidth - Ee, Yt = jt + TA.offsetHeight - de;
-                if (AA.value = TA.offsetHeight - de - 2 * GA, b.value = Yt > 0, Lt > 0) {
-                  var yt = He + TA.offsetWidth - _A, nn = Rt;
-                  $.value.x -= yt > nn ? nn : yt;
+                if (AA.value = TA.offsetHeight - de - 2 * qA, b.value = Yt > 0, Lt > 0) {
+                  var yt = He + TA.offsetWidth - _A, rn = Rt;
+                  $.value.x -= yt > rn ? rn : yt;
                 }
                 if (b.value) {
                   var bn = Yt, Qt = jt;
-                  $.value.y -= bn > Qt ? Qt - GA : bn - 2 * GA, V.value = de - 2 * GA;
+                  $.value.y -= bn > Qt ? Qt - qA : bn - 2 * qA, V.value = de - 2 * qA;
                 } else
                   V.value = 0;
               });
@@ -13653,15 +13653,15 @@ function Ir(A, e) {
   }
   A.prototype = e === null ? Object.create(e) : (t.prototype = e.prototype, new t());
 }
-var BA = function() {
-  return BA = Object.assign || function(e) {
+var YA = function() {
+  return YA = Object.assign || function(e) {
     for (var t, n = 1, a = arguments.length; n < a; n++) {
       t = arguments[n];
       for (var s in t)
         Object.prototype.hasOwnProperty.call(t, s) && (e[s] = t[s]);
     }
     return e;
-  }, BA.apply(this, arguments);
+  }, YA.apply(this, arguments);
 };
 function Va(A, e) {
   var t = {};
@@ -15977,7 +15977,7 @@ function gD(A, e) {
       throw __DEV__ ? new $t("Found a ".concat(s.operation, " operation").concat(s.name ? " named '".concat(s.name.value, "'") : "", ". ") + "No operations are allowed when using a fragment as a query. Only fragments are allowed.") : new $t(44);
     s.kind === "FragmentDefinition" && n.push(s);
   }), typeof t > "u" && (__DEV__ ? me(n.length === 1, "Found ".concat(n.length, " fragments. `fragmentName` must be provided when there is not exactly 1 fragment.")) : me(n.length === 1, 45), t = n[0].name.value);
-  var a = BA(BA({}, A), { definitions: Yc([
+  var a = YA(YA({}, A), { definitions: Yc([
     {
       kind: "OperationDefinition",
       operation: "query",
@@ -16366,7 +16366,7 @@ function cx(A, e) {
         if (E.variableDefinitions) {
           var T = I(t(E.name && E.name.value)).transitiveVars;
           if (T.size < E.variableDefinitions.length)
-            return BA(BA({}, E), { variableDefinitions: E.variableDefinitions.filter(function(Y) {
+            return YA(YA({}, E), { variableDefinitions: E.variableDefinitions.filter(function(Y) {
               return T.has(Y.variable.name.value);
             }) });
         }
@@ -16389,7 +16389,7 @@ var Pg = Object.assign(function(A) {
               if (!(Ha(l) && l.directives && l.directives.some(function(f) {
                 return f.name.value === "export";
               })))
-                return BA(BA({}, e), { selections: Yc(Yc([], a, !0), [pv], !1) });
+                return YA(YA({}, e), { selections: Yc(Yc([], a, !0), [pv], !1) });
             }
           }
         }
@@ -16418,7 +16418,7 @@ function MD(A) {
   var n = ui(A, {
     OperationDefinition: {
       enter: function(a) {
-        return BA(BA({}, a), { operation: "query" });
+        return YA(YA({}, a), { operation: "query" });
       }
     }
   });
@@ -16469,7 +16469,7 @@ var FD = function(A, e, t) {
         e = n.shallowCopyForMerge(e), e[l] = t[l];
     }), e) : t;
   }, A.prototype.shallowCopyForMerge = function(e) {
-    return Jt(e) && (this.pastCopies.has(e) || (Array.isArray(e) ? e = e.slice(0) : e = BA({ __proto__: Object.getPrototypeOf(e) }, e), this.pastCopies.add(e))), e;
+    return Jt(e) && (this.pastCopies.has(e) || (Array.isArray(e) ? e = e.slice(0) : e = YA({ __proto__: Object.getPrototypeOf(e) }, e), this.pastCopies.add(e))), e;
   }, A;
 }();
 function VD(A, e) {
@@ -17154,7 +17154,7 @@ function JD(A) {
 }
 function xd(A, e) {
   return Fu(A, e, e.variables && {
-    variables: BA(BA({}, A && A.variables), e.variables)
+    variables: YA(YA({}, A && A.variables), e.variables)
   });
 }
 function kv(A) {
@@ -17181,10 +17181,10 @@ function AP(A) {
   return A;
 }
 function eP(A, e) {
-  var t = BA({}, A), n = function(s) {
-    typeof s == "function" ? t = BA(BA({}, t), s(t)) : t = BA(BA({}, t), s);
+  var t = YA({}, A), n = function(s) {
+    typeof s == "function" ? t = YA(YA({}, t), s(t)) : t = YA(YA({}, t), s);
   }, a = function() {
-    return BA({}, t);
+    return YA({}, t);
   };
   return Object.defineProperty(e, "setContext", {
     enumerable: !1,
@@ -17508,7 +17508,7 @@ function IP(A, e) {
     t[n - 2] = arguments[n];
   var a = {}, s = {};
   t.forEach(function(y) {
-    a = BA(BA(BA({}, a), y.options), { headers: BA(BA({}, a.headers), y.headers) }), y.credentials && (a.credentials = y.credentials), s = BA(BA({}, s), y.http);
+    a = YA(YA(YA({}, a), y.options), { headers: YA(YA({}, a.headers), y.headers) }), y.credentials && (a.credentials = y.credentials), s = YA(YA({}, s), y.http);
   }), a.headers && (a.headers = kP(a.headers, s.preserveHeaderCase));
   var l = A.operationName, f = A.extensions, p = A.variables, h = A.query, m = { operationName: l, variables: p };
   return s.includeExtensions && (m.extensions = f), s.includeQuery && (m.query = e(h, sD)), {
@@ -17597,7 +17597,7 @@ var Ev = pr(function() {
       var M = O.clientAwareness, E = M.name, T = M.version;
       E && (F["apollographql-client-name"] = E), T && (F["apollographql-client-version"] = T);
     }
-    var Y = BA(BA({}, F), O.headers), B = {
+    var Y = YA(YA({}, F), O.headers), B = {
       http: O.http,
       options: O.fetchOptions,
       credentials: O.credentials,
@@ -17609,7 +17609,7 @@ var Ev = pr(function() {
         Variable: function(R, rA, W) {
           W && W.kind !== "VariableDefinition" && G.delete(R.name.value);
         }
-      }), G.size && (oA.variables = BA({}, oA.variables), G.forEach(function(R) {
+      }), G.size && (oA.variables = YA({}, oA.variables), G.forEach(function(R) {
         delete oA.variables[R];
       }));
     }
@@ -18134,9 +18134,9 @@ var AO = function() {
   }, A.prototype.modify = function(e) {
     return !1;
   }, A.prototype.readQuery = function(e, t) {
-    return t === void 0 && (t = !!e.optimistic), this.read(BA(BA({}, e), { rootId: e.id || "ROOT_QUERY", optimistic: t }));
+    return t === void 0 && (t = !!e.optimistic), this.read(YA(YA({}, e), { rootId: e.id || "ROOT_QUERY", optimistic: t }));
   }, A.prototype.readFragment = function(e, t) {
-    return t === void 0 && (t = !!e.optimistic), this.read(BA(BA({}, e), { query: this.getFragmentDoc(e.fragment, e.fragmentName), rootId: e.id, optimistic: t }));
+    return t === void 0 && (t = !!e.optimistic), this.read(YA(YA({}, e), { query: this.getFragmentDoc(e.fragment, e.fragmentName), rootId: e.id, optimistic: t }));
   }, A.prototype.writeQuery = function(e) {
     var t = e.id, n = e.data, a = Va(e, ["id", "data"]);
     return this.write(Object.assign(a, {
@@ -18154,14 +18154,14 @@ var AO = function() {
     return this.batch({
       update: function(n) {
         var a = n.readQuery(e), s = t(a);
-        return s == null ? a : (n.writeQuery(BA(BA({}, e), { data: s })), s);
+        return s == null ? a : (n.writeQuery(YA(YA({}, e), { data: s })), s);
       }
     });
   }, A.prototype.updateFragment = function(e, t) {
     return this.batch({
       update: function(n) {
         var a = n.readFragment(e), s = t(a);
-        return s == null ? a : (n.writeFragment(BA(BA({}, e), { data: s })), s);
+        return s == null ? a : (n.writeFragment(YA(YA({}, e), { data: s })), s);
       }
     });
   }, A;
@@ -18257,7 +18257,7 @@ var mc = /* @__PURE__ */ Object.create(null), kd = function() {
     };
   }
   return A.prototype.toObject = function() {
-    return BA({}, this.data);
+    return YA({}, this.data);
   }, A.prototype.has = function(e) {
     return this.lookup(e, !0) !== void 0;
   }, A.prototype.get = function(e, t) {
@@ -18318,7 +18318,7 @@ var mc = /* @__PURE__ */ Object.create(null), kd = function() {
         if (y !== void 0) {
           var C = typeof t == "function" ? t : t[h] || t[m];
           if (C) {
-            var S = C === kd ? mc : C(Xh(y), BA(BA({}, p), { fieldName: m, storeFieldName: h, storage: n.getStorage(e, h) }));
+            var S = C === kd ? mc : C(Xh(y), YA(YA({}, p), { fieldName: m, storeFieldName: h, storage: n.getStorage(e, h) }));
             S === Fv ? n.group.dirty(e, h) : (S === mc && (S = void 0), S !== y && (s[h] = S, l = !0, y = S));
           }
           y !== void 0 && (f = !1);
@@ -18453,10 +18453,10 @@ var _i = function(A) {
       })) : n.delete(s);
     }), a) : a === this.parent ? this : a.addLayer(this.id, this.replay);
   }, e.prototype.toObject = function() {
-    return BA(BA({}, this.parent.toObject()), this.data);
+    return YA(YA({}, this.parent.toObject()), this.data);
   }, e.prototype.findChildRefIds = function(t) {
     var n = this.parent.findChildRefIds(t);
-    return wn.call(this.data, t) ? BA(BA({}, n), A.prototype.findChildRefIds.call(this, t)) : n;
+    return wn.call(this.data, t) ? YA(YA({}, n), A.prototype.findChildRefIds.call(this, t)) : n;
   }, e.prototype.getStorage = function() {
     for (var t = this.parent; t.parent; )
       t = t.parent;
@@ -18482,7 +18482,7 @@ function Yo(A) {
   return !!(A instanceof dl && A.group.caching);
 }
 function aO(A) {
-  return Jt(A) ? An(A) ? A.slice(0) : BA({ __proto__: Object.getPrototypeOf(A) }, A) : A;
+  return Jt(A) ? An(A) ? A.slice(0) : YA({ __proto__: Object.getPrototypeOf(A) }, A) : A;
 }
 var tf = function() {
   function A() {
@@ -18572,7 +18572,7 @@ var sO = function() {
       var a, s = n.context.canonizeResults, l = Yv(n);
       l[3] = !s;
       var f = (a = t.executeSelectionSet).peek.apply(a, l);
-      return f ? s ? BA(BA({}, f), { result: t.canon.admit(f.result) }) : f : (Vv(n.context.store, n.enclosingRef.__ref), t.execSelectionSetImpl(n));
+      return f ? s ? YA(YA({}, f), { result: t.canon.admit(f.result) }) : f : (Vv(n.context.store, n.enclosingRef.__ref), t.execSelectionSetImpl(n));
     }, {
       max: this.config.resultCacheMaxSize,
       keyArgs: Yv,
@@ -18595,12 +18595,12 @@ var sO = function() {
     this.canon = new tf();
   }, A.prototype.diffQueryAgainstStore = function(e) {
     var t = e.store, n = e.query, a = e.rootId, s = a === void 0 ? "ROOT_QUERY" : a, l = e.variables, f = e.returnPartialData, p = f === void 0 ? !0 : f, h = e.canonizeResults, m = h === void 0 ? this.config.canonizeResults : h, y = this.config.cache.policies;
-    l = BA(BA({}, Dg(ox(n))), l);
+    l = YA(YA({}, Dg(ox(n))), l);
     var C = _s(s), S = this.executeSelectionSet({
       selectionSet: Eg(n).selectionSet,
       objectOrReference: C,
       enclosingRef: C,
-      context: BA({ store: t, query: n, policies: y, variables: l, varString: Da(l), canonizeResults: m }, Rx(n, this.config.fragments))
+      context: YA({ store: t, query: n, policies: y, variables: l, varString: Da(l), canonizeResults: m }, Rx(n, this.config.fragments))
     }), I;
     if (S.missing && (I = [new Px(oO(S.missing), S.missing, n, l)], !p))
       throw I[0];
@@ -18852,13 +18852,13 @@ var hO = function() {
   return e;
 }, fO = function() {
   function A(e) {
-    this.config = e, this.typePolicies = /* @__PURE__ */ Object.create(null), this.toBeAdded = /* @__PURE__ */ Object.create(null), this.supertypeMap = /* @__PURE__ */ new Map(), this.fuzzySubtypes = /* @__PURE__ */ new Map(), this.rootIdsByTypename = /* @__PURE__ */ Object.create(null), this.rootTypenamesById = /* @__PURE__ */ Object.create(null), this.usingPossibleTypes = !1, this.config = BA({ dataIdFromObject: Ox }, e), this.cache = this.config.cache, this.setRootTypename("Query"), this.setRootTypename("Mutation"), this.setRootTypename("Subscription"), e.possibleTypes && this.addPossibleTypes(e.possibleTypes), e.typePolicies && this.addTypePolicies(e.typePolicies);
+    this.config = e, this.typePolicies = /* @__PURE__ */ Object.create(null), this.toBeAdded = /* @__PURE__ */ Object.create(null), this.supertypeMap = /* @__PURE__ */ new Map(), this.fuzzySubtypes = /* @__PURE__ */ new Map(), this.rootIdsByTypename = /* @__PURE__ */ Object.create(null), this.rootTypenamesById = /* @__PURE__ */ Object.create(null), this.usingPossibleTypes = !1, this.config = YA({ dataIdFromObject: Ox }, e), this.cache = this.config.cache, this.setRootTypename("Query"), this.setRootTypename("Mutation"), this.setRootTypename("Subscription"), e.possibleTypes && this.addPossibleTypes(e.possibleTypes), e.typePolicies && this.addTypePolicies(e.typePolicies);
   }
   return A.prototype.identify = function(e, t) {
     var n, a = this, s = t && (t.typename || ((n = t.storeObject) === null || n === void 0 ? void 0 : n.__typename)) || e.__typename;
     if (s === this.rootTypenamesById.ROOT_QUERY)
       return ["ROOT_QUERY"];
-    for (var l = t && t.storeObject || e, f = BA(BA({}, t), { typename: s, storeObject: l, readField: t && t.readField || function() {
+    for (var l = t && t.storeObject || e, f = YA(YA({}, t), { typename: s, storeObject: l, readField: t && t.readField || function() {
       var C = jg(arguments, l);
       return a.readField(C, {
         store: a.cache.data,
@@ -19027,7 +19027,7 @@ function jg(A, e, t) {
   return typeof n == "string" ? l = {
     fieldName: n,
     from: s > 1 ? a : e
-  } : (l = BA({}, n), wn.call(l, "from") || (l.from = e)), __DEV__ && l.from === void 0 && __DEV__ && me.warn("Undefined 'from' passed to readField with arguments ".concat(JD(Array.from(A)))), l.variables === void 0 && (l.variables = t), l;
+  } : (l = YA({}, n), wn.call(l, "from") || (l.from = e)), __DEV__ && l.from === void 0 && __DEV__ && me.warn("Undefined 'from' passed to readField with arguments ".concat(JD(Array.from(A)))), l.variables === void 0 && (l.variables = t), l;
 }
 function Yx(A) {
   return function(t, n) {
@@ -19042,14 +19042,14 @@ function Yx(A) {
       if (vs(t) && Nt(n))
         return A.merge(t, n.__ref), n;
       if (vs(t) && vs(n))
-        return BA(BA({}, t), n);
+        return YA(YA({}, t), n);
     }
     return n;
   };
 }
 function Sd(A, e, t) {
   var n = "".concat(e).concat(t), a = A.flavors.get(n);
-  return a || A.flavors.set(n, a = A.clientOnly === e && A.deferred === t ? A : BA(BA({}, A), { clientOnly: e, deferred: t })), a;
+  return a || A.flavors.set(n, a = A.clientOnly === e && A.deferred === t ? A : YA(YA({}, A), { clientOnly: e, deferred: t })), a;
 }
 var gO = function() {
   function A(e, t, n) {
@@ -19057,8 +19057,8 @@ var gO = function() {
   }
   return A.prototype.writeToStore = function(e, t) {
     var n = this, a = t.query, s = t.result, l = t.dataId, f = t.variables, p = t.overwrite, h = $l(a), m = nO();
-    f = BA(BA({}, Dg(h)), f);
-    var y = BA(BA({ store: e, written: /* @__PURE__ */ Object.create(null), merge: function(S, I) {
+    f = YA(YA({}, Dg(h)), f);
+    var y = YA(YA({ store: e, written: /* @__PURE__ */ Object.create(null), merge: function(S, I) {
       return m.merge(S, I);
     }, variables: f, varString: Da(f) }, Rx(a, this.fragments)), { overwrite: !!p, incomingById: /* @__PURE__ */ new Map(), clientOnly: !1, deferred: !1, flavors: /* @__PURE__ */ new Map() }), C = this.processSelectionSet({
       result: s || /* @__PURE__ */ Object.create(null),
@@ -19102,7 +19102,7 @@ var gO = function() {
       if (Nt(T.from)) {
         var Y = l.incomingById.get(T.from.__ref);
         if (Y) {
-          var B = p.readField(BA(BA({}, T), { from: Y.storeObject }), l);
+          var B = p.readField(YA(YA({}, T), { from: Y.storeObject }), l);
           if (B !== void 0)
             return B;
         }
@@ -19207,7 +19207,7 @@ var gO = function() {
           var F = f.applyMerges(C, I, O, a, s);
           F !== O && (m = m || /* @__PURE__ */ new Map(), m.set(S, F)), s && me(s.pop() === S);
         }
-      }), m && (n = An(h) ? h.slice(0) : BA({}, h), m.forEach(function(C, S) {
+      }), m && (n = An(h) ? h.slice(0) : YA({}, h), m.forEach(function(C, S) {
         n[S] = C;
       }));
     }
@@ -19223,7 +19223,7 @@ function sf(A, e) {
     return A;
   if (!A || zc(A))
     return e;
-  var t = A.info && e.info ? BA(BA({}, A.info), e.info) : A.info || e.info, n = A.map.size && e.map.size, a = n ? /* @__PURE__ */ new Map() : A.map.size ? A.map : e.map, s = { info: t, map: a };
+  var t = A.info && e.info ? YA(YA({}, A.info), e.info) : A.info || e.info, n = A.map.size && e.map.size, a = n ? /* @__PURE__ */ new Map() : A.map.size ? A.map : e.map, s = { info: t, map: a };
   if (n) {
     var l = new Set(e.map.keys());
     A.map.forEach(function(f, p) {
@@ -19326,7 +19326,7 @@ var Ux = function(A) {
   }, e.prototype.read = function(t) {
     var n = t.returnPartialData, a = n === void 0 ? !1 : n;
     try {
-      return this.storeReader.diffQueryAgainstStore(BA(BA({}, t), { store: t.optimistic ? this.optimisticData : this.data, config: this.config, returnPartialData: a })).result || null;
+      return this.storeReader.diffQueryAgainstStore(YA(YA({}, t), { store: t.optimistic ? this.optimisticData : this.data, config: this.config, returnPartialData: a })).result || null;
     } catch (s) {
       if (s instanceof Px)
         return null;
@@ -19348,7 +19348,7 @@ var Ux = function(A) {
       !--this.txCount && t.broadcast !== !1 && this.broadcastWatches();
     }
   }, e.prototype.diff = function(t) {
-    return this.storeReader.diffQueryAgainstStore(BA(BA({}, t), { store: t.optimistic ? this.optimisticData : this.data, rootId: t.id || "ROOT_QUERY", config: this.config }));
+    return this.storeReader.diffQueryAgainstStore(YA(YA({}, t), { store: t.optimistic ? this.optimisticData : this.data, rootId: t.id || "ROOT_QUERY", config: this.config }));
   }, e.prototype.watch = function(t) {
     var n = this;
     return this.watches.size || cO(this), this.watches.add(t), t.immediate && this.maybeBroadcastWatch(t), function() {
@@ -19374,7 +19374,7 @@ var Ux = function(A) {
     if (!t.id) {
       if (wn.call(t, "id"))
         return !1;
-      t = BA(BA({}, t), { id: "ROOT_QUERY" });
+      t = YA(YA({}, t), { id: "ROOT_QUERY" });
     }
     try {
       return ++this.txCount, this.optimisticData.evict(t, this.data);
@@ -19399,9 +19399,9 @@ var Ux = function(A) {
         --n.txCount, n.data = I, n.optimisticData = O;
       }
     }, y = /* @__PURE__ */ new Set();
-    return p && !this.txCount && this.broadcastWatches(BA(BA({}, t), { onWatchUpdated: function(C) {
+    return p && !this.txCount && this.broadcastWatches(YA(YA({}, t), { onWatchUpdated: function(C) {
       return y.add(C), !1;
-    } })), typeof l == "string" ? this.optimisticData = this.optimisticData.addLayer(l, m) : l === !1 ? m(this.data) : m(), typeof f == "string" && (this.optimisticData = this.optimisticData.removeLayer(f)), p && y.size ? (this.broadcastWatches(BA(BA({}, t), { onWatchUpdated: function(C, S) {
+    } })), typeof l == "string" ? this.optimisticData = this.optimisticData.addLayer(l, m) : l === !1 ? m(this.data) : m(), typeof f == "string" && (this.optimisticData = this.optimisticData.removeLayer(f)), p && y.size ? (this.broadcastWatches(YA(YA({}, t), { onWatchUpdated: function(C, S) {
       var I = p.call(this, C, S);
       return I !== !1 && y.delete(C), I;
     } })), y.size && y.forEach(function(C) {
@@ -19479,7 +19479,7 @@ var yO = Object.assign, bO = Object.hasOwnProperty, of = function(A) {
     }) || this;
     l.observers = /* @__PURE__ */ new Set(), l.subscriptions = /* @__PURE__ */ new Set(), l.queryInfo = a, l.queryManager = n, l.isTornDown = !1;
     var f = n.defaultOptions.watchQuery, p = f === void 0 ? {} : f, h = p.fetchPolicy, m = h === void 0 ? "cache-first" : h, y = s.fetchPolicy, C = y === void 0 ? m : y, S = s.initialFetchPolicy, I = S === void 0 ? C === "standby" ? m : C : S;
-    l.options = BA(BA({}, s), { initialFetchPolicy: I, fetchPolicy: C }), l.queryId = a.queryId || n.generateQueryId();
+    l.options = YA(YA({}, s), { initialFetchPolicy: I, fetchPolicy: C }), l.queryId = a.queryId || n.generateQueryId();
     var O = $l(l.query);
     return l.queryName = O && O.name && O.name.value, l;
   }
@@ -19509,7 +19509,7 @@ var yO = Object.assign, bO = Object.hasOwnProperty, of = function(A) {
     });
   }, e.prototype.getCurrentResult = function(t) {
     t === void 0 && (t = !0);
-    var n = this.getLastResult(!0), a = this.queryInfo.networkStatus || n && n.networkStatus || Ft.ready, s = BA(BA({}, n), { loading: hl(a), networkStatus: a }), l = this.options.fetchPolicy, f = l === void 0 ? "cache-first" : l;
+    var n = this.getLastResult(!0), a = this.queryInfo.networkStatus || n && n.networkStatus || Ft.ready, s = YA(YA({}, n), { loading: hl(a), networkStatus: a }), l = this.options.fetchPolicy, f = l === void 0 ? "cache-first" : l;
     if (!(f === "network-only" || f === "no-cache" || f === "standby" || this.queryManager.transform(this.options.query).hasForcedResolvers)) {
       var p = this.queryInfo.getDiff();
       (p.complete || this.options.returnPartialData) && (s.data = p.result), gn(s.data, {}) && (s.data = void 0), p.complete ? (delete s.partial, p.complete && s.networkStatus === Ft.loading && (f === "cache-first" || f === "cache-only") && (s.networkStatus = Ft.ready, s.loading = !1)) : s.partial = !0, __DEV__ && !p.complete && !this.options.partialRefetch && !s.loading && !s.data && !s.error && zx(p.missing);
@@ -19540,9 +19540,9 @@ var yO = Object.assign, bO = Object.hasOwnProperty, of = function(A) {
       })) && __DEV__ && me.warn("Called refetch(".concat(JSON.stringify(t), ") for query ").concat(((n = l.name) === null || n === void 0 ? void 0 : n.value) || JSON.stringify(l), `, which does not declare a $variables variable.
 Did you mean to call refetch(variables) instead of refetch({ variables })?`));
     }
-    return t && !gn(this.options.variables, t) && (a.variables = this.options.variables = BA(BA({}, this.options.variables), t)), this.queryInfo.resetLastWrite(), this.reobserve(a, Ft.refetch);
+    return t && !gn(this.options.variables, t) && (a.variables = this.options.variables = YA(YA({}, this.options.variables), t)), this.queryInfo.resetLastWrite(), this.reobserve(a, Ft.refetch);
   }, e.prototype.fetchMore = function(t) {
-    var n = this, a = BA(BA({}, t.query ? t : BA(BA(BA(BA({}, this.options), { query: this.query }), t), { variables: BA(BA({}, this.options.variables), t.variables) })), { fetchPolicy: "no-cache" }), s = this.queryManager.generateQueryId(), l = this.queryInfo, f = l.networkStatus;
+    var n = this, a = YA(YA({}, t.query ? t : YA(YA(YA(YA({}, this.options), { query: this.query }), t), { variables: YA(YA({}, this.options.variables), t.variables) })), { fetchPolicy: "no-cache" }), s = this.queryManager.generateQueryId(), l = this.queryInfo, f = l.networkStatus;
     l.networkStatus = Ft.fetchMore, a.notifyOnNetworkStatusChange && this.observe();
     var p = /* @__PURE__ */ new Set();
     return this.queryManager.fetchQuery(s, a, Ft.fetchMore).then(function(h) {
@@ -19661,13 +19661,13 @@ Did you mean to call refetch(variables) instead of refetch({ variables })?`));
       }
     }
   }, e.prototype.updateLastResult = function(t, n) {
-    return n === void 0 && (n = this.variables), this.last = BA(BA({}, this.last), { result: this.queryManager.assumeImmutableResults ? t : fx(t), variables: n }), xr(t.errors) || delete this.last.error, this.last;
+    return n === void 0 && (n = this.variables), this.last = YA(YA({}, this.last), { result: this.queryManager.assumeImmutableResults ? t : fx(t), variables: n }), xr(t.errors) || delete this.last.error, this.last;
   }, e.prototype.reobserve = function(t, n) {
     var a = this;
     this.isTornDown = !1;
     var s = n === Ft.refetch || n === Ft.fetchMore || n === Ft.poll, l = this.options.variables, f = this.options.fetchPolicy, p = Fu(this.options, t || {}), h = s ? p : yO(this.options, p);
     s || (this.updatePolling(), t && t.variables && !gn(t.variables, l) && h.fetchPolicy !== "standby" && h.fetchPolicy === f && (this.applyNextFetchPolicy("variables-changed", h), n === void 0 && (n = Ft.setVariables)));
-    var m = h.variables && BA({}, h.variables), y = this.fetch(h, n), C = {
+    var m = h.variables && YA({}, h.variables), y = this.fetch(h, n), C = {
       next: function(S) {
         a.reportResult(S, m);
       },
@@ -19682,7 +19682,7 @@ Did you mean to call refetch(variables) instead of refetch({ variables })?`));
     var a = this.getLastError();
     (a || this.isDifferentFromLastResult(t, n)) && ((a || !t.partial || this.options.returnPartialData) && this.updateLastResult(t, n), Bo(this.observers, "next", t));
   }, e.prototype.reportError = function(t, n) {
-    var a = BA(BA({}, this.getLastResult()), { error: t, errors: t.graphQLErrors, networkStatus: Ft.error, loading: !1 });
+    var a = YA(YA({}, this.getLastResult()), { error: t, errors: t.graphQLErrors, networkStatus: Ft.error, loading: !1 });
     this.updateLastResult(a, n), Bo(this.observers, "error", this.last.error = t);
   }, e.prototype.hasObservers = function() {
     return this.observers.size > 0;
@@ -19727,7 +19727,7 @@ var Wx = function() {
     return Pi(this, void 0, void 0, function() {
       return Oi(this, function(p) {
         return t ? [2, this.resolveDocument(t, n.data, a, s, this.fragmentMatcher, f).then(function(h) {
-          return BA(BA({}, n), { data: h.result });
+          return YA(YA({}, n), { data: h.result });
         })] : [2, n];
       });
     });
@@ -19741,15 +19741,15 @@ var Wx = function() {
     return RD(e);
   }, A.prototype.prepareContext = function(e) {
     var t = this.cache;
-    return BA(BA({}, e), { cache: t, getCacheKey: function(n) {
+    return YA(YA({}, e), { cache: t, getCacheKey: function(n) {
       return t.identify(n);
     } });
   }, A.prototype.addExportedVariables = function(e, t, n) {
     return t === void 0 && (t = {}), n === void 0 && (n = {}), Pi(this, void 0, void 0, function() {
       return Oi(this, function(a) {
         return e ? [2, this.resolveDocument(e, this.buildRootValueFromCache(e, t) || {}, this.prepareContext(n), t).then(function(s) {
-          return BA(BA({}, t), s.exportedVariables);
-        })] : [2, BA({}, t)];
+          return YA(YA({}, t), s.exportedVariables);
+        })] : [2, YA({}, t)];
       });
     });
   }, A.prototype.shouldForceResolvers = function(e) {
@@ -19779,7 +19779,7 @@ var Wx = function() {
       return Oi(this, function(E) {
         return f = Eg(e), p = $g(e), h = kg(p), m = this.collectSelectionsToResolve(f, h), y = f.operation, C = y ? y.charAt(0).toUpperCase() + y.slice(1) : "Query", S = this, I = S.cache, O = S.client, F = {
           fragmentMap: h,
-          context: BA(BA({}, n), { cache: I, client: O }),
+          context: YA(YA({}, n), { cache: I, client: O }),
           variables: a,
           fragmentMatcher: s,
           defaultOperationType: C,
@@ -19972,7 +19972,7 @@ var Ed = function() {
     e === void 0 && (e = this.variables);
     var n = this.observableQuery;
     if (!(n && n.options.fetchPolicy === "no-cache")) {
-      var a = BA(BA({}, this.getDiffOptions(e)), { watcher: this, callback: function(s) {
+      var a = YA(YA({}, this.getDiffOptions(e)), { watcher: this, callback: function(s) {
         return t.setDiff(s);
       } });
       (!this.lastWatch || !gn(a, this.lastWatch)) && (this.cancel(), this.cancel = this.cache.watch(this.lastWatch = a));
@@ -20062,13 +20062,13 @@ var CO = Object.prototype.hasOwnProperty, wO = function() {
               update: C,
               keepRootFields: E
             }), this.broadcastQueries(), G = this, [2, new Promise(function(Q, j) {
-              return bd(G.getObservableFromLink(a, BA(BA({}, T), { optimisticResponse: l }), s, !1), function(J) {
+              return bd(G.getObservableFromLink(a, YA(YA({}, T), { optimisticResponse: l }), s, !1), function(J) {
                 if (pc(J) && M === "none")
                   throw new va({
                     graphQLErrors: Gh(J)
                   });
                 oA && (oA.loading = !1, oA.error = null);
-                var sA = BA({}, J);
+                var sA = YA({}, J);
                 return typeof h == "function" && (h = h(sA)), M === "ignore" && pc(sA) && delete sA.errors, G.markMutationResult({
                   mutationId: Y,
                   result: sA,
@@ -20167,7 +20167,7 @@ var CO = Object.prototype.hasOwnProperty, wO = function() {
                 optimistic: !1,
                 returnPartialData: !0
               });
-              I.complete && (a = BA(BA({}, a), { data: I.result }), "incremental" in a && delete a.incremental, "hasNext" in a && delete a.hasNext);
+              I.complete && (a = YA(YA({}, a), { data: I.result }), "incremental" in a && delete a.incremental, "hasNext" in a && delete a.hasNext);
             }
             S && C(y, a, {
               context: e.context,
@@ -20198,7 +20198,7 @@ var CO = Object.prototype.hasOwnProperty, wO = function() {
     var n = this, a = typeof e == "function" ? e(t.variables) : e;
     return this.cache.recordOptimisticTransaction(function(s) {
       try {
-        n.markMutationResult(BA(BA({}, t), { result: { data: a } }), s);
+        n.markMutationResult(YA(YA({}, t), { result: { data: a } }), s);
       } catch (l) {
         __DEV__ && me.error(l);
       }
@@ -20228,8 +20228,8 @@ var CO = Object.prototype.hasOwnProperty, wO = function() {
         clientQuery: s,
         serverQuery: l,
         defaultVars: Dg($l(n)),
-        asQuery: BA(BA({}, n), { definitions: n.definitions.map(function(h) {
-          return h.kind === "OperationDefinition" && h.operation !== "query" ? BA(BA({}, h), { operation: "query" }) : h;
+        asQuery: YA(YA({}, n), { definitions: n.definitions.map(function(h) {
+          return h.kind === "OperationDefinition" && h.operation !== "query" ? YA(YA({}, h), { operation: "query" }) : h;
         }) })
       }, p = function(h) {
         h && !t.has(h) && t.set(h, f);
@@ -20238,9 +20238,9 @@ var CO = Object.prototype.hasOwnProperty, wO = function() {
     }
     return t.get(e);
   }, A.prototype.getVariables = function(e, t) {
-    return BA(BA({}, this.transform(e).defaultVars), t);
+    return YA(YA({}, this.transform(e).defaultVars), t);
   }, A.prototype.watchQuery = function(e) {
-    e = BA(BA({}, e), { variables: this.getVariables(e.query, e.variables) }), typeof e.notifyOnNetworkStatusChange > "u" && (e.notifyOnNetworkStatusChange = !1);
+    e = YA(YA({}, e), { variables: this.getVariables(e.query, e.variables) }), typeof e.notifyOnNetworkStatusChange > "u" && (e.notifyOnNetworkStatusChange = !1);
     var t = new Ed(this), n = new of({
       queryManager: this,
       queryInfo: t,
@@ -20298,7 +20298,7 @@ var CO = Object.prototype.hasOwnProperty, wO = function() {
       }), h = new of({
         queryManager: t,
         queryInfo: p,
-        options: BA(BA({}, l), { fetchPolicy: "network-only" })
+        options: YA(YA({}, l), { fetchPolicy: "network-only" })
       });
       me(h.queryId === f), p.setObservableQuery(h), n.set(f, h);
     }), __DEV__ && a.size && a.forEach(function(l, f) {
@@ -20364,7 +20364,7 @@ var CO = Object.prototype.hasOwnProperty, wO = function() {
         query: p,
         variables: n,
         operationName: Uh(p) || void 0,
-        context: this.prepareContext(BA(BA({}, t), { forceFetch: !a }))
+        context: this.prepareContext(YA(YA({}, t), { forceFetch: !a }))
       };
       if (t = C.context, a) {
         var S = m.get(p) || /* @__PURE__ */ new Map();
@@ -20490,7 +20490,7 @@ var CO = Object.prototype.hasOwnProperty, wO = function() {
       var eA = Y.result;
       __DEV__ && !m && !gn(eA, {}) && zx(Y.missing);
       var tA = function(oA) {
-        return Vt.of(BA({ data: oA, loading: hl(B), networkStatus: B }, Y.complete ? null : { partial: !0 }));
+        return Vt.of(YA({ data: oA, loading: hl(B), networkStatus: B }, Y.complete ? null : { partial: !0 }));
       };
       return eA && a.transform(s).hasForcedResolvers ? a.localState.runResolvers({
         document: s,
@@ -20553,7 +20553,7 @@ var CO = Object.prototype.hasOwnProperty, wO = function() {
   }, A.prototype.prepareContext = function(e) {
     e === void 0 && (e = {});
     var t = this.localState.prepareContext(e);
-    return BA(BA({}, t), { clientAwareness: this.clientAwareness });
+    return YA(YA({}, t), { clientAwareness: this.clientAwareness });
   }, A;
 }(), e0 = !1, Xx = function() {
   function A(e) {
@@ -20601,9 +20601,9 @@ For more information, please visit: https://go.apollo.dev/c/docs`) : new $t(9);
   return A.prototype.stop = function() {
     this.queryManager.stop();
   }, A.prototype.watchQuery = function(e) {
-    return this.defaultOptions.watchQuery && (e = xd(this.defaultOptions.watchQuery, e)), this.disableNetworkFetches && (e.fetchPolicy === "network-only" || e.fetchPolicy === "cache-and-network") && (e = BA(BA({}, e), { fetchPolicy: "cache-first" })), this.queryManager.watchQuery(e);
+    return this.defaultOptions.watchQuery && (e = xd(this.defaultOptions.watchQuery, e)), this.disableNetworkFetches && (e.fetchPolicy === "network-only" || e.fetchPolicy === "cache-and-network") && (e = YA(YA({}, e), { fetchPolicy: "cache-first" })), this.queryManager.watchQuery(e);
   }, A.prototype.query = function(e) {
-    return this.defaultOptions.query && (e = xd(this.defaultOptions.query, e)), __DEV__ ? me(e.fetchPolicy !== "cache-and-network", "The cache-and-network fetchPolicy does not work with client.query, because client.query can only return a single result. Please use client.watchQuery to receive multiple results from the cache and the network, or consider using a different fetchPolicy, such as cache-first or network-only.") : me(e.fetchPolicy !== "cache-and-network", 10), this.disableNetworkFetches && e.fetchPolicy === "network-only" && (e = BA(BA({}, e), { fetchPolicy: "cache-first" })), this.queryManager.query(e);
+    return this.defaultOptions.query && (e = xd(this.defaultOptions.query, e)), __DEV__ ? me(e.fetchPolicy !== "cache-and-network", "The cache-and-network fetchPolicy does not work with client.query, because client.query can only return a single result. Please use client.watchQuery to receive multiple results from the cache and the network, or consider using a different fetchPolicy, such as cache-first or network-only.") : me(e.fetchPolicy !== "cache-and-network", 10), this.disableNetworkFetches && e.fetchPolicy === "network-only" && (e = YA(YA({}, e), { fetchPolicy: "cache-first" })), this.queryManager.query(e);
   }, A.prototype.mutate = function(e) {
     return this.defaultOptions.mutate && (e = xd(this.defaultOptions.mutate, e)), this.queryManager.mutate(e);
   }, A.prototype.subscribe = function(e) {
@@ -20705,7 +20705,7 @@ graphql-tag enforces all fragment names across your application to be unique; re
 this in the docs: http://dev.apollodata.com/core/fragments.html#unique-names`) : l || cf.set(a, l = /* @__PURE__ */ new Set()), l.add(s), e.has(s) || (e.add(s), t.push(n));
     } else
       t.push(n);
-  }), BA(BA({}, A), { definitions: t });
+  }), YA(YA({}, A), { definitions: t });
 }
 function _O(A) {
   var e = new Set(A.definitions);
@@ -22158,7 +22158,7 @@ const jO = { class: "modal-mask" }, zO = { class: "modal-wrapper" }, WO = {
   emits: ["onOk", "onCancel"],
   setup(A, { emit: e }) {
     const t = e;
-    return (n, a) => (X(), Ae(Bn, { name: "modal" }, {
+    return (n, a) => (X(), JA(Bn, { name: "modal" }, {
       default: Ne(() => [
         D("div", jO, [
           D("div", zO, [
@@ -22207,7 +22207,7 @@ const jO = { class: "modal-mask" }, zO = { class: "modal-wrapper" }, WO = {
     }));
   }
 });
-const nt = /* @__PURE__ */ tn(n8, [["__scopeId", "data-v-c7d50198"]]), gt = "UPS! SORRY, WE DIDN'T SEE THAT COMING!. PLEASE TRY AGAIN OR COMMUNICATE WITH THE TEAM TO RESOLVE THIS ISSUE.", t0 = "THE SPOT WAS NOT FOUND IN THE LIST OF DISABLED SPOTS. THIS ERROR IS VERY UNLIKELY TO HAPPEN.", r8 = "YOU ARE OUTSIDE THE EARLY CANCELLATION WINDOW. YOU CAN ONLY MAKE A LATE CANCELLATION.", i8 = "THE USER IS ALREADY BOOKED IN THIS WAITLIST.", a8 = "THE CLASS IS FULL.", s8 = "THE WAITLIST IF FULL.", Kx = "THE CLASS IS OUTSIDE THE SCHEDULING WINDOW.", o8 = "THE SPOT HAS BEN BOOKED BY ANOTHER USER.", l8 = "THE USER IS ALREADY BOOKED IN THIS CLASS.", c8 = "PLEASE ENTER UNIQUE NAMES FOR SPOTS.", u8 = "WAITLIST ENTRY NOT FOUND", n0 = "ENROLLMENT NOT FOUND", r0 = "YOU ARE TRYING TO MOVE TO THE SAME SPOT", d8 = "THE USER ARE ALREADY BOOKED IN A OVERLAPPING CLASS AND THIS BOOKING CANNOT BE COMPLETED.";
+const nt = /* @__PURE__ */ nn(n8, [["__scopeId", "data-v-c7d50198"]]), gt = "UPS! SORRY, WE DIDN'T SEE THAT COMING!. PLEASE TRY AGAIN OR COMMUNICATE WITH THE TEAM TO RESOLVE THIS ISSUE.", t0 = "THE SPOT WAS NOT FOUND IN THE LIST OF DISABLED SPOTS. THIS ERROR IS VERY UNLIKELY TO HAPPEN.", r8 = "YOU ARE OUTSIDE THE EARLY CANCELLATION WINDOW. YOU CAN ONLY MAKE A LATE CANCELLATION.", i8 = "THE USER IS ALREADY BOOKED IN THIS WAITLIST.", a8 = "THE CLASS IS FULL.", s8 = "THE WAITLIST IF FULL.", Kx = "THE CLASS IS OUTSIDE THE SCHEDULING WINDOW.", o8 = "THE SPOT HAS BEN BOOKED BY ANOTHER USER.", l8 = "THE USER IS ALREADY BOOKED IN THIS CLASS.", c8 = "PLEASE ENTER UNIQUE NAMES FOR SPOTS.", u8 = "WAITLIST ENTRY NOT FOUND", n0 = "ENROLLMENT NOT FOUND", r0 = "YOU ARE TRYING TO MOVE TO THE SAME SPOT", d8 = "THE USER ARE ALREADY BOOKED IN A OVERLAPPING CLASS AND THIS BOOKING CANNOT BE COMPLETED.";
 function Cr(A) {
   return Cr = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(e) {
     return typeof e;
@@ -23557,7 +23557,7 @@ function Xr(A) {
   var e = ze(A), t = e.getMinutes();
   return t;
 }
-function It(A) {
+function kt(A) {
   Re(1, arguments);
   var e = ze(A), t = e.getMonth();
   return t;
@@ -23884,7 +23884,7 @@ var L4 = 10, cC = /* @__PURE__ */ function() {
       return s.era = l, a.setUTCFullYear(l, 0, 1), a.setUTCHours(0, 0, 0, 0), a;
     }
   }]), t;
-}(Dt), sn = {
+}(Dt), on = {
   month: /^(1[0-2]|0?\d)/,
   date: /^(3[0-1]|[0-2]?\d)/,
   dayOfYear: /^(36[0-6]|3[0-5]\d|[0-2]?\d?\d)/,
@@ -23911,7 +23911,7 @@ var L4 = 10, cC = /* @__PURE__ */ function() {
   extended: /^([+-])(\d{2}):(\d{2})|Z/,
   extendedOptionalSeconds: /^([+-])(\d{2}):(\d{2})(:(\d{2}))?|Z/
 };
-function on(A, e) {
+function ln(A, e) {
   return A && {
     value: e(A.value),
     rest: A.rest
@@ -23940,18 +23940,18 @@ function Vr(A, e) {
   };
 }
 function uC(A) {
-  return Kt(sn.anyDigitsSigned, A);
+  return Kt(on.anyDigitsSigned, A);
 }
-function en(A, e) {
+function tn(A, e) {
   switch (A) {
     case 1:
-      return Kt(sn.singleDigit, e);
+      return Kt(on.singleDigit, e);
     case 2:
-      return Kt(sn.twoDigits, e);
+      return Kt(on.twoDigits, e);
     case 3:
-      return Kt(sn.threeDigits, e);
+      return Kt(on.threeDigits, e);
     case 4:
-      return Kt(sn.fourDigits, e);
+      return Kt(on.fourDigits, e);
     default:
       return Kt(new RegExp("^\\d{1," + A + "}"), e);
   }
@@ -23959,13 +23959,13 @@ function en(A, e) {
 function Kc(A, e) {
   switch (A) {
     case 1:
-      return Kt(sn.singleDigitSigned, e);
+      return Kt(on.singleDigitSigned, e);
     case 2:
-      return Kt(sn.twoDigitsSigned, e);
+      return Kt(on.twoDigitsSigned, e);
     case 3:
-      return Kt(sn.threeDigitsSigned, e);
+      return Kt(on.threeDigitsSigned, e);
     case 4:
-      return Kt(sn.fourDigitsSigned, e);
+      return Kt(on.fourDigitsSigned, e);
     default:
       return Kt(new RegExp("^-?\\d{1," + A + "}"), e);
   }
@@ -24021,13 +24021,13 @@ var Y4 = /* @__PURE__ */ function(A) {
       };
       switch (s) {
         case "y":
-          return on(en(4, a), f);
+          return ln(tn(4, a), f);
         case "yo":
-          return on(l.ordinalNumber(a, {
+          return ln(l.ordinalNumber(a, {
             unit: "year"
           }), f);
         default:
-          return on(en(s.length, a), f);
+          return ln(tn(s.length, a), f);
       }
     }
   }, {
@@ -24068,13 +24068,13 @@ var Y4 = /* @__PURE__ */ function(A) {
       };
       switch (s) {
         case "Y":
-          return on(en(4, a), f);
+          return ln(tn(4, a), f);
         case "Yo":
-          return on(l.ordinalNumber(a, {
+          return ln(l.ordinalNumber(a, {
             unit: "year"
           }), f);
         default:
-          return on(en(s.length, a), f);
+          return ln(tn(s.length, a), f);
       }
     }
   }, {
@@ -24153,7 +24153,7 @@ var Y4 = /* @__PURE__ */ function(A) {
       switch (s) {
         case "Q":
         case "QQ":
-          return en(s.length, a);
+          return tn(s.length, a);
         case "Qo":
           return l.ordinalNumber(a, {
             unit: "quarter"
@@ -24212,7 +24212,7 @@ var Y4 = /* @__PURE__ */ function(A) {
       switch (s) {
         case "q":
         case "qq":
-          return en(s.length, a);
+          return tn(s.length, a);
         case "qo":
           return l.ordinalNumber(a, {
             unit: "quarter"
@@ -24273,11 +24273,11 @@ var Y4 = /* @__PURE__ */ function(A) {
       };
       switch (s) {
         case "M":
-          return on(Kt(sn.month, a), f);
+          return ln(Kt(on.month, a), f);
         case "MM":
-          return on(en(2, a), f);
+          return ln(tn(2, a), f);
         case "Mo":
-          return on(l.ordinalNumber(a, {
+          return ln(l.ordinalNumber(a, {
             unit: "month"
           }), f);
         case "MMM":
@@ -24336,11 +24336,11 @@ var Y4 = /* @__PURE__ */ function(A) {
       };
       switch (s) {
         case "L":
-          return on(Kt(sn.month, a), f);
+          return ln(Kt(on.month, a), f);
         case "LL":
-          return on(en(2, a), f);
+          return ln(tn(2, a), f);
         case "Lo":
-          return on(l.ordinalNumber(a, {
+          return ln(l.ordinalNumber(a, {
             unit: "month"
           }), f);
         case "LLL":
@@ -24402,13 +24402,13 @@ var Q4 = /* @__PURE__ */ function(A) {
     value: function(a, s, l) {
       switch (s) {
         case "w":
-          return Kt(sn.week, a);
+          return Kt(on.week, a);
         case "wo":
           return l.ordinalNumber(a, {
             unit: "week"
           });
         default:
-          return en(s.length, a);
+          return tn(s.length, a);
       }
     }
   }, {
@@ -24443,13 +24443,13 @@ var Z4 = /* @__PURE__ */ function(A) {
     value: function(a, s, l) {
       switch (s) {
         case "I":
-          return Kt(sn.week, a);
+          return Kt(on.week, a);
         case "Io":
           return l.ordinalNumber(a, {
             unit: "week"
           });
         default:
-          return en(s.length, a);
+          return tn(s.length, a);
       }
     }
   }, {
@@ -24478,13 +24478,13 @@ var Z4 = /* @__PURE__ */ function(A) {
     value: function(a, s, l) {
       switch (s) {
         case "d":
-          return Kt(sn.date, a);
+          return Kt(on.date, a);
         case "do":
           return l.ordinalNumber(a, {
             unit: "date"
           });
         default:
-          return en(s.length, a);
+          return tn(s.length, a);
       }
     }
   }, {
@@ -24515,13 +24515,13 @@ var Z4 = /* @__PURE__ */ function(A) {
       switch (s) {
         case "D":
         case "DD":
-          return Kt(sn.dayOfYear, a);
+          return Kt(on.dayOfYear, a);
         case "Do":
           return l.ordinalNumber(a, {
             unit: "date"
           });
         default:
-          return en(s.length, a);
+          return tn(s.length, a);
       }
     }
   }, {
@@ -24634,9 +24634,9 @@ var nT = /* @__PURE__ */ function(A) {
       switch (s) {
         case "e":
         case "ee":
-          return on(en(s.length, a), p);
+          return ln(tn(s.length, a), p);
         case "eo":
-          return on(l.ordinalNumber(a, {
+          return ln(l.ordinalNumber(a, {
             unit: "day"
           }), p);
         case "eee":
@@ -24711,9 +24711,9 @@ var nT = /* @__PURE__ */ function(A) {
       switch (s) {
         case "c":
         case "cc":
-          return on(en(s.length, a), p);
+          return ln(tn(s.length, a), p);
         case "co":
-          return on(l.ordinalNumber(a, {
+          return ln(l.ordinalNumber(a, {
             unit: "day"
           }), p);
         case "ccc":
@@ -24795,13 +24795,13 @@ var sT = /* @__PURE__ */ function(A) {
       switch (s) {
         case "i":
         case "ii":
-          return en(s.length, a);
+          return tn(s.length, a);
         case "io":
           return l.ordinalNumber(a, {
             unit: "day"
           });
         case "iii":
-          return on(l.day(a, {
+          return ln(l.day(a, {
             width: "abbreviated",
             context: "formatting"
           }) || l.day(a, {
@@ -24812,12 +24812,12 @@ var sT = /* @__PURE__ */ function(A) {
             context: "formatting"
           }), f);
         case "iiiii":
-          return on(l.day(a, {
+          return ln(l.day(a, {
             width: "narrow",
             context: "formatting"
           }), f);
         case "iiiiii":
-          return on(l.day(a, {
+          return ln(l.day(a, {
             width: "short",
             context: "formatting"
           }) || l.day(a, {
@@ -24826,7 +24826,7 @@ var sT = /* @__PURE__ */ function(A) {
           }), f);
         case "iiii":
         default:
-          return on(l.day(a, {
+          return ln(l.day(a, {
             width: "wide",
             context: "formatting"
           }) || l.day(a, {
@@ -25014,13 +25014,13 @@ var sT = /* @__PURE__ */ function(A) {
     value: function(a, s, l) {
       switch (s) {
         case "h":
-          return Kt(sn.hour12h, a);
+          return Kt(on.hour12h, a);
         case "ho":
           return l.ordinalNumber(a, {
             unit: "hour"
           });
         default:
-          return en(s.length, a);
+          return tn(s.length, a);
       }
     }
   }, {
@@ -25050,13 +25050,13 @@ var sT = /* @__PURE__ */ function(A) {
     value: function(a, s, l) {
       switch (s) {
         case "H":
-          return Kt(sn.hour23h, a);
+          return Kt(on.hour23h, a);
         case "Ho":
           return l.ordinalNumber(a, {
             unit: "hour"
           });
         default:
-          return en(s.length, a);
+          return tn(s.length, a);
       }
     }
   }, {
@@ -25085,13 +25085,13 @@ var sT = /* @__PURE__ */ function(A) {
     value: function(a, s, l) {
       switch (s) {
         case "K":
-          return Kt(sn.hour11h, a);
+          return Kt(on.hour11h, a);
         case "Ko":
           return l.ordinalNumber(a, {
             unit: "hour"
           });
         default:
-          return en(s.length, a);
+          return tn(s.length, a);
       }
     }
   }, {
@@ -25121,13 +25121,13 @@ var sT = /* @__PURE__ */ function(A) {
     value: function(a, s, l) {
       switch (s) {
         case "k":
-          return Kt(sn.hour24h, a);
+          return Kt(on.hour24h, a);
         case "ko":
           return l.ordinalNumber(a, {
             unit: "hour"
           });
         default:
-          return en(s.length, a);
+          return tn(s.length, a);
       }
     }
   }, {
@@ -25157,13 +25157,13 @@ var sT = /* @__PURE__ */ function(A) {
     value: function(a, s, l) {
       switch (s) {
         case "m":
-          return Kt(sn.minute, a);
+          return Kt(on.minute, a);
         case "mo":
           return l.ordinalNumber(a, {
             unit: "minute"
           });
         default:
-          return en(s.length, a);
+          return tn(s.length, a);
       }
     }
   }, {
@@ -25192,13 +25192,13 @@ var sT = /* @__PURE__ */ function(A) {
     value: function(a, s, l) {
       switch (s) {
         case "s":
-          return Kt(sn.second, a);
+          return Kt(on.second, a);
         case "so":
           return l.ordinalNumber(a, {
             unit: "second"
           });
         default:
-          return en(s.length, a);
+          return tn(s.length, a);
       }
     }
   }, {
@@ -25228,7 +25228,7 @@ var sT = /* @__PURE__ */ function(A) {
       var l = function(p) {
         return Math.floor(p * Math.pow(10, -s.length + 3));
       };
-      return on(en(s.length, a), l);
+      return ln(tn(s.length, a), l);
     }
   }, {
     key: "set",
@@ -25402,8 +25402,8 @@ function hf(A, e, t, n) {
   }, J = [new V4()], sA = tA.match(IT).map(function(DA) {
     var RA = DA[0];
     if (RA in uf) {
-      var YA = uf[RA];
-      return YA(DA, G.formatLong);
+      var VA = uf[RA];
+      return VA(DA, G.formatLong);
     }
     return DA;
   }).join("").match(wT), nA = [], cA = c0(sA), aA;
@@ -25411,19 +25411,19 @@ function hf(A, e, t, n) {
     var R = function() {
       var RA = aA.value;
       !(n != null && n.useAdditionalWeekYearTokens) && sC(RA) && qc(RA, tA, A), !(n != null && n.useAdditionalDayOfYearTokens) && aC(RA) && qc(RA, tA, A);
-      var YA = RA[0], $A = CT[YA];
+      var VA = RA[0], $A = CT[VA];
       if ($A) {
-        var qA = $A.incompatibleTokens;
-        if (Array.isArray(qA)) {
+        var GA = $A.incompatibleTokens;
+        if (Array.isArray(GA)) {
           var uA = nA.find(function(NA) {
-            return qA.includes(NA.token) || NA.token === YA;
+            return GA.includes(NA.token) || NA.token === VA;
           });
           if (uA)
             throw new RangeError("The format string mustn't contain `".concat(uA.fullToken, "` and `").concat(RA, "` at the same time"));
         } else if ($A.incompatibleTokens === "*" && nA.length > 0)
           throw new RangeError("The format string mustn't contain `".concat(RA, "` and any other token at the same time"));
         nA.push({
-          token: YA,
+          token: VA,
           fullToken: RA
         });
         var fA = $A.run(eA, RA, G.match, j);
@@ -25433,9 +25433,9 @@ function hf(A, e, t, n) {
           };
         J.push(fA.setter), eA = fA.rest;
       } else {
-        if (YA.match($T))
-          throw new RangeError("Format string contains an unescaped latin alphabet character `" + YA + "`");
-        if (RA === "''" ? RA = "'" : YA === "'" && (RA = ET(RA)), eA.indexOf(RA) === 0)
+        if (VA.match($T))
+          throw new RangeError("Format string contains an unescaped latin alphabet character `" + VA + "`");
+        if (RA === "''" ? RA = "'" : VA === "'" && (RA = ET(RA)), eA.indexOf(RA) === 0)
           eA = eA.slice(RA.length);
         else
           return {
@@ -25459,23 +25459,23 @@ function hf(A, e, t, n) {
     return DA.priority;
   }).sort(function(DA, RA) {
     return RA - DA;
-  }).filter(function(DA, RA, YA) {
-    return YA.indexOf(DA) === RA;
+  }).filter(function(DA, RA, VA) {
+    return VA.indexOf(DA) === RA;
   }).map(function(DA) {
     return J.filter(function(RA) {
       return RA.priority === DA;
-    }).sort(function(RA, YA) {
-      return YA.subPriority - RA.subPriority;
+    }).sort(function(RA, VA) {
+      return VA.subPriority - RA.subPriority;
     });
   }).map(function(DA) {
     return DA[0];
   }), pA = ze(t);
   if (isNaN(pA.getTime()))
     return new Date(NaN);
-  var vA = eC(pA, Gc(pA)), mA = {}, MA = c0(W), JA;
+  var vA = eC(pA, Gc(pA)), mA = {}, MA = c0(W), Ae;
   try {
-    for (MA.s(); !(JA = MA.n()).done; ) {
-      var EA = JA.value;
+    for (MA.s(); !(Ae = MA.n()).done; ) {
+      var EA = Ae.value;
       if (!EA.validate(vA, j))
         return new Date(NaN);
       var wA = EA.set(vA, mA, j);
@@ -26350,12 +26350,12 @@ const xN = (A, e, t) => {
     if (t > A)
       return 12;
     if (t === A)
-      return It(ie(e));
+      return kt(ie(e));
   }
 }, SC = (A, e) => {
   if (e) {
     const t = xt(ie(e));
-    return t < A ? -1 : t === A ? It(ie(e)) : void 0;
+    return t < A ? -1 : t === A ? kt(ie(e)) : void 0;
   }
 }, js = (A) => {
   if (A)
@@ -26365,7 +26365,7 @@ const xN = (A, e, t) => {
   return AC({ start: t, end: n });
 }, $N = (A) => {
   const e = zr(A, 1);
-  return { month: It(e), year: xt(e) };
+  return { month: kt(e), year: xt(e) };
 }, bc = (A, e, t) => {
   const n = Ua(Yr(A, e), { weekStartsOn: +t }), a = b8(Yr(A, e), { weekStartsOn: +t });
   return [n, a];
@@ -26382,7 +26382,7 @@ const xN = (A, e, t) => {
 }, PC = (A, e, t, n, a) => {
   if (!n || a && !e || !a && !t)
     return !1;
-  const s = a ? zr(A, 1) : Hs(A, 1), l = [It(s), xt(s)];
+  const s = a ? zr(A, 1) : Hs(A, 1), l = [kt(s), xt(s)];
   return a ? !DN(...l, e) : !EN(...l, t);
 }, EN = (A, e, t) => Nn(...Vi(t, A, e)) || Tt(...Vi(t, A, e)), DN = (A, e, t) => Vn(...Vi(t, A, e)) || Tt(...Vi(t, A, e)), OC = (A, e, t, n, a, s) => {
   if (typeof e == "function")
@@ -26412,7 +26412,7 @@ const xN = (A, e, t) => {
 }, k0 = (A, e, t, n, a) => {
   const s = A ? PN(A) : ie(e);
   return Array.isArray(n) ? Ld(n[0], s, t, !!e) && Ld(n[1], s, t, !!e) && a : Ld(n, s, t, !!e) && a;
-}, Fd = (A) => Gt(ie(), Ta(A)), ON = (A, e) => Array.isArray(A) ? A.map((t) => ie(t)).filter((t) => xt(ie(t)) === e).map((t) => It(t)) : [], bo = dn({
+}, Fd = (A) => Gt(ie(), Ta(A)), ON = (A, e) => Array.isArray(A) ? A.map((t) => ie(t)).filter((t) => xt(ie(t)) === e).map((t) => kt(t)) : [], bo = dn({
   menuFocused: !1,
   shiftKeyInMenu: !1
 }), TC = () => {
@@ -26601,7 +26601,7 @@ const xN = (A, e, t) => {
       minutes: Xr(pA),
       seconds: e.enableSeconds ? Ys(pA) : 0
     };
-  }, C = (W) => e.modelType ? cA(W) : { month: It(W), year: xt(W) }, S = (W) => Array.isArray(W) ? Jl(
+  }, C = (W) => e.modelType ? cA(W) : { month: kt(W), year: xt(W) }, S = (W) => Array.isArray(W) ? Jl(
     () => [
       Oa(ie(), W[0]),
       W[1] ? Oa(ie(), W[1]) : ls(e.partialRange)
@@ -26681,7 +26681,7 @@ const xN = (A, e, t) => {
 }, UN = (A, e) => {
   const { defaultedFilters: t } = Sn(A), { validateMonthYearInRange: n } = Ol(A), a = (h, m) => {
     let y = h;
-    return t.value.months.includes(It(y)) ? (y = m ? zr(h, 1) : Hs(h, 1), a(y, m)) : y;
+    return t.value.months.includes(kt(y)) ? (y = m ? zr(h, 1) : Hs(h, 1), a(y, m)) : y;
   }, s = (h, m) => {
     let y = h;
     return t.value.years.includes(xt(y)) ? (y = m ? Wg(h, 1) : yC(h, 1), s(y, m)) : y;
@@ -26689,8 +26689,8 @@ const xN = (A, e, t) => {
     const y = Gt(/* @__PURE__ */ new Date(), { month: A.month, year: A.year });
     let C = h ? zr(y, 1) : Hs(y, 1);
     A.disableYearSelect && (C = Oa(C, A.year));
-    let S = It(C), I = xt(C);
-    t.value.months.includes(S) && (C = a(C, h), S = It(C), I = xt(C)), t.value.years.includes(I) && (C = s(C, h), I = xt(C)), n(S, I, h, A.preventMinMaxNavigation) && f(S, I, m);
+    let S = kt(C), I = xt(C);
+    t.value.months.includes(S) && (C = a(C, h), S = kt(C), I = xt(C)), t.value.years.includes(I) && (C = s(C, h), I = xt(C)), n(S, I, h, A.preventMinMaxNavigation) && f(S, I, m);
   }, f = (h, m, y) => {
     e("update-month-year", { month: h, year: m, fromNav: y });
   }, p = jA(() => (h) => PC(
@@ -26820,7 +26820,7 @@ const jN = ({
       W.setAttribute("id", "dp--temp-container");
       const vA = (R = n.value) != null && R.clientWidth ? n.value : document.body;
       vA.append(W);
-      const mA = document.getElementById("dp--temp-container"), MA = sA(pA), JA = cr(
+      const mA = document.getElementById("dp--temp-container"), MA = sA(pA), Ae = cr(
         nA,
         {
           ...cA,
@@ -26829,7 +26829,7 @@ const jN = ({
         },
         Object.fromEntries(Object.keys(f).map((EA) => [EA, f[EA]]))
       );
-      il(JA, mA), p.value = (rA = JA.el) == null ? void 0 : rA.getBoundingClientRect(), il(null, mA), vA.removeChild(mA);
+      il(Ae, mA), p.value = (rA = Ae.el) == null ? void 0 : rA.getBoundingClientRect(), il(null, mA), vA.removeChild(mA);
     }
   };
 }, pa = [
@@ -26886,7 +26886,7 @@ const jN = ({
   const e = jA(() => (n) => A.value ? n ? A.value.open : A.value.close : ""), t = jA(() => (n) => A.value ? n ? A.value.menuAppearTop : A.value.menuAppearBottom : "");
   return { transitionName: e, showTransition: !!A.value, menuTransition: t };
 }, Yu = (A, e) => {
-  const t = yA([{ month: It(ie()), year: xt(ie()) }]), n = dn({
+  const t = yA([{ month: kt(ie()), year: xt(ie()) }]), n = dn({
     hours: A.range ? [Wr(ie()), Wr(ie())] : Wr(ie()),
     minutes: A.range ? [Xr(ie()), Xr(ie())] : Xr(ie()),
     seconds: A.range ? [0, 0] : 0
@@ -27026,7 +27026,7 @@ const jN = ({
     const Q = A.maxDate ? Vn(a(G), a(ie(A.maxDate))) : !1, j = A.minDate ? Nn(a(G), a(ie(A.minDate))) : !1, J = h(
       a(G),
       (Z = A.arrMapValues) != null && Z.disabledDates ? A.arrMapValues.disabledDates : A.disabledDates
-    ), sA = e.value.months.map((rA) => +rA).includes(It(G)), nA = A.disabledWeekDays.length ? A.disabledWeekDays.some((rA) => +rA === k4(G)) : !1, cA = y(G), aA = xt(G), R = aA < +A.yearRange[0] || aA > +A.yearRange[1];
+    ), sA = e.value.months.map((rA) => +rA).includes(kt(G)), nA = A.disabledWeekDays.length ? A.disabledWeekDays.some((rA) => +rA === k4(G)) : !1, cA = y(G), aA = xt(G), R = aA < +A.yearRange[0] || aA > +A.yearRange[1];
     return !(Q || j || J || sA || R || nA || cA);
   }, l = (G, Z) => Nn(...Vi(A.minDate, G, Z)) || Tt(...Vi(A.minDate, G, Z)), f = (G, Z) => Vn(...Vi(A.maxDate, G, Z)) || Tt(...Vi(A.maxDate, G, Z)), p = (G, Z, Q) => {
     let j = !1;
@@ -27419,7 +27419,7 @@ const jN = ({
             }, [
               $e(j.$slots, "input-icon")
             ])) : IA("", !0),
-            !j.$slots["input-icon"] && !j.hideInputIcon && !j.$slots["dp-input"] ? (X(), Ae(gA(Dl), {
+            !j.$slots["input-icon"] && !j.hideInputIcon && !j.$slots["dp-input"] ? (X(), JA(gA(Dl), {
               key: 1,
               onClick: J[1] || (J[1] = (nA) => t("toggle")),
               class: "dp__input_icon dp__input_icons"
@@ -27428,7 +27428,7 @@ const jN = ({
           j.$slots["clear-icon"] && A.inputValue && j.clearable && !j.disabled && !j.readonly ? (X(), dA("span", KN, [
             $e(j.$slots, "clear-icon", { clear: Z })
           ])) : IA("", !0),
-          j.clearable && !j.$slots["clear-icon"] && A.inputValue && !j.disabled && !j.readonly ? (X(), Ae(gA(bC), {
+          j.clearable && !j.$slots["clear-icon"] && A.inputValue && !j.disabled && !j.readonly ? (X(), JA(gA(bC), {
             key: 3,
             class: "dp__clear_icon dp__input_icons",
             onClick: J[3] || (J[3] = rt((nA) => Z(nA), ["prevent"]))
@@ -27457,7 +27457,7 @@ const jN = ({
       defaultedInline: f,
       getDefaultPattern: p
     } = Sn(t), { isValidTime: h } = Ol(t), { buildMatrix: m } = ca(), y = yA(null), C = yA(null);
-    wt(() => {
+    It(() => {
       t.arrowNavigation && m([pn(y), pn(C)], "actionRow");
     });
     const S = jA(() => t.range && !t.partialRange && t.internalModelValue ? t.internalModelValue.length === 2 : !0), I = jA(() => !O.value || !F.value || !S.value), O = jA(() => !t.enableTimePicker || t.ignoreTimeValidation ? !0 : h(t.internalModelValue)), F = jA(() => t.monthPicker ? t.range && Array.isArray(t.internalModelValue) ? !t.internalModelValue.filter((G) => !tA(G)).length : tA(t.internalModelValue) : !0), M = () => {
@@ -27590,7 +27590,7 @@ const jN = ({
     ), { hideNavigationButtons: m } = Hu(), y = yA(!1), C = yA(null), S = yA(null), I = yA([]), O = yA(), F = yA(null), M = yA(0), E = yA(null);
     Kf(() => {
       C.value = null;
-    }), wt(() => {
+    }), It(() => {
       Rn().then(() => Z()), Y(), T(!0);
     }), aa(() => T(!1));
     const T = (R) => {
@@ -27686,14 +27686,14 @@ const jN = ({
               "aria-selected": mA.active,
               "aria-disabled": mA.disabled || void 0,
               ref_for: !0,
-              ref: (JA) => sA(JA, mA, vA, MA),
+              ref: (Ae) => sA(Ae, mA, vA, MA),
               tabindex: "0",
-              onClick: (JA) => Q(mA),
+              onClick: (Ae) => Q(mA),
               onKeydown: [
-                Ve(rt((JA) => Q(mA), ["prevent"]), ["enter"]),
-                Ve(rt((JA) => Q(mA), ["prevent"]), ["space"])
+                Ve(rt((Ae) => Q(mA), ["prevent"]), ["enter"]),
+                Ve(rt((Ae) => Q(mA), ["prevent"]), ["space"])
               ],
-              onMouseover: (JA) => aA(mA.value)
+              onMouseover: (Ae) => aA(mA.value)
             }, [
               D("div", {
                 class: Le(mA.className)
@@ -27772,7 +27772,7 @@ const jN = ({
   emits: ["activate", "set-ref"],
   setup(A, { emit: e }) {
     const t = yA(null);
-    return wt(() => e("set-ref", t)), (n, a) => (X(), dA("button", {
+    return It(() => e("set-ref", t)), (n, a) => (X(), dA("button", {
       type: "button",
       class: "dp__btn dp--arrow-btn-nav",
       onClick: a[0] || (a[0] = (s) => n.$emit("activate")),
@@ -27814,7 +27814,7 @@ const jN = ({
         h.value[J] = h.value[0];
       else {
         const sA = Gt(ie(), h.value[J - 1]);
-        h.value[J] = { month: It(sA), year: xt(Wg(sA, J)) };
+        h.value[J] = { month: kt(sA), year: xt(Wg(sA, J)) };
       }
   }, I = (J) => {
     if (!J)
@@ -27824,10 +27824,10 @@ const jN = ({
   }, O = (J) => A.focusStartDate ? J[0] : J[1] ? J[1] : J[0], F = () => {
     if (l.value) {
       const J = Array.isArray(l.value) ? O(l.value) : l.value;
-      h.value[0] = { month: It(J), year: xt(J) };
+      h.value[0] = { month: kt(J), year: xt(J) };
     }
   };
-  wt(() => {
+  It(() => {
     F(), t.value.count && S();
   });
   const M = jA(() => (J, sA) => {
@@ -27836,7 +27836,7 @@ const jN = ({
       year: f.value(J)
     });
     return PC(nA, A.maxDate, A.minDate, A.preventMinMaxNavigation, sA);
-  }), E = (J) => J ? { month: It(J), year: xt(J) } : { month: null, year: null }, T = () => l.value ? Array.isArray(l.value) ? l.value.map((J) => E(J)) : E(l.value) : E(), Y = (J, sA) => {
+  }), E = (J) => J ? { month: kt(J), year: xt(J) } : { month: null, year: null }, T = () => l.value ? Array.isArray(l.value) ? l.value.map((J) => E(J)) : E(l.value) : E(), Y = (J, sA) => {
     const nA = h.value[J], cA = T();
     return Array.isArray(cA) ? cA.some((aA) => aA.year === (nA == null ? void 0 : nA.year) && aA.month === sA) : (nA == null ? void 0 : nA.year) === cA.year && sA === cA.month;
   }, B = (J, sA, nA) => {
@@ -27928,7 +27928,7 @@ const jN = ({
     }, B = (eA, tA = !1, oA) => {
       tA || e("reset-flow"), oA !== void 0 ? E.value[eA] = oA : E.value[eA] = !E.value[eA], E.value || e("overlay-closed");
     };
-    return (eA, tA) => (X(), Ae(lp, {
+    return (eA, tA) => (X(), JA(lp, {
       "multi-calendars": gA(f).count,
       stretch: ""
     }, {
@@ -27940,7 +27940,7 @@ const jN = ({
           selectMonth: gA(C),
           selectYear: gA(S),
           instance: oA
-        }))) : (X(), Ae(ml, {
+        }))) : (X(), JA(ml, {
           key: 1,
           items: gA(n)(oA),
           "arrow-navigation": eA.arrowNavigation,
@@ -27957,7 +27957,7 @@ const jN = ({
             var G, Z, Q;
             return [
               D("div", l5, [
-                gA(M)(gA(f), oA) ? (X(), Ae(jo, {
+                gA(M)(gA(f), oA) ? (X(), JA(jo, {
                   key: 0,
                   ref: "mpPrevIconRef",
                   "aria-label": (G = gA(p)) == null ? void 0 : G.prevYear,
@@ -27966,7 +27966,7 @@ const jN = ({
                 }, {
                   default: Ne(() => [
                     eA.$slots["arrow-left"] ? $e(eA.$slots, "arrow-left", { key: 0 }) : IA("", !0),
-                    eA.$slots["arrow-left"] ? IA("", !0) : (X(), Ae(gA(Jg), { key: 1 }))
+                    eA.$slots["arrow-left"] ? IA("", !0) : (X(), JA(gA(Jg), { key: 1 }))
                   ]),
                   _: 2
                 }, 1032, ["aria-label", "disabled", "onActivate"])) : IA("", !0),
@@ -27987,7 +27987,7 @@ const jN = ({
                     Ie(OA(gA(s)(oA)), 1)
                   ], 64))
                 ], 40, c5),
-                gA(F)(gA(f), oA) ? (X(), Ae(jo, {
+                gA(F)(gA(f), oA) ? (X(), JA(jo, {
                   key: 1,
                   ref: "mpNextIconRef",
                   "aria-label": (Q = gA(p)) == null ? void 0 : Q.nextYear,
@@ -27996,7 +27996,7 @@ const jN = ({
                 }, {
                   default: Ne(() => [
                     eA.$slots["arrow-right"] ? $e(eA.$slots, "arrow-right", { key: 0 }) : IA("", !0),
-                    eA.$slots["arrow-right"] ? IA("", !0) : (X(), Ae(gA(Ap), { key: 1 }))
+                    eA.$slots["arrow-right"] ? IA("", !0) : (X(), JA(gA(Ap), { key: 1 }))
                   ]),
                   _: 2
                 }, 1032, ["aria-label", "disabled", "onActivate"])) : IA("", !0),
@@ -28005,7 +28005,7 @@ const jN = ({
                   css: gA(O)
                 }, {
                   default: Ne(() => [
-                    E.value[oA] ? (X(), Ae(ml, {
+                    E.value[oA] ? (X(), JA(ml, {
                       key: 0,
                       items: gA(a)(oA),
                       "text-input": eA.textInput,
@@ -28018,7 +28018,7 @@ const jN = ({
                     }, tr({
                       "button-icon": Ne(() => [
                         eA.$slots["calendar-icon"] ? $e(eA.$slots, "calendar-icon", { key: 0 }) : IA("", !0),
-                        eA.$slots["calendar-icon"] ? IA("", !0) : (X(), Ae(gA(Dl), { key: 1 }))
+                        eA.$slots["calendar-icon"] ? IA("", !0) : (X(), JA(gA(Dl), { key: 1 }))
                       ]),
                       _: 2
                     }, [
@@ -28080,7 +28080,7 @@ const jN = ({
       f.$slots["month-year"] ? $e(f.$slots, "month-year", _n(mn({ key: 0 }, {
         years: gA(n),
         selectYear: gA(a)
-      }))) : (X(), Ae(ml, {
+      }))) : (X(), JA(ml, {
         key: 1,
         items: gA(n),
         "is-last": f.autoApply && !f.keepActionRow && !gA(l).keepActionRow,
@@ -28138,7 +28138,7 @@ const jN = ({
       minutes: !1,
       seconds: !1
     }), S = yA("AM"), I = yA(null), O = yA([]);
-    wt(() => {
+    It(() => {
       t("mounted");
     });
     const F = (mA) => Gt(/* @__PURE__ */ new Date(), {
@@ -28166,46 +28166,46 @@ const jN = ({
       }
       return { text: n[mA] < 10 ? `0${n[mA]}` : `${n[mA]}`, value: n[mA] };
     }), Q = (mA, MA) => {
-      var JA;
+      var Ae;
       if (!n.disabledTimesConfig)
         return !1;
       const EA = n.disabledTimesConfig(n.order, mA === "hours" ? MA : void 0);
-      return EA[mA] ? !!((JA = EA[mA]) != null && JA.includes(MA)) : !0;
+      return EA[mA] ? !!((Ae = EA[mA]) != null && Ae.includes(MA)) : !0;
     }, j = (mA) => {
-      const MA = n.is24 ? 24 : 12, JA = mA === "hours" ? MA : 60, EA = +n[`${mA}GridIncrement`], wA = mA === "hours" && !n.is24 ? EA : 0, DA = [];
-      for (let RA = wA; RA < JA; RA += EA)
+      const MA = n.is24 ? 24 : 12, Ae = mA === "hours" ? MA : 60, EA = +n[`${mA}GridIncrement`], wA = mA === "hours" && !n.is24 ? EA : 0, DA = [];
+      for (let RA = wA; RA < Ae; RA += EA)
         DA.push({ value: RA, text: RA < 10 ? `0${RA}` : `${RA}` });
       return mA === "hours" && !n.is24 && DA.push({ value: 0, text: "12" }), Us(DA, (RA) => ({ active: !1, disabled: p.value.times[mA].includes(RA.value) || !J(RA.value, mA) || Q(mA, RA.value) }));
     }, J = (mA, MA) => {
-      const JA = n.minTime ? F(Rd(n.minTime)) : null, EA = n.maxTime ? F(Rd(n.maxTime)) : null, wA = F(Rd(E.value, MA, mA));
-      return JA && EA ? (gl(wA, EA) || bs(wA, EA)) && (fl(wA, JA) || bs(wA, JA)) : JA ? fl(wA, JA) || bs(wA, JA) : EA ? gl(wA, EA) || bs(wA, EA) : !0;
+      const Ae = n.minTime ? F(Rd(n.minTime)) : null, EA = n.maxTime ? F(Rd(n.maxTime)) : null, wA = F(Rd(E.value, MA, mA));
+      return Ae && EA ? (gl(wA, EA) || bs(wA, EA)) && (fl(wA, Ae) || bs(wA, Ae)) : Ae ? fl(wA, Ae) || bs(wA, Ae) : EA ? gl(wA, EA) || bs(wA, EA) : !0;
     }, sA = (mA) => n[`no${mA[0].toUpperCase() + mA.slice(1)}Overlay`], nA = (mA) => {
       sA(mA) || (C[mA] = !C[mA], C[mA] || t("overlay-closed"));
     }, cA = (mA) => mA === "hours" ? Wr : mA === "minutes" ? Xr : Ys, aA = (mA, MA = !0) => {
-      const JA = MA ? B : eA, EA = MA ? +n[`${mA}Increment`] : -+n[`${mA}Increment`];
+      const Ae = MA ? B : eA, EA = MA ? +n[`${mA}Increment`] : -+n[`${mA}Increment`];
       J(+n[mA] + EA, mA) && t(
         `update:${mA}`,
-        cA(mA)(JA({ [mA]: +n[mA] }, { [mA]: +n[`${mA}Increment`] }))
+        cA(mA)(Ae({ [mA]: +n[mA] }, { [mA]: +n[`${mA}Increment`] }))
       );
     }, R = (mA) => n.is24 ? mA : (mA >= 12 ? S.value = "PM" : S.value = "AM", CN(mA)), rA = () => {
       S.value === "PM" ? (S.value = "AM", t("update:hours", n.hours - 12)) : (S.value = "PM", t("update:hours", n.hours + 12)), t("am-pm-change", S.value);
     }, W = (mA) => {
       C[mA] = !0;
-    }, pA = (mA, MA, JA) => {
+    }, pA = (mA, MA, Ae) => {
       if (mA && n.arrowNavigation) {
-        Array.isArray(O.value[MA]) ? O.value[MA][JA] = mA : O.value[MA] = [mA];
+        Array.isArray(O.value[MA]) ? O.value[MA][Ae] = mA : O.value[MA] = [mA];
         const EA = O.value.reduce(
-          (wA, DA) => DA.map((RA, YA) => [...wA[YA] || [], DA[YA]]),
+          (wA, DA) => DA.map((RA, VA) => [...wA[VA] || [], DA[VA]]),
           []
         );
         s(n.closeTimePickerBtn), I.value && (EA[1] = EA[1].concat(I.value)), a(EA, n.order);
       }
     }, vA = (mA, MA) => (nA(mA), mA === "hours" && !n.is24 ? t(`update:${mA}`, S.value === "PM" ? MA + 12 : MA) : t(`update:${mA}`, MA));
     return e({ openChildCmp: W }), (mA, MA) => {
-      var JA;
+      var Ae;
       return mA.disabled ? IA("", !0) : (X(), dA("div", f5, [
         (X(!0), dA(HA, null, fe(oA.value, (EA, wA) => {
-          var DA, RA, YA;
+          var DA, RA, VA;
           return X(), dA("div", {
             key: wA,
             class: Le(tA.value)
@@ -28237,7 +28237,7 @@ const jN = ({
                   m5
                 ], 64)) : (X(), dA(HA, { key: 0 }, [
                   mA.$slots["arrow-up"] ? $e(mA.$slots, "arrow-up", { key: 0 }) : IA("", !0),
-                  mA.$slots["arrow-up"] ? IA("", !0) : (X(), Ae(gA(tp), { key: 1 }))
+                  mA.$slots["arrow-up"] ? IA("", !0) : (X(), JA(gA(tp), { key: 1 }))
                 ], 64))
               ], 42, g5),
               D("button", {
@@ -28278,7 +28278,7 @@ const jN = ({
                   dp__tp_inline_btn_bottom: n.timePickerInline,
                   dp__inc_dec_button_disabled: Y.value(EA.type)
                 }),
-                "aria-label": (YA = gA(l)) == null ? void 0 : YA.decrementValue(EA.type),
+                "aria-label": (VA = gA(l)) == null ? void 0 : VA.decrementValue(EA.type),
                 tabindex: "0",
                 onKeydown: [
                   Ve(rt(($A) => aA(EA.type, !1), ["prevent"]), ["enter"]),
@@ -28293,7 +28293,7 @@ const jN = ({
                   x5
                 ], 64)) : (X(), dA(HA, { key: 0 }, [
                   mA.$slots["arrow-down"] ? $e(mA.$slots, "arrow-down", { key: 0 }) : IA("", !0),
-                  mA.$slots["arrow-down"] ? IA("", !0) : (X(), Ae(gA(np), { key: 1 }))
+                  mA.$slots["arrow-down"] ? IA("", !0) : (X(), JA(gA(np), { key: 1 }))
                 ], 64))
               ], 42, y5)
             ], 64))
@@ -28312,7 +28312,7 @@ const jN = ({
             type: "button",
             class: "dp__pm_am_button",
             role: "button",
-            "aria-label": (JA = gA(l)) == null ? void 0 : JA.amPmButton,
+            "aria-label": (Ae = gA(l)) == null ? void 0 : Ae.amPmButton,
             tabindex: "0",
             onClick: rA,
             onKeydown: [
@@ -28321,13 +28321,13 @@ const jN = ({
             ]
           }, OA(S.value), 41, w5))
         ])),
-        (X(!0), dA(HA, null, fe(G.value, (EA, wA) => (X(), Ae(Bn, {
+        (X(!0), dA(HA, null, fe(G.value, (EA, wA) => (X(), JA(Bn, {
           key: wA,
           name: gA(m)(C[EA.type]),
           css: gA(y)
         }, {
           default: Ne(() => [
-            C[EA.type] ? (X(), Ae(ml, {
+            C[EA.type] ? (X(), JA(ml, {
               key: 0,
               items: j(EA.type),
               "is-last": mA.autoApply && !mA.keepActionRow && !gA(h).keepActionRow,
@@ -28342,7 +28342,7 @@ const jN = ({
             }, tr({
               "button-icon": Ne(() => [
                 mA.$slots["clock-icon"] ? $e(mA.$slots, "clock-icon", { key: 0 }) : IA("", !0),
-                mA.$slots["clock-icon"] ? IA("", !0) : (X(), Ae(gA(ep), { key: 1 }))
+                mA.$slots["clock-icon"] ? IA("", !0) : (X(), JA(gA(ep), { key: 1 }))
               ]),
               _: 2
             }, [
@@ -28387,7 +28387,7 @@ const jN = ({
   ],
   setup(A, { expose: e, emit: t }) {
     const n = A, { buildMatrix: a, setTimePicker: s } = ca(), l = qs(), { defaultedTransitions: f, defaultedAriaLabels: p, defaultedTextInput: h, defaultedConfig: m } = Sn(n), { transitionName: y, showTransition: C } = Pl(f), { hideNavigationButtons: S } = Hu(), I = yA(null), O = yA(null), F = yA([]), M = yA(null);
-    wt(() => {
+    It(() => {
       t("mount"), !n.timePicker && n.arrowNavigation ? a([pn(I.value)], "time") : s(!0, n.timePicker);
     });
     const E = jA(() => n.range && n.modelAuto ? kC(n.internalModelValue) : !0), T = yA(!1), Y = (sA) => ({
@@ -28440,7 +28440,7 @@ const jN = ({
           onClick: nA[2] || (nA[2] = (aA) => eA(!0))
         }, [
           sA.$slots["clock-icon"] ? $e(sA.$slots, "clock-icon", { key: 0 }) : IA("", !0),
-          sA.$slots["clock-icon"] ? IA("", !0) : (X(), Ae(gA(ep), { key: 1 }))
+          sA.$slots["clock-icon"] ? IA("", !0) : (X(), JA(gA(ep), { key: 1 }))
         ], 42, k5)), [
           [ks, !gA(S)(sA.hideNavigation, "time")]
         ]) : IA("", !0),
@@ -28484,7 +28484,7 @@ const jN = ({
                     key: 1,
                     class: Le(sA.timePickerInline ? "dp__flex" : "dp__overlay_row dp__flex_row")
                   }, [
-                    (X(!0), dA(HA, null, fe(B.value, (R, rA) => Xe((X(), Ae(I5, mn({ key: rA }, {
+                    (X(!0), dA(HA, null, fe(B.value, (R, rA) => Xe((X(), JA(I5, mn({ key: rA }, {
                       ...sA.$props,
                       order: rA,
                       hours: R.hours,
@@ -28529,7 +28529,7 @@ const jN = ({
                     onClick: nA[6] || (nA[6] = (R) => eA(!1))
                   }, [
                     sA.$slots["calendar-icon"] ? $e(sA.$slots, "calendar-icon", { key: 0 }) : IA("", !0),
-                    sA.$slots["calendar-icon"] ? IA("", !0) : (X(), Ae(gA(Dl), { key: 1 }))
+                    sA.$slots["calendar-icon"] ? IA("", !0) : (X(), JA(gA(Dl), { key: 1 }))
                   ], 42, S5)), [
                     [ks, !gA(S)(sA.hideNavigation, "time")]
                   ]) : IA("", !0)
@@ -28638,7 +28638,7 @@ const jN = ({
       [M.seconds, E.minutes]
     ) : I(M.hours, M.minutes, M.seconds);
   };
-  wt(() => {
+  It(() => {
     if (!A.shadow)
       return p(a.value), t.value ? O() : C();
   });
@@ -28663,7 +28663,7 @@ const jN = ({
   emits: ["update:internal-model-value", "time-update", "am-pm-change"],
   setup(A, { emit: e }) {
     const t = A, n = qs(), a = Or(n, "timePicker"), { time: s, disabledTimesConfig: l, updateTime: f } = $5(t, e);
-    return (p, h) => (X(), Ae(lp, {
+    return (p, h) => (X(), JA(lp, {
       "multi-calendars": 0,
       stretch: ""
     }, {
@@ -28706,7 +28706,7 @@ const jN = ({
   emits: ["update-month-year", "mount", "reset-flow", "overlay-closed"],
   setup(A, { expose: e, emit: t }) {
     const n = A, { defaultedTransitions: a, defaultedAriaLabels: s, defaultedMultiCalendars: l, defaultedFilters: f, defaultedConfig: p } = Sn(n), { transitionName: h, showTransition: m } = Pl(a), { buildMatrix: y } = ca(), { handleMonthYearChange: C, isDisabled: S, updateMonthYear: I } = UN(n, t), { showLeftIcon: O, showRightIcon: F } = Hu(), M = yA(!1), E = yA(!1), T = yA([null, null, null, null]);
-    wt(() => {
+    It(() => {
       t("mount");
     });
     const Y = (R) => ({
@@ -28779,7 +28779,7 @@ const jN = ({
       var W, pA, vA;
       return X(), dA("div", D5, [
         R.$slots["month-year"] ? $e(R.$slots, "month-year", _n(mn({ key: 0 }, { month: A.month, year: A.year, months: A.months, years: A.years, updateMonthYear: gA(I), handleMonthYearChange: gA(C), instance: A.instance }))) : (X(), dA(HA, { key: 1 }, [
-          gA(O)(gA(l), A.instance) && !R.vertical ? (X(), Ae(jo, {
+          gA(O)(gA(l), A.instance) && !R.vertical ? (X(), JA(jo, {
             key: 0,
             "aria-label": (W = gA(s)) == null ? void 0 : W.prevMonth,
             disabled: gA(S)(!1),
@@ -28788,7 +28788,7 @@ const jN = ({
           }, {
             default: Ne(() => [
               R.$slots["arrow-left"] ? $e(R.$slots, "arrow-left", { key: 0 }) : IA("", !0),
-              R.$slots["arrow-left"] ? IA("", !0) : (X(), Ae(gA(Jg), { key: 1 }))
+              R.$slots["arrow-left"] ? IA("", !0) : (X(), JA(gA(Jg), { key: 1 }))
             ]),
             _: 3
           }, 8, ["aria-label", "disabled"])) : IA("", !0),
@@ -28806,7 +28806,7 @@ const jN = ({
                 tabindex: "0",
                 "aria-label": mA.ariaLabel,
                 ref_for: !0,
-                ref: (JA) => nA(JA, MA + 1),
+                ref: (Ae) => nA(Ae, MA + 1),
                 onClick: mA.toggle,
                 onKeydown: [
                   Ve(rt(mA.toggle, ["prevent"]), ["enter"]),
@@ -28827,7 +28827,7 @@ const jN = ({
                 css: gA(m)
               }, {
                 default: Ne(() => [
-                  mA.showSelectionGrid ? (X(), Ae(ml, {
+                  mA.showSelectionGrid ? (X(), JA(ml, {
                     key: 0,
                     items: mA.items,
                     "arrow-navigation": R.arrowNavigation,
@@ -28844,16 +28844,16 @@ const jN = ({
                   }, tr({
                     "button-icon": Ne(() => [
                       R.$slots["calendar-icon"] ? $e(R.$slots, "calendar-icon", { key: 0 }) : IA("", !0),
-                      R.$slots["calendar-icon"] ? IA("", !0) : (X(), Ae(gA(Dl), { key: 1 }))
+                      R.$slots["calendar-icon"] ? IA("", !0) : (X(), JA(gA(Dl), { key: 1 }))
                     ]),
                     _: 2
                   }, [
                     R.$slots[`${mA.type}-overlay-val`] ? {
                       name: "item",
-                      fn: Ne(({ item: JA }) => [
+                      fn: Ne(({ item: Ae }) => [
                         $e(R.$slots, `${mA.type}-overlay-val`, {
-                          text: JA.text,
-                          value: JA.value
+                          text: Ae.text,
+                          value: Ae.value
                         })
                       ]),
                       key: "0"
@@ -28880,7 +28880,7 @@ const jN = ({
               }, 1032, ["name", "css"])
             ], 64))), 128))
           ], 2),
-          gA(O)(gA(l), A.instance) && R.vertical ? (X(), Ae(jo, {
+          gA(O)(gA(l), A.instance) && R.vertical ? (X(), JA(jo, {
             key: 1,
             "aria-label": (pA = gA(s)) == null ? void 0 : pA.prevMonth,
             disabled: gA(S)(!1),
@@ -28888,11 +28888,11 @@ const jN = ({
           }, {
             default: Ne(() => [
               R.$slots["arrow-up"] ? $e(R.$slots, "arrow-up", { key: 0 }) : IA("", !0),
-              R.$slots["arrow-up"] ? IA("", !0) : (X(), Ae(gA(tp), { key: 1 }))
+              R.$slots["arrow-up"] ? IA("", !0) : (X(), JA(gA(tp), { key: 1 }))
             ]),
             _: 3
           }, 8, ["aria-label", "disabled"])) : IA("", !0),
-          gA(F)(gA(l), A.instance) ? (X(), Ae(jo, {
+          gA(F)(gA(l), A.instance) ? (X(), JA(jo, {
             key: 2,
             ref: "rightIcon",
             disabled: gA(S)(!0),
@@ -28902,7 +28902,7 @@ const jN = ({
           }, {
             default: Ne(() => [
               R.$slots[R.vertical ? "arrow-down" : "arrow-right"] ? $e(R.$slots, R.vertical ? "arrow-down" : "arrow-right", { key: 0 }) : IA("", !0),
-              R.$slots[R.vertical ? "arrow-down" : "arrow-right"] ? IA("", !0) : (X(), Ae(gu(R.vertical ? gA(np) : gA(Ap)), { key: 1 }))
+              R.$slots[R.vertical ? "arrow-down" : "arrow-right"] ? IA("", !0) : (X(), JA(gu(R.vertical ? gA(np) : gA(Ap)), { key: 1 }))
             ]),
             _: 3
           }, 8, ["disabled", "aria-label"])) : IA("", !0)
@@ -28949,7 +28949,7 @@ const jN = ({
       left: "",
       transform: ""
     }), y = yA([]), C = yA(null), S = yA(!0), I = yA(""), O = yA({ startX: 0, endX: 0, startY: 0, endY: 0 }), F = yA([]), M = yA({ left: "50%" }), E = jA(() => n.calendar ? n.calendar(n.mappedDates) : n.mappedDates), T = jA(() => n.dayNames ? Array.isArray(n.dayNames) ? n.dayNames : n.dayNames(n.locale, +n.weekStart) : xN(n.formatLocale, n.locale, +n.weekStart));
-    wt(() => {
+    It(() => {
       t("mount", { cmp: "calendar", refs: y }), !n.noSwipe && !l.value.noSwipe && C.value && (C.value.addEventListener("touchstart", J, { passive: !1 }), C.value.addEventListener("touchend", sA, { passive: !1 }), C.value.addEventListener("touchmove", nA, { passive: !1 })), n.monthChangeOnScroll && C.value && C.value.addEventListener("wheel", R, { passive: !1 });
     });
     const Y = (vA) => vA ? n.vertical ? "vNext" : "next" : n.vertical ? "vPrevious" : "previous", B = (vA, mA) => {
@@ -28973,20 +28973,20 @@ const jN = ({
       dp__calendar: !0,
       dp__calendar_next: p.value.count > 0 && n.instance !== 0
     })), Z = jA(() => (vA) => n.hideOffsetDates ? vA.current : !0), Q = async (vA, mA, MA) => {
-      var JA, EA;
-      if (t("set-hover-date", vA), (EA = (JA = vA.marker) == null ? void 0 : JA.tooltip) != null && EA.length) {
+      var Ae, EA;
+      if (t("set-hover-date", vA), (EA = (Ae = vA.marker) == null ? void 0 : Ae.tooltip) != null && EA.length) {
         const wA = pn(y.value[mA][MA]);
         if (wA) {
           const { width: DA, height: RA } = wA.getBoundingClientRect();
           h.value = vA.value;
-          let YA = { left: `${DA / 2}px` }, $A = -50;
+          let VA = { left: `${DA / 2}px` }, $A = -50;
           if (await Rn(), F.value[0]) {
-            const { left: qA, width: uA } = F.value[0].getBoundingClientRect();
-            qA < 0 && (YA = { left: "0" }, $A = 0, M.value.left = `${DA / 2}px`), window.innerWidth < qA + uA && (YA = { right: "0" }, $A = 0, M.value.left = `${uA - DA / 2}px`);
+            const { left: GA, width: uA } = F.value[0].getBoundingClientRect();
+            GA < 0 && (VA = { left: "0" }, $A = 0, M.value.left = `${DA / 2}px`), window.innerWidth < GA + uA && (VA = { right: "0" }, $A = 0, M.value.left = `${uA - DA / 2}px`);
           }
           m.value = {
             bottom: `${RA}px`,
-            ...YA,
+            ...VA,
             transform: `translateX(${$A}%)`
           }, t("tooltip-open", vA.marker);
         }
@@ -29029,18 +29029,18 @@ const jN = ({
           (X(), dA(HA, { key: 0 }, [
             D("div", N5, [
               vA.weekNumbers ? (X(), dA("div", M5, OA(vA.weekNumName), 1)) : IA("", !0),
-              (X(!0), dA(HA, null, fe(T.value, (JA, EA) => (X(), dA("div", {
+              (X(!0), dA(HA, null, fe(T.value, (Ae, EA) => (X(), dA("div", {
                 class: "dp__calendar_header_item",
                 role: "gridcell",
                 key: EA
               }, [
                 vA.$slots["calendar-header"] ? $e(vA.$slots, "calendar-header", {
                   key: 0,
-                  day: JA,
+                  day: Ae,
                   index: EA
                 }) : IA("", !0),
                 vA.$slots["calendar-header"] ? IA("", !0) : (X(), dA(HA, { key: 1 }, [
-                  Ie(OA(JA), 1)
+                  Ie(OA(Ae), 1)
                 ], 64))
               ]))), 128))
             ]),
@@ -29050,13 +29050,13 @@ const jN = ({
               css: !!vA.transitions
             }, {
               default: Ne(() => {
-                var JA;
+                var Ae;
                 return [
                   S.value ? (X(), dA("div", {
                     key: 0,
                     class: "dp__calendar",
                     role: "grid",
-                    "aria-label": ((JA = gA(f)) == null ? void 0 : JA.calendarDays) || void 0
+                    "aria-label": ((Ae = gA(f)) == null ? void 0 : Ae.calendarDays) || void 0
                   }, [
                     (X(!0), dA(HA, null, fe(E.value, (EA, wA) => (X(), dA("div", {
                       class: "dp__calendar_row",
@@ -29067,7 +29067,7 @@ const jN = ({
                         D("div", V5, OA(rA(EA.days)), 1)
                       ])) : IA("", !0),
                       (X(!0), dA(HA, null, fe(EA.days, (DA, RA) => {
-                        var YA, $A, qA;
+                        var VA, $A, GA;
                         return X(), dA("div", {
                           role: "gridcell",
                           class: "dp__calendar_item",
@@ -29076,7 +29076,7 @@ const jN = ({
                           key: RA + wA,
                           "aria-selected": DA.classData.dp__active_date || DA.classData.dp__range_start || DA.classData.dp__range_start,
                           "aria-disabled": DA.classData.dp__cell_disabled || void 0,
-                          "aria-label": ($A = (YA = gA(f)) == null ? void 0 : YA.day) == null ? void 0 : $A.call(YA, DA),
+                          "aria-label": ($A = (VA = gA(f)) == null ? void 0 : VA.day) == null ? void 0 : $A.call(VA, DA),
                           tabindex: "0",
                           onClick: rt((uA) => W(uA, DA), ["prevent"]),
                           onKeydown: [
@@ -29117,7 +29117,7 @@ const jN = ({
                               ref: F,
                               style: Xn(m.value)
                             }, [
-                              (qA = DA.marker) != null && qA.tooltip ? (X(), dA("div", {
+                              (GA = DA.marker) != null && GA.tooltip ? (X(), dA("div", {
                                 key: 0,
                                 class: "dp__tooltip_content",
                                 onClick: pA
@@ -29177,7 +29177,7 @@ const jN = ({
   };
   Je(s, (SA, PA) => {
     JSON.stringify(SA) !== JSON.stringify(PA) && G();
-  }), wt(() => {
+  }), It(() => {
     A.shadow || (s.value || (rA(), h.value && M(h.value)), G(!0), A.focusStartDate && A.startDate && rA());
   });
   const tA = jA(() => {
@@ -29191,10 +29191,10 @@ const jN = ({
     if (p.value.count && SA && !A.startDate)
       return Z(ie(), SA);
   }, Z = (SA, PA = !1) => {
-    if ((!p.value.count || !p.value.static || PA) && B(0, It(SA), xt(SA)), p.value.count)
+    if ((!p.value.count || !p.value.static || PA) && B(0, kt(SA), xt(SA)), p.value.count)
       for (let hA = 1; hA < p.value.count; hA++) {
         const q = Gt(ie(), { month: T.value(hA - 1), year: Y.value(hA - 1) }), zA = Zx(q, { months: 1 });
-        l.value[hA] = { month: It(zA), year: xt(zA) };
+        l.value[hA] = { month: kt(zA), year: xt(zA) };
       }
   }, Q = (SA, PA) => {
     Z(SA), F("hours", Wr(SA)), F("minutes", Xr(SA)), F("seconds", Ys(SA)), p.value.count && PA && R();
@@ -29202,7 +29202,7 @@ const jN = ({
     if (p.value.count) {
       if (p.value.solo)
         return 0;
-      const PA = It(SA[0]), hA = It(SA[1]);
+      const PA = kt(SA[0]), hA = kt(SA[1]);
       return Math.abs(hA - PA) < p.value.count ? 0 : 1;
     }
     return 1;
@@ -29225,26 +29225,26 @@ const jN = ({
     sA(PA, SA), p.value.count && p.value.solo && R();
   }, cA = (SA, PA) => {
     const hA = Gt(ie(), { month: T.value(PA), year: Y.value(PA) }), q = SA < 0 ? zr(hA, 1) : Hs(hA, 1);
-    m(It(q), xt(q), SA < 0, A.preventMinMaxNavigation) && (B(PA, It(q), xt(q)), p.value.count && !p.value.solo && aA(PA), t());
+    m(kt(q), xt(q), SA < 0, A.preventMinMaxNavigation) && (B(PA, kt(q), xt(q)), p.value.count && !p.value.solo && aA(PA), t());
   }, aA = (SA) => {
     for (let PA = SA - 1; PA >= 0; PA--) {
       const hA = Hs(Gt(ie(), { month: T.value(PA + 1), year: Y.value(PA + 1) }), 1);
-      B(PA, It(hA), xt(hA));
+      B(PA, kt(hA), xt(hA));
     }
     for (let PA = SA + 1; PA <= p.value.count - 1; PA++) {
       const hA = zr(Gt(ie(), { month: T.value(PA - 1), year: Y.value(PA - 1) }), 1);
-      B(PA, It(hA), xt(hA));
+      B(PA, kt(hA), xt(hA));
     }
   }, R = () => {
     if (Array.isArray(s.value) && s.value.length === 2) {
       const SA = ie(
         ie(s.value[1] ? s.value[1] : zr(s.value[0], 1))
-      ), [PA, hA] = [It(s.value[0]), xt(s.value[0])], [q, zA] = [It(s.value[1]), xt(s.value[1])];
-      (PA !== q || PA === q && hA !== zA) && p.value.solo && B(1, It(SA), xt(SA));
+      ), [PA, hA] = [kt(s.value[0]), xt(s.value[0])], [q, zA] = [kt(s.value[1]), xt(s.value[1])];
+      (PA !== q || PA === q && hA !== zA) && p.value.solo && B(1, kt(SA), xt(SA));
     } else
-      s.value && !Array.isArray(s.value) && (B(0, It(s.value), xt(s.value)), Z(ie()));
+      s.value && !Array.isArray(s.value) && (B(0, kt(s.value), xt(s.value)), Z(ie()));
   }, rA = () => {
-    A.startDate && (B(0, It(ie(A.startDate)), xt(ie(A.startDate))), p.value.count && aA(0));
+    A.startDate && (B(0, kt(ie(A.startDate)), xt(ie(A.startDate))), p.value.count && aA(0));
   }, W = (SA, PA) => {
     A.monthChangeOnScroll && cA(A.monthChangeOnScroll !== "inverse" ? -SA.deltaY : SA.deltaY, PA);
   }, pA = (SA, PA, hA = !1) => {
@@ -29264,15 +29264,15 @@ const jN = ({
       default:
         return [!1, !1];
     }
-  }, JA = (SA, PA, hA, q) => {
+  }, Ae = (SA, PA, hA, q) => {
     if (A.sixWeeks && SA.length < 6) {
       const zA = 6 - SA.length, oe = (PA.getDay() + 7 - q) % 7, se = 6 - (hA.getDay() + 7 - q) % 7, [we, Oe] = MA(oe, se);
       for (let Ge = 1; Ge <= zA; Ge++)
         if (Oe ? !!(Ge % 2) == we : we) {
-          const We = SA[0].days[0], Zt = EA(ai(We.value, -7), It(PA));
+          const We = SA[0].days[0], Zt = EA(ai(We.value, -7), kt(PA));
           SA.unshift({ days: Zt });
         } else {
-          const We = SA[SA.length - 1], Zt = We.days[We.days.length - 1], Xt = EA(ai(Zt.value, 1), It(PA));
+          const We = SA[SA.length - 1], Zt = We.days[We.days.length - 1], Xt = EA(ai(Zt.value, 1), kt(PA));
           SA.push({ days: Xt });
         }
     }
@@ -29280,7 +29280,7 @@ const jN = ({
   }, EA = (SA, PA) => {
     const hA = ie(SA), q = [];
     for (let zA = 0; zA < 7; zA++) {
-      const oe = ai(hA, zA), se = It(oe) !== PA;
+      const oe = ai(hA, zA), se = kt(oe) !== PA;
       q.push({
         text: A.hideOffsetDates && se ? "" : oe.getDate(),
         value: oe,
@@ -29299,19 +29299,19 @@ const jN = ({
         we(We);
       }
     };
-    return we(se), JA(hA, q, zA, oe);
+    return we(se), Ae(hA, q, zA, oe);
   }, DA = (SA) => (s.value = bc(ie(SA.value), A.timezone, A.weekStart), oA()), RA = (SA) => {
     const PA = Xi(ie(SA.value), f.hours, f.minutes, FA());
     A.multiDates ? cp(PA, s, A.multiDatesLimit) : s.value = PA, n(), Rn().then(() => {
       oA();
     });
-  }, YA = (SA) => A.noDisabledRange ? EC(a.value[0], SA).some((PA) => y(PA)) : !1, $A = () => {
+  }, VA = (SA) => A.noDisabledRange ? EC(a.value[0], SA).some((PA) => y(PA)) : !1, $A = () => {
     a.value = s.value ? s.value.slice() : [], a.value.length === 2 && !(A.fixedStart || A.fixedEnd) && (a.value = []);
-  }, qA = (SA, PA) => {
+  }, GA = (SA, PA) => {
     const hA = [ie(SA.value), ai(ie(SA.value), +A.autoRange)];
     C(hA) && (PA && uA(SA.value), a.value = hA);
   }, uA = (SA) => {
-    const PA = It(ie(SA)), hA = xt(ie(SA));
+    const PA = kt(ie(SA)), hA = xt(ie(SA));
     if (B(0, PA, hA), p.value.count > 0)
       for (let q = 1; q < p.value.count; q++) {
         const zA = $N(
@@ -29320,13 +29320,13 @@ const jN = ({
         B(q, zA.month, zA.year);
       }
   }, fA = (SA) => Array.isArray(s.value) && s.value.length === 2 ? A.fixedStart && (Vn(SA, s.value[0]) || Tt(SA, s.value[0])) ? [s.value[0], SA] : A.fixedEnd && (Nn(SA, s.value[1]) || Tt(SA, s.value[1])) ? [SA, s.value[1]] : (e("invalid-fixed-range", SA), s.value) : [], NA = (SA) => {
-    YA(SA.value) || !S(SA.value, s.value, A.fixedStart ? 0 : 1) || (a.value = fA(ie(SA.value)));
+    VA(SA.value) || !S(SA.value, s.value, A.fixedStart ? 0 : 1) || (a.value = fA(ie(SA.value)));
   }, UA = (SA, PA) => {
     if ($A(), A.autoRange)
-      return qA(SA, PA);
+      return GA(SA, PA);
     if (A.fixedStart || A.fixedEnd)
       return NA(SA);
-    a.value[0] ? S(ie(SA.value), s.value) && !YA(SA.value) && (Nn(ie(SA.value), ie(a.value[0])) ? (a.value.unshift(ie(SA.value)), e("range-end", a.value[0])) : (a.value[1] = ie(SA.value), e("range-end", a.value[1]))) : (a.value[0] = ie(SA.value), e("range-start", a.value[0]));
+    a.value[0] ? S(ie(SA.value), s.value) && !VA(SA.value) && (Nn(ie(SA.value), ie(a.value[0])) ? (a.value.unshift(ie(SA.value)), e("range-end", a.value[0])) : (a.value[1] = ie(SA.value), e("range-end", a.value[1]))) : (a.value[0] = ie(SA.value), e("range-start", a.value[0]));
   }, FA = (SA = !0) => A.enableSeconds ? Array.isArray(f.seconds) ? SA ? f.seconds[0] : f.seconds[1] : f.seconds : 0, ne = (SA) => {
     a.value[SA] = Xi(
       a.value[SA],
@@ -29489,7 +29489,7 @@ const jN = ({
         "multi-calendars": gA(oA).count
       }, {
         default: Ne(({ instance: vA, index: mA }) => [
-          W.disableMonthYearSelect ? IA("", !0) : (X(), Ae(O5, mn({
+          W.disableMonthYearSelect ? IA("", !0) : (X(), JA(O5, mn({
             key: 0,
             ref: (MA) => {
               MA && (G.value[mA] = MA);
@@ -29505,7 +29505,7 @@ const jN = ({
             onUpdateMonthYear: (MA) => gA(F)(vA, MA),
             onOverlayClosed: pA[2] || (pA[2] = (MA) => W.$emit("focus-menu"))
           }), tr({ _: 2 }, [
-            fe(gA(J), (MA, JA) => ({
+            fe(gA(J), (MA, Ae) => ({
               name: MA,
               fn: Ne((EA) => [
                 $e(W.$slots, MA, _n(Ar(EA)))
@@ -29530,7 +29530,7 @@ const jN = ({
             onTooltipOpen: pA[6] || (pA[6] = (MA) => W.$emit("tooltip-open", MA)),
             onTooltipClose: pA[7] || (pA[7] = (MA) => W.$emit("tooltip-close", MA))
           }), tr({ _: 2 }, [
-            fe(gA(j), (MA, JA) => ({
+            fe(gA(j), (MA, Ae) => ({
               name: MA,
               fn: Ne((EA) => [
                 $e(W.$slots, MA, _n(Ar({ ...EA })))
@@ -29541,7 +29541,7 @@ const jN = ({
         _: 3
       }, 8, ["multi-calendars"]),
       W.enableTimePicker ? (X(), dA("div", U5, [
-        W.$slots["time-picker"] ? $e(W.$slots, "time-picker", _n(mn({ key: 0 }, { time: gA(p), updateTime: gA(T) }))) : (X(), Ae(MC, mn({
+        W.$slots["time-picker"] ? $e(W.$slots, "time-picker", _n(mn({ key: 0 }, { time: gA(p), updateTime: gA(T) }))) : (X(), JA(MC, mn({
           key: 1,
           ref_key: "timePickerRef",
           ref: Q
@@ -29615,21 +29615,21 @@ const jN = ({
   ],
   setup(A, { expose: e, emit: t }) {
     const n = A, a = jA(() => {
-      const { openOnTop: $A, ...qA } = n;
+      const { openOnTop: $A, ...GA } = n;
       return {
-        ...qA,
+        ...GA,
         flowStep: tA.value
       };
     }), { setMenuFocused: s, setShiftKey: l, control: f } = TC(), p = qs(), { defaultedTextInput: h, defaultedInline: m, defaultedConfig: y } = Sn(n), C = yA(null), S = yA(0), I = yA(null), O = yA(null), F = yA(!1), M = yA(null);
-    wt(() => {
+    It(() => {
       if (!n.shadow) {
         F.value = !0, E(), window.addEventListener("resize", E);
         const $A = pn(I);
         if ($A && !h.value.enabled && !m.value.enabled && (s(!0), j()), $A) {
-          const qA = (uA) => {
+          const GA = (uA) => {
             (n.allowPreventDefault || y.value.allowPreventDefault) && uA.preventDefault(), Wi(uA, y.value, !0);
           };
-          $A.addEventListener("pointerdown", qA), $A.addEventListener("mousedown", qA);
+          $A.addEventListener("pointerdown", GA), $A.addEventListener("mousedown", GA);
         }
       }
     }), aa(() => {
@@ -29676,28 +29676,28 @@ const jN = ({
       l($A.shiftKey), !n.disableMonthYearSelect && $A.code === "Tab" && $A.target.classList.contains("dp__menu") && f.value.shiftKeyInMenu && ($A.preventDefault(), Wi($A, y.value, !0), t("close-picker"));
     }, MA = () => {
       j(), t("time-picker-close");
-    }, JA = ($A) => {
-      var qA, uA, fA;
-      (qA = M.value) == null || qA.toggleTimePicker(!1, !1), (uA = M.value) == null || uA.toggleMonthPicker(!1, !1, $A), (fA = M.value) == null || fA.toggleYearPicker(!1, !1, $A);
-    }, EA = ($A, qA = 0) => {
+    }, Ae = ($A) => {
+      var GA, uA, fA;
+      (GA = M.value) == null || GA.toggleTimePicker(!1, !1), (uA = M.value) == null || uA.toggleMonthPicker(!1, !1, $A), (fA = M.value) == null || fA.toggleYearPicker(!1, !1, $A);
+    }, EA = ($A, GA = 0) => {
       var uA, fA, NA;
-      return $A === "month" ? (uA = M.value) == null ? void 0 : uA.toggleMonthPicker(!1, !0, qA) : $A === "year" ? (fA = M.value) == null ? void 0 : fA.toggleYearPicker(!1, !0, qA) : $A === "time" ? (NA = M.value) == null ? void 0 : NA.toggleTimePicker(!0, !1) : JA(qA);
-    }, wA = ($A, ...qA) => {
+      return $A === "month" ? (uA = M.value) == null ? void 0 : uA.toggleMonthPicker(!1, !0, GA) : $A === "year" ? (fA = M.value) == null ? void 0 : fA.toggleYearPicker(!1, !0, GA) : $A === "time" ? (NA = M.value) == null ? void 0 : NA.toggleTimePicker(!0, !1) : Ae(GA);
+    }, wA = ($A, ...GA) => {
       var uA, fA;
-      (uA = M.value) != null && uA[$A] && ((fA = M.value) == null || fA[$A](...qA));
+      (uA = M.value) != null && uA[$A] && ((fA = M.value) == null || fA[$A](...GA));
     }, DA = () => {
       wA("selectCurrentDate");
-    }, RA = ($A, qA) => {
-      wA("presetDate", $A, qA);
-    }, YA = () => {
+    }, RA = ($A, GA) => {
+      wA("presetDate", $A, GA);
+    }, VA = () => {
       wA("clearHoverDate");
     };
     return e({
-      updateMonthYear: ($A, qA) => {
-        wA("updateMonthYear", $A, qA);
+      updateMonthYear: ($A, GA) => {
+        wA("updateMonthYear", $A, GA);
       },
       switchView: EA
-    }), ($A, qA) => {
+    }), ($A, GA) => {
       var uA;
       return X(), dA("div", {
         id: $A.uid ? `dp-menu-${$A.uid}` : void 0,
@@ -29706,14 +29706,14 @@ const jN = ({
         ref: I,
         role: "dialog",
         class: Le(rA.value),
-        onMouseleave: YA,
+        onMouseleave: VA,
         onClick: W,
         onKeydown: [
           Ve(pA, ["esc"]),
-          qA[15] || (qA[15] = Ve(rt((fA) => vA("left"), ["prevent"]), ["left"])),
-          qA[16] || (qA[16] = Ve(rt((fA) => vA("up"), ["prevent"]), ["up"])),
-          qA[17] || (qA[17] = Ve(rt((fA) => vA("down"), ["prevent"]), ["down"])),
-          qA[18] || (qA[18] = Ve(rt((fA) => vA("right"), ["prevent"]), ["right"])),
+          GA[15] || (GA[15] = Ve(rt((fA) => vA("left"), ["prevent"]), ["left"])),
+          GA[16] || (GA[16] = Ve(rt((fA) => vA("up"), ["prevent"]), ["up"])),
+          GA[17] || (GA[17] = Ve(rt((fA) => vA("down"), ["prevent"]), ["down"])),
+          GA[18] || (GA[18] = Ve(rt((fA) => vA("right"), ["prevent"]), ["right"])),
           mA
         ]
       }, [
@@ -29765,7 +29765,7 @@ const jN = ({
             ref: C,
             role: "document"
           }, [
-            (X(), Ae(gu(Q.value), mn({
+            (X(), JA(gu(Q.value), mn({
               ref_key: "dynCmpRef",
               ref: M
             }, a.value, {
@@ -29774,20 +29774,20 @@ const jN = ({
               onUpdateFlowStep: gA(oA),
               onResetFlow: gA(Z),
               onFocusMenu: j,
-              onSelectDate: qA[0] || (qA[0] = (fA) => $A.$emit("select-date")),
-              onTooltipOpen: qA[1] || (qA[1] = (fA) => $A.$emit("tooltip-open", fA)),
-              onTooltipClose: qA[2] || (qA[2] = (fA) => $A.$emit("tooltip-close", fA)),
-              onAutoApply: qA[3] || (qA[3] = (fA) => $A.$emit("auto-apply", fA)),
-              onRangeStart: qA[4] || (qA[4] = (fA) => $A.$emit("range-start", fA)),
-              onRangeEnd: qA[5] || (qA[5] = (fA) => $A.$emit("range-end", fA)),
-              onInvalidFixedRange: qA[6] || (qA[6] = (fA) => $A.$emit("invalid-fixed-range", fA)),
-              onTimeUpdate: qA[7] || (qA[7] = (fA) => $A.$emit("time-update")),
-              onAmPmChange: qA[8] || (qA[8] = (fA) => $A.$emit("am-pm-change", fA)),
-              onTimePickerOpen: qA[9] || (qA[9] = (fA) => $A.$emit("time-picker-open", fA)),
+              onSelectDate: GA[0] || (GA[0] = (fA) => $A.$emit("select-date")),
+              onTooltipOpen: GA[1] || (GA[1] = (fA) => $A.$emit("tooltip-open", fA)),
+              onTooltipClose: GA[2] || (GA[2] = (fA) => $A.$emit("tooltip-close", fA)),
+              onAutoApply: GA[3] || (GA[3] = (fA) => $A.$emit("auto-apply", fA)),
+              onRangeStart: GA[4] || (GA[4] = (fA) => $A.$emit("range-start", fA)),
+              onRangeEnd: GA[5] || (GA[5] = (fA) => $A.$emit("range-end", fA)),
+              onInvalidFixedRange: GA[6] || (GA[6] = (fA) => $A.$emit("invalid-fixed-range", fA)),
+              onTimeUpdate: GA[7] || (GA[7] = (fA) => $A.$emit("time-update")),
+              onAmPmChange: GA[8] || (GA[8] = (fA) => $A.$emit("am-pm-change", fA)),
+              onTimePickerOpen: GA[9] || (GA[9] = (fA) => $A.$emit("time-picker-open", fA)),
               onTimePickerClose: MA,
               onRecalculatePosition: sA,
-              onUpdateMonthYear: qA[10] || (qA[10] = (fA) => $A.$emit("update-month-year", fA)),
-              "onUpdate:internalModelValue": qA[11] || (qA[11] = (fA) => $A.$emit("update:internal-model-value", fA))
+              onUpdateMonthYear: GA[10] || (GA[10] = (fA) => $A.$emit("update-month-year", fA)),
+              "onUpdate:internalModelValue": GA[11] || (GA[11] = (fA) => $A.$emit("update:internal-model-value", fA))
             }), tr({ _: 2 }, [
               fe(cA.value, (fA, NA) => ({
                 name: fA,
@@ -29807,14 +29807,14 @@ const jN = ({
             }) : IA("", !0)
           ])) : IA("", !0)
         ], 6),
-        !$A.autoApply || $A.keepActionRow || gA(y).keepActionRow ? (X(), Ae(t5, mn({
+        !$A.autoApply || $A.keepActionRow || gA(y).keepActionRow ? (X(), JA(t5, mn({
           key: 2,
           "menu-mount": F.value
         }, a.value, {
           "calendar-width": S.value,
-          onClosePicker: qA[12] || (qA[12] = (fA) => $A.$emit("close-picker")),
-          onSelectDate: qA[13] || (qA[13] = (fA) => $A.$emit("select-date")),
-          onInvalidSelect: qA[14] || (qA[14] = (fA) => $A.$emit("invalid-select")),
+          onClosePicker: GA[12] || (GA[12] = (fA) => $A.$emit("close-picker")),
+          onSelectDate: GA[13] || (GA[13] = (fA) => $A.$emit("select-date")),
+          onInvalidSelect: GA[14] || (GA[14] = (fA) => $A.$emit("invalid-select")),
           onSelectNow: DA
         }), tr({ _: 2 }, [
           fe(gA(nA), (fA, NA) => ({
@@ -29883,7 +29883,7 @@ const jN = ({
   ],
   setup(A, { expose: e, emit: t }) {
     const n = A, a = qs(), s = yA(!1), l = Hi(n, "modelValue"), f = Hi(n, "timezone"), p = yA(null), h = yA(null), m = yA(null), y = yA(!1), C = yA(null), { setMenuFocused: S, setShiftKey: I } = TC(), { clearArrowNav: O } = ca(), { mapDatesArrToMap: F, validateDate: M, isValidTime: E } = Ol(n), { defaultedTransitions: T, defaultedTextInput: Y, defaultedInline: B, defaultedConfig: eA } = Sn(n), { menuTransition: tA, showTransition: oA } = Pl(T);
-    wt(() => {
+    It(() => {
       W(n.modelValue), Rn().then(() => {
         B.value.enabled || (cA(C.value).addEventListener("scroll", wA), window.addEventListener("resize", DA));
       }), B.value.enabled && (s.value = !0);
@@ -29927,7 +29927,7 @@ const jN = ({
         dp__flex_display: B.value.enabled,
         dp__flex_display_with_input: B.value.input
       })
-    ), JA = jA(() => n.dark ? "dp__theme_dark" : "dp__theme_light"), EA = jA(() => n.teleport ? {
+    ), Ae = jA(() => n.dark ? "dp__theme_dark" : "dp__theme_light"), EA = jA(() => n.teleport ? {
       to: typeof n.teleport == "boolean" ? "body" : n.teleport,
       disabled: B.value.enabled
     } : { class: "dp__outer_menu_wrap" }), wA = () => {
@@ -29936,12 +29936,12 @@ const jN = ({
       s.value && nA();
     }, RA = () => {
       !n.disabled && !n.readonly && (aA(E0, n), nA(!1), s.value = !0, s.value && t("open"), s.value || UA(), W(n.modelValue));
-    }, YA = () => {
+    }, VA = () => {
       R.value = "", UA(), t("update:model-value", null), t("update:model-timezone-value", null), t("cleared"), (n.closeOnClearValue || eA.value.closeOnClearValue) && FA();
     }, $A = () => {
       const PA = rA.value;
       return !PA || !Array.isArray(PA) && M(PA) ? !0 : Array.isArray(PA) ? PA.length === 2 && M(PA[0]) && M(PA[1]) ? !0 : n.partialRange && !n.timePicker ? M(PA[0]) : !1 : !1;
-    }, qA = () => {
+    }, GA = () => {
       mA() && $A() ? (pA(), FA()) : t("invalid-select", rA.value);
     }, uA = (PA) => {
       fA(), pA(), (n.closeOnAutoApply || eA.value.closeOnAutoApply) && !PA && FA();
@@ -29958,7 +29958,7 @@ const jN = ({
         rA.value = null;
         return;
       }
-      rA.value = PA, hA && (qA(), t("text-submit"));
+      rA.value = PA, hA && (GA(), t("text-submit"));
     }, le = () => {
       n.autoApply && E(rA.value) && pA(), fA();
     }, re = () => s.value ? FA() : RA(), ae = (PA) => {
@@ -29980,8 +29980,8 @@ const jN = ({
     }, SA = (PA) => n.onClickOutside ? n.onClickOutside(PA) : eA.value.onClickOutside ? eA.value.onClickOutside(PA) : FA();
     return AM(p, m, () => SA($A)), e({
       closeMenu: FA,
-      selectDate: qA,
-      clearValue: YA,
+      selectDate: GA,
+      clearValue: VA,
       openMenu: RA,
       onScroll: wA,
       formatInputValue: vA,
@@ -29999,13 +29999,13 @@ const jN = ({
         ref: m,
         "is-menu-open": s.value,
         "input-value": gA(R),
-        "onUpdate:inputValue": hA[0] || (hA[0] = (q) => Ct(R) ? R.value = q : null)
+        "onUpdate:inputValue": hA[0] || (hA[0] = (q) => wt(R) ? R.value = q : null)
       }, PA.$props, {
-        onClear: YA,
+        onClear: VA,
         onOpen: RA,
         onSetInputDate: ne,
         onSetEmptyDate: gA(pA),
-        onSelectDate: qA,
+        onSelectDate: GA,
         onToggle: re,
         onClose: FA,
         onFocus: KA,
@@ -30024,7 +30024,7 @@ const jN = ({
         css: gA(oA) && !gA(B).enabled
       }, {
         default: Ne(() => [
-          s.value ? (X(), Ae(gu(PA.teleport ? hb : "div"), mn({
+          s.value ? (X(), JA(gu(PA.teleport ? hb : "div"), mn({
             key: 0,
             ref_key: "dpWrapMenuRef",
             ref: p
@@ -30036,15 +30036,15 @@ const jN = ({
               te(E0, mn({
                 ref_key: "dpMenuRef",
                 ref: h,
-                class: { [JA.value]: !0, "dp--menu-wrapper": PA.teleport },
+                class: { [Ae.value]: !0, "dp--menu-wrapper": PA.teleport },
                 style: PA.teleport ? gA(J) : void 0,
                 "open-on-top": gA(j),
                 "arr-map-values": G.value
               }, PA.$props, {
                 "internal-model-value": gA(rA),
-                "onUpdate:internalModelValue": hA[2] || (hA[2] = (q) => Ct(rA) ? rA.value = q : null),
+                "onUpdate:internalModelValue": hA[2] || (hA[2] = (q) => wt(rA) ? rA.value = q : null),
                 onClosePicker: FA,
-                onSelectDate: qA,
+                onSelectDate: GA,
                 onAutoApply: NA,
                 onTimeUpdate: le,
                 onFlowStep: hA[3] || (hA[3] = (q) => PA.$emit("flow-step", q)),
@@ -33810,7 +33810,7 @@ const Pt = (A) => (vn("data-v-1c1c6cf0"), A = A(), yn(), A), p9 = /* @__PURE__ *
         sameAs: Ze.withMessage("You must accept the terms and conditions", Ym(!0))
       }
     })), M = (Q) => Q.startsWith("+971") ? Rr(Q).startsWith("+9715") : !0, E = (Q) => Q.startsWith("+971") ? Rr(Q).length === 13 : !0, T = kl(F, I), Y = At("gqlApiService");
-    wt(() => {
+    It(() => {
       let Q = At("url-after-submit");
       Q && (y.value = Q), tA(), oA("AE");
     });
@@ -34303,14 +34303,14 @@ const Pt = (A) => (vn("data-v-1c1c6cf0"), A = A(), yn(), A), p9 = /* @__PURE__ *
           ])
         ])
       ], 40, v9),
-      a.value ? (X(), Ae(nt, {
+      a.value ? (X(), JA(nt, {
         key: 0,
         title: "Error",
         message: s.value,
         "cancel-text": null,
         onOnOk: j[21] || (j[21] = (J) => a.value = !1)
       }, null, 8, ["message"])) : IA("", !0),
-      n.value ? (X(), Ae(nt, {
+      n.value ? (X(), JA(nt, {
         key: 1,
         title: "SUCCESS",
         message: "The account has been successfully created.",
@@ -34322,7 +34322,7 @@ const Pt = (A) => (vn("data-v-1c1c6cf0"), A = A(), yn(), A), p9 = /* @__PURE__ *
     ], 64));
   }
 });
-const zC = /* @__PURE__ */ tn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const zC = /* @__PURE__ */ nn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: zC
 }, Symbol.toStringTag, { value: "Module" })), GR = "WE JUST SENT AN EMAIL TO THE USER WITH A RESET LINK PASSWORD. PLEASE TELL THEM TO CHECK THEIR SPAM FOLDER IF THE EMAIL IS NOT FOUND.", qR = "PROFILE WAS SUCCESSFULLY UPDATED.", QR = "THE USER HAS BEEN ADDED TO THE WAITLIST SUCCESSFULLY.", KR = /* @__PURE__ */ Me({
@@ -34341,12 +34341,12 @@ const zC = /* @__PURE__ */ tn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
       n.value = !1, a.value = !1, m ? m.__typename === "ResetPasswordLinkSentSuccessfully" ? s.value = !0 : m.__typename === "TooManyResetPasswordLinkRequestsError" ? (f.value = "A RESET LINK HAS ALREADY BEEN SENT TO YOU. PLEASE TRY AGAIN AFTER " + ht(m.availableAgainAt).format("DD/MM/YYYY h:mm a"), l.value = !0) : (f.value = gt, l.value = !0) : (f.value = gt, l.value = !0);
     }
     return (m, y) => (X(), dA(HA, null, [
-      te(St, {
+      te(Ct, {
         text: "Reset Password",
         type: "button",
         onOnClick: p
       }),
-      a.value ? (X(), Ae(nt, {
+      a.value ? (X(), JA(nt, {
         key: 0,
         title: "RESET PASSWORD",
         message: "ARE YOU SURE YOU WANT TO PROCEED?",
@@ -34356,7 +34356,7 @@ const zC = /* @__PURE__ */ tn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
         onOnCancel: y[0] || (y[0] = (C) => a.value = !1),
         onOnOk: y[1] || (y[1] = (C) => h())
       }, null, 8, ["ok-loading"])) : IA("", !0),
-      s.value ? (X(), Ae(nt, {
+      s.value ? (X(), JA(nt, {
         key: 1,
         title: "SUCCESS",
         message: gA(GR),
@@ -34364,7 +34364,7 @@ const zC = /* @__PURE__ */ tn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
         onOnOk: y[2] || (y[2] = (C) => s.value = !1),
         "cancel-text": null
       }, null, 8, ["message"])) : IA("", !0),
-      l.value ? (X(), Ae(nt, {
+      l.value ? (X(), JA(nt, {
         key: 2,
         title: "Error",
         message: f.value,
@@ -34451,12 +34451,12 @@ const zC = /* @__PURE__ */ tn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
       s.value = !1, p.value = !1;
     }
     return (F, M) => (X(), dA(HA, null, [
-      te(St, {
+      te(Ct, {
         text: "Update mindbody Ids",
         type: "button",
         onOnClick: y
       }),
-      p.value ? (X(), Ae(Bn, {
+      p.value ? (X(), JA(Bn, {
         key: 0,
         name: "modal"
       }, {
@@ -34510,13 +34510,13 @@ const zC = /* @__PURE__ */ tn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
                       ])
                     ]),
                     D("div", b7, [
-                      te(St, {
+                      te(Ct, {
                         text: "Cancel",
                         type: "button",
                         variant: "secondary",
                         onOnClick: M[1] || (M[1] = (T) => p.value = !1)
                       }),
-                      te(St, {
+                      te(Ct, {
                         text: "SAVE",
                         type: "button",
                         "is-loading": h.value,
@@ -34531,7 +34531,7 @@ const zC = /* @__PURE__ */ tn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
         }),
         _: 1
       })) : IA("", !0),
-      a.value ? (X(), Ae(nt, {
+      a.value ? (X(), JA(nt, {
         key: 1,
         title: "CONFIRM",
         message: "ARE YOU SURE YOU WANT TO PROCEED?",
@@ -34541,7 +34541,7 @@ const zC = /* @__PURE__ */ tn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
         onOnCancel: M[3] || (M[3] = (E) => a.value = !1),
         onOnOk: M[4] || (M[4] = (E) => I())
       }, null, 8, ["ok-loading"])) : IA("", !0),
-      s.value ? (X(), Ae(nt, {
+      s.value ? (X(), JA(nt, {
         key: 2,
         title: "SUCCESS",
         message: "MINDBODY ID WAS SUCCESSFULLY UPDATED.",
@@ -34549,7 +34549,7 @@ const zC = /* @__PURE__ */ tn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
         onOnOk: O,
         "cancel-text": null
       }, null, 8, ["message"])) : IA("", !0),
-      l.value ? (X(), Ae(nt, {
+      l.value ? (X(), JA(nt, {
         key: 3,
         title: "Error",
         message: f.value,
@@ -34700,7 +34700,7 @@ const zC = /* @__PURE__ */ tn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
         required: Ze.withMessage("Field is required", bt)
       }
     })), F = (Z) => Z.startsWith("+971") ? Rr(Z).startsWith("+9715") : !0, M = (Z) => Z.startsWith("+971") ? Rr(Z).length === 13 : !0, E = kl(O, I), T = At("gqlApiService");
-    wt(() => {
+    It(() => {
       C.value = Y(), tA(), B();
     });
     function Y() {
@@ -35119,7 +35119,7 @@ const zC = /* @__PURE__ */ tn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
           ])
         ])
       ], 40, k7),
-      n.value ? (X(), Ae(nt, {
+      n.value ? (X(), JA(nt, {
         key: 0,
         title: "Profile update",
         message: gA(qR),
@@ -35127,7 +35127,7 @@ const zC = /* @__PURE__ */ tn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
         onOnOk: Q[18] || (Q[18] = (j) => n.value = !1),
         "cancel-text": null
       }, null, 8, ["message"])) : IA("", !0),
-      a.value ? (X(), Ae(nt, {
+      a.value ? (X(), JA(nt, {
         key: 1,
         title: "Error",
         message: s.value,
@@ -35137,7 +35137,7 @@ const zC = /* @__PURE__ */ tn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
     ], 64));
   }
 });
-const WC = /* @__PURE__ */ tn(NL, [["__scopeId", "data-v-ec613528"]]), ML = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const WC = /* @__PURE__ */ nn(NL, [["__scopeId", "data-v-ec613528"]]), ML = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: WC
 }, Symbol.toStringTag, { value: "Module" }));
@@ -35420,7 +35420,7 @@ var ny = XC(function(A, e) {
         throw new Error("noUiSlider: 'keyboardDefaultStep' is not numeric.");
       hA.keyboardDefaultStep = q;
     }
-    function JA(hA, q) {
+    function Ae(hA, q) {
       if (typeof q != "object" || Array.isArray(q))
         throw new Error("noUiSlider: 'range' is not an object.");
       if (q.min === void 0 || q.max === void 0)
@@ -35447,7 +35447,7 @@ var ny = XC(function(A, e) {
         throw new Error("noUiSlider: 'animationDuration' option must be a number.");
       hA.animationDuration = q;
     }
-    function YA(hA, q) {
+    function VA(hA, q) {
       var zA, oe = [!1];
       if (q === "lower" ? q = [!0, !1] : q === "upper" && (q = [!1, !0]), q === !0 || q === !1) {
         for (zA = 1; zA < hA.handles; zA++)
@@ -35472,7 +35472,7 @@ var ny = XC(function(A, e) {
           throw new Error("noUiSlider: 'orientation' option is invalid.");
       }
     }
-    function qA(hA, q) {
+    function GA(hA, q) {
       if (!y(q))
         throw new Error("noUiSlider: 'margin' option must be numeric.");
       q !== 0 && (hA.margin = hA.spectrum.getDistance(q));
@@ -35517,7 +35517,7 @@ var ny = XC(function(A, e) {
       if (se) {
         if (hA.handles !== 2)
           throw new Error("noUiSlider: 'fixed' behaviour must be used with 2 handles");
-        qA(hA, hA.start[1] - hA.start[0]);
+        GA(hA, hA.start[1] - hA.start[0]);
       }
       if (Ge && (hA.margin || hA.limit))
         throw new Error("noUiSlider: 'unconstrained' behaviour cannot be used with margin or limit");
@@ -35574,7 +35574,7 @@ var ny = XC(function(A, e) {
       })) : hA.cssClasses = q;
     }
     function Ce(hA) {
-      var q = { margin: null, limit: null, padding: null, animate: !0, animationDuration: 300, ariaFormat: R, format: R }, zA = { step: { r: !1, t: pA }, keyboardPageMultiplier: { r: !1, t: vA }, keyboardMultiplier: { r: !1, t: mA }, keyboardDefaultStep: { r: !1, t: MA }, start: { r: !0, t: EA }, connect: { r: !0, t: YA }, direction: { r: !0, t: NA }, snap: { r: !1, t: wA }, animate: { r: !1, t: DA }, animationDuration: { r: !1, t: RA }, range: { r: !0, t: JA }, orientation: { r: !1, t: $A }, margin: { r: !1, t: qA }, limit: { r: !1, t: uA }, padding: { r: !1, t: fA }, behaviour: { r: !0, t: UA }, ariaFormat: { r: !1, t: le }, format: { r: !1, t: re }, tooltips: { r: !1, t: FA }, keyboardSupport: { r: !0, t: ae }, documentElement: { r: !1, t: KA }, cssPrefix: { r: !0, t: ve }, cssClasses: { r: !0, t: pe }, handleAttributes: { r: !1, t: ne } }, oe = { connect: !1, direction: "ltr", behaviour: "tap", orientation: "horizontal", keyboardSupport: !0, cssPrefix: "noUi-", cssClasses: rA, keyboardPageMultiplier: 5, keyboardMultiplier: 1, keyboardDefaultStep: 10 };
+      var q = { margin: null, limit: null, padding: null, animate: !0, animationDuration: 300, ariaFormat: R, format: R }, zA = { step: { r: !1, t: pA }, keyboardPageMultiplier: { r: !1, t: vA }, keyboardMultiplier: { r: !1, t: mA }, keyboardDefaultStep: { r: !1, t: MA }, start: { r: !0, t: EA }, connect: { r: !0, t: VA }, direction: { r: !0, t: NA }, snap: { r: !1, t: wA }, animate: { r: !1, t: DA }, animationDuration: { r: !1, t: RA }, range: { r: !0, t: Ae }, orientation: { r: !1, t: $A }, margin: { r: !1, t: GA }, limit: { r: !1, t: uA }, padding: { r: !1, t: fA }, behaviour: { r: !0, t: UA }, ariaFormat: { r: !1, t: le }, format: { r: !1, t: re }, tooltips: { r: !1, t: FA }, keyboardSupport: { r: !0, t: ae }, documentElement: { r: !1, t: KA }, cssPrefix: { r: !0, t: ve }, cssClasses: { r: !0, t: pe }, handleAttributes: { r: !1, t: ne } }, oe = { connect: !1, direction: "ltr", behaviour: "tap", orientation: "horizontal", keyboardSupport: !0, cssPrefix: "noUi-", cssClasses: rA, keyboardPageMultiplier: 5, keyboardMultiplier: 1, keyboardDefaultStep: 10 };
       hA.format && !hA.ariaFormat && (hA.ariaFormat = hA.format), Object.keys(zA).forEach(function(We) {
         if (l(hA[We]) || oe[We] !== void 0)
           zA[We].t(q, l(hA[We]) ? hA[We] : oe[We]);
@@ -35593,16 +35593,16 @@ var ny = XC(function(A, e) {
         return _A && F(LA, _A), bA.appendChild(LA), LA;
       }
       function no(bA, _A) {
-        var LA = rr(bA, q.cssClasses.origin), GA = rr(LA, q.cssClasses.handle);
-        if (rr(GA, q.cssClasses.touchArea), GA.setAttribute("data-handle", String(_A)), q.keyboardSupport && (GA.setAttribute("tabindex", "0"), GA.addEventListener("keydown", function(ue) {
+        var LA = rr(bA, q.cssClasses.origin), qA = rr(LA, q.cssClasses.handle);
+        if (rr(qA, q.cssClasses.touchArea), qA.setAttribute("data-handle", String(_A)), q.keyboardSupport && (qA.setAttribute("tabindex", "0"), qA.addEventListener("keydown", function(ue) {
           return k(ue, _A);
         })), q.handleAttributes !== void 0) {
           var he = q.handleAttributes[_A];
           Object.keys(he).forEach(function(ue) {
-            GA.setAttribute(ue, he[ue]);
+            qA.setAttribute(ue, he[ue]);
           });
         }
-        return GA.setAttribute("role", "slider"), GA.setAttribute("aria-orientation", q.ort ? "vertical" : "horizontal"), _A === 0 ? F(GA, q.cssClasses.handleLower) : _A === q.handles - 1 && F(GA, q.cssClasses.handleUpper), LA;
+        return qA.setAttribute("role", "slider"), qA.setAttribute("aria-orientation", q.ort ? "vertical" : "horizontal"), _A === 0 ? F(qA, q.cssClasses.handleLower) : _A === q.handles - 1 && F(qA, q.cssClasses.handleUpper), LA;
       }
       function vi(bA, _A) {
         return !!_A && rr(bA, q.cssClasses.connect);
@@ -35610,8 +35610,8 @@ var ny = XC(function(A, e) {
       function ts(bA, _A) {
         var LA = rr(_A, q.cssClasses.connects);
         se = [], (we = []).push(vi(LA, bA[0]));
-        for (var GA = 0; GA < q.handles; GA++)
-          se.push(no(_A, GA)), fn[GA] = GA, we.push(vi(LA, bA[GA + 1]));
+        for (var qA = 0; qA < q.handles; qA++)
+          se.push(no(_A, qA)), fn[qA] = qA, we.push(vi(LA, bA[qA + 1]));
       }
       function da(bA) {
         return F(bA, q.cssClasses.target), q.dir === 0 ? F(bA, q.cssClasses.ltr) : F(bA, q.cssClasses.rtl), q.ort === 0 ? F(bA, q.cssClasses.horizontal) : F(bA, q.cssClasses.vertical), F(bA, getComputedStyle(bA).direction === "rtl" ? q.cssClasses.textDirectionRtl : q.cssClasses.textDirectionLtr), rr(bA, q.cssClasses.base);
@@ -35633,13 +35633,13 @@ var ny = XC(function(A, e) {
       function ge() {
         QA(), Ge = se.map(ha), P("update" + W.tooltips, function(bA, _A, LA) {
           if (Ge && q.tooltips && Ge[_A] !== !1) {
-            var GA = bA[_A];
-            q.tooltips[_A] !== !0 && (GA = q.tooltips[_A].to(LA[_A])), Ge[_A].innerHTML = GA;
+            var qA = bA[_A];
+            q.tooltips[_A] !== !0 && (qA = q.tooltips[_A].to(LA[_A])), Ge[_A].innerHTML = qA;
           }
         });
       }
       function Te() {
-        L("update" + W.aria), P("update" + W.aria, function(bA, _A, LA, GA, he) {
+        L("update" + W.aria), P("update" + W.aria, function(bA, _A, LA, qA, he) {
           fn.forEach(function(ue) {
             var Ee = se[ue], de = AA(Mt, ue, 0, !0, !0, !0), Rt = AA(Mt, ue, 100, !0, !0, !0), jt = he[ue], Lt = String(q.ariaFormat.to(LA[ue]));
             de = Be.fromStepping(de).toFixed(1), Rt = Be.fromStepping(Rt).toFixed(1), jt = Be.fromStepping(jt).toFixed(1), Ee.children[0].setAttribute("aria-valuemin", de), Ee.children[0].setAttribute("aria-valuemax", Rt), Ee.children[0].setAttribute("aria-valuenow", jt), Ee.children[0].setAttribute("aria-valuetext", Lt);
@@ -35652,9 +35652,9 @@ var ny = XC(function(A, e) {
         if (bA.mode === t.PipsMode.Count) {
           if (bA.values < 2)
             throw new Error("noUiSlider: 'values' (>= 2) required for mode 'count'.");
-          for (var _A = bA.values - 1, LA = 100 / _A, GA = []; _A--; )
-            GA[_A] = _A * LA;
-          return GA.push(100), ot(GA, bA.stepped);
+          for (var _A = bA.values - 1, LA = 100 / _A, qA = []; _A--; )
+            qA[_A] = _A * LA;
+          return qA.push(100), ot(qA, bA.stepped);
         }
         return bA.mode === t.PipsMode.Positions ? ot(bA.values, bA.stepped) : bA.mode === t.PipsMode.Values ? bA.stepped ? bA.values.map(function(he) {
           return Be.fromStepping(Be.getStep(Be.toStepping(he)));
@@ -35669,28 +35669,28 @@ var ny = XC(function(A, e) {
         function _A(jt, Lt) {
           return Number((jt + Lt).toFixed(7));
         }
-        var LA = at(bA), GA = {}, he = Be.xVal[0], ue = Be.xVal[Be.xVal.length - 1], Ee = !1, de = !1, Rt = 0;
+        var LA = at(bA), qA = {}, he = Be.xVal[0], ue = Be.xVal[Be.xVal.length - 1], Ee = !1, de = !1, Rt = 0;
         return (LA = p(LA.slice().sort(function(jt, Lt) {
           return jt - Lt;
         })))[0] !== he && (LA.unshift(he), Ee = !0), LA[LA.length - 1] !== ue && (LA.push(ue), de = !0), LA.forEach(function(jt, Lt) {
-          var Yt, yt, nn, bn, Qt, Cp, Gu, wp, Ip, kp, qu = jt, ns = LA[Lt + 1], _p = bA.mode === t.PipsMode.Steps;
+          var Yt, yt, rn, bn, Qt, Cp, Gu, wp, Ip, kp, qu = jt, ns = LA[Lt + 1], _p = bA.mode === t.PipsMode.Steps;
           for (_p && (Yt = Be.xNumSteps[Lt]), Yt || (Yt = ns - qu), ns === void 0 && (ns = qu), Yt = Math.max(Yt, 1e-7), yt = qu; yt <= ns; yt = _A(yt, Yt)) {
-            for (wp = (Qt = (bn = Be.toStepping(yt)) - Rt) / (bA.density || 1), kp = Qt / (Ip = Math.round(wp)), nn = 1; nn <= Ip; nn += 1)
-              GA[(Cp = Rt + nn * kp).toFixed(5)] = [Be.fromStepping(Cp), 0];
-            Gu = LA.indexOf(yt) > -1 ? t.PipsType.LargeValue : _p ? t.PipsType.SmallValue : t.PipsType.NoValue, !Lt && Ee && yt !== ns && (Gu = 0), yt === ns && de || (GA[bn.toFixed(5)] = [yt, Gu]), Rt = bn;
+            for (wp = (Qt = (bn = Be.toStepping(yt)) - Rt) / (bA.density || 1), kp = Qt / (Ip = Math.round(wp)), rn = 1; rn <= Ip; rn += 1)
+              qA[(Cp = Rt + rn * kp).toFixed(5)] = [Be.fromStepping(Cp), 0];
+            Gu = LA.indexOf(yt) > -1 ? t.PipsType.LargeValue : _p ? t.PipsType.SmallValue : t.PipsType.NoValue, !Lt && Ee && yt !== ns && (Gu = 0), yt === ns && de || (qA[bn.toFixed(5)] = [yt, Gu]), Rt = bn;
           }
-        }), GA;
+        }), qA;
       }
       function qe(bA, _A, LA) {
-        var GA, he, ue = kr.createElement("div"), Ee = ((GA = {})[t.PipsType.None] = "", GA[t.PipsType.NoValue] = q.cssClasses.valueNormal, GA[t.PipsType.LargeValue] = q.cssClasses.valueLarge, GA[t.PipsType.SmallValue] = q.cssClasses.valueSub, GA), de = ((he = {})[t.PipsType.None] = "", he[t.PipsType.NoValue] = q.cssClasses.markerNormal, he[t.PipsType.LargeValue] = q.cssClasses.markerLarge, he[t.PipsType.SmallValue] = q.cssClasses.markerSub, he), Rt = [q.cssClasses.valueHorizontal, q.cssClasses.valueVertical], jt = [q.cssClasses.markerHorizontal, q.cssClasses.markerVertical];
-        function Lt(yt, nn) {
-          var bn = nn === q.cssClasses.value, Qt = bn ? Ee : de;
-          return nn + " " + (bn ? Rt : jt)[q.ort] + " " + Qt[yt];
+        var qA, he, ue = kr.createElement("div"), Ee = ((qA = {})[t.PipsType.None] = "", qA[t.PipsType.NoValue] = q.cssClasses.valueNormal, qA[t.PipsType.LargeValue] = q.cssClasses.valueLarge, qA[t.PipsType.SmallValue] = q.cssClasses.valueSub, qA), de = ((he = {})[t.PipsType.None] = "", he[t.PipsType.NoValue] = q.cssClasses.markerNormal, he[t.PipsType.LargeValue] = q.cssClasses.markerLarge, he[t.PipsType.SmallValue] = q.cssClasses.markerSub, he), Rt = [q.cssClasses.valueHorizontal, q.cssClasses.valueVertical], jt = [q.cssClasses.markerHorizontal, q.cssClasses.markerVertical];
+        function Lt(yt, rn) {
+          var bn = rn === q.cssClasses.value, Qt = bn ? Ee : de;
+          return rn + " " + (bn ? Rt : jt)[q.ort] + " " + Qt[yt];
         }
-        function Yt(yt, nn, bn) {
-          if ((bn = _A ? _A(nn, bn) : bn) !== t.PipsType.None) {
+        function Yt(yt, rn, bn) {
+          if ((bn = _A ? _A(rn, bn) : bn) !== t.PipsType.None) {
             var Qt = rr(ue, !1);
-            Qt.className = Lt(bn, q.cssClasses.marker), Qt.style[q.style] = yt + "%", bn > t.PipsType.NoValue && ((Qt = rr(ue, !1)).className = Lt(bn, q.cssClasses.value), Qt.setAttribute("data-value", String(nn)), Qt.style[q.style] = yt + "%", Qt.innerHTML = String(LA.to(nn)));
+            Qt.className = Lt(bn, q.cssClasses.marker), Qt.style[q.style] = yt + "%", bn > t.PipsType.NoValue && ((Qt = rr(ue, !1)).className = Lt(bn, q.cssClasses.value), Qt.setAttribute("data-value", String(rn)), Qt.style[q.style] = yt + "%", Qt.innerHTML = String(LA.to(rn)));
           }
         }
         return F(ue, q.cssClasses.pips), F(ue, q.ort === 0 ? q.cssClasses.pipsHorizontal : q.cssClasses.pipsVertical), Object.keys(bA).forEach(function(yt) {
@@ -35702,29 +35702,29 @@ var ny = XC(function(A, e) {
       }
       function Ut(bA) {
         et();
-        var _A = Ke(bA), LA = bA.filter, GA = bA.format || { to: function(he) {
+        var _A = Ke(bA), LA = bA.filter, qA = bA.format || { to: function(he) {
           return String(Math.round(he));
         } };
-        return Oe = Xt.appendChild(qe(_A, LA, GA));
+        return Oe = Xt.appendChild(qe(_A, LA, qA));
       }
       function z() {
         var bA = oe.getBoundingClientRect(), _A = "offset" + ["Width", "Height"][q.ort];
         return q.ort === 0 ? bA.width || oe[_A] : bA.height || oe[_A];
       }
-      function r(bA, _A, LA, GA) {
+      function r(bA, _A, LA, qA) {
         var he = function(Ee) {
-          var de = i(Ee, GA.pageOffset, GA.target || _A);
-          return !!de && !(ur() && !GA.doNotReject) && !(E(Xt, q.cssClasses.tap) && !GA.doNotReject) && !(bA === We.start && de.buttons !== void 0 && de.buttons > 1) && (!GA.hover || !de.buttons) && (Zt || de.preventDefault(), de.calcPoint = de.points[q.ort], void LA(de, GA));
+          var de = i(Ee, qA.pageOffset, qA.target || _A);
+          return !!de && !(ur() && !qA.doNotReject) && !(E(Xt, q.cssClasses.tap) && !qA.doNotReject) && !(bA === We.start && de.buttons !== void 0 && de.buttons > 1) && (!qA.hover || !de.buttons) && (Zt || de.preventDefault(), de.calcPoint = de.points[q.ort], void LA(de, qA));
         }, ue = [];
         return bA.split(" ").forEach(function(Ee) {
           _A.addEventListener(Ee, he, !!Zt && { passive: !0 }), ue.push([Ee, he]);
         }), ue;
       }
       function i(bA, _A, LA) {
-        var GA = bA.type.indexOf("touch") === 0, he = bA.type.indexOf("mouse") === 0, ue = bA.type.indexOf("pointer") === 0, Ee = 0, de = 0;
+        var qA = bA.type.indexOf("touch") === 0, he = bA.type.indexOf("mouse") === 0, ue = bA.type.indexOf("pointer") === 0, Ee = 0, de = 0;
         if (bA.type.indexOf("MSPointer") === 0 && (ue = !0), bA.type === "mousedown" && !bA.buttons && !bA.touches)
           return !1;
-        if (GA) {
+        if (qA) {
           var Rt = function(Yt) {
             var yt = Yt.target;
             return yt === LA || LA.contains(yt) || bA.composed && bA.composedPath().shift() === LA;
@@ -35749,7 +35749,7 @@ var ny = XC(function(A, e) {
       }
       function c(bA) {
         var _A = 100, LA = !1;
-        return se.forEach(function(GA, he) {
+        return se.forEach(function(qA, he) {
           if (!kA(he)) {
             var ue = Mt[he], Ee = Math.abs(ue - bA);
             (Ee < _A || Ee <= _A && bA > ue || Ee === 100 && _A === 100) && (LA = he, _A = Ee);
@@ -35780,8 +35780,8 @@ var ny = XC(function(A, e) {
         if (!_A.handleNumbers.some(kA)) {
           var LA;
           _A.handleNumbers.length === 1 && (LA = se[_A.handleNumbers[0]].children[0], ua += 1, F(LA, q.cssClasses.active)), bA.stopPropagation();
-          var GA = [], he = r(We.move, pi, d, { target: bA.target, handle: LA, connect: _A.connect, listeners: GA, startCalcPoint: bA.calcPoint, baseSize: z(), pageOffset: bA.pageOffset, handleNumbers: _A.handleNumbers, buttonsProperty: bA.buttons, locations: Mt.slice() }), ue = r(We.end, pi, g, { target: bA.target, handle: LA, listeners: GA, doNotReject: !0, handleNumbers: _A.handleNumbers }), Ee = r("mouseout", pi, u, { target: bA.target, handle: LA, listeners: GA, doNotReject: !0, handleNumbers: _A.handleNumbers });
-          GA.push.apply(GA, he.concat(ue, Ee)), bA.cursor && (mi.style.cursor = getComputedStyle(bA.target).cursor, se.length > 1 && F(Xt, q.cssClasses.drag), mi.addEventListener("selectstart", f, !1)), _A.handleNumbers.forEach(function(de) {
+          var qA = [], he = r(We.move, pi, d, { target: bA.target, handle: LA, connect: _A.connect, listeners: qA, startCalcPoint: bA.calcPoint, baseSize: z(), pageOffset: bA.pageOffset, handleNumbers: _A.handleNumbers, buttonsProperty: bA.buttons, locations: Mt.slice() }), ue = r(We.end, pi, g, { target: bA.target, handle: LA, listeners: qA, doNotReject: !0, handleNumbers: _A.handleNumbers }), Ee = r("mouseout", pi, u, { target: bA.target, handle: LA, listeners: qA, doNotReject: !0, handleNumbers: _A.handleNumbers });
+          qA.push.apply(qA, he.concat(ue, Ee)), bA.cursor && (mi.style.cursor = getComputedStyle(bA.target).cursor, se.length > 1 && F(Xt, q.cssClasses.drag), mi.addEventListener("selectstart", f, !1)), _A.handleNumbers.forEach(function(de) {
             H("start", de);
           });
         }
@@ -35792,20 +35792,20 @@ var ny = XC(function(A, e) {
         LA !== !1 && (q.events.snap || C(Xt, q.cssClasses.tap, q.animationDuration), K(LA, _A, !0, !0), U(), H("slide", LA, !0), H("update", LA, !0), q.events.snap ? v(bA, { handleNumbers: [LA] }) : (H("change", LA, !0), H("set", LA, !0)));
       }
       function w(bA) {
-        var _A = o(bA.calcPoint), LA = Be.getStep(_A), GA = Be.fromStepping(LA);
+        var _A = o(bA.calcPoint), LA = Be.getStep(_A), qA = Be.fromStepping(LA);
         Object.keys(qn).forEach(function(he) {
           he.split(".")[0] === "hover" && qn[he].forEach(function(ue) {
-            ue.call(He, GA);
+            ue.call(He, qA);
           });
         });
       }
       function k(bA, _A) {
         if (ur() || kA(_A))
           return !1;
-        var LA = ["Left", "Right"], GA = ["Down", "Up"], he = ["PageDown", "PageUp"], ue = ["Home", "End"];
-        q.dir && !q.ort ? LA.reverse() : q.ort && !q.dir && (GA.reverse(), he.reverse());
-        var Ee, de = bA.key.replace("Arrow", ""), Rt = de === he[0], jt = de === he[1], Lt = de === GA[0] || de === LA[0] || Rt, Yt = de === GA[1] || de === LA[1] || jt, yt = de === ue[0], nn = de === ue[1];
-        if (!(Lt || Yt || yt || nn))
+        var LA = ["Left", "Right"], qA = ["Down", "Up"], he = ["PageDown", "PageUp"], ue = ["Home", "End"];
+        q.dir && !q.ort ? LA.reverse() : q.ort && !q.dir && (qA.reverse(), he.reverse());
+        var Ee, de = bA.key.replace("Arrow", ""), Rt = de === he[0], jt = de === he[1], Lt = de === qA[0] || de === LA[0] || Rt, Yt = de === qA[1] || de === LA[1] || jt, yt = de === ue[0], rn = de === ue[1];
+        if (!(Lt || Yt || yt || rn))
           return !0;
         if (bA.preventDefault(), Yt || Lt) {
           var bn = Lt ? 0 : 1, Qt = ye(_A)[bn];
@@ -35813,7 +35813,7 @@ var ny = XC(function(A, e) {
             return !1;
           Qt === !1 && (Qt = Be.getDefaultStep(Mt[_A], Lt, q.keyboardDefaultStep)), Qt *= jt || Rt ? q.keyboardPageMultiplier : q.keyboardMultiplier, Qt = Math.max(Qt, 1e-7), Qt *= Lt ? -1 : 1, Ee = Gn[_A] + Qt;
         } else
-          Ee = nn ? q.spectrum.xVal[q.spectrum.xVal.length - 1] : q.spectrum.xVal[0];
+          Ee = rn ? q.spectrum.xVal[q.spectrum.xVal.length - 1] : q.spectrum.xVal[0];
         return K(_A, Be.toStepping(Ee), !0, !0), H("slide", _A), H("update", _A), H("change", _A), H("set", _A), !1;
       }
       function _(bA) {
@@ -35821,16 +35821,16 @@ var ny = XC(function(A, e) {
           r(We.start, _A.children[0], v, { handleNumbers: [LA] });
         }), bA.tap && r(We.start, oe, x, {}), bA.hover && r(We.move, oe, w, { hover: !0 }), bA.drag && we.forEach(function(_A, LA) {
           if (_A !== !1 && LA !== 0 && LA !== we.length - 1) {
-            var GA = se[LA - 1], he = se[LA], ue = [_A], Ee = [GA, he], de = [LA - 1, LA];
-            F(_A, q.cssClasses.draggable), bA.fixed && (ue.push(GA.children[0]), ue.push(he.children[0])), bA.dragAll && (Ee = se, de = fn), ue.forEach(function(Rt) {
+            var qA = se[LA - 1], he = se[LA], ue = [_A], Ee = [qA, he], de = [LA - 1, LA];
+            F(_A, q.cssClasses.draggable), bA.fixed && (ue.push(qA.children[0]), ue.push(he.children[0])), bA.dragAll && (Ee = se, de = fn), ue.forEach(function(Rt) {
               r(We.start, Rt, v, { handles: Ee, handleNumbers: de, connect: _A });
             });
           }
         });
       }
       function P(bA, _A) {
-        qn[bA] = qn[bA] || [], qn[bA].push(_A), bA.split(".")[0] === "update" && se.forEach(function(LA, GA) {
-          H("update", GA);
+        qn[bA] = qn[bA] || [], qn[bA].push(_A), bA.split(".")[0] === "update" && se.forEach(function(LA, qA) {
+          H("update", qA);
         });
       }
       function N(bA) {
@@ -35838,37 +35838,37 @@ var ny = XC(function(A, e) {
       }
       function L(bA) {
         var _A = bA && bA.split(".")[0], LA = _A ? bA.substring(_A.length) : bA;
-        Object.keys(qn).forEach(function(GA) {
-          var he = GA.split(".")[0], ue = GA.substring(he.length);
-          _A && _A !== he || LA && LA !== ue || N(ue) && LA !== ue || delete qn[GA];
+        Object.keys(qn).forEach(function(qA) {
+          var he = qA.split(".")[0], ue = qA.substring(he.length);
+          _A && _A !== he || LA && LA !== ue || N(ue) && LA !== ue || delete qn[qA];
         });
       }
       function H(bA, _A, LA) {
-        Object.keys(qn).forEach(function(GA) {
-          var he = GA.split(".")[0];
-          bA === he && qn[GA].forEach(function(ue) {
+        Object.keys(qn).forEach(function(qA) {
+          var he = qA.split(".")[0];
+          bA === he && qn[qA].forEach(function(ue) {
             ue.call(He, Gn.map(q.format.to), _A, Gn.slice(), LA || !1, Mt.slice(), He);
           });
         });
       }
-      function AA(bA, _A, LA, GA, he, ue, Ee) {
+      function AA(bA, _A, LA, qA, he, ue, Ee) {
         var de;
-        return se.length > 1 && !q.events.unconstrained && (GA && _A > 0 && (de = Be.getAbsoluteDistance(bA[_A - 1], q.margin, !1), LA = Math.max(LA, de)), he && _A < se.length - 1 && (de = Be.getAbsoluteDistance(bA[_A + 1], q.margin, !0), LA = Math.min(LA, de))), se.length > 1 && q.limit && (GA && _A > 0 && (de = Be.getAbsoluteDistance(bA[_A - 1], q.limit, !1), LA = Math.min(LA, de)), he && _A < se.length - 1 && (de = Be.getAbsoluteDistance(bA[_A + 1], q.limit, !0), LA = Math.max(LA, de))), q.padding && (_A === 0 && (de = Be.getAbsoluteDistance(0, q.padding[0], !1), LA = Math.max(LA, de)), _A === se.length - 1 && (de = Be.getAbsoluteDistance(100, q.padding[1], !0), LA = Math.min(LA, de))), Ee || (LA = Be.getStep(LA)), !((LA = S(LA)) === bA[_A] && !ue) && LA;
+        return se.length > 1 && !q.events.unconstrained && (qA && _A > 0 && (de = Be.getAbsoluteDistance(bA[_A - 1], q.margin, !1), LA = Math.max(LA, de)), he && _A < se.length - 1 && (de = Be.getAbsoluteDistance(bA[_A + 1], q.margin, !0), LA = Math.min(LA, de))), se.length > 1 && q.limit && (qA && _A > 0 && (de = Be.getAbsoluteDistance(bA[_A - 1], q.limit, !1), LA = Math.min(LA, de)), he && _A < se.length - 1 && (de = Be.getAbsoluteDistance(bA[_A + 1], q.limit, !0), LA = Math.max(LA, de))), q.padding && (_A === 0 && (de = Be.getAbsoluteDistance(0, q.padding[0], !1), LA = Math.max(LA, de)), _A === se.length - 1 && (de = Be.getAbsoluteDistance(100, q.padding[1], !0), LA = Math.min(LA, de))), Ee || (LA = Be.getStep(LA)), !((LA = S(LA)) === bA[_A] && !ue) && LA;
       }
       function iA(bA, _A) {
         var LA = q.ort;
         return (LA ? _A : bA) + ", " + (LA ? bA : _A);
       }
-      function b(bA, _A, LA, GA, he) {
-        var ue = LA.slice(), Ee = GA[0], de = q.events.smoothSteps, Rt = [!bA, bA], jt = [bA, !bA];
-        GA = GA.slice(), bA && GA.reverse(), GA.length > 1 ? GA.forEach(function(Yt, yt) {
-          var nn = AA(ue, Yt, ue[Yt] + _A, Rt[yt], jt[yt], !1, de);
-          nn === !1 ? _A = 0 : (_A = nn - ue[Yt], ue[Yt] = nn);
+      function b(bA, _A, LA, qA, he) {
+        var ue = LA.slice(), Ee = qA[0], de = q.events.smoothSteps, Rt = [!bA, bA], jt = [bA, !bA];
+        qA = qA.slice(), bA && qA.reverse(), qA.length > 1 ? qA.forEach(function(Yt, yt) {
+          var rn = AA(ue, Yt, ue[Yt] + _A, Rt[yt], jt[yt], !1, de);
+          rn === !1 ? _A = 0 : (_A = rn - ue[Yt], ue[Yt] = rn);
         }) : Rt = jt = [!0];
         var Lt = !1;
-        GA.forEach(function(Yt, yt) {
+        qA.forEach(function(Yt, yt) {
           Lt = K(Yt, LA[Yt] + _A, Rt[yt], jt[yt], !1, de) || Lt;
-        }), Lt && (GA.forEach(function(Yt) {
+        }), Lt && (qA.forEach(function(Yt) {
           H("update", Yt), H("slide", Yt);
         }), he != null && H("drag", Ee));
       }
@@ -35886,14 +35886,14 @@ var ny = XC(function(A, e) {
           se[bA].style.zIndex = String(LA);
         });
       }
-      function K(bA, _A, LA, GA, he, ue) {
-        return he || (_A = AA(Mt, bA, _A, LA, GA, !1, ue)), _A !== !1 && (V(bA, _A), !0);
+      function K(bA, _A, LA, qA, he, ue) {
+        return he || (_A = AA(Mt, bA, _A, LA, qA, !1, ue)), _A !== !1 && (V(bA, _A), !0);
       }
       function lA(bA) {
         if (we[bA]) {
           var _A = 0, LA = 100;
           bA !== 0 && (_A = Mt[bA - 1]), bA !== we.length - 1 && (LA = Mt[bA]);
-          var GA = LA - _A, he = "translate(" + iA($(_A, GA) + "%", "0") + ")", ue = "scale(" + iA(GA / 100, "1") + ")";
+          var qA = LA - _A, he = "translate(" + iA($(_A, qA) + "%", "0") + ")", ue = "scale(" + iA(qA / 100, "1") + ")";
           we[bA].style[q.transformRule] = he + " " + ue;
         }
       }
@@ -35901,9 +35901,9 @@ var ny = XC(function(A, e) {
         return bA === null || bA === !1 || bA === void 0 ? Mt[_A] : (typeof bA == "number" && (bA = String(bA)), (bA = q.format.from(bA)) !== !1 && (bA = Be.toStepping(bA)), bA === !1 || isNaN(bA) ? Mt[_A] : bA);
       }
       function CA(bA, _A, LA) {
-        var GA = I(bA), he = Mt[0] === void 0;
+        var qA = I(bA), he = Mt[0] === void 0;
         _A = _A === void 0 || _A, q.animate && !he && C(Xt, q.cssClasses.tap, q.animationDuration), fn.forEach(function(de) {
-          K(de, xA(GA[de], de), !0, !1, LA);
+          K(de, xA(qA[de], de), !0, !1, LA);
         });
         var ue = fn.length === 1 ? 0 : 1;
         if (he && Be.hasNoSize() && (LA = !0, Mt[0] = 0, fn.length > 1)) {
@@ -35917,18 +35917,18 @@ var ny = XC(function(A, e) {
             K(de, Mt[de], !0, !0, LA);
           });
         U(), fn.forEach(function(de) {
-          H("update", de), GA[de] !== null && _A && H("set", de);
+          H("update", de), qA[de] !== null && _A && H("set", de);
         });
       }
       function TA(bA) {
         CA(q.start, bA);
       }
-      function WA(bA, _A, LA, GA) {
+      function WA(bA, _A, LA, qA) {
         if (!((bA = Number(bA)) >= 0 && bA < fn.length))
           throw new Error("noUiSlider: invalid handle number, got: " + bA);
-        K(bA, xA(_A, bA), !0, !0, GA), H("update", bA), LA && H("set", bA);
+        K(bA, xA(_A, bA), !0, !0, qA), H("update", bA), LA && H("set", bA);
       }
-      function VA(bA) {
+      function BA(bA) {
         if (bA === void 0 && (bA = !1), bA)
           return Gn.length === 1 ? Gn[0] : Gn.slice(0);
         var _A = Gn.map(q.format.to);
@@ -35942,10 +35942,10 @@ var ny = XC(function(A, e) {
         delete Xt.noUiSlider;
       }
       function ye(bA) {
-        var _A = Mt[bA], LA = Be.getNearbySteps(_A), GA = Gn[bA], he = LA.thisStep.step, ue = null;
+        var _A = Mt[bA], LA = Be.getNearbySteps(_A), qA = Gn[bA], he = LA.thisStep.step, ue = null;
         if (q.snap)
-          return [GA - LA.stepBefore.startValue || null, LA.stepAfter.startValue - GA || null];
-        he !== !1 && GA + he > LA.stepAfter.startValue && (he = LA.stepAfter.startValue - GA), ue = GA > LA.thisStep.startValue ? LA.thisStep.step : LA.stepBefore.step !== !1 && GA - LA.stepBefore.highestStep, _A === 100 ? he = null : _A === 0 && (ue = null);
+          return [qA - LA.stepBefore.startValue || null, LA.stepAfter.startValue - qA || null];
+        he !== !1 && qA + he > LA.stepAfter.startValue && (he = LA.stepAfter.startValue - qA), ue = qA > LA.thisStep.startValue ? LA.thisStep.step : LA.stepBefore.step !== !1 && qA - LA.stepBefore.highestStep, _A === 100 ? he = null : _A === 0 && (ue = null);
         var Ee = Be.countStepDecimals();
         return he !== null && he !== !1 && (he = Number(he.toFixed(Ee))), ue !== null && ue !== !1 && (ue = Number(ue.toFixed(Ee))), [ue, he];
       }
@@ -35953,12 +35953,12 @@ var ny = XC(function(A, e) {
         return fn.map(ye);
       }
       function Ye(bA, _A) {
-        var LA = VA(), GA = ["margin", "limit", "padding", "range", "animate", "snap", "step", "format", "pips", "tooltips"];
-        GA.forEach(function(ue) {
+        var LA = BA(), qA = ["margin", "limit", "padding", "range", "animate", "snap", "step", "format", "pips", "tooltips"];
+        qA.forEach(function(ue) {
           bA[ue] !== void 0 && (zA[ue] = bA[ue]);
         });
         var he = Ce(zA);
-        GA.forEach(function(ue) {
+        qA.forEach(function(ue) {
           bA[ue] !== void 0 && (q[ue] = he[ue]);
         }), Be = he.spectrum, q.margin = he.margin, q.limit = he.limit, q.padding = he.padding, q.pips ? Ut(q.pips) : et(), q.tooltips ? ge() : QA(), Mt = [], CA(l(bA.start) ? bA.start : LA, _A);
       }
@@ -35966,7 +35966,7 @@ var ny = XC(function(A, e) {
         oe = da(Xt), ts(q.connect, oe), _(q.events), CA(q.start), q.pips && Ut(q.pips), q.tooltips && ge(), Te();
       }
       Qe();
-      var He = { destroy: ce, steps: De, on: P, off: L, get: VA, set: CA, setHandle: WA, reset: TA, __moveHandles: function(bA, _A, LA) {
+      var He = { destroy: ce, steps: De, on: P, off: L, get: BA, set: CA, setHandle: WA, reset: TA, __moveHandles: function(bA, _A, LA) {
         b(bA, _A, Mt, LA);
       }, options: zA, updateOptions: Ye, target: Xt, removePips: et, removeTooltips: QA, getPositions: function() {
         return Mt.slice();
@@ -36036,8 +36036,8 @@ var nu = { name: "Slider", emits: ["input", "update:modelValue", "start", "slide
               J[R].forEach(function(EA) {
                 vA += 1e3 - EA;
               });
-              var mA = Y ? "bottom" : "right", MA = T ? 0 : rA - 1, JA = 1e3 - J[R][MA];
-              vA = (E && !Y ? 100 : 0) + vA / rA - JA, B[pA].innerHTML = sA[R].join(M), B[pA].style.display = "block", B[pA].style[mA] = vA + "%", C.value.tooltipHidden.split(" ").forEach((EA) => {
+              var mA = Y ? "bottom" : "right", MA = T ? 0 : rA - 1, Ae = 1e3 - J[R][MA];
+              vA = (E && !Y ? 100 : 0) + vA / rA - Ae, B[pA].innerHTML = sA[R].join(M), B[pA].style.display = "block", B[pA].style[mA] = vA + "%", C.value.tooltipHidden.split(" ").forEach((EA) => {
                 B[pA].classList.contains(EA) && B[pA].classList.remove(EA);
               });
             } else
@@ -36097,17 +36097,17 @@ var nu = { name: "Slider", emits: ["input", "update:modelValue", "start", "slide
       }), cA.value = !0;
     }, MA = () => {
       nA.value.off(), nA.value.destroy(), nA.value = null;
-    }, JA = (EA, wA) => {
+    }, Ae = (EA, wA) => {
       cA.value = !1, MA(), mA();
     };
-    return wt(mA), aa(MA), Je(rA, JA, { immediate: !1 }), Je(S, JA, { immediate: !1 }), Je(I, JA, { immediate: !1 }), Je(C, JA, { immediate: !1 }), Je(h, JA, { immediate: !1 }), Je(m, JA, { immediate: !1 }), Je(y, JA, { immediate: !1 }), Je(O, JA, { immediate: !1 }), Je(Y, JA, { immediate: !1, deep: !0 }), Je(E, JA, { immediate: !1, deep: !0 }), Je(T, JA, { immediate: !1, deep: !0 }), Je(oA, (EA, wA) => {
-      wA && (typeof wA == "object" && typeof EA == "object" && EA && Object.keys(wA) > Object.keys(EA) || typeof wA == "object" && typeof EA != "object" || ec(EA)) && JA();
+    return It(mA), aa(MA), Je(rA, Ae, { immediate: !1 }), Je(S, Ae, { immediate: !1 }), Je(I, Ae, { immediate: !1 }), Je(C, Ae, { immediate: !1 }), Je(h, Ae, { immediate: !1 }), Je(m, Ae, { immediate: !1 }), Je(y, Ae, { immediate: !1 }), Je(O, Ae, { immediate: !1 }), Je(Y, Ae, { immediate: !1, deep: !0 }), Je(E, Ae, { immediate: !1, deep: !0 }), Je(T, Ae, { immediate: !1, deep: !0 }), Je(oA, (EA, wA) => {
+      wA && (typeof wA == "object" && typeof EA == "object" && EA && Object.keys(wA) > Object.keys(EA) || typeof wA == "object" && typeof EA != "object" || ec(EA)) && Ae();
     }, { immediate: !1 }), Je(oA, (EA) => {
       if (ec(EA))
         return void pA(S.value, !1);
       let wA = W();
       rA.value && !Array.isArray(wA) && (wA = [wA]), (rA.value && !ry(EA, wA) || !rA.value && EA != wA) && pA(EA, !1);
-    }, { deep: !0 }), { slider: sA, slider$: nA, isRange: rA, sliderProps: R, init: mA, destroy: MA, refresh: JA, update: pA, reset: () => {
+    }, { deep: !0 }), { slider: sA, slider$: nA, isRange: rA, sliderProps: R, init: mA, destroy: MA, refresh: Ae, update: pA, reset: () => {
       vA(G.value);
     } };
   }(A, e, { value: t.value, initialValue: t.initialValue, tooltipFormat: a.tooltipFormat, tooltipsFormat: a.tooltipsFormat, tooltipsMerge: a.tooltipsMerge, classList: n.classList });
@@ -36160,7 +36160,7 @@ const $n = (A) => (vn("data-v-72a55567"), A = A(), yn(), A), FL = { autocomplete
       x: 500,
       y: 200
     }), m = yA(!1), y = yA(""), C = yA(0), S = yA(!1), I = yA(!1), O = yA(""), F = yA(!1), M = yA(!1), E = yA(null);
-    wt(() => {
+    It(() => {
       n.value = Y();
       let aA = At("roomLayoutListUrl");
       aA && (E.value = aA), n.value ? (y.value = "EDIT ROOM LAYOUT", T()) : (y.value = "NEW ROOM LAYOUT", B(a.rows, a.cols));
@@ -36351,7 +36351,7 @@ const $n = (A) => (vn("data-v-72a55567"), A = A(), yn(), A), FL = { autocomplete
         D("p", null, "Total Configured Spots - " + OA(C.value), 1),
         D("div", ZL, [
           D("div", JL, [
-            te(St, {
+            te(Ct, {
               text: "Save Layout",
               onOnClick: R[3] || (R[3] = (W) => Q()),
               type: "button",
@@ -36360,7 +36360,7 @@ const $n = (A) => (vn("data-v-72a55567"), A = A(), yn(), A), FL = { autocomplete
             }, null, 8, ["is-loading"])
           ]),
           D("div", AF, [
-            te(St, {
+            te(Ct, {
               text: "Cancel",
               onOnClick: R[4] || (R[4] = (W) => cA()),
               type: "button",
@@ -36498,7 +36498,7 @@ const $n = (A) => (vn("data-v-72a55567"), A = A(), yn(), A), FL = { autocomplete
           ]),
           _: 1
         }, 8, ["show", "options"]),
-        M.value ? (X(), Ae(nt, {
+        M.value ? (X(), JA(nt, {
           key: 0,
           "ok-loading": !1,
           title: "SUCCESS",
@@ -36507,7 +36507,7 @@ const $n = (A) => (vn("data-v-72a55567"), A = A(), yn(), A), FL = { autocomplete
           "cancel-text": null,
           onOnOk: R[16] || (R[16] = (W) => cA())
         })) : IA("", !0),
-        F.value ? (X(), Ae(nt, {
+        F.value ? (X(), JA(nt, {
           key: 1,
           "ok-loading": !1,
           title: "Error",
@@ -36520,7 +36520,7 @@ const $n = (A) => (vn("data-v-72a55567"), A = A(), yn(), A), FL = { autocomplete
     };
   }
 });
-const vp = /* @__PURE__ */ tn(PF, [["__scopeId", "data-v-72a55567"]]), iy = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const vp = /* @__PURE__ */ nn(PF, [["__scopeId", "data-v-72a55567"]]), iy = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: vp
 }, Symbol.toStringTag, { value: "Module" })), OF = (A) => (vn("data-v-af02abea"), A = A(), yn(), A), TF = /* @__PURE__ */ OF(() => /* @__PURE__ */ D("div", {
@@ -36542,7 +36542,7 @@ const vp = /* @__PURE__ */ tn(PF, [["__scopeId", "data-v-72a55567"]]), iy = /* @
     ], 64));
   }
 });
-const eo = /* @__PURE__ */ tn(MF, [["__scopeId", "data-v-af02abea"]]), GC = (A) => (vn("data-v-d61cd147"), A = A(), yn(), A), RF = { class: "row" }, LF = /* @__PURE__ */ GC(() => /* @__PURE__ */ D("div", { class: "col-12 text-center" }, [
+const eo = /* @__PURE__ */ nn(MF, [["__scopeId", "data-v-af02abea"]]), GC = (A) => (vn("data-v-d61cd147"), A = A(), yn(), A), RF = { class: "row" }, LF = /* @__PURE__ */ GC(() => /* @__PURE__ */ D("div", { class: "col-12 text-center" }, [
   /* @__PURE__ */ D("h4", null, "RANK")
 ], -1)), FF = /* @__PURE__ */ GC(() => /* @__PURE__ */ D("div", { class: "col-6 text-right" }, [
   /* @__PURE__ */ D("i", {
@@ -36581,7 +36581,7 @@ const eo = /* @__PURE__ */ tn(MF, [["__scopeId", "data-v-af02abea"]]), GC = (A) 
     ]));
   }
 });
-const qC = /* @__PURE__ */ tn(BF, [["__scopeId", "data-v-d61cd147"]]), YF = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAACXBIWXMAAA3XAAAN1wFCKJt4AAA5+mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxMzIgNzkuMTU5Mjg0LCAyMDE2LzA0LzE5LTEzOjEzOjQwICAgICAgICAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIKICAgICAgICAgICAgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNS41IChNYWNpbnRvc2gpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE5LTA5LTEyVDIyOjQ5OjIwKzAyOjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTktMDktMTJUMjI6NTE6NTArMDI6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8eG1wOk1ldGFkYXRhRGF0ZT4yMDE5LTA5LTEyVDIyOjUxOjUwKzAyOjAwPC94bXA6TWV0YWRhdGFEYXRlPgogICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3BuZzwvZGM6Zm9ybWF0PgogICAgICAgICA8cGhvdG9zaG9wOkNvbG9yTW9kZT4zPC9waG90b3Nob3A6Q29sb3JNb2RlPgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjJkY2EwOWI0LWY5MjAtNGFlNC04ZjllLTFjMzg1ZWJmYjMzMjwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+YWRvYmU6ZG9jaWQ6cGhvdG9zaG9wOjM1NzhkZjM3LTE2MmQtMTE3ZC1iYTEwLWJmMzZlOWVkOWE3ZDwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOmNkZTRlZDI3LTcxNzEtNDA3OS05ZDVjLTE1NDZlNmQ5MmE3MTwveG1wTU06T3JpZ2luYWxEb2N1bWVudElEPgogICAgICAgICA8eG1wTU06SGlzdG9yeT4KICAgICAgICAgICAgPHJkZjpTZXE+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmNyZWF0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDpjZGU0ZWQyNy03MTcxLTQwNzktOWQ1Yy0xNTQ2ZTZkOTJhNzE8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTktMDktMTJUMjI6NDk6MjArMDI6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE1LjUgKE1hY2ludG9zaCk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjJkY2EwOWI0LWY5MjAtNGFlNC04ZjllLTFjMzg1ZWJmYjMzMjwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxOS0wOS0xMlQyMjo1MTo1MCswMjowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIDIwMTUuNSAoTWFjaW50b3NoKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICAgICA8dGlmZjpYUmVzb2x1dGlvbj45MDAwMDAvMTAwMDA8L3RpZmY6WFJlc29sdXRpb24+CiAgICAgICAgIDx0aWZmOllSZXNvbHV0aW9uPjkwMDAwMC8xMDAwMDwvdGlmZjpZUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6UmVzb2x1dGlvblVuaXQ+MjwvdGlmZjpSZXNvbHV0aW9uVW5pdD4KICAgICAgICAgPGV4aWY6Q29sb3JTcGFjZT42NTUzNTwvZXhpZjpDb2xvclNwYWNlPgogICAgICAgICA8ZXhpZjpQaXhlbFhEaW1lbnNpb24+MjAwPC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjIwMDwvZXhpZjpQaXhlbFlEaW1lbnNpb24+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgIAo8P3hwYWNrZXQgZW5kPSJ3Ij8+LrEG7AAAACBjSFJNAAB6JQAAgIMAAPn/AACA6AAAUggAARVYAAA6lwAAF2/XWh+QAAJx50lEQVR4AQD//wAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAADUAAABEAAAAMQAAACMAAAAWAAAACwAAAAAAAAD1AAAA6wAAAN4AAADPAAAAvgAAAMgAAAD9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAB/AAAA4QAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAOQAAACGAAAAEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdgAAAPUAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA+AAAAH0AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEMAAADrAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAADwAAAASQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcgAAALwAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAtgAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACeAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAACkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJYAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbgAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDAAAAvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABNAAAAtAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADOAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAKgAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAcgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAANgAAAAdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAACYAAADzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAB0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAGMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAA3QAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAAAA1QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADqAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAA4gAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPUAAAAlAAAA5wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADxAAAAuwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL8AAADnAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAApgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL0AAABCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzQAAADQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMEAAACtAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC6AAAAtgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAAAAzgAAABoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO8AAAA0AAAA3gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADpAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFIAAADeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAywAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABVAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAABbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALwAAALwAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAEUAAADMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0QAAACYAAACoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAJQAAAMwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALQAAAL4AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAxQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAZAAAAE4AAAAXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7QAAALIAAACdAAAAxQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAzAAAANAAAACMAAAAYAAAADQAAAAAAAADzAAAA6QAAAN4AAADNAAAAzAAAAP0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAADAAAAA4AAAAFAAAAAYAAAD9AAAA7AAAAO4AAADwAAAA8AAAAPAAAADxAAAA7wAAAPMAAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAABxAAAAZgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8AAAA9QAAAPMAAADvAAAA8AAAAO8AAADwAAAA7wAAAO8AAADvAAAA7gAAAO8AAADuAAAA8QAAAPQAAADyAAAA8gAAAP4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYwAAAJsAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPoAAADxAAAA8gAAAPIAAADxAAAA7wAAAPEAAADiAAAA2AAAAMgAAADfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAChAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAADEAAAATQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJ8AAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL4AAABcAAAA5wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD3AAAAPAAAAM4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA1QAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+AAAADgAAADRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABvAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAKMAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC0AAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABoAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAWQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/QAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPUAAAD7AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAPQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+AAAAMcAAAD+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAP4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtwAAANAAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAqAAAACUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACrAAAAzAAAAEkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACBAAAAIgAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADZAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALoAAADVAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPwAAADCAAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHMAAAAAAAAAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN0AAADSAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAAAANQAAAA2AAAAGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMUAAADaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAABFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMEAAAD2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACaAAAAzgAAAAAAAABCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACOAAAAAAAAABQAAAAyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6gAAAOIAAAAbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI0AAADZAAAAAAAAADoAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxQAAAAAAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD1AAAA8QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8QAAAIsAAAAAAAAAAAAAAEMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxQAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADzAAAA8gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjwAAAOkAAAAAAAAAAAAAADsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvwAAAAAAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADyAAAA8wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAAiwAAAAAAAAAAAAAAIgAAADMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAzgAAAAAAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACOAAAA9gAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADJAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAACSAAAAAAAAAAAAAAAAAAAAPgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8AAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIUAAAD9AAAAAAAAAAAAAAAAAAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP0AAADEAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGA/n8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADPAAAApAAAAAAAAAAAAAAAAAAAADYAAAAlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0AAAAOAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACCAAAAAAAAAAAAAAAAAAAAAAAAAD8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwQAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALoAAACwAAAAAAAAAAAAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvQAAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAAAAAAAAAACwAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAAzAAAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAAAAAAAAAAAArAAAALsAAAAAAAAAAAAAAAAAAAAAAAAAPQAAABEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADLAAAA6gAAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAhwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8AAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAAAAAACiAAAAzgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAPoAAACDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAANQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOYAAADMAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+QAAAPUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAA4AAAAAAAAAAAAAAJ4AAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMMAAAD6AAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAPQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAABAAAAAAAAAAAAAAAKcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAPYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAA8AAAAAAAAA8gAAAM8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAA/gAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0QAAANMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAAAAAAAAAAAAAEAAAABUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPQAAAD2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPsAAADkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAAAAAAAAAAAAAAAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAACMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAB0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO0AAAD3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOcAAADiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAABkAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAAAAAABwAAAAbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADqAAAA+QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD7AAAA8QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADmAAAA5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0AAAA8QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAACwAAAAAAAAAAAAAAAAAAAAAAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8AAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADzAAAA7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARAAAADQAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADqAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD1AAAA/gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABoAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAAAAaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADhAAAA7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0AAAA7QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4wAAAPYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAOoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADtAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5wAAAOsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPwAAADzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAABQAAADsAAAAAAAAAAAAAAAAAAAAAAAAAOwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPMAAAANAAAACwAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAPYAAADuAAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABYAAADsAAAAAAAAAAAAAAAAAAAAAAAAAOQAAADuAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAADSAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAPkAAADqAAAA3AAAAKsAAACnAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOwAAADnAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAADAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAAAAAAcAAAAdAAAAQQAAAJYAAADpAAAAYwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADqAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAnAAAAKwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFMAAACoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN8AAAD+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAID/fwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFcAAABoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7AAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACGAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9gAAAOIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARAAAAVQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATQAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAB4AAADuAAAAAAAAAAAAAAAAAAAAAAAAAO0AAADyAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMwAAAAiAAAArQAAANoAAAACAAAACgAAAA0AAAA1AAAAQAAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKwAAACkAAADHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAApgAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAE4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADSAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAsQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUAAACxAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA9wAAAE3///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMsAAABPAAAAJwAAAMkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2wAAALcAAADgAAAA7AAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADpAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAAoAAAD2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2gAAADgAAACOAAAAcQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3gAAAN8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAKAAAACaAAAAxwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHAAAABgAAADeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAByAAAA4QAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2gAAANsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAGQAAAAAAAADUAAAAWQAAANQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAADeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkQAAABoAAAB2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxQAAAPkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAApAAAACwAAAI8AAAAtAAAA1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADpAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAB0AAAAtAAAAGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHcAAAC5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAowAAAHIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADlAAAA/gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAB9AAAA1AAAAOAAAADSAAAA3gAAANYAAAB5AAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADfAAAAyQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAAACwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHAAAA5AAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAJEAAAAAAAAAAAAAAAAAAAAAAAAAQwAAAO4AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA8QAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmAAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAACjAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAA9QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAKQAAAD0AAAAwAAAACQAAAAAAAAAAAAAAAAAAAAAAAAD5AAAA7QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAAAAAABEAAAAvAAAABEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAMMAAABGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAnQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAAIoAAADnAAAA/wAAAP8AAAD/AAAA8wAAAKUAAAAmAAAAAAAAAAAAAAAAAAAArgAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAANoAAABIAAAAWQAAAHoAAADqAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAADtAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANUAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAApAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGAAAA+QAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAbQAAAAAAAAAAAAAAiwAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHoAAAD2AAAA1gAAANUAAADVAAAA1QAAAM4AAAD0AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAANIAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEUAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAALoAAACpAAAA4wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA3AAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAADqAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAJoAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAKEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAACsAAADSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8AAAAVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcgAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+QAAAMUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0AAAAOMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8QAAAN0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAADQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtAAAAO0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADyAAAAzgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA1QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9wAAAN0AAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACDAAAAywAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADKAAAA6QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABzAAAACgAAACQAAAAlAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIUAAAB+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAApAAAAKgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHAAAAPMAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP4AAACwAAAAiAAAAHgAAADjAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAOgAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAD0AAADIAAAA/wAAAP8AAAD/AAAA/wAAAP8AAADKAAAAPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABjAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFYAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAH8AAAAAAAAAAAAAAAAAAABtAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAHcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAAFcAAABmAAAAWAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACmAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAOgAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAMwAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArAAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAArAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAADdAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAKsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvgAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAKEAAAD2AAAA/wAAAP8AAAD/AAAA/QAAALoAAAAzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKMAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAClAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA/wAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAPwAAAFUAAABFAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABMAAAA0wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA3QAAAE0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHUAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAH///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAA4gAAAAMAAABwAAAAkQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAA1AAAADAAAAPQAAADSAAAA0QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALEAAABOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1wAAACoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlAAAAAwAAAAAAAACQAAAA7QAAAKQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAyQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdAAAAAAAAAAAAAAAAAAAAowAAAG0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOQAAABcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAJIAAACsAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAqAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABTAAAA6QAAAIIAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJgAAACoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAA3gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAH0AAAB7AAAAvQAAAMAAAADPAAAA6gAAAPUAAAAQAAAAGAAAAB0AAABMAAAARgAAAGsAAADWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAOwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAARQAAAEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB0AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+wAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPUAAADKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3gAAAOEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM8AAADlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACUAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMhxN44AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAAywAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADmAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADFAAAA7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAKgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArAAAAJgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAUQAAAFIAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPgAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArAAAAUAAAAFMAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOoAAADuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOIAAADIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0AAAAUwAAAFIAAAAmAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANoAAAD+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAAD+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA7AAAAUwAAAE8AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAABDAAAAUQAAAFAAAAAXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAAABGAAAAUQAAAEsAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1AAAANUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAABJAAAAUwAAAEgAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAyQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAABMAAAAUgAAAEMAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9gAAAOMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAA0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAABRAAAAUQAAAD4AAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4gAAAOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD6AAAAxQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACcAAABQAAAAVAAAADQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADRAAAA4QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC4AAABSAAAAUAAAAC8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAuwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAABTAAAAUQAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADtAAAApQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAD8AAABQAAAAUAAAAB0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB/AAAA7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPMAAADNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAEUAAABRAAAATgAAABUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALkAAACVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMoAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEYAAABjAAAARgAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvQAAAEsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDAAAAnQAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACZAAAAaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIsAAAC8AAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0AAAApgAAAC8AAABoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6wAAAMUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAHMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADvAAAAtAAAAK8AAAC5AAAA9gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwwAAAPkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAcwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADmAAAAsQAAAK4AAAC/AAAA/QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALwAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADeAAAAsQAAAK0AAADHAAAA/gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFwAAAE0AAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADWAAAArwAAAK4AAADOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADZAAAAzQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQwAAAEsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADNAAAArgAAALAAAADWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAANAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQAAAC8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAArwAAAK4AAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwAAABsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPsAAAC+AAAArwAAALIAAADnAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPcAAAC7AAAArQAAALUAAADtAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANIAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5gAAAOkAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAC0AAAAsAAAALcAAAD2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxgAAABsAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOsAAACzAAAArgAAAL0AAAD4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADRAAAA5AAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAHAAAAGoAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAOAAAACSAAAAPgAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAogAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA5gAAAAsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAA4AAADnAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAANkAAACIAAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAigAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAABkAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAANEAAAB/AAAALQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJkAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAADhAAAACwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAnwAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAMYAAAB1AAAAJQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAADOAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAJ0AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/QAAAL4AAABsAAAAHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAAAAyQAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/AAAAEYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABXAAAA8AAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA9wAAALMAAABhAAAAFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAC4AAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAFgAAABSAAAAKgAAABQAAAD9AAAA5gAAAM4AAAC8AAAAswAAAPEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVAAAAXwAAAEcAAAAlAAAAEQAAAPcAAADjAAAAyQAAAJ8AAADNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA//8AtAFuDBqbswAAAABJRU5ErkJggg==", HF = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAADxVJREFUeJztnXm0XtMZh59MJJFIJCESGqlQWUEMJYY0LWJuDY20plLKQhttY2rRqlttaakhZqKGarFoWpaZWkJRs1BjomKZSSJk5MbN7R/vvcttfPf7zrD3efc+533WelfWurn3nN8+3/59Z4/vBsMwOqWLtgBlVgKGAH2BHsAiYC4wX1OUEQ5VM8hAYE9gB2ArYF2gW43fmwf8B5gO3Ak8AbQWI9EwimcbYBrQjFT0tPEyMBlYpWjhhuGTkcDdZDNFrZgDHAl0LbIQhuGarsCJZH9jNIpHgOFFFcYwXNIXuB0/xugY84FdCiqTYThhEJ93qIuIZcD+hZTMMHLSB3ic4szRHp8BexRQPsPITBfgZoo3R3ssAUZ7L6VhZGQyeuZoj5exYWAjQIYj3+DaBmkFzvBbVMNIz9/QN0Z7NAPr+S2uYSRnI/RNsWJM9Vpiw0jBFegbotZbZJDPQhtGEnoDC9A3RK2Y5LHcRoHEvKZoPDJrHiITtAUYbojZINtrC6jDtkBPbRFGfmI2yJbaAurQExlAMCInZoNsoC2gAaHrMxIQq0F6AKtri2jAWtoCjPzEapA+2gISEOoAgpGCWA1Sax95aHTXFmDkJ1aDLNIWkIAF2gKM/MRqkE+BhdoiGjBHW4CRn1gN0grM1BbRgFe0BRj5idUgADO0BdShFXheW4SRn5gNMl1bQB2exrIzloKYDXIP0KItohPu0BZgGAC3or9yt1as77PQhpGUXdA3w4pxt9cSG0YKuqCT6qdejPNaYsNIyVj0TdEeN3kuq2Fk4lL0zTEfWNt3QQ0jC72R8zw0DbK391IaRg5GAO+hY45fFVA+w8jNpsgRakWa4zyqd1KXETEbALMpxhy/wMxhRMgA4Bb8GWMusHthpTEMD3QBDgDexa05rgbWKK4YhuGXVYBjgbfIborPgBuBTQrWbhiF0Q3YCbgceJXGpliEHAH9U2Cwgl4jAKrcwRyEdOiHIQkWVkJ2Kc5FNmPNRt4caRkMbIhMGvZGjmn7oO2aMxHzGUal2ByYAvyXxp37q5DMi4ZRer4GPEC2fs3TwGFAr8JVG4Zn+iJvAhejYvOAs4B1Cy2BYXhiBJ/3JVxGC3AbsCvV7hsaEbMJ7udVasVM4BigfzHFMoz8jAM+wr85OsZi4DLsiGkjcDZG5kWKNMeK8S9gXyRxt2EEw0DgNXTN0THeAZqAIR7LbBiJ6A7ch74pakUzcAMy1GwYKpyCvhGSxDPA4dicilEg6wFL0a/8aeJD4GxsTsUogLvRr/BZowW4HdgNm1MxPLAP+pXcVcxClvvbnIrhjBnoV2zXsRiYiu1pMXKyK/qV2XfYnIqRmfvRr8BFhc2pGKnYFP1KqxHNwPXYnIrRgLPRr6zaYXMqRk26ki+xQ9niQ+CP2JyK0cb26FfKEKN9n4rNqVScS9CvjKHHTGAyNqdSSZKkArKQWIx8oQzL9KSN6BiGfqWLMZYAP87wvI3IOAT9yhZzXEJJ+yfdtAUEwmRkDsTIxhbIKOD92kIMPzyP/rdw7NFCCRPilfK1mJKVkf3m3bWFlICHKdlsfFdtAQEwCjOHK8ZSsqaqGST85d+HAr8E3tYWkpA9tAW4xAwiGd5D5n3gd8BwZIn6Q6pqGrOFtgCXmEFgHW0BDWht+7f9EJ9xwGbAlcAnWqLqMFRbgEvMIOHPBi+v8bMZSGb4tYGTgDcLVVSfUg38mEHCN0hrnf+bB/we+DIwETmKQZsPtAW4pOoG6Ur4TYJ6BmmnBZgGbIcMOlyBpCzS4Bml+xoeGIj+BFuj2CFj2QYAJwCvF6x3bEa9RoCMQN8AvgzSTjdgbyRRg2+tz+XUGhxVb2Ktpi0gAa05/74FuJliKu9JBdyjUMwg1WAb4CjP95iGZHMsFVU3SF9tAQXQAzkb3udn/TEl3RdSdYOspC0gAXnnFU4ANnIhpA4nIUfTGSXjIPQ74T476UVkqH+Ykk0OdqTqb5AYUm/m+YwuA3q6ElKDZcAR5B9ICBYzSPhk/Yy+T/4h4kacCbzg+R6qVN0gMXzzZfmMBiFZIn0yC/it53uoU3WDLNMWkIAseQPORVYJ+ORIwlxN7JSqG6RZW0AC0u523BH4ng8hHbiaiiRoqLpBYniDpOkn9QIu9SWkjTnA8Z7vEQxVN8in2gISkOYNciqyvswnxyLL7CtB1Q2ySFtAAlZO+HujgeN8CgHuBf7i+R5BUXWDfKwtIAFJDNIVWU7iMzvLUvyv5wqOqhtkgbaABCQxyCRgK886TgNe83wPIzAGo7+UpFGc0KAMayNG96nhWSqaO6zqb5D52gISsEqD/78Qv6uSlyPLST7zeI9gqbpBmgm/mVXPIBOAvTzf/2LgMc/3MAJmFvrNqHpxcSe6V0WyLfq895tUY89Mp1T9DQLhp6nprIKegf+MLEcDCz3fI2jMIJLaM2RWrfGzIrbQ/gO4xfM9gscMIkc/h8yKBiliC+0CSrqFNi1mkLDSdtZiRYMUsYX2ZOLJJm94Zj/0O+L1YnYHrcPxv4X239gXp9GBseiboF50HIa+0vO9moGNsz5Io5wMRd8EjaIH0tT6xPN9Ts/5LI0S0gU571vbBPViCJI+1Oc9ZuE3wUOUWFtTKkfoi/AG4/+ouKOowBbatJhBhFe1BTRgCLCGx+tfC9zn8frRYgYRZmkLaMCaSBJqH8xDdgkaNTCDCC9pC2jAUPzNSxwHzPV07egxgwgvagtowDDgSQ/XvQ+4xsN1jZLRD/2RqnpxF5Joe57Day5FcvcadShil1g/ZIhyO2AkciZHiLvTWgk3CfM6yCTeVODnjq75G8IfnCg1A4HzgMXofwPHHksQ864GvOfges8RR17i0rIbsoxcu2KVKb7U9mx3Rra/Zr3OQvwvdjTqcCQyJKldocoW4zs84wORrJBZzOE747tRh/2QTf7alamMseIGqa+T7ojnGdibQ5WRWH/DZ1xQ45n3Qib5Xqnzd08CPyDMgZHgcTlqMx34hsPrGf/Pg9R/vusBmyLrtpYjE4tPYRufcuHKIDsB9zi6llGb+cAAbRFVw9VM+o8cXcfonNWQGXWjQFwYpDewu4PrGI0Zoy2gargwyBjiOG+8DGytLaBquDDISAfXMJLhO4O7sQIuDGIdx+LYguQH6hgOcGEQa14VR09gW20RVcL2g8TH+Ma/YrjCDBIfO2oLqBJmkPgYgyRxMArADBIfXYBva4uoCmaQOJmgLaAqmEHi5BvAIG0RVcAMEifdgYO0RVQBM0i8HKEtoAqYQeJlJLb/xjtmkLj5obaAsmMGiZuJwAhtEWXGDBI33YCTtEWUGTNI/BzM5zmzDMeYQeKnB3CKtoiyEksqmP0J4/SjHYFJ2iJqcBhwEfCsthDjizThPydUn6IK04A+wAfo58iqFfd7LHdlsSZWOhYBZ2mL6ITtgH20RZQNM0h6LkLeIiFyIbYF2ilmkPQsAf6gLaIT1gTO1xZRJswg2bgEOacjRA4E9tIWURbMINlYCpymLaIOf8KyMDrBDJKdy5GTmkJkIHATlnEmN2aQ7LQAP9EWUYcxwDnaImLHDJKPB5Bv6lCZBBytLSJmzCD5OR7pk4TKFGBPbRGxYgbJzxuEO+wL8hlfj2VkzIQZxA1nAM9ri6hDb+BOLPl1aswgbmgGDkGOZw6VVYG7gS21hcSEGcQdTwFnaotoQD/gXmwve2LMIG75NfCCtogG9EPeJLawMQFmELfE0NQCOWPkRmCytpDQMYO450ngZG0RCegKnAtcjZw7YniiiepsmEpKF+AW9DdRJY0nsLVbNbE3iB9akabW67oyErMFsl33O9pCQsMM4o/5wHeRfkkM9Ef6JVciQ8IGZhDfPEF8HeFDkZG4b2kLKQtNWB+kEVPQ72dkieuw06xy04QZpBFdgVvRr/BZYiFwIra3JDNNmEGS0Ad4Bv0KnzVeBQ5ARugqg/VBimMR0q5/W1tIRkYAfwVmIMvnK2EUM0ixvI1kZww1bVASRiNzPDOQjJfddOX4xQxSPC8jJpmnLSQno5FO/CzgWGSNl1GDJqwPkoXNkbkS7b6Fq1gEXIotp/8CTZhBsrI1sAD9yu06ngWOA4a6e1Tx0oQZJA9fJdyE2HmjBUmqPQlYy9UDi40mzCB5+Qqybku7QvuM5cBjwKlIM6wSo2BgBnHFWsgSD+2KXFTMBaYhb5dNKPGAURNmEFcMQHJtaVdejfgI+CeSAGMisD4BvGViOWGqKnyIDAFfAByprKVo+gHj26KdJcAryND4LGA20hR9G0kevtC3KDNIeCwDjkLy/k6h2p9Rb2CztqjFMmR4eT7wGpI44x7kLdxShMAkNGFNLF9sR3lHuHzGW8DPgF6pn/gKlLZjVBKmIx3Y+5R1xMZaSLbL54GxeS5kBgmfd4GdkUQQoWdLCY11kS+ZA7NewAwSB8uR0Z1xSFvbSE534Brgm1n+2AwSF48CGwPnIaYxktEN+DNyhmMqzCDxsQQ4Bmlbv6isJSYGIJkvU2EGiZdHkeHPUwn7fJKQOJiUx2SbQeKmGTlMdAPgBmUtMdCTlNlazCDl4E1kd984ZLLM6JxUw75mkHLxELJSdiLhZ5nXYv00v+zCIEVkDvy0gHuUhVZklexoJAvJTF05wdE/zS+7MIjvvdULkDU3RjqWI2cTjgL2RbI8GiknW10Y5CUH19C8ftlpQXLujkFOlroNectUlVRpl1wY5HH8DjM+4PHaVeNBYA8kx9UZwPu6clR4UuOm1+NvZebmBZajavRAOvR3IM1Y7VW4RcQoJ08uJWMyim0U0wssQ9VZAzgaeAT9Suwr7nL2tDJwXSeiskYLkvHDKJ5hiFnuRUYptSu2i1iMTKiqMRB4A3cFOrVY+UYn9EMOApqKbHnVruhZv2wnun4wWdgIGfbNW6BrCWDDvlGTEcDhwFXIHIt25W8UHwN7eXkSGRmFbLDPWqCzsRn+mFgd2WtxCvB3wnnLLEcmTId7K3kO+gLnk25k5FVgNw2xhnP6IkteDgZOR0Y5H0WGlX0bYxZwDrChi4L4bsYMRzJ0TKD2GpilyDzHtchklm0pLT8rI8e6DQEGI33XQcgSkL5t0Qs50ao7Uke7IHVjGVJnliBNp3ltsQh4B9kfM8el2CLb+WsgJumPjIy8i7RhYzkF1jAMw+jI/wAMzQRLQFIU1gAAAABJRU5ErkJggg==", UF = (A) => (vn("data-v-a2fc42b1"), A = A(), yn(), A), jF = { class: "row p-3" }, zF = /* @__PURE__ */ UF(() => /* @__PURE__ */ D("div", { class: "col-12 text-center" }, [
+const qC = /* @__PURE__ */ nn(BF, [["__scopeId", "data-v-d61cd147"]]), YF = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAACXBIWXMAAA3XAAAN1wFCKJt4AAA5+mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxMzIgNzkuMTU5Mjg0LCAyMDE2LzA0LzE5LTEzOjEzOjQwICAgICAgICAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIKICAgICAgICAgICAgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNS41IChNYWNpbnRvc2gpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE5LTA5LTEyVDIyOjQ5OjIwKzAyOjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTktMDktMTJUMjI6NTE6NTArMDI6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8eG1wOk1ldGFkYXRhRGF0ZT4yMDE5LTA5LTEyVDIyOjUxOjUwKzAyOjAwPC94bXA6TWV0YWRhdGFEYXRlPgogICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3BuZzwvZGM6Zm9ybWF0PgogICAgICAgICA8cGhvdG9zaG9wOkNvbG9yTW9kZT4zPC9waG90b3Nob3A6Q29sb3JNb2RlPgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjJkY2EwOWI0LWY5MjAtNGFlNC04ZjllLTFjMzg1ZWJmYjMzMjwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+YWRvYmU6ZG9jaWQ6cGhvdG9zaG9wOjM1NzhkZjM3LTE2MmQtMTE3ZC1iYTEwLWJmMzZlOWVkOWE3ZDwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOmNkZTRlZDI3LTcxNzEtNDA3OS05ZDVjLTE1NDZlNmQ5MmE3MTwveG1wTU06T3JpZ2luYWxEb2N1bWVudElEPgogICAgICAgICA8eG1wTU06SGlzdG9yeT4KICAgICAgICAgICAgPHJkZjpTZXE+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmNyZWF0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDpjZGU0ZWQyNy03MTcxLTQwNzktOWQ1Yy0xNTQ2ZTZkOTJhNzE8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTktMDktMTJUMjI6NDk6MjArMDI6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE1LjUgKE1hY2ludG9zaCk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjJkY2EwOWI0LWY5MjAtNGFlNC04ZjllLTFjMzg1ZWJmYjMzMjwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxOS0wOS0xMlQyMjo1MTo1MCswMjowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIDIwMTUuNSAoTWFjaW50b3NoKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICAgICA8dGlmZjpYUmVzb2x1dGlvbj45MDAwMDAvMTAwMDA8L3RpZmY6WFJlc29sdXRpb24+CiAgICAgICAgIDx0aWZmOllSZXNvbHV0aW9uPjkwMDAwMC8xMDAwMDwvdGlmZjpZUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6UmVzb2x1dGlvblVuaXQ+MjwvdGlmZjpSZXNvbHV0aW9uVW5pdD4KICAgICAgICAgPGV4aWY6Q29sb3JTcGFjZT42NTUzNTwvZXhpZjpDb2xvclNwYWNlPgogICAgICAgICA8ZXhpZjpQaXhlbFhEaW1lbnNpb24+MjAwPC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjIwMDwvZXhpZjpQaXhlbFlEaW1lbnNpb24+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgIAo8P3hwYWNrZXQgZW5kPSJ3Ij8+LrEG7AAAACBjSFJNAAB6JQAAgIMAAPn/AACA6AAAUggAARVYAAA6lwAAF2/XWh+QAAJx50lEQVR4AQD//wAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAADUAAABEAAAAMQAAACMAAAAWAAAACwAAAAAAAAD1AAAA6wAAAN4AAADPAAAAvgAAAMgAAAD9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAB/AAAA4QAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAOQAAACGAAAAEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdgAAAPUAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA+AAAAH0AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEMAAADrAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAADwAAAASQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcgAAALwAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAtgAAAHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACeAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAACkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJYAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbgAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDAAAAvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABNAAAAtAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADOAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAKgAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAcgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAANgAAAAdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAACYAAADzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAB0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAGMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAA3QAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAAAA1QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADqAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAA4gAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPUAAAAlAAAA5wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADxAAAAuwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL8AAADnAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAApgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL0AAABCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzQAAADQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMEAAACtAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC6AAAAtgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXAAAAzgAAABoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO8AAAA0AAAA3gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADpAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFIAAADeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAywAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABVAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAABbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALwAAALwAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAEUAAADMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0QAAACYAAACoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAJQAAAMwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALQAAAL4AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAxQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAZAAAAE4AAAAXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7QAAALIAAACdAAAAxQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAzAAAANAAAACMAAAAYAAAADQAAAAAAAADzAAAA6QAAAN4AAADNAAAAzAAAAP0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAADAAAAA4AAAAFAAAAAYAAAD9AAAA7AAAAO4AAADwAAAA8AAAAPAAAADxAAAA7wAAAPMAAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAABxAAAAZgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8AAAA9QAAAPMAAADvAAAA8AAAAO8AAADwAAAA7wAAAO8AAADvAAAA7gAAAO8AAADuAAAA8QAAAPQAAADyAAAA8gAAAP4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYwAAAJsAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPoAAADxAAAA8gAAAPIAAADxAAAA7wAAAPEAAADiAAAA2AAAAMgAAADfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAChAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAADEAAAATQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJ8AAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL4AAABcAAAA5wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD3AAAAPAAAAM4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA1QAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+AAAADgAAADRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABvAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAKMAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC0AAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABoAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAWQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/QAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPUAAAD7AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAPQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+AAAAMcAAAD+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAP4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtwAAANAAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAqAAAACUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACrAAAAzAAAAEkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACBAAAAIgAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADZAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALoAAADVAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPwAAADCAAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHMAAAAAAAAAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN0AAADSAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAAAANQAAAA2AAAAGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMUAAADaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAABFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMEAAAD2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACaAAAAzgAAAAAAAABCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACOAAAAAAAAABQAAAAyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6gAAAOIAAAAbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI0AAADZAAAAAAAAADoAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxQAAAAAAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD1AAAA8QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8QAAAIsAAAAAAAAAAAAAAEMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxQAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADzAAAA8gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjwAAAOkAAAAAAAAAAAAAADsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvwAAAAAAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADyAAAA8wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAAiwAAAAAAAAAAAAAAIgAAADMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAzgAAAAAAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACOAAAA9gAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADJAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAACSAAAAAAAAAAAAAAAAAAAAPgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8AAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIUAAAD9AAAAAAAAAAAAAAAAAAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP0AAADEAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGA/n8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADPAAAApAAAAAAAAAAAAAAAAAAAADYAAAAlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0AAAAOAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACCAAAAAAAAAAAAAAAAAAAAAAAAAD8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwQAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALoAAACwAAAAAAAAAAAAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvQAAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAAAAAAAAAACwAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAAzAAAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAAAAAAAAAAAArAAAALsAAAAAAAAAAAAAAAAAAAAAAAAAPQAAABEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADLAAAA6gAAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAhwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8AAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAAAAAACiAAAAzgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAPoAAACDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAANQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOYAAADMAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+QAAAPUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAA4AAAAAAAAAAAAAAJ4AAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMMAAAD6AAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAPQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAABAAAAAAAAAAAAAAAKcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAPYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAA8AAAAAAAAA8gAAAM8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAA/gAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0QAAANMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAAAAAAAAAAAAAEAAAABUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPQAAAD2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPsAAADkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAAAAAAAAAAAAAAAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAACMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAB0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO0AAAD3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOcAAADiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAABkAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAAAAAABwAAAAbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADqAAAA+QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD7AAAA8QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADmAAAA5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0AAAA8QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAACwAAAAAAAAAAAAAAAAAAAAAAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8AAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADzAAAA7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARAAAADQAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADqAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD1AAAA/gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABoAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAAAAaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADhAAAA7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0AAAA7QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4wAAAPYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAOoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADtAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5wAAAOsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7wAAAOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPwAAADzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAABQAAADsAAAAAAAAAAAAAAAAAAAAAAAAAOwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPMAAAANAAAACwAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAPYAAADuAAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABYAAADsAAAAAAAAAAAAAAAAAAAAAAAAAOQAAADuAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAADSAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAPkAAADqAAAA3AAAAKsAAACnAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOwAAADnAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAADAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAAAAAAcAAAAdAAAAQQAAAJYAAADpAAAAYwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADqAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAnAAAAKwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFMAAACoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN8AAAD+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAID/fwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFcAAABoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7AAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACGAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9gAAAOIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARAAAAVQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATQAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAB4AAADuAAAAAAAAAAAAAAAAAAAAAAAAAO0AAADyAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMwAAAAiAAAArQAAANoAAAACAAAACgAAAA0AAAA1AAAAQAAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKwAAACkAAADHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAApgAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAE4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADSAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAsQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUAAACxAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA9wAAAE3///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMsAAABPAAAAJwAAAMkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2wAAALcAAADgAAAA7AAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADpAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAAoAAAD2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2gAAADgAAACOAAAAcQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3gAAAN8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAKAAAACaAAAAxwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHAAAABgAAADeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAByAAAA4QAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2gAAANsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAGQAAAAAAAADUAAAAWQAAANQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAADeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkQAAABoAAAB2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxQAAAPkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAApAAAACwAAAI8AAAAtAAAA1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADpAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAB0AAAAtAAAAGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHcAAAC5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAowAAAHIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADlAAAA/gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAB9AAAA1AAAAOAAAADSAAAA3gAAANYAAAB5AAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADfAAAAyQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAAACwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHAAAA5AAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAJEAAAAAAAAAAAAAAAAAAAAAAAAAQwAAAO4AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA8QAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmAAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAACjAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAA9QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAKQAAAD0AAAAwAAAACQAAAAAAAAAAAAAAAAAAAAAAAAD5AAAA7QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAAAAAABEAAAAvAAAABEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAMMAAABGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAnQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAAIoAAADnAAAA/wAAAP8AAAD/AAAA8wAAAKUAAAAmAAAAAAAAAAAAAAAAAAAArgAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAANoAAABIAAAAWQAAAHoAAADqAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAADtAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANUAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAApAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGAAAA+QAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAbQAAAAAAAAAAAAAAiwAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHoAAAD2AAAA1gAAANUAAADVAAAA1QAAAM4AAAD0AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAANIAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEUAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAALoAAACpAAAA4wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA3AAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAADqAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAJoAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAKEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIwAAACsAAADSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8AAAAVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcgAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+QAAAMUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0AAAAOMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8QAAAN0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAADQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtAAAAO0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADyAAAAzgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA1QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9wAAAN0AAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACDAAAAywAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADKAAAA6QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABzAAAACgAAACQAAAAlAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIUAAAB+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAApAAAAKgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHAAAAPMAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP4AAACwAAAAiAAAAHgAAADjAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAOgAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAD0AAADIAAAA/wAAAP8AAAD/AAAA/wAAAP8AAADKAAAAPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABjAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFYAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAH8AAAAAAAAAAAAAAAAAAABtAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAHcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAAFcAAABmAAAAWAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACmAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAOgAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAMwAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArAAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAArAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAADdAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAKsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvgAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAKEAAAD2AAAA/wAAAP8AAAD/AAAA/QAAALoAAAAzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKMAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAClAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA/wAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAPwAAAFUAAABFAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABMAAAA0wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA3QAAAE0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHUAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAH///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAA4gAAAAMAAABwAAAAkQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAA1AAAADAAAAPQAAADSAAAA0QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALEAAABOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1wAAACoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlAAAAAwAAAAAAAACQAAAA7QAAAKQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAyQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdAAAAAAAAAAAAAAAAAAAAowAAAG0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOQAAABcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAJIAAACsAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAqAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABTAAAA6QAAAIIAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJgAAACoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAA3gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAH0AAAB7AAAAvQAAAMAAAADPAAAA6gAAAPUAAAAQAAAAGAAAAB0AAABMAAAARgAAAGsAAADWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAOwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAARQAAAEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB0AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+wAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPUAAADKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3gAAAOEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM8AAADlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACUAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMhxN44AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAAywAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADmAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADFAAAA7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAKgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArAAAAJgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAUQAAAFIAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPgAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArAAAAUAAAAFMAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOoAAADuAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOIAAADIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0AAAAUwAAAFIAAAAmAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANoAAAD+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAAD+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA7AAAAUwAAAE8AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAABDAAAAUQAAAFAAAAAXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsAAABGAAAAUQAAAEsAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1AAAANUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAABJAAAAUwAAAEgAAAALAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAyQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAABMAAAAUgAAAEMAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9gAAAOMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAA0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAABRAAAAUQAAAD4AAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4gAAAOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD6AAAAxQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACcAAABQAAAAVAAAADQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADRAAAA4QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC4AAABSAAAAUAAAAC8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAuwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAABTAAAAUQAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADtAAAApQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAD8AAABQAAAAUAAAAB0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB/AAAA7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPMAAADNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAEUAAABRAAAATgAAABUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALkAAACVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMoAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEYAAABjAAAARgAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvQAAAEsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDAAAAnQAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACZAAAAaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIsAAAC8AAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0AAAApgAAAC8AAABoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6wAAAMUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAHMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADvAAAAtAAAAK8AAAC5AAAA9gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwwAAAPkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAcwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADmAAAAsQAAAK4AAAC/AAAA/QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALwAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADeAAAAsQAAAK0AAADHAAAA/gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFwAAAE0AAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADWAAAArwAAAK4AAADOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADZAAAAzQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQwAAAEsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADNAAAArgAAALAAAADWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAANAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQAAAC8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAArwAAAK4AAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwAAABsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPsAAAC+AAAArwAAALIAAADnAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPcAAAC7AAAArQAAALUAAADtAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANIAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5gAAAOkAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAC0AAAAsAAAALcAAAD2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxgAAABsAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOsAAACzAAAArgAAAL0AAAD4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADRAAAA5AAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAHAAAAGoAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAOAAAACSAAAAPgAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAogAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA5gAAAAsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAA4AAADnAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAANkAAACIAAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAigAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAABkAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAANEAAAB/AAAALQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJkAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAADhAAAACwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAnwAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAMYAAAB1AAAAJQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAADOAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAJ0AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/QAAAL4AAABsAAAAHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAAAAyQAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/AAAAEYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABXAAAA8AAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA9wAAALMAAABhAAAAFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAC4AAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAFgAAABSAAAAKgAAABQAAAD9AAAA5gAAAM4AAAC8AAAAswAAAPEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVAAAAXwAAAEcAAAAlAAAAEQAAAPcAAADjAAAAyQAAAJ8AAADNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA//8AtAFuDBqbswAAAABJRU5ErkJggg==", HF = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAADxVJREFUeJztnXm0XtMZh59MJJFIJCESGqlQWUEMJYY0LWJuDY20plLKQhttY2rRqlttaakhZqKGarFoWpaZWkJRs1BjomKZSSJk5MbN7R/vvcttfPf7zrD3efc+533WelfWurn3nN8+3/59Z4/vBsMwOqWLtgBlVgKGAH2BHsAiYC4wX1OUEQ5VM8hAYE9gB2ArYF2gW43fmwf8B5gO3Ak8AbQWI9EwimcbYBrQjFT0tPEyMBlYpWjhhuGTkcDdZDNFrZgDHAl0LbIQhuGarsCJZH9jNIpHgOFFFcYwXNIXuB0/xugY84FdCiqTYThhEJ93qIuIZcD+hZTMMHLSB3ic4szRHp8BexRQPsPITBfgZoo3R3ssAUZ7L6VhZGQyeuZoj5exYWAjQIYj3+DaBmkFzvBbVMNIz9/QN0Z7NAPr+S2uYSRnI/RNsWJM9Vpiw0jBFegbotZbZJDPQhtGEnoDC9A3RK2Y5LHcRoHEvKZoPDJrHiITtAUYbojZINtrC6jDtkBPbRFGfmI2yJbaAurQExlAMCInZoNsoC2gAaHrMxIQq0F6AKtri2jAWtoCjPzEapA+2gISEOoAgpGCWA1Sax95aHTXFmDkJ1aDLNIWkIAF2gKM/MRqkE+BhdoiGjBHW4CRn1gN0grM1BbRgFe0BRj5idUgADO0BdShFXheW4SRn5gNMl1bQB2exrIzloKYDXIP0KItohPu0BZgGAC3or9yt1as77PQhpGUXdA3w4pxt9cSG0YKuqCT6qdejPNaYsNIyVj0TdEeN3kuq2Fk4lL0zTEfWNt3QQ0jC72R8zw0DbK391IaRg5GAO+hY45fFVA+w8jNpsgRakWa4zyqd1KXETEbALMpxhy/wMxhRMgA4Bb8GWMusHthpTEMD3QBDgDexa05rgbWKK4YhuGXVYBjgbfIborPgBuBTQrWbhiF0Q3YCbgceJXGpliEHAH9U2Cwgl4jAKrcwRyEdOiHIQkWVkJ2Kc5FNmPNRt4caRkMbIhMGvZGjmn7oO2aMxHzGUal2ByYAvyXxp37q5DMi4ZRer4GPEC2fs3TwGFAr8JVG4Zn+iJvAhejYvOAs4B1Cy2BYXhiBJ/3JVxGC3AbsCvV7hsaEbMJ7udVasVM4BigfzHFMoz8jAM+wr85OsZi4DLsiGkjcDZG5kWKNMeK8S9gXyRxt2EEw0DgNXTN0THeAZqAIR7LbBiJ6A7ch74pakUzcAMy1GwYKpyCvhGSxDPA4dicilEg6wFL0a/8aeJD4GxsTsUogLvRr/BZowW4HdgNm1MxPLAP+pXcVcxClvvbnIrhjBnoV2zXsRiYiu1pMXKyK/qV2XfYnIqRmfvRr8BFhc2pGKnYFP1KqxHNwPXYnIrRgLPRr6zaYXMqRk26ki+xQ9niQ+CP2JyK0cb26FfKEKN9n4rNqVScS9CvjKHHTGAyNqdSSZKkArKQWIx8oQzL9KSN6BiGfqWLMZYAP87wvI3IOAT9yhZzXEJJ+yfdtAUEwmRkDsTIxhbIKOD92kIMPzyP/rdw7NFCCRPilfK1mJKVkf3m3bWFlICHKdlsfFdtAQEwCjOHK8ZSsqaqGST85d+HAr8E3tYWkpA9tAW4xAwiGd5D5n3gd8BwZIn6Q6pqGrOFtgCXmEFgHW0BDWht+7f9EJ9xwGbAlcAnWqLqMFRbgEvMIOHPBi+v8bMZSGb4tYGTgDcLVVSfUg38mEHCN0hrnf+bB/we+DIwETmKQZsPtAW4pOoG6Ur4TYJ6BmmnBZgGbIcMOlyBpCzS4Bml+xoeGIj+BFuj2CFj2QYAJwCvF6x3bEa9RoCMQN8AvgzSTjdgbyRRg2+tz+XUGhxVb2Ktpi0gAa05/74FuJliKu9JBdyjUMwg1WAb4CjP95iGZHMsFVU3SF9tAQXQAzkb3udn/TEl3RdSdYOspC0gAXnnFU4ANnIhpA4nIUfTGSXjIPQ74T476UVkqH+Ykk0OdqTqb5AYUm/m+YwuA3q6ElKDZcAR5B9ICBYzSPhk/Yy+T/4h4kacCbzg+R6qVN0gMXzzZfmMBiFZIn0yC/it53uoU3WDLNMWkIAseQPORVYJ+ORIwlxN7JSqG6RZW0AC0u523BH4ng8hHbiaiiRoqLpBYniDpOkn9QIu9SWkjTnA8Z7vEQxVN8in2gISkOYNciqyvswnxyLL7CtB1Q2ySFtAAlZO+HujgeN8CgHuBf7i+R5BUXWDfKwtIAFJDNIVWU7iMzvLUvyv5wqOqhtkgbaABCQxyCRgK886TgNe83wPIzAGo7+UpFGc0KAMayNG96nhWSqaO6zqb5D52gISsEqD/78Qv6uSlyPLST7zeI9gqbpBmgm/mVXPIBOAvTzf/2LgMc/3MAJmFvrNqHpxcSe6V0WyLfq895tUY89Mp1T9DQLhp6nprIKegf+MLEcDCz3fI2jMIJLaM2RWrfGzIrbQ/gO4xfM9gscMIkc/h8yKBiliC+0CSrqFNi1mkLDSdtZiRYMUsYX2ZOLJJm94Zj/0O+L1YnYHrcPxv4X239gXp9GBseiboF50HIa+0vO9moGNsz5Io5wMRd8EjaIH0tT6xPN9Ts/5LI0S0gU571vbBPViCJI+1Oc9ZuE3wUOUWFtTKkfoi/AG4/+ouKOowBbatJhBhFe1BTRgCLCGx+tfC9zn8frRYgYRZmkLaMCaSBJqH8xDdgkaNTCDCC9pC2jAUPzNSxwHzPV07egxgwgvagtowDDgSQ/XvQ+4xsN1jZLRD/2RqnpxF5Joe57Day5FcvcadShil1g/ZIhyO2AkciZHiLvTWgk3CfM6yCTeVODnjq75G8IfnCg1A4HzgMXofwPHHksQ864GvOfges8RR17i0rIbsoxcu2KVKb7U9mx3Rra/Zr3OQvwvdjTqcCQyJKldocoW4zs84wORrJBZzOE747tRh/2QTf7alamMseIGqa+T7ojnGdibQ5WRWH/DZ1xQ45n3Qib5Xqnzd08CPyDMgZHgcTlqMx34hsPrGf/Pg9R/vusBmyLrtpYjE4tPYRufcuHKIDsB9zi6llGb+cAAbRFVw9VM+o8cXcfonNWQGXWjQFwYpDewu4PrGI0Zoy2gargwyBjiOG+8DGytLaBquDDISAfXMJLhO4O7sQIuDGIdx+LYguQH6hgOcGEQa14VR09gW20RVcL2g8TH+Ma/YrjCDBIfO2oLqBJmkPgYgyRxMArADBIfXYBva4uoCmaQOJmgLaAqmEHi5BvAIG0RVcAMEifdgYO0RVQBM0i8HKEtoAqYQeJlJLb/xjtmkLj5obaAsmMGiZuJwAhtEWXGDBI33YCTtEWUGTNI/BzM5zmzDMeYQeKnB3CKtoiyEksqmP0J4/SjHYFJ2iJqcBhwEfCsthDjizThPydUn6IK04A+wAfo58iqFfd7LHdlsSZWOhYBZ2mL6ITtgH20RZQNM0h6LkLeIiFyIbYF2ilmkPQsAf6gLaIT1gTO1xZRJswg2bgEOacjRA4E9tIWURbMINlYCpymLaIOf8KyMDrBDJKdy5GTmkJkIHATlnEmN2aQ7LQAP9EWUYcxwDnaImLHDJKPB5Bv6lCZBBytLSJmzCD5OR7pk4TKFGBPbRGxYgbJzxuEO+wL8hlfj2VkzIQZxA1nAM9ri6hDb+BOLPl1aswgbmgGDkGOZw6VVYG7gS21hcSEGcQdTwFnaotoQD/gXmwve2LMIG75NfCCtogG9EPeJLawMQFmELfE0NQCOWPkRmCytpDQMYO450ngZG0RCegKnAtcjZw7YniiiepsmEpKF+AW9DdRJY0nsLVbNbE3iB9akabW67oyErMFsl33O9pCQsMM4o/5wHeRfkkM9Ef6JVciQ8IGZhDfPEF8HeFDkZG4b2kLKQtNWB+kEVPQ72dkieuw06xy04QZpBFdgVvRr/BZYiFwIra3JDNNmEGS0Ad4Bv0KnzVeBQ5ARugqg/VBimMR0q5/W1tIRkYAfwVmIMvnK2EUM0ixvI1kZww1bVASRiNzPDOQjJfddOX4xQxSPC8jJpmnLSQno5FO/CzgWGSNl1GDJqwPkoXNkbkS7b6Fq1gEXIotp/8CTZhBsrI1sAD9yu06ngWOA4a6e1Tx0oQZJA9fJdyE2HmjBUmqPQlYy9UDi40mzCB5+Qqybku7QvuM5cBjwKlIM6wSo2BgBnHFWsgSD+2KXFTMBaYhb5dNKPGAURNmEFcMQHJtaVdejfgI+CeSAGMisD4BvGViOWGqKnyIDAFfAByprKVo+gHj26KdJcAryND4LGA20hR9G0kevtC3KDNIeCwDjkLy/k6h2p9Rb2CztqjFMmR4eT7wGpI44x7kLdxShMAkNGFNLF9sR3lHuHzGW8DPgF6pn/gKlLZjVBKmIx3Y+5R1xMZaSLbL54GxeS5kBgmfd4GdkUQQoWdLCY11kS+ZA7NewAwSB8uR0Z1xSFvbSE534Brgm1n+2AwSF48CGwPnIaYxktEN+DNyhmMqzCDxsQQ4Bmlbv6isJSYGIJkvU2EGiZdHkeHPUwn7fJKQOJiUx2SbQeKmGTlMdAPgBmUtMdCTlNlazCDl4E1kd984ZLLM6JxUw75mkHLxELJSdiLhZ5nXYv00v+zCIEVkDvy0gHuUhVZklexoJAvJTF05wdE/zS+7MIjvvdULkDU3RjqWI2cTjgL2RbI8GiknW10Y5CUH19C8ftlpQXLujkFOlroNectUlVRpl1wY5HH8DjM+4PHaVeNBYA8kx9UZwPu6clR4UuOm1+NvZebmBZajavRAOvR3IM1Y7VW4RcQoJ08uJWMyim0U0wssQ9VZAzgaeAT9Suwr7nL2tDJwXSeiskYLkvHDKJ5hiFnuRUYptSu2i1iMTKiqMRB4A3cFOrVY+UYn9EMOApqKbHnVruhZv2wnun4wWdgIGfbNW6BrCWDDvlGTEcDhwFXIHIt25W8UHwN7eXkSGRmFbLDPWqCzsRn+mFgd2WtxCvB3wnnLLEcmTId7K3kO+gLnk25k5FVgNw2xhnP6IkteDgZOR0Y5H0WGlX0bYxZwDrChi4L4bsYMRzJ0TKD2GpilyDzHtchklm0pLT8rI8e6DQEGI33XQcgSkL5t0Qs50ao7Uke7IHVjGVJnliBNp3ltsQh4B9kfM8el2CLb+WsgJumPjIy8i7RhYzkF1jAMw+jI/wAMzQRLQFIU1gAAAABJRU5ErkJggg==", UF = (A) => (vn("data-v-a2fc42b1"), A = A(), yn(), A), jF = { class: "row p-3" }, zF = /* @__PURE__ */ UF(() => /* @__PURE__ */ D("div", { class: "col-12 text-center" }, [
   /* @__PURE__ */ D("h4", null, "SPOT")
 ], -1)), WF = { class: "col-6 text-right" }, XF = {
   key: 0,
@@ -36620,7 +36620,7 @@ const qC = /* @__PURE__ */ tn(BF, [["__scopeId", "data-v-d61cd147"]]), YF = "dat
     };
   }
 });
-const QC = /* @__PURE__ */ tn(KF, [["__scopeId", "data-v-a2fc42b1"]]), ZF = { class: "row p-3" }, JF = { class: "col-12 text-center" }, AV = { class: "col-6 text-right" }, eV = {
+const QC = /* @__PURE__ */ nn(KF, [["__scopeId", "data-v-a2fc42b1"]]), ZF = { class: "row p-3" }, JF = { class: "col-12 text-center" }, AV = { class: "col-6 text-right" }, eV = {
   key: 0,
   class: "bi bi-stopwatch-fill",
   style: { "font-size": "4rem" }
@@ -36660,7 +36660,7 @@ const QC = /* @__PURE__ */ tn(KF, [["__scopeId", "data-v-a2fc42b1"]]), ZF = { cl
     ]));
   }
 });
-const Bi = /* @__PURE__ */ tn(aV, [["__scopeId", "data-v-27231081"]]), KC = (A) => (vn("data-v-b1f8853a"), A = A(), yn(), A), sV = { class: "row p-3" }, oV = { class: "col-12" }, lV = { class: "row" }, cV = { class: "col-12 text-center" }, uV = { class: "row" }, dV = { class: "col-12" }, hV = /* @__PURE__ */ KC(() => /* @__PURE__ */ D("div", { class: "row" }, [
+const Bi = /* @__PURE__ */ nn(aV, [["__scopeId", "data-v-27231081"]]), KC = (A) => (vn("data-v-b1f8853a"), A = A(), yn(), A), sV = { class: "row p-3" }, oV = { class: "col-12" }, lV = { class: "row" }, cV = { class: "col-12 text-center" }, uV = { class: "row" }, dV = { class: "col-12" }, hV = /* @__PURE__ */ KC(() => /* @__PURE__ */ D("div", { class: "row" }, [
   /* @__PURE__ */ D("div", { class: "col-5 text-right" }, [
     /* @__PURE__ */ D("p", null, "AVG")
   ]),
@@ -36703,14 +36703,14 @@ const Bi = /* @__PURE__ */ tn(aV, [["__scopeId", "data-v-27231081"]]), KC = (A) 
     ]));
   }
 });
-const ru = /* @__PURE__ */ tn(vV, [["__scopeId", "data-v-b1f8853a"]]), yV = /* @__PURE__ */ Me({
+const ru = /* @__PURE__ */ nn(vV, [["__scopeId", "data-v-b1f8853a"]]), yV = /* @__PURE__ */ Me({
   __name: "WorkoutSummaryChart",
   props: {
     chartPoints: { default: () => [] }
   },
   setup(A) {
     const e = A;
-    wt(() => {
+    It(() => {
       a(e.chartPoints);
     });
     const t = yA({
@@ -36752,7 +36752,7 @@ const ru = /* @__PURE__ */ tn(vV, [["__scopeId", "data-v-b1f8853a"]]), yV = /* @
     }
     return (s, l) => {
       const f = wl("apexchart");
-      return X(), Ae(f, {
+      return X(), JA(f, {
         type: "line",
         options: t.value,
         series: n.value,
@@ -36762,7 +36762,7 @@ const ru = /* @__PURE__ */ tn(vV, [["__scopeId", "data-v-b1f8853a"]]), yV = /* @
     };
   }
 });
-const ZC = /* @__PURE__ */ tn(yV, [["__scopeId", "data-v-3e5574d7"]]), Tl = (A) => (vn("data-v-f306382c"), A = A(), yn(), A), bV = { class: "modal-mask" }, xV = { class: "modal-wrapper" }, CV = {
+const ZC = /* @__PURE__ */ nn(yV, [["__scopeId", "data-v-3e5574d7"]]), Tl = (A) => (vn("data-v-f306382c"), A = A(), yn(), A), bV = { class: "modal-mask" }, xV = { class: "modal-wrapper" }, CV = {
   class: "modal-dialog modal-xl modal-dialog-scrollable",
   role: "document"
 }, wV = { class: "modal-content" }, IV = { class: "modal-header border-0" }, kV = /* @__PURE__ */ Tl(() => /* @__PURE__ */ D("h3", { class: "modal-title" }, "WORKOUT SUMMARY", -1)), _V = {
@@ -36796,12 +36796,12 @@ const ZC = /* @__PURE__ */ tn(yV, [["__scopeId", "data-v-3e5574d7"]]), Tl = (A) 
       }
     }
     return (h, m) => (X(), dA(HA, null, [
-      te(St, {
+      te(Ct, {
         text: "Show Stats",
         type: "button",
         onOnClick: m[0] || (m[0] = (y) => f())
       }),
-      l.value ? (X(), Ae(Bn, {
+      l.value ? (X(), JA(Bn, {
         key: 0,
         name: "modal"
       }, {
@@ -36851,7 +36851,7 @@ const ZC = /* @__PURE__ */ tn(yV, [["__scopeId", "data-v-3e5574d7"]]), Tl = (A) 
                         ]),
                         D("div", VV, [
                           D("div", BV, [
-                            (O = a.value) != null && O.adjustedChartPoints ? (X(), Ae(ZC, {
+                            (O = a.value) != null && O.adjustedChartPoints ? (X(), JA(ZC, {
                               key: 0,
                               "chart-points": (F = a.value) == null ? void 0 : F.adjustedChartPoints
                             }, null, 8, ["chart-points"])) : IA("", !0)
@@ -36893,7 +36893,7 @@ const ZC = /* @__PURE__ */ tn(yV, [["__scopeId", "data-v-3e5574d7"]]), Tl = (A) 
                             }, null, 8, ["class-name", "spot-number"])
                           ]),
                           D("div", XV, [
-                            (J = a.value) != null && J.enrollment.class.id ? (X(), Ae(qC, {
+                            (J = a.value) != null && J.enrollment.class.id ? (X(), JA(qC, {
                               key: 0,
                               "class-id": (sA = a.value) == null ? void 0 : sA.enrollment.class.id,
                               "user-id": h.userId
@@ -36931,7 +36931,7 @@ const ZC = /* @__PURE__ */ tn(yV, [["__scopeId", "data-v-3e5574d7"]]), Tl = (A) 
         }),
         _: 1
       })) : IA("", !0),
-      s.value ? (X(), Ae(nt, {
+      s.value ? (X(), JA(nt, {
         key: 1,
         title: "Error",
         message: gA(gt),
@@ -36941,7 +36941,7 @@ const ZC = /* @__PURE__ */ tn(yV, [["__scopeId", "data-v-3e5574d7"]]), Tl = (A) 
     ], 64));
   }
 });
-const ZV = /* @__PURE__ */ tn(KV, [["__scopeId", "data-v-f306382c"]]), Xu = (A) => (vn("data-v-a3a0e6ed"), A = A(), yn(), A), JV = /* @__PURE__ */ Xu(() => /* @__PURE__ */ D("div", { class: "row" }, [
+const ZV = /* @__PURE__ */ nn(KV, [["__scopeId", "data-v-f306382c"]]), Xu = (A) => (vn("data-v-a3a0e6ed"), A = A(), yn(), A), JV = /* @__PURE__ */ Xu(() => /* @__PURE__ */ D("div", { class: "row" }, [
   /* @__PURE__ */ D("div", { class: "col-12" }, [
     /* @__PURE__ */ D("h5", null, "WORKOUT STATS")
   ])
@@ -36981,7 +36981,7 @@ const ZV = /* @__PURE__ */ tn(KV, [["__scopeId", "data-v-f306382c"]]), Xu = (A) 
   },
   setup(A) {
     const e = At("gqlApiService"), t = A, n = yA(!1), a = yA(!1), s = yA([]);
-    wt(() => {
+    It(() => {
       l();
     });
     async function l() {
@@ -37035,7 +37035,7 @@ const ZV = /* @__PURE__ */ tn(KV, [["__scopeId", "data-v-f306382c"]]), Xu = (A) 
             ])
           ])
         ])),
-        a.value ? (X(), Ae(nt, {
+        a.value ? (X(), JA(nt, {
           key: 2,
           title: "Error",
           message: gA(gt),
@@ -37046,197 +37046,216 @@ const ZV = /* @__PURE__ */ tn(KV, [["__scopeId", "data-v-f306382c"]]), Xu = (A) 
     };
   }
 });
-const yB = /* @__PURE__ */ tn(vB, [["__scopeId", "data-v-a3a0e6ed"]]), bB = { class: "row" }, xB = { class: "col-12" }, CB = /* @__PURE__ */ D("hr", null, null, -1), wB = /* @__PURE__ */ D("h6", null, "Personal Information", -1), IB = { class: "row" }, kB = { class: "col" }, _B = { class: "col" }, SB = { class: "row" }, $B = { class: "col" }, EB = { class: "col" }, DB = { class: "row" }, PB = { class: "col" }, OB = { class: "col" }, TB = /* @__PURE__ */ D("hr", null, null, -1), NB = /* @__PURE__ */ D("h6", null, "Contact Information", -1), MB = { class: "row" }, RB = { class: "col" }, LB = { class: "col" }, FB = { class: "row" }, VB = { class: "col" }, BB = { class: "col" }, YB = { class: "row" }, HB = { class: "col" }, UB = { class: "col" }, jB = { class: "row" }, zB = { class: "col" }, WB = { class: "col" }, XB = /* @__PURE__ */ D("hr", null, null, -1), GB = { class: "row" }, qB = { class: "col-12" };
-var QB = /* @__PURE__ */ ((A) => (A.F = "F", A.M = "M", A.N = "N", A))(QB || {});
-const KB = /* @__PURE__ */ Me({
+const yB = /* @__PURE__ */ nn(vB, [["__scopeId", "data-v-a3a0e6ed"]]), bB = { class: "row" }, xB = { class: "col-6" }, CB = {
+  class: "col-6",
+  style: { "text-align": "right" }
+}, wB = /* @__PURE__ */ D("hr", null, null, -1), IB = { class: "row" }, kB = { class: "col-12" }, _B = /* @__PURE__ */ D("h6", null, "Personal Information", -1), SB = { class: "row" }, $B = { class: "col" }, EB = { class: "col" }, DB = { class: "row" }, PB = { class: "col" }, OB = { class: "col" }, TB = { class: "row" }, NB = { class: "col" }, MB = { class: "col" }, RB = /* @__PURE__ */ D("hr", null, null, -1), LB = /* @__PURE__ */ D("h6", null, "Contact Information", -1), FB = { class: "row" }, VB = { class: "col" }, BB = { class: "col" }, YB = { class: "row" }, HB = { class: "col" }, UB = { class: "col" }, jB = { class: "row" }, zB = { class: "col" }, WB = { class: "col" }, XB = { class: "row" }, GB = { class: "col" }, qB = { class: "col" }, QB = /* @__PURE__ */ D("hr", null, null, -1), KB = { class: "row" }, ZB = { class: "col-12" };
+var JB = /* @__PURE__ */ ((A) => (A.F = "F", A.M = "M", A.N = "N", A))(JB || {});
+const AY = /* @__PURE__ */ Me({
   __name: "CustomerProfileView",
   setup(A) {
-    const e = dg(), t = At("gqlApiService"), n = yA(""), a = yA(!1), s = yA(!1), l = yA(null);
-    wt(() => {
-      n.value = f(), p(n.value);
+    const e = dg(), t = At("gqlApiService"), n = yA(""), a = yA(!1), s = yA(!1), l = yA(null), f = yA(null);
+    It(() => {
+      let y = At("legacyViewUrl");
+      y && (f.value = y), n.value = p(), h(n.value);
     });
-    function f() {
-      let h = At("userId");
-      return h !== void 0 ? h : e.params.id;
+    function p() {
+      let y = At("userId");
+      return y !== void 0 ? y : e.params.id;
     }
-    async function p(h) {
+    async function h(y) {
       try {
-        a.value = !0, l.value = await t.getUser(h);
+        a.value = !0, l.value = await t.getUser(y);
       } catch {
         s.value = !0;
       } finally {
         a.value = !1;
       }
     }
-    return (h, m) => {
-      var y, C, S, I, O, F, M, E, T, Y, B, eA, tA, oA, G, Z, Q, j, J, sA, nA, cA, aA, R, rA, W, pA, vA, mA, MA, JA, EA, wA, DA, RA;
+    async function m() {
+      f.value && (window.location.href = f.value);
+    }
+    return (y, C) => {
+      var S, I, O, F, M, E, T, Y, B, eA, tA, oA, G, Z, Q, j, J, sA, nA, cA, aA, R, rA, W, pA, vA, mA, MA, Ae, EA, wA, DA, RA, VA, $A;
       return X(), dA(HA, null, [
         D("div", bB, [
           D("div", xB, [
-            D("h5", null, "Email: " + OA((C = (y = l.value) == null ? void 0 : y.user) == null ? void 0 : C.email), 1),
-            CB,
-            wB,
-            D("div", IB, [
-              D("div", kB, [
-                D("p", null, [
-                  Ie(" First Name: "),
-                  D("b", null, OA((I = (S = l.value) == null ? void 0 : S.user) == null ? void 0 : I.firstName), 1)
-                ])
-              ]),
-              D("div", _B, [
-                D("p", null, [
-                  Ie(" Last Name: "),
-                  D("b", null, OA((F = (O = l.value) == null ? void 0 : O.user) == null ? void 0 : F.lastName), 1)
-                ])
-              ])
-            ]),
+            D("h5", null, "Email: " + OA((I = (S = l.value) == null ? void 0 : S.user) == null ? void 0 : I.email), 1)
+          ]),
+          D("div", CB, [
+            f.value ? (X(), JA(Ct, {
+              key: 0,
+              type: "button",
+              text: "Legacy View",
+              onOnClick: C[0] || (C[0] = (GA) => m())
+            })) : IA("", !0)
+          ])
+        ]),
+        wB,
+        D("div", IB, [
+          D("div", kB, [
+            _B,
             D("div", SB, [
               D("div", $B, [
                 D("p", null, [
-                  Ie(" Gender: "),
-                  D("b", null, OA(((E = (M = l.value) == null ? void 0 : M.user) == null ? void 0 : E.gender) === "M" ? "Male" : ((Y = (T = l.value) == null ? void 0 : T.user) == null ? void 0 : Y.gender) === "F" ? "Female" : ""), 1)
+                  Ie(" First Name: "),
+                  D("b", null, OA((F = (O = l.value) == null ? void 0 : O.user) == null ? void 0 : F.firstName), 1)
                 ])
               ]),
               D("div", EB, [
                 D("p", null, [
-                  Ie(" Leaderboard Name: "),
-                  D("b", null, OA((eA = (B = l.value) == null ? void 0 : B.user) == null ? void 0 : eA.leaderboardUsername), 1)
+                  Ie(" Last Name: "),
+                  D("b", null, OA((E = (M = l.value) == null ? void 0 : M.user) == null ? void 0 : E.lastName), 1)
                 ])
               ])
             ]),
             D("div", DB, [
               D("div", PB, [
                 D("p", null, [
-                  Ie(" Date of Birth: "),
-                  D("b", null, OA(gA(ht)((oA = (tA = l.value) == null ? void 0 : tA.user) == null ? void 0 : oA.birthdate).format("DD/MM/YYYY")), 1)
+                  Ie(" Gender: "),
+                  D("b", null, OA(((Y = (T = l.value) == null ? void 0 : T.user) == null ? void 0 : Y.gender) === "M" ? "Male" : ((eA = (B = l.value) == null ? void 0 : B.user) == null ? void 0 : eA.gender) === "F" ? "Female" : ""), 1)
                 ])
               ]),
               D("div", OB, [
                 D("p", null, [
-                  Ie(" Weight: "),
-                  D("b", null, OA((Q = (Z = (G = l.value) == null ? void 0 : G.user) == null ? void 0 : Z.weight) != null ? Q : "") + " kg", 1)
+                  Ie(" Leaderboard Name: "),
+                  D("b", null, OA((oA = (tA = l.value) == null ? void 0 : tA.user) == null ? void 0 : oA.leaderboardUsername), 1)
                 ])
               ])
             ]),
-            TB,
-            NB,
-            D("div", MB, [
-              D("div", RB, [
+            D("div", TB, [
+              D("div", NB, [
                 D("p", null, [
-                  Ie(" Country: "),
-                  D("b", null, OA((sA = (J = (j = l.value) == null ? void 0 : j.user) == null ? void 0 : J.country) == null ? void 0 : sA.name), 1)
+                  Ie(" Date of Birth: "),
+                  D("b", null, OA(gA(ht)((Z = (G = l.value) == null ? void 0 : G.user) == null ? void 0 : Z.birthdate).format("DD/MM/YYYY")), 1)
                 ])
               ]),
-              D("div", LB, [
+              D("div", MB, [
                 D("p", null, [
-                  Ie(" City/State: "),
-                  D("b", null, OA((aA = (cA = (nA = l.value) == null ? void 0 : nA.user) == null ? void 0 : cA.state) == null ? void 0 : aA.name), 1)
+                  Ie(" Weight: "),
+                  D("b", null, OA((J = (j = (Q = l.value) == null ? void 0 : Q.user) == null ? void 0 : j.weight) != null ? J : "") + " kg", 1)
                 ])
               ])
             ]),
+            RB,
+            LB,
             D("div", FB, [
               D("div", VB, [
                 D("p", null, [
-                  Ie(" Adress Line 1: "),
-                  D("b", null, OA((rA = (R = l.value) == null ? void 0 : R.user) == null ? void 0 : rA.address1), 1)
+                  Ie(" Country: "),
+                  D("b", null, OA((cA = (nA = (sA = l.value) == null ? void 0 : sA.user) == null ? void 0 : nA.country) == null ? void 0 : cA.name), 1)
                 ])
               ]),
               D("div", BB, [
                 D("p", null, [
-                  Ie(" Adress Line 2: "),
-                  D("b", null, OA((pA = (W = l.value) == null ? void 0 : W.user) == null ? void 0 : pA.address2), 1)
+                  Ie(" City/State: "),
+                  D("b", null, OA((rA = (R = (aA = l.value) == null ? void 0 : aA.user) == null ? void 0 : R.state) == null ? void 0 : rA.name), 1)
                 ])
               ])
             ]),
             D("div", YB, [
               D("div", HB, [
                 D("p", null, [
-                  Ie(" Mobile Number: "),
-                  D("b", null, OA((mA = (vA = l.value) == null ? void 0 : vA.user) == null ? void 0 : mA.phone), 1)
+                  Ie(" Adress Line 1: "),
+                  D("b", null, OA((pA = (W = l.value) == null ? void 0 : W.user) == null ? void 0 : pA.address1), 1)
                 ])
               ]),
               D("div", UB, [
                 D("p", null, [
-                  Ie(" Emergency Contact Name: "),
-                  D("b", null, OA((JA = (MA = l.value) == null ? void 0 : MA.user) == null ? void 0 : JA.emergencyContactName), 1)
+                  Ie(" Adress Line 2: "),
+                  D("b", null, OA((mA = (vA = l.value) == null ? void 0 : vA.user) == null ? void 0 : mA.address2), 1)
                 ])
               ])
             ]),
             D("div", jB, [
               D("div", zB, [
                 D("p", null, [
-                  Ie(" Emergency Contact Number: "),
-                  D("b", null, OA((wA = (EA = l.value) == null ? void 0 : EA.user) == null ? void 0 : wA.emergencyContactPhone), 1)
+                  Ie(" Mobile Number: "),
+                  D("b", null, OA((Ae = (MA = l.value) == null ? void 0 : MA.user) == null ? void 0 : Ae.phone), 1)
                 ])
               ]),
               D("div", WB, [
                 D("p", null, [
+                  Ie(" Emergency Contact Name: "),
+                  D("b", null, OA((wA = (EA = l.value) == null ? void 0 : EA.user) == null ? void 0 : wA.emergencyContactName), 1)
+                ])
+              ])
+            ]),
+            D("div", XB, [
+              D("div", GB, [
+                D("p", null, [
+                  Ie(" Emergency Contact Number: "),
+                  D("b", null, OA((RA = (DA = l.value) == null ? void 0 : DA.user) == null ? void 0 : RA.emergencyContactPhone), 1)
+                ])
+              ]),
+              D("div", qB, [
+                D("p", null, [
                   Ie(" Emergency Contact Relationship: "),
-                  D("b", null, OA((RA = (DA = l.value) == null ? void 0 : DA.user) == null ? void 0 : RA.emergencyContactRelationship), 1)
+                  D("b", null, OA(($A = (VA = l.value) == null ? void 0 : VA.user) == null ? void 0 : $A.emergencyContactRelationship), 1)
                 ])
               ])
             ])
           ])
         ]),
-        XB,
-        D("div", GB, [
-          D("div", qB, [
-            n.value ? (X(), Ae(yB, {
+        QB,
+        D("div", KB, [
+          D("div", ZB, [
+            n.value ? (X(), JA(yB, {
               key: 0,
               "user-id": n.value
             }, null, 8, ["user-id"])) : IA("", !0)
           ])
         ]),
-        s.value ? (X(), Ae(nt, {
+        s.value ? (X(), JA(nt, {
           key: 0,
           title: "ERROR",
           message: gA(gt),
           closable: !1,
-          onOnOk: m[0] || (m[0] = (YA) => s.value = !1)
+          onOnOk: C[1] || (C[1] = (GA) => s.value = !1)
         }, null, 8, ["message"])) : IA("", !0)
       ], 64);
     };
   }
-}), ZB = { key: 0 }, JB = /* @__PURE__ */ D("i", {
+}), eY = { key: 0 }, tY = /* @__PURE__ */ D("i", {
   class: "bi bi-person-fill",
-  style: { "font-size": "1.8rem" }
-}, null, -1), AY = [
-  JB
-], eY = { key: 1 }, tY = /* @__PURE__ */ D("i", {
-  class: "bi bi-speaker",
   style: { "font-size": "1.8rem" }
 }, null, -1), nY = [
   tY
-], rY = { key: 2 }, iY = /* @__PURE__ */ D("i", {
-  class: "bi bi-fan",
+], rY = { key: 1 }, iY = /* @__PURE__ */ D("i", {
+  class: "bi bi-speaker",
   style: { "font-size": "1.8rem" }
 }, null, -1), aY = [
   iY
-], sY = { key: 3 }, oY = /* @__PURE__ */ D("i", {
-  class: "bi bi-tv",
+], sY = { key: 2 }, oY = /* @__PURE__ */ D("i", {
+  class: "bi bi-fan",
   style: { "font-size": "1.8rem" }
 }, null, -1), lY = [
   oY
-], cY = /* @__PURE__ */ Me({
+], cY = { key: 3 }, uY = /* @__PURE__ */ D("i", {
+  class: "bi bi-tv",
+  style: { "font-size": "1.8rem" }
+}, null, -1), dY = [
+  uY
+], hY = /* @__PURE__ */ Me({
   __name: "IconPositionNotBookable",
   props: {
     icon: {}
   },
   setup(A) {
     return (e, t) => (X(), dA("div", null, [
-      e.icon === "instructor" ? (X(), dA("div", ZB, AY)) : e.icon === "speaker" ? (X(), dA("div", eY, nY)) : e.icon === "fan" ? (X(), dA("div", rY, aY)) : e.icon === "tv" ? (X(), dA("div", sY, lY)) : IA("", !0)
+      e.icon === "instructor" ? (X(), dA("div", eY, nY)) : e.icon === "speaker" ? (X(), dA("div", rY, aY)) : e.icon === "fan" ? (X(), dA("div", sY, lY)) : e.icon === "tv" ? (X(), dA("div", cY, dY)) : IA("", !0)
     ]));
   }
-}), yp = (A) => (vn("data-v-9187443b"), A = A(), yn(), A), uY = { key: 0 }, dY = /* @__PURE__ */ yp(() => /* @__PURE__ */ D("br", null, null, -1)), hY = {
+}), yp = (A) => (vn("data-v-9187443b"), A = A(), yn(), A), fY = { key: 0 }, gY = /* @__PURE__ */ yp(() => /* @__PURE__ */ D("br", null, null, -1)), pY = {
   key: 2,
   class: /* @__PURE__ */ Le(["changeMemberSpot-disabledSpot"])
-}, fY = { key: 1 }, gY = /* @__PURE__ */ yp(() => /* @__PURE__ */ D("br", null, null, -1)), pY = {
+}, mY = { key: 1 }, vY = /* @__PURE__ */ yp(() => /* @__PURE__ */ D("br", null, null, -1)), yY = {
   key: 1,
   class: /* @__PURE__ */ Le(["empty-spot-not-selectable"])
-}, mY = {
+}, bY = {
   key: 2,
   class: /* @__PURE__ */ Le(["changeMemberSpot-disabledSpot"])
-}, vY = { key: 2 }, yY = /* @__PURE__ */ yp(() => /* @__PURE__ */ D("br", null, null, -1)), bY = /* @__PURE__ */ Me({
+}, xY = { key: 2 }, CY = /* @__PURE__ */ yp(() => /* @__PURE__ */ D("br", null, null, -1)), wY = /* @__PURE__ */ Me({
   __name: "AdminBookableSpotPosition",
   props: {
     spotNumber: {},
@@ -37257,20 +37276,20 @@ const KB = /* @__PURE__ */ Me({
     }
     return (s, l) => {
       var f, p, h, m, y, C;
-      return s.spotAction === 2 ? (X(), dA("div", uY, [
+      return s.spotAction === 2 ? (X(), dA("div", fY, [
         s.isBooked ? (X(), dA("div", {
           key: 0,
           class: Le(["changeMemberSpot-bookedSpot", s.selected ? "selectedSpot" : ""])
         }, [
           Ie(OA(s.spotNumber + (s.isCheckedIn === !0 ? "\u2713" : "")) + " ", 1),
-          dY,
+          gY,
           Ie(" " + OA((f = s.user) == null ? void 0 : f.firstName) + " " + OA((p = s.user) == null ? void 0 : p.lastName), 1)
         ], 2)) : s.enabled ? (X(), dA("div", {
           key: 1,
           class: Le(["changeMemberSpot-spotAvailable"]),
           onClick: l[0] || (l[0] = (S) => s.spotSelectionIsDisabled ? null : a())
-        }, OA(s.spotNumber), 1)) : (X(), dA("div", hY, OA(s.spotNumber), 1))
-      ])) : s.spotAction === 3 ? (X(), dA("div", fY, [
+        }, OA(s.spotNumber), 1)) : (X(), dA("div", pY, OA(s.spotNumber), 1))
+      ])) : s.spotAction === 3 ? (X(), dA("div", mY, [
         s.isBooked ? (X(), dA("div", {
           key: 0,
           onClick: l[1] || (l[1] = (S) => s.selected || s.spotSelectionIsDisabled ? null : a()),
@@ -37280,10 +37299,10 @@ const KB = /* @__PURE__ */ Me({
           ])
         }, [
           Ie(OA(s.spotNumber + (s.isCheckedIn === !0 ? "\u2713" : "")) + " ", 1),
-          gY,
+          vY,
           Ie(" " + OA((h = s.user) == null ? void 0 : h.firstName) + " " + OA((m = s.user) == null ? void 0 : m.lastName), 1)
-        ], 2)) : s.enabled ? (X(), dA("div", pY, OA(s.spotNumber), 1)) : (X(), dA("div", mY, OA(s.spotNumber), 1))
-      ])) : (X(), dA("div", vY, [
+        ], 2)) : s.enabled ? (X(), dA("div", yY, OA(s.spotNumber), 1)) : (X(), dA("div", bY, OA(s.spotNumber), 1))
+      ])) : (X(), dA("div", xY, [
         s.isBooked ? (X(), dA("div", {
           key: 0,
           onClick: l[2] || (l[2] = (S) => s.spotSelectionIsDisabled ? null : a()),
@@ -37295,7 +37314,7 @@ const KB = /* @__PURE__ */ Me({
           ])
         }, [
           Ie(OA(s.spotNumber + (s.isCheckedIn === !0 ? "\u2713" : "")) + " ", 1),
-          yY,
+          CY,
           Ie(" " + OA((y = s.user) == null ? void 0 : y.firstName) + " " + OA((C = s.user) == null ? void 0 : C.lastName), 1)
         ], 2)) : s.enabled ? (X(), dA("div", {
           key: 1,
@@ -37316,10 +37335,10 @@ const KB = /* @__PURE__ */ Me({
     };
   }
 });
-const xY = /* @__PURE__ */ tn(bY, [["__scopeId", "data-v-9187443b"]]), CY = {
+const IY = /* @__PURE__ */ nn(wY, [["__scopeId", "data-v-9187443b"]]), kY = {
   class: "table table-sm table-borderless",
   style: { margin: "0 auto", "margin-bottom": "35px" }
-}, wY = /* @__PURE__ */ Me({
+}, _Y = /* @__PURE__ */ Me({
   __name: "SpotMatrix",
   props: {
     matrix: {},
@@ -37333,7 +37352,7 @@ const xY = /* @__PURE__ */ tn(bY, [["__scopeId", "data-v-9187443b"]]), CY = {
   emits: ["clickSpot"],
   setup(A, { emit: e }) {
     const t = A, n = e, a = yA([]);
-    wt(() => {
+    It(() => {
       t.matrix && (a.value = l(t.matrix));
     }), Je(
       () => t.matrix,
@@ -37390,7 +37409,7 @@ const xY = /* @__PURE__ */ tn(bY, [["__scopeId", "data-v-9187443b"]]), CY = {
         spotNumber: p
       });
     }
-    return (p, h) => (X(), dA("table", CY, [
+    return (p, h) => (X(), dA("table", kY, [
       D("tbody", null, [
         (X(!0), dA(HA, null, fe(a.value, (m, y) => (X(), dA("tr", {
           key: y,
@@ -37402,7 +37421,7 @@ const xY = /* @__PURE__ */ tn(bY, [["__scopeId", "data-v-9187443b"]]), CY = {
               class: "class-position",
               key: S
             }, [
-              C.icon === "spot" ? (X(), Ae(xY, {
+              C.icon === "spot" ? (X(), JA(IY, {
                 key: 0,
                 "spot-number": (I = C.spotNumber) != null ? I : 0,
                 "is-booked": !!C.user,
@@ -37414,7 +37433,7 @@ const xY = /* @__PURE__ */ tn(bY, [["__scopeId", "data-v-9187443b"]]), CY = {
                 "spot-action": p.spotAction,
                 "spot-selection-is-disabled": p.spotSelectionIsDisabled,
                 "is-booked-for-free": C.isBookedForFree
-              }, null, 8, ["spot-number", "is-booked", "user", "enabled", "selected", "is-checked-in", "spot-action", "spot-selection-is-disabled", "is-booked-for-free"])) : (X(), Ae(cY, {
+              }, null, 8, ["spot-number", "is-booked", "user", "enabled", "selected", "is-checked-in", "spot-action", "spot-selection-is-disabled", "is-booked-for-free"])) : (X(), JA(hY, {
                 key: 1,
                 icon: C.icon
               }, null, 8, ["icon"]))
@@ -37425,7 +37444,7 @@ const xY = /* @__PURE__ */ tn(bY, [["__scopeId", "data-v-9187443b"]]), CY = {
     ]));
   }
 });
-const IY = /* @__PURE__ */ tn(wY, [["__scopeId", "data-v-7225b904"]]), JC = /* @__PURE__ */ Me({
+const SY = /* @__PURE__ */ nn(_Y, [["__scopeId", "data-v-7225b904"]]), JC = /* @__PURE__ */ Me({
   __name: "CheckInCheckOutUserInClass",
   props: {
     enrollmentId: {},
@@ -37461,7 +37480,7 @@ const IY = /* @__PURE__ */ tn(wY, [["__scopeId", "data-v-7225b904"]]), JC = /* @
       }
     }
     return (m, y) => (X(), dA(HA, null, [
-      m.isCheckedIn ? IA("", !0) : (X(), Ae(St, {
+      m.isCheckedIn ? IA("", !0) : (X(), JA(Ct, {
         key: 0,
         text: "Check-In",
         type: "button",
@@ -37469,7 +37488,7 @@ const IY = /* @__PURE__ */ tn(wY, [["__scopeId", "data-v-7225b904"]]), JC = /* @
         class: "mr-1",
         "is-loading": s.value
       }, null, 8, ["is-loading"])),
-      m.isCheckedIn ? (X(), Ae(St, {
+      m.isCheckedIn ? (X(), JA(Ct, {
         key: 1,
         text: "Check-Out",
         type: "button",
@@ -37477,7 +37496,7 @@ const IY = /* @__PURE__ */ tn(wY, [["__scopeId", "data-v-7225b904"]]), JC = /* @
         class: "mr-1",
         "is-loading": s.value
       }, null, 8, ["is-loading"])) : IA("", !0),
-      l.value ? (X(), Ae(nt, {
+      l.value ? (X(), JA(nt, {
         key: 2,
         title: "Error",
         message: f.value,
@@ -37486,11 +37505,11 @@ const IY = /* @__PURE__ */ tn(wY, [["__scopeId", "data-v-7225b904"]]), JC = /* @
       }, null, 8, ["message"])) : IA("", !0)
     ], 64));
   }
-}), Nl = (A) => (vn("data-v-fe5780d2"), A = A(), yn(), A), kY = /* @__PURE__ */ Nl(() => /* @__PURE__ */ D("div", { class: "row" }, [
+}), Nl = (A) => (vn("data-v-fe5780d2"), A = A(), yn(), A), $Y = /* @__PURE__ */ Nl(() => /* @__PURE__ */ D("div", { class: "row" }, [
   /* @__PURE__ */ D("div", { class: "col-12 text-center" }, [
     /* @__PURE__ */ D("h3", null, "WORKOUT SUMMARY")
   ])
-], -1)), _Y = { key: 0 }, SY = { class: "row" }, $Y = { class: "col-12 text-center" }, EY = { key: 1 }, DY = { class: "row mt-3" }, PY = { class: "col-12" }, OY = { class: "col-12 text-center" }, TY = /* @__PURE__ */ Nl(() => /* @__PURE__ */ D("br", null, null, -1)), NY = /* @__PURE__ */ Nl(() => /* @__PURE__ */ D("b", null, "TIME: ", -1)), MY = /* @__PURE__ */ Nl(() => /* @__PURE__ */ D("b", null, "DURATION: ", -1)), RY = /* @__PURE__ */ Nl(() => /* @__PURE__ */ D("b", null, "INSTRUCTOR: ", -1)), LY = { class: "row mt-3" }, FY = { class: "col-12 text-center" }, VY = { class: "row mt-3" }, BY = { class: "col-sm-6" }, YY = { class: "col-sm-6" }, HY = { class: "col-sm-6" }, UY = { class: "col-sm-6" }, jY = { class: "col-sm-6" }, zY = { class: "col-sm-6" }, WY = { class: "col-sm-6" }, XY = { class: "col-sm-6" }, GY = /* @__PURE__ */ Me({
+], -1)), EY = { key: 0 }, DY = { class: "row" }, PY = { class: "col-12 text-center" }, OY = { key: 1 }, TY = { class: "row mt-3" }, NY = { class: "col-12" }, MY = { class: "col-12 text-center" }, RY = /* @__PURE__ */ Nl(() => /* @__PURE__ */ D("br", null, null, -1)), LY = /* @__PURE__ */ Nl(() => /* @__PURE__ */ D("b", null, "TIME: ", -1)), FY = /* @__PURE__ */ Nl(() => /* @__PURE__ */ D("b", null, "DURATION: ", -1)), VY = /* @__PURE__ */ Nl(() => /* @__PURE__ */ D("b", null, "INSTRUCTOR: ", -1)), BY = { class: "row mt-3" }, YY = { class: "col-12 text-center" }, HY = { class: "row mt-3" }, UY = { class: "col-sm-6" }, jY = { class: "col-sm-6" }, zY = { class: "col-sm-6" }, WY = { class: "col-sm-6" }, XY = { class: "col-sm-6" }, GY = { class: "col-sm-6" }, qY = { class: "col-sm-6" }, QY = { class: "col-sm-6" }, KY = /* @__PURE__ */ Me({
   __name: "CustomerWorkoutSummary",
   props: {
     classId: {},
@@ -37499,7 +37518,7 @@ const IY = /* @__PURE__ */ tn(wY, [["__scopeId", "data-v-7225b904"]]), JC = /* @
   },
   setup(A) {
     const e = At("gqlApiService"), t = A, n = yA(!1), a = yA(null), s = yA(!1);
-    wt(() => {
+    It(() => {
       l();
     });
     async function l() {
@@ -37515,92 +37534,92 @@ const IY = /* @__PURE__ */ tn(wY, [["__scopeId", "data-v-7225b904"]]), JC = /* @
     return (f, p) => {
       var h, m, y, C, S, I, O, F, M, E, T, Y, B, eA, tA, oA, G, Z, Q, j, J, sA, nA, cA, aA, R, rA, W;
       return X(), dA(HA, null, [
-        kY,
-        n.value ? (X(), dA("div", _Y, [
-          D("div", SY, [
-            D("div", $Y, [
+        $Y,
+        n.value ? (X(), dA("div", EY, [
+          D("div", DY, [
+            D("div", PY, [
               te(eo, { text: "Loading..." })
             ])
           ])
-        ])) : (X(), dA("div", EY, [
-          D("div", DY, [
-            D("div", PY, [
-              D("div", OY, [
+        ])) : (X(), dA("div", OY, [
+          D("div", TY, [
+            D("div", NY, [
+              D("div", MY, [
                 D("h4", null, OA((h = a.value) == null ? void 0 : h.enrollment.class.name), 1),
-                TY,
+                RY,
                 D("p", null, [
-                  NY,
+                  LY,
                   D("span", null, OA(gA(ht)((m = a.value) == null ? void 0 : m.enrollment.class.start).format("h:mm a")), 1),
                   Ie(" | "),
-                  MY,
+                  FY,
                   D("span", null, OA((y = a.value) == null ? void 0 : y.enrollment.class.duration), 1),
                   Ie(" mins. ")
                 ]),
                 D("p", null, [
-                  RY,
+                  VY,
                   Ie(" " + OA((C = a.value) == null ? void 0 : C.enrollment.class.instructorName), 1)
                 ])
               ])
             ])
           ]),
-          D("div", LY, [
-            D("div", FY, [
-              (S = a.value) != null && S.adjustedChartPoints ? (X(), Ae(ZC, {
+          D("div", BY, [
+            D("div", YY, [
+              (S = a.value) != null && S.adjustedChartPoints ? (X(), JA(ZC, {
                 key: 0,
                 "chart-points": (I = a.value) == null ? void 0 : I.adjustedChartPoints
               }, null, 8, ["chart-points"])) : IA("", !0)
             ])
           ]),
-          D("div", VY, [
-            D("div", BY, [
+          D("div", HY, [
+            D("div", UY, [
               te(Bi, {
                 icon: "duration",
                 value: gA(mp)((O = a.value) == null ? void 0 : O.enrollment.class.duration),
                 title: "DURATION"
               }, null, 8, ["value"])
             ]),
-            D("div", YY, [
+            D("div", jY, [
               te(Bi, {
                 icon: "distance",
                 value: ((E = (M = (F = a.value) == null ? void 0 : F.distance) == null ? void 0 : M.toFixed(1)) != null ? E : "0") + "KM",
                 title: "DISTANCE"
               }, null, 8, ["value"])
             ]),
-            D("div", HY, [
+            D("div", zY, [
               te(Bi, {
                 icon: "calories",
                 value: (B = (Y = (T = a.value) == null ? void 0 : T.calories) == null ? void 0 : Y.toFixed(1)) != null ? B : "0",
                 title: "CALORIES"
               }, null, 8, ["value"])
             ]),
-            D("div", UY, [
+            D("div", WY, [
               te(Bi, {
                 icon: "total_energy",
                 value: (oA = (tA = (eA = a.value) == null ? void 0 : eA.totalEnergy) == null ? void 0 : tA.toFixed(1)) != null ? oA : "0",
                 title: "TOTAL ENERGY"
               }, null, 8, ["value"])
             ]),
-            D("div", jY, [
+            D("div", XY, [
               te(QC, {
                 "class-name": (G = a.value) == null ? void 0 : G.enrollment.class.name,
                 "spot-number": (Z = a.value) == null ? void 0 : Z.enrollment.enrollmentInfo.spotNumber
               }, null, 8, ["class-name", "spot-number"])
             ]),
-            D("div", zY, [
-              (Q = a.value) != null && Q.enrollment.class.id ? (X(), Ae(qC, {
+            D("div", GY, [
+              (Q = a.value) != null && Q.enrollment.class.id ? (X(), JA(qC, {
                 key: 0,
                 "class-id": (j = a.value) == null ? void 0 : j.enrollment.class.id,
                 "user-id": f.userId
               }, null, 8, ["class-id", "user-id"])) : IA("", !0)
             ]),
-            D("div", WY, [
+            D("div", qY, [
               te(ru, {
                 title: "POWER",
                 "avg-value": (sA = (J = a.value) == null ? void 0 : J.averagePower) != null ? sA : 0,
                 "high-value": (cA = (nA = a.value) == null ? void 0 : nA.highPower) != null ? cA : 0
               }, null, 8, ["avg-value", "high-value"])
             ]),
-            D("div", XY, [
+            D("div", QY, [
               te(ru, {
                 title: "RPM",
                 "avg-value": (R = (aA = a.value) == null ? void 0 : aA.averageRpm) != null ? R : 0,
@@ -37609,7 +37628,7 @@ const IY = /* @__PURE__ */ tn(wY, [["__scopeId", "data-v-7225b904"]]), JC = /* @
             ])
           ])
         ])),
-        s.value ? (X(), Ae(nt, {
+        s.value ? (X(), JA(nt, {
           key: 2,
           title: "Error",
           message: gA(gt),
@@ -37620,21 +37639,21 @@ const IY = /* @__PURE__ */ tn(wY, [["__scopeId", "data-v-7225b904"]]), JC = /* @
     };
   }
 });
-const qY = /* @__PURE__ */ tn(GY, [["__scopeId", "data-v-fe5780d2"]]), Ml = (A) => (vn("data-v-a5acd2ad"), A = A(), yn(), A), QY = { class: "modal-mask" }, KY = { class: "modal-wrapper" }, ZY = {
+const ZY = /* @__PURE__ */ nn(KY, [["__scopeId", "data-v-fe5780d2"]]), Ml = (A) => (vn("data-v-a5acd2ad"), A = A(), yn(), A), JY = { class: "modal-mask" }, AH = { class: "modal-wrapper" }, eH = {
   class: "modal-dialog modal-xl modal-dialog-scrollable",
   role: "document"
-}, JY = { class: "modal-content" }, AH = { class: "modal-header border-0" }, eH = { class: "modal-title" }, tH = {
+}, tH = { class: "modal-content" }, nH = { class: "modal-header border-0" }, rH = { class: "modal-title" }, iH = {
   type: "button",
   class: "close",
   "data-dismiss": "modal",
   "aria-label": "Close"
-}, nH = { class: "modal-body" }, rH = {
+}, aH = { class: "modal-body" }, sH = {
   key: 0,
   class: "row"
-}, iH = { class: "col-12 text-center" }, aH = {
+}, oH = { class: "col-12 text-center" }, lH = {
   key: 1,
   class: "row"
-}, sH = { class: "col-12" }, oH = /* @__PURE__ */ Ml(() => /* @__PURE__ */ D("hr", null, null, -1)), lH = /* @__PURE__ */ Ml(() => /* @__PURE__ */ D("h6", null, "Personal Information", -1)), cH = { class: "row" }, uH = { class: "col" }, dH = { class: "col" }, hH = { class: "row" }, fH = { class: "col" }, gH = { class: "col" }, pH = { class: "row" }, mH = { class: "col" }, vH = { class: "col" }, yH = /* @__PURE__ */ Ml(() => /* @__PURE__ */ D("hr", null, null, -1)), bH = /* @__PURE__ */ Ml(() => /* @__PURE__ */ D("h6", null, "Contact Information", -1)), xH = { class: "row" }, CH = { class: "col" }, wH = { class: "col" }, IH = { class: "row" }, kH = { class: "col" }, _H = { class: "col" }, SH = { class: "row" }, $H = { class: "col" }, EH = { class: "col" }, DH = { class: "row" }, PH = { class: "col" }, OH = { class: "col" }, TH = /* @__PURE__ */ Ml(() => /* @__PURE__ */ D("hr", null, null, -1)), NH = { class: "modal-footer border-0" }, MH = /* @__PURE__ */ Me({
+}, cH = { class: "col-12" }, uH = /* @__PURE__ */ Ml(() => /* @__PURE__ */ D("hr", null, null, -1)), dH = /* @__PURE__ */ Ml(() => /* @__PURE__ */ D("h6", null, "Personal Information", -1)), hH = { class: "row" }, fH = { class: "col" }, gH = { class: "col" }, pH = { class: "row" }, mH = { class: "col" }, vH = { class: "col" }, yH = { class: "row" }, bH = { class: "col" }, xH = { class: "col" }, CH = /* @__PURE__ */ Ml(() => /* @__PURE__ */ D("hr", null, null, -1)), wH = /* @__PURE__ */ Ml(() => /* @__PURE__ */ D("h6", null, "Contact Information", -1)), IH = { class: "row" }, kH = { class: "col" }, _H = { class: "col" }, SH = { class: "row" }, $H = { class: "col" }, EH = { class: "col" }, DH = { class: "row" }, PH = { class: "col" }, OH = { class: "col" }, TH = { class: "row" }, NH = { class: "col" }, MH = { class: "col" }, RH = /* @__PURE__ */ Ml(() => /* @__PURE__ */ D("hr", null, null, -1)), LH = { class: "modal-footer border-0" }, FH = /* @__PURE__ */ Me({
   __name: "UserProfile",
   props: {
     userId: {},
@@ -37656,153 +37675,153 @@ const qY = /* @__PURE__ */ tn(GY, [["__scopeId", "data-v-fe5780d2"]]), Ml = (A) 
       }
     }
     return (h, m) => (X(), dA(HA, null, [
-      te(St, {
+      te(Ct, {
         text: "View Profile",
         type: "button",
         onOnClick: f
       }),
-      a.value ? (X(), Ae(Bn, {
+      a.value ? (X(), JA(Bn, {
         key: 0,
         name: "modal"
       }, {
         default: Ne(() => {
-          var y, C, S, I, O, F, M, E, T, Y, B, eA, tA, oA, G, Z, Q, j, J, sA, nA, cA, aA, R, rA, W, pA, vA, mA, MA, JA, EA, wA, DA, RA, YA, $A, qA, uA;
+          var y, C, S, I, O, F, M, E, T, Y, B, eA, tA, oA, G, Z, Q, j, J, sA, nA, cA, aA, R, rA, W, pA, vA, mA, MA, Ae, EA, wA, DA, RA, VA, $A, GA, uA;
           return [
-            D("div", QY, [
-              D("div", KY, [
-                D("div", ZY, [
-                  D("div", JY, [
-                    D("div", AH, [
-                      D("h5", eH, " Profile " + OA(l.value !== null ? " - " + ((C = (y = l.value.user) == null ? void 0 : y.firstName) != null ? C : "") + " " + ((I = (S = l.value.user) == null ? void 0 : S.lastName) != null ? I : "") : ""), 1),
-                      D("button", tH, [
+            D("div", JY, [
+              D("div", AH, [
+                D("div", eH, [
+                  D("div", tH, [
+                    D("div", nH, [
+                      D("h5", rH, " Profile " + OA(l.value !== null ? " - " + ((C = (y = l.value.user) == null ? void 0 : y.firstName) != null ? C : "") + " " + ((I = (S = l.value.user) == null ? void 0 : S.lastName) != null ? I : "") : ""), 1),
+                      D("button", iH, [
                         D("span", {
                           "aria-hidden": "true",
                           onClick: m[0] || (m[0] = (fA) => a.value = !1)
                         }, "\xD7")
                       ])
                     ]),
-                    D("div", nH, [
-                      n.value ? (X(), dA("div", rH, [
-                        D("div", iH, [
+                    D("div", aH, [
+                      n.value ? (X(), dA("div", sH, [
+                        D("div", oH, [
                           te(eo, { text: "Loading..." })
                         ])
-                      ])) : (X(), dA("div", aH, [
-                        D("div", sH, [
+                      ])) : (X(), dA("div", lH, [
+                        D("div", cH, [
                           D("h5", null, "Email: " + OA((F = (O = l.value) == null ? void 0 : O.user) == null ? void 0 : F.email), 1),
-                          oH,
-                          lH,
-                          D("div", cH, [
-                            D("div", uH, [
+                          uH,
+                          dH,
+                          D("div", hH, [
+                            D("div", fH, [
                               D("p", null, [
                                 Ie(" First Name: "),
                                 D("b", null, OA((E = (M = l.value) == null ? void 0 : M.user) == null ? void 0 : E.firstName), 1)
                               ])
                             ]),
-                            D("div", dH, [
+                            D("div", gH, [
                               D("p", null, [
                                 Ie(" Last Name: "),
                                 D("b", null, OA((Y = (T = l.value) == null ? void 0 : T.user) == null ? void 0 : Y.lastName), 1)
                               ])
                             ])
                           ]),
-                          D("div", hH, [
-                            D("div", fH, [
+                          D("div", pH, [
+                            D("div", mH, [
                               D("p", null, [
                                 Ie(" Gender: "),
                                 D("b", null, OA(((eA = (B = l.value) == null ? void 0 : B.user) == null ? void 0 : eA.gender) === "M" ? "Male" : ((oA = (tA = l.value) == null ? void 0 : tA.user) == null ? void 0 : oA.gender) === "F" ? "Female" : ""), 1)
                               ])
                             ]),
-                            D("div", gH, [
+                            D("div", vH, [
                               D("p", null, [
                                 Ie(" Leaderboard Name: "),
                                 D("b", null, OA((Z = (G = l.value) == null ? void 0 : G.user) == null ? void 0 : Z.leaderboardUsername), 1)
                               ])
                             ])
                           ]),
-                          D("div", pH, [
-                            D("div", mH, [
+                          D("div", yH, [
+                            D("div", bH, [
                               D("p", null, [
                                 Ie(" Date of Birth: "),
                                 D("b", null, OA(gA(ht)((j = (Q = l.value) == null ? void 0 : Q.user) == null ? void 0 : j.birthdate).format("DD/MM/YYYY")), 1)
                               ])
                             ]),
-                            D("div", vH, [
+                            D("div", xH, [
                               D("p", null, [
                                 Ie(" Weight: "),
                                 D("b", null, OA((nA = (sA = (J = l.value) == null ? void 0 : J.user) == null ? void 0 : sA.weight) != null ? nA : "") + " kg", 1)
                               ])
                             ])
                           ]),
-                          yH,
-                          bH,
-                          D("div", xH, [
-                            D("div", CH, [
+                          CH,
+                          wH,
+                          D("div", IH, [
+                            D("div", kH, [
                               D("p", null, [
                                 Ie(" Country: "),
                                 D("b", null, OA((R = (aA = (cA = l.value) == null ? void 0 : cA.user) == null ? void 0 : aA.country) == null ? void 0 : R.name), 1)
                               ])
                             ]),
-                            D("div", wH, [
+                            D("div", _H, [
                               D("p", null, [
                                 Ie(" City/State: "),
                                 D("b", null, OA((pA = (W = (rA = l.value) == null ? void 0 : rA.user) == null ? void 0 : W.state) == null ? void 0 : pA.name), 1)
                               ])
                             ])
                           ]),
-                          D("div", IH, [
-                            D("div", kH, [
+                          D("div", SH, [
+                            D("div", $H, [
                               D("p", null, [
                                 Ie(" Adress Line 1: "),
                                 D("b", null, OA((mA = (vA = l.value) == null ? void 0 : vA.user) == null ? void 0 : mA.address1), 1)
                               ])
                             ]),
-                            D("div", _H, [
-                              D("p", null, [
-                                Ie(" Adress Line 2: "),
-                                D("b", null, OA((JA = (MA = l.value) == null ? void 0 : MA.user) == null ? void 0 : JA.address2), 1)
-                              ])
-                            ])
-                          ]),
-                          D("div", SH, [
-                            D("div", $H, [
-                              D("p", null, [
-                                Ie(" Mobile Number: "),
-                                D("b", null, OA((wA = (EA = l.value) == null ? void 0 : EA.user) == null ? void 0 : wA.phone), 1)
-                              ])
-                            ]),
                             D("div", EH, [
                               D("p", null, [
-                                Ie(" Emergency Contact Name: "),
-                                D("b", null, OA((RA = (DA = l.value) == null ? void 0 : DA.user) == null ? void 0 : RA.emergencyContactName), 1)
+                                Ie(" Adress Line 2: "),
+                                D("b", null, OA((Ae = (MA = l.value) == null ? void 0 : MA.user) == null ? void 0 : Ae.address2), 1)
                               ])
                             ])
                           ]),
                           D("div", DH, [
                             D("div", PH, [
                               D("p", null, [
-                                Ie(" Emergency Contact Number: "),
-                                D("b", null, OA(($A = (YA = l.value) == null ? void 0 : YA.user) == null ? void 0 : $A.emergencyContactPhone), 1)
+                                Ie(" Mobile Number: "),
+                                D("b", null, OA((wA = (EA = l.value) == null ? void 0 : EA.user) == null ? void 0 : wA.phone), 1)
                               ])
                             ]),
                             D("div", OH, [
                               D("p", null, [
+                                Ie(" Emergency Contact Name: "),
+                                D("b", null, OA((RA = (DA = l.value) == null ? void 0 : DA.user) == null ? void 0 : RA.emergencyContactName), 1)
+                              ])
+                            ])
+                          ]),
+                          D("div", TH, [
+                            D("div", NH, [
+                              D("p", null, [
+                                Ie(" Emergency Contact Number: "),
+                                D("b", null, OA(($A = (VA = l.value) == null ? void 0 : VA.user) == null ? void 0 : $A.emergencyContactPhone), 1)
+                              ])
+                            ]),
+                            D("div", MH, [
+                              D("p", null, [
                                 Ie(" Emergency Contact Relationship: "),
-                                D("b", null, OA((uA = (qA = l.value) == null ? void 0 : qA.user) == null ? void 0 : uA.emergencyContactRelationship), 1)
+                                D("b", null, OA((uA = (GA = l.value) == null ? void 0 : GA.user) == null ? void 0 : uA.emergencyContactRelationship), 1)
                               ])
                             ])
                           ])
                         ])
                       ])),
-                      TH,
-                      h.userId && h.classId && h.enrollmentId ? (X(), Ae(qY, {
+                      RH,
+                      h.userId && h.classId && h.enrollmentId ? (X(), JA(ZY, {
                         key: 2,
                         "user-id": h.userId,
                         "class-id": h.classId,
                         "enrollment-id": h.enrollmentId
                       }, null, 8, ["user-id", "class-id", "enrollment-id"])) : IA("", !0)
                     ]),
-                    D("div", NH, [
-                      te(St, {
+                    D("div", LH, [
+                      te(Ct, {
                         text: "Close",
                         type: "button",
                         variant: "primary",
@@ -37817,7 +37836,7 @@ const qY = /* @__PURE__ */ tn(GY, [["__scopeId", "data-v-fe5780d2"]]), Ml = (A) 
         }),
         _: 1
       })) : IA("", !0),
-      s.value ? (X(), Ae(nt, {
+      s.value ? (X(), JA(nt, {
         key: 1,
         title: "ERROR",
         message: gA(gt),
@@ -37827,15 +37846,15 @@ const qY = /* @__PURE__ */ tn(GY, [["__scopeId", "data-v-fe5780d2"]]), Ml = (A) 
     ], 64));
   }
 });
-const Aw = /* @__PURE__ */ tn(MH, [["__scopeId", "data-v-a5acd2ad"]]), Rl = (A) => (vn("data-v-9cd679ed"), A = A(), yn(), A), RH = { class: "table-responsive" }, LH = { class: "table" }, FH = /* @__PURE__ */ Rl(() => /* @__PURE__ */ D("th", null, "FIRST NAME", -1)), VH = /* @__PURE__ */ Rl(() => /* @__PURE__ */ D("th", null, "LAST NAME", -1)), BH = { key: 0 }, YH = { key: 1 }, HH = /* @__PURE__ */ Rl(() => /* @__PURE__ */ D("th", null, "VIEW PROFILE", -1)), UH = /* @__PURE__ */ Rl(() => /* @__PURE__ */ D("th", null, null, -1)), jH = ["index"], zH = { key: 0 }, WH = { key: 1 }, XH = ["onClick"], GH = {
+const Aw = /* @__PURE__ */ nn(FH, [["__scopeId", "data-v-a5acd2ad"]]), Rl = (A) => (vn("data-v-9cd679ed"), A = A(), yn(), A), VH = { class: "table-responsive" }, BH = { class: "table" }, YH = /* @__PURE__ */ Rl(() => /* @__PURE__ */ D("th", null, "FIRST NAME", -1)), HH = /* @__PURE__ */ Rl(() => /* @__PURE__ */ D("th", null, "LAST NAME", -1)), UH = { key: 0 }, jH = { key: 1 }, zH = /* @__PURE__ */ Rl(() => /* @__PURE__ */ D("th", null, "VIEW PROFILE", -1)), WH = /* @__PURE__ */ Rl(() => /* @__PURE__ */ D("th", null, null, -1)), XH = ["index"], GH = { key: 0 }, qH = { key: 1 }, QH = ["onClick"], KH = {
   key: 0,
   class: "badge badge-warning"
-}, qH = { key: 0 }, QH = /* @__PURE__ */ Rl(() => /* @__PURE__ */ D("td", {
+}, ZH = { key: 0 }, JH = /* @__PURE__ */ Rl(() => /* @__PURE__ */ D("td", {
   colspan: "4",
   class: "tableMessageNoRecords"
-}, " There are no users enrolled in this class ", -1)), KH = [
-  QH
-], ZH = /* @__PURE__ */ Me({
+}, " There are no users enrolled in this class ", -1)), AU = [
+  JH
+], eU = /* @__PURE__ */ Me({
   __name: "AdminBookedUsersList",
   props: {
     enrollments: {},
@@ -37861,16 +37880,16 @@ const Aw = /* @__PURE__ */ tn(MH, [["__scopeId", "data-v-a5acd2ad"]]), Rl = (A) 
       s.value = !1, l.value = !1, f.value = !1, O === "CancelUserEnrollmentSuccess" ? t("afterCancelMemberReservation") : O === "LateCancellationRequiredError" ? (l.value = !1, f.value = !0) : p.value = !0;
     }
     return (S, I) => (X(), dA(HA, null, [
-      D("div", RH, [
-        D("table", LH, [
+      D("div", VH, [
+        D("table", BH, [
           D("thead", null, [
             D("tr", null, [
-              FH,
-              VH,
-              S.userCanCheckInCheckOut ? (X(), dA("th", BH, "SIGN IN")) : IA("", !0),
-              S.showEditOptions ? (X(), dA("th", YH, "CANCEL RESERVATION")) : IA("", !0),
+              YH,
               HH,
-              UH
+              S.userCanCheckInCheckOut ? (X(), dA("th", UH, "SIGN IN")) : IA("", !0),
+              S.showEditOptions ? (X(), dA("th", jH, "CANCEL RESERVATION")) : IA("", !0),
+              zH,
+              WH
             ])
           ]),
           D("tbody", null, [
@@ -37882,37 +37901,37 @@ const Aw = /* @__PURE__ */ tn(MH, [["__scopeId", "data-v-a5acd2ad"]]), Rl = (A) 
               }, [
                 D("td", null, OA((T = (E = (M = O.identifiableSiteUser) == null ? void 0 : M.identifiableUser) == null ? void 0 : E.user) == null ? void 0 : T.firstName), 1),
                 D("td", null, OA((eA = (B = (Y = O.identifiableSiteUser) == null ? void 0 : Y.identifiableUser) == null ? void 0 : B.user) == null ? void 0 : eA.lastName), 1),
-                S.userCanCheckInCheckOut ? (X(), dA("td", zH, [
-                  O.id != null && O.isCheckedIn != null ? (X(), Ae(JC, {
+                S.userCanCheckInCheckOut ? (X(), dA("td", GH, [
+                  O.id != null && O.isCheckedIn != null ? (X(), JA(JC, {
                     key: 0,
                     "enrollment-id": O.id,
                     "is-checked-in": O.isCheckedIn,
                     onAfterCheckInCheckOut: I[0] || (I[0] = (Q) => t("afterCancelMemberReservation"))
                   }, null, 8, ["enrollment-id", "is-checked-in"])) : IA("", !0)
                 ])) : IA("", !0),
-                S.showEditOptions ? (X(), dA("td", WH, [
+                S.showEditOptions ? (X(), dA("td", qH, [
                   D("button", {
                     class: "btn btn-primary",
                     type: "button",
                     onClick: (Q) => h(O.id)
-                  }, " CANCEL BOOKING ", 8, XH)
+                  }, " CANCEL BOOKING ", 8, QH)
                 ])) : IA("", !0),
                 D("td", null, [
-                  (oA = (tA = O.identifiableSiteUser) == null ? void 0 : tA.identifiableUser) != null && oA.id ? (X(), Ae(Aw, {
+                  (oA = (tA = O.identifiableSiteUser) == null ? void 0 : tA.identifiableUser) != null && oA.id ? (X(), JA(Aw, {
                     key: 0,
                     "user-id": (Z = (G = O.identifiableSiteUser) == null ? void 0 : G.identifiableUser) == null ? void 0 : Z.id
                   }, null, 8, ["user-id"])) : IA("", !0)
                 ]),
                 D("td", null, [
-                  O.isBookedForFree === !0 ? (X(), dA("span", GH, "Not paid")) : IA("", !0)
+                  O.isBookedForFree === !0 ? (X(), dA("span", KH, "Not paid")) : IA("", !0)
                 ])
-              ], 8, jH);
+              ], 8, XH);
             }), 128)),
-            !S.isLoading && S.enrollments.length === 0 ? (X(), dA("tr", qH, KH)) : IA("", !0)
+            !S.isLoading && S.enrollments.length === 0 ? (X(), dA("tr", ZH, AU)) : IA("", !0)
           ])
         ])
       ]),
-      l.value ? (X(), Ae(nt, {
+      l.value ? (X(), JA(nt, {
         key: 0,
         title: "CANCEL BOOKING",
         message: "Are you sure you want to proceed?",
@@ -37922,7 +37941,7 @@ const Aw = /* @__PURE__ */ tn(MH, [["__scopeId", "data-v-a5acd2ad"]]), Rl = (A) 
         onOnCancel: I[1] || (I[1] = (O) => l.value = !1),
         onOnOk: I[2] || (I[2] = (O) => m())
       }, null, 8, ["ok-loading"])) : IA("", !0),
-      f.value ? (X(), Ae(nt, {
+      f.value ? (X(), JA(nt, {
         key: 1,
         title: "Warning",
         message: "You are outside the early cancellation window. you can only make a late cancellaiton.",
@@ -37932,7 +37951,7 @@ const Aw = /* @__PURE__ */ tn(MH, [["__scopeId", "data-v-a5acd2ad"]]), Rl = (A) 
         "ok-loading": s.value,
         onOnOk: I[4] || (I[4] = (O) => y())
       }, null, 8, ["ok-loading"])) : IA("", !0),
-      p.value ? (X(), Ae(nt, {
+      p.value ? (X(), JA(nt, {
         key: 2,
         title: "Error",
         message: gA(gt),
@@ -37942,12 +37961,12 @@ const Aw = /* @__PURE__ */ tn(MH, [["__scopeId", "data-v-a5acd2ad"]]), Rl = (A) 
     ], 64));
   }
 });
-const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { class: "row" }, eU = { class: "col-8" }, tU = ["innerHTML"], nU = { class: "col-4" }, rU = ["disabled"], iU = {
+const tU = /* @__PURE__ */ nn(eU, [["__scopeId", "data-v-9cd679ed"]]), nU = { class: "row" }, rU = { class: "col-8" }, iU = ["innerHTML"], aU = { class: "col-4" }, sU = ["disabled"], oU = {
   key: 0,
   class: "spinner-border spinner-border-sm",
   role: "status",
   "aria-hidden": "true"
-}, aU = /* @__PURE__ */ D("br", null, null, -1), Gd = /* @__PURE__ */ Me({
+}, lU = /* @__PURE__ */ D("br", null, null, -1), Gd = /* @__PURE__ */ Me({
   __name: "EnrollSelectedMemberComponent",
   props: {
     classId: {},
@@ -37991,8 +38010,8 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
     return (Y, B) => {
       const eA = wl("vue3-simple-typeahead");
       return X(), dA(HA, null, [
-        D("div", AU, [
-          D("div", eU, [
+        D("div", nU, [
+          D("div", rU, [
             te(eA, {
               id: "typeahead_users",
               class: "custom-select",
@@ -38009,12 +38028,12 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
               "list-item-text": Ne((tA) => [
                 D("span", {
                   innerHTML: tA.boldMatchText(tA.itemProjection(tA.item))
-                }, null, 8, tU)
+                }, null, 8, iU)
               ]),
               _: 1
             }, 8, ["items"])
           ]),
-          D("div", nU, [
+          D("div", aU, [
             D("button", {
               class: "btn btn-primary",
               type: "button",
@@ -38022,12 +38041,12 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
               onClick: B[0] || (B[0] = (tA) => I())
             }, [
               Ie(OA(n.enrollButtonText) + " ", 1),
-              l.value ? (X(), dA("span", iU)) : IA("", !0)
-            ], 8, rU)
+              l.value ? (X(), dA("span", oU)) : IA("", !0)
+            ], 8, sU)
           ])
         ]),
-        aU,
-        C.value ? (X(), Ae(nt, {
+        lU,
+        C.value ? (X(), JA(nt, {
           key: 0,
           title: "Warning",
           message: "This client has no credits in his account. Do you want to continue?",
@@ -38040,14 +38059,14 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
             return O(n.classId, (oA = f.value) == null ? void 0 : oA.id, n.spotNumber, !1);
           })
         }, null, 8, ["ok-loading"])) : IA("", !0),
-        p.value ? (X(), Ae(nt, {
+        p.value ? (X(), JA(nt, {
           key: 1,
           title: "Error",
           message: h.value,
           "cancel-text": null,
           onOnOk: B[3] || (B[3] = (tA) => p.value = !1)
         }, null, 8, ["message"])) : IA("", !0),
-        m.value ? (X(), Ae(nt, {
+        m.value ? (X(), JA(nt, {
           key: 2,
           title: "SUCCESS",
           message: y.value,
@@ -38057,18 +38076,18 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
       ], 64);
     };
   }
-}), sU = { class: "modal-mask" }, oU = { class: "modal-wrapper" }, lU = {
+}), cU = { class: "modal-mask" }, uU = { class: "modal-wrapper" }, dU = {
   class: "modal-dialog",
   role: "document"
-}, cU = { class: "modal-content" }, uU = { class: "modal-header border-0" }, dU = /* @__PURE__ */ D("h5", { class: "modal-title" }, "CHANGE LAYOUT", -1), hU = {
+}, hU = { class: "modal-content" }, fU = { class: "modal-header border-0" }, gU = /* @__PURE__ */ D("h5", { class: "modal-title" }, "CHANGE LAYOUT", -1), pU = {
   type: "button",
   class: "close",
   "data-dismiss": "modal",
   "aria-label": "Close"
-}, fU = { class: "modal-body" }, gU = /* @__PURE__ */ D("label", {
+}, mU = { class: "modal-body" }, vU = /* @__PURE__ */ D("label", {
   for: "countryRegistration",
   class: "input-label"
-}, "Layout Options:", -1), pU = /* @__PURE__ */ D("option", { value: null }, "-- NO ROOM LAYOUT --", -1), mU = ["value"], vU = { class: "modal-footer border-0" }, yU = /* @__PURE__ */ Me({
+}, "Layout Options:", -1), yU = /* @__PURE__ */ D("option", { value: null }, "-- NO ROOM LAYOUT --", -1), bU = ["value"], xU = { class: "modal-footer border-0" }, CU = /* @__PURE__ */ Me({
   __name: "ChangeLayoutClass",
   props: {
     classId: {},
@@ -38098,52 +38117,52 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
       s.value = !1, f.value = !1, l.value = !1, M.__typename === "EditClassSuccessResult" ? (a("afterChangingRoomLayout"), C.value = !0) : y.value = !0;
     }
     return (M, E) => (X(), dA(HA, null, [
-      te(St, {
+      te(Ct, {
         text: "CHANGE LAYOUT",
         type: "button",
         onOnClick: E[0] || (E[0] = (T) => I())
       }),
-      l.value ? (X(), Ae(Bn, {
+      l.value ? (X(), JA(Bn, {
         key: 0,
         name: "modal"
       }, {
         default: Ne(() => [
-          D("div", sU, [
-            D("div", oU, [
-              D("div", lU, [
-                D("div", cU, [
-                  D("div", uU, [
-                    dU,
-                    D("button", hU, [
+          D("div", cU, [
+            D("div", uU, [
+              D("div", dU, [
+                D("div", hU, [
+                  D("div", fU, [
+                    gU,
+                    D("button", pU, [
                       D("span", {
                         "aria-hidden": "true",
                         onClick: E[1] || (E[1] = (T) => l.value = !1)
                       }, "\xD7")
                     ])
                   ]),
-                  D("div", fU, [
+                  D("div", mU, [
                     D("p", null, [
                       Ie(" Current Layout: "),
                       D("b", null, OA(h.value), 1)
                     ]),
-                    gU,
+                    vU,
                     Xe(D("select", {
                       class: "custom-select",
                       "onUpdate:modelValue": E[2] || (E[2] = (T) => m.value = T),
                       id: "countryRegistration",
                       required: ""
                     }, [
-                      pU,
+                      yU,
                       (X(!0), dA(HA, null, fe(S.value, (T, Y) => (X(), dA("option", {
                         key: Y,
                         value: T.id
-                      }, OA(T.name), 9, mU))), 128))
+                      }, OA(T.name), 9, bU))), 128))
                     ], 512), [
                       [Tn, m.value]
                     ])
                   ]),
-                  D("div", vU, [
-                    m.value !== M.roomLayoutId && !p.value ? (X(), Ae(St, {
+                  D("div", xU, [
+                    m.value !== M.roomLayoutId && !p.value ? (X(), JA(Ct, {
                       key: 0,
                       text: "CHANGE",
                       type: "button",
@@ -38151,7 +38170,7 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
                       disabled: m.value === M.roomLayoutId && !p.value,
                       onOnClick: E[3] || (E[3] = (T) => f.value = !0)
                     }, null, 8, ["is-loading", "disabled"])) : IA("", !0),
-                    te(St, {
+                    te(Ct, {
                       text: "Cancel",
                       type: "button",
                       disabled: s.value,
@@ -38166,7 +38185,7 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
         ]),
         _: 1
       })) : IA("", !0),
-      f.value ? (X(), Ae(nt, {
+      f.value ? (X(), JA(nt, {
         key: 1,
         title: "Confirm",
         message: "ARE YOU SURE YOU WANT TO CHANGE THE ROOM LAYOUT FOR THIS CLASS?",
@@ -38176,7 +38195,7 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
         onOnCancel: E[5] || (E[5] = (T) => f.value = !1),
         onOnOk: E[6] || (E[6] = (T) => F())
       }, null, 8, ["ok-loading"])) : IA("", !0),
-      C.value ? (X(), Ae(nt, {
+      C.value ? (X(), JA(nt, {
         key: 2,
         title: "SUCCESS",
         message: "ROOM LAYOUT ASSIGNED SUCCESSFULLY.",
@@ -38184,7 +38203,7 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
         "ok-text": "OK",
         onOnOk: E[7] || (E[7] = (T) => C.value = !1)
       })) : IA("", !0),
-      y.value ? (X(), Ae(nt, {
+      y.value ? (X(), JA(nt, {
         key: 3,
         title: "ERROR",
         message: gA(gt),
@@ -38194,34 +38213,34 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
       }, null, 8, ["message"])) : IA("", !0)
     ], 64));
   }
-}), bU = { class: "modal-mask" }, xU = { class: "modal-wrapper" }, CU = {
+}), wU = { class: "modal-mask" }, IU = { class: "modal-wrapper" }, kU = {
   class: "modal-dialog modal-lg",
   role: "document"
-}, wU = { class: "modal-content" }, IU = { class: "modal-header border-0" }, kU = /* @__PURE__ */ D("h5", { class: "modal-title" }, "Waitlist Entries", -1), _U = {
+}, _U = { class: "modal-content" }, SU = { class: "modal-header border-0" }, $U = /* @__PURE__ */ D("h5", { class: "modal-title" }, "Waitlist Entries", -1), EU = {
   type: "button",
   class: "close",
   "data-dismiss": "modal",
   "aria-label": "Close"
-}, SU = { class: "modal-body" }, $U = { class: "table-responsive" }, EU = { class: "table table-sm" }, DU = /* @__PURE__ */ D("thead", null, [
+}, DU = { class: "modal-body" }, PU = { class: "table-responsive" }, OU = { class: "table table-sm" }, TU = /* @__PURE__ */ D("thead", null, [
   /* @__PURE__ */ D("tr", { class: "text-center" }, [
     /* @__PURE__ */ D("th", null, "NO"),
     /* @__PURE__ */ D("th", null, "FIRST NAME"),
     /* @__PURE__ */ D("th", null, "LAST NAME"),
     /* @__PURE__ */ D("th", null, "ACTION")
   ])
-], -1), PU = { class: "text-center align-middle" }, OU = { class: "text-center align-middle" }, TU = { class: "text-center align-middle" }, NU = { class: "text-center align-middle" }, MU = { key: 0 }, RU = /* @__PURE__ */ D("td", {
+], -1), NU = { class: "text-center align-middle" }, MU = { class: "text-center align-middle" }, RU = { class: "text-center align-middle" }, LU = { class: "text-center align-middle" }, FU = { key: 0 }, VU = /* @__PURE__ */ D("td", {
   colspan: "4",
   class: "text-center"
 }, [
   /* @__PURE__ */ D("p", null, "NO DATA AVAILABLE IN TABLE")
-], -1), LU = [
-  RU
-], FU = {
+], -1), BU = [
+  VU
+], YU = {
   key: 1,
   class: "text-center"
-}, VU = /* @__PURE__ */ D("td", { colspan: "4" }, "LOADING...", -1), BU = [
-  VU
-], YU = /* @__PURE__ */ Me({
+}, HU = /* @__PURE__ */ D("td", { colspan: "4" }, "LOADING...", -1), UU = [
+  HU
+], jU = /* @__PURE__ */ Me({
   __name: "ViewWaitlistEntries",
   props: {
     classId: {}
@@ -38261,42 +38280,42 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
       m.value = F.id, s.value = !0;
     }
     return (F, M) => (X(), dA(HA, null, [
-      te(St, {
+      te(Ct, {
         text: "View Waitlist",
         type: "button",
         onOnClick: M[0] || (M[0] = (E) => C())
       }),
-      f.value ? (X(), Ae(Bn, {
+      f.value ? (X(), JA(Bn, {
         key: 0,
         name: "modal"
       }, {
         default: Ne(() => [
-          D("div", bU, [
-            D("div", xU, [
-              D("div", CU, [
-                D("div", wU, [
-                  D("div", IU, [
-                    kU,
-                    D("button", _U, [
+          D("div", wU, [
+            D("div", IU, [
+              D("div", kU, [
+                D("div", _U, [
+                  D("div", SU, [
+                    $U,
+                    D("button", EU, [
                       D("span", {
                         "aria-hidden": "true",
                         onClick: M[1] || (M[1] = (E) => f.value = !1)
                       }, "\xD7")
                     ])
                   ]),
-                  D("div", SU, [
-                    D("div", $U, [
-                      D("table", EU, [
-                        DU,
+                  D("div", DU, [
+                    D("div", PU, [
+                      D("table", OU, [
+                        TU,
                         D("tbody", null, [
                           (X(!0), dA(HA, null, fe(y.value, (E, T) => {
                             var Y, B, eA, tA;
                             return X(), dA("tr", { key: T }, [
-                              D("td", PU, OA(T + 1), 1),
-                              D("td", OU, OA((B = (Y = E.identifiableSiteUser) == null ? void 0 : Y.identifiableUser.user) == null ? void 0 : B.firstName.toUpperCase()), 1),
-                              D("td", TU, OA((tA = (eA = E.identifiableSiteUser) == null ? void 0 : eA.identifiableUser.user) == null ? void 0 : tA.lastName.toUpperCase()), 1),
-                              D("td", NU, [
-                                te(St, {
+                              D("td", NU, OA(T + 1), 1),
+                              D("td", MU, OA((B = (Y = E.identifiableSiteUser) == null ? void 0 : Y.identifiableUser.user) == null ? void 0 : B.firstName.toUpperCase()), 1),
+                              D("td", RU, OA((tA = (eA = E.identifiableSiteUser) == null ? void 0 : eA.identifiableUser.user) == null ? void 0 : tA.lastName.toUpperCase()), 1),
+                              D("td", LU, [
+                                te(Ct, {
                                   text: "REMOVE",
                                   type: "button",
                                   onOnClick: (oA) => O(E)
@@ -38304,8 +38323,8 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
                               ])
                             ]);
                           }), 128)),
-                          y.value.length === 0 && !p.value ? (X(), dA("tr", MU, LU)) : IA("", !0),
-                          p.value ? (X(), dA("tr", FU, BU)) : IA("", !0)
+                          y.value.length === 0 && !p.value ? (X(), dA("tr", FU, BU)) : IA("", !0),
+                          p.value ? (X(), dA("tr", YU, UU)) : IA("", !0)
                         ])
                       ])
                     ])
@@ -38317,7 +38336,7 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
         ]),
         _: 1
       })) : IA("", !0),
-      n.value ? (X(), Ae(nt, {
+      n.value ? (X(), JA(nt, {
         key: 1,
         title: "ERROR",
         message: l.value,
@@ -38325,7 +38344,7 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
         "cancel-text": null,
         onOnOk: M[2] || (M[2] = (E) => n.value = !1)
       }, null, 8, ["message"])) : IA("", !0),
-      a.value ? (X(), Ae(nt, {
+      a.value ? (X(), JA(nt, {
         key: 2,
         title: "SUCCESS",
         message: "THE USER HAS BEEN SUCCESSFULLY REMOVED FROM THE WAITLIST.",
@@ -38333,7 +38352,7 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
         "ok-text": "OK",
         onOnOk: M[3] || (M[3] = (E) => a.value = !1)
       })) : IA("", !0),
-      s.value ? (X(), Ae(nt, {
+      s.value ? (X(), JA(nt, {
         key: 3,
         title: "CONFIRM",
         message: "ARE YOU SURE YOU WANT TO REMOVE THE USER FROM THE WAITLIST?",
@@ -38345,18 +38364,18 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
       }, null, 8, ["ok-loading"])) : IA("", !0)
     ], 64));
   }
-}), HU = { class: "modal-mask" }, UU = { class: "modal-wrapper" }, jU = {
+}), zU = { class: "modal-mask" }, WU = { class: "modal-wrapper" }, XU = {
   class: "modal-dialog",
   role: "document"
-}, zU = { class: "modal-content" }, WU = { class: "modal-header border-0" }, XU = /* @__PURE__ */ D("h5", { class: "modal-title" }, "On Hold Spots", -1), GU = {
+}, GU = { class: "modal-content" }, qU = { class: "modal-header border-0" }, QU = /* @__PURE__ */ D("h5", { class: "modal-title" }, "On Hold Spots", -1), KU = {
   type: "button",
   class: "close",
   "data-dismiss": "modal",
   "aria-label": "Close"
-}, qU = { class: "modal-body" }, QU = /* @__PURE__ */ D("label", {
+}, ZU = { class: "modal-body" }, JU = /* @__PURE__ */ D("label", {
   for: "onHoldSpotsInput",
   class: "input-label"
-}, "On Hold Spots:", -1), KU = { class: "modal-footer border-0" }, ZU = /* @__PURE__ */ Me({
+}, "On Hold Spots:", -1), Aj = { class: "modal-footer border-0" }, ej = /* @__PURE__ */ Me({
   __name: "SetOnHoldSpots",
   props: {
     classId: {},
@@ -38386,35 +38405,35 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
       }
     }
     return (S, I) => (X(), dA(HA, null, [
-      te(St, {
+      te(Ct, {
         text: "Set On Hold Spots (" + h.onHoldSpots + ")",
         type: "button",
         onOnClick: I[0] || (I[0] = (O) => y())
       }, null, 8, ["text"]),
-      n.value ? (X(), Ae(Bn, {
+      n.value ? (X(), JA(Bn, {
         key: 0,
         name: "modal"
       }, {
         default: Ne(() => [
-          D("div", HU, [
-            D("div", UU, [
-              D("div", jU, [
-                D("div", zU, [
-                  D("div", WU, [
-                    XU,
-                    D("button", GU, [
+          D("div", zU, [
+            D("div", WU, [
+              D("div", XU, [
+                D("div", GU, [
+                  D("div", qU, [
+                    QU,
+                    D("button", KU, [
                       D("span", {
                         "aria-hidden": "true",
                         onClick: I[1] || (I[1] = (O) => n.value = !1)
                       }, "\xD7")
                     ])
                   ]),
-                  D("div", qU, [
+                  D("div", ZU, [
                     D("p", null, [
                       Ie(" Current On Hold Spots: "),
                       D("b", null, OA(h.onHoldSpots), 1)
                     ]),
-                    QU,
+                    JU,
                     Xe(D("input", {
                       id: "onHoldSpotsInput",
                       class: "form-control",
@@ -38431,14 +38450,14 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
                       style: { color: "red" }
                     }, OA(O.$message), 1))), 128))
                   ]),
-                  D("div", KU, [
-                    te(St, {
+                  D("div", Aj, [
+                    te(Ct, {
                       text: "Set On Hold Spots",
                       type: "button",
                       "is-loading": a.value,
                       onOnClick: I[3] || (I[3] = (O) => C())
                     }, null, 8, ["is-loading"]),
-                    te(St, {
+                    te(Ct, {
                       text: "Cancel",
                       type: "button",
                       disabled: a.value,
@@ -38453,7 +38472,7 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
         ]),
         _: 1
       })) : IA("", !0),
-      s.value ? (X(), Ae(nt, {
+      s.value ? (X(), JA(nt, {
         key: 1,
         title: "ERROR",
         message: gA(gt),
@@ -38463,7 +38482,7 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
       }, null, 8, ["message"])) : IA("", !0)
     ], 64));
   }
-}), JU = /* @__PURE__ */ Me({
+}), tj = /* @__PURE__ */ Me({
   __name: "SyncClassButton",
   props: {
     classId: {}
@@ -38482,13 +38501,13 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
       }
     }
     return (p, h) => (X(), dA(HA, null, [
-      te(St, {
+      te(Ct, {
         text: "SYNC CLASS",
         type: "button",
         "is-loading": s.value,
         onOnClick: f
       }, null, 8, ["is-loading"]),
-      l.value ? (X(), Ae(nt, {
+      l.value ? (X(), JA(nt, {
         key: 0,
         title: "ERROR",
         message: gA(gt),
@@ -38500,18 +38519,18 @@ const JH = /* @__PURE__ */ tn(ZH, [["__scopeId", "data-v-9cd679ed"]]), AU = { cl
   }
 });
 var zo = /* @__PURE__ */ ((A) => (A.ROLE_SUPER_ADMIN = "ROLE_SUPER_ADMIN", A.ROLE_ADMIN_MANAGER = "ROLE_ADMIN_MANAGER", A.ROLE_STAFF = "ROLE_STAFF", A.ROLE_USER = "ROLE_USER", A.ROLE_MINDBODY_USER = "ROLE_MINDBODY_USER", A.ROLE_INSTRUCTOR = "ROLE_INSTRUCTOR", A))(zo || {});
-const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "ClassDetails" }, ej = { key: 0 }, tj = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("h2", { style: { margin: "0 auto", "text-align": "center" } }, "Please select a class", -1)), nj = [
-  tj
-], rj = { key: 1 }, ij = { class: "row" }, aj = { class: "col-12 text-center" }, sj = { key: 2 }, oj = { class: "row" }, lj = { class: "col-md-10" }, cj = { class: "col-md-2" }, uj = {
+const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), nj = { class: "ClassDetails" }, rj = { key: 0 }, ij = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("h2", { style: { margin: "0 auto", "text-align": "center" } }, "Please select a class", -1)), aj = [
+  ij
+], sj = { key: 1 }, oj = { class: "row" }, lj = { class: "col-12 text-center" }, cj = { key: 2 }, uj = { class: "row" }, dj = { class: "col-md-10" }, hj = { class: "col-md-2" }, fj = {
   key: 0,
   class: "row"
-}, dj = { class: "col-md-12" }, hj = {
+}, gj = { class: "col-md-12" }, pj = {
   key: 1,
   class: "row"
-}, fj = { class: "col-md-12" }, gj = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("hr", null, null, -1)), pj = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("hr", null, null, -1)), mj = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("br", null, null, -1)), vj = { key: 5 }, yj = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("h2", null, "Choose an action :", -1)), bj = { key: 6 }, xj = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("h2", null, "Spot is under maintenance", -1)), Cj = { key: 7 }, wj = { key: 14 }, Ij = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("hr", null, null, -1)), kj = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("br", null, null, -1)), _j = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("br", null, null, -1)), Sj = {
+}, mj = { class: "col-md-12" }, vj = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("hr", null, null, -1)), yj = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("hr", null, null, -1)), bj = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("br", null, null, -1)), xj = { key: 5 }, Cj = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("h2", null, "Choose an action :", -1)), wj = { key: 6 }, Ij = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("h2", null, "Spot is under maintenance", -1)), kj = { key: 7 }, _j = { key: 14 }, Sj = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("hr", null, null, -1)), $j = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("br", null, null, -1)), Ej = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("br", null, null, -1)), Dj = {
   key: 15,
   class: "row"
-}, $j = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("div", {
+}, Pj = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("div", {
   class: "col-12",
   style: { "text-align": "center" }
 }, [
@@ -38519,9 +38538,9 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
     /* @__PURE__ */ D("hr", { style: { border: "none", height: "2px", "background-color": "#ffd903", "max-width": "20px" } }),
     /* @__PURE__ */ D("small", null, "Not Paid")
   ])
-], -1)), Ej = [
-  $j
-], Dj = /* @__PURE__ */ Me({
+], -1)), Oj = [
+  Pj
+], Tj = /* @__PURE__ */ Me({
   __name: "ClassDetails",
   props: {
     classId: {}
@@ -38558,7 +38577,7 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
       isLoading: !1,
       isVisible: !1
     });
-    wt(() => {
+    It(() => {
       B(), eA();
     });
     function B() {
@@ -38582,12 +38601,12 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
         for (let W = 0; W < l.value.roomLayout.matrix.length; W++) {
           const pA = l.value.roomLayout.matrix[W];
           if (pA.icon === "spot" && pA.spotNumber === aA.spotNumber) {
-            let vA = !1, mA, MA, JA;
+            let vA = !1, mA, MA, Ae;
             if (f.value != null)
               for (let EA = 0; EA < f.value.length; EA++) {
                 const wA = f.value[EA];
                 if (mA = wA.isCheckedIn, pA.spotNumber === wA.spotNumber && ((R = wA.identifiableSiteUser) == null ? void 0 : R.identifiableUser)) {
-                  vA = !0, JA = (rA = wA.identifiableSiteUser) == null ? void 0 : rA.identifiableUser, MA = wA.id;
+                  vA = !0, Ae = (rA = wA.identifiableSiteUser) == null ? void 0 : rA.identifiableUser, MA = wA.id;
                   break;
                 }
               }
@@ -38597,7 +38616,7 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
               enabled: pA.enabled,
               enrollmentId: MA,
               isCheckedIn: mA,
-              identifiableUser: JA
+              identifiableUser: Ae
             };
             break;
           }
@@ -38666,42 +38685,42 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
       await new Promise((aA) => setTimeout(aA, 5e3)), I.value = await a.classWaitlistIsEnabled(pt().site, t.classId);
     }
     return (aA, R) => {
-      var rA, W, pA, vA, mA, MA, JA, EA, wA, DA, RA, YA, $A, qA, uA, fA, NA, UA, FA, ne, le, re, ae, KA, ve, pe, Ce, Pe, SA, PA, hA, q, zA, oe, se, we;
+      var rA, W, pA, vA, mA, MA, Ae, EA, wA, DA, RA, VA, $A, GA, uA, fA, NA, UA, FA, ne, le, re, ae, KA, ve, pe, Ce, Pe, SA, PA, hA, q, zA, oe, se, we;
       return X(), dA(HA, null, [
-        D("div", Aj, [
-          aA.classId === null ? (X(), dA("div", ej, nj)) : s.value ? (X(), dA("div", rj, [
-            D("div", ij, [
-              D("div", aj, [
+        D("div", nj, [
+          aA.classId === null ? (X(), dA("div", rj, aj)) : s.value ? (X(), dA("div", sj, [
+            D("div", oj, [
+              D("div", lj, [
                 te(eo, { text: "Loading..." })
               ])
             ])
-          ])) : (X(), dA("div", sj, [
-            D("div", oj, [
-              D("div", lj, [
-                D("h4", null, OA((W = (rA = l.value) == null ? void 0 : rA.class) == null ? void 0 : W.name) + " - " + OA(((vA = (pA = l.value) == null ? void 0 : pA.class) == null ? void 0 : vA.instructorName) + ((MA = (mA = l.value) == null ? void 0 : mA.class) != null && MA.isSubstitute ? " (Substitute)" : "")) + " (" + OA(gA(ht)((JA = l.value) == null ? void 0 : JA.class.startWithNoTimeZone).format("DD/MM/YYYY")) + ") ", 1),
+          ])) : (X(), dA("div", cj, [
+            D("div", uj, [
+              D("div", dj, [
+                D("h4", null, OA((W = (rA = l.value) == null ? void 0 : rA.class) == null ? void 0 : W.name) + " - " + OA(((vA = (pA = l.value) == null ? void 0 : pA.class) == null ? void 0 : vA.instructorName) + ((MA = (mA = l.value) == null ? void 0 : mA.class) != null && MA.isSubstitute ? " (Substitute)" : "")) + " (" + OA(gA(ht)((Ae = l.value) == null ? void 0 : Ae.class.startWithNoTimeZone).format("DD/MM/YYYY")) + ") ", 1),
                 D("h5", null, " Time : " + OA(gA(ht)((EA = l.value) == null ? void 0 : EA.class.startWithNoTimeZone).format("hh:mm A")) + " | Duration : " + OA((DA = (wA = l.value) == null ? void 0 : wA.class) == null ? void 0 : DA.duration) + " mins ", 1)
               ]),
-              D("div", cj, [
-                ((RA = l.value) == null ? void 0 : RA.class.id) && S.value ? (X(), Ae(JU, {
+              D("div", hj, [
+                ((RA = l.value) == null ? void 0 : RA.class.id) && S.value ? (X(), JA(tj, {
                   key: 0,
-                  "class-id": (YA = l.value) == null ? void 0 : YA.class.id,
+                  "class-id": (VA = l.value) == null ? void 0 : VA.class.id,
                   onAfterSyncClass: R[0] || (R[0] = (Oe) => eA())
                 }, null, 8, ["class-id"])) : IA("", !0)
               ])
             ]),
-            C.value ? (X(), dA("div", uj, [
-              D("div", dj, [
-                l.value ? (X(), Ae(yU, {
+            C.value ? (X(), dA("div", fj, [
+              D("div", gj, [
+                l.value ? (X(), JA(CU, {
                   key: 0,
                   "class-id": aA.classId,
-                  "room-layout-id": (qA = ($A = l.value) == null ? void 0 : $A.roomLayout) == null ? void 0 : qA.id,
+                  "room-layout-id": (GA = ($A = l.value) == null ? void 0 : $A.roomLayout) == null ? void 0 : GA.id,
                   "max-capacity": (fA = (uA = l.value) == null ? void 0 : uA.class) == null ? void 0 : fA.maxCapacity,
                   onAfterChangingRoomLayout: R[1] || (R[1] = (Oe) => eA())
                 }, null, 8, ["class-id", "room-layout-id", "max-capacity"])) : IA("", !0),
                 Ie(" \xA0 "),
-                te(YU, { "class-id": aA.classId }, null, 8, ["class-id"]),
+                te(jU, { "class-id": aA.classId }, null, 8, ["class-id"]),
                 Ie(" \xA0 "),
-                l.value ? (X(), Ae(ZU, {
+                l.value ? (X(), JA(ej, {
                   key: 1,
                   "class-id": aA.classId,
                   onAfterSetOnHoldSpots: R[2] || (R[2] = (Oe) => eA()),
@@ -38709,10 +38728,10 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
                 }, null, 8, ["class-id", "on-hold-spots"])) : IA("", !0)
               ])
             ])) : IA("", !0),
-            l.value !== null && I.value === !0 ? (X(), dA("div", hj, [
-              D("div", fj, [
-                gj,
-                l.value !== null && I.value === !0 && ((FA = (UA = l.value) == null ? void 0 : UA.class) == null ? void 0 : FA.showAsDisabled) === !1 ? (X(), Ae(Gd, {
+            l.value !== null && I.value === !0 ? (X(), dA("div", pj, [
+              D("div", mj, [
+                vj,
+                l.value !== null && I.value === !0 && ((FA = (UA = l.value) == null ? void 0 : UA.class) == null ? void 0 : FA.showAsDisabled) === !1 ? (X(), JA(Gd, {
                   key: 0,
                   "class-id": aA.classId,
                   onAfterEnrolling: R[3] || (R[3] = (Oe) => eA()),
@@ -38722,9 +38741,9 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
                 }, null, 8, ["class-id"])) : IA("", !0)
               ])
             ])) : IA("", !0),
-            pj,
-            mj,
-            l.value !== null && l.value.roomLayout !== null && ((ne = l.value.roomLayout) == null ? void 0 : ne.matrix) !== null ? (X(), Ae(IY, {
+            yj,
+            bj,
+            l.value !== null && l.value.roomLayout !== null && ((ne = l.value.roomLayout) == null ? void 0 : ne.matrix) !== null ? (X(), JA(SY, {
               key: 2,
               matrix: l.value.roomLayout.matrix,
               "show-user-in-spots": !0,
@@ -38734,7 +38753,7 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
               "spot-action": y.value,
               "spot-selection-is-disabled": !C.value && !O.value
             }, null, 8, ["matrix", "selectedSpotNumber", "enrollments", "spot-action", "spot-selection-is-disabled"])) : IA("", !0),
-            l.value !== null && l.value.roomLayout === null && l.value.enrollments !== null && I.value === !1 && C.value ? (X(), Ae(Gd, {
+            l.value !== null && l.value.roomLayout === null && l.value.enrollments !== null && I.value === !1 && C.value ? (X(), JA(Gd, {
               key: 3,
               "class-id": aA.classId,
               onAfterEnrolling: R[4] || (R[4] = (Oe) => nA()),
@@ -38742,7 +38761,7 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
               enrollButtonText: "BOOK",
               "is-waitlist-booking": !1
             }, null, 8, ["class-id"])) : IA("", !0),
-            l.value !== null && l.value.roomLayout === null && l.value.enrollments !== null ? (X(), Ae(JH, {
+            l.value !== null && l.value.roomLayout === null && l.value.enrollments !== null ? (X(), JA(tU, {
               key: 4,
               enrollments: f.value,
               isLoading: !1,
@@ -38750,15 +38769,15 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
               "show-edit-options": C.value,
               "user-can-check-in-check-out": O.value
             }, null, 8, ["enrollments", "show-edit-options", "user-can-check-in-check-out"])) : IA("", !0),
-            C.value && ((re = T.value) == null ? void 0 : re.isBooked) === !1 && T.value.enabled === !0 ? (X(), dA("div", vj, [
-              yj,
-              te(St, {
+            C.value && ((re = T.value) == null ? void 0 : re.isBooked) === !1 && T.value.enabled === !0 ? (X(), dA("div", xj, [
+              Cj,
+              te(Ct, {
                 text: "ASSIGN CLIENT",
                 type: "button",
                 onOnClick: R[6] || (R[6] = (Oe) => y.value = 1),
                 class: "mr-1"
               }),
-              te(St, {
+              te(Ct, {
                 text: "Put under maintenance",
                 type: "button",
                 onOnClick: oA,
@@ -38766,9 +38785,9 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
                 "is-loading": p.value
               }, null, 8, ["is-loading"])
             ])) : IA("", !0),
-            C.value && T.value.enabled === !1 ? (X(), dA("div", bj, [
-              xj,
-              te(St, {
+            C.value && T.value.enabled === !1 ? (X(), dA("div", wj, [
+              Ij,
+              te(Ct, {
                 text: "Recover from maintenance",
                 type: "button",
                 onOnClick: G,
@@ -38776,15 +38795,15 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
                 "is-loading": p.value
               }, null, 8, ["is-loading"])
             ])) : IA("", !0),
-            C.value && ((ae = T.value) == null ? void 0 : ae.isBooked) === !0 ? (X(), dA("h2", Cj, " Spot is reserved for - " + OA(((pe = (ve = (KA = T.value.identifiableUser) == null ? void 0 : KA.user) == null ? void 0 : ve.firstName) != null ? pe : "") + " " + ((SA = (Pe = (Ce = T.value.identifiableUser) == null ? void 0 : Ce.user) == null ? void 0 : Pe.lastName) != null ? SA : "")), 1)) : IA("", !0),
-            C.value && ((PA = T.value) == null ? void 0 : PA.isBooked) === !0 && y.value !== 2 && y.value !== 3 ? (X(), Ae(St, {
+            C.value && ((ae = T.value) == null ? void 0 : ae.isBooked) === !0 ? (X(), dA("h2", kj, " Spot is reserved for - " + OA(((pe = (ve = (KA = T.value.identifiableUser) == null ? void 0 : KA.user) == null ? void 0 : ve.firstName) != null ? pe : "") + " " + ((SA = (Pe = (Ce = T.value.identifiableUser) == null ? void 0 : Ce.user) == null ? void 0 : Pe.lastName) != null ? SA : "")), 1)) : IA("", !0),
+            C.value && ((PA = T.value) == null ? void 0 : PA.isBooked) === !0 && y.value !== 2 && y.value !== 3 ? (X(), JA(Ct, {
               key: 8,
               text: "CANCEL BOOKING",
               type: "button",
               onOnClick: Z,
               class: "mr-1"
             })) : IA("", !0),
-            C.value && ((hA = T.value) == null ? void 0 : hA.isBooked) === !0 && y.value !== 3 ? (X(), Ae(St, {
+            C.value && ((hA = T.value) == null ? void 0 : hA.isBooked) === !0 && y.value !== 3 ? (X(), JA(Ct, {
               key: 9,
               text: "CHANGE SPOT",
               "is-loading": h.value,
@@ -38793,7 +38812,7 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
               onOnClick: R[7] || (R[7] = (Oe) => y.value = 2),
               class: "mr-1"
             }, null, 8, ["is-loading", "disabled"])) : IA("", !0),
-            C.value && ((q = T.value) == null ? void 0 : q.isBooked) === !0 && y.value !== 2 ? (X(), Ae(St, {
+            C.value && ((q = T.value) == null ? void 0 : q.isBooked) === !0 && y.value !== 2 ? (X(), JA(Ct, {
               key: 10,
               type: "button",
               text: "Swap Spot",
@@ -38802,28 +38821,28 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
               onOnClick: R[8] || (R[8] = (Oe) => y.value = 3),
               class: "mr-1"
             }, null, 8, ["is-loading", "disabled"])) : IA("", !0),
-            C.value && ((zA = T.value) == null ? void 0 : zA.isBooked) === !0 && (y.value === 2 || y.value === 3) ? (X(), Ae(St, {
+            C.value && ((zA = T.value) == null ? void 0 : zA.isBooked) === !0 && (y.value === 2 || y.value === 3) ? (X(), JA(Ct, {
               key: 11,
               disabled: h.value,
               text: "Cancel",
               type: "button",
               onOnClick: R[9] || (R[9] = (Oe) => y.value = 0)
             }, null, 8, ["disabled"])) : IA("", !0),
-            O.value && T.value.enrollmentId != null && T.value.isCheckedIn != null && y.value !== 2 && y.value !== 3 ? (X(), Ae(JC, {
+            O.value && T.value.enrollmentId != null && T.value.isCheckedIn != null && y.value !== 2 && y.value !== 3 ? (X(), JA(JC, {
               key: 12,
               "enrollment-id": T.value.enrollmentId,
               "is-checked-in": T.value.isCheckedIn,
               onAfterCheckInCheckOut: R[10] || (R[10] = (Oe) => eA())
             }, null, 8, ["enrollment-id", "is-checked-in"])) : IA("", !0),
-            ((oe = T.value.identifiableUser) == null ? void 0 : oe.id) && y.value !== 2 && y.value !== 3 ? (X(), Ae(Aw, {
+            ((oe = T.value.identifiableUser) == null ? void 0 : oe.id) && y.value !== 2 && y.value !== 3 ? (X(), JA(Aw, {
               key: 13,
               "user-id": (se = T.value.identifiableUser) == null ? void 0 : se.id,
               "enrollment-id": T.value.enrollmentId,
               "class-id": aA.classId
             }, null, 8, ["user-id", "enrollment-id", "class-id"])) : IA("", !0),
-            C.value && y.value === 1 ? (X(), dA("div", wj, [
-              Ij,
-              l.value !== null && T.value.spotNumber !== null && T.value.spotNumber !== void 0 ? (X(), Ae(Gd, {
+            C.value && y.value === 1 ? (X(), dA("div", _j, [
+              Sj,
+              l.value !== null && T.value.spotNumber !== null && T.value.spotNumber !== void 0 ? (X(), JA(Gd, {
                 key: 0,
                 "class-id": aA.classId,
                 "spot-number": T.value.spotNumber,
@@ -38832,12 +38851,12 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
                 "is-waitlist-booking": !1
               }, null, 8, ["class-id", "spot-number"])) : IA("", !0)
             ])) : IA("", !0),
-            kj,
-            _j,
-            l.value !== null && l.value.roomLayout !== null && ((we = l.value.roomLayout) == null ? void 0 : we.matrix) !== null ? (X(), dA("div", Sj, Ej)) : IA("", !0)
+            $j,
+            Ej,
+            l.value !== null && l.value.roomLayout !== null && ((we = l.value.roomLayout) == null ? void 0 : we.matrix) !== null ? (X(), dA("div", Dj, Oj)) : IA("", !0)
           ]))
         ]),
-        F.value.isVisible ? (X(), Ae(nt, {
+        F.value.isVisible ? (X(), JA(nt, {
           key: 0,
           title: "ERROR",
           message: F.value.message,
@@ -38845,7 +38864,7 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
           onOnOk: R[12] || (R[12] = (Oe) => F.value.isVisible = !1),
           "cancel-text": null
         }, null, 8, ["message"])) : IA("", !0),
-        M.value.isVisible ? (X(), Ae(nt, {
+        M.value.isVisible ? (X(), JA(nt, {
           key: 1,
           title: "CANCEL BOOKING",
           message: "Are you sure you want to proceed?",
@@ -38854,7 +38873,7 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
           onOnOk: R[14] || (R[14] = (Oe) => Q()),
           closable: !1
         }, null, 8, ["ok-loading"])) : IA("", !0),
-        E.value.isVisible ? (X(), Ae(nt, {
+        E.value.isVisible ? (X(), JA(nt, {
           key: 2,
           title: "Warning",
           message: gA(r8),
@@ -38864,7 +38883,7 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
           onOnOk: R[16] || (R[16] = (Oe) => j()),
           closable: !1
         }, null, 8, ["message", "isLoading"])) : IA("", !0),
-        Y.value.isVisible ? (X(), Ae(nt, {
+        Y.value.isVisible ? (X(), JA(nt, {
           key: 3,
           title: Y.value.title,
           message: Y.value.message,
@@ -38875,7 +38894,7 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), Aj = { class: "Clas
     };
   }
 });
-const Pj = /* @__PURE__ */ tn(Dj, [["__scopeId", "data-v-84e76624"]]), Oj = /* @__PURE__ */ Me({
+const Nj = /* @__PURE__ */ nn(Tj, [["__scopeId", "data-v-84e76624"]]), Mj = /* @__PURE__ */ Me({
   __name: "SyncAllClassesButton",
   props: {
     disabled: { type: Boolean }
@@ -38894,14 +38913,14 @@ const Pj = /* @__PURE__ */ tn(Dj, [["__scopeId", "data-v-84e76624"]]), Oj = /* @
       }
     }
     return (p, h) => (X(), dA(HA, null, [
-      te(St, {
+      te(Ct, {
         text: "SYNC ALL CLASSES",
         type: "button",
         "is-loading": s.value,
         onOnClick: f,
         disabled: t.disabled
       }, null, 8, ["is-loading", "disabled"]),
-      l.value ? (X(), Ae(nt, {
+      l.value ? (X(), JA(nt, {
         key: 0,
         title: "ERROR",
         message: gA(gt),
@@ -38911,12 +38930,12 @@ const Pj = /* @__PURE__ */ tn(Dj, [["__scopeId", "data-v-84e76624"]]), Oj = /* @
       }, null, 8, ["message"])) : IA("", !0)
     ], 64));
   }
-}), Tj = ["value"], Nj = /* @__PURE__ */ Me({
+}), Rj = ["value"], Lj = /* @__PURE__ */ Me({
   __name: "SiteSelector",
   emits: ["afterChangingSite"],
   setup(A, { emit: e }) {
     const t = e, n = yA([]), a = yA(pt().site);
-    wt(() => {
+    It(() => {
       s();
     });
     function s() {
@@ -38935,31 +38954,31 @@ const Pj = /* @__PURE__ */ tn(Dj, [["__scopeId", "data-v-84e76624"]]), Oj = /* @
       (X(!0), dA(HA, null, fe(n.value, (h, m) => (X(), dA("option", {
         key: m,
         value: h.serviceKey
-      }, OA(h.name), 9, Tj))), 128))
+      }, OA(h.name), 9, Rj))), 128))
     ], 544)), [
       [Tn, a.value]
     ]);
   }
-}), bp = (A) => (vn("data-v-30490417"), A = A(), yn(), A), Mj = { class: "row ml-1" }, Rj = { class: "col-lg-7 col-md-10 col-sm-12 ml-auto mr-3" }, Lj = /* @__PURE__ */ bp(() => /* @__PURE__ */ D("hr", null, null, -1)), Fj = { class: "ReservationClassList" }, Vj = { id: "DateRangeSection" }, Bj = { style: { display: "flex", "justify-content": "space-between", width: "100%" } }, Yj = { id: "prev" }, Hj = /* @__PURE__ */ bp(() => /* @__PURE__ */ D("i", {
+}), bp = (A) => (vn("data-v-30490417"), A = A(), yn(), A), Fj = { class: "row ml-1" }, Vj = { class: "col-lg-7 col-md-10 col-sm-12 ml-auto mr-3" }, Bj = /* @__PURE__ */ bp(() => /* @__PURE__ */ D("hr", null, null, -1)), Yj = { class: "ReservationClassList" }, Hj = { id: "DateRangeSection" }, Uj = { style: { display: "flex", "justify-content": "space-between", width: "100%" } }, jj = { id: "prev" }, zj = /* @__PURE__ */ bp(() => /* @__PURE__ */ D("i", {
   class: "bi bi-caret-left-fill",
   style: { color: "black" }
-}, null, -1)), Uj = [
-  Hj
-], jj = {
+}, null, -1)), Wj = [
+  zj
+], Xj = {
   id: "dateRange",
   style: { "font-weight": "500" }
-}, zj = { id: "next" }, Wj = /* @__PURE__ */ bp(() => /* @__PURE__ */ D("i", { class: "bi bi-caret-right-fill" }, null, -1)), Xj = [
-  Wj
-], Gj = {
+}, Gj = { id: "next" }, qj = /* @__PURE__ */ bp(() => /* @__PURE__ */ D("i", { class: "bi bi-caret-right-fill" }, null, -1)), Qj = [
+  qj
+], Kj = {
   key: 0,
   class: "row"
-}, qj = { class: "col-12 text-center" }, Qj = { id: "ClassesSection" }, Kj = { class: "day" }, Zj = ["onClick"], Jj = { style: { display: "inline-block", width: "100%", "align-self": "stretch" } }, Az = { class: "row" }, ez = { class: "col-12 text-center" }, tz = /* @__PURE__ */ Me({
+}, Zj = { class: "col-12 text-center" }, Jj = { id: "ClassesSection" }, Az = { class: "day" }, ez = ["onClick"], tz = { style: { display: "inline-block", width: "100%", "align-self": "stretch" } }, nz = { class: "row" }, rz = { class: "col-12 text-center" }, iz = /* @__PURE__ */ Me({
   __name: "CalendarList",
   emits: ["selectClass"],
   setup(A, { expose: e, emit: t }) {
     ht.Ls.en.weekStart = 1;
     const n = At("gqlApiService"), a = yA(!1), s = yA(!1), l = yA(ht(Date()).startOf("week").toDate()), f = yA(ht(Date()).endOf("week").toDate()), p = yA([]), h = yA(!1), m = yA(null), y = t;
-    wt(() => {
+    It(() => {
       C(), h.value = Ea.userHasRole(zo.ROLE_SUPER_ADMIN);
     }), e({
       getCalendarClasses: C
@@ -39006,42 +39025,42 @@ const Pj = /* @__PURE__ */ tn(Dj, [["__scopeId", "data-v-84e76624"]]), Oj = /* @
       C();
     }
     return (M, E) => (X(), dA(HA, null, [
-      D("div", Mj, [
-        D("div", Rj, [
-          te(Nj, { onAfterChangingSite: F })
-        ])
-      ]),
-      Lj,
       D("div", Fj, [
         D("div", Vj, [
-          D("div", Bj, [
-            D("div", Yj, [
+          te(Lj, { onAfterChangingSite: F })
+        ])
+      ]),
+      Bj,
+      D("div", Yj, [
+        D("div", Hj, [
+          D("div", Uj, [
+            D("div", jj, [
               D("a", {
                 href: "#",
                 onClick: E[0] || (E[0] = rt((T) => S(), ["prevent"]))
-              }, Uj)
+              }, Wj)
             ]),
-            D("div", jj, OA(gA(ht)(l.value).format("DD/MM/YYYY")) + " to " + OA(gA(ht)(f.value).format("DD/MM/YYYY")), 1),
-            D("div", zj, [
+            D("div", Xj, OA(gA(ht)(l.value).format("DD/MM/YYYY")) + " to " + OA(gA(ht)(f.value).format("DD/MM/YYYY")), 1),
+            D("div", Gj, [
               D("a", {
                 href: "#",
                 onClick: E[1] || (E[1] = rt((T) => I(), ["prevent"])),
                 style: { color: "black" }
-              }, Xj)
+              }, Qj)
             ])
           ])
         ]),
-        a.value ? (X(), dA("div", Gj, [
-          D("div", qj, [
+        a.value ? (X(), dA("div", Kj, [
+          D("div", Zj, [
             te(eo, { text: "Loading..." })
           ])
         ])) : IA("", !0),
-        D("div", Qj, [
+        D("div", Jj, [
           (X(!0), dA(HA, null, fe(p.value, (T) => (X(), dA("div", {
             class: "ClassDate",
             key: T.date.toISOString
           }, [
-            D("span", Kj, OA(gA(ht)(T.date).format("ddd MMM D, YYYY")), 1),
+            D("span", Az, OA(gA(ht)(T.date).format("ddd MMM D, YYYY")), 1),
             (X(!0), dA(HA, null, fe(T.classes, (Y) => (X(), dA("div", {
               key: Y.id,
               style: { cursor: "pointer" },
@@ -39050,15 +39069,15 @@ const Pj = /* @__PURE__ */ tn(Dj, [["__scopeId", "data-v-84e76624"]]), Oj = /* @
             }, [
               D("div", null, [
                 D("time", null, OA(gA(ht)(Y.startWithNoTimeZone).format("h:mm A")), 1),
-                D("desc", Jj, OA(Y.name), 1),
+                D("desc", tz, OA(Y.name), 1),
                 D("span", null, OA("(" + (Y.totalBooked + Y.totalUnderMaintenanceSpots) + "/" + Y.maxCapacity + ")"), 1)
               ])
-            ], 10, Zj))), 128))
+            ], 10, ez))), 128))
           ]))), 128))
         ]),
-        D("div", Az, [
-          D("div", ez, [
-            h.value ? (X(), Ae(Oj, {
+        D("div", nz, [
+          D("div", rz, [
+            h.value ? (X(), JA(Mj, {
               key: 0,
               disabled: !1,
               onAfterSyncAllClasses: E[2] || (E[2] = (T) => C(!0))
@@ -39066,7 +39085,7 @@ const Pj = /* @__PURE__ */ tn(Dj, [["__scopeId", "data-v-84e76624"]]), Oj = /* @
           ])
         ])
       ]),
-      s.value ? (X(), Ae(nt, {
+      s.value ? (X(), JA(nt, {
         key: 0,
         title: "Error",
         message: gA(gt),
@@ -39076,7 +39095,7 @@ const Pj = /* @__PURE__ */ tn(Dj, [["__scopeId", "data-v-84e76624"]]), Oj = /* @
     ], 64));
   }
 });
-const nz = /* @__PURE__ */ tn(tz, [["__scopeId", "data-v-30490417"]]), rz = { class: "row" }, iz = { class: "col-lg-3 col-md-3 col-sm-4" }, az = { class: "col-lg-9 col-md-9 col-sm-8" }, sz = /* @__PURE__ */ Me({
+const az = /* @__PURE__ */ nn(iz, [["__scopeId", "data-v-30490417"]]), sz = { class: "row" }, oz = { class: "col-lg-3 col-md-3 col-sm-4" }, lz = { class: "col-lg-9 col-md-9 col-sm-8" }, cz = /* @__PURE__ */ Me({
   __name: "AdminClassView",
   setup(A) {
     const e = yA(null), t = yA(null);
@@ -39087,46 +39106,46 @@ const nz = /* @__PURE__ */ tn(tz, [["__scopeId", "data-v-30490417"]]), rz = { cl
       var s;
       (s = t.value) == null || s.getCalendarClasses(!1);
     }
-    return (s, l) => (X(), dA("div", rz, [
-      D("div", iz, [
-        te(nz, {
+    return (s, l) => (X(), dA("div", sz, [
+      D("div", oz, [
+        te(az, {
           onSelectClass: n,
           ref_key: "calendarList",
           ref: t
         }, null, 512)
       ]),
-      D("div", az, [
-        te(Pj, {
+      D("div", lz, [
+        te(Nj, {
           "class-id": e.value,
           onAvailableSpotsChanged: a
         }, null, 8, ["class-id"])
       ])
     ]));
   }
-}), Yn = (A) => (vn("data-v-61a8bf2a"), A = A(), yn(), A), oz = { class: "row" }, lz = {
+}), Yn = (A) => (vn("data-v-61a8bf2a"), A = A(), yn(), A), uz = { class: "row" }, dz = {
   class: "col-12",
   style: { "text-align": "right" }
-}, cz = ["href"], uz = { class: "row" }, dz = { class: "col-6 col-sm-6 col-md-6 col-lg-5 col-xl-3" }, hz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("option", { value: null }, "Type filter (none selected)", -1)), fz = ["value"], gz = { class: "col-6 col-sm-6 col-md-6 col-lg-5 col-xl-3" }, pz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("option", { value: null }, "Capacity filter (none selected)", -1)), mz = ["value"], vz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("br", null, null, -1)), yz = {
+}, hz = ["href"], fz = { class: "row" }, gz = { class: "col-6 col-sm-6 col-md-6 col-lg-5 col-xl-3" }, pz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("option", { value: null }, "Type filter (none selected)", -1)), mz = ["value"], vz = { class: "col-6 col-sm-6 col-md-6 col-lg-5 col-xl-3" }, yz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("option", { value: null }, "Capacity filter (none selected)", -1)), bz = ["value"], xz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("br", null, null, -1)), Cz = {
   key: 0,
   class: "row"
-}, bz = { class: "col-6 col-sm-6 col-md-6 col-lg-5 col-xl-3" }, xz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("option", { value: "-1" }, "Select a room layout", -1)), Cz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("option", { value: null }, "-- NO ROOM LAYOUT --", -1)), wz = ["value"], Iz = { class: "col-6 col-sm-6 col-md-6 col-lg-6 col-xl-4" }, kz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("hr", null, null, -1)), _z = { class: "row" }, Sz = { class: "col-12" }, $z = { class: "table-responsive" }, Ez = { class: "table table-sm table-hover" }, Dz = { class: "text-center" }, Pz = { class: "custom-control custom-checkbox" }, Oz = ["indeterminate"], Tz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("label", {
+}, wz = { class: "col-6 col-sm-6 col-md-6 col-lg-5 col-xl-3" }, Iz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("option", { value: "-1" }, "Select a room layout", -1)), kz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("option", { value: null }, "-- NO ROOM LAYOUT --", -1)), _z = ["value"], Sz = { class: "col-6 col-sm-6 col-md-6 col-lg-6 col-xl-4" }, $z = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("hr", null, null, -1)), Ez = { class: "row" }, Dz = { class: "col-12" }, Pz = { class: "table-responsive" }, Oz = { class: "table table-sm table-hover" }, Tz = { class: "text-center" }, Nz = { class: "custom-control custom-checkbox" }, Mz = ["indeterminate"], Rz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("label", {
   class: "custom-control-label",
   for: "checkboxSelectAll"
-}, null, -1)), Nz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("th", { class: "text-center" }, "ID", -1)), Mz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("th", { class: "text-center" }, "Class", -1)), Rz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("th", { class: "text-center" }, "Capacity", -1)), Lz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("th", { class: "text-center" }, "Instructor", -1)), Fz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("th", { class: "text-center" }, "Day of the Week", -1)), Vz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("th", { class: "text-center" }, "Starts", -1)), Bz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("th", { class: "text-center" }, "Ends", -1)), Yz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("th", { class: "text-center" }, "Room Layout", -1)), Hz = ["index"], Uz = { class: "text-center" }, jz = { class: "custom-control custom-checkbox" }, zz = ["id", "checked", "onChange"], Wz = ["for"], Xz = { class: "text-center" }, Gz = { class: "text-center" }, qz = { class: "text-center" }, Qz = { class: "text-center" }, Kz = { class: "text-center" }, Zz = { class: "text-center" }, Jz = { class: "text-center" }, AW = { class: "text-center" }, eW = { key: 0 }, tW = {
+}, null, -1)), Lz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("th", { class: "text-center" }, "ID", -1)), Fz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("th", { class: "text-center" }, "Class", -1)), Vz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("th", { class: "text-center" }, "Capacity", -1)), Bz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("th", { class: "text-center" }, "Instructor", -1)), Yz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("th", { class: "text-center" }, "Day of the Week", -1)), Hz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("th", { class: "text-center" }, "Starts", -1)), Uz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("th", { class: "text-center" }, "Ends", -1)), jz = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("th", { class: "text-center" }, "Room Layout", -1)), zz = ["index"], Wz = { class: "text-center" }, Xz = { class: "custom-control custom-checkbox" }, Gz = ["id", "checked", "onChange"], qz = ["for"], Qz = { class: "text-center" }, Kz = { class: "text-center" }, Zz = { class: "text-center" }, Jz = { class: "text-center" }, AW = { class: "text-center" }, eW = { class: "text-center" }, tW = { class: "text-center" }, nW = { class: "text-center" }, rW = { key: 0 }, iW = {
   colspan: "9",
   class: "text-center"
-}, nW = { key: 1 }, rW = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("td", {
+}, aW = { key: 1 }, sW = /* @__PURE__ */ Yn(() => /* @__PURE__ */ D("td", {
   colspan: "9",
   class: "text-center"
-}, "LOADING...", -1)), iW = [
-  rW
-], aW = /* @__PURE__ */ Me({
+}, "LOADING...", -1)), oW = [
+  sW
+], lW = /* @__PURE__ */ Me({
   __name: "ClassSchedulesView",
   setup(A) {
     const e = At("gqlApiService"), t = yA(!1), n = yA(!1), a = yA(!1), s = yA(/* @__PURE__ */ new Set()), l = yA(!1), f = yA([]), p = yA([]), h = yA("-1");
     var m = [];
     const y = yA([]), C = yA([]), S = yA(null), I = yA([]), O = yA(null), F = yA(!1), M = yA(!1), E = yA(!1), T = yA("#"), Y = yA(!1);
-    wt(() => {
+    It(() => {
       let R = At("url-sync-all");
       R && (T.value = R), B(), tA(), eA();
     });
@@ -39207,16 +39226,16 @@ const nz = /* @__PURE__ */ tn(tz, [["__scopeId", "data-v-30490417"]]), rz = { cl
     return (R, rA) => {
       var W;
       return X(), dA(HA, null, [
-        D("div", oz, [
-          D("div", lz, [
+        D("div", uz, [
+          D("div", dz, [
             D("a", {
               href: T.value,
               class: "btn btn-primary"
-            }, "Sync All", 8, cz)
+            }, "Sync All", 8, hz)
           ])
         ]),
-        D("div", uz, [
-          D("div", dz, [
+        D("div", fz, [
+          D("div", gz, [
             Xe(D("select", {
               class: "custom-select",
               "onUpdate:modelValue": rA[0] || (rA[0] = (pA) => S.value = pA),
@@ -39224,16 +39243,16 @@ const nz = /* @__PURE__ */ tn(tz, [["__scopeId", "data-v-30490417"]]), rz = { cl
               required: "",
               onChange: sA
             }, [
-              hz,
+              pz,
               (X(!0), dA(HA, null, fe(C.value, (pA, vA) => (X(), dA("option", {
                 key: vA,
                 value: pA
-              }, OA(pA), 9, fz))), 128))
+              }, OA(pA), 9, mz))), 128))
             ], 544), [
               [Tn, S.value]
             ])
           ]),
-          D("div", gz, [
+          D("div", vz, [
             Xe(D("select", {
               class: "custom-select",
               "onUpdate:modelValue": rA[1] || (rA[1] = (pA) => O.value = pA),
@@ -39241,37 +39260,37 @@ const nz = /* @__PURE__ */ tn(tz, [["__scopeId", "data-v-30490417"]]), rz = { cl
               required: "",
               onChange: sA
             }, [
-              pz,
+              yz,
               (X(!0), dA(HA, null, fe(I.value, (pA, vA) => (X(), dA("option", {
                 key: vA,
                 value: pA
-              }, OA(pA), 9, mz))), 128))
+              }, OA(pA), 9, bz))), 128))
             ], 544), [
               [Tn, O.value]
             ])
           ])
         ]),
-        vz,
-        s.value.size > 0 ? (X(), dA("div", yz, [
-          D("div", bz, [
+        xz,
+        s.value.size > 0 ? (X(), dA("div", Cz, [
+          D("div", wz, [
             Xe(D("select", {
               class: "custom-select",
               "onUpdate:modelValue": rA[2] || (rA[2] = (pA) => h.value = pA),
               id: "countryRegistration",
               required: ""
             }, [
-              xz,
-              Cz,
+              Iz,
+              kz,
               (X(!0), dA(HA, null, fe(p.value, (pA, vA) => (X(), dA("option", {
                 key: vA,
                 value: pA.id
-              }, OA(pA.name), 9, wz))), 128))
+              }, OA(pA.name), 9, _z))), 128))
             ], 512), [
               [Tn, h.value]
             ])
           ]),
-          D("div", Iz, [
-            te(St, {
+          D("div", Sz, [
+            te(Ct, {
               text: "Update Selected",
               type: "button",
               onOnClick: rA[3] || (rA[3] = (pA) => F.value = !0),
@@ -39279,15 +39298,15 @@ const nz = /* @__PURE__ */ tn(tz, [["__scopeId", "data-v-30490417"]]), rz = { cl
             }, null, 8, ["disabled"])
           ])
         ])) : IA("", !0),
-        kz,
-        D("div", _z, [
-          D("div", Sz, [
-            D("div", $z, [
-              D("table", Ez, [
+        $z,
+        D("div", Ez, [
+          D("div", Dz, [
+            D("div", Pz, [
+              D("table", Oz, [
                 D("thead", null, [
                   D("tr", null, [
-                    D("th", Dz, [
-                      D("div", Pz, [
+                    D("th", Tz, [
+                      D("div", Nz, [
                         Xe(D("input", {
                           type: "checkbox",
                           class: "custom-control-input",
@@ -39295,20 +39314,20 @@ const nz = /* @__PURE__ */ tn(tz, [["__scopeId", "data-v-30490417"]]), rz = { cl
                           "onUpdate:modelValue": rA[4] || (rA[4] = (pA) => n.value = pA),
                           indeterminate: a.value,
                           onChange: rA[5] || (rA[5] = (pA) => Q(pA))
-                        }, null, 40, Oz), [
+                        }, null, 40, Mz), [
                           [Qs, n.value]
                         ]),
-                        Tz
+                        Rz
                       ])
                     ]),
-                    Nz,
-                    Mz,
-                    Rz,
                     Lz,
                     Fz,
                     Vz,
                     Bz,
-                    Yz
+                    Yz,
+                    Hz,
+                    Uz,
+                    jz
                   ])
                 ]),
                 D("tbody", null, [
@@ -39318,43 +39337,43 @@ const nz = /* @__PURE__ */ tn(tz, [["__scopeId", "data-v-30490417"]]), rz = { cl
                       key: pA.id,
                       index: vA
                     }, [
-                      D("td", Uz, [
-                        D("div", jz, [
+                      D("td", Wz, [
+                        D("div", Xz, [
                           D("input", {
                             type: "checkbox",
                             class: "custom-control-input",
                             id: "checkboxSelect" + pA.id,
                             checked: s.value.has(pA.id),
                             onChange: (MA) => Z(pA.id, MA)
-                          }, null, 40, zz),
+                          }, null, 40, Gz),
                           D("label", {
                             class: "custom-control-label",
                             for: "checkboxSelect" + pA.id
-                          }, null, 8, Wz)
+                          }, null, 8, qz)
                         ])
                       ]),
-                      D("td", Xz, OA(pA.id), 1),
-                      D("td", Gz, OA(pA.type), 1),
-                      D("td", qz, OA(pA.capacity), 1),
-                      D("td", Qz, OA(pA.instructorName), 1),
-                      D("td", Kz, OA(pA.dayOfWeek), 1),
-                      D("td", Zz, OA(gA(ht)(pA.start).format("DD/MM/YYYY h:mm A")), 1),
-                      D("td", Jz, OA(gA(ht)(pA.end).format("DD/MM/YYYY h:mm A")), 1),
-                      D("td", AW, OA((mA = pA == null ? void 0 : pA.roomLayout) == null ? void 0 : mA.name), 1)
-                    ], 8, Hz);
+                      D("td", Qz, OA(pA.id), 1),
+                      D("td", Kz, OA(pA.type), 1),
+                      D("td", Zz, OA(pA.capacity), 1),
+                      D("td", Jz, OA(pA.instructorName), 1),
+                      D("td", AW, OA(pA.dayOfWeek), 1),
+                      D("td", eW, OA(gA(ht)(pA.start).format("DD/MM/YYYY h:mm A")), 1),
+                      D("td", tW, OA(gA(ht)(pA.end).format("DD/MM/YYYY h:mm A")), 1),
+                      D("td", nW, OA((mA = pA == null ? void 0 : pA.roomLayout) == null ? void 0 : mA.name), 1)
+                    ], 8, zz);
                   }), 128)),
-                  !t.value && ((W = y.value) == null ? void 0 : W.length) === 0 ? (X(), dA("tr", eW, [
-                    D("td", tW, [
+                  !t.value && ((W = y.value) == null ? void 0 : W.length) === 0 ? (X(), dA("tr", rW, [
+                    D("td", iW, [
                       D("p", null, OA("NO DATA AVAILABLE IN TABLE" + (O.value || S.value ? " WITHIN THE FILTERED RANGE" : "")), 1)
                     ])
                   ])) : IA("", !0),
-                  t.value ? (X(), dA("tr", nW, iW)) : IA("", !0)
+                  t.value ? (X(), dA("tr", aW, oW)) : IA("", !0)
                 ])
               ])
             ])
           ])
         ]),
-        F.value ? (X(), Ae(nt, {
+        F.value ? (X(), JA(nt, {
           key: 1,
           title: "CONFIRM",
           message: "ARE YOU SURE YOU WANT TO PROCEED?",
@@ -39365,14 +39384,14 @@ const nz = /* @__PURE__ */ tn(tz, [["__scopeId", "data-v-30490417"]]), rz = { cl
           onOnCancel: rA[6] || (rA[6] = (pA) => F.value = !1),
           onOnOk: rA[7] || (rA[7] = (pA) => nA())
         }, null, 8, ["ok-loading", "cancel-disabled"])) : IA("", !0),
-        M.value ? (X(), Ae(nt, {
+        M.value ? (X(), JA(nt, {
           key: 2,
           title: "Error",
           message: gA(gt),
           "cancel-text": null,
           onOnOk: rA[8] || (rA[8] = (pA) => M.value = !1)
         }, null, 8, ["message"])) : IA("", !0),
-        E.value ? (X(), Ae(nt, {
+        E.value ? (X(), JA(nt, {
           key: 3,
           title: "SUCCESS",
           message: "THE CLASS SCHEDULES HAVE BEEN UPDATED SUCCESSFULLY",
@@ -39384,11 +39403,11 @@ const nz = /* @__PURE__ */ tn(tz, [["__scopeId", "data-v-30490417"]]), rz = { cl
     };
   }
 });
-const ew = /* @__PURE__ */ tn(aW, [["__scopeId", "data-v-61a8bf2a"]]), sW = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const ew = /* @__PURE__ */ nn(lW, [["__scopeId", "data-v-61a8bf2a"]]), cW = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: ew
 }, Symbol.toStringTag, { value: "Module" }));
-function oW(A) {
+function uW(A) {
   return A && A.__esModule && Object.prototype.hasOwnProperty.call(A, "default") ? A.default : A;
 }
 var kf = { exports: {} };
@@ -39847,8 +39866,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     }
     return f(z, [{ key: "roundPathCorners", value: function(r, i) {
       function o(lA, xA, CA) {
-        var TA = xA.x - lA.x, WA = xA.y - lA.y, VA = Math.sqrt(TA * TA + WA * WA);
-        return c(lA, xA, Math.min(1, CA / VA));
+        var TA = xA.x - lA.x, WA = xA.y - lA.y, BA = Math.sqrt(TA * TA + WA * WA);
+        return c(lA, xA, Math.min(1, CA / BA));
       }
       function c(lA, xA, CA) {
         return { x: lA.x + (xA.x - lA.x) * CA, y: lA.y + (xA.y - lA.y) * CA };
@@ -39929,16 +39948,16 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       CA ? i = u : (i = d, V.globals.animationEnded = !0);
       var TA = V.config.stroke.dashArray, WA = 0;
       WA = Array.isArray(TA) ? TA[c] : V.config.stroke.dashArray;
-      var VA = this.drawPath({ d: i, stroke: g, strokeWidth: v, fill: w, fillOpacity: 1, classes: N, strokeLinecap: x, strokeDashArray: WA });
-      if (VA.attr("index", c), H && VA.attr({ "clip-path": "url(#gridRectMask".concat(V.globals.cuid, ")") }), V.config.states.normal.filter.type !== "none")
-        U.getDefaultFilter(VA, c);
+      var BA = this.drawPath({ d: i, stroke: g, strokeWidth: v, fill: w, fillOpacity: 1, classes: N, strokeLinecap: x, strokeDashArray: WA });
+      if (BA.attr("index", c), H && BA.attr({ "clip-path": "url(#gridRectMask".concat(V.globals.cuid, ")") }), V.config.states.normal.filter.type !== "none")
+        U.getDefaultFilter(BA, c);
       else if (V.config.chart.dropShadow.enabled && $ && (!V.config.chart.dropShadow.enabledOnSeries || V.config.chart.dropShadow.enabledOnSeries && V.config.chart.dropShadow.enabledOnSeries.indexOf(c) !== -1)) {
         var ce = V.config.chart.dropShadow;
-        U.dropShadow(VA, ce, c);
+        U.dropShadow(BA, ce, c);
       }
-      iA && (VA.node.addEventListener("mouseenter", this.pathMouseEnter.bind(this, VA)), VA.node.addEventListener("mouseleave", this.pathMouseLeave.bind(this, VA)), VA.node.addEventListener("mousedown", this.pathMouseDown.bind(this, VA))), VA.attr({ pathTo: d, pathFrom: u });
-      var ye = { el: VA, j: o, realIndex: c, pathFrom: u, pathTo: d, fill: w, strokeWidth: v, delay: k };
-      return !lA || V.globals.resized || V.globals.dataChanged ? !V.globals.resized && V.globals.dataChanged || K.showDelayedElements() : K.animatePathsGradually(n(n({}, ye), {}, { speed: _ })), V.globals.dataChanged && xA && CA && K.animatePathsGradually(n(n({}, ye), {}, { speed: P })), VA;
+      iA && (BA.node.addEventListener("mouseenter", this.pathMouseEnter.bind(this, BA)), BA.node.addEventListener("mouseleave", this.pathMouseLeave.bind(this, BA)), BA.node.addEventListener("mousedown", this.pathMouseDown.bind(this, BA))), BA.attr({ pathTo: d, pathFrom: u });
+      var ye = { el: BA, j: o, realIndex: c, pathFrom: u, pathTo: d, fill: w, strokeWidth: v, delay: k };
+      return !lA || V.globals.resized || V.globals.dataChanged ? !V.globals.resized && V.globals.dataChanged || K.showDelayedElements() : K.animatePathsGradually(n(n({}, ye), {}, { speed: _ })), V.globals.dataChanged && xA && CA && K.animatePathsGradually(n(n({}, ye), {}, { speed: P })), BA;
     } }, { key: "drawPattern", value: function(r, i, o) {
       var c = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : "#a8a8a8", u = arguments.length > 4 && arguments[4] !== void 0 ? arguments[4] : 0;
       return this.w.globals.dom.Paper.pattern(i, o, function(d) {
@@ -40399,12 +40418,12 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     } }, { key: "addPointAnnotation", value: function(r, i, o) {
       this.pointsAnnotations.addPointAnnotation(r, i, o);
     } }, { key: "addText", value: function(r, i) {
-      var o = r.x, c = r.y, u = r.text, d = r.textAnchor, g = r.foreColor, v = r.fontSize, x = r.fontFamily, w = r.fontWeight, k = r.cssClass, _ = r.backgroundColor, P = r.borderWidth, N = r.strokeDashArray, L = r.borderRadius, H = r.borderColor, AA = r.appendTo, iA = AA === void 0 ? ".apexcharts-svg" : AA, b = r.paddingLeft, $ = b === void 0 ? 4 : b, V = r.paddingRight, U = V === void 0 ? 4 : V, K = r.paddingBottom, lA = K === void 0 ? 2 : K, xA = r.paddingTop, CA = xA === void 0 ? 2 : xA, TA = this.w, WA = this.graphics.drawText({ x: o, y: c, text: u, textAnchor: d || "start", fontSize: v || "12px", fontWeight: w || "regular", fontFamily: x || TA.config.chart.fontFamily, foreColor: g || TA.config.chart.foreColor, cssClass: k }), VA = TA.globals.dom.baseEl.querySelector(iA);
-      VA && VA.appendChild(WA.node);
+      var o = r.x, c = r.y, u = r.text, d = r.textAnchor, g = r.foreColor, v = r.fontSize, x = r.fontFamily, w = r.fontWeight, k = r.cssClass, _ = r.backgroundColor, P = r.borderWidth, N = r.strokeDashArray, L = r.borderRadius, H = r.borderColor, AA = r.appendTo, iA = AA === void 0 ? ".apexcharts-svg" : AA, b = r.paddingLeft, $ = b === void 0 ? 4 : b, V = r.paddingRight, U = V === void 0 ? 4 : V, K = r.paddingBottom, lA = K === void 0 ? 2 : K, xA = r.paddingTop, CA = xA === void 0 ? 2 : xA, TA = this.w, WA = this.graphics.drawText({ x: o, y: c, text: u, textAnchor: d || "start", fontSize: v || "12px", fontWeight: w || "regular", fontFamily: x || TA.config.chart.fontFamily, foreColor: g || TA.config.chart.foreColor, cssClass: k }), BA = TA.globals.dom.baseEl.querySelector(iA);
+      BA && BA.appendChild(WA.node);
       var ce = WA.bbox();
       if (u) {
         var ye = this.graphics.drawRect(ce.x - $, ce.y - CA, ce.width + $ + U, ce.height + lA + CA, L, _ || "transparent", 1, P, H, N);
-        VA.insertBefore(ye.node, WA.node);
+        BA.insertBefore(ye.node, WA.node);
       }
     } }, { key: "addImage", value: function(r, i) {
       var o = this.w, c = r.path, u = r.x, d = u === void 0 ? 0 : u, g = r.y, v = g === void 0 ? 0 : g, x = r.width, w = x === void 0 ? 20 : x, k = r.height, _ = k === void 0 ? 20 : k, P = r.appendTo, N = P === void 0 ? ".apexcharts-svg" : P, L = o.globals.dom.Paper.image(c);
@@ -40947,7 +40966,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       var i = this.w;
       return { y: r += parseInt(i.config.dataLabels.style.fontSize, 10) / 4 };
     } }]), z;
-  }(), JA = function() {
+  }(), Ae = function() {
     function z(r) {
       s(this, z), this.ctx = r, this.w = r.w;
     }
@@ -41530,7 +41549,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       var c = document.createElement("a");
       c.href = r, c.download = (i || this.w.globals.chartID) + o, document.body.appendChild(c), c.click(), document.body.removeChild(c);
     } }]), z;
-  }(), YA = function() {
+  }(), VA = function() {
     function z(r, i) {
       s(this, z), this.ctx = r, this.elgrid = i, this.w = r.w;
       var o = this.w;
@@ -41581,8 +41600,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
               _.config.chart.events.xAxisLabelClick(ce, v.ctx, ye);
             }
           }), r) {
-            var VA = document.createElementNS(_.globals.SVGNS, "title");
-            VA.textContent = Array.isArray(CA.text) ? CA.text.join(" ") : CA.text, WA.node.appendChild(VA), CA.text !== "" && (w.push(CA.text), k.push(CA));
+            var BA = document.createElementNS(_.globals.SVGNS, "title");
+            BA.textContent = Array.isArray(CA.text) ? CA.text.join(" ") : CA.text, WA.node.appendChild(BA), CA.text !== "" && (w.push(CA.text), k.push(CA));
           }
         }
         lA < b - 1 && (iA += d(lA + 1, g));
@@ -41614,8 +41633,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           });
           var WA = document.createElementNS(u.globals.SVGNS, "title");
           if (WA.textContent = Array.isArray(U) ? U.join(" ") : U, TA.node.appendChild(WA), u.config.yaxis[r].labels.rotate !== 0) {
-            var VA = d.rotateAroundCenter(TA.node);
-            TA.node.setAttribute("transform", "rotate(".concat(u.config.yaxis[r].labels.rotate, " 0 ").concat(VA.y, ")"));
+            var BA = d.rotateAroundCenter(TA.node);
+            TA.node.setAttribute("transform", "rotate(".concat(u.config.yaxis[r].labels.rotate, " 0 ").concat(BA.y, ")"));
           }
           o += i;
         }, L = 0; L <= w.length - 1; L++)
@@ -41721,7 +41740,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
             _ === i && (w = 0.6 * x.globals.xAxisLabelsHeight);
           }
         }
-        new YA(this.ctx).drawXaxisTicks(o, w, x.globals.dom.elGraphical);
+        new VA(this.ctx).drawXaxisTicks(o, w, x.globals.dom.elGraphical);
       }
     } }, { key: "_drawGridLine", value: function(r) {
       var i = r.i, o = r.x1, c = r.y1, u = r.x2, d = r.y2, g = r.xCount, v = r.parent, x = this.w, w = !1, k = v.node.classList.contains("apexcharts-gridlines-horizontal"), _ = x.config.grid.strokeDashArray, P = x.globals.barPadForNumericAxis;
@@ -41756,7 +41775,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       var i = r.xCount, o = this.w;
       if (o.config.grid.xaxis.lines.show || o.config.xaxis.axisTicks.show)
         for (var c, u = o.globals.padHorizontal, d = o.globals.gridHeight, g = 0; g < i + 1; g++)
-          o.config.grid.xaxis.lines.show && this._drawGridLine({ i: g, xCount: i + 1, x1: u, y1: 0, x2: c, y2: d, parent: this.elgridLinesV }), new YA(this.ctx).drawXaxisTicks(u, 0, o.globals.dom.elGraphical), c = u = u + o.globals.gridWidth / i + 0.3;
+          o.config.grid.xaxis.lines.show && this._drawGridLine({ i: g, xCount: i + 1, x1: u, y1: 0, x2: c, y2: d, parent: this.elgridLinesV }), new VA(this.ctx).drawXaxisTicks(u, 0, o.globals.dom.elGraphical), c = u = u + o.globals.gridWidth / i + 0.3;
       if (o.config.grid.yaxis.lines.show)
         for (var v = 0, x = 0, w = o.globals.gridWidth, k = 0; k < o.globals.dataPoints + 1; k++)
           this._drawGridLine({ i: k, xCount: o.globals.dataPoints + 1, x1: 0, y1: v, x2: w, y2: x, parent: this.elgridLinesH }), x = v += o.globals.gridHeight / o.globals.dataPoints;
@@ -41780,7 +41799,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         for (var x = o.globals.isBarHorizontal || o.config.xaxis.tickPlacement !== "on" || o.config.xaxis.type !== "category" && !o.config.xaxis.convertedCatToNumeric ? r : r - 1, w = o.globals.padHorizontal, k = o.globals.padHorizontal + o.globals.gridWidth / x, _ = o.globals.gridHeight, P = 0, N = 0; P < r; P++, N++)
           N >= o.config.grid.column.colors.length && (N = 0), this._drawGridBandRect({ c: N, x1: w, y1: 0, x2: k, y2: _, type: "column" }), w += o.globals.gridWidth / x;
     } }]), z;
-  }(), qA = function() {
+  }(), GA = function() {
     function z(r) {
       s(this, z), this.ctx = r, this.w = r.w;
     }
@@ -41941,7 +41960,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     } }]), z;
   }(), uA = function() {
     function z(r) {
-      s(this, z), this.ctx = r, this.w = r.w, this.scales = new qA(r);
+      s(this, z), this.ctx = r, this.w = r.w, this.scales = new GA(r);
     }
     return f(z, [{ key: "init", value: function() {
       this.setYRange(), this.setXRange(), this.setZRange();
@@ -42090,9 +42109,9 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           o.config.yaxis[r].opposite && o.config.yaxis.length !== 0 && (TA *= -1);
           var WA = "end";
           o.config.yaxis[r].opposite && (WA = "start"), o.config.yaxis[r].labels.align === "left" ? WA = "start" : o.config.yaxis[r].labels.align === "center" ? WA = "middle" : o.config.yaxis[r].labels.align === "right" && (WA = "end");
-          var VA = i.axesUtils.getYAxisForeColor(u.colors, r), ce = o.config.yaxis[r].labels.offsetY;
+          var BA = i.axesUtils.getYAxisForeColor(u.colors, r), ce = o.config.yaxis[r].labels.offsetY;
           o.config.chart.type === "heatmap" && (ce -= (o.globals.gridHeight / o.globals.series.length - 1) / 2);
-          var ye = c.drawText({ x: TA, y: P + k / 10 + ce + 1, text: CA, textAnchor: WA, fontSize: d, fontFamily: g, fontWeight: v, maxWidth: o.config.yaxis[r].labels.maxWidth, foreColor: Array.isArray(VA) ? VA[xA] : VA, isPlainText: !1, cssClass: "apexcharts-yaxis-label " + u.cssClass });
+          var ye = c.drawText({ x: TA, y: P + k / 10 + ce + 1, text: CA, textAnchor: WA, fontSize: d, fontFamily: g, fontWeight: v, maxWidth: o.config.yaxis[r].labels.maxWidth, foreColor: Array.isArray(BA) ? BA[xA] : BA, isPlainText: !1, cssClass: "apexcharts-yaxis-label " + u.cssClass });
           xA === k && (H = ye), w.add(ye);
           var De = document.createElementNS(o.globals.SVGNS, "title");
           if (De.textContent = Array.isArray(CA) ? CA.join(" ") : CA, ye.node.appendChild(De), o.config.yaxis[r].labels.rotate !== 0) {
@@ -42246,7 +42265,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       s(this, z), this.ctx = r, this.w = r.w;
     }
     return f(z, [{ key: "drawAxis", value: function(r, i) {
-      var o, c, u = this, d = this.w.globals, g = this.w.config, v = new YA(this.ctx, i), x = new fA(this.ctx, i);
+      var o, c, u = this, d = this.w.globals, g = this.w.config, v = new VA(this.ctx, i), x = new fA(this.ctx, i);
       d.axisCharts && r !== "radar" && (d.isBarHorizontal ? (c = x.drawYaxisInversed(0), o = v.drawXaxisInversed(0), d.dom.elGraphical.add(o), d.dom.elGraphical.add(c)) : (o = v.drawXaxis(), d.dom.elGraphical.add(o), g.yaxis.map(function(w, k) {
         if (d.ignoreYAxisIndexes.indexOf(k) === -1 && (c = x.drawYaxis(k), d.dom.Paper.add(c), u.w.config.grid.position === "back")) {
           var _ = d.dom.Paper.children()[1];
@@ -42772,10 +42791,10 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       var r = this, i = this.w, o = i.config.legend.fontFamily, c = i.globals.seriesNames, u = i.globals.colors.slice();
       if (i.config.chart.type === "heatmap") {
         var d = i.config.plotOptions.heatmap.colorScale.ranges;
-        c = d.map(function(VA) {
-          return VA.name ? VA.name : VA.from + " - " + VA.to;
-        }), u = d.map(function(VA) {
-          return VA.color;
+        c = d.map(function(BA) {
+          return BA.name ? BA.name : BA.from + " - " + BA.to;
+        }), u = d.map(function(BA) {
+          return BA.color;
         });
       } else
         this.isBarsDistributed && (c = i.globals.labels.slice());
@@ -42947,7 +42966,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           var c = { min: r, max: i }, u = this.getBeforeZoomRange(c);
           u && (c = u.xaxis);
           var d = { xaxis: c }, g = E.clone(o.globals.initialConfig.yaxis);
-          o.config.chart.zoom.autoScaleYaxis && (g = new qA(this.ctx).autoScaleY(this.ctx, g, { xaxis: c })), o.config.chart.group || (d.yaxis = g), this.w.globals.zoomed = !0, this.ctx.updateHelpers._updateOptions(d, !1, this.w.config.chart.animations.dynamicAnimation.enabled), this.zoomCallback(c, g);
+          o.config.chart.zoom.autoScaleYaxis && (g = new GA(this.ctx).autoScaleY(this.ctx, g, { xaxis: c })), o.config.chart.group || (d.yaxis = g), this.w.globals.zoomed = !0, this.ctx.updateHelpers._updateOptions(d, !1, this.w.config.chart.animations.dynamicAnimation.enabled), this.zoomCallback(c, g);
         }
       } else
         this.handleZoomReset();
@@ -43079,7 +43098,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           if (d.globals.zoomed = !0, d.config.xaxis.convertedCatToNumeric && (_ = Math.floor(_), P = Math.floor(P), _ < 1 && (_ = 1, P = d.globals.dataPoints), P - _ < 2 && (P = _ + 1)), u !== "xy" && u !== "x" || (AA = { min: _, max: P }), u !== "xy" && u !== "y" || H.forEach(function(K, lA) {
             H[lA].min = L[lA], H[lA].max = N[lA];
           }), d.config.chart.zoom.autoScaleYaxis) {
-            var iA = new qA(g.ctx);
+            var iA = new GA(g.ctx);
             H = iA.autoScaleY(g.ctx, H, { xaxis: AA });
           }
           if (x) {
@@ -43111,7 +43130,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       var u = this.w, d = this.xyRatios, g = E.clone(u.globals.initialConfig.yaxis), v = d.xRatio, x = u.globals.minX, w = u.globals.maxX;
       u.globals.isRangeBar && (v = d.invertedYRatio, x = u.globals.minY, w = u.globals.maxY), this.moveDirection === "left" ? (o = x + u.globals.gridWidth / 15 * v, c = w + u.globals.gridWidth / 15 * v) : this.moveDirection === "right" && (o = x - u.globals.gridWidth / 15 * v, c = w - u.globals.gridWidth / 15 * v), u.globals.isRangeBar || (o < u.globals.initialMinX || c > u.globals.initialMaxX) && (o = x, c = w);
       var k = { min: o, max: c };
-      u.config.chart.zoom.autoScaleYaxis && (g = new qA(this.ctx).autoScaleY(this.ctx, g, { xaxis: k }));
+      u.config.chart.zoom.autoScaleYaxis && (g = new GA(this.ctx).autoScaleY(this.ctx, g, { xaxis: k }));
       var _ = { xaxis: { min: o, max: c } };
       u.config.chart.group || (_.yaxis = g), this.updateScrolledChart(_, o, c);
     } }, { key: "updateScrolledChart", value: function(o, c, u) {
@@ -43243,8 +43262,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         var lA = w.config.tooltip.inverseOrder ? U : V;
         if (w.globals.axisCharts) {
           var xA = function(WA) {
-            var VA, ce, ye, De;
-            return w.globals.isRangeData ? K.yLbFormatter((VA = w.globals.seriesRangeStart) === null || VA === void 0 || (ce = VA[WA]) === null || ce === void 0 ? void 0 : ce[u], { series: w.globals.seriesRangeStart, seriesIndex: WA, dataPointIndex: u, w }) + " - " + K.yLbFormatter((ye = w.globals.seriesRangeEnd) === null || ye === void 0 || (De = ye[WA]) === null || De === void 0 ? void 0 : De[u], { series: w.globals.seriesRangeEnd, seriesIndex: WA, dataPointIndex: u, w }) : K.yLbFormatter(w.globals.series[WA][u], { series: w.globals.series, seriesIndex: WA, dataPointIndex: u, w });
+            var BA, ce, ye, De;
+            return w.globals.isRangeData ? K.yLbFormatter((BA = w.globals.seriesRangeStart) === null || BA === void 0 || (ce = BA[WA]) === null || ce === void 0 ? void 0 : ce[u], { series: w.globals.seriesRangeStart, seriesIndex: WA, dataPointIndex: u, w }) + " - " + K.yLbFormatter((ye = w.globals.seriesRangeEnd) === null || ye === void 0 || (De = ye[WA]) === null || De === void 0 ? void 0 : De[u], { series: w.globals.seriesRangeEnd, seriesIndex: WA, dataPointIndex: u, w }) : K.yLbFormatter(w.globals.series[WA][u], { series: w.globals.series, seriesIndex: WA, dataPointIndex: u, w });
           };
           if (v)
             K = o.getFormatters(lA), H = o.getSeriesName({ fn: K.yLbTitleFormatter, index: lA, seriesIndex: c, j: u }), AA = w.globals.colors[lA], i = xA(lA), _(lA) && (k = w.globals.seriesGoals[lA][u].map(function(WA) {
@@ -43591,7 +43610,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       var o = document.createElement("div");
       if (o.classList.add("apexcharts-tooltip"), i.config.tooltip.cssClass && o.classList.add(i.config.tooltip.cssClass), o.classList.add("apexcharts-theme-".concat(this.tConfig.theme)), i.globals.dom.elWrap.appendChild(o), i.globals.axisCharts) {
         this.axesTooltip.drawXaxisTooltip(), this.axesTooltip.drawYaxisTooltip(), this.axesTooltip.setXCrosshairWidth(), this.axesTooltip.handleYCrosshair();
-        var c = new YA(this.ctx);
+        var c = new VA(this.ctx);
         this.xAxisTicksPositions = c.getXAxisTicksPositions();
       }
       if (!i.globals.comboCharts && !this.tConfig.intersect && i.config.chart.type !== "rangeBar" || this.tConfig.shared || (this.showOnIntersect = !0), i.config.markers.size !== 0 && i.globals.markers.largestSize !== 0 || this.marker.drawDynamicPoints(this), i.globals.collapsedSeries.length !== i.globals.series.length) {
@@ -43762,11 +43781,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       if (K.config.legend.tooltipHoverFormatter) {
         var TA = K.config.legend.tooltipHoverFormatter, WA = Array.from(this.legendLabels);
         WA.forEach(function(LA) {
-          var GA = LA.getAttribute("data:default-text");
-          LA.innerHTML = decodeURIComponent(GA);
+          var qA = LA.getAttribute("data:default-text");
+          LA.innerHTML = decodeURIComponent(qA);
         });
-        for (var VA = 0; VA < WA.length; VA++) {
-          var ce = WA[VA], ye = parseInt(ce.getAttribute("i"), 10), De = decodeURIComponent(ce.getAttribute("data:default-text")), Ye = TA(De, { seriesIndex: U ? ye : o, dataPointIndex: c, w: K });
+        for (var BA = 0; BA < WA.length; BA++) {
+          var ce = WA[BA], ye = parseInt(ce.getAttribute("i"), 10), De = decodeURIComponent(ce.getAttribute("data:default-text")), Ye = TA(De, { seriesIndex: U ? ye : o, dataPointIndex: c, w: K });
           if (U)
             ce.innerHTML = K.globals.collapsedSeriesIndices.indexOf(ye) < 0 ? Ye : De;
           else if (ce.innerHTML = ye === o ? Ye : De, o === ye)
@@ -43793,15 +43812,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     return f(z, [{ key: "handleBarDataLabels", value: function(r) {
       var i = r.x, o = r.y, c = r.y1, u = r.y2, d = r.i, g = r.j, v = r.realIndex, x = r.groupIndex, w = r.series, k = r.barHeight, _ = r.barWidth, P = r.barXPosition, N = r.barYPosition, L = r.visibleSeries, H = r.renderedPath, AA = this.w, iA = new B(this.barCtx.ctx), b = Array.isArray(this.barCtx.strokeWidth) ? this.barCtx.strokeWidth[v] : this.barCtx.strokeWidth, $ = i + parseFloat(_ * L), V = o + parseFloat(k * L);
       AA.globals.isXNumeric && !AA.globals.isBarHorizontal && ($ = i + parseFloat(_ * (L + 1)), V = o + parseFloat(k * (L + 1)) - b);
-      var U, K = null, lA = i, xA = o, CA = {}, TA = AA.config.dataLabels, WA = this.barCtx.barOptions.dataLabels, VA = this.barCtx.barOptions.dataLabels.total;
+      var U, K = null, lA = i, xA = o, CA = {}, TA = AA.config.dataLabels, WA = this.barCtx.barOptions.dataLabels, BA = this.barCtx.barOptions.dataLabels.total;
       N !== void 0 && this.barCtx.isRangeBar && (V = N, xA = N), P !== void 0 && this.barCtx.isVerticalGroupedRangeBar && ($ = P, lA = P);
       var ce = TA.offsetX, ye = TA.offsetY, De = { width: 0, height: 0 };
       if (AA.config.dataLabels.enabled) {
         var Ye = this.barCtx.series[d][g];
         De = iA.getTextRects(AA.globals.yLabelFormatters[0](Ye), parseFloat(TA.style.fontSize));
       }
-      var Qe = { x: i, y: o, i: d, j: g, realIndex: v, groupIndex: x || -1, renderedPath: H, bcx: $, bcy: V, barHeight: k, barWidth: _, textRects: De, strokeWidth: b, dataLabelsX: lA, dataLabelsY: xA, dataLabelsConfig: TA, barDataLabelsConfig: WA, barTotalDataLabelsConfig: VA, offX: ce, offY: ye };
-      return CA = this.barCtx.isHorizontal ? this.calculateBarsDataLabelsPosition(Qe) : this.calculateColumnsDataLabelsPosition(Qe), H.attr({ cy: CA.bcy, cx: CA.bcx, j: g, val: w[d][g], barHeight: k, barWidth: _ }), U = this.drawCalculatedDataLabels({ x: CA.dataLabelsX, y: CA.dataLabelsY, val: this.barCtx.isRangeBar ? [c, u] : w[d][g], i: v, j: g, barWidth: _, barHeight: k, textRects: De, dataLabelsConfig: TA }), AA.config.chart.stacked && VA.enabled && (K = this.drawTotalDataLabels({ x: CA.totalDataLabelsX, y: CA.totalDataLabelsY, barWidth: _, barHeight: k, realIndex: v, textAnchor: CA.totalDataLabelsAnchor, val: this.getStackedTotalDataLabel({ realIndex: v, j: g }), dataLabelsConfig: TA, barTotalDataLabelsConfig: VA })), { dataLabels: U, totalDataLabels: K };
+      var Qe = { x: i, y: o, i: d, j: g, realIndex: v, groupIndex: x || -1, renderedPath: H, bcx: $, bcy: V, barHeight: k, barWidth: _, textRects: De, strokeWidth: b, dataLabelsX: lA, dataLabelsY: xA, dataLabelsConfig: TA, barDataLabelsConfig: WA, barTotalDataLabelsConfig: BA, offX: ce, offY: ye };
+      return CA = this.barCtx.isHorizontal ? this.calculateBarsDataLabelsPosition(Qe) : this.calculateColumnsDataLabelsPosition(Qe), H.attr({ cy: CA.bcy, cx: CA.bcx, j: g, val: w[d][g], barHeight: k, barWidth: _ }), U = this.drawCalculatedDataLabels({ x: CA.dataLabelsX, y: CA.dataLabelsY, val: this.barCtx.isRangeBar ? [c, u] : w[d][g], i: v, j: g, barWidth: _, barHeight: k, textRects: De, dataLabelsConfig: TA }), AA.config.chart.stacked && BA.enabled && (K = this.drawTotalDataLabels({ x: CA.totalDataLabelsX, y: CA.totalDataLabelsY, barWidth: _, barHeight: k, realIndex: v, textAnchor: CA.totalDataLabelsAnchor, val: this.getStackedTotalDataLabel({ realIndex: v, j: g }), dataLabelsConfig: TA, barTotalDataLabelsConfig: BA })), { dataLabels: U, totalDataLabels: K };
     } }, { key: "getStackedTotalDataLabel", value: function(r) {
       var i = r.realIndex, o = r.j, c = this.w, u = this.barCtx.stackedSeriesTotals[o];
       return this.totalFormatter && (u = this.totalFormatter(u, n(n({}, c), {}, { seriesIndex: i, dataPointIndex: o, w: c }))), u;
@@ -43850,7 +43869,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     } }, { key: "drawCalculatedDataLabels", value: function(r) {
       var i = r.x, o = r.y, c = r.val, u = r.i, d = r.j, g = r.textRects, v = r.barHeight, x = r.barWidth, w = r.dataLabelsConfig, k = this.w, _ = "rotate(0)";
       k.config.plotOptions.bar.dataLabels.orientation === "vertical" && (_ = "rotate(-90, ".concat(i, ", ").concat(o, ")"));
-      var P = new JA(this.barCtx.ctx), N = new B(this.barCtx.ctx), L = w.formatter, H = null, AA = k.globals.collapsedSeriesIndices.indexOf(u) > -1;
+      var P = new Ae(this.barCtx.ctx), N = new B(this.barCtx.ctx), L = w.formatter, H = null, AA = k.globals.collapsedSeriesIndices.indexOf(u) > -1;
       if (w.enabled && !AA) {
         H = N.group({ class: "apexcharts-data-labels", transform: _ });
         var iA = "";
@@ -44026,14 +44045,14 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         for (var xA = 0; xA < o.globals.dataPoints; xA++) {
           var CA = this.barHelpers.getStrokeWidth(g, xA, AA), TA = null, WA = { indexes: { i: g, j: xA, realIndex: AA, bc: v }, x: P, y: N, strokeWidth: CA, elSeries: iA };
           this.isHorizontal ? (TA = this.drawBarPaths(n(n({}, WA), {}, { barHeight: b, zeroW: _, yDivision: w })), $ = this.series[g][xA] / this.invertedYRatio) : (TA = this.drawColumnPaths(n(n({}, WA), {}, { xDivision: x, barWidth: $, zeroH: k })), b = this.series[g][xA] / this.yRatio[this.yaxisIndex]);
-          var VA = this.barHelpers.getPathFillColor(r, g, xA, AA);
+          var BA = this.barHelpers.getPathFillColor(r, g, xA, AA);
           if (this.isFunnel && this.barOptions.isFunnel3d && this.pathArr.length && xA > 0) {
-            var ce = this.barHelpers.drawBarShadow({ color: typeof VA == "string" && (VA == null ? void 0 : VA.indexOf("url")) === -1 ? VA : E.hexToRgba(o.globals.colors[g]), prevPaths: this.pathArr[this.pathArr.length - 1], currPaths: TA });
+            var ce = this.barHelpers.drawBarShadow({ color: typeof BA == "string" && (BA == null ? void 0 : BA.indexOf("url")) === -1 ? BA : E.hexToRgba(o.globals.colors[g]), prevPaths: this.pathArr[this.pathArr.length - 1], currPaths: TA });
             ce && lA.add(ce);
           }
           this.pathArr.push(TA);
           var ye = this.barHelpers.drawGoalLine({ barXPosition: TA.barXPosition, barYPosition: TA.barYPosition, goalX: TA.goalX, goalY: TA.goalY, barHeight: b, barWidth: $ });
-          ye && K.add(ye), N = TA.y, P = TA.x, xA > 0 && H.push(P + $ / 2), L.push(N), this.renderSeries({ realIndex: AA, pathFill: VA, j: xA, i: g, pathFrom: TA.pathFrom, pathTo: TA.pathTo, strokeWidth: CA, elSeries: iA, x: P, y: N, series: r, barHeight: TA.barHeight ? TA.barHeight : b, barWidth: TA.barWidth ? TA.barWidth : $, elDataLabelsWrap: U, elGoalsMarkers: K, elBarShadows: lA, visibleSeries: this.visibleI, type: "bar" });
+          ye && K.add(ye), N = TA.y, P = TA.x, xA > 0 && H.push(P + $ / 2), L.push(N), this.renderSeries({ realIndex: AA, pathFill: BA, j: xA, i: g, pathFrom: TA.pathFrom, pathTo: TA.pathTo, strokeWidth: CA, elSeries: iA, x: P, y: N, series: r, barHeight: TA.barHeight ? TA.barHeight : b, barWidth: TA.barWidth ? TA.barWidth : $, elDataLabelsWrap: U, elGoalsMarkers: K, elBarShadows: lA, visibleSeries: this.visibleI, type: "bar" });
         }
         o.globals.seriesXvalues[AA] = H, o.globals.seriesYvalues[AA] = L, d.add(iA);
       }
@@ -44041,11 +44060,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     } }, { key: "renderSeries", value: function(r) {
       var i = r.realIndex, o = r.pathFill, c = r.lineFill, u = r.j, d = r.i, g = r.groupIndex, v = r.pathFrom, x = r.pathTo, w = r.strokeWidth, k = r.elSeries, _ = r.x, P = r.y, N = r.y1, L = r.y2, H = r.series, AA = r.barHeight, iA = r.barWidth, b = r.barXPosition, $ = r.barYPosition, V = r.elDataLabelsWrap, U = r.elGoalsMarkers, K = r.elBarShadows, lA = r.visibleSeries, xA = r.type, CA = this.w, TA = new B(this.ctx);
       c || (c = this.barOptions.distributed ? CA.globals.stroke.colors[u] : CA.globals.stroke.colors[i]), CA.config.series[d].data[u] && CA.config.series[d].data[u].strokeColor && (c = CA.config.series[d].data[u].strokeColor), this.isNullValue && (o = "none");
-      var WA = u / CA.config.chart.animations.animateGradually.delay * (CA.config.chart.animations.speed / CA.globals.dataPoints) / 2.4, VA = TA.renderPaths({ i: d, j: u, realIndex: i, pathFrom: v, pathTo: x, stroke: c, strokeWidth: w, strokeLineCap: CA.config.stroke.lineCap, fill: o, animationDelay: WA, initialSpeed: CA.config.chart.animations.speed, dataChangeSpeed: CA.config.chart.animations.dynamicAnimation.speed, className: "apexcharts-".concat(xA, "-area") });
-      VA.attr("clip-path", "url(#gridRectMask".concat(CA.globals.cuid, ")"));
+      var WA = u / CA.config.chart.animations.animateGradually.delay * (CA.config.chart.animations.speed / CA.globals.dataPoints) / 2.4, BA = TA.renderPaths({ i: d, j: u, realIndex: i, pathFrom: v, pathTo: x, stroke: c, strokeWidth: w, strokeLineCap: CA.config.stroke.lineCap, fill: o, animationDelay: WA, initialSpeed: CA.config.chart.animations.speed, dataChangeSpeed: CA.config.chart.animations.dynamicAnimation.speed, className: "apexcharts-".concat(xA, "-area") });
+      BA.attr("clip-path", "url(#gridRectMask".concat(CA.globals.cuid, ")"));
       var ce = CA.config.forecastDataPoints;
-      ce.count > 0 && u >= CA.globals.dataPoints - ce.count && (VA.node.setAttribute("stroke-dasharray", ce.dashArray), VA.node.setAttribute("stroke-width", ce.strokeWidth), VA.node.setAttribute("fill-opacity", ce.fillOpacity)), N !== void 0 && L !== void 0 && (VA.attr("data-range-y1", N), VA.attr("data-range-y2", L)), new Y(this.ctx).setSelectionFilter(VA, i, u), k.add(VA);
-      var ye = new Zt(this).handleBarDataLabels({ x: _, y: P, y1: N, y2: L, i: d, j: u, series: H, realIndex: i, groupIndex: g, barHeight: AA, barWidth: iA, barXPosition: b, barYPosition: $, renderedPath: VA, visibleSeries: lA });
+      ce.count > 0 && u >= CA.globals.dataPoints - ce.count && (BA.node.setAttribute("stroke-dasharray", ce.dashArray), BA.node.setAttribute("stroke-width", ce.strokeWidth), BA.node.setAttribute("fill-opacity", ce.fillOpacity)), N !== void 0 && L !== void 0 && (BA.attr("data-range-y1", N), BA.attr("data-range-y2", L)), new Y(this.ctx).setSelectionFilter(BA, i, u), k.add(BA);
+      var ye = new Zt(this).handleBarDataLabels({ x: _, y: P, y1: N, y2: L, i: d, j: u, series: H, realIndex: i, groupIndex: g, barHeight: AA, barWidth: iA, barXPosition: b, barYPosition: $, renderedPath: BA, visibleSeries: lA });
       return ye.dataLabels !== null && V.add(ye.dataLabels), ye.totalDataLabels && V.add(ye.totalDataLabels), k.add(V), U && k.add(U), K && k.add(K), k;
     } }, { key: "drawBarPaths", value: function(r) {
       var i, o = r.indexes, c = r.barHeight, u = r.strokeWidth, d = r.zeroW, g = r.x, v = r.y, x = r.yDivision, w = r.elSeries, k = this.w, _ = o.i, P = o.j;
@@ -44104,8 +44123,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         u.yRatio.length > 1 && (u.yaxisIndex = K), u.isReversed = d.config.yaxis[u.yaxisIndex] && d.config.yaxis[u.yaxisIndex].reversed;
         var lA = u.graphics.group({ class: "apexcharts-series", seriesName: E.escapeString(d.globals.seriesNames[K]), rel: N + 1, "data:realIndex": K });
         u.ctx.series.addCollapsedClassToSeries(lA, K);
-        var xA = u.graphics.group({ class: "apexcharts-datalabels", "data:realIndex": K }), CA = u.graphics.group({ class: "apexcharts-bar-goals-markers" }), TA = 0, WA = 0, VA = u.initialPositions(x, w, H, AA, iA, b);
-        w = VA.y, TA = VA.barHeight, AA = VA.yDivision, b = VA.zeroW, x = VA.x, WA = VA.barWidth, H = VA.xDivision, iA = VA.zeroH, d.globals.barHeight = TA, d.globals.barWidth = WA, u.barHelpers.initializeStackedXYVars(u), u.groupCtx.prevY.length === 1 && u.groupCtx.prevY[0].every(function(bA) {
+        var xA = u.graphics.group({ class: "apexcharts-datalabels", "data:realIndex": K }), CA = u.graphics.group({ class: "apexcharts-bar-goals-markers" }), TA = 0, WA = 0, BA = u.initialPositions(x, w, H, AA, iA, b);
+        w = BA.y, TA = BA.barHeight, AA = BA.yDivision, b = BA.zeroW, x = BA.x, WA = BA.barWidth, H = BA.xDivision, iA = BA.zeroH, d.globals.barHeight = TA, d.globals.barWidth = WA, u.barHelpers.initializeStackedXYVars(u), u.groupCtx.prevY.length === 1 && u.groupCtx.prevY[0].every(function(bA) {
           return isNaN(bA);
         }) && (u.groupCtx.prevY[0] = u.groupCtx.prevY[0].map(function(bA) {
           return iA;
@@ -44158,13 +44177,13 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
               break;
             }
           }
-        for (var VA = 1; VA < CA; VA++) {
+        for (var BA = 1; BA < CA; BA++) {
           var ce, ye;
-          if (((ce = this.groupCtx.prevYVal[U - VA]) === null || ce === void 0 ? void 0 : ce[L]) < 0) {
+          if (((ce = this.groupCtx.prevYVal[U - BA]) === null || ce === void 0 ? void 0 : ce[L]) < 0) {
             lA = this.series[N][L] >= 0 ? xA - $ + 2 * (this.isReversed ? $ : 0) : xA;
             break;
           }
-          if (((ye = this.groupCtx.prevYVal[U - VA]) === null || ye === void 0 ? void 0 : ye[L]) >= 0) {
+          if (((ye = this.groupCtx.prevYVal[U - BA]) === null || ye === void 0 ? void 0 : ye[L]) >= 0) {
             lA = this.series[N][L] >= 0 ? xA : xA + $ - 2 * (this.isReversed ? $ : 0);
             break;
           }
@@ -44201,11 +44220,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         d.yRatio.length > 1 && (d.yaxisIndex = lA);
         var WA = d.barHelpers.initialPositions();
         V = WA.y, CA = WA.barHeight, AA = WA.yDivision, b = WA.zeroW, $ = WA.x, TA = WA.barWidth, H = WA.xDivision, iA = WA.zeroH, K.push($ + TA / 2);
-        for (var VA = v.group({ class: "apexcharts-datalabels", "data:realIndex": lA }), ce = function(De) {
+        for (var BA = v.group({ class: "apexcharts-datalabels", "data:realIndex": lA }), ce = function(De) {
           var Ye = d.barHelpers.getStrokeWidth(L, De, lA), Qe = null, He = { indexes: { i: L, j: De, realIndex: lA }, x: $, y: V, strokeWidth: Ye, elSeries: xA };
           Qe = d.isHorizontal ? d.drawHorizontalBoxPaths(n(n({}, He), {}, { yDivision: AA, barHeight: CA, zeroW: b })) : d.drawVerticalBoxPaths(n(n({}, He), {}, { xDivision: H, barWidth: TA, zeroH: iA })), V = Qe.y, $ = Qe.x, De > 0 && K.push($ + TA / 2), U.push(V), Qe.pathTo.forEach(function(bA, _A) {
-            var LA = !d.isBoxPlot && d.candlestickOptions.wick.useFillColor ? Qe.color[_A] : g.globals.stroke.colors[L], GA = w.fillPath({ seriesNumber: lA, dataPointIndex: De, color: Qe.color[_A], value: o[L][De] });
-            d.renderSeries({ realIndex: lA, pathFill: GA, lineFill: LA, j: De, i: L, pathFrom: Qe.pathFrom, pathTo: bA, strokeWidth: Ye, elSeries: xA, x: $, y: V, series: o, barHeight: CA, barWidth: TA, elDataLabelsWrap: VA, visibleSeries: d.visibleI, type: g.config.chart.type });
+            var LA = !d.isBoxPlot && d.candlestickOptions.wick.useFillColor ? Qe.color[_A] : g.globals.stroke.colors[L], qA = w.fillPath({ seriesNumber: lA, dataPointIndex: De, color: Qe.color[_A], value: o[L][De] });
+            d.renderSeries({ realIndex: lA, pathFill: qA, lineFill: LA, j: De, i: L, pathFrom: Qe.pathFrom, pathTo: bA, strokeWidth: Ye, elSeries: xA, x: $, y: V, series: o, barHeight: CA, barWidth: TA, elDataLabelsWrap: BA, visibleSeries: d.visibleI, type: g.config.chart.type });
           });
         }, ye = 0; ye < g.globals.dataPoints; ye++)
           ce(ye);
@@ -44269,7 +44288,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         }
       }), { color: v, foreColor: x, percent: P };
     } }, { key: "calculateDataLabels", value: function(r) {
-      var i = r.text, o = r.x, c = r.y, u = r.i, d = r.j, g = r.colorProps, v = r.fontSize, x = this.w.config.dataLabels, w = new B(this.ctx), k = new JA(this.ctx), _ = null;
+      var i = r.text, o = r.x, c = r.y, u = r.i, d = r.j, g = r.colorProps, v = r.fontSize, x = this.w.config.dataLabels, w = new B(this.ctx), k = new Ae(this.ctx), _ = null;
       if (x.enabled) {
         _ = w.group({ class: "apexcharts-data-labels" });
         var P = x.offsetX, N = x.offsetY, L = o + P, H = c + parseFloat(x.style.fontSize) / 3 + N;
@@ -44446,7 +44465,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       var k = Math.PI * (w - 90) / 180, _ = o.centerX + d * Math.cos(x), P = o.centerY + d * Math.sin(x), N = o.centerX + d * Math.cos(k), L = o.centerY + d * Math.sin(k), H = E.polarToCartesian(o.centerX, o.centerY, o.donutSize, w), AA = E.polarToCartesian(o.centerX, o.centerY, o.donutSize, v), iA = u > 180 ? 1 : 0, b = ["M", _, P, "A", d, d, 0, iA, 1, N, L];
       return i = o.chartType === "donut" ? [].concat(b, ["L", H.x, H.y, "A", o.donutSize, o.donutSize, 0, iA, 0, AA.x, AA.y, "L", _, P, "z"]).join(" ") : o.chartType === "pie" || o.chartType === "polarArea" ? [].concat(b, ["L", o.centerX, o.centerY, "L", _, P]).join(" ") : [].concat(b).join(" "), g.roundPathCorners(i, 2 * this.strokeWidth);
     } }, { key: "drawPolarElements", value: function(r) {
-      var i = this.w, o = new qA(this.ctx), c = new B(this.ctx), u = new qn(this.ctx), d = c.group(), g = c.group(), v = o.niceScale(0, Math.ceil(this.maxY), i.config.yaxis[0].tickAmount, 0, !0), x = v.result.reverse(), w = v.result.length;
+      var i = this.w, o = new GA(this.ctx), c = new B(this.ctx), u = new qn(this.ctx), d = c.group(), g = c.group(), v = o.niceScale(0, Math.ceil(this.maxY), i.config.yaxis[0].tickAmount, 0, !0), x = v.result.reverse(), w = v.result.length;
       this.maxY = v.niceMax;
       for (var k = i.globals.radialSize, _ = k / (w - 1), P = 0; P < w - 1; P++) {
         var N = c.drawCircle(k);
@@ -44522,14 +44541,14 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       this.graphics = new B(this.ctx), this.lineColorArr = i.globals.stroke.colors !== void 0 ? i.globals.stroke.colors : i.globals.colors, this.defaultSize = i.globals.svgHeight < i.globals.svgWidth ? i.globals.gridHeight + 1.5 * i.globals.goldenPadding : i.globals.gridWidth, this.isLog = i.config.yaxis[0].logarithmic, this.coreUtils = new eA(this.ctx), this.maxValue = this.isLog ? this.coreUtils.getLogVal(i.globals.maxY, 0) : i.globals.maxY, this.minValue = this.isLog ? this.coreUtils.getLogVal(this.w.globals.minY, 0) : i.globals.minY, this.polygons = i.config.plotOptions.radar.polygons, this.strokeWidth = i.config.stroke.show ? i.config.stroke.width : 0, this.size = this.defaultSize / 2.1 - this.strokeWidth - i.config.chart.dropShadow.blur, i.config.xaxis.labels.show && (this.size = this.size - i.globals.xAxisLabelsWidth / 1.75), i.config.plotOptions.radar.size !== void 0 && (this.size = i.config.plotOptions.radar.size), this.dataRadiusOfPercent = [], this.dataRadius = [], this.angleArr = [], this.yaxisLabelsTextsPos = [];
     }
     return f(z, [{ key: "draw", value: function(r) {
-      var i = this, o = this.w, c = new vA(this.ctx), u = [], d = new JA(this.ctx);
+      var i = this, o = this.w, c = new vA(this.ctx), u = [], d = new Ae(this.ctx);
       r.length && (this.dataPointsLen = r[o.globals.maxValsInArrayIndex].length), this.disAngle = 2 * Math.PI / this.dataPointsLen;
       var g = o.globals.gridWidth / 2, v = o.globals.gridHeight / 2, x = g + o.config.plotOptions.radar.offsetX, w = v + o.config.plotOptions.radar.offsetY, k = this.graphics.group({ class: "apexcharts-radar-series apexcharts-plot-series", transform: "translate(".concat(x || 0, ", ").concat(w || 0, ")") }), _ = [], P = null, N = null;
       if (this.yaxisLabels = this.graphics.group({ class: "apexcharts-yaxis" }), r.forEach(function(H, AA) {
         var iA = H.length === o.globals.dataPoints, b = i.graphics.group().attr({ class: "apexcharts-series", "data:longestSeries": iA, seriesName: E.escapeString(o.globals.seriesNames[AA]), rel: AA + 1, "data:realIndex": AA });
-        i.dataRadiusOfPercent[AA] = [], i.dataRadius[AA] = [], i.angleArr[AA] = [], H.forEach(function(VA, ce) {
+        i.dataRadiusOfPercent[AA] = [], i.dataRadius[AA] = [], i.angleArr[AA] = [], H.forEach(function(BA, ce) {
           var ye = Math.abs(i.maxValue - i.minValue);
-          VA += Math.abs(i.minValue), i.isLog && (VA = i.coreUtils.getLogVal(VA, 0)), i.dataRadiusOfPercent[AA][ce] = VA / ye, i.dataRadius[AA][ce] = i.dataRadiusOfPercent[AA][ce] * i.size, i.angleArr[AA][ce] = ce * i.disAngle;
+          BA += Math.abs(i.minValue), i.isLog && (BA = i.coreUtils.getLogVal(BA, 0)), i.dataRadiusOfPercent[AA][ce] = BA / ye, i.dataRadius[AA][ce] = i.dataRadiusOfPercent[AA][ce] * i.size, i.angleArr[AA][ce] = ce * i.disAngle;
         }), _ = i.getDataPointsPos(i.dataRadius[AA], i.angleArr[AA]);
         var $ = i.createPaths(_, { x: 0, y: 0 });
         P = i.graphics.group({ class: "apexcharts-series-markers-wrap apexcharts-element-hidden" }), N = i.graphics.group({ class: "apexcharts-datalabels", "data:realIndex": AA }), o.globals.delayedElements.push({ el: P.node, index: AA });
@@ -44545,7 +44564,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           }
           b.add(CA);
         }
-        H.forEach(function(VA, ce) {
+        H.forEach(function(BA, ce) {
           var ye = new mA(i.ctx).getMarkerConfig({ cssClass: "apexcharts-marker", seriesIndex: AA, dataPointIndex: ce }), De = i.graphics.drawMarker(_[ce].x, _[ce].y, ye);
           De.attr("rel", ce), De.attr("j", ce), De.attr("index", AA), De.node.setAttribute("default-marker-size", ye.pSize);
           var Ye = i.graphics.group({ class: "apexcharts-series-markers" });
@@ -44590,7 +44609,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     } }, { key: "drawXAxisTexts", value: function() {
       var r = this, i = this.w, o = i.config.xaxis.labels, c = this.graphics.group({ class: "apexcharts-xaxis" }), u = E.getPolygonPos(this.size, this.dataPointsLen);
       return i.globals.labels.forEach(function(d, g) {
-        var v = i.config.xaxis.labels.formatter, x = new JA(r.ctx);
+        var v = i.config.xaxis.labels.formatter, x = new Ae(r.ctx);
         if (u[g]) {
           var w = r.getTextPos(u[g], r.size), k = v(d, { seriesIndex: -1, dataPointIndex: g, w: i });
           x.plotDataLabelsText({ x: w.newX, y: w.newY, text: k, textAnchor: w.textAnchor, i: g, j: g, parent: c, color: Array.isArray(o.style.colors) && o.style.colors[g] ? o.style.colors[g] : "#a8a8a8", dataLabelsConfig: n({ textAnchor: w.textAnchor, dropShadow: { enabled: !1 } }, o), offsetCorrection: !1 });
@@ -44691,8 +44710,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         c.globals.dataChanged && (U = this.startAngle, xA = Math.round(this.totalAngle * E.negToZero(c.globals.previousPaths[iA]) / 100) + U), Math.abs(lA) + Math.abs(V) >= 360 && (lA -= 0.01), Math.abs(xA) + Math.abs(U) >= 360 && (xA -= 0.01);
         var CA = lA - V, TA = Array.isArray(c.config.stroke.dashArray) ? c.config.stroke.dashArray[iA] : c.config.stroke.dashArray, WA = u.drawPath({ d: "", stroke: $, strokeWidth: x, fill: "none", fillOpacity: c.config.fill.opacity, classes: "apexcharts-radialbar-area apexcharts-radialbar-slice-" + iA, strokeDashArray: TA });
         if (B.setAttrs(WA.node, { "data:angle": CA, "data:value": o.series[iA] }), c.config.chart.dropShadow.enabled) {
-          var VA = c.config.chart.dropShadow;
-          g.dropShadow(WA, VA, iA);
+          var BA = c.config.chart.dropShadow;
+          g.dropShadow(WA, BA, iA);
         }
         if (g.setSelectionFilter(WA, 0, iA), this.addListeners(WA, this.radialDataLabels), b.add(WA), WA.attr({ index: 0, j: iA }), this.barLabels.enabled) {
           var ce = E.polarToCartesian(o.centerX, o.centerY, o.size, V), ye = this.barLabels.formatter(c.globals.seriesNames[iA], { seriesIndex: iA, w: c }), De = ["apexcharts-radialbar-label"];
@@ -44752,17 +44771,17 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         var b = this.barHelpers.initialPositions();
         N = b.y, _ = b.zeroW, P = b.x, iA = b.barWidth, AA = b.barHeight, x = b.xDivision, w = b.yDivision, k = b.zeroH;
         for (var $ = d.group({ class: "apexcharts-datalabels", "data:realIndex": L }), V = d.group({ class: "apexcharts-rangebar-goals-markers" }), U = 0; U < u.globals.dataPoints; U++) {
-          var K, lA = this.barHelpers.getStrokeWidth(v, U, L), xA = this.seriesRangeStart[v][U], CA = this.seriesRangeEnd[v][U], TA = null, WA = null, VA = null, ce = { x: P, y: N, strokeWidth: lA, elSeries: H }, ye = this.seriesLen;
+          var K, lA = this.barHelpers.getStrokeWidth(v, U, L), xA = this.seriesRangeStart[v][U], CA = this.seriesRangeEnd[v][U], TA = null, WA = null, BA = null, ce = { x: P, y: N, strokeWidth: lA, elSeries: H }, ye = this.seriesLen;
           if (u.config.plotOptions.bar.rangeBarGroupRows && (ye = 1), u.config.series[v].data[U] === void 0)
             break;
           if (this.isHorizontal) {
-            VA = N + AA * this.visibleI;
+            BA = N + AA * this.visibleI;
             var De = (w - AA * ye) / 2;
             if (u.config.series[v].data[U].x) {
-              var Ye = this.detectOverlappingBars({ i: v, j: U, barYPosition: VA, srty: De, barHeight: AA, yDivision: w, initPositions: b });
-              AA = Ye.barHeight, VA = Ye.barYPosition;
+              var Ye = this.detectOverlappingBars({ i: v, j: U, barYPosition: BA, srty: De, barHeight: AA, yDivision: w, initPositions: b });
+              AA = Ye.barHeight, BA = Ye.barYPosition;
             }
-            iA = (TA = this.drawRangeBarPaths(n({ indexes: { i: v, j: U, realIndex: L }, barHeight: AA, barYPosition: VA, zeroW: _, yDivision: w, y1: xA, y2: CA }, ce))).barWidth;
+            iA = (TA = this.drawRangeBarPaths(n({ indexes: { i: v, j: U, realIndex: L }, barHeight: AA, barYPosition: BA, zeroW: _, yDivision: w, y1: xA, y2: CA }, ce))).barWidth;
           } else {
             u.globals.isXNumeric && (P = (u.globals.seriesX[v][U] - u.globals.minX) / this.xRatio - iA / 2), WA = P + iA * this.visibleI;
             var Qe = (x - iA * ye) / 2;
@@ -44772,10 +44791,10 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
             }
             AA = (TA = this.drawRangeColumnPaths(n({ indexes: { i: v, j: U, realIndex: L }, barWidth: iA, barXPosition: WA, zeroH: k, xDivision: x }, ce))).barHeight;
           }
-          var bA = this.barHelpers.drawGoalLine({ barXPosition: TA.barXPosition, barYPosition: VA, goalX: TA.goalX, goalY: TA.goalY, barHeight: AA, barWidth: iA });
+          var bA = this.barHelpers.drawGoalLine({ barXPosition: TA.barXPosition, barYPosition: BA, goalX: TA.goalX, goalY: TA.goalY, barHeight: AA, barWidth: iA });
           bA && V.add(bA), N = TA.y, P = TA.x;
           var _A = this.barHelpers.getPathFillColor(o, v, U, L), LA = u.globals.stroke.colors[L];
-          this.renderSeries((p(K = { realIndex: L, pathFill: _A, lineFill: LA, j: U, i: v, x: P, y: N, y1: xA, y2: CA, pathFrom: TA.pathFrom, pathTo: TA.pathTo, strokeWidth: lA, elSeries: H, series: o, barHeight: AA, barWidth: iA, barXPosition: WA, barYPosition: VA }, "barWidth", iA), p(K, "elDataLabelsWrap", $), p(K, "elGoalsMarkers", V), p(K, "visibleSeries", this.visibleI), p(K, "type", "rangebar"), K));
+          this.renderSeries((p(K = { realIndex: L, pathFill: _A, lineFill: LA, j: U, i: v, x: P, y: N, y1: xA, y2: CA, pathFrom: TA.pathFrom, pathTo: TA.pathTo, strokeWidth: lA, elSeries: H, series: o, barHeight: AA, barWidth: iA, barXPosition: WA, barYPosition: BA }, "barWidth", iA), p(K, "elDataLabelsWrap", $), p(K, "elGoalsMarkers", V), p(K, "visibleSeries", this.visibleI), p(K, "type", "rangebar"), K));
         }
         g.add(H);
       }
@@ -44898,8 +44917,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         for (var WA = k.length; WA > 0; WA--)
           x.add(k[WA - 1]);
       else
-        for (var VA = 0; VA < k.length; VA++)
-          x.add(k[VA]);
+        for (var BA = 0; BA < k.length; BA++)
+          x.add(k[BA]);
       return x;
     } }, { key: "_initSerieVariables", value: function(r, i, o) {
       var c = this.w, u = new B(this.ctx);
@@ -44959,7 +44978,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         }
       }
     } }, { key: "_iterateOverDataPoints", value: function(r) {
-      var i, o = this, c = r.type, u = r.series, d = r.iterations, g = r.realIndex, v = r.i, x = r.x, w = r.y, k = r.pX, _ = r.pY, P = r.pathsFrom, N = r.linePaths, L = r.areaPaths, H = r.seriesIndex, AA = r.lineYPosition, iA = r.xArrj, b = r.yArrj, $ = r.y2Arrj, V = r.isRangeStart, U = r.seriesRangeEnd, K = this.w, lA = new B(this.ctx), xA = this.yRatio, CA = P.prevY, TA = P.linePath, WA = P.areaPath, VA = P.pathFromLine, ce = P.pathFromArea, ye = E.isNumber(K.globals.minYArr[g]) ? K.globals.minYArr[g] : K.globals.minY;
+      var i, o = this, c = r.type, u = r.series, d = r.iterations, g = r.realIndex, v = r.i, x = r.x, w = r.y, k = r.pX, _ = r.pY, P = r.pathsFrom, N = r.linePaths, L = r.areaPaths, H = r.seriesIndex, AA = r.lineYPosition, iA = r.xArrj, b = r.yArrj, $ = r.y2Arrj, V = r.isRangeStart, U = r.seriesRangeEnd, K = this.w, lA = new B(this.ctx), xA = this.yRatio, CA = P.prevY, TA = P.linePath, WA = P.areaPath, BA = P.pathFromLine, ce = P.pathFromArea, ye = E.isNumber(K.globals.minYArr[g]) ? K.globals.minYArr[g] : K.globals.minY;
       d || (d = K.globals.dataPoints > 1 ? K.globals.dataPoints - 1 : K.globals.dataPoints);
       for (var De = function(he, ue) {
         return ue - he / xA[o.yaxisIndex] + 2 * (o.isReversed ? he / xA[o.yaxisIndex] : 0);
@@ -44978,12 +44997,12 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
             }
           return ue >= 0 ? ue : 0;
         }(v - 1)][He + 1] : AA = this.zeroY : AA = this.zeroY, bA ? w = De(ye, AA) : (w = De(u[v][He + 1], AA), c === "rangeArea" && (Ye = De(U[v][He + 1], AA))), iA.push(x), bA && K.config.stroke.curve === "smooth" ? b.push(null) : b.push(w), $.push(Ye);
-        var LA = this.lineHelpers.calculatePoints({ series: u, x, y: w, realIndex: g, i: v, j: He, prevY: CA }), GA = this._createPaths({ type: c, series: u, i: v, realIndex: g, j: He, x, y: w, y2: Ye, xArrj: iA, yArrj: b, y2Arrj: $, pX: k, pY: _, linePath: TA, areaPath: WA, linePaths: N, areaPaths: L, seriesIndex: H, isRangeStart: V });
-        L = GA.areaPaths, N = GA.linePaths, k = GA.pX, _ = GA.pY, WA = GA.areaPath, TA = GA.linePath, !this.appendPathFrom || K.config.stroke.curve === "monotoneCubic" && c === "rangeArea" || (VA += lA.line(x, this.zeroY), ce += lA.line(x, this.zeroY)), this.handleNullDataPoints(u, LA, v, He, g), this._handleMarkersAndLabels({ type: c, pointsPos: LA, i: v, j: He, realIndex: g, isRangeStart: V });
+        var LA = this.lineHelpers.calculatePoints({ series: u, x, y: w, realIndex: g, i: v, j: He, prevY: CA }), qA = this._createPaths({ type: c, series: u, i: v, realIndex: g, j: He, x, y: w, y2: Ye, xArrj: iA, yArrj: b, y2Arrj: $, pX: k, pY: _, linePath: TA, areaPath: WA, linePaths: N, areaPaths: L, seriesIndex: H, isRangeStart: V });
+        L = qA.areaPaths, N = qA.linePaths, k = qA.pX, _ = qA.pY, WA = qA.areaPath, TA = qA.linePath, !this.appendPathFrom || K.config.stroke.curve === "monotoneCubic" && c === "rangeArea" || (BA += lA.line(x, this.zeroY), ce += lA.line(x, this.zeroY)), this.handleNullDataPoints(u, LA, v, He, g), this._handleMarkersAndLabels({ type: c, pointsPos: LA, i: v, j: He, realIndex: g, isRangeStart: V });
       }
-      return { yArrj: b, xArrj: iA, pathFromArea: ce, areaPaths: L, pathFromLine: VA, linePaths: N, linePath: TA, areaPath: WA };
+      return { yArrj: b, xArrj: iA, pathFromArea: ce, areaPaths: L, pathFromLine: BA, linePaths: N, linePath: TA, areaPath: WA };
     } }, { key: "_handleMarkersAndLabels", value: function(r) {
-      var i = r.type, o = r.pointsPos, c = r.isRangeStart, u = r.i, d = r.j, g = r.realIndex, v = this.w, x = new JA(this.ctx);
+      var i = r.type, o = r.pointsPos, c = r.isRangeStart, u = r.i, d = r.j, g = r.realIndex, v = this.w, x = new Ae(this.ctx);
       if (this.pointsChart)
         this.scatter.draw(this.elSeries, d, { realIndex: g, pointsPos: o, zRatio: this.zRatio, elParent: this.elPointsMain });
       else {
@@ -45005,8 +45024,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           var TA = ts(CA);
           if (L += vi(TA), o[c][0] === null ? H = L : H += vi(TA), i === "rangeArea" && $) {
             L += U.line(x[x.length - 1], _[_.length - 1]);
-            var WA = x.slice().reverse(), VA = _.slice().reverse(), ce = WA.map(function(Qe, He) {
-              return [WA[He], VA[He]];
+            var WA = x.slice().reverse(), BA = _.slice().reverse(), ce = WA.map(function(Qe, He) {
+              return [WA[He], BA[He]];
             }), ye = ts(ce);
             H = L += vi(ye);
           } else
@@ -45165,8 +45184,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           }
           var TA = i.getFontSize(P), WA = o.config.dataLabels.formatter(i.labels[x][N], { value: o.globals.series[x][N], seriesIndex: x, dataPointIndex: N, w: o });
           o.config.plotOptions.treemap.dataLabels.format === "truncate" && (TA = parseInt(o.config.dataLabels.style.fontSize, 10), WA = i.truncateLabels(WA, TA, L, H, AA, iA));
-          var VA = i.helpers.calculateDataLabels({ text: WA, x: (L + AA) / 2, y: (H + iA) / 2 + i.strokeWidth / 2 + TA / 3, i: x, j: N, colorProps: $, fontSize: TA, series: r });
-          o.config.dataLabels.enabled && VA && i.rotateToFitLabel(VA, TA, WA, L, H, AA, iA), w.add(b), VA !== null && w.add(VA);
+          var BA = i.helpers.calculateDataLabels({ text: WA, x: (L + AA) / 2, y: (H + iA) / 2 + i.strokeWidth / 2 + TA / 3, i: x, j: N, colorProps: $, fontSize: TA, series: r });
+          o.config.dataLabels.enabled && BA && i.rotateToFitLabel(BA, TA, WA, L, H, AA, iA), w.add(b), BA !== null && w.add(BA);
         }), w.add(_), d.add(w);
       }), d;
     } }, { key: "getFontSize", value: function(r) {
@@ -45576,7 +45595,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           o.forEach(function(d) {
             var g = ApexCharts.getChartByID(d), v = E.clone(i.config.yaxis);
             if (i.config.chart.brush.autoScaleYaxis && g.w.globals.series.length === 1) {
-              var x = new qA(g);
+              var x = new GA(g);
               v = x.autoScaleY(g, v, u);
             }
             var w = g.w.config.yaxis.reduce(function(k, _, P) {
@@ -46955,15 +46974,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
           break;
         case "A":
           d = function(g, v) {
-            var x, w, k, _, P, N, L, H, AA, iA, b, $, V, U, K, lA, xA, CA, TA, WA, VA, ce, ye, De, Ye, Qe, He = Math.abs(v[1]), bA = Math.abs(v[2]), _A = v[3] % 360, LA = v[4], GA = v[5], he = v[6], ue = v[7], Ee = new SVG.Point(g), de = new SVG.Point(he, ue), Rt = [];
+            var x, w, k, _, P, N, L, H, AA, iA, b, $, V, U, K, lA, xA, CA, TA, WA, BA, ce, ye, De, Ye, Qe, He = Math.abs(v[1]), bA = Math.abs(v[2]), _A = v[3] % 360, LA = v[4], qA = v[5], he = v[6], ue = v[7], Ee = new SVG.Point(g), de = new SVG.Point(he, ue), Rt = [];
             if (He === 0 || bA === 0 || Ee.x === de.x && Ee.y === de.y)
               return [["C", Ee.x, Ee.y, de.x, de.y, de.x, de.y]];
-            for (x = new SVG.Point((Ee.x - de.x) / 2, (Ee.y - de.y) / 2).transform(new SVG.Matrix().rotate(_A)), (w = x.x * x.x / (He * He) + x.y * x.y / (bA * bA)) > 1 && (He *= w = Math.sqrt(w), bA *= w), k = new SVG.Matrix().rotate(_A).scale(1 / He, 1 / bA).rotate(-_A), Ee = Ee.transform(k), de = de.transform(k), _ = [de.x - Ee.x, de.y - Ee.y], N = _[0] * _[0] + _[1] * _[1], P = Math.sqrt(N), _[0] /= P, _[1] /= P, L = N < 4 ? Math.sqrt(1 - N / 4) : 0, LA === GA && (L *= -1), H = new SVG.Point((de.x + Ee.x) / 2 + L * -_[1], (de.y + Ee.y) / 2 + L * _[0]), AA = new SVG.Point(Ee.x - H.x, Ee.y - H.y), iA = new SVG.Point(de.x - H.x, de.y - H.y), b = Math.acos(AA.x / Math.sqrt(AA.x * AA.x + AA.y * AA.y)), AA.y < 0 && (b *= -1), $ = Math.acos(iA.x / Math.sqrt(iA.x * iA.x + iA.y * iA.y)), iA.y < 0 && ($ *= -1), GA && b > $ && ($ += 2 * Math.PI), !GA && b < $ && ($ -= 2 * Math.PI), U = Math.ceil(2 * Math.abs(b - $) / Math.PI), lA = [], xA = b, V = ($ - b) / U, K = 4 * Math.tan(V / 4) / 3, VA = 0; VA <= U; VA++)
-              TA = Math.cos(xA), CA = Math.sin(xA), WA = new SVG.Point(H.x + TA, H.y + CA), lA[VA] = [new SVG.Point(WA.x + K * CA, WA.y - K * TA), WA, new SVG.Point(WA.x - K * CA, WA.y + K * TA)], xA += V;
-            for (lA[0][0] = lA[0][1].clone(), lA[lA.length - 1][2] = lA[lA.length - 1][1].clone(), k = new SVG.Matrix().rotate(_A).scale(He, bA).rotate(-_A), VA = 0, ce = lA.length; VA < ce; VA++)
-              lA[VA][0] = lA[VA][0].transform(k), lA[VA][1] = lA[VA][1].transform(k), lA[VA][2] = lA[VA][2].transform(k);
-            for (VA = 1, ce = lA.length; VA < ce; VA++)
-              ye = (WA = lA[VA - 1][2]).x, De = WA.y, Ye = (WA = lA[VA][0]).x, Qe = WA.y, he = (WA = lA[VA][1]).x, ue = WA.y, Rt.push(["C", ye, De, Ye, Qe, he, ue]);
+            for (x = new SVG.Point((Ee.x - de.x) / 2, (Ee.y - de.y) / 2).transform(new SVG.Matrix().rotate(_A)), (w = x.x * x.x / (He * He) + x.y * x.y / (bA * bA)) > 1 && (He *= w = Math.sqrt(w), bA *= w), k = new SVG.Matrix().rotate(_A).scale(1 / He, 1 / bA).rotate(-_A), Ee = Ee.transform(k), de = de.transform(k), _ = [de.x - Ee.x, de.y - Ee.y], N = _[0] * _[0] + _[1] * _[1], P = Math.sqrt(N), _[0] /= P, _[1] /= P, L = N < 4 ? Math.sqrt(1 - N / 4) : 0, LA === qA && (L *= -1), H = new SVG.Point((de.x + Ee.x) / 2 + L * -_[1], (de.y + Ee.y) / 2 + L * _[0]), AA = new SVG.Point(Ee.x - H.x, Ee.y - H.y), iA = new SVG.Point(de.x - H.x, de.y - H.y), b = Math.acos(AA.x / Math.sqrt(AA.x * AA.x + AA.y * AA.y)), AA.y < 0 && (b *= -1), $ = Math.acos(iA.x / Math.sqrt(iA.x * iA.x + iA.y * iA.y)), iA.y < 0 && ($ *= -1), qA && b > $ && ($ += 2 * Math.PI), !qA && b < $ && ($ -= 2 * Math.PI), U = Math.ceil(2 * Math.abs(b - $) / Math.PI), lA = [], xA = b, V = ($ - b) / U, K = 4 * Math.tan(V / 4) / 3, BA = 0; BA <= U; BA++)
+              TA = Math.cos(xA), CA = Math.sin(xA), WA = new SVG.Point(H.x + TA, H.y + CA), lA[BA] = [new SVG.Point(WA.x + K * CA, WA.y - K * TA), WA, new SVG.Point(WA.x - K * CA, WA.y + K * TA)], xA += V;
+            for (lA[0][0] = lA[0][1].clone(), lA[lA.length - 1][2] = lA[lA.length - 1][1].clone(), k = new SVG.Matrix().rotate(_A).scale(He, bA).rotate(-_A), BA = 0, ce = lA.length; BA < ce; BA++)
+              lA[BA][0] = lA[BA][0].transform(k), lA[BA][1] = lA[BA][1].transform(k), lA[BA][2] = lA[BA][2].transform(k);
+            for (BA = 1, ce = lA.length; BA < ce; BA++)
+              ye = (WA = lA[BA - 1][2]).x, De = WA.y, Ye = (WA = lA[BA][0]).x, Qe = WA.y, he = (WA = lA[BA][1]).x, ue = WA.y, Rt.push(["C", ye, De, Ye, Qe, he, ue]);
             return Rt;
           }(this.pos, u), u = d[0];
       }
@@ -48033,7 +48052,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       (r.length === 0 || d) && this.series.handleNoData(), this.events.setupEventHandlers(), this.data.parseData(r), this.theme.init(), new mA(this).setGlobalMarkerSize(), this.formatters.setLabelFormatters(), this.titleSubtitle.draw(), c.noData && c.collapsedSeries.length !== c.series.length && !o.config.legend.showForSingleSeries || this.legend.init(), this.series.hasAllSeriesEqualX(), c.axisCharts && (this.core.coreCalculations(), o.config.xaxis.type !== "category" && this.formatters.setLabelFormatters(), this.ctx.toolbar.minX = o.globals.minX, this.ctx.toolbar.maxX = o.globals.maxX), this.formatters.heatmapLabelFormatters(), new eA(this).getLargestMarkerSize(), this.dimensions.plotCoords();
       var g = this.core.xySettings();
       this.grid.createGridMask();
-      var v = this.core.plotChartType(r, g), x = new JA(this);
+      var v = this.core.plotChartType(r, g), x = new Ae(this);
       return x.bringForward(), o.config.dataLabels.background.enabled && x.dataLabelsBackground(), this.core.shiftGraphPosition(), { elGraph: v, xyRatios: g, dimensions: { plot: { left: o.globals.translateX, top: o.globals.translateY, width: o.globals.gridWidth, height: o.globals.gridHeight } } };
     } }, { key: "mount", value: function() {
       var r = this, i = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : null, o = this, c = o.w;
@@ -48048,7 +48067,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         else
           c.globals.dom.elGraphical.add(i.elGraph);
         c.config.grid.position === "front" && (x && c.globals.dom.elGraphical.add(x.el), x != null && (v = x.elGridBorders) !== null && v !== void 0 && v.node && c.globals.dom.elGraphical.add(x.elGridBorders)), c.config.xaxis.crosshairs.position === "front" && o.crosshairs.drawXCrosshairs(), c.config.yaxis[0].crosshairs.position === "front" && o.crosshairs.drawYCrosshairs(), c.config.chart.type !== "treemap" && o.axes.drawAxis(c.config.chart.type, x);
-        var k = new YA(r.ctx, x), _ = new fA(r.ctx, x);
+        var k = new VA(r.ctx, x), _ = new fA(r.ctx, x);
         if (x !== null && (k.xAxisLabelCorrections(x.xAxisTickWidth), _.setYAxisTextAlignments(), c.config.yaxis.map(function(N, L) {
           c.globals.ignoreYAxisIndexes.indexOf(L) === -1 && _.yAxisTitleRotate(L, N.opposite);
         })), o.annotations.drawAxesAnnotations(), !c.globals.noData) {
@@ -48214,8 +48233,8 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   }();
   A.exports = Ut;
 })(kf, kf.exports);
-var lW = kf.exports;
-const ay = /* @__PURE__ */ oW(lW), sy = [
+var dW = kf.exports;
+const ay = /* @__PURE__ */ uW(dW), sy = [
   "animationEnd",
   "beforeMount",
   "mounted",
@@ -48320,7 +48339,7 @@ const ay = /* @__PURE__ */ oW(lW), sy = [
     };
     vu(() => {
       window.ApexCharts = ay;
-    }), wt(() => {
+    }), It(() => {
       t.value = nr().proxy.$el, l();
     }), Gs(() => {
       n.value && p();
@@ -48369,14 +48388,14 @@ const ay = /* @__PURE__ */ oW(lW), sy = [
       class: "vue-apexcharts"
     });
   }
-}), cW = (A) => {
+}), hW = (A) => {
   A.component(bl.name, bl);
 };
-bl.install = cW;
-const SW = async function(A, e, t, n) {
+bl.install = hW;
+const DW = async function(A, e, t, n) {
   const a = sa({
     setup() {
-      ln("url-after-submit", A), ln(
+      en("url-after-submit", A), en(
         "gqlApiService",
         new Za(As(e), Ja(e))
       );
@@ -48384,10 +48403,10 @@ const SW = async function(A, e, t, n) {
     render: () => cr(zC)
   });
   a.use(Qa()).use(or).use(es).use(Js), Cn().setSession(t), a.mount(n);
-}, $W = async function(A, e, t, n) {
+}, PW = async function(A, e, t, n) {
   const a = sa({
     setup() {
-      ln("userId", t), ln(
+      en("userId", t), en(
         "gqlApiService",
         new Za(As(A), Ja(A))
       );
@@ -48395,10 +48414,10 @@ const SW = async function(A, e, t, n) {
     render: () => cr(WC)
   });
   a.use(Qa()).use(or).use(es).use(Js), Cn().setSession(e), a.mount(n);
-}, EW = async function(A, e, t, n, a) {
+}, OW = async function(A, e, t, n, a) {
   const s = sa({
     setup() {
-      ln("roomLayoutListUrl", n), ln(
+      en("roomLayoutListUrl", n), en(
         "gqlApiService",
         new Za(As(A), Ja(A))
       );
@@ -48415,10 +48434,10 @@ const SW = async function(A, e, t, n) {
   else
     throw Error;
   s.mount(a);
-}, DW = async function(A, e, t, n, a, s) {
+}, TW = async function(A, e, t, n, a, s) {
   const l = sa({
     setup() {
-      ln("roomLayoutId", n), ln("roomLayoutListUrl", a), ln(
+      en("roomLayoutId", n), en("roomLayoutListUrl", a), en(
         "gqlApiService",
         new Za(As(A), Ja(A))
       );
@@ -48435,15 +48454,15 @@ const SW = async function(A, e, t, n) {
   else
     throw Error;
   l.mount(s);
-}, PW = async function(A, e, t, n) {
+}, NW = async function(A, e, t, n) {
   const a = sa({
     setup() {
-      ln(
+      en(
         "gqlApiService",
         new Za(As(A), Ja(A))
       );
     },
-    render: () => cr(sz)
+    render: () => cr(cz)
   });
   if (a.use(Qa()).use(or).use(bl).use(es), Cn().setSession(e), t)
     if (t === qt.Dubai.toString())
@@ -48455,10 +48474,10 @@ const SW = async function(A, e, t, n) {
   else
     throw Error;
   a.mount(n);
-}, OW = async function(A, e, t, n, a) {
+}, MW = async function(A, e, t, n, a) {
   const s = sa({
     setup() {
-      ln("url-sync-all", A), ln(
+      en("url-sync-all", A), en(
         "gqlApiService",
         new Za(As(e), Ja(e))
       );
@@ -48475,27 +48494,27 @@ const SW = async function(A, e, t, n) {
   else
     throw Error;
   s.mount(a);
-}, TW = async function(A, e, t, n) {
-  const a = sa({
+}, RW = async function(A, e, t, n, a) {
+  const s = sa({
     setup() {
-      ln("userId", t), ln(
+      en("userId", t), en("legacyViewUrl", a), en(
         "gqlApiService",
         new Za(As(A), Ja(A))
       );
     },
-    render: () => cr(KB)
+    render: () => cr(AY)
   });
-  a.use(Qa()).use(or).use(es).use(bl).use(Js), Cn().setSession(e), a.mount(n);
+  s.use(Qa()).use(or).use(es).use(bl).use(Js), Cn().setSession(e), s.mount(n);
 };
 export {
-  QB as G,
-  sz as _,
-  KB as a,
-  EW as b,
-  DW as c,
-  PW as d,
-  $W as e,
-  OW as f,
-  TW as g,
-  SW as s
+  JB as G,
+  cz as _,
+  AY as a,
+  OW as b,
+  TW as c,
+  NW as d,
+  PW as e,
+  MW as f,
+  RW as g,
+  DW as s
 };

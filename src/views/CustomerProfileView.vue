@@ -52,6 +52,7 @@ import dayjs from 'dayjs'
 import { useRoute } from 'vue-router'
 
 import CustomerWorkoutStats from '@/components/CustomerWorkoutStats.vue'
+import DefaultButtonComponent from '@/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
 
 import type { ApiService } from '@/services/apiService'
@@ -64,8 +65,14 @@ const userId = ref<string>('')
 const isLoading = ref<boolean>(false)
 const errorModalIsVisible = ref<boolean>(false)
 const identifiableUser = ref<IdentifiableUser | null>(null)
+const legacyViewUrl = ref<string | null>(null)
 
 onMounted(() => {
+  let _legacyViewUrl = inject<any | undefined>('legacyViewUrl')
+  if (_legacyViewUrl) {
+    legacyViewUrl.value = _legacyViewUrl
+  }
+
   userId.value = getUserId()
   getUser(userId.value)
 })
@@ -89,13 +96,26 @@ async function getUser(userId: string) {
     isLoading.value = false
   }
 }
+
+async function goToLegacyView() {
+  if (legacyViewUrl.value) {
+    window.location.href = legacyViewUrl.value
+  }
+}
 </script>
 
 <template>
   <div class="row">
-    <div class="col-12">
+    <div class="col-6">
       <h5>Email: {{ identifiableUser?.user?.email }}</h5>
-      <hr />
+    </div>
+    <div class="col-6" style="text-align: right;">
+      <DefaultButtonComponent v-if="legacyViewUrl" type="button" text="Legacy View" @on-click="goToLegacyView()"></DefaultButtonComponent>      
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-12"> 
       <h6>Personal Information</h6>
       <div class="row">
         <div class="col">

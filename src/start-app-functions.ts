@@ -216,11 +216,13 @@ export const startCustomerProfileApp = async function (
   gqlUrl: string,
   token: string,
   userId: string,
-  appDiv: string
+  appDiv: string,
+  legacyViewUrl?: string | null,
 ) {
   const app = createApp({
     setup() {
       provide('userId', userId)
+      provide('legacyViewUrl', legacyViewUrl)
       provide(
         'gqlApiService',
         new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))

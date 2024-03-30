@@ -55,7 +55,7 @@ const router = createRouter({
       component: () => import('../views/ClassSchedulesView.vue')
     },
     {
-      path: '/customer-profile',
+      path: '/customer-profile/:id',
       name: 'customer_profile',
       component: () => import('../views/CustomerProfileView.vue')
     }
