@@ -246,6 +246,15 @@ async function getClassInfo() {
 
   isLoading.value = false
 
+  if (
+    (enrollments.value.length === classInfo.value.class.maxCapacity &&
+      waitListAvailable.value === false) ||
+    (enrollments.value.length < classInfo.value.class.maxCapacity &&
+      waitListAvailable.value === true)
+  ) {
+    checkWaitlistIsEnable()
+  }
+
   totalSignedIn.value = enrollments.value?.filter((x) => x.isCheckedIn === true).length ?? 0
 }
 
@@ -450,7 +459,6 @@ async function swapSpot(newSpotNumber: number) {
 async function afterEnrollingUser() {
   emits('availableSpotsChanged')
   await getClassInfo()
-  checkWaitlistIsEnable()
 }
 
 async function checkWaitlistIsEnable() {
@@ -541,7 +549,7 @@ async function checkWaitlistIsEnable() {
           ></CrankCircularProgressIndicator>
         </div>
       </div>
-      <div class="row" v-if="classInfo !== null && waitListAvailable === true">
+      <div class="row" v-else-if="classInfo !== null && waitListAvailable === true">
         <div class="col-md-12">
           <hr />
           <EnrollSelectedMemberComponent
