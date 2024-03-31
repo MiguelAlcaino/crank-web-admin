@@ -40,6 +40,7 @@ const props = defineProps<{
   spotNumber: number | null
   enrollButtonText: string
   isWaitlistBooking: boolean
+  userIdsToHide?: string[] | undefined
 }>()
 
 const emits = defineEmits<{
@@ -140,6 +141,12 @@ async function onInputEventHandler(event: any) {
     appStore().site,
     event.input
   )) as IdentifiableSiteUser[]
+
+  if(props.userIdsToHide && props.userIdsToHide.length > 0) {
+    identifiableSiteUsers.value = identifiableSiteUsers.value.filter(
+      (user) => !props.userIdsToHide?.includes(user.id)
+    )
+  }
 
   isLoading.value = false
 }

@@ -164,6 +164,7 @@ const userCanSyncClasses = ref<boolean>(false)
 const waitListAvailable = ref<boolean>(false)
 const userCanCheckInCheckOut = ref<boolean>(false)
 const checkingWaitlist = ref<boolean>(false)
+const userIdsToHide = ref<string[]>([])
 
 const errorModalData = ref<{
   title: string
@@ -243,6 +244,8 @@ async function getClassInfo() {
         x.enrollmentStatus !== EnrollmentStatusEnum.Cancelled &&
         x.enrollmentStatus !== EnrollmentStatusEnum.LateCancelled
     ) ?? []
+
+  userIdsToHide.value = enrollments.value.map((x) => x.identifiableSiteUser?.id ?? '')
 
   isLoading.value = false
 
@@ -563,6 +566,7 @@ async function checkWaitlistIsEnable() {
             :spot-number="null"
             enrollButtonText="ADD TO WAITLIST"
             :is-waitlist-booking="true"
+            :user-ids-to-hide="userIdsToHide"
           >
           </EnrollSelectedMemberComponent>
         </div>
@@ -601,6 +605,7 @@ async function checkWaitlistIsEnable() {
         :spot-number="null"
         enrollButtonText="BOOK"
         :is-waitlist-booking="false"
+        :user-ids-to-hide="userIdsToHide"
       >
       </EnrollSelectedMemberComponent>
 
@@ -755,6 +760,7 @@ async function checkWaitlistIsEnable() {
           enrollButtonText="Assign"
           @after-enrolling="afterEnrollingUser()"
           :is-waitlist-booking="false"
+          :user-ids-to-hide="userIdsToHide"
         ></EnrollSelectedMemberComponent>
       </div>
 
