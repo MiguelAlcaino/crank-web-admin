@@ -163,6 +163,7 @@ const userCanModifyClass = ref<boolean>(false)
 const userCanSyncClasses = ref<boolean>(false)
 const waitListAvailable = ref<boolean>(false)
 const userCanCheckInCheckOut = ref<boolean>(false)
+const checkingWaitlist = ref<boolean>(false)
 
 const errorModalData = ref<{
   title: string
@@ -453,9 +454,21 @@ async function afterEnrollingUser() {
 }
 
 async function checkWaitlistIsEnable() {
-  await new Promise((f) => setTimeout(f, 5000))
+  if (checkingWaitlist.value) return
+  checkingWaitlist.value = true
+  try {
+    await new Promise((f) => setTimeout(f, 5000))
 
-  waitListAvailable.value = await apiService.classWaitlistIsEnabled(appStore().site, props.classId!)
+    waitListAvailable.value = await apiService.classWaitlistIsEnabled(
+      appStore().site,
+      props.classId!
+    )
+  } catch (error) {
+    errorModalData.value.message = 'ERROR CHECKING WAITLIST STATUS'
+    errorModalData.value.isVisible = true
+  } finally {
+    checkingWaitlist.value = false
+  }
 }
 </script>
 
@@ -521,6 +534,13 @@ async function checkWaitlistIsEnable() {
       </div>
 
       <!-- Enroll in Waitlist -->
+      <div class="row" v-if="checkingWaitlist">
+        <div class="col-12 text-center">
+          <CrankCircularProgressIndicator
+            text="Cheking waitlist status..."
+          ></CrankCircularProgressIndicator>
+        </div>
+      </div>
       <div class="row" v-if="classInfo !== null && waitListAvailable === true">
         <div class="col-md-12">
           <hr />
