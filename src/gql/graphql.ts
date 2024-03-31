@@ -194,10 +194,12 @@ export type ClassSchedule = {
   capacity: Scalars['Int']
   dayOfWeek: Scalars['String']
   end: Scalars['DateTime']
+  endWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']
   id: Scalars['ID']
   instructorName: Scalars['String']
   roomLayout?: Maybe<RoomLayout>
   start: Scalars['DateTime']
+  startWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']
   type: Scalars['String']
 }
 
@@ -433,6 +435,8 @@ export type Mutation = {
   createCurrentUserInSite?: Maybe<CreateCurrentUserInSiteUnion>
   /** Creates a new room layout */
   createRoomLayout: RoomLayout
+  /** It deletes the current user's account */
+  deleteCurrentUserAccount?: Maybe<Scalars['Boolean']>
   /** Removes a devices token */
   deleteDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']>
   /** Disables a spot in a class */
@@ -521,6 +525,11 @@ export type MutationCreateCurrentUserInSiteArgs = {
 export type MutationCreateRoomLayoutArgs = {
   input: RoomLayoutInput
   site: SiteEnum
+}
+
+export type MutationDeleteCurrentUserAccountArgs = {
+  site: SiteEnum
+  userPassword: Scalars['String']
 }
 
 export type MutationDeleteDeviceTokenToCurrentUserArgs = {
@@ -1739,13 +1748,14 @@ export type SetRoomLayoutForClassSchedulesMutation = {
   }>
 }
 
-export type CurrentUserWorkoutStatsQueryVariables = Exact<{
+export type UserWorkoutStatsQueryVariables = Exact<{
   site: SiteEnum
+  userId: Scalars['ID']
 }>
 
-export type CurrentUserWorkoutStatsQuery = {
+export type UserWorkoutStatsQuery = {
   __typename: 'Query'
-  currentUserWorkoutStats: Array<{
+  userWorkoutStats: Array<{
     __typename: 'ClassStat'
     totalEnergy?: number | null
     enrollment: {
@@ -1753,9 +1763,73 @@ export type CurrentUserWorkoutStatsQuery = {
       enrollmentInfo:
         | { __typename: 'EnrollmentInfo'; spotNumber?: number | null; id: string }
         | { __typename: 'WaitlistEntry'; id: string }
-      class: { __typename: 'Class'; name: string; start: any; duration: number }
+      class: { __typename: 'Class'; id: string; name: string; start: any; duration: number }
     }
   } | null>
+}
+
+export type SingleWorkoutStatQueryVariables = Exact<{
+  enrollmentId: Scalars['ID']
+}>
+
+export type SingleWorkoutStatQuery = {
+  __typename: 'Query'
+  singleWorkoutStat?: {
+    __typename: 'ClassStat'
+    averagePower?: number | null
+    highPower?: number | null
+    averageRpm?: number | null
+    highRpm?: number | null
+    totalEnergy?: number | null
+    calories?: number | null
+    distance?: number | null
+    enrollment: {
+      __typename: 'Enrollment'
+      enrollmentInfo:
+        | { __typename: 'EnrollmentInfo'; spotNumber?: number | null; id: string }
+        | { __typename: 'WaitlistEntry'; id: string }
+      class: {
+        __typename: 'Class'
+        id: string
+        name: string
+        start: any
+        duration: number
+        instructorName: string
+      }
+    }
+    adjustedChartPoints: Array<{
+      __typename: 'ChartPoint'
+      time?: number | null
+      rpm?: number | null
+      power?: number | null
+    }>
+  } | null
+}
+
+export type UserRankingInClassQueryVariables = Exact<{
+  userId: Scalars['ID']
+  classId: Scalars['ID']
+}>
+
+export type UserRankingInClassQuery = {
+  __typename: 'Query'
+  userRankingInClass?: {
+    __typename: 'UserInClassRanking'
+    totalRanking: {
+      __typename: 'UserRanking'
+      positionInRanking?: number | null
+      totalMembersInRanking?: number | null
+    }
+    genderRanking?: {
+      __typename: 'GenderRanking'
+      gender?: GenderEnum | null
+      ranking?: {
+        __typename: 'UserRanking'
+        positionInRanking?: number | null
+        totalMembersInRanking?: number | null
+      } | null
+    } | null
+  } | null
 }
 
 export const SiteSettingsDocument = {
@@ -4128,13 +4202,13 @@ export const SetRoomLayoutForClassSchedulesDocument = {
   SetRoomLayoutForClassSchedulesMutation,
   SetRoomLayoutForClassSchedulesMutationVariables
 >
-export const CurrentUserWorkoutStatsDocument = {
+export const UserWorkoutStatsDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'currentUserWorkoutStats' },
+      name: { kind: 'Name', value: 'userWorkoutStats' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
@@ -4143,6 +4217,14 @@ export const CurrentUserWorkoutStatsDocument = {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
           }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
         }
       ],
       selectionSet: {
@@ -4150,12 +4232,17 @@ export const CurrentUserWorkoutStatsDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'currentUserWorkoutStats' },
+            name: { kind: 'Name', value: 'userWorkoutStats' },
             arguments: [
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'site' },
                 value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'userId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } }
               }
             ],
             selectionSet: {
@@ -4196,6 +4283,7 @@ export const CurrentUserWorkoutStatsDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'start' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'duration' } }
@@ -4213,4 +4301,206 @@ export const CurrentUserWorkoutStatsDocument = {
       }
     }
   ]
-} as unknown as DocumentNode<CurrentUserWorkoutStatsQuery, CurrentUserWorkoutStatsQueryVariables>
+} as unknown as DocumentNode<UserWorkoutStatsQuery, UserWorkoutStatsQueryVariables>
+export const SingleWorkoutStatDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'singleWorkoutStat' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'enrollmentId' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'singleWorkoutStat' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'enrollmentId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'enrollmentId' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'enrollment' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'enrollmentInfo' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            {
+                              kind: 'InlineFragment',
+                              typeCondition: {
+                                kind: 'NamedType',
+                                name: { kind: 'Name', value: 'EnrollmentInfo' }
+                              },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'class' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'start' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'duration' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'instructorName' } }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'averagePower' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'highPower' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'averageRpm' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'highRpm' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalEnergy' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'calories' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'distance' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'adjustedChartPoints' },
+                  arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'amountOfPoints' },
+                      value: { kind: 'IntValue', value: '62' }
+                    }
+                  ],
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'time' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'rpm' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'power' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<SingleWorkoutStatQuery, SingleWorkoutStatQueryVariables>
+export const UserRankingInClassDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'userRankingInClass' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'classId' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'userRankingInClass' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'userId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'classId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'classId' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'totalRanking' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'positionInRanking' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'totalMembersInRanking' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'genderRanking' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'gender' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'ranking' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'positionInRanking' } },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'totalMembersInRanking' }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<UserRankingInClassQuery, UserRankingInClassQueryVariables>
