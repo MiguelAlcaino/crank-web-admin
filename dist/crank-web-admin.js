@@ -1,4 +1,4 @@
-import { d as s, f as r, s as p, e, g as o, b as A, c as C } from "./index.3d1d8b5d.js";
+import { d as s, f as r, s as p, e, g as o, b as A, c as C } from "./index.66419d39.js";
 export {
   s as startCalendarApp,
   r as startClassScheduleApp,

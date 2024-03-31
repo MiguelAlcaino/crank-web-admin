@@ -12075,7 +12075,7 @@ const vE = /* @__PURE__ */ nn(cE, [["render", mE]]), or = kS({
     {
       path: "/admin/calendar-class",
       name: "admin_calendar_class",
-      component: () => import("./AdminClassView.eae46aa2.js")
+      component: () => import("./AdminClassView.13e38414.js")
     },
     {
       path: "/admin/room-layout/list",
@@ -12100,7 +12100,7 @@ const vE = /* @__PURE__ */ nn(cE, [["render", mE]]), or = kS({
     {
       path: "/customer-profile/:id",
       name: "customer_profile",
-      component: () => import("./CustomerProfileView.023c0d8c.js")
+      component: () => import("./CustomerProfileView.508f82a6.js")
     }
   ]
 });
@@ -38519,7 +38519,7 @@ const tU = /* @__PURE__ */ nn(eU, [["__scopeId", "data-v-9cd679ed"]]), nU = { cl
   }
 });
 var zo = /* @__PURE__ */ ((A) => (A.ROLE_SUPER_ADMIN = "ROLE_SUPER_ADMIN", A.ROLE_ADMIN_MANAGER = "ROLE_ADMIN_MANAGER", A.ROLE_STAFF = "ROLE_STAFF", A.ROLE_USER = "ROLE_USER", A.ROLE_MINDBODY_USER = "ROLE_MINDBODY_USER", A.ROLE_INSTRUCTOR = "ROLE_INSTRUCTOR", A))(zo || {});
-const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), nj = { class: "ClassDetails" }, rj = { key: 0 }, ij = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("h2", { style: { margin: "0 auto", "text-align": "center" } }, "Please select a class", -1)), aj = [
+const Kr = (A) => (vn("data-v-aa34dda5"), A = A(), yn(), A), nj = { class: "ClassDetails" }, rj = { key: 0 }, ij = /* @__PURE__ */ Kr(() => /* @__PURE__ */ D("h2", { style: { margin: "0 auto", "text-align": "center" } }, "Please select a class", -1)), aj = [
   ij
 ], sj = { key: 1 }, oj = { class: "row" }, lj = { class: "col-12 text-center" }, cj = { key: 2 }, uj = { class: "row" }, dj = { class: "col-md-10" }, hj = { class: "col-md-2" }, fj = {
   key: 0,
@@ -38877,12 +38877,13 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), nj = { class: "Clas
           key: 2,
           title: "Warning",
           message: gA(r8),
-          isLoading: E.value.isLoading,
+          "cancel-disabled": E.value.isLoading,
+          "ok-loading": E.value.isLoading,
           onOnCancel: R[15] || (R[15] = (Oe) => E.value.isVisible = !1),
           "ok-text": "CONFIRM",
           onOnOk: R[16] || (R[16] = (Oe) => j()),
           closable: !1
-        }, null, 8, ["message", "isLoading"])) : IA("", !0),
+        }, null, 8, ["message", "cancel-disabled", "ok-loading"])) : IA("", !0),
         Y.value.isVisible ? (X(), JA(nt, {
           key: 3,
           title: Y.value.title,
@@ -38894,7 +38895,7 @@ const Kr = (A) => (vn("data-v-84e76624"), A = A(), yn(), A), nj = { class: "Clas
     };
   }
 });
-const Nj = /* @__PURE__ */ nn(Tj, [["__scopeId", "data-v-84e76624"]]), Mj = /* @__PURE__ */ Me({
+const Nj = /* @__PURE__ */ nn(Tj, [["__scopeId", "data-v-aa34dda5"]]), Mj = /* @__PURE__ */ Me({
   __name: "SyncAllClassesButton",
   props: {
     disabled: { type: Boolean }
