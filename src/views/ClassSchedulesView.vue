@@ -206,6 +206,7 @@ async function onClickConfirm() {
 
     selectedRoomLayoutId.value = '-1'
     setOfCheckedId.value.clear()
+    refreshCheckedStatus()
 
     successModalIsVisible.value = true
   } catch (error) {
