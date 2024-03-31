@@ -4,8 +4,8 @@ interface ClassSchedule {
   type: string
   instructorName: string
   dayOfWeek: string
-  start: Date
-  end: Date
+  startWithNoTimeZone: Date
+  endWithNoTimeZone: Date
   roomLayout: RoomLayout
   capacity: number
 }
@@ -357,8 +357,12 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
               <td class="text-center">{{ item.capacity }}</td>
               <td class="text-center">{{ item.instructorName }}</td>
               <td class="text-center">{{ item.dayOfWeek }}</td>
-              <td class="text-center">{{ dayjs(item.start).format('DD/MM/YYYY h:mm A') }}</td>
-              <td class="text-center">{{ dayjs(item.end).format('DD/MM/YYYY h:mm A') }}</td>
+              <td class="text-center">
+                {{ dayjs(item.startWithNoTimeZone).format('DD/MM/YYYY h:mm A') }}
+              </td>
+              <td class="text-center">
+                {{ dayjs(item.endWithNoTimeZone).format('DD/MM/YYYY h:mm A') }}
+              </td>
               <td class="text-center">{{ item?.roomLayout?.name }}</td>
             </tr>
             <tr v-if="!isLoading && filteredClassSchedules?.length === 0">

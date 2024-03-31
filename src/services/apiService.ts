@@ -1098,8 +1098,8 @@ export class ApiService {
           id
           instructorName
           dayOfWeek
-          start
-          end
+          startWithNoTimeZone
+          endWithNoTimeZone
           type
           capacity
           roomLayout {
