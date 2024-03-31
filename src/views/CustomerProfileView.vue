@@ -109,13 +109,18 @@ async function goToLegacyView() {
     <div class="col-6">
       <h5>Email: {{ identifiableUser?.user?.email }}</h5>
     </div>
-    <div class="col-6" style="text-align: right;">
-      <DefaultButtonComponent v-if="legacyViewUrl" type="button" text="Legacy View" @on-click="goToLegacyView()"></DefaultButtonComponent>      
+    <div class="col-6" style="text-align: right">
+      <DefaultButtonComponent
+        v-if="legacyViewUrl"
+        type="button"
+        text="Legacy View"
+        @on-click="goToLegacyView()"
+      ></DefaultButtonComponent>
     </div>
   </div>
   <hr />
   <div class="row">
-    <div class="col-12"> 
+    <div class="col-12">
       <h6>Personal Information</h6>
       <div class="row">
         <div class="col">

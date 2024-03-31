@@ -217,7 +217,7 @@ export const startCustomerProfileApp = async function (
   token: string,
   userId: string,
   appDiv: string,
-  legacyViewUrl?: string | null,
+  legacyViewUrl?: string | null
 ) {
   const app = createApp({
     setup() {
