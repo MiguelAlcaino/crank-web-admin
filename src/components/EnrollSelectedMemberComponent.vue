@@ -142,7 +142,7 @@ async function onInputEventHandler(event: any) {
     event.input
   )) as IdentifiableSiteUser[]
 
-  if(props.userIdsToHide && props.userIdsToHide.length > 0) {
+  if (props.userIdsToHide && props.userIdsToHide.length > 0) {
     identifiableSiteUsers.value = identifiableSiteUsers.value.filter(
       (user) => !props.userIdsToHide?.includes(user.id)
     )

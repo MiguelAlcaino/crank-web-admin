@@ -1259,7 +1259,8 @@ export class ApiService {
       query: query,
       variables: {
         enrollmentId: enrollmentId
-      }
+      },
+      fetchPolicy: 'network-only'
     })
 
     return queryResult.data.singleWorkoutStat as ClassStat
@@ -1290,7 +1291,7 @@ export class ApiService {
         userId: userId,
         classId: classId
       },
-      fetchPolicy: 'no-cache'
+      fetchPolicy: 'network-only'
     })
 
     return queryResult.data.userRankingInClass as UserInClassRanking
