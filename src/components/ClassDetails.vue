@@ -225,7 +225,7 @@ function setPermissionsByRole() {
   userCanCheckInCheckOut.value = authService.userHasRole(Role.ROLE_INSTRUCTOR)
 }
 
-async function getClassInfo() {
+async function getClassInfo(checkWaitList?: boolean | null) {
   if (props.classId === null) return
 
   selectedSpot.value = {}
@@ -250,7 +250,8 @@ async function getClassInfo() {
   isLoading.value = false
 
   if (
-    (enrollments.value.length === classInfo.value.class.maxCapacity &&
+    (checkWaitList === true &&
+      enrollments.value.length === classInfo.value.class.maxCapacity &&
       waitListAvailable.value === false) ||
     (enrollments.value.length < classInfo.value.class.maxCapacity &&
       waitListAvailable.value === true)
@@ -321,7 +322,7 @@ async function clickPutUnderMaintenance() {
   isEnablingDisablingSpot.value = false
 
   if (response === 'Success') {
-    await getClassInfo()
+    await getClassInfo(true)
     emits('availableSpotsChanged')
   } else if (response === 'SpotNotFoundError') {
     errorModalData.value.message = ERROR_SPOT_NOT_FOUND
@@ -342,7 +343,7 @@ async function clickRecoverFromMaintenance() {
   isEnablingDisablingSpot.value = false
 
   if (response === 'Success') {
-    await getClassInfo()
+    await getClassInfo(true)
     emits('availableSpotsChanged')
   } else if (response === 'SpotNotFoundError') {
     errorModalData.value.message = ERROR_SPOT_NOT_FOUND
@@ -368,7 +369,7 @@ async function removeUserFromClass() {
   confirmModalCancelReservationData.value.isVisible = false
 
   if (response === 'CancelUserEnrollmentSuccess') {
-    await getClassInfo()
+    await getClassInfo(true)
     emits('availableSpotsChanged')
   } else if (response === 'LateCancellationRequiredError') {
     confirmModalLateCancelReservationData.value.isLoading = false
@@ -389,7 +390,7 @@ async function confirmLateCancelation() {
   confirmModalLateCancelReservationData.value.isVisible = false
 
   if (response === 'CancelUserEnrollmentSuccess') {
-    await getClassInfo()
+    await getClassInfo(true)
     emits('availableSpotsChanged')
   } else if (response === 'LateCancellationRequiredError') {
     confirmModalLateCancelReservationData.value.isLoading = false
@@ -461,7 +462,7 @@ async function swapSpot(newSpotNumber: number) {
 
 async function afterEnrollingUser() {
   emits('availableSpotsChanged')
-  await getClassInfo()
+  await getClassInfo(true)
 }
 
 async function checkWaitlistIsEnable() {
@@ -538,7 +539,7 @@ async function checkWaitlistIsEnable() {
           <SetOnHoldSpots
             v-if="classInfo"
             :class-id="classId"
-            @after-set-on-hold-spots="getClassInfo()"
+            @after-set-on-hold-spots="getClassInfo(true)"
             :on-hold-spots="classInfo?.onHoldSpots"
           ></SetOnHoldSpots>
         </div>
@@ -562,7 +563,7 @@ async function checkWaitlistIsEnable() {
               waitListAvailable === true &&
               classInfo?.class?.showAsDisabled === false
             "
-            @after-enrolling="getClassInfo()"
+            @after-enrolling="getClassInfo(true)"
             :spot-number="null"
             enrollButtonText="ADD TO WAITLIST"
             :is-waitlist-booking="true"
