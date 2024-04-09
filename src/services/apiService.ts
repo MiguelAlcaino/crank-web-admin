@@ -921,7 +921,9 @@ export class ApiService {
     const mutation = gql`
       mutation registerUser($site: SiteEnum!, $input: RegisterUserInput!) {
         registerIdentifiableUser(site: $site, input: $input) {
-          id
+          identifiableUser {
+            id    
+          }
         }
       }
     `
@@ -934,8 +936,8 @@ export class ApiService {
         }
       })
 
-      const registerIdentifiableUser = result.data.registerIdentifiableUser as IdentifiableUser
-      return registerIdentifiableUser.id!
+      const registerIdentifiableUser = result.data.registerIdentifiableUser as IdentifiableSiteUser
+      return registerIdentifiableUser.identifiableUser?.id!
     } catch (error) {
       if (error instanceof ApolloError) {
         if (error.graphQLErrors[0].message === 'register.user_already_registered') {
