@@ -509,13 +509,15 @@ this in the docs: http://dev.apollodata.com/core/fragments.html#unique-names`):l
           }
         }
       }
-    `;try{return(await this.anonymousApiClient.query({query:t,variables:{countryCode:e}})).data.country}catch{return null}}async registerIdentifiableUser(e,t){const n=tt`
+    `;try{return(await this.anonymousApiClient.query({query:t,variables:{countryCode:e}})).data.country}catch{return null}}async registerIdentifiableUser(e,t){var a;const n=tt`
       mutation registerUser($site: SiteEnum!, $input: RegisterUserInput!) {
         registerIdentifiableUser(site: $site, input: $input) {
-          id
+          identifiableUser {
+            id    
+          }
         }
       }
-    `;try{return(await this.authApiClient.mutate({mutation:n,variables:{site:e,input:t}})).data.registerIdentifiableUser.id}catch(a){throw a instanceof Ba?a.graphQLErrors[0].message==="register.user_already_registered"?new wu("Your email address is already registered with us. Please login directly to your account."):a.graphQLErrors[0].message==="minimum_password_length_is_four_chars"?new wu("The password must contain at least 8 characters."):a.graphQLErrors[0].message==="password_must_contain_letter_or_number"?new wu("The password must contain a letter and a number."):a:a}}async editUser(e,t){const n={userId:e,userDataInput:t},a=tt`
+    `;try{return(a=(await this.authApiClient.mutate({mutation:n,variables:{site:e,input:t}})).data.registerIdentifiableUser.identifiableUser)==null?void 0:a.id}catch(s){throw s instanceof Ba?s.graphQLErrors[0].message==="register.user_already_registered"?new wu("Your email address is already registered with us. Please login directly to your account."):s.graphQLErrors[0].message==="minimum_password_length_is_four_chars"?new wu("The password must contain at least 8 characters."):s.graphQLErrors[0].message==="password_must_contain_letter_or_number"?new wu("The password must contain a letter and a number."):s:s}}async editUser(e,t){const n={userId:e,userDataInput:t},a=tt`
       mutation editUser($input: EditUserInput!) {
         editUser(input: $input) {
           ... on IdentifiableUser {
