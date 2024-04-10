@@ -33,6 +33,7 @@ const v$ = useVuelidate(rules, formData)
 const props = defineProps<{
   classId: string
   onHoldSpots: number
+  disabled: boolean
 }>()
 
 const emits = defineEmits<{
@@ -69,6 +70,7 @@ async function saveOnHoldSpots() {
     :text="'Set On Hold Spots (' + props.onHoldSpots + ')'"
     type="button"
     @on-click="onClickSetOnHoldSpots()"
+    :disabled="props.disabled"
   ></DefaultButtonComponent>
 
   <transition name="modal" v-if="modalIsVisible">

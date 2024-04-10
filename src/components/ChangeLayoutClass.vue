@@ -21,6 +21,7 @@ const props = defineProps<{
   classId: string
   roomLayoutId?: string
   maxCapacity: number
+  disabled: boolean
 }>()
 
 const emits = defineEmits<{
@@ -89,6 +90,7 @@ async function assignRoomLayoutId() {
     text="CHANGE LAYOUT"
     type="button"
     @on-click="openModal()"
+    :disabled="disabled"
   ></DefaultButtonComponent>
 
   <transition name="modal" v-if="modalIsVisible">
