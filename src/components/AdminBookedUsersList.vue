@@ -119,6 +119,7 @@ async function removeUserFromClass(enrollmentId: string, lateCancel: boolean) {
               :enrollment-id="item.id"
               :is-checked-in="item.isCheckedIn"
               @after-check-in-check-out="emits('afterCancelMemberReservation')"
+              :disabled="false"
             ></CheckInCheckOutUserInClass>
           </td>
           <td v-if="showEditOptions">
