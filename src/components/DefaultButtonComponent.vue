@@ -6,6 +6,7 @@ interface Props {
   type: 'button' | 'submit'
   block?: boolean
   variant?: 'primary' | 'secondary'
+  size?: 'sm' | 'lg'
 }
 withDefaults(defineProps<Props>(), {
   isLoading: false,
@@ -29,6 +30,8 @@ const emits = defineEmits<{
       'btn-block': block,
       'btn-primary': variant === 'primary',
       'btn-secondary': variant === 'secondary',
+      'btn-sm': size === 'sm',
+      'btn-lg': size === 'lg',
       disabled: disabled
     }"
   >
