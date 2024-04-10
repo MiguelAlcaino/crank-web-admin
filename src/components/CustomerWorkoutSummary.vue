@@ -105,7 +105,8 @@ async function getSingleWorkoutStat() {
             <br />
             <p>
               <b>TIME: </b>
-              <span>{{ dayjs(classStat?.enrollment.class.start).format('h:mm a') }}</span> |
+              <span>{{ dayjs(classStat?.enrollment.class.start).format('h:mm a') }}</span>
+              |
               <b>DURATION: </b>
               <span>{{ classStat?.enrollment.class.duration }}</span> mins.
             </p>

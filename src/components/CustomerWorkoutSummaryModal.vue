@@ -125,9 +125,13 @@ async function singleWorkoutStat() {
                         <span>{{ dayjs(classStat?.enrollment.class.start).format('h:mm a') }}</span>
                         |
                         <b>DURATION: </b>
-                        <span>{{ classStat?.enrollment.class.duration }}</span> mins.
+                        <span>{{ classStat?.enrollment.class.duration }}</span>
+                        mins.
                       </p>
-                      <p><b>INSTRUCTOR: </b> {{ classStat?.enrollment.class.instructorName }}</p>
+                      <p>
+                        <b>INSTRUCTOR: </b>
+                        {{ classStat?.enrollment.class.instructorName }}
+                      </p>
                     </div>
                   </div>
                 </div>

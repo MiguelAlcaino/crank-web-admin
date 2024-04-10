@@ -131,12 +131,14 @@ async function getUser(userId: string) {
                   <div class="row">
                     <div class="col">
                       <p>
-                        First Name: <b>{{ identifiableUser?.user?.firstName }}</b>
+                        First Name:
+                        <b>{{ identifiableUser?.user?.firstName }}</b>
                       </p>
                     </div>
                     <div class="col">
                       <p>
-                        Last Name: <b>{{ identifiableUser?.user?.lastName }}</b>
+                        Last Name:
+                        <b>{{ identifiableUser?.user?.lastName }}</b>
                       </p>
                     </div>
                   </div>
@@ -155,7 +157,8 @@ async function getUser(userId: string) {
                     </div>
                     <div class="col">
                       <p>
-                        Leaderboard Name: <b>{{ identifiableUser?.user?.leaderboardUsername }}</b>
+                        Leaderboard Name:
+                        <b>{{ identifiableUser?.user?.leaderboardUsername }}</b>
                       </p>
                     </div>
                   </div>
@@ -168,7 +171,8 @@ async function getUser(userId: string) {
                     </div>
                     <div class="col">
                       <p>
-                        Weight: <b>{{ identifiableUser?.user?.weight ?? '' }} kg</b>
+                        Weight:
+                        <b>{{ identifiableUser?.user?.weight ?? '' }} kg</b>
                       </p>
                     </div>
                   </div>
@@ -177,31 +181,36 @@ async function getUser(userId: string) {
                   <div class="row">
                     <div class="col">
                       <p>
-                        Country: <b>{{ identifiableUser?.user?.country?.name }}</b>
+                        Country:
+                        <b>{{ identifiableUser?.user?.country?.name }}</b>
                       </p>
                     </div>
                     <div class="col">
                       <p>
-                        City/State: <b>{{ identifiableUser?.user?.state?.name }}</b>
-                      </p>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <p>
-                        Adress Line 1: <b>{{ identifiableUser?.user?.address1 }}</b>
-                      </p>
-                    </div>
-                    <div class="col">
-                      <p>
-                        Adress Line 2: <b>{{ identifiableUser?.user?.address2 }}</b>
+                        City/State:
+                        <b>{{ identifiableUser?.user?.state?.name }}</b>
                       </p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col">
                       <p>
-                        Mobile Number: <b>{{ identifiableUser?.user?.phone }}</b>
+                        Adress Line 1:
+                        <b>{{ identifiableUser?.user?.address1 }}</b>
+                      </p>
+                    </div>
+                    <div class="col">
+                      <p>
+                        Adress Line 2:
+                        <b>{{ identifiableUser?.user?.address2 }}</b>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <p>
+                        Mobile Number:
+                        <b>{{ identifiableUser?.user?.phone }}</b>
                       </p>
                     </div>
                     <div class="col">

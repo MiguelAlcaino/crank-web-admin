@@ -92,7 +92,9 @@ async function getUserWorkoutStats() {
           <tbody>
             <tr v-for="(item, index) in classStats" :key="index">
               <td>{{ item.enrollment.class.name }}</td>
-              <td class="text-center">{{ item.enrollment.enrollmentInfo.spotNumber }}</td>
+              <td class="text-center">
+                {{ item.enrollment.enrollmentInfo.spotNumber }}
+              </td>
               <td class="text-center">
                 {{ dayjs(new Date(item.enrollment.class.start)).format('DD/MM/YYYY h:mm A') }}
               </td>

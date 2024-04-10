@@ -326,7 +326,10 @@ export class ApiService {
   }
 
   async removeUserFromClass(enrollmentId: string, lateCancel?: boolean): Promise<string> {
-    const input = { enrollmentId: enrollmentId, lateCancel: lateCancel } as CancelEnrollmentInput
+    const input = {
+      enrollmentId: enrollmentId,
+      lateCancel: lateCancel
+    } as CancelEnrollmentInput
 
     const REMOVE_USER_FROM_CLASS_MUTATION = gql`
       mutation removeUserFromClass($input: CancelEnrollmentInput!) {
@@ -958,7 +961,10 @@ export class ApiService {
   }
 
   async editUser(userId: string, userDataInput: UserInput): Promise<EditUserResultUnion> {
-    const input: EditUserInput = { userId: userId, userDataInput: userDataInput } as EditUserInput
+    const input: EditUserInput = {
+      userId: userId,
+      userDataInput: userDataInput
+    } as EditUserInput
 
     const mutation = gql`
       mutation editUser($input: EditUserInput!) {
