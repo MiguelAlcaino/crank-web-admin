@@ -922,7 +922,7 @@ export class ApiService {
       mutation registerUser($site: SiteEnum!, $input: RegisterUserInput!) {
         registerIdentifiableUser(site: $site, input: $input) {
           identifiableUser {
-            id    
+            id
           }
         }
       }
