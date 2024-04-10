@@ -38,6 +38,7 @@ const apiService = inject<ApiService>('gqlApiService')!
 
 const props = defineProps<{
   classId: string
+  disabled: boolean
 }>()
 
 const errorModalIsVisible = ref<boolean>(false)
@@ -111,6 +112,7 @@ function showConfirmModal(waitlistEntry: WaitlistEntry) {
     text="View Waitlist"
     type="button"
     @on-click="openModal()"
+    :disabled="props.disabled"
   ></DefaultButtonComponent>
 
   <transition name="modal" v-if="modalIsVisible">

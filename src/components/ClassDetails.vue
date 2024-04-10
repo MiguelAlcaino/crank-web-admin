@@ -500,6 +500,7 @@ async function checkWaitlistIsEnable() {
       <!-- Class Description -->
       <div class="row">
         <div class="col-md-10">
+          <h4 v-if="classInfo?.class?.showAsDisabled === true">CLASS CANCELLED</h4>
           <h4>
             {{ classInfo?.class?.name }} -
             {{
@@ -531,16 +532,21 @@ async function checkWaitlistIsEnable() {
             :room-layout-id="classInfo?.roomLayout?.id"
             :max-capacity="classInfo?.class?.maxCapacity"
             @after-changing-room-layout="getClassInfo()"
+            :disabled="classInfo?.class?.showAsDisabled === true"
           >
           </ChangeLayoutClass>
           &nbsp;
-          <ViewWaitlistEntries :class-id="classId"></ViewWaitlistEntries>
+          <ViewWaitlistEntries
+            :class-id="classId"
+            :disabled="classInfo?.class?.showAsDisabled === true"
+          ></ViewWaitlistEntries>
           &nbsp;
           <SetOnHoldSpots
             v-if="classInfo"
             :class-id="classId"
             @after-set-on-hold-spots="getClassInfo(true)"
             :on-hold-spots="classInfo?.onHoldSpots"
+            :disabled="classInfo?.class?.showAsDisabled === true"
           ></SetOnHoldSpots>
         </div>
       </div>
@@ -600,7 +606,8 @@ async function checkWaitlistIsEnable() {
           classInfo.roomLayout === null &&
           classInfo.enrollments !== null &&
           waitListAvailable === false &&
-          userCanModifyClass
+          userCanModifyClass &&
+          classInfo?.class?.showAsDisabled === false
         "
         @after-enrolling="afterEnrollingUser()"
         :spot-number="null"
@@ -616,8 +623,10 @@ async function checkWaitlistIsEnable() {
         :enrollments="enrollments"
         :isLoading="false"
         @after-cancel-member-reservation="afterEnrollingUser()"
-        :show-edit-options="userCanModifyClass"
-        :user-can-check-in-check-out="userCanCheckInCheckOut"
+        :show-edit-options="userCanModifyClass && classInfo?.class?.showAsDisabled === false"
+        :user-can-check-in-check-out="
+          userCanCheckInCheckOut && classInfo?.class?.showAsDisabled === false
+        "
       >
       </AdminBookedUsersList>
 
@@ -633,6 +642,7 @@ async function checkWaitlistIsEnable() {
           type="button"
           @on-click="spotAction = SpotActionEnum.asignUserToSpot"
           class="mr-1"
+          :disabled="classInfo?.class?.showAsDisabled === true"
         ></DefaultButtonComponent>
         <DefaultButtonComponent
           text="Put under maintenance"
@@ -640,6 +650,7 @@ async function checkWaitlistIsEnable() {
           @on-click="clickPutUnderMaintenance"
           class="mr-1"
           :is-loading="isEnablingDisablingSpot"
+          :disabled="classInfo?.class?.showAsDisabled === true"
         ></DefaultButtonComponent>
       </div>
       <!-- Select under manteince spot options -->
@@ -651,6 +662,7 @@ async function checkWaitlistIsEnable() {
           @on-click="clickRecoverFromMaintenance"
           class="mr-1"
           :is-loading="isEnablingDisablingSpot"
+          :disabled="classInfo?.class?.showAsDisabled === true"
         ></DefaultButtonComponent>
       </div>
 
@@ -675,6 +687,7 @@ async function checkWaitlistIsEnable() {
         type="button"
         @on-click="clickCancelMembersReservation"
         class="mr-1"
+        :disabled="classInfo?.class?.showAsDisabled === true"
       >
       </DefaultButtonComponent>
       <!-- CHANGE SPOT button -->
@@ -682,7 +695,10 @@ async function checkWaitlistIsEnable() {
         text="CHANGE SPOT"
         :is-loading="changingMemberSpot"
         type="button"
-        :disabled="spotAction === SpotActionEnum.changeMemberSpot"
+        :disabled="
+          spotAction === SpotActionEnum.changeMemberSpot ||
+          classInfo?.class?.showAsDisabled === true
+        "
         @on-click="spotAction = SpotActionEnum.changeMemberSpot"
         v-if="
           userCanModifyClass &&
@@ -698,7 +714,9 @@ async function checkWaitlistIsEnable() {
         type="button"
         text="Swap Spot"
         :is-loading="changingMemberSpot"
-        :disabled="spotAction === SpotActionEnum.swapSpot"
+        :disabled="
+          spotAction === SpotActionEnum.swapSpot || classInfo?.class?.showAsDisabled === true
+        "
         v-if="
           userCanModifyClass &&
           selectedSpot?.isBooked === true &&
@@ -735,6 +753,7 @@ async function checkWaitlistIsEnable() {
         :enrollment-id="selectedSpot.enrollmentId"
         :is-checked-in="selectedSpot.isCheckedIn"
         @after-check-in-check-out="getClassInfo()"
+        :disabled="classInfo?.class?.showAsDisabled === true"
       ></CheckInCheckOutUserInClass>
 
       <UserProfile

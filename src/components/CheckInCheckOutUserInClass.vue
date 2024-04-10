@@ -26,6 +26,7 @@ const apiService = inject<ApiService>('gqlApiService')!
 const props = defineProps<{
   enrollmentId: string
   isCheckedIn: boolean
+  disabled: boolean
 }>()
 
 const emits = defineEmits<{
@@ -88,6 +89,7 @@ async function checkOutUserInClass() {
     @on-click="checkinUserInClass()"
     class="mr-1"
     :is-loading="isLoading"
+    :disabled="disabled"
   ></DefaultButtonComponent>
   <DefaultButtonComponent
     v-if="isCheckedIn"
@@ -96,6 +98,7 @@ async function checkOutUserInClass() {
     @on-click="checkOutUserInClass()"
     class="mr-1"
     :is-loading="isLoading"
+    :disabled="disabled"
   ></DefaultButtonComponent>
 
   <!-- Error Modal -->

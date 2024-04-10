@@ -480,7 +480,9 @@ async function goToRoomLayoutList() {
                     class="seat-number"
                     min="1"
                     max="2500"
-                    :class="{ hasError: spot.spotNumber === null || spot.spotNumber === undefined }"
+                    :class="{
+                      hasError: spot.spotNumber === null || spot.spotNumber === undefined
+                    }"
                     v-model="spot.spotNumber"
                   />
                   <i class="bi bi-circle" style="font-size: 1.8rem"></i>

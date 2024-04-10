@@ -143,7 +143,8 @@ function onAfterChangingSite(): void {
           </a>
         </div>
         <div id="dateRange" style="font-weight: 500">
-          {{ dayjs(startDate).format('DD/MM/YYYY') }} to {{ dayjs(endDate).format('DD/MM/YYYY') }}
+          {{ dayjs(startDate).format('DD/MM/YYYY') }} to
+          {{ dayjs(endDate).format('DD/MM/YYYY') }}
         </div>
         <div id="next">
           <a href="#" @click.prevent="goToNextWeek()" style="color: black">
@@ -165,7 +166,10 @@ function onAfterChangingSite(): void {
           :key="c.id"
           style="cursor: pointer"
           @click="selectClass(c.id)"
-          :class="{ selectedClass: c.id === selectedClassId, disabledClass: c.showAsDisabled }"
+          :class="{
+            selectedClass: c.id === selectedClassId,
+            disabledClass: c.showAsDisabled
+          }"
         >
           <div>
             <time>{{ dayjs(c.startWithNoTimeZone).format('h:mm A') }}</time>
