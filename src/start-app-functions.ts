@@ -147,7 +147,7 @@ export const startCalendarApp = async function (
   token: string,
   site: string,
   appDiv: string,
-  goBackUrl?: string | null | undefined,
+  goBackUrl?: string | null | undefined
 ) {
   const app = createApp({
     setup() {
