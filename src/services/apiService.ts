@@ -32,6 +32,7 @@ import type {
   RoomLayout,
   RoomLayoutInput,
   RoomLayoutsInput,
+  SendClassStatsToEmailInput,
   SetRoomLayoutForClassSchedulesInput,
   SimpleSiteUser,
   SiteEnum,
@@ -1322,5 +1323,24 @@ export class ApiService {
     })
 
     return queryResult.data.sendClassStatsToUsers as boolean
+  }
+
+  async sendClassStatsToEmail(email: string, enrollmentId: string): Promise<boolean> {
+    const input = { email: email, enrollmentId: enrollmentId } as SendClassStatsToEmailInput
+
+    const query = gql`
+      mutation sendClassStatsToEmail($input: SendClassStatsToEmailInput!) {
+        sendClassStatsToEmail(input: $input)
+      }
+    `
+    const queryResult = await this.authApiClient.query({
+      query: query,
+      fetchPolicy: 'no-cache',
+      variables: {
+        input: input
+      }
+    })
+
+    return queryResult.data.sendClassStatsToEmail as boolean
   }
 }

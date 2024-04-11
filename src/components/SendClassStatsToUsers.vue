@@ -63,7 +63,7 @@ async function sendClassStatsToUsers() {
   <ModalComponent
     v-if="successModalIsVisible"
     title="SUCCESS"
-    :message="'MINDBODY ID WAS SUCCESSFULLY UPDATED.'"
+    message="EMAILS SENT SUCCESSFULLY."
     :closable="false"
     @on-ok="successModalIsVisible = false"
     :cancel-text="null"
