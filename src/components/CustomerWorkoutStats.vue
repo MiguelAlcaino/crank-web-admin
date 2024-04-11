@@ -26,17 +26,21 @@ interface EnrollmentInfo {
 import { inject, onMounted, ref } from 'vue'
 import dayjs from 'dayjs'
 
+import { appStore } from '@/stores/appStorage'
+import type { ApiService } from '@/services/apiService'
+
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
-import ModalComponent from '@/components/ModalComponent.vue'
+
 import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIndicator.vue'
 import CustomerWorkoutSummaryModal from '@/components/CustomerWorkoutSummaryModal.vue'
-import type { ApiService } from '@/services/apiService'
-import { appStore } from '@/stores/appStorage'
+import ModalComponent from '@/components/ModalComponent.vue'
+import SendClassStatsToEmail from '@/components/SendClassStatsToEmail.vue'
 
 const apiService = inject<ApiService>('gqlApiService')!
 
 const props = defineProps<{
   userId: string
+  userEmail?: string | null
 }>()
 
 const isLoading = ref<boolean>(false)
@@ -87,6 +91,7 @@ async function getUserWorkoutStats() {
               <th>DURATION</th>
               <th>TOTAL ENERGY</th>
               <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -107,14 +112,22 @@ async function getUserWorkoutStats() {
                   :user-id="userId"
                 ></CustomerWorkoutSummaryModal>
               </td>
+              <td>
+                <SendClassStatsToEmail
+                  v-if="userEmail"
+                  :classId="item.enrollment.class.id"
+                  :userEmail="userEmail"
+                  :enrollmentId="item.enrollment.enrollmentInfo.id"
+                ></SendClassStatsToEmail>
+              </td>
             </tr>
             <tr v-if="classStats?.length === 0 && !isLoading">
-              <td colspan="6" class="text-center">
+              <td colspan="7" class="text-center">
                 <p>NO DATA AVAILABLE IN TABLE</p>
               </td>
             </tr>
             <tr v-if="isLoading">
-              <td colspan="6" class="text-center"><p>LOADING...</p></td>
+              <td colspan="7" class="text-center"><p>LOADING...</p></td>
             </tr>
           </tbody>
         </table>

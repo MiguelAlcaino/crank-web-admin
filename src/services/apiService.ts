@@ -32,6 +32,7 @@ import type {
   RoomLayout,
   RoomLayoutInput,
   RoomLayoutsInput,
+  SendClassStatsToEmailInput,
   SetRoomLayoutForClassSchedulesInput,
   SimpleSiteUser,
   SiteEnum,
@@ -94,6 +95,7 @@ export class ApiService {
             showAsDisabled
             maxCapacity
             isSubstitute
+            hasClassStats
           }
           roomLayout {
             id
@@ -1303,5 +1305,42 @@ export class ApiService {
     })
 
     return queryResult.data.userRankingInClass as UserInClassRanking
+  }
+
+  async sendClassStatsToUsers(classId: string): Promise<boolean> {
+    const query = gql`
+      mutation sendClassStatsToUsers($classId: ID!) {
+        sendClassStatsToUsers(classId: $classId)
+      }
+    `
+
+    const queryResult = await this.authApiClient.query({
+      query: query,
+      fetchPolicy: 'no-cache',
+      variables: {
+        classId: classId
+      }
+    })
+
+    return queryResult.data.sendClassStatsToUsers as boolean
+  }
+
+  async sendClassStatsToEmail(email: string, enrollmentId: string): Promise<boolean> {
+    const input = { email: email, enrollmentId: enrollmentId } as SendClassStatsToEmailInput
+
+    const query = gql`
+      mutation sendClassStatsToEmail($input: SendClassStatsToEmailInput!) {
+        sendClassStatsToEmail(input: $input)
+      }
+    `
+    const queryResult = await this.authApiClient.query({
+      query: query,
+      fetchPolicy: 'no-cache',
+      variables: {
+        input: input
+      }
+    })
+
+    return queryResult.data.sendClassStatsToEmail as boolean
   }
 }

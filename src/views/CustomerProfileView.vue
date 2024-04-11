@@ -225,7 +225,11 @@ async function goToLegacyView() {
   <hr />
   <div class="row">
     <div class="col-12">
-      <CustomerWorkoutStats v-if="userId" :user-id="userId"></CustomerWorkoutStats>
+      <CustomerWorkoutStats
+        v-if="userId"
+        :user-id="userId"
+        :user-email="identifiableUser?.user?.email"
+      ></CustomerWorkoutStats>
     </div>
   </div>
 

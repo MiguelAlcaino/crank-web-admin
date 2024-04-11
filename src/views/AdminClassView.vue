@@ -24,14 +24,14 @@ function availableSpotsChanged() {
 
 async function goBack() {
   if (goBackUrl.value) {
-    window.location.href = goBackUrl.value 
+    window.location.href = goBackUrl.value
   }
 }
 </script>
 
 <template>
   <div class="row">
-    <div class="col-lg-12">    
+    <div class="col-lg-12">
       <DefaultButtonComponent
         text="Go Back"
         @on-click="goBack()"
