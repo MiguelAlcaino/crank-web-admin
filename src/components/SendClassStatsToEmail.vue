@@ -43,7 +43,10 @@ async function onClickConfirm() {
     isLoading.value = true
 
     try {
-      const success = await apiService.sendClassStatsToEmail(sendEmailForm.email, props.enrollmentId)
+      const success = await apiService.sendClassStatsToEmail(
+        sendEmailForm.email,
+        props.enrollmentId
+      )
       if (success) {
         successModalIsVisible.value = true
       } else {
@@ -60,9 +63,9 @@ async function onClickConfirm() {
   }
 }
 
-function openModal(){
-    sendEmailForm.email = props.userEmail
-    modalIsVisible.value = true
+function openModal() {
+  sendEmailForm.email = props.userEmail
+  modalIsVisible.value = true
 }
 </script>
 
@@ -79,7 +82,7 @@ function openModal(){
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header border-0">
-              <h5 class="modal-title">Resend email</h5>   
+              <h5 class="modal-title">Resend email</h5>
             </div>
             <div class="modal-body">
               <div class="row">
