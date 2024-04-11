@@ -36,6 +36,7 @@ interface Class {
   showAsDisabled: boolean
   maxCapacity: number
   isSubstitute: boolean
+  hasClassStats: boolean
 }
 
 interface EnrollmentInfo {
@@ -120,6 +121,7 @@ import SetOnHoldSpots from '@/components/SetOnHoldSpots.vue'
 import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIndicator.vue'
 import UserProfile from '@/components/UserProfile.vue'
 import SyncClassButton from '@/components/SyncClassButton.vue'
+import SendClassStatsToUsers from '@/components/SendClassStatsToUsers.vue'
 
 import {
   ERROR_CLIENT_IS_OUTSIDE_SCHEDULING_WINDOW,
@@ -800,6 +802,15 @@ async function checkWaitlistIsEnable() {
             <small>Not Paid</small>
           </div>
         </div>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-12">
+        <SendClassStatsToUsers
+          v-if="classInfo?.class?.id && classInfo?.class?.hasClassStats"
+          :class-id="classInfo?.class?.id"
+        ></SendClassStatsToUsers>
       </div>
     </div>
   </div>
