@@ -151,6 +151,7 @@ export type Class = {
   bookingWindow: BookingWindow
   description: Scalars['String']
   duration: Scalars['Int']
+  hasClassStats: Scalars['Boolean']
   id: Scalars['ID']
   instructorName: Scalars['String']
   isSubstitute: Scalars['Boolean']
@@ -259,6 +260,15 @@ export type CurrentUserEnrollmentsParams = {
   enrollmentType?: InputMaybe<EnrollmentTypeEnum>
   startDate?: InputMaybe<Scalars['Date']>
 }
+
+export type DeleteCurrentUserAccountSuccess = {
+  __typename: 'DeleteCurrentUserAccountSuccess'
+  success: Scalars['Boolean']
+}
+
+export type DeleteCurrentUserAccountUnion =
+  | DeleteCurrentUserAccountSuccess
+  | UserPasswordDoesNotMatchError
 
 export type DeviceTokenInput = {
   deviceToken: Scalars['String']
@@ -436,7 +446,7 @@ export type Mutation = {
   /** Creates a new room layout */
   createRoomLayout: RoomLayout
   /** It deletes the current user's account */
-  deleteCurrentUserAccount?: Maybe<Scalars['Boolean']>
+  deleteCurrentUserAccount?: Maybe<DeleteCurrentUserAccountUnion>
   /** Removes a devices token */
   deleteDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']>
   /** Disables a spot in a class */
@@ -469,6 +479,10 @@ export type Mutation = {
   requestPasswordLink?: Maybe<ResetPasswordLinkResultUnion>
   /** Resets the current user's password */
   resetPasswordForCurrentUser?: Maybe<ResetPasswordForCurrentUserUnion>
+  /** Sends a single class stats to an email */
+  sendClassStatsToEmail?: Maybe<Scalars['Boolean']>
+  /** Sends the class stats to the users booked in a class */
+  sendClassStatsToUsers?: Maybe<Scalars['Boolean']>
   /** Sets a room layout for a list of class schedules */
   setRoomLayoutForClassSchedules: Array<ClassSchedule>
   /** Swaps a spot in a class */
@@ -602,6 +616,14 @@ export type MutationRequestPasswordLinkArgs = {
 
 export type MutationResetPasswordForCurrentUserArgs = {
   input?: InputMaybe<ResetPasswordForCurrentUserInput>
+}
+
+export type MutationSendClassStatsToEmailArgs = {
+  input: SendClassStatsToEmailInput
+}
+
+export type MutationSendClassStatsToUsersArgs = {
+  classId: Scalars['ID']
 }
 
 export type MutationSetRoomLayoutForClassSchedulesArgs = {
@@ -903,6 +925,11 @@ export type RoomLayoutsInput = {
   usersCapacity?: InputMaybe<Scalars['Int']>
 }
 
+export type SendClassStatsToEmailInput = {
+  email: Scalars['String']
+  enrollmentId: Scalars['ID']
+}
+
 export type SetRoomLayoutForClassSchedulesInput = {
   classSchedulesIds: Array<Scalars['ID']>
   roomLayoutId?: InputMaybe<Scalars['ID']>
@@ -1031,7 +1058,7 @@ export type UserAlreadyExistsError = Error & {
 export type UserInClassRanking = {
   __typename: 'UserInClassRanking'
   genderRanking?: Maybe<GenderRanking>
-  totalRanking: UserRanking
+  totalRanking?: Maybe<UserRanking>
 }
 
 export type UserInRankingParams = {
@@ -1056,6 +1083,11 @@ export type UserInput = {
   state?: InputMaybe<Scalars['String']>
   weight?: InputMaybe<Scalars['Float']>
   zipCode?: InputMaybe<Scalars['String']>
+}
+
+export type UserPasswordDoesNotMatchError = Error & {
+  __typename: 'UserPasswordDoesNotMatchError'
+  code: Scalars['String']
 }
 
 export type UserRanking = {
@@ -1120,6 +1152,7 @@ export type ClassInfoAdminQuery = {
       showAsDisabled: boolean
       maxCapacity: number
       isSubstitute: boolean
+      hasClassStats: boolean
     }
     roomLayout?: {
       __typename: 'RoomLayout'
@@ -1486,11 +1519,7 @@ export type GetUserQuery = {
       existsInSites: Array<SiteEnum>
       country: { __typename: 'Country'; code: string; name: string }
       state?: { __typename: 'State'; code: string; name: string } | null
-      siteUsers: Array<{
-        __typename: 'SimpleSiteUser'
-        externalUserId: string
-        site: SiteEnum
-      }>
+      siteUsers: Array<{ __typename: 'SimpleSiteUser'; externalUserId: string; site: SiteEnum }>
     } | null
   } | null
 }
@@ -1631,7 +1660,10 @@ export type RegisterUserMutationVariables = Exact<{
 
 export type RegisterUserMutation = {
   __typename: 'Mutation'
-  registerIdentifiableUser?: { __typename: 'IdentifiableSiteUser'; id?: string | null } | null
+  registerIdentifiableUser?: {
+    __typename: 'IdentifiableSiteUser'
+    identifiableUser?: { __typename: 'IdentifiableUser'; id?: string | null } | null
+  } | null
 }
 
 export type EditUserMutationVariables = Exact<{
@@ -1673,11 +1705,7 @@ export type GetUserSitesQuery = {
     id?: string | null
     user?: {
       __typename: 'User'
-      siteUsers: Array<{
-        __typename: 'SimpleSiteUser'
-        externalUserId: string
-        site: SiteEnum
-      }>
+      siteUsers: Array<{ __typename: 'SimpleSiteUser'; externalUserId: string; site: SiteEnum }>
     } | null
   } | null
 }
@@ -1723,8 +1751,8 @@ export type ClassSchedulesQuery = {
     id: string
     instructorName: string
     dayOfWeek: string
-    start: any
-    end: any
+    startWithNoTimeZone: any
+    endWithNoTimeZone: any
     type: string
     capacity: number
     roomLayout?: { __typename: 'RoomLayout'; id: string; name: string } | null
@@ -1823,11 +1851,11 @@ export type UserRankingInClassQuery = {
   __typename: 'Query'
   userRankingInClass?: {
     __typename: 'UserInClassRanking'
-    totalRanking: {
+    totalRanking?: {
       __typename: 'UserRanking'
       positionInRanking?: number | null
       totalMembersInRanking?: number | null
-    }
+    } | null
     genderRanking?: {
       __typename: 'GenderRanking'
       gender?: GenderEnum | null
@@ -1933,46 +1961,17 @@ export const ClassInfoAdminDocument = {
                     kind: 'SelectionSet',
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'name' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'description' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'instructorName' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'start' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'startWithNoTimeZone' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'duration' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'waitListAvailable' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'showAsDisabled' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'maxCapacity' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'isSubstitute' }
-                      }
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'instructorName' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'start' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'startWithNoTimeZone' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'duration' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'waitListAvailable' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'showAsDisabled' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'maxCapacity' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'isSubstitute' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'hasClassStats' } }
                     ]
                   }
                 },
@@ -1983,54 +1982,27 @@ export const ClassInfoAdminDocument = {
                     kind: 'SelectionSet',
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'name' }
-                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'matrix' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'x' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'y' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'icon' }
-                            },
+                            { kind: 'Field', name: { kind: 'Name', value: 'x' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'y' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'icon' } },
                             {
                               kind: 'InlineFragment',
                               typeCondition: {
                                 kind: 'NamedType',
-                                name: {
-                                  kind: 'Name',
-                                  value: 'BookableSpot'
-                                }
+                                name: { kind: 'Name', value: 'BookableSpot' }
                               },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: {
-                                      kind: 'Name',
-                                      value: 'enabled'
-                                    }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: {
-                                      kind: 'Name',
-                                      value: 'spotNumber'
-                                    }
-                                  }
+                                  { kind: 'Field', name: { kind: 'Name', value: 'enabled' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } }
                                 ]
                               }
                             }
@@ -2054,79 +2026,40 @@ export const ClassInfoAdminDocument = {
                     kind: 'SelectionSet',
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'enrollmentStatus' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'enrollmentDateTime' } },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'enrollmentStatus' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'enrollmentDateTime' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: {
-                          kind: 'Name',
-                          value: 'identifiableSiteUser'
-                        },
+                        name: { kind: 'Name', value: 'identifiableSiteUser' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'identifiableUser'
-                              },
+                              name: { kind: 'Name', value: 'identifiableUser' },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                                   {
                                     kind: 'Field',
-                                    name: {
-                                      kind: 'Name',
-                                      value: 'id'
-                                    }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: {
-                                      kind: 'Name',
-                                      value: 'user'
-                                    },
+                                    name: { kind: 'Name', value: 'user' },
                                     selectionSet: {
                                       kind: 'SelectionSet',
                                       selections: [
                                         {
                                           kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'firstName'
-                                          }
+                                          name: { kind: 'Name', value: 'firstName' }
                                         },
                                         {
                                           kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'lastName'
-                                          }
+                                          name: { kind: 'Name', value: 'lastName' }
                                         },
+                                        { kind: 'Field', name: { kind: 'Name', value: 'email' } },
                                         {
                                           kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'email'
-                                          }
-                                        },
-                                        {
-                                          kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'leaderboardUsername'
-                                          }
+                                          name: { kind: 'Name', value: 'leaderboardUsername' }
                                         }
                                       ]
                                     }
@@ -2146,27 +2079,9 @@ export const ClassInfoAdminDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'isCheckedIn'
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'spotNumber'
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'isBookedForFree'
-                              }
-                            }
+                            { kind: 'Field', name: { kind: 'Name', value: 'isCheckedIn' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'isBookedForFree' } }
                           ]
                         }
                       }
@@ -2193,10 +2108,7 @@ export const DisableSpotDocument = {
         {
           kind: 'VariableDefinition',
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NamedType',
-            name: { kind: 'Name', value: 'DisableEnableSpotInput' }
-          }
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'DisableEnableSpotInput' } }
         }
       ],
       selectionSet: {
@@ -2225,14 +2137,8 @@ export const DisableSpotDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: '__typename' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'result' }
-                      }
+                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'result' } }
                     ]
                   }
                 },
@@ -2245,10 +2151,7 @@ export const DisableSpotDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: '__typename' }
-                      },
+                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'code' } }
                     ]
                   }
@@ -2272,10 +2175,7 @@ export const EnableSpotDocument = {
         {
           kind: 'VariableDefinition',
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NamedType',
-            name: { kind: 'Name', value: 'DisableEnableSpotInput' }
-          }
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'DisableEnableSpotInput' } }
         }
       ],
       selectionSet: {
@@ -2304,14 +2204,8 @@ export const EnableSpotDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: '__typename' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'result' }
-                      }
+                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'result' } }
                     ]
                   }
                 },
@@ -2324,10 +2218,7 @@ export const EnableSpotDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: '__typename' }
-                      },
+                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'code' } }
                     ]
                   }
@@ -2397,24 +2288,9 @@ export const SearchSiteUserDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'firstName'
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'lastName'
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'email' }
-                            }
+                            { kind: 'Field', name: { kind: 'Name', value: 'firstName' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'lastName' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'email' } }
                           ]
                         }
                       }
@@ -2442,10 +2318,7 @@ export const BookUserIntoClassDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
           type: {
             kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'BookUserIntoClassInput' }
-            }
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'BookUserIntoClassInput' } }
           }
         }
       ],
@@ -2485,10 +2358,7 @@ export const RemoveUserFromClassDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
           type: {
             kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'CancelEnrollmentInput' }
-            }
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'CancelEnrollmentInput' } }
           }
         }
       ],
@@ -2558,14 +2428,8 @@ export const EditClassDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: '__typename' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'updated' }
-                      }
+                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'updated' } }
                     ]
                   }
                 }
@@ -2689,10 +2553,7 @@ export const RoomLayoutDocument = {
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'x' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'y' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'icon' }
-                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'icon' } },
                       {
                         kind: 'InlineFragment',
                         typeCondition: {
@@ -2702,13 +2563,7 @@ export const RoomLayoutDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'spotNumber'
-                              }
-                            }
+                            { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } }
                           ]
                         }
                       }
@@ -2744,10 +2599,7 @@ export const CreateRoomLayoutDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
           type: {
             kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'RoomLayoutInput' }
-            }
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'RoomLayoutInput' } }
           }
         }
       ],
@@ -2800,10 +2652,7 @@ export const EditRoomLayoutDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
           type: {
             kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'EditRoomLayoutInput' }
-            }
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'EditRoomLayoutInput' } }
           }
         }
       ],
@@ -2895,66 +2744,33 @@ export const ClassWaitlistEntriesDocument = {
                     kind: 'SelectionSet',
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'enrollmentStatus' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'enrollmentDateTime' } },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'enrollmentStatus' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'enrollmentDateTime' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: {
-                          kind: 'Name',
-                          value: 'identifiableSiteUser'
-                        },
+                        name: { kind: 'Name', value: 'identifiableSiteUser' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'identifiableUser'
-                              },
+                              name: { kind: 'Name', value: 'identifiableUser' },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                                   {
                                     kind: 'Field',
-                                    name: {
-                                      kind: 'Name',
-                                      value: 'id'
-                                    }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: {
-                                      kind: 'Name',
-                                      value: 'user'
-                                    },
+                                    name: { kind: 'Name', value: 'user' },
                                     selectionSet: {
                                       kind: 'SelectionSet',
                                       selections: [
                                         {
                                           kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'firstName'
-                                          }
+                                          name: { kind: 'Name', value: 'firstName' }
                                         },
-                                        {
-                                          kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'lastName'
-                                          }
-                                        }
+                                        { kind: 'Field', name: { kind: 'Name', value: 'lastName' } }
                                       ]
                                     }
                                   }
@@ -3019,12 +2835,7 @@ export const RemoveUserFromWaitlistDocument = {
                   },
                   selectionSet: {
                     kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'success' }
-                      }
-                    ]
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'success' } }]
                   }
                 },
                 {
@@ -3070,10 +2881,7 @@ export const CheckinUserInClassDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
           type: {
             kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'CheckinUserInClass' }
-            }
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'CheckinUserInClass' } }
           }
         }
       ],
@@ -3107,12 +2915,7 @@ export const CheckinUserInClassDocument = {
                   },
                   selectionSet: {
                     kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'success' }
-                      }
-                    ]
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'success' } }]
                   }
                 },
                 {
@@ -3155,10 +2958,7 @@ export const CheckoutUserInClassDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
           type: {
             kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'CheckoutUserInClass' }
-            }
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'CheckoutUserInClass' } }
           }
         }
       ],
@@ -3192,12 +2992,7 @@ export const CheckoutUserInClassDocument = {
                   },
                   selectionSet: {
                     kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'success' }
-                      }
-                    ]
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'success' } }]
                   }
                 },
                 {
@@ -3240,10 +3035,7 @@ export const EditEnrollmentDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
           type: {
             kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'EditEnrollmentInput' }
-            }
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'EditEnrollmentInput' } }
           }
         }
       ],
@@ -3271,18 +3063,10 @@ export const EditEnrollmentDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                 {
                   kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'Enrollment' }
-                  },
+                  typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Enrollment' } },
                   selectionSet: {
                     kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: '__typename' }
-                      }
-                    ]
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: '__typename' } }]
                   }
                 },
                 {
@@ -3311,10 +3095,7 @@ export const EditEnrollmentDocument = {
                   kind: 'InlineFragment',
                   typeCondition: {
                     kind: 'NamedType',
-                    name: {
-                      kind: 'Name',
-                      value: 'ClientIsOutsideSchedulingWindowError'
-                    }
+                    name: { kind: 'Name', value: 'ClientIsOutsideSchedulingWindowError' }
                   },
                   selectionSet: {
                     kind: 'SelectionSet',
@@ -3350,10 +3131,7 @@ export const SwapSpotDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
           type: {
             kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'EditEnrollmentInput' }
-            }
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'EditEnrollmentInput' } }
           }
         }
       ],
@@ -3387,12 +3165,7 @@ export const SwapSpotDocument = {
                   },
                   selectionSet: {
                     kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: '__typename' }
-                      }
-                    ]
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: '__typename' } }]
                   }
                 },
                 {
@@ -3404,10 +3177,7 @@ export const SwapSpotDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: '__typename' }
-                      },
+                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'code' } }
                     ]
                   }
@@ -3439,10 +3209,7 @@ export const GetCalendarClassesForListDocument = {
         {
           kind: 'VariableDefinition',
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'params' } },
-          type: {
-            kind: 'NamedType',
-            name: { kind: 'Name', value: 'CalendarClassesParams' }
-          }
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'CalendarClassesParams' } }
         }
       ],
       selectionSet: {
@@ -3468,16 +3235,10 @@ export const GetCalendarClassesForListDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'startWithNoTimeZone' }
-                },
+                { kind: 'Field', name: { kind: 'Name', value: 'startWithNoTimeZone' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'maxCapacity' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'totalBooked' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'totalUnderMaintenanceSpots' }
-                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalUnderMaintenanceSpots' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'showAsDisabled' } }
               ]
             }
@@ -3530,48 +3291,21 @@ export const GetUserDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'firstName' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'lastName' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'email' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'leaderboardUsername' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'weight' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'gender' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'birthdate' }
-                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'firstName' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'lastName' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'leaderboardUsername' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'gender' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'birthdate' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'country' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'code' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'name' }
-                            }
+                            { kind: 'Field', name: { kind: 'Name', value: 'code' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
                           ]
                         }
                       },
@@ -3581,83 +3315,32 @@ export const GetUserDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'code' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'name' }
-                            }
+                            { kind: 'Field', name: { kind: 'Name', value: 'code' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
                           ]
                         }
                       },
+                      { kind: 'Field', name: { kind: 'Name', value: 'city' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'address1' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'address2' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'zipCode' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'phone' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'emergencyContactName' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'emergencyContactPhone' } },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'city' }
+                        name: { kind: 'Name', value: 'emergencyContactRelationship' }
                       },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'address1' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'address2' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'zipCode' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'phone' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: {
-                          kind: 'Name',
-                          value: 'emergencyContactName'
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: {
-                          kind: 'Name',
-                          value: 'emergencyContactPhone'
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: {
-                          kind: 'Name',
-                          value: 'emergencyContactRelationship'
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'hideMetrics' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'existsInSites' }
-                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'hideMetrics' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'existsInSites' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'siteUsers' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'externalUserId'
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'site' }
-                            }
+                            { kind: 'Field', name: { kind: 'Name', value: 'externalUserId' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'site' } }
                           ]
                         }
                       }
@@ -3724,10 +3407,7 @@ export const ClassWaitlistIsEnabledDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'waitListAvailable' }
-                      }
+                      { kind: 'Field', name: { kind: 'Name', value: 'waitListAvailable' } }
                     ]
                   }
                 }
@@ -3779,10 +3459,7 @@ export const SyncClassDocument = {
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'classId' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'classId' }
-                }
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'classId' } }
               }
             ],
             selectionSet: {
@@ -3795,34 +3472,13 @@ export const SyncClassDocument = {
                     kind: 'SelectionSet',
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'name' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'description' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'instructorName' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'start' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'startWithNoTimeZone' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'duration' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'waitListAvailable' }
-                      }
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'instructorName' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'start' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'startWithNoTimeZone' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'duration' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'waitListAvailable' } }
                     ]
                   }
                 },
@@ -3833,54 +3489,27 @@ export const SyncClassDocument = {
                     kind: 'SelectionSet',
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'name' }
-                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'matrix' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'x' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'y' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'icon' }
-                            },
+                            { kind: 'Field', name: { kind: 'Name', value: 'x' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'y' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'icon' } },
                             {
                               kind: 'InlineFragment',
                               typeCondition: {
                                 kind: 'NamedType',
-                                name: {
-                                  kind: 'Name',
-                                  value: 'BookableSpot'
-                                }
+                                name: { kind: 'Name', value: 'BookableSpot' }
                               },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: {
-                                      kind: 'Name',
-                                      value: 'enabled'
-                                    }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: {
-                                      kind: 'Name',
-                                      value: 'spotNumber'
-                                    }
-                                  }
+                                  { kind: 'Field', name: { kind: 'Name', value: 'enabled' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } }
                                 ]
                               }
                             }
@@ -3904,79 +3533,40 @@ export const SyncClassDocument = {
                     kind: 'SelectionSet',
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'enrollmentStatus' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'enrollmentDateTime' } },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'enrollmentStatus' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'enrollmentDateTime' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: {
-                          kind: 'Name',
-                          value: 'identifiableSiteUser'
-                        },
+                        name: { kind: 'Name', value: 'identifiableSiteUser' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'identifiableUser'
-                              },
+                              name: { kind: 'Name', value: 'identifiableUser' },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                                   {
                                     kind: 'Field',
-                                    name: {
-                                      kind: 'Name',
-                                      value: 'id'
-                                    }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: {
-                                      kind: 'Name',
-                                      value: 'user'
-                                    },
+                                    name: { kind: 'Name', value: 'user' },
                                     selectionSet: {
                                       kind: 'SelectionSet',
                                       selections: [
                                         {
                                           kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'firstName'
-                                          }
+                                          name: { kind: 'Name', value: 'firstName' }
                                         },
                                         {
                                           kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'lastName'
-                                          }
+                                          name: { kind: 'Name', value: 'lastName' }
                                         },
+                                        { kind: 'Field', name: { kind: 'Name', value: 'email' } },
                                         {
                                           kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'email'
-                                          }
-                                        },
-                                        {
-                                          kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'leaderboardUsername'
-                                          }
+                                          name: { kind: 'Name', value: 'leaderboardUsername' }
                                         }
                                       ]
                                     }
@@ -3996,20 +3586,8 @@ export const SyncClassDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'isCheckedIn'
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'spotNumber'
-                              }
-                            }
+                            { kind: 'Field', name: { kind: 'Name', value: 'isCheckedIn' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } }
                           ]
                         }
                       }
@@ -4118,10 +3696,7 @@ export const CountryDocument = {
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'countryCode' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'countryCode' }
-                }
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'countryCode' } }
               }
             ],
             selectionSet: {
@@ -4135,10 +3710,7 @@ export const CountryDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'name' }
-                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'code' } }
                     ]
                   }
@@ -4172,10 +3744,7 @@ export const RegisterUserDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
           type: {
             kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'RegisterUserInput' }
-            }
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'RegisterUserInput' } }
           }
         }
       ],
@@ -4199,7 +3768,16 @@ export const RegisterUserDocument = {
             ],
             selectionSet: {
               kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }]
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'identifiableUser' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }]
+                  }
+                }
+              ]
             }
           }
         ]
@@ -4255,12 +3833,7 @@ export const EditUserDocument = {
                         name: { kind: 'Name', value: 'user' },
                         selectionSet: {
                           kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'email' }
-                            }
-                          ]
+                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'email' } }]
                         }
                       }
                     ]
@@ -4285,10 +3858,7 @@ export const RequestPasswordLinkDocument = {
         {
           kind: 'VariableDefinition',
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NamedType',
-            name: { kind: 'Name', value: 'RequestPasswordLinkInput' }
-          }
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'RequestPasswordLinkInput' } }
         }
       ],
       selectionSet: {
@@ -4311,18 +3881,12 @@ export const RequestPasswordLinkDocument = {
                   kind: 'InlineFragment',
                   typeCondition: {
                     kind: 'NamedType',
-                    name: {
-                      kind: 'Name',
-                      value: 'TooManyResetPasswordLinkRequestsError'
-                    }
+                    name: { kind: 'Name', value: 'TooManyResetPasswordLinkRequestsError' }
                   },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'availableAgainAt' }
-                      }
+                      { kind: 'Field', name: { kind: 'Name', value: 'availableAgainAt' } }
                     ]
                   }
                 },
@@ -4330,19 +3894,11 @@ export const RequestPasswordLinkDocument = {
                   kind: 'InlineFragment',
                   typeCondition: {
                     kind: 'NamedType',
-                    name: {
-                      kind: 'Name',
-                      value: 'ResetPasswordLinkSentSuccessfully'
-                    }
+                    name: { kind: 'Name', value: 'ResetPasswordLinkSentSuccessfully' }
                   },
                   selectionSet: {
                     kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'status' }
-                      }
-                    ]
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'status' } }]
                   }
                 }
               ]
@@ -4399,17 +3955,8 @@ export const GetUserSitesDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'externalUserId'
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'site' }
-                            }
+                            { kind: 'Field', name: { kind: 'Name', value: 'externalUserId' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'site' } }
                           ]
                         }
                       }
@@ -4472,12 +4019,7 @@ export const EditUserSitesDocument = {
                         name: { kind: 'Name', value: 'user' },
                         selectionSet: {
                           kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'email' }
-                            }
-                          ]
+                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'email' } }]
                         }
                       }
                     ]
@@ -4487,10 +4029,7 @@ export const EditUserSitesDocument = {
                   kind: 'InlineFragment',
                   typeCondition: {
                     kind: 'NamedType',
-                    name: {
-                      kind: 'Name',
-                      value: 'OtherUserHasThisExternalIdError'
-                    }
+                    name: { kind: 'Name', value: 'OtherUserHasThisExternalIdError' }
                   },
                   selectionSet: {
                     kind: 'SelectionSet',
@@ -4503,55 +4042,31 @@ export const EditUserSitesDocument = {
                           selections: [
                             {
                               kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'siteUserInfo'
-                              },
+                              name: { kind: 'Name', value: 'siteUserInfo' },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
                                   {
                                     kind: 'Field',
-                                    name: {
-                                      kind: 'Name',
-                                      value: 'externalUserId'
-                                    }
+                                    name: { kind: 'Name', value: 'externalUserId' }
                                   },
-                                  {
-                                    kind: 'Field',
-                                    name: {
-                                      kind: 'Name',
-                                      value: 'site'
-                                    }
-                                  }
+                                  { kind: 'Field', name: { kind: 'Name', value: 'site' } }
                                 ]
                               }
                             },
                             {
                               kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'identifiableUser'
-                              },
+                              name: { kind: 'Name', value: 'identifiableUser' },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
                                   {
                                     kind: 'Field',
-                                    name: {
-                                      kind: 'Name',
-                                      value: 'user'
-                                    },
+                                    name: { kind: 'Name', value: 'user' },
                                     selectionSet: {
                                       kind: 'SelectionSet',
                                       selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'email'
-                                          }
-                                        }
+                                        { kind: 'Field', name: { kind: 'Name', value: 'email' } }
                                       ]
                                     }
                                   }
@@ -4608,8 +4123,8 @@ export const ClassSchedulesDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'instructorName' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'dayOfWeek' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'start' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'end' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'startWithNoTimeZone' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'endWithNoTimeZone' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'type' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'capacity' } },
                 {
@@ -4716,14 +4231,8 @@ export const SetRoomLayoutForClassSchedulesDocument = {
                     kind: 'SelectionSet',
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'name' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'capacity' }
-                      }
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'capacity' } }
                     ]
                   }
                 },
@@ -4797,29 +4306,17 @@ export const UserWorkoutStatsDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                             {
                               kind: 'InlineFragment',
                               typeCondition: {
                                 kind: 'NamedType',
-                                name: {
-                                  kind: 'Name',
-                                  value: 'EnrollmentInfo'
-                                }
+                                name: { kind: 'Name', value: 'EnrollmentInfo' }
                               },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: {
-                                      kind: 'Name',
-                                      value: 'spotNumber'
-                                    }
-                                  }
+                                  { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } }
                                 ]
                               }
                             }
@@ -4832,25 +4329,10 @@ export const UserWorkoutStatsDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'name' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'start' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'duration'
-                              }
-                            }
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'start' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'duration' } }
                           ]
                         }
                       }
@@ -4893,10 +4375,7 @@ export const SingleWorkoutStatDocument = {
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'enrollmentId' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'enrollmentId' }
-                }
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'enrollmentId' } }
               }
             ],
             selectionSet: {
@@ -4914,29 +4393,17 @@ export const SingleWorkoutStatDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                             {
                               kind: 'InlineFragment',
                               typeCondition: {
                                 kind: 'NamedType',
-                                name: {
-                                  kind: 'Name',
-                                  value: 'EnrollmentInfo'
-                                }
+                                name: { kind: 'Name', value: 'EnrollmentInfo' }
                               },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: {
-                                      kind: 'Name',
-                                      value: 'spotNumber'
-                                    }
-                                  }
+                                  { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } }
                                 ]
                               }
                             }
@@ -4949,32 +4416,11 @@ export const SingleWorkoutStatDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'name' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'start' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'duration'
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'instructorName'
-                              }
-                            }
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'start' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'duration' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'instructorName' } }
                           ]
                         }
                       }
@@ -5001,15 +4447,9 @@ export const SingleWorkoutStatDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'time' }
-                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'time' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'rpm' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'power' }
-                      }
+                      { kind: 'Field', name: { kind: 'Name', value: 'power' } }
                     ]
                   }
                 }
@@ -5061,10 +4501,7 @@ export const UserRankingInClassDocument = {
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'classId' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'classId' }
-                }
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'classId' } }
               }
             ],
             selectionSet: {
@@ -5076,17 +4513,8 @@ export const UserRankingInClassDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'positionInRanking' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: {
-                          kind: 'Name',
-                          value: 'totalMembersInRanking'
-                        }
-                      }
+                      { kind: 'Field', name: { kind: 'Name', value: 'positionInRanking' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'totalMembersInRanking' } }
                     ]
                   }
                 },
@@ -5096,29 +4524,17 @@ export const UserRankingInClassDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'gender' }
-                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'gender' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'ranking' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'positionInRanking' } },
                             {
                               kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'positionInRanking'
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'totalMembersInRanking'
-                              }
+                              name: { kind: 'Name', value: 'totalMembersInRanking' }
                             }
                           ]
                         }
