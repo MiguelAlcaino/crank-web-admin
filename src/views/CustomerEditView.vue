@@ -112,7 +112,7 @@ const formData = reactive({
   emergencyContactPhone: '',
   emergencyContactRelationship: '',
   leaderboardUsername: '',
-  hideMetrics: false
+  joinTheLeaderboard: false
 })
 
 const rules = computed(() => {
@@ -170,7 +170,7 @@ const rules = computed(() => {
     leaderboardUsername: {
       required: helpers.withMessage('Leaderboard Nickname is required', required)
     },
-    hideMetrics: {
+    joinTheLeaderboard: {
       required: helpers.withMessage('Field is required', required)
     }
   }
@@ -230,8 +230,8 @@ async function getUser(): Promise<void> {
       )
       formData.emergencyContactRelationship = identifiableUser.user.emergencyContactRelationship!
       formData.leaderboardUsername = identifiableUser.user.leaderboardUsername!
-      formData.hideMetrics =
-        identifiableUser.user.hideMetrics !== null ? identifiableUser.user.hideMetrics! : false
+      formData.joinTheLeaderboard =
+        identifiableUser.user.hideMetrics !== null ? !(identifiableUser.user.hideMetrics!) : false
     }
   } catch (error) {
     console.error(error)
@@ -258,7 +258,7 @@ const submitForm = async () => {
       birthdate: dayjs(formData.birthdate).format('YYYY-MM-DD'),
       city: formData.cityState,
       country: formData.country,
-      hideMetrics: formData.hideMetrics,
+      hideMetrics: !formData.joinTheLeaderboard,
       emergencyContactName: formData.emergencyContactName,
       emergencyContactPhone: formData.emergencyContactPhone,
       emergencyContactRelationship: formData.emergencyContactRelationship,
@@ -329,14 +329,14 @@ function onChangeCountry() {
           <input
             type="checkbox"
             class="custom-control-input"
-            v-model="formData.hideMetrics"
-            id="hideMetricsMyProfile"
+            v-model="formData.joinTheLeaderboard"
+            id="joinTheLeaderboardMyProfile"
           />
-          <label class="custom-control-label" for="hideMetricsMyProfile"
+          <label class="custom-control-label" for="joinTheLeaderboardMyProfile"
             >Join the Leaderboard?</label
           >
           <small
-            v-for="error in v$.hideMetrics.$errors"
+            v-for="error in v$.joinTheLeaderboard.$errors"
             :key="error.$uid"
             class="form-text"
             style="color: red"
