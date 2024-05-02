@@ -6,9 +6,11 @@ import CalendarList from '@/components/CalendarList.vue'
 import DefaultButtonComponent from '@/components/DefaultButtonComponent.vue'
 
 const goBackUrl = ref<string | undefined | null>(undefined)
+const editCustomerProfileUrl = ref<string | undefined | null>(undefined)
 
 onMounted(() => {
   goBackUrl.value = inject<string | undefined | null>('goBackUrl')
+  editCustomerProfileUrl.value = inject<string | undefined | null>('editCustomerProfileUrl')
 })
 
 const classId = ref<string | null>(null)
@@ -51,6 +53,7 @@ async function goBack() {
       <ClassDetails
         :class-id="classId"
         @available-spots-changed="availableSpotsChanged"
+        :edit-customer-profile-url="editCustomerProfileUrl"
       ></ClassDetails>
     </div>
   </div>

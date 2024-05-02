@@ -136,6 +136,7 @@ import { Role } from '@/utils/userRoles'
 
 const props = defineProps<{
   classId: string | null
+  editCustomerProfileUrl?: string | null
 }>()
 
 const emits = defineEmits<{
@@ -629,6 +630,7 @@ async function checkWaitlistIsEnable() {
         :user-can-check-in-check-out="
           userCanCheckInCheckOut && classInfo?.class?.showAsDisabled === false
         "
+        :edit-customer-profile-url="editCustomerProfileUrl"
       >
       </AdminBookedUsersList>
 
@@ -767,6 +769,7 @@ async function checkWaitlistIsEnable() {
         :user-id="selectedSpot.identifiableUser?.id"
         :enrollment-id="selectedSpot.enrollmentId"
         :class-id="classId"
+        :edit-customer-profile-url="editCustomerProfileUrl"
       ></UserProfile>
 
       <div v-if="userCanModifyClass && spotAction === SpotActionEnum.asignUserToSpot">

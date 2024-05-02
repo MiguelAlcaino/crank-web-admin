@@ -147,7 +147,8 @@ export const startCalendarApp = async function (
   token: string,
   site: string,
   appDiv: string,
-  goBackUrl?: string | null | undefined
+  goBackUrl?: string | null | undefined,
+  editCustomerProfileUrl?: string | null | undefined
 ) {
   const app = createApp({
     setup() {
@@ -156,6 +157,7 @@ export const startCalendarApp = async function (
         new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
       )
       provide('goBackUrl', goBackUrl)
+      provide('editCustomerProfileUrl', editCustomerProfileUrl)
     },
     render: () => h(AdminClassView)
   })

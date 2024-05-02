@@ -63,12 +63,14 @@ const props = defineProps<{
   userId: string
   classId?: string | null
   enrollmentId?: string | null
+  editCustomerProfileUrl?: string | null
 }>()
 
 const isLoading = ref<boolean>(false)
 const modalIsVisible = ref<boolean>(false)
 const errorModalIsVisible = ref<boolean>(false)
 const identifiableUser = ref<IdentifiableUser | null>(null)
+const editCustomerProfileUrl = ref<string | null | undefined>(props.editCustomerProfileUrl)
 
 function onClickViewProfile() {
   getUser(props.userId)
@@ -79,6 +81,10 @@ async function getUser(userId: string) {
   try {
     isLoading.value = true
     identifiableUser.value = (await apiService.getUser(userId)) as IdentifiableUser
+
+    if (editCustomerProfileUrl.value) {
+      editCustomerProfileUrl.value = props.editCustomerProfileUrl!.replace('REPLACE_ID', userId)
+    }
   } catch (error) {
     errorModalIsVisible.value = true
   } finally {
@@ -236,6 +242,7 @@ async function getUser(userId: string) {
                   </div>
                 </div>
               </div>
+
               <hr />
               <CustomerWorkoutSummary
                 v-if="userId && classId && enrollmentId"
@@ -245,6 +252,14 @@ async function getUser(userId: string) {
               ></CustomerWorkoutSummary>
             </div>
             <div class="modal-footer border-0">
+              <a
+                v-if="editCustomerProfileUrl && isLoading === false"
+                :href="editCustomerProfileUrl"
+                class="btn btn-primary"
+              >
+                Edit Profile
+              </a>
+
               <DefaultButtonComponent
                 text="Close"
                 type="button"

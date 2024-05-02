@@ -35,6 +35,7 @@ interface Props {
   isLoading: boolean
   showEditOptions?: boolean
   userCanCheckInCheckOut: boolean
+  editCustomerProfileUrl?: string | null
 }
 </script>
 
@@ -135,6 +136,7 @@ async function removeUserFromClass(enrollmentId: string, lateCancel: boolean) {
             <UserProfile
               v-if="item.identifiableSiteUser?.identifiableUser?.id"
               :user-id="item.identifiableSiteUser?.identifiableUser?.id"
+              :edit-customer-profile-url="editCustomerProfileUrl"
             ></UserProfile>
           </td>
           <td>
