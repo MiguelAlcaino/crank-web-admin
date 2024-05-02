@@ -10601,7 +10601,7 @@ const J$ = (A) => {
     return n;
   };
   return t(A, 0);
-}, A3 = ti("AsyncFunction"), e3 = (A) => A && (Eu(A) || br(A)) && br(A.then) && br(A.catch), ee = {
+}, AE = ti("AsyncFunction"), eE = (A) => A && (Eu(A) || br(A)) && br(A.then) && br(A.catch), ee = {
   isArray: to,
   isArrayBuffer: N1,
   isBuffer: w$,
@@ -10651,8 +10651,8 @@ const J$ = (A) => {
   generateString: K$,
   isSpecCompliantForm: Z$,
   toJSONObject: J$,
-  isAsyncFn: A3,
-  isThenable: e3
+  isAsyncFn: AE,
+  isThenable: eE
 };
 function pt(A, e, t, n, a) {
   Error.call(this), Error.captureStackTrace ? Error.captureStackTrace(this, this.constructor) : this.stack = new Error().stack, this.message = A, this.name = "AxiosError", e && (this.code = e), t && (this.config = t), n && (this.request = n), a && (this.response = a);
@@ -10699,7 +10699,7 @@ pt.from = (A, e, t, n, a, s) => {
     return p !== Error.prototype;
   }, (f) => f !== "isAxiosError"), pt.call(l, A.message, e, t, n, a), l.cause = A, l.name = A.name, s && Object.assign(l, s), l;
 };
-const t3 = null;
+const tE = null;
 function Ph(A) {
   return ee.isPlainObject(A) || ee.isArray(A);
 }
@@ -10711,10 +10711,10 @@ function qm(A, e, t) {
     return a = U1(a), !t && s ? "[" + a + "]" : a;
   }).join(t ? "." : "") : e;
 }
-function n3(A) {
+function nE(A) {
   return ee.isArray(A) && !A.some(Ph);
 }
-const r3 = ee.toFlatObject(ee, {}, null, function(e) {
+const rE = ee.toFlatObject(ee, {}, null, function(e) {
   return /^is[A-Z]/.test(e);
 });
 function Du(A, e, t) {
@@ -10744,7 +10744,7 @@ function Du(A, e, t) {
     if (I && !B && typeof I == "object") {
       if (ee.endsWith(O, "{}"))
         O = n ? O : O.slice(0, -2), I = JSON.stringify(I);
-      else if (ee.isArray(I) && n3(I) || (ee.isFileList(I) || ee.endsWith(O, "[]")) && (N = ee.toArray(I)))
+      else if (ee.isArray(I) && nE(I) || (ee.isFileList(I) || ee.endsWith(O, "[]")) && (N = ee.toArray(I)))
         return O = U1(O), N.forEach(function(M, Y) {
           !(ee.isUndefined(M) || M === null) && e.append(
             l === !0 ? qm([O], Y, s) : l === null ? O : O + "[]",
@@ -10754,7 +10754,7 @@ function Du(A, e, t) {
     }
     return Ph(I) ? !0 : (e.append(qm(B, O, s), h(I)), !1);
   }
-  const y = [], C = Object.assign(r3, {
+  const y = [], C = Object.assign(rE, {
     defaultVisitor: m,
     convertValue: h,
     isVisitable: Ph
@@ -10807,13 +10807,13 @@ j1.toString = function(e) {
     return t(a[0]) + "=" + t(a[1]);
   }, "").join("&");
 };
-function i3(A) {
+function iE(A) {
   return encodeURIComponent(A).replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");
 }
 function z1(A, e, t) {
   if (!e)
     return A;
-  const n = t && t.encode || i3, a = t && t.serialize;
+  const n = t && t.encode || iE, a = t && t.serialize;
   let s;
   if (a ? s = a(e, t) : s = ee.isURLSearchParams(e) ? e.toString() : new gg(e, t).toString(n), s) {
     const l = A.indexOf("#");
@@ -10821,7 +10821,7 @@ function z1(A, e, t) {
   }
   return A;
 }
-class a3 {
+class aE {
   constructor() {
     this.handlers = [];
   }
@@ -10845,35 +10845,35 @@ class a3 {
     });
   }
 }
-const Km = a3, W1 = {
+const Km = aE, W1 = {
   silentJSONParsing: !0,
   forcedJSONParsing: !0,
   clarifyTimeoutError: !1
-}, s3 = typeof URLSearchParams < "u" ? URLSearchParams : gg, o3 = typeof FormData < "u" ? FormData : null, l3 = typeof Blob < "u" ? Blob : null, c3 = (() => {
+}, sE = typeof URLSearchParams < "u" ? URLSearchParams : gg, oE = typeof FormData < "u" ? FormData : null, lE = typeof Blob < "u" ? Blob : null, cE = (() => {
   let A;
   return typeof navigator < "u" && ((A = navigator.product) === "ReactNative" || A === "NativeScript" || A === "NS") ? !1 : typeof window < "u" && typeof document < "u";
-})(), u3 = (() => typeof WorkerGlobalScope < "u" && self instanceof WorkerGlobalScope && typeof self.importScripts == "function")(), Xr = {
+})(), uE = (() => typeof WorkerGlobalScope < "u" && self instanceof WorkerGlobalScope && typeof self.importScripts == "function")(), Xr = {
   isBrowser: !0,
   classes: {
-    URLSearchParams: s3,
-    FormData: o3,
-    Blob: l3
+    URLSearchParams: sE,
+    FormData: oE,
+    Blob: lE
   },
-  isStandardBrowserEnv: c3,
-  isStandardBrowserWebWorkerEnv: u3,
+  isStandardBrowserEnv: cE,
+  isStandardBrowserWebWorkerEnv: uE,
   protocols: ["http", "https", "file", "blob", "url", "data"]
 };
-function d3(A, e) {
+function dE(A, e) {
   return Du(A, new Xr.classes.URLSearchParams(), Object.assign({
     visitor: function(t, n, a, s) {
       return Xr.isNode && ee.isBuffer(t) ? (this.append(n, t.toString("base64")), !1) : s.defaultVisitor.apply(this, arguments);
     }
   }, e));
 }
-function h3(A) {
+function hE(A) {
   return ee.matchAll(/\w+|\[(\w*)]/g, A).map((e) => e[0] === "[]" ? "" : e[1] || e[0]);
 }
-function f3(A) {
+function fE(A) {
   const e = {}, t = Object.keys(A);
   let n;
   const a = t.length;
@@ -10886,17 +10886,17 @@ function X1(A) {
   function e(t, n, a, s) {
     let l = t[s++];
     const f = Number.isFinite(+l), p = s >= t.length;
-    return l = !l && ee.isArray(a) ? a.length : l, p ? (ee.hasOwnProp(a, l) ? a[l] = [a[l], n] : a[l] = n, !f) : ((!a[l] || !ee.isObject(a[l])) && (a[l] = []), e(t, n, a[l], s) && ee.isArray(a[l]) && (a[l] = f3(a[l])), !f);
+    return l = !l && ee.isArray(a) ? a.length : l, p ? (ee.hasOwnProp(a, l) ? a[l] = [a[l], n] : a[l] = n, !f) : ((!a[l] || !ee.isObject(a[l])) && (a[l] = []), e(t, n, a[l], s) && ee.isArray(a[l]) && (a[l] = fE(a[l])), !f);
   }
   if (ee.isFormData(A) && ee.isFunction(A.entries)) {
     const t = {};
     return ee.forEachEntry(A, (n, a) => {
-      e(h3(n), a, t, 0);
+      e(hE(n), a, t, 0);
     }), t;
   }
   return null;
 }
-function g3(A, e, t) {
+function gE(A, e, t) {
   if (ee.isString(A))
     try {
       return (e || JSON.parse)(A), ee.trim(A);
@@ -10922,7 +10922,7 @@ const pg = {
     let f;
     if (s) {
       if (n.indexOf("application/x-www-form-urlencoded") > -1)
-        return d3(e, this.formSerializer).toString();
+        return dE(e, this.formSerializer).toString();
       if ((f = ee.isFileList(e)) || n.indexOf("multipart/form-data") > -1) {
         const p = this.env && this.env.FormData;
         return Du(
@@ -10932,7 +10932,7 @@ const pg = {
         );
       }
     }
-    return s || a ? (t.setContentType("application/json", !1), g3(e)) : e;
+    return s || a ? (t.setContentType("application/json", !1), gE(e)) : e;
   }],
   transformResponse: [function(e) {
     const t = this.transitional || pg.transitional, n = t && t.forcedJSONParsing, a = this.responseType === "json";
@@ -10969,7 +10969,7 @@ const pg = {
 ee.forEach(["delete", "get", "head", "post", "put", "patch"], (A) => {
   pg.headers[A] = {};
 });
-const mg = pg, p3 = ee.toObjectSet([
+const mg = pg, pE = ee.toObjectSet([
   "age",
   "authorization",
   "content-length",
@@ -10987,12 +10987,12 @@ const mg = pg, p3 = ee.toObjectSet([
   "referer",
   "retry-after",
   "user-agent"
-]), m3 = (A) => {
+]), mE = (A) => {
   const e = {};
   let t, n, a;
   return A && A.split(`
 `).forEach(function(l) {
-    a = l.indexOf(":"), t = l.substring(0, a).trim().toLowerCase(), n = l.substring(a + 1).trim(), !(!t || e[t] && p3[t]) && (t === "set-cookie" ? e[t] ? e[t].push(n) : e[t] = [n] : e[t] = e[t] ? e[t] + ", " + n : n);
+    a = l.indexOf(":"), t = l.substring(0, a).trim().toLowerCase(), n = l.substring(a + 1).trim(), !(!t || e[t] && pE[t]) && (t === "set-cookie" ? e[t] ? e[t].push(n) : e[t] = [n] : e[t] = e[t] ? e[t] + ", " + n : n);
   }), e;
 }, Zm = Symbol("internals");
 function uo(A) {
@@ -11001,14 +11001,14 @@ function uo(A) {
 function cc(A) {
   return A === !1 || A == null ? A : ee.isArray(A) ? A.map(cc) : String(A);
 }
-function v3(A) {
+function vE(A) {
   const e = /* @__PURE__ */ Object.create(null), t = /([^\s,;=]+)\s*(?:=\s*([^,;]+))?/g;
   let n;
   for (; n = t.exec(A); )
     e[n[1]] = n[2];
   return e;
 }
-const y3 = (A) => /^[-_a-zA-Z0-9^`|~,!#$%&'*+.]+$/.test(A.trim());
+const yE = (A) => /^[-_a-zA-Z0-9^`|~,!#$%&'*+.]+$/.test(A.trim());
 function dd(A, e, t, n, a) {
   if (ee.isFunction(n))
     return n.call(this, e, t);
@@ -11019,10 +11019,10 @@ function dd(A, e, t, n, a) {
       return n.test(e);
   }
 }
-function b3(A) {
+function bE(A) {
   return A.trim().toLowerCase().replace(/([a-z\d])(\w*)/g, (e, t, n) => t.toUpperCase() + n);
 }
-function x3(A, e) {
+function xE(A, e) {
   const t = ee.toCamelCase(" " + e);
   ["get", "set", "has"].forEach((n) => {
     Object.defineProperty(A, n + t, {
@@ -11047,7 +11047,7 @@ class Pu {
       (!y || a[y] === void 0 || h === !0 || h === void 0 && a[y] !== !1) && (a[y || p] = cc(f));
     }
     const l = (f, p) => ee.forEach(f, (h, m) => s(h, m, p));
-    return ee.isPlainObject(e) || e instanceof this.constructor ? l(e, t) : ee.isString(e) && (e = e.trim()) && !y3(e) ? l(m3(e), t) : e != null && s(t, e, n), this;
+    return ee.isPlainObject(e) || e instanceof this.constructor ? l(e, t) : ee.isString(e) && (e = e.trim()) && !yE(e) ? l(mE(e), t) : e != null && s(t, e, n), this;
   }
   get(e, t) {
     if (e = uo(e), e) {
@@ -11057,7 +11057,7 @@ class Pu {
         if (!t)
           return a;
         if (t === !0)
-          return v3(a);
+          return vE(a);
         if (ee.isFunction(t))
           return t.call(this, a, n);
         if (ee.isRegExp(t))
@@ -11101,7 +11101,7 @@ class Pu {
         t[l] = cc(a), delete t[s];
         return;
       }
-      const f = e ? b3(s) : String(s).trim();
+      const f = e ? bE(s) : String(s).trim();
       f !== s && delete t[s], t[f] = cc(a), n[f] = !0;
     }), this;
   }
@@ -11137,7 +11137,7 @@ class Pu {
     }).accessors, a = this.prototype;
     function s(l) {
       const f = uo(l);
-      n[f] || (x3(a, l), n[f] = !0);
+      n[f] || (xE(a, l), n[f] = !0);
     }
     return ee.isArray(e) ? e.forEach(s) : s(e), this;
   }
@@ -11170,7 +11170,7 @@ function Sl(A, e, t) {
 ee.inherits(Sl, pt, {
   __CANCEL__: !0
 });
-function C3(A, e, t) {
+function CE(A, e, t) {
   const n = t.config.validateStatus;
   !t.status || !n || n(t.status) ? A(t) : e(new pt(
     "Request failed with status code " + t.status,
@@ -11180,7 +11180,7 @@ function C3(A, e, t) {
     t
   ));
 }
-const w3 = Xr.isStandardBrowserEnv ? function() {
+const wE = Xr.isStandardBrowserEnv ? function() {
   return {
     write: function(t, n, a, s, l, f) {
       const p = [];
@@ -11205,16 +11205,16 @@ const w3 = Xr.isStandardBrowserEnv ? function() {
     }
   };
 }();
-function I3(A) {
+function IE(A) {
   return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(A);
 }
-function k3(A, e) {
+function kE(A, e) {
   return e ? A.replace(/\/+$/, "") + "/" + e.replace(/^\/+/, "") : A;
 }
 function q1(A, e) {
-  return A && !I3(e) ? k3(A, e) : e;
+  return A && !IE(e) ? kE(A, e) : e;
 }
-const _3 = Xr.isStandardBrowserEnv ? function() {
+const _E = Xr.isStandardBrowserEnv ? function() {
   const e = /(msie|trident)/i.test(navigator.userAgent), t = document.createElement("a");
   let n;
   function a(s) {
@@ -11239,11 +11239,11 @@ const _3 = Xr.isStandardBrowserEnv ? function() {
     return !0;
   };
 }();
-function S3(A) {
+function SE(A) {
   const e = /^([-+\w]{1,25})(:?\/\/|:)/.exec(A);
   return e && e[1] || "";
 }
-function $3(A, e) {
+function $E(A, e) {
   A = A || 10;
   const t = new Array(A), n = new Array(A);
   let a = 0, s = 0, l;
@@ -11261,7 +11261,7 @@ function $3(A, e) {
 }
 function Jm(A, e) {
   let t = 0;
-  const n = $3(50, 250);
+  const n = $E(50, 250);
   return (a) => {
     const s = a.loaded, l = a.lengthComputable ? a.total : void 0, f = s - t, p = n(f), h = s <= l;
     t = s;
@@ -11277,7 +11277,7 @@ function Jm(A, e) {
     m[e ? "download" : "upload"] = !0, A(m);
   };
 }
-const E3 = typeof XMLHttpRequest < "u", D3 = E3 && function(A) {
+const EE = typeof XMLHttpRequest < "u", DE = EE && function(A) {
   return new Promise(function(t, n) {
     let a = A.data;
     const s = pi.from(A.headers).normalize(), l = A.responseType;
@@ -11307,7 +11307,7 @@ const E3 = typeof XMLHttpRequest < "u", D3 = E3 && function(A) {
         config: A,
         request: m
       };
-      C3(function(E) {
+      CE(function(E) {
         t(E), p();
       }, function(E) {
         n(E), p();
@@ -11329,7 +11329,7 @@ const E3 = typeof XMLHttpRequest < "u", D3 = E3 && function(A) {
         m
       )), m = null;
     }, Xr.isStandardBrowserEnv) {
-      const I = (A.withCredentials || _3(y)) && A.xsrfCookieName && w3.read(A.xsrfCookieName);
+      const I = (A.withCredentials || _E(y)) && A.xsrfCookieName && wE.read(A.xsrfCookieName);
       I && s.set(A.xsrfHeaderName, I);
     }
     a === void 0 && s.setContentType(null), "setRequestHeader" in m && ee.forEach(s.toJSON(), function(O, B) {
@@ -11337,7 +11337,7 @@ const E3 = typeof XMLHttpRequest < "u", D3 = E3 && function(A) {
     }), ee.isUndefined(A.withCredentials) || (m.withCredentials = !!A.withCredentials), l && l !== "json" && (m.responseType = A.responseType), typeof A.onDownloadProgress == "function" && m.addEventListener("progress", Jm(A.onDownloadProgress, !0)), typeof A.onUploadProgress == "function" && m.upload && m.upload.addEventListener("progress", Jm(A.onUploadProgress)), (A.cancelToken || A.signal) && (f = (I) => {
       !m || (n(!I || I.type ? new Sl(null, A, m) : I), m.abort(), m = null);
     }, A.cancelToken && A.cancelToken.subscribe(f), A.signal && (A.signal.aborted ? f() : A.signal.addEventListener("abort", f)));
-    const S = S3(y);
+    const S = SE(y);
     if (S && Xr.protocols.indexOf(S) === -1) {
       n(new pt("Unsupported protocol " + S + ":", pt.ERR_BAD_REQUEST, A));
       return;
@@ -11345,8 +11345,8 @@ const E3 = typeof XMLHttpRequest < "u", D3 = E3 && function(A) {
     m.send(a || null);
   });
 }, Oh = {
-  http: t3,
-  xhr: D3
+  http: tE,
+  xhr: DE
 };
 ee.forEach(Oh, (A, e) => {
   if (A) {
@@ -11357,7 +11357,7 @@ ee.forEach(Oh, (A, e) => {
     Object.defineProperty(A, "adapterName", { value: e });
   }
 });
-const Av = (A) => `- ${A}`, P3 = (A) => ee.isFunction(A) || A === null || A === !1, Q1 = {
+const Av = (A) => `- ${A}`, PE = (A) => ee.isFunction(A) || A === null || A === !1, Q1 = {
   getAdapter: (A) => {
     A = ee.isArray(A) ? A : [A];
     const { length: e } = A;
@@ -11366,7 +11366,7 @@ const Av = (A) => `- ${A}`, P3 = (A) => ee.isFunction(A) || A === null || A === 
     for (let s = 0; s < e; s++) {
       t = A[s];
       let l;
-      if (n = t, !P3(t) && (n = Oh[(l = String(t)).toLowerCase()], n === void 0))
+      if (n = t, !PE(t) && (n = Oh[(l = String(t)).toLowerCase()], n === void 0))
         throw new pt(`Unknown adapter '${l}'`);
       if (n)
         break;
@@ -11501,7 +11501,7 @@ vg.transitional = function(e, t, n) {
     )), e ? e(s, l, f) : !0;
   };
 };
-function O3(A, e, t) {
+function OE(A, e, t) {
   if (typeof A != "object")
     throw new pt("options must be an object", pt.ERR_BAD_OPTION_VALUE);
   const n = Object.keys(A);
@@ -11519,7 +11519,7 @@ function O3(A, e, t) {
   }
 }
 const Th = {
-  assertOptions: O3,
+  assertOptions: OE,
   validators: vg
 }, Ei = Th.validators;
 class Vc {
@@ -11674,13 +11674,13 @@ class yg {
     };
   }
 }
-const T3 = yg;
-function N3(A) {
+const TE = yg;
+function NE(A) {
   return function(t) {
     return A.apply(null, t);
   };
 }
-function M3(A) {
+function ME(A) {
   return ee.isObject(A) && A.isAxiosError === !0;
 }
 const Nh = {
@@ -11751,7 +11751,7 @@ const Nh = {
 Object.entries(Nh).forEach(([A, e]) => {
   Nh[e] = A;
 });
-const R3 = Nh;
+const RE = Nh;
 function Z1(A) {
   const e = new uc(A), t = T1(uc.prototype.request, e);
   return ee.extend(t, uc.prototype, e, { allOwnKeys: !0 }), ee.extend(t, e, null, { allOwnKeys: !0 }), t.create = function(a) {
@@ -11761,7 +11761,7 @@ function Z1(A) {
 const fn = Z1(mg);
 fn.Axios = uc;
 fn.CanceledError = Sl;
-fn.CancelToken = T3;
+fn.CancelToken = TE;
 fn.isCancel = G1;
 fn.VERSION = K1;
 fn.toFormData = Du;
@@ -11770,17 +11770,17 @@ fn.Cancel = fn.CanceledError;
 fn.all = function(e) {
   return Promise.all(e);
 };
-fn.spread = N3;
-fn.isAxiosError = M3;
+fn.spread = NE;
+fn.isAxiosError = ME;
 fn.mergeConfig = Vs;
 fn.AxiosHeaders = pi;
 fn.formToJSON = (A) => X1(ee.isHTMLForm(A) ? new FormData(A) : A);
 fn.getAdapter = Q1.getAdapter;
-fn.HttpStatusCode = R3;
+fn.HttpStatusCode = RE;
 fn.default = fn;
 const dc = fn, {
   Axios: VW,
-  AxiosError: L3,
+  AxiosError: LE,
   CanceledError: BW,
   isCancel: YW,
   CancelToken: HW,
@@ -11796,7 +11796,7 @@ const dc = fn, {
   getAdapter: ZW,
   mergeConfig: JW
 } = dc;
-class F3 extends Error {
+class FE extends Error {
 }
 function Mh(A) {
   this.message = A;
@@ -11810,7 +11810,7 @@ var rv = typeof window < "u" && window.atob && window.atob.bind(window) || funct
     n = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".indexOf(n);
   return l;
 };
-function V3(A) {
+function VE(A) {
   var e = A.replace(/-/g, "+").replace(/_/g, "/");
   switch (e.length % 4) {
     case 0:
@@ -11843,7 +11843,7 @@ function gd(A, e) {
     throw new Bc("Invalid token specified");
   var t = (e = e || {}).header === !0 ? 0 : 1;
   try {
-    return JSON.parse(V3(A.split(".")[t]));
+    return JSON.parse(VE(A.split(".")[t]));
   } catch (n) {
     throw new Bc("Invalid token specified: " + n.message);
   }
@@ -11868,7 +11868,7 @@ const Oa = {
       )).data.token;
       a && (Cn().setSession(a), vt().setSite(t), this.startRefreshTokenTimer());
     } catch {
-      throw new F3();
+      throw new FE();
     }
   },
   startRefreshTokenTimer() {
@@ -11898,7 +11898,7 @@ const Oa = {
       );
       return Cn().setSession(s.data.token), "success";
     } catch (s) {
-      return s instanceof L3 && ((e = s.response) == null ? void 0 : e.data) && ((t = s.response) == null ? void 0 : t.data.status) && ((n = s.response) == null ? void 0 : n.data.status) === "error" ? (a = s.response) == null ? void 0 : a.data.code : "unknown_error";
+      return s instanceof LE && ((e = s.response) == null ? void 0 : e.data) && ((t = s.response) == null ? void 0 : t.data.status) && ((n = s.response) == null ? void 0 : n.data.status) === "error" ? (a = s.response) == null ? void 0 : a.data.code : "unknown_error";
     }
   },
   userHasRole(A) {
@@ -11920,29 +11920,29 @@ const Oa = {
     }
     return [];
   }
-}, B3 = /* @__PURE__ */ D("h1", null, "Room Layouts", -1), Y3 = { class: "row" }, H3 = { class: "col-12 text-right" }, U3 = /* @__PURE__ */ D("br", null, null, -1), j3 = { class: "row" }, z3 = { class: "col-12" }, W3 = { class: "table" }, X3 = /* @__PURE__ */ D("thead", null, [
+}, BE = /* @__PURE__ */ D("h1", null, "Room Layouts", -1), YE = { class: "row" }, HE = { class: "col-12 text-right" }, UE = /* @__PURE__ */ D("br", null, null, -1), jE = { class: "row" }, zE = { class: "col-12" }, WE = { class: "table" }, XE = /* @__PURE__ */ D("thead", null, [
   /* @__PURE__ */ D("tr", null, [
     /* @__PURE__ */ D("th", { class: "text-center" }, "ROOM NAME"),
     /* @__PURE__ */ D("th", { class: "text-center" }, "EDIT"),
     /* @__PURE__ */ D("th", { class: "text-center" }, "DELETE")
   ])
-], -1), G3 = ["index"], q3 = { class: "text-center" }, Q3 = ["onClick"], K3 = /* @__PURE__ */ D("i", { class: "bi bi-pencil-fill" }, null, -1), Z3 = [
-  K3
-], J3 = { class: "text-center" }, AE = ["onClick"], eE = /* @__PURE__ */ D("i", { class: "bi bi-trash3-fill" }, null, -1), tE = [
-  eE
-], nE = { key: 0 }, rE = /* @__PURE__ */ D("td", {
+], -1), GE = ["index"], qE = { class: "text-center" }, QE = ["onClick"], KE = /* @__PURE__ */ D("i", { class: "bi bi-pencil-fill" }, null, -1), ZE = [
+  KE
+], JE = { class: "text-center" }, A3 = ["onClick"], e3 = /* @__PURE__ */ D("i", { class: "bi bi-trash3-fill" }, null, -1), t3 = [
+  e3
+], n3 = { key: 0 }, r3 = /* @__PURE__ */ D("td", {
   colspan: "3",
   class: "text-center"
 }, [
   /* @__PURE__ */ D("p", null, "NO DATA AVAILABLE IN TABLE")
-], -1), iE = [
-  rE
-], aE = { key: 1 }, sE = /* @__PURE__ */ D("td", {
+], -1), i3 = [
+  r3
+], a3 = { key: 1 }, s3 = /* @__PURE__ */ D("td", {
   colspan: "3",
   class: "text-center"
-}, "LOADING...", -1), oE = [
-  sE
-], lE = /* @__PURE__ */ Te({
+}, "LOADING...", -1), o3 = [
+  s3
+], l3 = /* @__PURE__ */ Te({
   __name: "RoomLayoutListView",
   setup(A) {
     const e = Ze("gqlApiService");
@@ -11959,9 +11959,9 @@ const Oa = {
     return (l, f) => {
       var p;
       return X(), cA(VA, null, [
-        B3,
-        D("div", Y3, [
-          D("div", H3, [
+        BE,
+        D("div", YE, [
+          D("div", HE, [
             JA(ot, {
               text: "New Rom Layout",
               onOnClick: f[0] || (f[0] = (h) => gA(cr).push("/admin/room-layout/create")),
@@ -11969,34 +11969,34 @@ const Oa = {
             })
           ])
         ]),
-        U3,
-        D("div", j3, [
-          D("div", z3, [
-            D("table", W3, [
-              X3,
+        UE,
+        D("div", jE, [
+          D("div", zE, [
+            D("table", WE, [
+              XE,
               D("tbody", null, [
                 (X(!0), cA(VA, null, ge(n.value, (h, m) => (X(), cA("tr", {
                   key: h.id,
                   index: m
                 }, [
                   D("td", null, OA(h.name), 1),
-                  D("td", q3, [
+                  D("td", qE, [
                     D("button", {
                       type: "button",
                       class: "btn btn-link btn-sm",
                       onClick: (y) => gA(cr).push("/admin/room-layout/edit/" + h.id)
-                    }, Z3, 8, Q3)
+                    }, ZE, 8, QE)
                   ]),
-                  D("td", J3, [
+                  D("td", JE, [
                     D("button", {
                       type: "button",
                       class: "btn btn-link btn-sm",
                       onClick: (y) => s(h)
-                    }, tE, 8, AE)
+                    }, t3, 8, A3)
                   ])
-                ], 8, G3))), 128)),
-                !t.value && ((p = n.value) == null ? void 0 : p.length) === 0 ? (X(), cA("tr", nE, iE)) : IA("", !0),
-                t.value ? (X(), cA("tr", aE, oE)) : IA("", !0)
+                ], 8, GE))), 128)),
+                !t.value && ((p = n.value) == null ? void 0 : p.length) === 0 ? (X(), cA("tr", n3, i3)) : IA("", !0),
+                t.value ? (X(), cA("tr", a3, o3)) : IA("", !0)
               ])
             ])
           ])
@@ -12004,12 +12004,12 @@ const Oa = {
       ], 64);
     };
   }
-}), cE = {}, uE = /* @__PURE__ */ D("h1", null, "Admin Panel", -1), dE = /* @__PURE__ */ D("h5", null, "Menu", -1), hE = /* @__PURE__ */ D("br", null, null, -1), fE = /* @__PURE__ */ D("br", null, null, -1), gE = /* @__PURE__ */ D("br", null, null, -1), pE = /* @__PURE__ */ D("br", null, null, -1);
-function mE(A, e) {
+}), c3 = {}, u3 = /* @__PURE__ */ D("h1", null, "Admin Panel", -1), d3 = /* @__PURE__ */ D("h5", null, "Menu", -1), h3 = /* @__PURE__ */ D("br", null, null, -1), f3 = /* @__PURE__ */ D("br", null, null, -1), g3 = /* @__PURE__ */ D("br", null, null, -1), p3 = /* @__PURE__ */ D("br", null, null, -1);
+function m3(A, e) {
   const t = Il("RouterLink");
   return X(), cA("main", null, [
-    uE,
-    dE,
+    u3,
+    d3,
     JA(t, {
       key: "/admin/calendar-class",
       to: "/admin/calendar-class"
@@ -12019,7 +12019,7 @@ function mE(A, e) {
       ]),
       _: 1
     }),
-    hE,
+    h3,
     JA(t, {
       key: "/admin/calendar-class",
       to: "/admin/room-layout/list"
@@ -12029,7 +12029,7 @@ function mE(A, e) {
       ]),
       _: 1
     }),
-    fE,
+    f3,
     JA(t, {
       key: "/user/create",
       to: "/user/create"
@@ -12039,7 +12039,7 @@ function mE(A, e) {
       ]),
       _: 1
     }),
-    gE,
+    g3,
     JA(t, {
       key: "/class-schedules",
       to: "/class-schedules"
@@ -12049,16 +12049,16 @@ function mE(A, e) {
       ]),
       _: 1
     }),
-    pE
+    p3
   ]);
 }
-const vE = /* @__PURE__ */ rn(cE, [["render", mE]]), cr = _S({
+const v3 = /* @__PURE__ */ rn(c3, [["render", m3]]), cr = _S({
   history: k_(),
   routes: [
     {
       path: "/",
       name: "home",
-      component: vE
+      component: v3
     },
     {
       path: "/login",
@@ -12073,17 +12073,17 @@ const vE = /* @__PURE__ */ rn(cE, [["render", mE]]), cr = _S({
     {
       path: "/user/edit/:id",
       name: "user_edit",
-      component: () => Promise.resolve().then(() => ML)
+      component: () => Promise.resolve().then(() => M7)
     },
     {
       path: "/admin/calendar-class",
       name: "admin_calendar_class",
-      component: () => import("./AdminClassView.4a0d5c19.js")
+      component: () => import("./AdminClassView.079b231d.js")
     },
     {
       path: "/admin/room-layout/list",
       name: "admin_room_layout_list",
-      component: lE
+      component: l3
     },
     {
       path: "/admin/room-layout/create",
@@ -12103,7 +12103,7 @@ const vE = /* @__PURE__ */ rn(cE, [["render", mE]]), cr = _S({
     {
       path: "/customer-profile/:id",
       name: "customer_profile",
-      component: () => import("./CustomerProfileView.426528ef.js")
+      component: () => import("./CustomerProfileView.25b8d51e.js")
     }
   ]
 });
@@ -12111,10 +12111,10 @@ cr.beforeEach(async (A, e, t) => {
   !["/login", "/calendar"].includes(A.path) && !Oa.isLoggedId() ? t({ name: "login", query: { redirect: A.path } }) : t();
 });
 var gr = { exports: {} };
-const yE = /* @__PURE__ */ r$(Rk);
+const y3 = /* @__PURE__ */ r$(Rk);
 (function(A, e) {
   (function(t, n) {
-    A.exports = n(yE);
+    A.exports = n(y3);
   })(typeof self < "u" ? self : P1, (t) => (() => {
     var n = { 9662: (f, p, h) => {
       var m = h(614), y = h(6330), C = TypeError;
@@ -13773,14 +13773,14 @@ function Yc(A, e, t) {
       (s || !(n in e)) && (s || (s = Array.prototype.slice.call(e, 0, n)), s[n] = e[n]);
   return A.concat(s || Array.prototype.slice.call(e));
 }
-var pd = "Invariant Violation", iv = Object.setPrototypeOf, bE = iv === void 0 ? function(A, e) {
+var pd = "Invariant Violation", iv = Object.setPrototypeOf, b3 = iv === void 0 ? function(A, e) {
   return A.__proto__ = e, A;
 } : iv, Et = function(A) {
   kr(e, A);
   function e(t) {
     t === void 0 && (t = pd);
     var n = A.call(this, typeof t == "number" ? pd + ": " + t + " (see https://github.com/apollographql/invariant-packages)" : t) || this;
-    return n.framesToPop = 1, n.name = pd, bE(n, e.prototype), n;
+    return n.framesToPop = 1, n.name = pd, b3(n, e.prototype), n;
   }
   return e;
 }(Error);
@@ -13788,10 +13788,10 @@ function me(A, e) {
   if (!A)
     throw new Et(e);
 }
-var J1 = ["debug", "log", "warn", "error", "silent"], xE = J1.indexOf("log");
+var J1 = ["debug", "log", "warn", "error", "silent"], x3 = J1.indexOf("log");
 function ql(A) {
   return function() {
-    if (J1.indexOf(A) >= xE) {
+    if (J1.indexOf(A) >= x3) {
       var e = console[A] || console.log;
       return e.apply(console, arguments);
     }
@@ -13818,7 +13818,7 @@ const av = mr(function() {
   return mr.constructor("return this")();
 });
 var sv = "__", ov = [sv, sv].join("DEV");
-function CE() {
+function C3() {
   try {
     return Boolean(__DEV__);
   } catch {
@@ -13832,7 +13832,7 @@ function CE() {
     }), av[ov];
   }
 }
-const md = CE();
+const md = C3();
 function Vi(A) {
   try {
     return A();
@@ -13850,7 +13850,7 @@ var Lh = Vi(function() {
 }) || Vi(function() {
   return Vi.constructor("return this")();
 }), Fh = !1;
-function wE() {
+function w3() {
   Lh && !Vi(function() {
     return process.env.NODE_ENV;
   }) && !Vi(function() {
@@ -13866,7 +13866,7 @@ function wE() {
     writable: !0
   }), Fh = !0);
 }
-wE();
+w3();
 function lv() {
   Fh && (delete Lh.process, Fh = !1);
 }
@@ -13874,20 +13874,20 @@ function hc(A, e) {
   if (!Boolean(A))
     throw new Error(e);
 }
-function IE(A) {
+function I3(A) {
   return typeof A == "object" && A !== null;
 }
-function kE(A, e) {
+function k3(A, e) {
   if (!Boolean(A))
     throw new Error(
       e != null ? e : "Unexpected invariant triggered."
     );
 }
-const _E = /\r\n|[\n\r]/g;
+const _3 = /\r\n|[\n\r]/g;
 function Vh(A, e) {
   let t = 0, n = 1;
-  for (const a of A.body.matchAll(_E)) {
-    if (typeof a.index == "number" || kE(!1), a.index >= e)
+  for (const a of A.body.matchAll(_3)) {
+    if (typeof a.index == "number" || k3(!1), a.index >= e)
       break;
     t = a.index + a[0].length, n += 1;
   }
@@ -13896,7 +13896,7 @@ function Vh(A, e) {
     column: e + 1 - t
   };
 }
-function SE(A) {
+function S3(A) {
   return Ax(
     A.source,
     Vh(A.source, A.start)
@@ -13928,7 +13928,7 @@ function cv(A) {
   return e.map(([n, a]) => n.padStart(t) + (a ? " " + a : "")).join(`
 `);
 }
-function $E(A) {
+function $3(A) {
   const e = A[0];
   return e == null || "kind" in e || "length" in e ? {
     nodes: e,
@@ -13942,7 +13942,7 @@ function $E(A) {
 class bg extends Error {
   constructor(e, ...t) {
     var n, a, s;
-    const { nodes: l, source: f, positions: p, path: h, originalError: m, extensions: y } = $E(t);
+    const { nodes: l, source: f, positions: p, path: h, originalError: m, extensions: y } = $3(t);
     super(e), this.name = "GraphQLError", this.path = h != null ? h : void 0, this.originalError = m != null ? m : void 0, this.nodes = uv(
       Array.isArray(l) ? l : l ? [l] : void 0
     );
@@ -13950,7 +13950,7 @@ class bg extends Error {
       (n = this.nodes) === null || n === void 0 ? void 0 : n.map((I) => I.loc).filter((I) => I != null)
     );
     this.source = f != null ? f : C == null || (a = C[0]) === null || a === void 0 ? void 0 : a.source, this.positions = p != null ? p : C == null ? void 0 : C.map((I) => I.start), this.locations = p && f ? p.map((I) => Vh(f, I)) : C == null ? void 0 : C.map((I) => Vh(I.source, I.start));
-    const S = IE(
+    const S = I3(
       m == null ? void 0 : m.extensions
     ) ? m == null ? void 0 : m.extensions : void 0;
     this.extensions = (s = y != null ? y : S) !== null && s !== void 0 ? s : /* @__PURE__ */ Object.create(null), Object.defineProperties(this, {
@@ -13992,7 +13992,7 @@ class bg extends Error {
       for (const t of this.nodes)
         t.loc && (e += `
 
-` + SE(t.loc));
+` + S3(t.loc));
     else if (this.source && this.locations)
       for (const t of this.locations)
         e += `
@@ -14016,7 +14016,7 @@ function kn(A, e, t) {
     positions: [e]
   });
 }
-class EE {
+class E3 {
   constructor(e, t, n) {
     this.start = e.start, this.end = t.end, this.startToken = e, this.endToken = t, this.source = n;
   }
@@ -14119,10 +14119,10 @@ const tx = {
   UnionTypeExtension: ["name", "directives", "types"],
   EnumTypeExtension: ["name", "directives", "values"],
   InputObjectTypeExtension: ["name", "directives", "fields"]
-}, DE = new Set(Object.keys(tx));
+}, D3 = new Set(Object.keys(tx));
 function dv(A) {
   const e = A == null ? void 0 : A.kind;
-  return typeof e == "string" && DE.has(e);
+  return typeof e == "string" && D3.has(e);
 }
 var bs;
 (function(A) {
@@ -14148,15 +14148,15 @@ function nx(A) {
 function rx(A) {
   return nx(A) || A === 95;
 }
-function PE(A) {
+function P3(A) {
   return nx(A) || ul(A) || A === 95;
 }
-function OE(A) {
+function O3(A) {
   var e;
   let t = Number.MAX_SAFE_INTEGER, n = null, a = -1;
   for (let l = 0; l < A.length; ++l) {
     var s;
-    const f = A[l], p = TE(f);
+    const f = A[l], p = T3(f);
     p !== f.length && (n = (s = n) !== null && s !== void 0 ? s : l, a = l, l !== 0 && p < t && (t = p));
   }
   return A.map((l, f) => f === 0 ? l : l.slice(t)).slice(
@@ -14164,13 +14164,13 @@ function OE(A) {
     a + 1
   );
 }
-function TE(A) {
+function T3(A) {
   let e = 0;
   for (; e < A.length && Yh(A.charCodeAt(e)); )
     ++e;
   return e;
 }
-function NE(A, e) {
+function N3(A, e) {
   const t = A.replace(/"""/g, '\\"""'), n = t.split(/\r\n|[\n\r]/g), a = n.length === 1, s = n.length > 1 && n.slice(1).every((S) => S.length === 0 || Yh(S.charCodeAt(0))), l = t.endsWith('\\"""'), f = A.endsWith('"') && !l, p = A.endsWith("\\"), h = f || p, m = !(e != null && e.minimize) && (!a || A.length > 70 || h || s || l);
   let y = "";
   const C = a && Yh(A.charCodeAt(0));
@@ -14182,7 +14182,7 @@ var te;
 (function(A) {
   A.SOF = "<SOF>", A.EOF = "<EOF>", A.BANG = "!", A.DOLLAR = "$", A.AMP = "&", A.PAREN_L = "(", A.PAREN_R = ")", A.SPREAD = "...", A.COLON = ":", A.EQUALS = "=", A.AT = "@", A.BRACKET_L = "[", A.BRACKET_R = "]", A.BRACE_L = "{", A.PIPE = "|", A.BRACE_R = "}", A.NAME = "Name", A.INT = "Int", A.FLOAT = "Float", A.STRING = "String", A.BLOCK_STRING = "BlockString", A.COMMENT = "Comment";
 })(te || (te = {}));
-class ME {
+class M3 {
   constructor(e) {
     const t = new ex(te.SOF, 0, 0, 0, 0);
     this.source = e, this.lastToken = t, this.token = t, this.line = 1, this.lineStart = 0;
@@ -14200,14 +14200,14 @@ class ME {
         if (e.next)
           e = e.next;
         else {
-          const t = LE(this, e.end);
+          const t = L3(this, e.end);
           e.next = t, t.prev = e, e = t;
         }
       while (e.kind === te.COMMENT);
     return e;
   }
 }
-function RE(A) {
+function R3(A) {
   return A === te.BANG || A === te.DOLLAR || A === te.AMP || A === te.PAREN_L || A === te.PAREN_R || A === te.SPREAD || A === te.COLON || A === te.EQUALS || A === te.AT || A === te.BRACKET_L || A === te.BRACKET_R || A === te.BRACE_L || A === te.PIPE || A === te.BRACE_R;
 }
 function ro(A) {
@@ -14236,7 +14236,7 @@ function hn(A, e, t, n, a) {
   const s = A.line, l = 1 + t - A.lineStart;
   return new ex(e, t, n, s, l, a);
 }
-function LE(A, e) {
+function L3(A, e) {
   const t = A.source.body, n = t.length;
   let a = e;
   for (; a < n; ) {
@@ -14255,7 +14255,7 @@ function LE(A, e) {
         t.charCodeAt(a + 1) === 10 ? a += 2 : ++a, ++A.line, A.lineStart = a;
         continue;
       case 35:
-        return FE(A, a);
+        return F3(A, a);
       case 33:
         return hn(A, te.BANG, a, a + 1);
       case 36:
@@ -14287,12 +14287,12 @@ function LE(A, e) {
       case 125:
         return hn(A, te.BRACE_R, a, a + 1);
       case 34:
-        return t.charCodeAt(a + 1) === 34 && t.charCodeAt(a + 2) === 34 ? jE(A, a) : BE(A, a);
+        return t.charCodeAt(a + 1) === 34 && t.charCodeAt(a + 2) === 34 ? j3(A, a) : B3(A, a);
     }
     if (ul(s) || s === 45)
-      return VE(A, a, s);
+      return V3(A, a, s);
     if (rx(s))
-      return zE(A, a);
+      return z3(A, a);
     throw kn(
       A.source,
       a,
@@ -14301,7 +14301,7 @@ function LE(A, e) {
   }
   return hn(A, te.EOF, n, n);
 }
-function FE(A, e) {
+function F3(A, e) {
   const t = A.source.body, n = t.length;
   let a = e + 1;
   for (; a < n; ) {
@@ -14323,7 +14323,7 @@ function FE(A, e) {
     t.slice(e + 1, a)
   );
 }
-function VE(A, e, t) {
+function V3(A, e, t) {
   const n = A.source.body;
   let a = e, s = t, l = !1;
   if (s === 45 && (s = n.charCodeAt(++a)), s === 48) {
@@ -14371,7 +14371,7 @@ function vd(A, e, t) {
     ++a;
   return a;
 }
-function BE(A, e) {
+function B3(A, e) {
   const t = A.source.body, n = t.length;
   let a = e + 1, s = a, l = "";
   for (; a < n; ) {
@@ -14380,7 +14380,7 @@ function BE(A, e) {
       return l += t.slice(s, a), hn(A, te.STRING, e, a + 1, l);
     if (f === 92) {
       l += t.slice(s, a);
-      const p = t.charCodeAt(a + 1) === 117 ? t.charCodeAt(a + 2) === 123 ? YE(A, a) : HE(A, a) : UE(A, a);
+      const p = t.charCodeAt(a + 1) === 117 ? t.charCodeAt(a + 2) === 123 ? Y3(A, a) : H3(A, a) : U3(A, a);
       l += p.value, a += p.size, s = a;
       continue;
     }
@@ -14402,7 +14402,7 @@ function BE(A, e) {
   }
   throw kn(A.source, a, "Unterminated string.");
 }
-function YE(A, e) {
+function Y3(A, e) {
   const t = A.source.body;
   let n = 0, a = 3;
   for (; a < 12; ) {
@@ -14427,7 +14427,7 @@ function YE(A, e) {
     )}".`
   );
 }
-function HE(A, e) {
+function H3(A, e) {
   const t = A.source.body, n = hv(t, e + 2);
   if (ro(n))
     return {
@@ -14454,7 +14454,7 @@ function hv(A, e) {
 function So(A) {
   return A >= 48 && A <= 57 ? A - 48 : A >= 65 && A <= 70 ? A - 55 : A >= 97 && A <= 102 ? A - 87 : -1;
 }
-function UE(A, e) {
+function U3(A, e) {
   const t = A.source.body;
   switch (t.charCodeAt(e + 1)) {
     case 34:
@@ -14508,7 +14508,7 @@ function UE(A, e) {
     )}".`
   );
 }
-function jE(A, e) {
+function j3(A, e) {
   const t = A.source.body, n = t.length;
   let a = A.lineStart, s = e + 3, l = s, f = "";
   const p = [];
@@ -14521,7 +14521,7 @@ function jE(A, e) {
         te.BLOCK_STRING,
         e,
         s + 3,
-        OE(p).join(`
+        O3(p).join(`
 `)
       );
       return A.line += p.length - 1, A.lineStart = a, m;
@@ -14550,12 +14550,12 @@ function jE(A, e) {
   }
   throw kn(A.source, s, "Unterminated string.");
 }
-function zE(A, e) {
+function z3(A, e) {
   const t = A.source.body, n = t.length;
   let a = e + 1;
   for (; a < n; ) {
     const s = t.charCodeAt(a);
-    if (PE(s))
+    if (P3(s))
       ++a;
     else
       break;
@@ -14568,7 +14568,7 @@ function zE(A, e) {
     t.slice(e, a)
   );
 }
-const WE = 10, sx = 2;
+const W3 = 10, sx = 2;
 function xg(A) {
   return Tu(A, []);
 }
@@ -14579,45 +14579,45 @@ function Tu(A, e) {
     case "function":
       return A.name ? `[function ${A.name}]` : "[function]";
     case "object":
-      return XE(A, e);
+      return X3(A, e);
     default:
       return String(A);
   }
 }
-function XE(A, e) {
+function X3(A, e) {
   if (A === null)
     return "null";
   if (e.includes(A))
     return "[Circular]";
   const t = [...e, A];
-  if (GE(A)) {
+  if (G3(A)) {
     const n = A.toJSON();
     if (n !== A)
       return typeof n == "string" ? n : Tu(n, t);
   } else if (Array.isArray(A))
-    return QE(A, t);
-  return qE(A, t);
+    return Q3(A, t);
+  return q3(A, t);
 }
-function GE(A) {
+function G3(A) {
   return typeof A.toJSON == "function";
 }
-function qE(A, e) {
+function q3(A, e) {
   const t = Object.entries(A);
-  return t.length === 0 ? "{}" : e.length > sx ? "[" + KE(A) + "]" : "{ " + t.map(
+  return t.length === 0 ? "{}" : e.length > sx ? "[" + K3(A) + "]" : "{ " + t.map(
     ([a, s]) => a + ": " + Tu(s, e)
   ).join(", ") + " }";
 }
-function QE(A, e) {
+function Q3(A, e) {
   if (A.length === 0)
     return "[]";
   if (e.length > sx)
     return "[Array]";
-  const t = Math.min(WE, A.length), n = A.length - t, a = [];
+  const t = Math.min(W3, A.length), n = A.length - t, a = [];
   for (let s = 0; s < t; ++s)
     a.push(Tu(A[s], e));
   return n === 1 ? a.push("... 1 more item") : n > 1 && a.push(`... ${n} more items`), "[" + a.join(", ") + "]";
 }
-function KE(A) {
+function K3(A) {
   const e = Object.prototype.toString.call(A).replace(/^\[object /, "").replace(/]$/, "");
   if (e === "Object" && typeof A.constructor == "function") {
     const t = A.constructor.name;
@@ -14626,7 +14626,7 @@ function KE(A) {
   }
   return e;
 }
-const ZE = process.env.NODE_ENV === "production" ? function(e, t) {
+const Z3 = process.env.NODE_ENV === "production" ? function(e, t) {
   return e instanceof t;
 } : function(e, t) {
   if (e instanceof t)
@@ -14669,16 +14669,16 @@ class Cg {
     return "Source";
   }
 }
-function JE(A) {
-  return ZE(A, Cg);
+function J3(A) {
+  return Z3(A, Cg);
 }
 function AD(A, e) {
   return new eD(A, e).parseDocument();
 }
 class eD {
   constructor(e, t = {}) {
-    const n = JE(e) ? e : new Cg(e);
-    this._lexer = new ME(n), this._options = t, this._tokenCounter = 0;
+    const n = J3(e) ? e : new Cg(e);
+    this._lexer = new M3(n), this._options = t, this._tokenCounter = 0;
   }
   parseName() {
     const e = this.expectToken(te.NAME);
@@ -15332,7 +15332,7 @@ class eD {
     throw this.unexpected(e);
   }
   node(e, t) {
-    return this._options.noLocation !== !0 && (t.loc = new EE(
+    return this._options.noLocation !== !0 && (t.loc = new E3(
       e,
       this._lexer.lastToken,
       this._lexer.source
@@ -15425,7 +15425,7 @@ function Ql(A) {
   return ox(A.kind) + (e != null ? ` "${e}"` : "");
 }
 function ox(A) {
-  return RE(A) ? `"${A}"` : A;
+  return R3(A) ? `"${A}"` : A;
 }
 function tD(A) {
   return `"${A.replace(nD, rD)}"`;
@@ -15744,7 +15744,7 @@ const oD = 80, lD = {
     leave: ({ value: A }) => A
   },
   StringValue: {
-    leave: ({ value: A, block: e }) => e ? NE(A) : tD(A)
+    leave: ({ value: A, block: e }) => e ? N3(A) : tD(A)
   },
   BooleanValue: {
     leave: ({ value: A }) => A ? "true" : "false"
@@ -34416,35 +34416,35 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
       }, null, 8, ["message"])) : IA("", !0)
     ], 64));
   }
-}), ZR = { class: "modal-mask" }, JR = { class: "modal-wrapper" }, A7 = {
+}), ZR = { class: "modal-mask" }, JR = { class: "modal-wrapper" }, AL = {
   class: "modal-dialog modal-lg",
   role: "document"
-}, e7 = { class: "modal-content" }, t7 = { class: "modal-header border-0" }, n7 = /* @__PURE__ */ D("h5", { class: "modal-title" }, "Update mindbody Ids", -1), r7 = {
+}, eL = { class: "modal-content" }, tL = { class: "modal-header border-0" }, nL = /* @__PURE__ */ D("h5", { class: "modal-title" }, "Update mindbody Ids", -1), rL = {
   type: "button",
   class: "close",
   "data-dismiss": "modal",
   "aria-label": "Close"
-}, i7 = { class: "modal-body" }, a7 = { class: "row" }, s7 = { class: "col-12" }, o7 = { class: "table" }, l7 = /* @__PURE__ */ D("thead", null, [
+}, iL = { class: "modal-body" }, aL = { class: "row" }, sL = { class: "col-12" }, oL = { class: "table" }, lL = /* @__PURE__ */ D("thead", null, [
   /* @__PURE__ */ D("tr", null, [
     /* @__PURE__ */ D("th", { class: "text-center" }, "SITE"),
     /* @__PURE__ */ D("th", { class: "text-center" }, "MINDBODY ID")
   ])
-], -1), c7 = ["index"], u7 = { class: "text-center" }, d7 = ["onUpdate:modelValue"], h7 = {
+], -1), cL = ["index"], uL = { class: "text-center" }, dL = ["onUpdate:modelValue"], hL = {
   class: "form-text",
   style: { color: "red" }
-}, f7 = { key: 0 }, g7 = /* @__PURE__ */ D("td", {
+}, fL = { key: 0 }, gL = /* @__PURE__ */ D("td", {
   colspan: "2",
   class: "text-center"
 }, [
   /* @__PURE__ */ D("p", null, "NO DATA AVAILABLE IN TABLE")
-], -1), p7 = [
-  g7
-], m7 = { key: 1 }, v7 = /* @__PURE__ */ D("td", {
+], -1), pL = [
+  gL
+], mL = { key: 1 }, vL = /* @__PURE__ */ D("td", {
   colspan: "2",
   class: "text-center"
-}, "LOADING...", -1), y7 = [
-  v7
-], b7 = { class: "modal-footer border-0" }, x7 = /* @__PURE__ */ Te({
+}, "LOADING...", -1), yL = [
+  vL
+], bL = { class: "modal-footer border-0" }, xL = /* @__PURE__ */ Te({
   __name: "ExternalUserIds",
   props: {
     userId: {}
@@ -34507,28 +34507,28 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
           return [
             D("div", ZR, [
               D("div", JR, [
-                D("div", A7, [
-                  D("div", e7, [
-                    D("div", t7, [
-                      n7,
-                      D("button", r7, [
+                D("div", AL, [
+                  D("div", eL, [
+                    D("div", tL, [
+                      nL,
+                      D("button", rL, [
                         D("span", {
                           "aria-hidden": "true",
                           onClick: N[0] || (N[0] = (M) => p.value = !1)
                         }, "\xD7")
                       ])
                     ]),
-                    D("div", i7, [
-                      D("div", a7, [
-                        D("div", s7, [
-                          D("table", o7, [
-                            l7,
+                    D("div", iL, [
+                      D("div", aL, [
+                        D("div", sL, [
+                          D("table", oL, [
+                            lL,
                             D("tbody", null, [
                               (X(!0), cA(VA, null, ge(m.value, (M, Y) => (X(), cA("tr", {
                                 key: M.site,
                                 index: Y
                               }, [
-                                D("td", u7, OA(M.site), 1),
+                                D("td", uL, OA(M.site), 1),
                                 D("td", null, [
                                   Xe(D("input", {
                                     id: "externalUserId{{ item.site }}",
@@ -34538,20 +34538,20 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
                                     placeholder: "External User Id",
                                     maxlength: "20",
                                     required: ""
-                                  }, null, 8, d7), [
+                                  }, null, 8, dL), [
                                     [Wt, M.externalUserId]
                                   ]),
-                                  D("small", h7, OA(M.errorMessage), 1)
+                                  D("small", hL, OA(M.errorMessage), 1)
                                 ])
-                              ], 8, c7))), 128)),
-                              !n.value && ((E = m.value) == null ? void 0 : E.length) === 0 ? (X(), cA("tr", f7, p7)) : IA("", !0),
-                              n.value ? (X(), cA("tr", m7, y7)) : IA("", !0)
+                              ], 8, cL))), 128)),
+                              !n.value && ((E = m.value) == null ? void 0 : E.length) === 0 ? (X(), cA("tr", fL, pL)) : IA("", !0),
+                              n.value ? (X(), cA("tr", mL, yL)) : IA("", !0)
                             ])
                           ])
                         ])
                       ])
                     ]),
-                    D("div", b7, [
+                    D("div", bL, [
                       JA(ot, {
                         text: "Cancel",
                         type: "button",
@@ -34601,71 +34601,71 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
       }, null, 8, ["message"])) : IA("", !0)
     ], 64));
   }
-}), Yt = (A) => (vn("data-v-ec613528"), A = A(), yn(), A), C7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("h1", null, "My Profile", -1)), w7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("br", null, null, -1)), I7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("hr", null, null, -1)), k7 = ["onSubmit"], _7 = { class: "field" }, S7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("hr", null, null, -1)), $7 = { class: "form-row" }, E7 = { class: "col-md-12 mb-3" }, D7 = { class: "custom-control custom-switch" }, P7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
+}), Yt = (A) => (vn("data-v-4c5e2dfc"), A = A(), yn(), A), CL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("h1", null, "My Profile", -1)), wL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("br", null, null, -1)), IL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("hr", null, null, -1)), kL = ["onSubmit"], _L = { class: "field" }, SL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("hr", null, null, -1)), $L = { class: "form-row" }, EL = { class: "col-md-12 mb-3" }, DL = { class: "custom-control custom-switch" }, PL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
   class: "custom-control-label",
-  for: "hideMetricsMyProfile"
-}, "Join the Leaderboard?", -1)), O7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("h3", null, "Personal Information", -1)), T7 = { class: "form-row" }, N7 = { class: "col-md-6 mb-3" }, M7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
+  for: "joinTheLeaderboardMyProfile"
+}, "Join the Leaderboard?", -1)), OL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("h3", null, "Personal Information", -1)), TL = { class: "form-row" }, NL = { class: "col-md-6 mb-3" }, ML = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
   for: "firstNameMyProfile",
   class: "input-label"
-}, "First Name *", -1)), R7 = { class: "col-md-6 mb-3" }, L7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
+}, "First Name *", -1)), RL = { class: "col-md-6 mb-3" }, LL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
   for: "lastNameMyProfile",
   class: "input-label"
-}, "Last Name *", -1)), F7 = { class: "form-row" }, V7 = { class: "col-md-6 mb-3" }, B7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
+}, "Last Name *", -1)), FL = { class: "form-row" }, VL = { class: "col-md-6 mb-3" }, BL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
   for: "genderMyProfile",
   class: "input-label"
-}, "Gender *", -1)), Y7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("option", { value: "M" }, "Male", -1)), H7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("option", { value: "F" }, "Female", -1)), U7 = [
-  Y7,
-  H7
-], j7 = { class: "form-row" }, z7 = { class: "col-md-6 mb-3" }, W7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
+}, "Gender *", -1)), YL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("option", { value: "M" }, "Male", -1)), HL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("option", { value: "F" }, "Female", -1)), UL = [
+  YL,
+  HL
+], jL = { class: "form-row" }, zL = { class: "col-md-6 mb-3" }, WL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
   for: "leaderboardUsernameMyProfile",
   class: "input-label"
-}, "Leaderboard Nickname *", -1)), X7 = { class: "form-row" }, G7 = { class: "col-md-6 mb-3" }, q7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
+}, "Leaderboard Nickname *", -1)), XL = { class: "form-row" }, GL = { class: "col-md-6 mb-3" }, qL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
   for: "dateOfBirthMyProfile",
   class: "input-label"
-}, "Date of Birth *", -1)), Q7 = { class: "form-row" }, K7 = { class: "col-md-6 mb-3" }, Z7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
+}, "Date of Birth *", -1)), QL = { class: "form-row" }, KL = { class: "col-md-6 mb-3" }, ZL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
   for: "weightMyProfile",
   class: "input-label"
-}, "Weight *", -1)), J7 = { class: "input-group" }, AL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("div", { class: "input-group-append" }, [
+}, "Weight *", -1)), JL = { class: "input-group" }, A7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("div", { class: "input-group-append" }, [
   /* @__PURE__ */ D("span", {
     class: "input-group-text",
     id: "input-group-append-kg"
   }, "kg")
-], -1)), eL = {
+], -1)), e7 = {
   key: 0,
   class: "form-text",
   style: { color: "#737373" }
-}, tL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("hr", null, null, -1)), nL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("h3", null, "Contact Information", -1)), rL = { class: "form-row" }, iL = { class: "col-md-6 mb-3" }, aL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
+}, t7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("hr", null, null, -1)), n7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("h3", null, "Contact Information", -1)), r7 = { class: "form-row" }, i7 = { class: "col-md-6 mb-3" }, a7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
   for: "countryMyProfile",
   class: "input-label"
-}, "Country *", -1)), sL = ["value"], oL = { class: "col-md-6 mb-3" }, lL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
+}, "Country *", -1)), s7 = ["value"], o7 = { class: "col-md-6 mb-3" }, l7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
   for: "cityStateMyProfile",
   class: "input-label"
-}, "City/State *", -1)), cL = ["value"], uL = { class: "form-row" }, dL = { class: "col-md-6 mb-3" }, hL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
+}, "City/State *", -1)), c7 = ["value"], u7 = { class: "form-row" }, d7 = { class: "col-md-6 mb-3" }, h7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
   for: "address1MyProfile",
   class: "input-label"
-}, "Address Line 1", -1)), fL = { class: "col-md-6 mb-3" }, gL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
+}, "Address Line 1", -1)), f7 = { class: "col-md-6 mb-3" }, g7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
   for: "address2MyProfile",
   class: "input-label"
-}, "Address Line 2", -1)), pL = { class: "form-row" }, mL = { class: "col-md-6 mb-3" }, vL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
+}, "Address Line 2", -1)), p7 = { class: "form-row" }, m7 = { class: "col-md-6 mb-3" }, v7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
   for: "mobileNumberMyProfile",
   class: "input-label"
-}, "Mobile Number *", -1)), yL = { class: "form-row" }, bL = { class: "col-md-6 mb-3" }, xL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
+}, "Mobile Number *", -1)), y7 = { class: "form-row" }, b7 = { class: "col-md-6 mb-3" }, x7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
   for: "emergencyContactNameMyProfile",
   class: "input-label"
-}, "Emergency Contact Name *", -1)), CL = { class: "col-md-6 mb-3" }, wL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
+}, "Emergency Contact Name *", -1)), C7 = { class: "col-md-6 mb-3" }, w7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
   for: "emergencyContactPhoneMyProfile",
   class: "input-label"
-}, "Emergency Contact Number *", -1)), IL = { class: "col-md-6 mb-3" }, kL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
+}, "Emergency Contact Number *", -1)), I7 = { class: "col-md-6 mb-3" }, k7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("label", {
   for: "emergencyContactRelationshipMyProfile",
   class: "input-label"
-}, "Emergency Contact Relationship *", -1)), _L = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("option", { value: "Friend" }, "Friend", -1)), SL = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("option", { value: "Relative" }, "Relative", -1)), $L = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("option", { value: "Other" }, "Other", -1)), EL = [
-  _L,
-  SL,
-  $L
-], DL = { class: "form-row justify-content-md-center" }, PL = { class: "col-md-3 mb-3" }, OL = ["disabled"], TL = {
+}, "Emergency Contact Relationship *", -1)), _7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("option", { value: "Friend" }, "Friend", -1)), S7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("option", { value: "Relative" }, "Relative", -1)), $7 = /* @__PURE__ */ Yt(() => /* @__PURE__ */ D("option", { value: "Other" }, "Other", -1)), E7 = [
+  _7,
+  S7,
+  $7
+], D7 = { class: "form-row justify-content-md-center" }, P7 = { class: "col-md-3 mb-3" }, O7 = ["disabled"], T7 = {
   key: 0,
   class: "spinner-border spinner-border-sm"
-}, NL = /* @__PURE__ */ Te({
+}, N7 = /* @__PURE__ */ Te({
   __name: "CustomerEditView",
   setup(A) {
     const e = dg(), t = vA(!1), n = vA(!1), a = vA(!1), s = vA(""), l = vA(!1), f = vA(!1), p = vA([]), h = vA([]), m = vA(new Date()), y = vA(""), C = vA(""), S = vA([]), I = dn({
@@ -34683,7 +34683,7 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
       emergencyContactPhone: "",
       emergencyContactRelationship: "",
       leaderboardUsername: "",
-      hideMetrics: !1
+      joinTheLeaderboard: !1
     }), O = UA(() => ({
       firstName: {
         required: Qe.withMessage("First Name is required", mt),
@@ -34738,7 +34738,7 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
       leaderboardUsername: {
         required: Qe.withMessage("Leaderboard Nickname is required", mt)
       },
-      hideMetrics: {
+      joinTheLeaderboard: {
         required: Qe.withMessage("Field is required", mt)
       }
     })), B = (Z) => Z.startsWith("+971") ? Ur(Z).startsWith("+9715") : !0, N = (Z) => Z.startsWith("+971") ? Ur(Z).length === 13 : !0, E = eo(O, I), M = Ze("gqlApiService");
@@ -34756,7 +34756,7 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
         const Q = await M.getUser(C.value);
         S.value = (Z = Q.user) == null ? void 0 : Z.siteUsers, Q.user !== null && Q.user !== void 0 && (y.value = Q.user.email, await aA(Q.user.country.code), I.firstName = Q.user.firstName, I.lastName = Q.user.lastName, I.gender = Q.user.gender !== null ? Q.user.gender.toString() : "N".toString(), I.birthdate = gt(Q.user.birthdate).toDate(), I.weight = Q.user.weight !== null ? Q.user.weight : 0, I.country = Q.user.country.code, I.cityState = Q.user.state.code, I.address1 = Q.user.address1, I.address2 = Q.user.address2, I.phone = Ur(Q.user.phone), I.emergencyContactName = Q.user.emergencyContactName, I.emergencyContactPhone = Ur(
           Q.user.emergencyContactPhone
-        ), I.emergencyContactRelationship = Q.user.emergencyContactRelationship, I.leaderboardUsername = Q.user.leaderboardUsername, I.hideMetrics = Q.user.hideMetrics !== null ? Q.user.hideMetrics : !1);
+        ), I.emergencyContactRelationship = Q.user.emergencyContactRelationship, I.leaderboardUsername = Q.user.leaderboardUsername, I.joinTheLeaderboard = Q.user.hideMetrics !== null ? !Q.user.hideMetrics : !1);
       } catch (Q) {
         console.error(Q);
       } finally {
@@ -34773,7 +34773,7 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
           birthdate: gt(I.birthdate).format("YYYY-MM-DD"),
           city: I.cityState,
           country: I.country,
-          hideMetrics: I.hideMetrics,
+          hideMetrics: !I.joinTheLeaderboard,
           emergencyContactName: I.emergencyContactName,
           emergencyContactPhone: I.emergencyContactPhone,
           emergencyContactRelationship: I.emergencyContactRelationship,
@@ -34807,33 +34807,33 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
       aA(I.country);
     }
     return (Z, Q) => (X(), cA(VA, null, [
-      C7,
-      w7,
+      CL,
+      wL,
       D("h5", null, OA(y.value), 1),
-      I7,
+      IL,
       D("form", {
         onSubmit: rt(eA, ["prevent"]),
         autocomplete: "off"
       }, [
-        D("div", _7, [
+        D("div", _L, [
           JA(KR, { email: y.value }, null, 8, ["email"]),
           Ie(" \xA0 "),
-          JA(x7, { userId: C.value }, null, 8, ["userId"])
+          JA(xL, { userId: C.value }, null, 8, ["userId"])
         ]),
-        S7,
-        D("div", $7, [
-          D("div", E7, [
-            D("div", D7, [
+        SL,
+        D("div", $L, [
+          D("div", EL, [
+            D("div", DL, [
               Xe(D("input", {
                 type: "checkbox",
                 class: "custom-control-input",
-                "onUpdate:modelValue": Q[0] || (Q[0] = (z) => I.hideMetrics = z),
-                id: "hideMetricsMyProfile"
+                "onUpdate:modelValue": Q[0] || (Q[0] = (z) => I.joinTheLeaderboard = z),
+                id: "joinTheLeaderboardMyProfile"
               }, null, 512), [
-                [Js, I.hideMetrics]
+                [Js, I.joinTheLeaderboard]
               ]),
-              P7,
-              (X(!0), cA(VA, null, ge(gA(E).hideMetrics.$errors, (z) => (X(), cA("small", {
+              PL,
+              (X(!0), cA(VA, null, ge(gA(E).joinTheLeaderboard.$errors, (z) => (X(), cA("small", {
                 key: z.$uid,
                 class: "form-text",
                 style: { color: "red" }
@@ -34841,10 +34841,10 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
             ])
           ])
         ]),
-        O7,
-        D("div", T7, [
-          D("div", N7, [
-            M7,
+        OL,
+        D("div", TL, [
+          D("div", NL, [
+            ML,
             Xe(D("input", {
               id: "firstNameMyProfile",
               class: "form-control",
@@ -34862,8 +34862,8 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
               style: { color: "red" }
             }, OA(z.$message), 1))), 128))
           ]),
-          D("div", R7, [
-            L7,
+          D("div", RL, [
+            LL,
             Xe(D("input", {
               id: "lastNameMyProfile",
               class: "form-control",
@@ -34882,16 +34882,16 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
             }, OA(z.$message), 1))), 128))
           ])
         ]),
-        D("div", F7, [
-          D("div", V7, [
-            B7,
+        D("div", FL, [
+          D("div", VL, [
+            BL,
             Xe(D("select", {
               class: "custom-select",
               "onUpdate:modelValue": Q[3] || (Q[3] = (z) => I.gender = z),
               id: "genderMyProfile",
               placeholder: "Gender",
               required: ""
-            }, U7, 512), [
+            }, UL, 512), [
               [Mn, I.gender]
             ]),
             (X(!0), cA(VA, null, ge(gA(E).gender.$errors, (z) => (X(), cA("small", {
@@ -34901,9 +34901,9 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
             }, OA(z.$message), 1))), 128))
           ])
         ]),
-        D("div", j7, [
-          D("div", z7, [
-            W7,
+        D("div", jL, [
+          D("div", zL, [
+            WL,
             Xe(D("input", {
               id: "leaderboardUsernameMyProfile",
               class: "form-control",
@@ -34922,9 +34922,9 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
             }, OA(z.$message), 1))), 128))
           ])
         ]),
-        D("div", X7, [
-          D("div", G7, [
-            q7,
+        D("div", XL, [
+          D("div", GL, [
+            qL,
             JA(gA(ju), {
               modelValue: I.birthdate,
               "onUpdate:modelValue": Q[5] || (Q[5] = (z) => I.birthdate = z),
@@ -34942,10 +34942,10 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
             }, OA(z.$message), 1))), 128))
           ])
         ]),
-        D("div", Q7, [
-          D("div", K7, [
-            Z7,
-            D("div", J7, [
+        D("div", QL, [
+          D("div", KL, [
+            ZL,
+            D("div", JL, [
               Xe(D("input", {
                 id: "weightMyProfile",
                 class: "form-control",
@@ -34958,9 +34958,9 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
               }, null, 544), [
                 [Wt, I.weight]
               ]),
-              AL
+              A7
             ]),
-            l.value ? (X(), cA("small", eL, " Enter your weight to improve the accuracy of your class stats ")) : IA("", !0),
+            l.value ? (X(), cA("small", e7, " Enter your weight to improve the accuracy of your class stats ")) : IA("", !0),
             (X(!0), cA(VA, null, ge(gA(E).weight.$errors, (z) => (X(), cA("small", {
               key: z.$uid,
               class: "form-text",
@@ -34968,11 +34968,11 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
             }, OA(z.$message), 1))), 128))
           ])
         ]),
-        tL,
-        nL,
-        D("div", rL, [
-          D("div", iL, [
-            aL,
+        t7,
+        n7,
+        D("div", r7, [
+          D("div", i7, [
+            a7,
             Xe(D("select", {
               class: "custom-select",
               "onUpdate:modelValue": Q[9] || (Q[9] = (z) => I.country = z),
@@ -34983,7 +34983,7 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
               (X(!0), cA(VA, null, ge(p.value, (z, J) => (X(), cA("option", {
                 key: J,
                 value: z.code
-              }, OA(z.name), 9, sL))), 128))
+              }, OA(z.name), 9, s7))), 128))
             ], 544), [
               [Mn, I.country]
             ]),
@@ -34993,8 +34993,8 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
               style: { color: "red" }
             }, OA(z.$message), 1))), 128))
           ]),
-          D("div", oL, [
-            lL,
+          D("div", o7, [
+            l7,
             Xe(D("select", {
               class: "custom-select",
               "onUpdate:modelValue": Q[11] || (Q[11] = (z) => I.cityState = z),
@@ -35004,7 +35004,7 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
               (X(!0), cA(VA, null, ge(h.value, (z, J) => (X(), cA("option", {
                 key: J,
                 value: z.code
-              }, OA(z.name), 9, cL))), 128))
+              }, OA(z.name), 9, c7))), 128))
             ], 512), [
               [Mn, I.cityState]
             ]),
@@ -35015,9 +35015,9 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
             }, OA(z.$message), 1))), 128))
           ])
         ]),
-        D("div", uL, [
-          D("div", dL, [
-            hL,
+        D("div", u7, [
+          D("div", d7, [
+            h7,
             Xe(D("input", {
               id: "address1MyProfile",
               class: "form-control",
@@ -35034,8 +35034,8 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
               style: { color: "red" }
             }, OA(z.$message), 1))), 128))
           ]),
-          D("div", fL, [
-            gL,
+          D("div", f7, [
+            g7,
             Xe(D("input", {
               id: "address2MyProfile",
               class: "form-control",
@@ -35053,9 +35053,9 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
             }, OA(z.$message), 1))), 128))
           ])
         ]),
-        D("div", pL, [
-          D("div", mL, [
-            vL,
+        D("div", p7, [
+          D("div", m7, [
+            v7,
             JA(gA(tu), {
               modelValue: I.phone,
               "onUpdate:modelValue": Q[14] || (Q[14] = (z) => I.phone = z),
@@ -35083,9 +35083,9 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
             }, OA(z.$message), 1))), 128))
           ])
         ]),
-        D("div", yL, [
-          D("div", bL, [
-            xL,
+        D("div", y7, [
+          D("div", b7, [
+            x7,
             Xe(D("input", {
               id: "emergencyContactNameMyProfile",
               class: "form-control",
@@ -35103,8 +35103,8 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
               style: { color: "red" }
             }, OA(z.$message), 1))), 128))
           ]),
-          D("div", CL, [
-            wL,
+          D("div", C7, [
+            w7,
             JA(gA(tu), {
               modelValue: I.emergencyContactPhone,
               "onUpdate:modelValue": Q[16] || (Q[16] = (z) => I.emergencyContactPhone = z),
@@ -35131,14 +35131,14 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
               style: { color: "red" }
             }, OA(z.$message), 1))), 128))
           ]),
-          D("div", IL, [
-            kL,
+          D("div", I7, [
+            k7,
             Xe(D("select", {
               class: "custom-select",
               "onUpdate:modelValue": Q[17] || (Q[17] = (z) => I.emergencyContactRelationship = z),
               id: "emergencyContactRelationshipMyProfile",
               required: ""
-            }, EL, 512), [
+            }, E7, 512), [
               [Mn, I.emergencyContactRelationship]
             ]),
             (X(!0), cA(VA, null, ge(gA(E).emergencyContactRelationship.$errors, (z) => (X(), cA("small", {
@@ -35148,19 +35148,19 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
             }, OA(z.$message), 1))), 128))
           ])
         ]),
-        D("div", DL, [
-          D("div", PL, [
+        D("div", D7, [
+          D("div", P7, [
             D("button", {
               class: "btn btn-primary",
               type: "submit",
               disabled: t.value
             }, [
               Ie(" Save Profile "),
-              t.value ? (X(), cA("span", TL)) : IA("", !0)
-            ], 8, OL)
+              t.value ? (X(), cA("span", T7)) : IA("", !0)
+            ], 8, O7)
           ])
         ])
-      ], 40, k7),
+      ], 40, kL),
       n.value ? (X(), qA(At, {
         key: 0,
         title: "Profile update",
@@ -35179,14 +35179,14 @@ const WC = /* @__PURE__ */ rn(WR, [["__scopeId", "data-v-1c1c6cf0"]]), XR = /* @
     ], 64));
   }
 });
-const XC = /* @__PURE__ */ rn(NL, [["__scopeId", "data-v-ec613528"]]), ML = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const XC = /* @__PURE__ */ rn(N7, [["__scopeId", "data-v-4c5e2dfc"]]), M7 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: XC
 }, Symbol.toStringTag, { value: "Module" }));
 function ec(A) {
   return [null, void 0, !1].indexOf(A) !== -1;
 }
-function RL(A) {
+function R7(A) {
   return A && A.__esModule && Object.prototype.hasOwnProperty.call(A, "default") ? A.default : A;
 }
 function GC(A) {
@@ -35260,7 +35260,7 @@ var ny = GC(function(A, e) {
     }
     return S;
   }();
-}), LL = RL(GC(function(A, e) {
+}), L7 = R7(GC(function(A, e) {
   (function(t) {
     function n(hA) {
       return a(hA) && typeof hA.from == "function";
@@ -36110,7 +36110,7 @@ var nu = { name: "Slider", emits: ["input", "update:modelValue", "start", "slide
     }, yA = (DA) => {
       f.emit("input", DA), f.emit("update:modelValue", DA), f.emit("update", DA);
     }, pA = () => {
-      rA.value = LL.create(sA.value, Object.assign({}, dA.value, E.value)), y.value && nA.value && O.value >= 0 && Q(sA.value, O.value, " - "), rA.value.on("set", () => {
+      rA.value = L7.create(sA.value, Object.assign({}, dA.value, E.value)), y.value && nA.value && O.value >= 0 && Q(sA.value, O.value, " - "), rA.value.on("set", () => {
         const DA = j();
         f.emit("change", DA), f.emit("set", DA), R.value && yA(DA);
       }), rA.value.on("update", () => {
@@ -36158,10 +36158,10 @@ var nu = { name: "Slider", emits: ["input", "update:modelValue", "start", "slide
 nu.render = function(A, e, t, n, a, s) {
   return X(), cA("div", mn(A.sliderProps, { ref: "slider" }), null, 16);
 }, nu.__file = "src/Slider.vue";
-const $n = (A) => (vn("data-v-dbbfb555"), A = A(), yn(), A), FL = { autocomplete: "off" }, VL = { class: "row" }, BL = { class: "form-group col-md-4 col-sm-12 col-xs-12" }, YL = /* @__PURE__ */ $n(() => /* @__PURE__ */ D("label", {
+const $n = (A) => (vn("data-v-dbbfb555"), A = A(), yn(), A), F7 = { autocomplete: "off" }, V7 = { class: "row" }, B7 = { class: "form-group col-md-4 col-sm-12 col-xs-12" }, Y7 = /* @__PURE__ */ $n(() => /* @__PURE__ */ D("label", {
   for: "roomLayoutName",
   class: "input-label"
-}, "Room Layout Name *", -1)), HL = { class: "controls" }, UL = /* @__PURE__ */ $n(() => /* @__PURE__ */ D("hr", null, null, -1)), jL = { class: "row" }, zL = { class: "form-group col-md-6" }, WL = { for: "formControlRange" }, XL = { class: "row" }, GL = { class: "form-group col-md-6" }, qL = { for: "formControlRange" }, QL = /* @__PURE__ */ $n(() => /* @__PURE__ */ D("hr", null, null, -1)), KL = /* @__PURE__ */ $n(() => /* @__PURE__ */ D("p", null, "Maximum 100 Spots can be configured", -1)), ZL = { class: "row" }, JL = { class: "col-md-2 col-xs-12" }, AF = { class: "col-md-2 col-xs-12" }, eF = { class: "row mt-5" }, tF = { class: "table-responsive col-md-12" }, nF = { class: "" }, rF = ["index"], iF = ["index", "onClick"], aF = { key: 0 }, sF = { key: 1 }, oF = ["onUpdate:modelValue"], lF = /* @__PURE__ */ $n(() => /* @__PURE__ */ D("i", {
+}, "Room Layout Name *", -1)), H7 = { class: "controls" }, U7 = /* @__PURE__ */ $n(() => /* @__PURE__ */ D("hr", null, null, -1)), j7 = { class: "row" }, z7 = { class: "form-group col-md-6" }, W7 = { for: "formControlRange" }, X7 = { class: "row" }, G7 = { class: "form-group col-md-6" }, q7 = { for: "formControlRange" }, Q7 = /* @__PURE__ */ $n(() => /* @__PURE__ */ D("hr", null, null, -1)), K7 = /* @__PURE__ */ $n(() => /* @__PURE__ */ D("p", null, "Maximum 100 Spots can be configured", -1)), Z7 = { class: "row" }, J7 = { class: "col-md-2 col-xs-12" }, AF = { class: "col-md-2 col-xs-12" }, eF = { class: "row mt-5" }, tF = { class: "table-responsive col-md-12" }, nF = { class: "" }, rF = ["index"], iF = ["index", "onClick"], aF = { key: 0 }, sF = { key: 1 }, oF = ["onUpdate:modelValue"], lF = /* @__PURE__ */ $n(() => /* @__PURE__ */ D("i", {
   class: "bi bi-circle",
   style: { "font-size": "1.8rem" }
 }, null, -1)), cF = { key: 2 }, uF = /* @__PURE__ */ $n(() => /* @__PURE__ */ D("i", {
@@ -36330,11 +36330,11 @@ const $n = (A) => (vn("data-v-dbbfb555"), A = A(), yn(), A), FL = { autocomplete
       const nA = Il("context-menu-sperator");
       return X(), cA(VA, null, [
         D("h1", null, OA(y.value), 1),
-        D("form", FL, [
-          D("div", VL, [
-            D("div", BL, [
-              YL,
-              D("div", HL, [
+        D("form", F7, [
+          D("div", V7, [
+            D("div", B7, [
+              Y7,
+              D("div", H7, [
                 Xe(D("input", {
                   type: "text",
                   id: "roomLayoutName",
@@ -36352,11 +36352,11 @@ const $n = (A) => (vn("data-v-dbbfb555"), A = A(), yn(), A), FL = { autocomplete
                 }, OA(j.$message), 1))), 128))
               ])
             ]),
-            UL
+            U7
           ]),
-          D("div", jL, [
-            D("div", zL, [
-              D("label", WL, "Rows - " + OA(a.rows), 1),
+          D("div", j7, [
+            D("div", z7, [
+              D("label", W7, "Rows - " + OA(a.rows), 1),
               JA(gA(nu), {
                 id: "formControlRangeRows",
                 modelValue: a.rows,
@@ -36370,9 +36370,9 @@ const $n = (A) => (vn("data-v-dbbfb555"), A = A(), yn(), A), FL = { autocomplete
               }, null, 8, ["modelValue"])
             ])
           ]),
-          D("div", XL, [
-            D("div", GL, [
-              D("label", qL, "Columns - " + OA(a.cols), 1),
+          D("div", X7, [
+            D("div", G7, [
+              D("label", q7, "Columns - " + OA(a.cols), 1),
               JA(gA(nu), {
                 id: "formControlRangeCols",
                 modelValue: a.cols,
@@ -36387,12 +36387,12 @@ const $n = (A) => (vn("data-v-dbbfb555"), A = A(), yn(), A), FL = { autocomplete
             ])
           ])
         ]),
-        QL,
-        KL,
+        Q7,
+        K7,
         D("p", null, "Total Spots - " + OA(a.rows * a.cols), 1),
         D("p", null, "Total Configured Spots - " + OA(C.value), 1),
-        D("div", ZL, [
-          D("div", JL, [
+        D("div", Z7, [
+          D("div", J7, [
             JA(ot, {
               text: "Save Layout",
               onOnClick: V[3] || (V[3] = (j) => Q()),
