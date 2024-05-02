@@ -104,7 +104,7 @@ const formData = reactive({
   birthdate: null as Date | null,
   weight: 0,
   country: '',
-  cityState: '',
+  cityState: null as string | null,
   address1: '',
   address2: '',
   phone: '',
@@ -220,7 +220,7 @@ async function getUser(): Promise<void> {
       formData.birthdate = dayjs(identifiableUser.user.birthdate).toDate()
       formData.weight = identifiableUser.user.weight !== null ? identifiableUser.user.weight! : 0
       formData.country = identifiableUser.user.country.code
-      formData.cityState = identifiableUser.user.state!.code
+      formData.cityState = identifiableUser.user.state?.code ?? null
       formData.address1 = identifiableUser.user.address1
       formData.address2 = identifiableUser.user.address2!
       formData.phone = getFormattedPhoneNumber(identifiableUser.user.phone)
@@ -231,7 +231,7 @@ async function getUser(): Promise<void> {
       formData.emergencyContactRelationship = identifiableUser.user.emergencyContactRelationship!
       formData.leaderboardUsername = identifiableUser.user.leaderboardUsername!
       formData.joinTheLeaderboard =
-        identifiableUser.user.hideMetrics !== null ? !(identifiableUser.user.hideMetrics!) : false
+        identifiableUser.user.hideMetrics !== null ? !identifiableUser.user.hideMetrics! : false
     }
   } catch (error) {
     console.error(error)
