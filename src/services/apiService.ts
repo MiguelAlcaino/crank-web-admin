@@ -1196,7 +1196,6 @@ export class ApiService {
   }
 
   async userWorkoutStats(site: SiteEnum, userId: string): Promise<ClassStat[]> {
-    console.log('userWorkoutStats', site, userId)
     const query = gql`
       query userWorkoutStats($site: SiteEnum!, $userId: ID!) {
         userWorkoutStats(site: $site, userId: $userId) {
