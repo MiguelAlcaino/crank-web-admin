@@ -22,7 +22,7 @@ enum GenderEnum {
 
 <script setup lang="ts">
 import type { ApiService } from '@/services/apiService'
-import { inject, ref, watch } from 'vue'
+import { inject, onMounted, ref, watch } from 'vue'
 
 const props = defineProps<{
   classId: string
@@ -35,6 +35,10 @@ watch(
     getCurrentUserRankingInClass(classId)
   }
 )
+
+onMounted(() => {
+  getCurrentUserRankingInClass(props.classId)
+})
 
 const apiService = inject<ApiService>('gqlApiService')!
 const userInClassRanking = ref<UserInClassRanking | null>(null)
@@ -50,8 +54,8 @@ async function getCurrentUserRankingInClass(classId?: string) {
   if (classId) {
     isLoading.value = true
     userInClassRanking.value = (await apiService.userRankingInClass(
-      props.classId,
-      props.userId
+      props.userId,
+      props.classId
     )) as UserInClassRanking
     isLoading.value = false
   }
