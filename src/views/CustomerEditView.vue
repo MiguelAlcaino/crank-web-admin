@@ -103,7 +103,7 @@ const formData = reactive({
   gender: '',
   birthdate: null as Date | null,
   weight: 0,
-  country: '',
+  country: null as string | null,
   cityState: null as string | null,
   address1: '',
   address2: '',
@@ -209,7 +209,9 @@ async function getUser(): Promise<void> {
     if (identifiableUser.user !== null && identifiableUser.user !== undefined) {
       userEmail.value = identifiableUser.user.email
 
-      await getCountryStates(identifiableUser.user.country.code)
+      if (identifiableUser.user.country?.code) {
+        await getCountryStates(identifiableUser.user.country.code)
+      }
 
       formData.firstName = identifiableUser.user.firstName
       formData.lastName = identifiableUser.user.lastName
@@ -218,8 +220,8 @@ async function getUser(): Promise<void> {
           ? identifiableUser.user.gender!.toString()
           : GenderEnum.N.toString()
       formData.birthdate = dayjs(identifiableUser.user.birthdate).toDate()
-      formData.weight = identifiableUser.user.weight !== null ? identifiableUser.user.weight! : 0
-      formData.country = identifiableUser.user.country.code
+      formData.weight = identifiableUser.user.weight !== null ?  Math.round(identifiableUser.user.weight!) : 0
+      formData.country = identifiableUser.user.country?.code ?? null
       formData.cityState = identifiableUser.user.state?.code ?? null
       formData.address1 = identifiableUser.user.address1
       formData.address2 = identifiableUser.user.address2!
@@ -303,7 +305,7 @@ async function getCountryStates(countryCode: string) {
 }
 
 function onChangeCountry() {
-  getCountryStates(formData.country)
+  getCountryStates(formData.country!)
 }
 </script>
 
