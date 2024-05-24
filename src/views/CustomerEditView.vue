@@ -220,7 +220,7 @@ async function getUser(): Promise<void> {
           ? identifiableUser.user.gender!.toString()
           : GenderEnum.N.toString()
       formData.birthdate = dayjs(identifiableUser.user.birthdate).toDate()
-      formData.weight = identifiableUser.user.weight !== null ?  Math.round(identifiableUser.user.weight!) : 0
+      formData.weight = identifiableUser.user.weight !== null ?  +identifiableUser.user.weight!.toFixed(2)  : 0
       formData.country = identifiableUser.user.country?.code ?? null
       formData.cityState = identifiableUser.user.state?.code ?? null
       formData.address1 = identifiableUser.user.address1
@@ -481,6 +481,7 @@ function onChangeCountry() {
             type="number"
             placeholder="Weight"
             required
+            step="0.01"
             @focus="weightInputMessageIsVisible = true"
             @blur="weightInputMessageIsVisible = false"
           />
