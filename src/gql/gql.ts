@@ -84,7 +84,11 @@ const documents = {
   '\n      query singleWorkoutStat($enrollmentId: ID!) {\n        singleWorkoutStat(enrollmentId: $enrollmentId) {\n          enrollment {\n            enrollmentInfo {\n              id\n              ... on EnrollmentInfo {\n                spotNumber\n              }\n            }\n            class {\n              id\n              name\n              start\n              duration\n              instructorName\n            }\n          }\n          averagePower\n          highPower\n          averageRpm\n          highRpm\n          totalEnergy\n          calories\n          distance\n          adjustedChartPoints(amountOfPoints: 62) {\n            time\n            rpm\n            power\n          }\n        }\n      }\n    ':
     types.SingleWorkoutStatDocument,
   '\n      query userRankingInClass($userId: ID!, $classId: ID!) {\n        userRankingInClass(userId: $userId, classId: $classId) {\n          totalRanking {\n            positionInRanking\n            totalMembersInRanking\n          }\n          genderRanking {\n            gender\n            ranking {\n              positionInRanking\n              totalMembersInRanking\n            }\n          }\n        }\n      }\n    ':
-    types.UserRankingInClassDocument
+    types.UserRankingInClassDocument,
+  '\n      mutation sendClassStatsToUsers($classId: ID!) {\n        sendClassStatsToUsers(classId: $classId)\n      }\n    ':
+    types.SendClassStatsToUsersDocument,
+  '\n      mutation sendClassStatsToEmail($input: SendClassStatsToEmailInput!) {\n        sendClassStatsToEmail(input: $input)\n      }\n    ':
+    types.SendClassStatsToEmailDocument
 }
 
 /**
@@ -317,6 +321,18 @@ export function graphql(
 export function graphql(
   source: '\n      query userRankingInClass($userId: ID!, $classId: ID!) {\n        userRankingInClass(userId: $userId, classId: $classId) {\n          totalRanking {\n            positionInRanking\n            totalMembersInRanking\n          }\n          genderRanking {\n            gender\n            ranking {\n              positionInRanking\n              totalMembersInRanking\n            }\n          }\n        }\n      }\n    '
 ): (typeof documents)['\n      query userRankingInClass($userId: ID!, $classId: ID!) {\n        userRankingInClass(userId: $userId, classId: $classId) {\n          totalRanking {\n            positionInRanking\n            totalMembersInRanking\n          }\n          genderRanking {\n            gender\n            ranking {\n              positionInRanking\n              totalMembersInRanking\n            }\n          }\n        }\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n      mutation sendClassStatsToUsers($classId: ID!) {\n        sendClassStatsToUsers(classId: $classId)\n      }\n    '
+): (typeof documents)['\n      mutation sendClassStatsToUsers($classId: ID!) {\n        sendClassStatsToUsers(classId: $classId)\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n      mutation sendClassStatsToEmail($input: SendClassStatsToEmailInput!) {\n        sendClassStatsToEmail(input: $input)\n      }\n    '
+): (typeof documents)['\n      mutation sendClassStatsToEmail($input: SendClassStatsToEmailInput!) {\n        sendClassStatsToEmail(input: $input)\n      }\n    ']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}

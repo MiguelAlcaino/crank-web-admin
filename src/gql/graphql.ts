@@ -22,7 +22,13 @@ export type AcceptLateCancelledSpotInClassInput = {
   waitlistEntryId: Scalars['ID']
 }
 
-export type AcceptLateCancelledSpotInClassResultUnion = AcceptLateCancelledSpotInClassSuccess
+export type AcceptLateCancelledSpotInClassResultUnion =
+  | AcceptLateCancelledSpotInClassSuccess
+  | ClassIsFullError
+  | ClientIsAlreadyBookedError
+  | ClientIsOutsideSchedulingWindowError
+  | PaymentRequiredError
+  | UnknownError
 
 export type AcceptLateCancelledSpotInClassSuccess = {
   __typename: 'AcceptLateCancelledSpotInClassSuccess'
@@ -368,7 +374,6 @@ export enum EnrollmentStatusEnum {
 }
 
 export enum EnrollmentTypeEnum {
-  All = 'all',
   Historical = 'historical',
   Upcoming = 'upcoming',
   Waitlist = 'waitlist'
@@ -659,6 +664,21 @@ export type OtherUserHasThisExternalIdError = Error & {
   siteUser: IdentifiableSiteUser
 }
 
+export type PaginatedEnrollments = PaginatedResult & {
+  __typename: 'PaginatedEnrollments'
+  enrollments: Array<Enrollment>
+  total: Scalars['Int']
+}
+
+export type PaginatedResult = {
+  total: Scalars['Int']
+}
+
+export type PaginationInput = {
+  limit?: InputMaybe<Scalars['Int']>
+  page?: InputMaybe<Scalars['Int']>
+}
+
 export type PasswordsDontMatchError = Error & {
   __typename: 'PasswordsDontMatchError'
   code: Scalars['String']
@@ -710,8 +730,12 @@ export type Query = {
   country?: Maybe<Country>
   /** Returns the current user by the given Authentication header */
   currentUser?: Maybe<User>
-  /** List of classes where the user is already enrolled */
+  /**
+   * List of classes where the user is already enrolled
+   * @deprecated Use currentUserEnrollmentsPaginated instead
+   */
   currentUserEnrollments: Array<Enrollment>
+  currentUserEnrollmentsPaginated: PaginatedEnrollments
   /** List of purchases made by the current */
   currentUserPurchases?: Maybe<Array<Maybe<Purchase>>>
   /** Get current user's ranking on a specific class */
@@ -763,6 +787,12 @@ export type QueryCountryArgs = {
 }
 
 export type QueryCurrentUserEnrollmentsArgs = {
+  params?: InputMaybe<CurrentUserEnrollmentsParams>
+  site?: InputMaybe<SiteEnum>
+}
+
+export type QueryCurrentUserEnrollmentsPaginatedArgs = {
+  pagination?: InputMaybe<PaginationInput>
   params?: InputMaybe<CurrentUserEnrollmentsParams>
   site?: InputMaybe<SiteEnum>
 }
@@ -1021,7 +1051,7 @@ export type User = {
   address2?: Maybe<Scalars['String']>
   birthdate?: Maybe<Scalars['Date']>
   city: Scalars['String']
-  country: Country
+  country?: Maybe<Country>
   doesExistInSite: Scalars['Boolean']
   email: Scalars['String']
   emergencyContactName: Scalars['String']
@@ -1517,7 +1547,7 @@ export type GetUserQuery = {
       emergencyContactRelationship?: string | null
       hideMetrics?: boolean | null
       existsInSites: Array<SiteEnum>
-      country: { __typename: 'Country'; code: string; name: string }
+      country?: { __typename: 'Country'; code: string; name: string } | null
       state?: { __typename: 'State'; code: string; name: string } | null
       siteUsers: Array<{ __typename: 'SimpleSiteUser'; externalUserId: string; site: SiteEnum }>
     } | null
@@ -1866,6 +1896,24 @@ export type UserRankingInClassQuery = {
       } | null
     } | null
   } | null
+}
+
+export type SendClassStatsToUsersMutationVariables = Exact<{
+  classId: Scalars['ID']
+}>
+
+export type SendClassStatsToUsersMutation = {
+  __typename: 'Mutation'
+  sendClassStatsToUsers?: boolean | null
+}
+
+export type SendClassStatsToEmailMutationVariables = Exact<{
+  input: SendClassStatsToEmailInput
+}>
+
+export type SendClassStatsToEmailMutation = {
+  __typename: 'Mutation'
+  sendClassStatsToEmail?: boolean | null
 }
 
 export const SiteSettingsDocument = {
@@ -4550,3 +4598,75 @@ export const UserRankingInClassDocument = {
     }
   ]
 } as unknown as DocumentNode<UserRankingInClassQuery, UserRankingInClassQueryVariables>
+export const SendClassStatsToUsersDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'sendClassStatsToUsers' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'classId' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'sendClassStatsToUsers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'classId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'classId' } }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<SendClassStatsToUsersMutation, SendClassStatsToUsersMutationVariables>
+export const SendClassStatsToEmailDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'sendClassStatsToEmail' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SendClassStatsToEmailInput' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'sendClassStatsToEmail' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<SendClassStatsToEmailMutation, SendClassStatsToEmailMutationVariables>
