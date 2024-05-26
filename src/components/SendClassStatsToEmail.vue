@@ -70,93 +70,95 @@ function openModal() {
 </script>
 
 <template>
-  <DefaultButtonComponent
-    text="Resend email"
-    type="button"
-    @on-click="openModal()"
-  ></DefaultButtonComponent>
+  <div>
+    <DefaultButtonComponent
+      text="Resend email"
+      type="button"
+      @on-click="openModal()"
+    ></DefaultButtonComponent>
 
-  <transition name="modal" v-if="modalIsVisible">
-    <div class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header border-0">
-              <h5 class="modal-title">Resend email</h5>
-            </div>
-            <div class="modal-body">
-              <div class="row">
-                <div class="col-12">
-                  <form @submit.prevent="onClickConfirm" autocomplete="off">
-                    <div class="form-row">
-                      <div class="col-md-12 mb-3">
-                        <label for="emailRegistration" class="input-label">Email *</label>
-                        <input
-                          type="email"
-                          v-model="sendEmailForm.email"
-                          class="form-control"
-                          id="emailRegistration"
-                          maxlength="200"
-                          placeholder="Email"
-                          required
-                        />
-                        <small
-                          v-for="error in v$.email.$errors"
-                          :key="error.$uid"
-                          class="form-text"
-                          style="color: red"
-                        >
-                          {{ error.$message }}
-                        </small>
+    <transition name="modal" v-if="modalIsVisible">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header border-0">
+                <h5 class="modal-title">Resend email</h5>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-12">
+                    <form @submit.prevent="onClickConfirm" autocomplete="off">
+                      <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                          <label for="emailRegistration" class="input-label">Email *</label>
+                          <input
+                            type="email"
+                            v-model="sendEmailForm.email"
+                            class="form-control"
+                            id="emailRegistration"
+                            maxlength="200"
+                            placeholder="Email"
+                            required
+                          />
+                          <small
+                            v-for="error in v$.email.$errors"
+                            :key="error.$uid"
+                            class="form-text"
+                            style="color: red"
+                          >
+                            {{ error.$message }}
+                          </small>
+                        </div>
                       </div>
-                    </div>
-                  </form>
+                    </form>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="modal-footer border-0">
-              <DefaultButtonComponent
-                text="Cancel"
-                type="button"
-                variant="secondary"
-                :disabled="isLoading"
-                @on-click="modalIsVisible = false"
-              ></DefaultButtonComponent>
+              <div class="modal-footer border-0">
+                <DefaultButtonComponent
+                  text="Cancel"
+                  type="button"
+                  variant="secondary"
+                  :disabled="isLoading"
+                  @on-click="modalIsVisible = false"
+                ></DefaultButtonComponent>
 
-              <DefaultButtonComponent
-                text="Send email"
-                type="button"
-                :is-loading="isLoading"
-                @on-click="onClickConfirm()"
-              ></DefaultButtonComponent>
+                <DefaultButtonComponent
+                  text="Send email"
+                  type="button"
+                  :is-loading="isLoading"
+                  @on-click="onClickConfirm()"
+                ></DefaultButtonComponent>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </transition>
+    </transition>
 
-  <!-- Success Modal -->
-  <ModalComponent
-    v-if="successModalIsVisible"
-    title="SUCCESS"
-    message="EMAIL SENT SUCCESSFULLY."
-    :closable="false"
-    @on-ok="successModalIsVisible = false"
-    :cancel-text="null"
-  >
-  </ModalComponent>
+    <!-- Success Modal -->
+    <ModalComponent
+      v-if="successModalIsVisible"
+      title="SUCCESS"
+      message="EMAIL SENT SUCCESSFULLY."
+      :closable="false"
+      @on-ok="successModalIsVisible = false"
+      :cancel-text="null"
+    >
+    </ModalComponent>
 
-  <!-- Error Modal -->
-  <ModalComponent
-    title="Error"
-    :message="ERROR_UNKNOWN"
-    :closable="false"
-    v-if="errorModalIsVisible"
-    @on-ok="errorModalIsVisible = false"
-    :cancel-text="null"
-  >
-  </ModalComponent>
+    <!-- Error Modal -->
+    <ModalComponent
+      title="Error"
+      :message="ERROR_UNKNOWN"
+      :closable="false"
+      v-if="errorModalIsVisible"
+      @on-ok="errorModalIsVisible = false"
+      :cancel-text="null"
+    >
+    </ModalComponent>
+  </div>
 </template>
 
 <style scoped></style>

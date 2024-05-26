@@ -87,142 +87,146 @@ async function singleWorkoutStat() {
 </script>
 
 <template>
-  <DefaultButtonComponent
-    text="Show Stats"
-    type="button"
-    @on-click="showStartModal()"
-  ></DefaultButtonComponent>
+  <div>
+    <DefaultButtonComponent
+      text="Show Stats"
+      type="button"
+      @on-click="showStartModal()"
+    ></DefaultButtonComponent>
 
-  <transition name="modal" v-if="modalIsVisible">
-    <div class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
-          <div class="modal-content">
-            <div class="modal-header border-0">
-              <h3 class="modal-title">WORKOUT SUMMARY</h3>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true" @click="modalIsVisible = false">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div v-if="isLoading">
-                <div class="row" v-if="isLoading">
-                  <div class="col-12 text-center">
-                    <CrankCircularProgressIndicator
-                      text="Loading..."
-                    ></CrankCircularProgressIndicator>
-                  </div>
-                </div>
+    <transition name="modal" v-if="modalIsVisible">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+              <div class="modal-header border-0">
+                <h3 class="modal-title">WORKOUT SUMMARY</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true" @click="modalIsVisible = false">&times;</span>
+                </button>
               </div>
-              <div v-else>
-                <div class="row mt-3">
-                  <div class="col-12">
+              <div class="modal-body">
+                <div v-if="isLoading">
+                  <div class="row" v-if="isLoading">
                     <div class="col-12 text-center">
-                      <h4>{{ classStat?.enrollment.class.name }}</h4>
-                      <br />
-                      <p>
-                        <b>TIME: </b>
-                        <span>{{ dayjs(classStat?.enrollment.class.start).format('h:mm a') }}</span>
-                        |
-                        <b>DURATION: </b>
-                        <span>{{ classStat?.enrollment.class.duration }}</span>
-                        mins.
-                      </p>
-                      <p>
-                        <b>INSTRUCTOR: </b>
-                        {{ classStat?.enrollment.class.instructorName }}
-                      </p>
+                      <CrankCircularProgressIndicator
+                        text="Loading..."
+                      ></CrankCircularProgressIndicator>
                     </div>
                   </div>
                 </div>
-                <div class="row mt-3">
-                  <div class="col-12 text-center">
-                    <WorkoutSummaryChart
-                      v-if="classStat?.adjustedChartPoints"
-                      :chart-points="classStat?.adjustedChartPoints"
-                    ></WorkoutSummaryChart>
+                <div v-else>
+                  <div class="row mt-3">
+                    <div class="col-12">
+                      <div class="col-12 text-center">
+                        <h4>{{ classStat?.enrollment.class.name }}</h4>
+                        <br />
+                        <p>
+                          <b>TIME: </b>
+                          <span>{{
+                            dayjs(classStat?.enrollment.class.start).format('h:mm a')
+                          }}</span>
+                          |
+                          <b>DURATION: </b>
+                          <span>{{ classStat?.enrollment.class.duration }}</span>
+                          mins.
+                        </p>
+                        <p>
+                          <b>INSTRUCTOR: </b>
+                          {{ classStat?.enrollment.class.instructorName }}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="row mt-3">
-                  <div class="col-sm-6">
-                    <StatIconWidget
-                      icon="duration"
-                      :value="secondsToMMSS(classStat?.enrollment.class.duration)"
-                      title="DURATION"
-                    ></StatIconWidget>
+                  <div class="row mt-3">
+                    <div class="col-12 text-center">
+                      <WorkoutSummaryChart
+                        v-if="classStat?.adjustedChartPoints"
+                        :chart-points="classStat?.adjustedChartPoints"
+                      ></WorkoutSummaryChart>
+                    </div>
                   </div>
-                  <div class="col-sm-6">
-                    <StatIconWidget
-                      icon="distance"
-                      :value="(classStat?.distance?.toFixed(1) ?? '0') + 'KM'"
-                      title="DISTANCE"
-                    ></StatIconWidget>
-                  </div>
-                  <div class="col-sm-6">
-                    <StatIconWidget
-                      icon="calories"
-                      :value="classStat?.calories?.toFixed(1) ?? '0'"
-                      title="CALORIES"
-                    ></StatIconWidget>
-                  </div>
-                  <div class="col-sm-6">
-                    <StatIconWidget
-                      icon="total_energy"
-                      :value="classStat?.totalEnergy?.toFixed(1) ?? '0'"
-                      title="TOTAL ENERGY"
-                    ></StatIconWidget>
-                  </div>
-                  <div class="col-sm-6">
-                    <SpotIconWidget
-                      :class-name="classStat?.enrollment.class.name"
-                      :spot-number="classStat?.enrollment.enrollmentInfo.spotNumber"
-                    ></SpotIconWidget>
-                  </div>
-                  <div class="col-sm-6">
-                    <RankWidget
-                      v-if="classStat?.enrollment.class.id"
-                      :class-id="classStat?.enrollment.class.id"
-                      :user-id="userId"
-                    ></RankWidget>
-                  </div>
-                  <div class="col-sm-6">
-                    <StatSlashWidget
-                      title="POWER"
-                      :avg-value="classStat?.averagePower ?? 0"
-                      :high-value="classStat?.highPower ?? 0"
-                    ></StatSlashWidget>
-                  </div>
-                  <div class="col-sm-6">
-                    <StatSlashWidget
-                      title="RPM"
-                      :avg-value="classStat?.averageRpm ?? 0"
-                      :high-value="classStat?.highRpm ?? 0"
-                    ></StatSlashWidget>
+                  <div class="row mt-3">
+                    <div class="col-sm-6">
+                      <StatIconWidget
+                        icon="duration"
+                        :value="secondsToMMSS(classStat?.enrollment.class.duration)"
+                        title="DURATION"
+                      ></StatIconWidget>
+                    </div>
+                    <div class="col-sm-6">
+                      <StatIconWidget
+                        icon="distance"
+                        :value="(classStat?.distance?.toFixed(1) ?? '0') + 'KM'"
+                        title="DISTANCE"
+                      ></StatIconWidget>
+                    </div>
+                    <div class="col-sm-6">
+                      <StatIconWidget
+                        icon="calories"
+                        :value="classStat?.calories?.toFixed(1) ?? '0'"
+                        title="CALORIES"
+                      ></StatIconWidget>
+                    </div>
+                    <div class="col-sm-6">
+                      <StatIconWidget
+                        icon="total_energy"
+                        :value="classStat?.totalEnergy?.toFixed(1) ?? '0'"
+                        title="TOTAL ENERGY"
+                      ></StatIconWidget>
+                    </div>
+                    <div class="col-sm-6">
+                      <SpotIconWidget
+                        :class-name="classStat?.enrollment.class.name"
+                        :spot-number="classStat?.enrollment.enrollmentInfo.spotNumber"
+                      ></SpotIconWidget>
+                    </div>
+                    <div class="col-sm-6">
+                      <RankWidget
+                        v-if="classStat?.enrollment.class.id"
+                        :class-id="classStat?.enrollment.class.id"
+                        :user-id="userId"
+                      ></RankWidget>
+                    </div>
+                    <div class="col-sm-6">
+                      <StatSlashWidget
+                        title="POWER"
+                        :avg-value="classStat?.averagePower ?? 0"
+                        :high-value="classStat?.highPower ?? 0"
+                      ></StatSlashWidget>
+                    </div>
+                    <div class="col-sm-6">
+                      <StatSlashWidget
+                        title="RPM"
+                        :avg-value="classStat?.averageRpm ?? 0"
+                        :high-value="classStat?.highRpm ?? 0"
+                      ></StatSlashWidget>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div class="modal-footer border-0">
-              <button class="btn btn-primary" type="button" @click="modalIsVisible = false">
-                CLOSE
-              </button>
+              <div class="modal-footer border-0">
+                <button class="btn btn-primary" type="button" @click="modalIsVisible = false">
+                  CLOSE
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </transition>
+    </transition>
 
-  <!-- Error Modal -->
-  <ModalComponent
-    v-if="errorModalIsVisible"
-    title="Error"
-    :message="ERROR_UNKNOWN"
-    :cancel-text="null"
-    @on-ok="errorModalIsVisible = false"
-  >
-  </ModalComponent>
+    <!-- Error Modal -->
+    <ModalComponent
+      v-if="errorModalIsVisible"
+      title="Error"
+      :message="ERROR_UNKNOWN"
+      :cancel-text="null"
+      @on-ok="errorModalIsVisible = false"
+    >
+    </ModalComponent>
+  </div>
 </template>
 
 <style lang="css" scoped src="bootstrap/dist/css/bootstrap.min.css"></style>
