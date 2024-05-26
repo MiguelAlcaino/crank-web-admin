@@ -88,11 +88,11 @@ async function singleWorkoutStat() {
 
 <template>
   <div>
-    <DefaultButtonComponent
-      text="Show Stats"
-      type="button"
-      @on-click="showStartModal()"
-    ></DefaultButtonComponent>
+    <i
+      class="bi bi-graph-up"
+      style="font-size: 2rem; cursor: pointer"
+      @click="showStartModal()"
+    ></i>
 
     <transition name="modal" v-if="modalIsVisible">
       <div class="modal-mask">
