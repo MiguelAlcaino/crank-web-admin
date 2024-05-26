@@ -24,6 +24,8 @@ import type {
   EditUserResultUnion,
   IdentifiableSiteUser,
   IdentifiableUser,
+  PaginatedClassStats,
+  PaginationInput,
   RegisterUserInput,
   RemoveUserFromWaitlistInput,
   RemoveUserFromWaitlistUnion,
@@ -1341,5 +1343,48 @@ export class ApiService {
     })
 
     return queryResult.data.sendClassStatsToEmail as boolean
+  }
+
+  async userWorkoutStatsPaginated(
+    site: SiteEnum,
+    userId: string,
+    pagination: PaginationInput
+  ): Promise<PaginatedClassStats> {
+    const query = gql`
+      query userWorkoutStatsPaginated($site: SiteEnum!, $userId: ID!, $pagination: PaginationInput) {
+        userWorkoutStatsPaginated(site: $site, userId: $userId, pagination: $pagination) {
+          classStats {
+            enrollment {
+              enrollmentInfo {
+                id
+                ... on EnrollmentInfo {
+                spotNumber
+                }
+              }
+              class {
+                id
+                name
+                start
+                duration
+              }
+            }
+            totalEnergy
+          }
+          total
+        }
+      }
+    `
+
+    const queryResult = await this.authApiClient.query({
+      query: query,
+      variables: {
+        site: site,
+        userId: userId,
+        pagination: pagination
+      },
+      fetchPolicy: 'network-only'
+    })
+
+    return queryResult.data.userWorkoutStatsPaginated as PaginatedClassStats
   }
 }
