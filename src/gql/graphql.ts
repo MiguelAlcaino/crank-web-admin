@@ -664,6 +664,12 @@ export type OtherUserHasThisExternalIdError = Error & {
   siteUser: IdentifiableSiteUser
 }
 
+export type PaginatedClassStats = PaginatedResult & {
+  __typename: 'PaginatedClassStats'
+  classStats: Array<ClassStat>
+  total: Scalars['Int']
+}
+
 export type PaginatedEnrollments = PaginatedResult & {
   __typename: 'PaginatedEnrollments'
   enrollments: Array<Enrollment>
@@ -739,11 +745,15 @@ export type Query = {
   /** List of purchases made by the current */
   currentUserPurchases?: Maybe<Array<Maybe<Purchase>>>
   /** Get current user's ranking on a specific class */
-  currentUserRankingInClass?: Maybe<UserInClassRanking>
+  currentUserRankingInClass: UserInClassRanking
   /** Get current user's workout stats for a specific enrollment */
   currentUserSingleWorkoutStat?: Maybe<ClassStat>
-  /** Get current user's workout stats */
+  /**
+   * Get current user's workout stats
+   * @deprecated Use currentUserWorkoutStatsPaginated instead
+   */
   currentUserWorkoutStats: Array<Maybe<ClassStat>>
+  currentUserWorkoutStatsPaginated: PaginatedClassStats
   /** Returns a specific room layout */
   roomLayout?: Maybe<RoomLayout>
   /** Returns a list of available RoomLayouts for a site */
@@ -762,6 +772,7 @@ export type Query = {
   userRankingInClass?: Maybe<UserInClassRanking>
   /** Returns a list of workhout stats */
   userWorkoutStats: Array<Maybe<ClassStat>>
+  userWorkoutStatsPaginated: PaginatedClassStats
 }
 
 export type QueryAvailableClassTypesArgs = {
@@ -814,6 +825,11 @@ export type QueryCurrentUserWorkoutStatsArgs = {
   site: SiteEnum
 }
 
+export type QueryCurrentUserWorkoutStatsPaginatedArgs = {
+  pagination?: InputMaybe<PaginationInput>
+  site: SiteEnum
+}
+
 export type QueryRoomLayoutArgs = {
   id: Scalars['ID']
   site: SiteEnum
@@ -851,6 +867,12 @@ export type QueryUserRankingInClassArgs = {
 }
 
 export type QueryUserWorkoutStatsArgs = {
+  site: SiteEnum
+  userId: Scalars['ID']
+}
+
+export type QueryUserWorkoutStatsPaginatedArgs = {
+  pagination?: InputMaybe<PaginationInput>
   site: SiteEnum
   userId: Scalars['ID']
 }
