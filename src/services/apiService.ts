@@ -1351,14 +1351,18 @@ export class ApiService {
     pagination: PaginationInput
   ): Promise<PaginatedClassStats> {
     const query = gql`
-      query userWorkoutStatsPaginated($site: SiteEnum!, $userId: ID!, $pagination: PaginationInput) {
+      query userWorkoutStatsPaginated(
+        $site: SiteEnum!
+        $userId: ID!
+        $pagination: PaginationInput
+      ) {
         userWorkoutStatsPaginated(site: $site, userId: $userId, pagination: $pagination) {
           classStats {
             enrollment {
               enrollmentInfo {
                 id
                 ... on EnrollmentInfo {
-                spotNumber
+                  spotNumber
                 }
               }
               class {

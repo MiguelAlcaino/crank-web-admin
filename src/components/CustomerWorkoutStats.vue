@@ -35,6 +35,7 @@ import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIn
 import CustomerWorkoutSummaryModal from '@/components/CustomerWorkoutSummaryModal.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
 import SendClassStatsToEmail from '@/components/SendClassStatsToEmail.vue'
+import PaginationComponent from '@/components/PaginationComponent.vue'
 
 const apiService = inject<ApiService>('gqlApiService')!
 
@@ -47,24 +48,40 @@ const isLoading = ref<boolean>(false)
 const errorModalIsVisible = ref<boolean>(false)
 const classStats = ref<ClassStat[]>([])
 
+const pageLimit = 20
+const currentPage = ref<number>(1)
+const total = ref<number>(0)
+
 onMounted(() => {
-  getUserWorkoutStats()
+  userWorkoutStatsPaginated()
 })
 
-async function getUserWorkoutStats() {
+async function userWorkoutStatsPaginated() {
   classStats.value = []
 
   try {
     isLoading.value = true
-    classStats.value = (await apiService.userWorkoutStats(
+    const paginatedClassStats = await apiService.userWorkoutStatsPaginated(
       appStore().site,
-      props.userId
-    )) as ClassStat[]
+      props.userId,
+      {
+        page: currentPage.value,
+        limit: pageLimit
+      }
+    )
+
+    total.value = paginatedClassStats.total
+    classStats.value = paginatedClassStats.classStats as ClassStat[]
   } catch (error) {
     errorModalIsVisible.value = true
   } finally {
     isLoading.value = false
   }
+}
+
+function pageChanged(page: number) {
+  currentPage.value = page
+  userWorkoutStatsPaginated()
 }
 </script>
 
@@ -74,12 +91,7 @@ async function getUserWorkoutStats() {
       <h5>WORKOUT STATS</h5>
     </div>
   </div>
-  <div class="row" v-if="isLoading">
-    <div class="col-12 text-center">
-      <CrankCircularProgressIndicator text="Loading..."></CrankCircularProgressIndicator>
-    </div>
-  </div>
-  <div class="row mt-3" v-else>
+  <div class="row mt-3">
     <div class="col-12">
       <div class="table-responsive">
         <table class="table table-sm">
@@ -118,6 +130,7 @@ async function getUserWorkoutStats() {
                   :classId="item.enrollment.class.id"
                   :userEmail="userEmail"
                   :enrollmentId="item.enrollment.enrollmentInfo.id"
+                  class="center-component"
                 ></SendClassStatsToEmail>
               </td>
             </tr>
@@ -127,10 +140,18 @@ async function getUserWorkoutStats() {
               </td>
             </tr>
             <tr v-if="isLoading">
-              <td colspan="7" class="text-center"><p>LOADING...</p></td>
+              <td colspan="7" class="text-center">
+                <CrankCircularProgressIndicator text="Loading..."></CrankCircularProgressIndicator>
+              </td>
             </tr>
           </tbody>
         </table>
+        <PaginationComponent
+          :page="currentPage"
+          :limit="pageLimit"
+          :total="total"
+          @page-changed="pageChanged"
+        ></PaginationComponent>
       </div>
     </div>
   </div>
@@ -153,5 +174,16 @@ async function getUserWorkoutStats() {
 p,
 td {
   font-family: 'Avenir', sans-serif;
+}
+
+.center-component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-component > * {
+  justify-content: start;
+  align-items: start;
 }
 </style>
