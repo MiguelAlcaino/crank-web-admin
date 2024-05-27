@@ -46,10 +46,10 @@ async function goBack() {
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-3 col-md-3 col-sm-4">
+    <div class="col-lg-3 col-md-6 col-sm-12 col-12">
       <CalendarList @select-class="selectClass" ref="calendarList"></CalendarList>
     </div>
-    <div class="col-lg-9 col-md-9 col-sm-8">
+    <div class="col-lg-9 col-md-6 col-sm-12 col-12">
       <ClassDetails
         :class-id="classId"
         @available-spots-changed="availableSpotsChanged"
