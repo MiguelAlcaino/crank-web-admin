@@ -21,6 +21,8 @@ import { appStore } from '@/stores/appStorage'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import dayjs from 'dayjs'
 import { inject, onMounted, ref } from 'vue'
+import VueDatePicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
 import ModalComponent from '@/components/ModalComponent.vue'
 import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIndicator.vue'
 import SyncAllClassesButton from '@/components/SyncAllClassesButton.vue'
@@ -38,6 +40,9 @@ const startDate = ref<Date>(dayjs(Date()).startOf('week').toDate())
 const endDate = ref<Date>(dayjs(Date()).endOf('week').toDate())
 const weekDays = ref<WeekDays[]>([])
 const userCanSyncClasses = ref<boolean>(false)
+
+const dateRange = ref<[Date, Date]>([startDate.value, endDate.value])
+const weekSelectorIsVisible = ref<boolean>(false)
 
 const selectedClassId = ref<string | null>(null)
 
@@ -57,6 +62,8 @@ defineExpose({
 
 async function getCalendarClasses(resetSelectedClass: boolean = true): Promise<void> {
   if (resetSelectedClass) selectClass(null)
+
+  dateRange.value = [startDate.value, endDate.value]
 
   weekDays.value = []
 
@@ -125,6 +132,19 @@ function selectClass(classId: string | null): void {
 function onAfterChangingSite(): void {
   getCalendarClasses()
 }
+
+const handleDate = (modelData: [Date, Date]) => {
+  startDate.value = modelData[0]
+  endDate.value = modelData[1]
+
+  getCalendarClasses()
+}
+
+const format = (modelData: [Date, Date]) => {
+  return `${dayjs(modelData[0]).format('DD/MM/YYYY')} to ${dayjs(modelData[1]).format(
+    'DD/MM/YYYY'
+  )}`
+}
 </script>
 
 <template>
@@ -137,16 +157,40 @@ function onAfterChangingSite(): void {
   <div class="ReservationClassList">
     <div id="DateRangeSection">
       <div style="display: flex; justify-content: space-between; width: 100%">
-        <div id="prev">
+        <VueDatePicker
+          v-model="dateRange"
+          week-picker
+          :enable-time-picker="false"
+          :clearable="false"
+          :format="format"
+          @update:model-value="handleDate"
+          v-if="weekSelectorIsVisible"
+          style="min-width: 233px"
+        />
+        <button
+          class="btn btn-sm"
+          type="button"
+          @click="weekSelectorIsVisible = !weekSelectorIsVisible"
+          v-if="weekSelectorIsVisible"
+        >
+          Cancel
+        </button>
+
+        <div id="prev" v-if="!weekSelectorIsVisible">
           <a href="#" @click.prevent="goToPrevWeek()">
             <i class="bi bi-caret-left-fill" style="color: black"></i>
           </a>
         </div>
-        <div id="dateRange" style="font-weight: 500">
+        <div
+          id="dateRange"
+          style="font-weight: 500; cursor: pointer"
+          v-if="!weekSelectorIsVisible"
+          @click="weekSelectorIsVisible = !weekSelectorIsVisible"
+        >
           {{ dayjs(startDate).format('DD/MM/YYYY') }} to
           {{ dayjs(endDate).format('DD/MM/YYYY') }}
         </div>
-        <div id="next">
+        <div id="next" v-if="!weekSelectorIsVisible">
           <a href="#" @click.prevent="goToNextWeek()" style="color: black">
             <i class="bi bi-caret-right-fill"></i>
           </a>
