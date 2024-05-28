@@ -150,6 +150,8 @@ watch(
   }
 )
 
+const setOnHoldSpotsIsVisible = false
+
 const apiService = inject<ApiService>('gqlApiService')!
 const isLoading = ref<boolean>(false)
 const classInfo = ref<ClassInfo | null>(null)
@@ -545,7 +547,7 @@ async function checkWaitlistIsEnable() {
           ></ViewWaitlistEntries>
           &nbsp;
           <SetOnHoldSpots
-            v-if="classInfo"
+            v-if="setOnHoldSpotsIsVisible && classInfo"
             :class-id="classId"
             @after-set-on-hold-spots="getClassInfo(true)"
             :on-hold-spots="classInfo?.onHoldSpots"
