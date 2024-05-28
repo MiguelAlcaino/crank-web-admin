@@ -151,6 +151,7 @@ watch(
 )
 
 const setOnHoldSpotsIsVisible = false
+const putUnderMaintenanceIsVisible = false
 
 const apiService = inject<ApiService>('gqlApiService')!
 const isLoading = ref<boolean>(false)
@@ -657,6 +658,7 @@ async function checkWaitlistIsEnable() {
           class="mr-1"
           :is-loading="isEnablingDisablingSpot"
           :disabled="classInfo?.class?.showAsDisabled === true"
+          v-if="putUnderMaintenanceIsVisible"
         ></DefaultButtonComponent>
       </div>
       <!-- Select under manteince spot options -->
