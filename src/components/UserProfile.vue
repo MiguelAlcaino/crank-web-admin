@@ -54,6 +54,7 @@ import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIn
 import CustomerWorkoutSummary from '@/components/CustomerWorkoutSummary.vue'
 import DefaultButtonComponent from '@/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
+import SendClassStatsToEmail from '@/components/SendClassStatsToEmail.vue'
 
 import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
@@ -71,8 +72,10 @@ const modalIsVisible = ref<boolean>(false)
 const errorModalIsVisible = ref<boolean>(false)
 const identifiableUser = ref<IdentifiableUser | null>(null)
 const editCustomerProfileUrl = ref<string | null | undefined>(props.editCustomerProfileUrl)
+const resendStatsIsVisible = ref<boolean>(false)
 
 function onClickViewProfile() {
+  resendStatsIsVisible.value = false
   getUser(props.userId)
   modalIsVisible.value = true
 }
@@ -81,6 +84,13 @@ async function getUser(userId: string) {
   try {
     isLoading.value = true
     identifiableUser.value = (await apiService.getUser(userId)) as IdentifiableUser
+
+    if (identifiableUser.value.user) {
+      identifiableUser.value.user.weight =
+        identifiableUser.value.user.weight !== null
+          ? +identifiableUser.value.user?.weight!.toFixed(2)
+          : undefined
+    }
 
     if (editCustomerProfileUrl.value) {
       editCustomerProfileUrl.value = props.editCustomerProfileUrl!.replace('REPLACE_ID', userId)
@@ -249,9 +259,19 @@ async function getUser(userId: string) {
                 :user-id="userId"
                 :class-id="classId"
                 :enrollment-id="enrollmentId"
+                @set-resend-stats-is-visible="resendStatsIsVisible = $event"
               ></CustomerWorkoutSummary>
             </div>
             <div class="modal-footer border-0">
+              <SendClassStatsToEmail
+                v-if="
+                  resendStatsIsVisible && identifiableUser?.user?.email && enrollmentId && classId
+                "
+                :classId="classId"
+                :userEmail="identifiableUser?.user?.email"
+                :enrollmentId="enrollmentId"
+              ></SendClassStatsToEmail>
+
               <a
                 v-if="editCustomerProfileUrl && isLoading === false"
                 :href="editCustomerProfileUrl"

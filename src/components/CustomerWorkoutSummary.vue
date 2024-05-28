@@ -60,6 +60,10 @@ const props = defineProps<{
   enrollmentId: string
 }>()
 
+const emits = defineEmits<{
+  (e: 'setResendStatsIsVisible', isVisible: boolean): void
+}>()
+
 const isLoading = ref<boolean>(false)
 const classStat = ref<ClassStat | null>(null)
 const errorModalIsVisible = ref<boolean>(false)
@@ -75,6 +79,8 @@ async function getSingleWorkoutStat() {
     isLoading.value = true
 
     classStat.value = (await apiService.singleWorkoutStat(props.enrollmentId)) as ClassStat
+
+    emits('setResendStatsIsVisible', classStat.value !== null)
   } catch (error) {
     errorModalIsVisible.value = true
   } finally {
