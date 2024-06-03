@@ -55,6 +55,9 @@ const urlSyncAll = ref<string>('#')
 
 const isSaving = ref(false)
 
+const isLoadingClassTypes = ref(false)
+const isLoadingRoomLayouts = ref(false)
+
 onMounted(() => {
   let _urlSyncAll = inject<any | undefined>('url-sync-all')
   if (_urlSyncAll) {
@@ -67,11 +70,11 @@ onMounted(() => {
 })
 
 async function getAvailableClassTypes() {
-  isLoading.value = true
+  isLoadingClassTypes.value = true
 
   types.value = (await apiService.availableClassTypes(appStore().site)) as string[]
 
-  isLoading.value = false
+  isLoadingClassTypes.value = false
 }
 
 async function getClassSchedules() {
@@ -88,13 +91,13 @@ async function getClassSchedules() {
 }
 
 async function getRoomLayouts() {
-  isLoading.value = true
+  isLoadingRoomLayouts.value = true
 
   roomLayouts.value = (await apiService.roomLayouts(appStore().site, null)) as RoomLayout[]
 
   filteredRoomLayouts.value = roomLayouts.value
 
-  isLoading.value = false
+  isLoadingRoomLayouts.value = false
 }
 
 function updateCheckedSet(id: string, checked: boolean): void {
@@ -428,6 +431,7 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
   background-color: #ff7f61 !important;
   border-color: #ff7f61 !important;
 }
+
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
   background-color: #ff7f61 !important;
   border-color: #ff7f61 !important;
