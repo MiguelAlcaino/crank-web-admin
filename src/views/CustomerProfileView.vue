@@ -24,6 +24,7 @@ interface User {
   state?: State
   weight?: number
   zipCode: string
+  siteUsers: SimpleSiteUser[]
 }
 
 interface Country {
@@ -34,6 +35,16 @@ interface Country {
 interface State {
   code: string
   name: string
+}
+
+interface SimpleSiteUser {
+  externalUserId: string
+  site: SiteEnum
+}
+
+enum SiteEnum {
+  AbuDhabi = 'abu_dhabi',
+  Dubai = 'dubai'
 }
 
 export enum GenderEnum {
@@ -115,7 +126,8 @@ async function goToLegacyView() {
         type="button"
         text="Legacy View"
         @on-click="goToLegacyView()"
-      ></DefaultButtonComponent>
+      >
+      </DefaultButtonComponent>
     </div>
   </div>
   <hr />
@@ -226,10 +238,12 @@ async function goToLegacyView() {
   <div class="row">
     <div class="col-12">
       <CustomerWorkoutStats
-        v-if="userId"
+        v-if="userId && identifiableUser?.user?.siteUsers"
         :user-id="userId"
         :user-email="identifiableUser?.user?.email"
-      ></CustomerWorkoutStats>
+        :user-sites="identifiableUser?.user?.siteUsers"
+      >
+      </CustomerWorkoutStats>
     </div>
   </div>
 

@@ -20,13 +20,22 @@ interface EnrollmentInfo {
   id: string
   spotNumber?: number
 }
+
+interface SimpleSiteUser {
+  externalUserId: string
+  site: SiteEnum
+}
+
+enum SiteEnum {
+  AbuDhabi = 'abu_dhabi',
+  Dubai = 'dubai'
+}
 </script>
 
 <script setup lang="ts">
 import { inject, onMounted, ref } from 'vue'
 import dayjs from 'dayjs'
 
-import { appStore } from '@/stores/appStorage'
 import type { ApiService } from '@/services/apiService'
 
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
@@ -36,12 +45,14 @@ import CustomerWorkoutSummaryModal from '@/components/CustomerWorkoutSummaryModa
 import ModalComponent from '@/components/ModalComponent.vue'
 import SendClassStatsToEmail from '@/components/SendClassStatsToEmail.vue'
 import PaginationComponent from '@/components/PaginationComponent.vue'
+import { authService, type AdminSite } from '@/services/authService'
 
 const apiService = inject<ApiService>('gqlApiService')!
 
 const props = defineProps<{
   userId: string
   userEmail?: string | null
+  userSites: SimpleSiteUser[]
 }>()
 
 const isLoading = ref<boolean>(false)
@@ -51,10 +62,29 @@ const classStats = ref<ClassStat[]>([])
 const pageLimit = 20
 const currentPage = ref<number>(1)
 const total = ref<number>(0)
+const siteItems = ref([] as AdminSite[])
+
+const selectedSite = ref<SiteEnum | null>(null)
 
 onMounted(() => {
+  getAvailableSites()
   userWorkoutStatsPaginated()
 })
+
+function getAvailableSites() {
+  const availableSites = authService.getAvailableSites()
+
+  for (const availableSite of availableSites) {
+    var index = props.userSites.findIndex((x) => x.site === availableSite.serviceKey)
+    if (index > -1) {
+      siteItems.value.push(availableSite)
+
+      if (selectedSite.value === null) {
+        selectedSite.value = availableSite.serviceKey as SiteEnum
+      }
+    }
+  }
+}
 
 async function userWorkoutStatsPaginated() {
   classStats.value = []
@@ -62,7 +92,7 @@ async function userWorkoutStatsPaginated() {
   try {
     isLoading.value = true
     const paginatedClassStats = await apiService.userWorkoutStatsPaginated(
-      appStore().site,
+      selectedSite.value as SiteEnum,
       props.userId,
       {
         page: currentPage.value,
@@ -83,6 +113,11 @@ function pageChanged(page: number) {
   currentPage.value = page
   userWorkoutStatsPaginated()
 }
+
+function onChangeSite() {
+  currentPage.value = 1
+  userWorkoutStatsPaginated()
+}
 </script>
 
 <template>
@@ -91,6 +126,22 @@ function pageChanged(page: number) {
       <h5>WORKOUT STATS</h5>
     </div>
   </div>
+  <div class="row mt-3">
+    <div class="col-xl-2 col-lg-3 col-md-6 col-sm-8 col-12">
+      <select
+        class="custom-select"
+        v-model="selectedSite"
+        @change="onChangeSite()"
+        id="countryRegistration"
+        required
+      >
+        <option v-for="(item, index) in siteItems" :key="index" :value="item.serviceKey">
+          {{ item.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
   <div class="row mt-3">
     <div class="col-12">
       <div class="table-responsive">
@@ -151,7 +202,8 @@ function pageChanged(page: number) {
           :limit="pageLimit"
           :total="total"
           @page-changed="pageChanged"
-        ></PaginationComponent>
+        >
+        </PaginationComponent>
       </div>
     </div>
   </div>
