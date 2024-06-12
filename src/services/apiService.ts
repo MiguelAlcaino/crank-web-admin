@@ -794,56 +794,13 @@ export class ApiService {
     return classInfo.class.waitListAvailable
   }
 
-  async syncClass(site: SiteEnum, classId: string): Promise<ClassInfo> {
+  async syncClass(site: SiteEnum, classId: string): Promise<boolean> {
     const mutation = gql`
       mutation syncClass($site: SiteEnum!, $classId: ID!) {
         syncClass(site: $site, classId: $classId) {
           class {
-            id
-            name
-            description
-            instructorName
-            start
-            startWithNoTimeZone
-            duration
-            waitListAvailable
+            isSynchronizing
           }
-          roomLayout {
-            id
-            name
-            matrix {
-              x
-              y
-              icon
-              ... on BookableSpot {
-                enabled
-                spotNumber
-              }
-            }
-          }
-          enrollments(status: active) {
-            id
-            enrollmentStatus
-            enrollmentDateTime
-            identifiableSiteUser {
-              id
-              identifiableUser {
-                id
-                user {
-                  firstName
-                  lastName
-                  email
-                  leaderboardUsername
-                }
-              }
-            }
-
-            ... on EnrollmentInfo {
-              isCheckedIn
-              spotNumber
-            }
-          }
-          onHoldSpots
         }
       }
     `
@@ -856,7 +813,8 @@ export class ApiService {
       fetchPolicy: 'no-cache'
     })
 
-    return result.data.syncClass as ClassInfo
+    const classInfo = result.data.syncClass as ClassInfo
+    return classInfo.class.isSynchronizing
   }
 
   async syncAllClasses(site: SiteEnum): Promise<Class[]> {

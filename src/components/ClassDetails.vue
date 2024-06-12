@@ -525,7 +525,7 @@ function initIntervalCheckSynchronizationClass() {
     } catch (error) {
       console.error(error)
     }
-  }, 2000)
+  }, 1000)
 }
 </script>
 
@@ -577,7 +577,7 @@ function initIntervalCheckSynchronizationClass() {
             <SyncClassButton
               v-if="classInfo?.class.id && userCanSyncClasses"
               :class-id="classInfo?.class.id"
-              @after-sync-class="getClassInfo()"
+              @after-sync-class="afterSyncClass"
             ></SyncClassButton>
           </div>
         </div>
