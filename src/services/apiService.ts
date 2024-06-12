@@ -1391,4 +1391,25 @@ export class ApiService {
 
     return queryResult.data.userWorkoutStatsPaginated as PaginatedClassStats
   }
+
+  async syncClassWithPiq(site: SiteEnum, classId: string): Promise<ClassInfo> {
+    // TODO: Implement this
+    const mutation = gql`
+      mutation syncClass($site: SiteEnum!, $classId: ID!) {
+        syncClass(site: $site, classId: $classId) {
+          __typename
+        }
+      }
+    `
+    const result = await this.authApiClient.mutate({
+      mutation: mutation,
+      variables: {
+        site: site,
+        classId: classId
+      },
+      fetchPolicy: 'no-cache'
+    })
+
+    return result.data.syncClass as ClassInfo
+  }
 }
