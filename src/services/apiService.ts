@@ -98,6 +98,7 @@ export class ApiService {
             maxCapacity
             isSubstitute
             hasClassStats
+            isSynchronizing
           }
           roomLayout {
             id
@@ -1392,7 +1393,7 @@ export class ApiService {
     return queryResult.data.userWorkoutStatsPaginated as PaginatedClassStats
   }
 
-  async syncClassWithPIQ(site: SiteEnum, classId: string): Promise<ClassInfo> {
+  async syncClassWithPIQ(site: SiteEnum, classId: string): Promise<boolean> {
     const mutation = gql`
       mutation syncClassWithPIQ($site: SiteEnum!, $classId: ID!) {
         syncClassWithPIQ(site: $site, classId: $classId) {
@@ -1411,6 +1412,33 @@ export class ApiService {
       fetchPolicy: 'no-cache'
     })
 
-    return result.data.syncClass as ClassInfo
+    const classInfo = result.data.syncClassWithPIQ as ClassInfo
+
+    return classInfo.class.isSynchronizing
+  }
+
+  async checkIfClassIsSynchronized(site: SiteEnum, id: string): Promise<boolean> {
+    const query = gql`
+      query checkIfClassIsSynchronized($site: SiteEnum!, $id: ID!) {
+        classInfo(site: $site, id: $id) {
+          class {
+            isSynchronizing
+          }
+        }
+      }
+    `
+
+    const queryResult = await this.authApiClient.query({
+      query: query,
+      variables: {
+        site: site,
+        id: id
+      },
+      fetchPolicy: 'network-only'
+    })
+
+    const classInfo = queryResult.data.classInfo as ClassInfo
+
+    return classInfo.class.isSynchronizing
   }
 }

@@ -11,7 +11,7 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<{
-  (e: 'afterSyncClassWithPiq'): void
+  (e: 'afterSyncClassWithPiq', isSynchronizing: boolean): void
 }>()
 
 const apiService = inject<ApiService>('gqlApiService')!
@@ -22,8 +22,8 @@ async function syncClassWithPIQ() {
   isSyncing.value = true
 
   try {
-    await apiService.syncClassWithPIQ(appStore().site, props.classId)
-    emits('afterSyncClassWithPiq')
+    const isSynchronizing = await apiService.syncClassWithPIQ(appStore().site, props.classId)
+    emits('afterSyncClassWithPiq', isSynchronizing)
   } catch (error) {
     errorModalIsVisible.value = true
   } finally {

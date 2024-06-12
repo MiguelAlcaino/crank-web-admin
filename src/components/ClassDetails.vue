@@ -37,6 +37,7 @@ interface Class {
   maxCapacity: number
   isSubstitute: boolean
   hasClassStats: boolean
+  isSynchronizing: boolean
 }
 
 interface EnrollmentInfo {
@@ -173,6 +174,8 @@ const userCanCheckInCheckOut = ref<boolean>(false)
 const checkingWaitlist = ref<boolean>(false)
 const userIdsToHide = ref<string[]>([])
 
+const isSynchronizing = ref(false)
+
 const errorModalData = ref<{
   title: string
   message: string
@@ -243,6 +246,10 @@ async function getClassInfo(checkWaitList?: boolean | null) {
     props.classId
   )) as ClassInfo
 
+  isSynchronizing.value = classInfo.value?.class.isSynchronizing
+  if (isSynchronizing.value) {
+    initIntervalCheckSynchronizationClass()
+  }
   waitListAvailable.value = classInfo.value?.class.waitListAvailable ?? false
 
   enrollments.value =
@@ -489,6 +496,37 @@ async function checkWaitlistIsEnable() {
     checkingWaitlist.value = false
   }
 }
+
+function afterSyncClass(isSynchronizingClass: boolean) {
+  isSynchronizing.value = isSynchronizingClass
+  if (isSynchronizingClass == false) {
+    getClassInfo()
+  } else {
+    initIntervalCheckSynchronizationClass()
+  }
+}
+
+const intervalId = ref<number | null>(null)
+
+function initIntervalCheckSynchronizationClass() {
+  intervalId.value = window.setInterval(async () => {
+    try {
+      const isSynchronizingClass = await apiService.checkIfClassIsSynchronized(
+        appStore().site,
+        props.classId!
+      ) // Reemplaza esto con tu llamada a la API
+      isSynchronizing.value = isSynchronizingClass
+
+      if (!isSynchronizingClass) {
+        clearInterval(intervalId.value!)
+        intervalId.value = null
+        getClassInfo()
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }, 2000)
+}
 </script>
 
 <template>
@@ -506,7 +544,7 @@ async function checkWaitlistIsEnable() {
     <div v-else>
       <!-- Class Description -->
       <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-9">
           <h4 v-if="classInfo?.class?.showAsDisabled === true">CLASS CANCELLED</h4>
           <h4>
             {{ classInfo?.class?.name }} -
@@ -521,16 +559,27 @@ async function checkWaitlistIsEnable() {
             {{ classInfo?.class?.duration }} mins
           </h5>
         </div>
-        <div class="col-md-2">
-          <!-- TODO: Add SyncClassWithPiqButton -->
-          <!-- <SyncClassWithPiqButton v-if="classInfo?.class.id && userCanSyncClasses" :class-id="classInfo?.class.id"
-            @after-sync-class-with-piq="getClassInfo()"></SyncClassWithPiqButton>
-          &nbsp; -->
-          <SyncClassButton
-            v-if="classInfo?.class.id && userCanSyncClasses"
-            :class-id="classInfo?.class.id"
-            @after-sync-class="getClassInfo()"
-          ></SyncClassButton>
+        <div class="col-md-3">
+          <div v-if="isSynchronizing">
+            <h6>
+              synchronizing...&nbsp;<span
+                class="spinner-border spinner-border-sm crankSpiner"
+              ></span>
+            </h6>
+          </div>
+          <div v-else>
+            <SyncClassWithPiqButton
+              v-if="classInfo?.class.id && userCanSyncClasses"
+              :class-id="classInfo?.class.id"
+              @after-sync-class-with-piq="afterSyncClass"
+            ></SyncClassWithPiqButton>
+            &nbsp;
+            <SyncClassButton
+              v-if="classInfo?.class.id && userCanSyncClasses"
+              :class-id="classInfo?.class.id"
+              @after-sync-class="getClassInfo()"
+            ></SyncClassButton>
+          </div>
         </div>
       </div>
 
@@ -894,5 +943,9 @@ async function checkWaitlistIsEnable() {
   box-shadow: 0 0 2px 0 #888;
   padding: 30px;
   font-family: 'Avenir', sans-serif;
+}
+
+.crankSpiner {
+  color: #ff6f60;
 }
 </style>
