@@ -34,11 +34,12 @@ async function syncClass() {
 
 <template>
   <DefaultButtonComponent
-    text="SYNC CLASS"
+    text="SYNC WITH MB"
     type="button"
     :is-loading="isSyncing"
     @on-click="syncClass"
-  ></DefaultButtonComponent>
+  >
+  </DefaultButtonComponent>
 
   <!-- ERROR modal -->
   <ModalComponent
