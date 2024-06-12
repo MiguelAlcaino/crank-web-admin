@@ -161,6 +161,7 @@ export type Class = {
   id: Scalars['ID']
   instructorName: Scalars['String']
   isSubstitute: Scalars['Boolean']
+  isSynchronizing: Scalars['Boolean']
   maxCapacity: Scalars['Int']
   name: Scalars['String']
   showAsDisabled: Scalars['Boolean']
@@ -496,6 +497,8 @@ export type Mutation = {
   syncAllClasses: Array<Class>
   /** Sync one class */
   syncClass: ClassInfo
+  /** Sync a class with PIQ */
+  syncClassWithPIQ: ClassInfo
   /** Updates the current user */
   updateCurrentUser?: Maybe<User>
   /** Updates a user's password in all the sites */
@@ -649,6 +652,11 @@ export type MutationSyncClassArgs = {
   site: SiteEnum
 }
 
+export type MutationSyncClassWithPiqArgs = {
+  classId: Scalars['ID']
+  site: SiteEnum
+}
+
 export type MutationUpdateCurrentUserArgs = {
   input: UserInput
 }
@@ -673,6 +681,12 @@ export type PaginatedClassStats = PaginatedResult & {
 export type PaginatedEnrollments = PaginatedResult & {
   __typename: 'PaginatedEnrollments'
   enrollments: Array<Enrollment>
+  total: Scalars['Int']
+}
+
+export type PaginatedPurchases = PaginatedResult & {
+  __typename: 'PaginatedPurchases'
+  purchases: Array<Purchase>
   total: Scalars['Int']
 }
 
@@ -715,6 +729,8 @@ export type Purchase = {
   activationDateTime: Scalars['DateTime']
   allowanceObtained: Scalars['Int']
   allowanceRemaining: Scalars['Int']
+  /** Whether a package can be used or not */
+  current: Scalars['Boolean']
   expirationDateTime: Scalars['DateTime']
   packageName: Scalars['String']
   paymentDateTime: Scalars['DateTime']
@@ -744,6 +760,7 @@ export type Query = {
   currentUserEnrollmentsPaginated: PaginatedEnrollments
   /** List of purchases made by the current */
   currentUserPurchases?: Maybe<Array<Maybe<Purchase>>>
+  currentUserPurchasesPaginated: PaginatedPurchases
   /** Get current user's ranking on a specific class */
   currentUserRankingInClass: UserInClassRanking
   /** Get current user's workout stats for a specific enrollment */
@@ -809,6 +826,11 @@ export type QueryCurrentUserEnrollmentsPaginatedArgs = {
 }
 
 export type QueryCurrentUserPurchasesArgs = {
+  site?: InputMaybe<SiteEnum>
+}
+
+export type QueryCurrentUserPurchasesPaginatedArgs = {
+  pagination?: InputMaybe<PaginationInput>
   site?: InputMaybe<SiteEnum>
 }
 
@@ -1936,6 +1958,31 @@ export type SendClassStatsToEmailMutationVariables = Exact<{
 export type SendClassStatsToEmailMutation = {
   __typename: 'Mutation'
   sendClassStatsToEmail?: boolean | null
+}
+
+export type UserWorkoutStatsPaginatedQueryVariables = Exact<{
+  site: SiteEnum
+  userId: Scalars['ID']
+  pagination?: InputMaybe<PaginationInput>
+}>
+
+export type UserWorkoutStatsPaginatedQuery = {
+  __typename: 'Query'
+  userWorkoutStatsPaginated: {
+    __typename: 'PaginatedClassStats'
+    total: number
+    classStats: Array<{
+      __typename: 'ClassStat'
+      totalEnergy?: number | null
+      enrollment: {
+        __typename: 'Enrollment'
+        enrollmentInfo:
+          | { __typename: 'EnrollmentInfo'; spotNumber?: number | null; id: string }
+          | { __typename: 'WaitlistEntry'; id: string }
+        class: { __typename: 'Class'; id: string; name: string; start: any; duration: number }
+      }
+    }>
+  }
 }
 
 export const SiteSettingsDocument = {
@@ -4692,3 +4739,129 @@ export const SendClassStatsToEmailDocument = {
     }
   ]
 } as unknown as DocumentNode<SendClassStatsToEmailMutation, SendClassStatsToEmailMutationVariables>
+export const UserWorkoutStatsPaginatedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'userWorkoutStatsPaginated' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'pagination' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'PaginationInput' } }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'userWorkoutStatsPaginated' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'site' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'userId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'pagination' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'pagination' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'classStats' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'enrollment' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'enrollmentInfo' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                                  {
+                                    kind: 'InlineFragment',
+                                    typeCondition: {
+                                      kind: 'NamedType',
+                                      name: { kind: 'Name', value: 'EnrollmentInfo' }
+                                    },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'spotNumber' }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'class' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'start' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'duration' } }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'totalEnergy' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'total' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  UserWorkoutStatsPaginatedQuery,
+  UserWorkoutStatsPaginatedQueryVariables
+>

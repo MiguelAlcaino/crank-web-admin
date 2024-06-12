@@ -18,11 +18,11 @@ const apiService = inject<ApiService>('gqlApiService')!
 const isSyncing = ref(false)
 const errorModalIsVisible = ref(false)
 
-async function syncClass() {
+async function syncClassWithPIQ() {
   isSyncing.value = true
 
   try {
-    await apiService.syncClassWithPiq(appStore().site, props.classId)
+    await apiService.syncClassWithPIQ(appStore().site, props.classId)
     emits('afterSyncClassWithPiq')
   } catch (error) {
     errorModalIsVisible.value = true
@@ -37,7 +37,7 @@ async function syncClass() {
     text="SYNC WITH PIQ"
     type="button"
     :is-loading="isSyncing"
-    @on-click="syncClass"
+    @on-click="syncClassWithPIQ"
   >
   </DefaultButtonComponent>
 

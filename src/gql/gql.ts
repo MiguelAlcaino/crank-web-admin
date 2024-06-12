@@ -88,7 +88,9 @@ const documents = {
   '\n      mutation sendClassStatsToUsers($classId: ID!) {\n        sendClassStatsToUsers(classId: $classId)\n      }\n    ':
     types.SendClassStatsToUsersDocument,
   '\n      mutation sendClassStatsToEmail($input: SendClassStatsToEmailInput!) {\n        sendClassStatsToEmail(input: $input)\n      }\n    ':
-    types.SendClassStatsToEmailDocument
+    types.SendClassStatsToEmailDocument,
+  '\n      query userWorkoutStatsPaginated(\n        $site: SiteEnum!\n        $userId: ID!\n        $pagination: PaginationInput\n      ) {\n        userWorkoutStatsPaginated(site: $site, userId: $userId, pagination: $pagination) {\n          classStats {\n            enrollment {\n              enrollmentInfo {\n                id\n                ... on EnrollmentInfo {\n                  spotNumber\n                }\n              }\n              class {\n                id\n                name\n                start\n                duration\n              }\n            }\n            totalEnergy\n          }\n          total\n        }\n      }\n    ':
+    types.UserWorkoutStatsPaginatedDocument
 }
 
 /**
@@ -333,6 +335,12 @@ export function graphql(
 export function graphql(
   source: '\n      mutation sendClassStatsToEmail($input: SendClassStatsToEmailInput!) {\n        sendClassStatsToEmail(input: $input)\n      }\n    '
 ): (typeof documents)['\n      mutation sendClassStatsToEmail($input: SendClassStatsToEmailInput!) {\n        sendClassStatsToEmail(input: $input)\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n      query userWorkoutStatsPaginated(\n        $site: SiteEnum!\n        $userId: ID!\n        $pagination: PaginationInput\n      ) {\n        userWorkoutStatsPaginated(site: $site, userId: $userId, pagination: $pagination) {\n          classStats {\n            enrollment {\n              enrollmentInfo {\n                id\n                ... on EnrollmentInfo {\n                  spotNumber\n                }\n              }\n              class {\n                id\n                name\n                start\n                duration\n              }\n            }\n            totalEnergy\n          }\n          total\n        }\n      }\n    '
+): (typeof documents)['\n      query userWorkoutStatsPaginated(\n        $site: SiteEnum!\n        $userId: ID!\n        $pagination: PaginationInput\n      ) {\n        userWorkoutStatsPaginated(site: $site, userId: $userId, pagination: $pagination) {\n          classStats {\n            enrollment {\n              enrollmentInfo {\n                id\n                ... on EnrollmentInfo {\n                  spotNumber\n                }\n              }\n              class {\n                id\n                name\n                start\n                duration\n              }\n            }\n            totalEnergy\n          }\n          total\n        }\n      }\n    ']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}

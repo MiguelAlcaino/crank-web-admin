@@ -1392,12 +1392,13 @@ export class ApiService {
     return queryResult.data.userWorkoutStatsPaginated as PaginatedClassStats
   }
 
-  async syncClassWithPiq(site: SiteEnum, classId: string): Promise<ClassInfo> {
-    // TODO: Implement this
+  async syncClassWithPIQ(site: SiteEnum, classId: string): Promise<ClassInfo> {
     const mutation = gql`
-      mutation syncClass($site: SiteEnum!, $classId: ID!) {
-        syncClass(site: $site, classId: $classId) {
-          __typename
+      mutation syncClassWithPIQ($site: SiteEnum!, $classId: ID!) {
+        syncClassWithPIQ(site: $site, classId: $classId) {
+          class {
+            isSynchronizing
+          }
         }
       }
     `
