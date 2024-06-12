@@ -121,6 +121,7 @@ import SetOnHoldSpots from '@/components/SetOnHoldSpots.vue'
 import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIndicator.vue'
 import UserProfile from '@/components/UserProfile.vue'
 import SyncClassButton from '@/components/SyncClassButton.vue'
+import SyncClassWithPiqButton from '@/components/SyncClassWithPiqButton.vue'
 import SendClassStatsToUsers from '@/components/SendClassStatsToUsers.vue'
 
 import {
@@ -521,6 +522,10 @@ async function checkWaitlistIsEnable() {
           </h5>
         </div>
         <div class="col-md-2">
+          <!-- TODO: Add SyncClassWithPiqButton -->
+          <!-- <SyncClassWithPiqButton v-if="classInfo?.class.id && userCanSyncClasses" :class-id="classInfo?.class.id"
+            @after-sync-class-with-piq="getClassInfo()"></SyncClassWithPiqButton>
+          &nbsp; -->
           <SyncClassButton
             v-if="classInfo?.class.id && userCanSyncClasses"
             :class-id="classInfo?.class.id"
@@ -545,7 +550,8 @@ async function checkWaitlistIsEnable() {
           <ViewWaitlistEntries
             :class-id="classId"
             :disabled="classInfo?.class?.showAsDisabled === true"
-          ></ViewWaitlistEntries>
+          >
+          </ViewWaitlistEntries>
           &nbsp;
           <SetOnHoldSpots
             v-if="setOnHoldSpotsIsVisible && classInfo"
@@ -671,7 +677,8 @@ async function checkWaitlistIsEnable() {
           class="mr-1"
           :is-loading="isEnablingDisablingSpot"
           :disabled="classInfo?.class?.showAsDisabled === true"
-        ></DefaultButtonComponent>
+        >
+        </DefaultButtonComponent>
       </div>
 
       <!-- Select booked spot options -->
@@ -762,7 +769,8 @@ async function checkWaitlistIsEnable() {
         :is-checked-in="selectedSpot.isCheckedIn"
         @after-check-in-check-out="getClassInfo()"
         :disabled="classInfo?.class?.showAsDisabled === true"
-      ></CheckInCheckOutUserInClass>
+      >
+      </CheckInCheckOutUserInClass>
 
       <UserProfile
         v-if="
@@ -790,7 +798,8 @@ async function checkWaitlistIsEnable() {
           @after-enrolling="afterEnrollingUser()"
           :is-waitlist-booking="false"
           :user-ids-to-hide="userIdsToHide"
-        ></EnrollSelectedMemberComponent>
+        >
+        </EnrollSelectedMemberComponent>
       </div>
 
       <br />
@@ -810,14 +819,15 @@ async function checkWaitlistIsEnable() {
           </div>
         </div>
       </div>
-    </div>
-    <br />
-    <div class="row">
-      <div class="col-12">
-        <SendClassStatsToUsers
-          v-if="classInfo?.class?.id && classInfo?.class?.hasClassStats"
-          :class-id="classInfo?.class?.id"
-        ></SendClassStatsToUsers>
+
+      <br />
+      <div class="row">
+        <div class="col-12">
+          <SendClassStatsToUsers
+            v-if="classInfo?.class?.id && classInfo?.class?.hasClassStats"
+            :class-id="classInfo?.class?.id"
+          ></SendClassStatsToUsers>
+        </div>
       </div>
     </div>
   </div>
