@@ -36,6 +36,7 @@ async function syncClass() {
   <DefaultButtonComponent
     text="SYNC WITH MB"
     type="button"
+    size="sm"
     :is-loading="isSyncing"
     @on-click="syncClass"
   >

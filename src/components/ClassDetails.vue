@@ -542,24 +542,8 @@ function initIntervalCheckSynchronizationClass() {
       </div>
     </div>
     <div v-else>
-      <!-- Class Description -->
       <div class="row">
-        <div class="col-md-9">
-          <h4 v-if="classInfo?.class?.showAsDisabled === true">CLASS CANCELLED</h4>
-          <h4>
-            {{ classInfo?.class?.name }} -
-            {{
-              classInfo?.class?.instructorName +
-              (classInfo?.class?.isSubstitute ? ' (Substitute)' : '')
-            }}
-            ({{ dayjs(classInfo?.class.startWithNoTimeZone).format('DD/MM/YYYY') }})
-          </h4>
-          <h5>
-            Time : {{ dayjs(classInfo?.class.startWithNoTimeZone).format('hh:mm A') }} | Duration :
-            {{ classInfo?.class?.duration }} mins
-          </h5>
-        </div>
-        <div class="col-md-3">
+        <div class="col-12 text-right">
           <div v-if="isSynchronizing">
             <h6>
               synchronizing...&nbsp;<span
@@ -582,6 +566,27 @@ function initIntervalCheckSynchronizationClass() {
           </div>
         </div>
       </div>
+      <br />
+
+      <!-- Class Description -->
+      <div class="row">
+        <div class="col-md-12">
+          <h4 v-if="classInfo?.class?.showAsDisabled === true">CLASS CANCELLED</h4>
+          <h4>
+            {{ classInfo?.class?.name }} -
+            {{
+              classInfo?.class?.instructorName +
+              (classInfo?.class?.isSubstitute ? ' (Substitute)' : '')
+            }}
+            ({{ dayjs(classInfo?.class.startWithNoTimeZone).format('DD/MM/YYYY') }})
+          </h4>
+          <h5>
+            Time : {{ dayjs(classInfo?.class.startWithNoTimeZone).format('hh:mm A') }} | Duration :
+            {{ classInfo?.class?.duration }} mins
+          </h5>
+        </div>
+      </div>
+      <br />
 
       <!-- Change Layout Class and View Waitlist Entries Options -->
       <div class="row" v-if="userCanModifyClass">

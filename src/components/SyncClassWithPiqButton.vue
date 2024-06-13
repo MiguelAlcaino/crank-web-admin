@@ -36,6 +36,7 @@ async function syncClassWithPIQ() {
   <DefaultButtonComponent
     text="SYNC WITH PIQ"
     type="button"
+    size="sm"
     :is-loading="isSyncing"
     @on-click="syncClassWithPIQ"
   >
