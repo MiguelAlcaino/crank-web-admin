@@ -176,6 +176,9 @@ const userIdsToHide = ref<string[]>([])
 
 const isSynchronizing = ref(false)
 
+const syncWithMbButtonIsDisabled = ref(false)
+const syncWithPiqButtonIsDisabled = ref(false)
+
 const errorModalData = ref<{
   title: string
   message: string
@@ -527,6 +530,11 @@ function initIntervalCheckSynchronizationClass() {
     }
   }, 1000)
 }
+
+function disableSyncButtons(disabled: boolean) {
+  syncWithMbButtonIsDisabled.value = disabled
+  syncWithPiqButtonIsDisabled.value = disabled
+}
 </script>
 
 <template>
@@ -556,12 +564,17 @@ function initIntervalCheckSynchronizationClass() {
               v-if="classInfo?.class.id && userCanSyncClasses"
               :class-id="classInfo?.class.id"
               @after-sync-class-with-piq="afterSyncClass"
-            ></SyncClassWithPiqButton>
+              :disabled="syncWithPiqButtonIsDisabled"
+              @disableSyncButtons="disableSyncButtons"
+            >
+            </SyncClassWithPiqButton>
             &nbsp;
             <SyncClassButton
               v-if="classInfo?.class.id && userCanSyncClasses"
               :class-id="classInfo?.class.id"
               @after-sync-class="afterSyncClass"
+              :disabled="syncWithMbButtonIsDisabled"
+              @disableSyncButtons="disableSyncButtons"
             ></SyncClassButton>
           </div>
         </div>

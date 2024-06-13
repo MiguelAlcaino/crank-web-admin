@@ -8,10 +8,12 @@ import { inject, ref } from 'vue'
 
 const props = defineProps<{
   classId: string
+  disabled: boolean
 }>()
 
 const emits = defineEmits<{
   (e: 'afterSyncClass', isSynchronizing: boolean): void
+  (e: 'disableSyncButtons', disabled: boolean): void
 }>()
 
 const apiService = inject<ApiService>('gqlApiService')!
@@ -20,14 +22,18 @@ const errorModalIsVisible = ref(false)
 
 async function syncClass() {
   isSyncing.value = true
+  emits('disableSyncButtons', true)
+
+  var isSynchronizing = false
 
   try {
-    const isSynchronizing = await apiService.syncClass(appStore().site, props.classId)
-    emits('afterSyncClass', isSynchronizing)
+    isSynchronizing = await apiService.syncClass(appStore().site, props.classId)
   } catch (error) {
     errorModalIsVisible.value = true
   } finally {
     isSyncing.value = false
+    emits('disableSyncButtons', false)
+    emits('afterSyncClass', isSynchronizing)
   }
 }
 </script>
@@ -39,6 +45,7 @@ async function syncClass() {
     size="sm"
     :is-loading="isSyncing"
     @on-click="syncClass"
+    :disabled="disabled"
   >
   </DefaultButtonComponent>
 
