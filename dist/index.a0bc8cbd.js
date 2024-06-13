@@ -12078,7 +12078,7 @@ const yE = /* @__PURE__ */ An(uE, [["render", vE]]), ur = _S({
     {
       path: "/admin/calendar-class",
       name: "admin_calendar_class",
-      component: () => import("./AdminClassView.96b524bc.js")
+      component: () => import("./AdminClassView.40f5bd3a.js")
     },
     {
       path: "/admin/room-layout/list",
@@ -12103,7 +12103,7 @@ const yE = /* @__PURE__ */ An(uE, [["render", vE]]), ur = _S({
     {
       path: "/customer-profile/:id",
       name: "customer_profile",
-      component: () => import("./CustomerProfileView.274a4a22.js")
+      component: () => import("./CustomerProfileView.a6202b3d.js")
     }
   ]
 });
@@ -38890,7 +38890,7 @@ const OH = /* @__PURE__ */ An(PH, [["__scopeId", "data-v-79c350f5"]]), TH = { cl
   }
 });
 var jo = /* @__PURE__ */ ((A) => (A.ROLE_SUPER_ADMIN = "ROLE_SUPER_ADMIN", A.ROLE_ADMIN_MANAGER = "ROLE_ADMIN_MANAGER", A.ROLE_STAFF = "ROLE_STAFF", A.ROLE_USER = "ROLE_USER", A.ROLE_MINDBODY_USER = "ROLE_MINDBODY_USER", A.ROLE_INSTRUCTOR = "ROLE_INSTRUCTOR", A))(jo || {});
-const sr = (A) => (gn("data-v-9be2586e"), A = A(), pn(), A), Iz = { class: "ClassDetails" }, kz = { key: 0 }, _z = /* @__PURE__ */ sr(() => /* @__PURE__ */ E("h2", { style: { margin: "0 auto", "text-align": "center" } }, "Please select a class", -1)), Sz = [
+const sr = (A) => (gn("data-v-843971a0"), A = A(), pn(), A), Iz = { class: "ClassDetails" }, kz = { key: 0 }, _z = /* @__PURE__ */ sr(() => /* @__PURE__ */ E("h2", { style: { margin: "0 auto", "text-align": "center" } }, "Please select a class", -1)), Sz = [
   _z
 ], $z = { key: 1 }, Ez = { class: "row" }, Dz = { class: "col-12 text-center" }, Pz = { key: 2 }, Oz = { class: "row" }, Tz = { class: "col-12 text-right" }, Nz = { key: 0 }, Mz = /* @__PURE__ */ sr(() => /* @__PURE__ */ E("h6", null, [
   /* @__PURE__ */ Ie(" synchronizing...\xA0"),
@@ -38961,7 +38961,7 @@ const sr = (A) => (gn("data-v-9be2586e"), A = A(), pn(), A), Iz = { class: "Clas
       q(), Q();
     });
     function q() {
-      x.value = Zi.userHasRole(jo.ROLE_STAFF), S.value = Zi.userHasRole(jo.ROLE_SUPER_ADMIN), O.value = Zi.userHasRole(jo.ROLE_INSTRUCTOR);
+      x.value = Zi.userHasRole(jo.ROLE_STAFF), S.value = Zi.userHasRole(jo.ROLE_STAFF), O.value = Zi.userHasRole(jo.ROLE_INSTRUCTOR);
     }
     async function Q(FA) {
       var kA, IA, DA, RA, BA, EA, XA;
@@ -39335,7 +39335,7 @@ const sr = (A) => (gn("data-v-9be2586e"), A = A(), pn(), A), Iz = { class: "Clas
     };
   }
 });
-const fj = /* @__PURE__ */ An(hj, [["__scopeId", "data-v-9be2586e"]]), gj = /* @__PURE__ */ Pe({
+const fj = /* @__PURE__ */ An(hj, [["__scopeId", "data-v-843971a0"]]), gj = /* @__PURE__ */ Pe({
   __name: "SyncAllClassesButton",
   props: {
     disabled: { type: Boolean }
