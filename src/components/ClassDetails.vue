@@ -234,7 +234,7 @@ onMounted(() => {
 
 function setPermissionsByRole() {
   userCanModifyClass.value = authService.userHasRole(Role.ROLE_STAFF)
-  userCanSyncClasses.value = authService.userHasRole(Role.ROLE_SUPER_ADMIN)
+  userCanSyncClasses.value = authService.userHasRole(Role.ROLE_STAFF)
   userCanCheckInCheckOut.value = authService.userHasRole(Role.ROLE_INSTRUCTOR)
 }
 
