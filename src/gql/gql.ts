@@ -57,6 +57,8 @@ const documents = {
     types.ClassWaitlistIsEnabledDocument,
   '\n      mutation syncClass($site: SiteEnum!, $classId: ID!) {\n        syncClass(site: $site, classId: $classId) {\n          class {\n            isSynchronizing\n          }\n        }\n      }\n    ':
     types.SyncClassDocument,
+  '\n      mutation syncAllClasses($site: SiteEnum!) {\n        syncAllClasses(site: $site)\n      }\n    ':
+    types.SyncAllClassesDocument,
   '\n      query Countries {\n        countries {\n          name\n          code\n        }\n      }\n    ':
     types.CountriesDocument,
   '\n      query country($countryCode: String!) {\n        country(countryCode: $countryCode) {\n          name\n          code\n          states {\n            name\n            code\n          }\n        }\n      }\n    ':
@@ -92,7 +94,9 @@ const documents = {
   '\n      mutation syncClassWithPIQ($site: SiteEnum!, $classId: ID!) {\n        syncClassWithPIQ(site: $site, classId: $classId) {\n          class {\n            isSynchronizing\n          }\n        }\n      }\n    ':
     types.SyncClassWithPiqDocument,
   '\n      query checkIfClassIsSynchronized($site: SiteEnum!, $id: ID!) {\n        classInfo(site: $site, id: $id) {\n          class {\n            isSynchronizing\n          }\n        }\n      }\n    ':
-    types.CheckIfClassIsSynchronizedDocument
+    types.CheckIfClassIsSynchronizedDocument,
+  '\n      query checkIfAllClassAreSynchronized($site: SiteEnum!) {\n        siteSettings(site: $site) {\n          isSynchronizingClasses\n        }\n      }\n    ':
+    types.CheckIfAllClassAreSynchronizedDocument
 }
 
 /**
@@ -245,6 +249,12 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
+  source: '\n      mutation syncAllClasses($site: SiteEnum!) {\n        syncAllClasses(site: $site)\n      }\n    '
+): (typeof documents)['\n      mutation syncAllClasses($site: SiteEnum!) {\n        syncAllClasses(site: $site)\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
   source: '\n      query Countries {\n        countries {\n          name\n          code\n        }\n      }\n    '
 ): (typeof documents)['\n      query Countries {\n        countries {\n          name\n          code\n        }\n      }\n    ']
 /**
@@ -349,6 +359,12 @@ export function graphql(
 export function graphql(
   source: '\n      query checkIfClassIsSynchronized($site: SiteEnum!, $id: ID!) {\n        classInfo(site: $site, id: $id) {\n          class {\n            isSynchronizing\n          }\n        }\n      }\n    '
 ): (typeof documents)['\n      query checkIfClassIsSynchronized($site: SiteEnum!, $id: ID!) {\n        classInfo(site: $site, id: $id) {\n          class {\n            isSynchronizing\n          }\n        }\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n      query checkIfAllClassAreSynchronized($site: SiteEnum!) {\n        siteSettings(site: $site) {\n          isSynchronizingClasses\n        }\n      }\n    '
+): (typeof documents)['\n      query checkIfAllClassAreSynchronized($site: SiteEnum!) {\n        siteSettings(site: $site) {\n          isSynchronizingClasses\n        }\n      }\n    ']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}

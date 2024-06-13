@@ -7329,7 +7329,7 @@
         "description": null,
         "fields": [
           {
-            "name": "isSynchronizing",
+            "name": "isSynchronizingClasses",
             "description": null,
             "args": [],
             "type": {

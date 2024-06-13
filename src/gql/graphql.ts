@@ -1022,7 +1022,7 @@ export enum SiteEnum {
 
 export type SiteSetting = {
   __typename: 'SiteSetting'
-  isSynchronizing: Scalars['Boolean']
+  isSynchronizingClasses: Scalars['Boolean']
   siteDateTimeNow?: Maybe<Scalars['DateTime']>
   siteTimezone?: Maybe<Scalars['String']>
 }
@@ -1623,6 +1623,12 @@ export type SyncClassMutation = {
   syncClass: { __typename: 'ClassInfo'; class: { __typename: 'Class'; isSynchronizing: boolean } }
 }
 
+export type SyncAllClassesMutationVariables = Exact<{
+  site: SiteEnum
+}>
+
+export type SyncAllClassesMutation = { __typename: 'Mutation'; syncAllClasses: boolean }
+
 export type CountriesQueryVariables = Exact<{ [key: string]: never }>
 
 export type CountriesQuery = {
@@ -1926,6 +1932,15 @@ export type CheckIfClassIsSynchronizedQuery = {
     __typename: 'ClassInfo'
     class: { __typename: 'Class'; isSynchronizing: boolean }
   } | null
+}
+
+export type CheckIfAllClassAreSynchronizedQueryVariables = Exact<{
+  site: SiteEnum
+}>
+
+export type CheckIfAllClassAreSynchronizedQuery = {
+  __typename: 'Query'
+  siteSettings: { __typename: 'SiteSetting'; isSynchronizingClasses: boolean }
 }
 
 export const SiteSettingsDocument = {
@@ -3544,6 +3559,42 @@ export const SyncClassDocument = {
     }
   ]
 } as unknown as DocumentNode<SyncClassMutation, SyncClassMutationVariables>
+export const SyncAllClassesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'syncAllClasses' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'syncAllClasses' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'site' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<SyncAllClassesMutation, SyncAllClassesMutationVariables>
 export const CountriesDocument = {
   kind: 'Document',
   definitions: [
@@ -4779,4 +4830,49 @@ export const CheckIfClassIsSynchronizedDocument = {
 } as unknown as DocumentNode<
   CheckIfClassIsSynchronizedQuery,
   CheckIfClassIsSynchronizedQueryVariables
+>
+export const CheckIfAllClassAreSynchronizedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'checkIfAllClassAreSynchronized' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'siteSettings' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'site' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'isSynchronizingClasses' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  CheckIfAllClassAreSynchronizedQuery,
+  CheckIfAllClassAreSynchronizedQueryVariables
 >
