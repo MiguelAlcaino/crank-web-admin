@@ -817,12 +817,10 @@ export class ApiService {
     return classInfo.class.isSynchronizing
   }
 
-  async syncAllClasses(site: SiteEnum): Promise<Class[]> {
+  async syncAllClasses(site: SiteEnum): Promise<boolean> {
     const mutation = gql`
       mutation syncAllClasses($site: SiteEnum!) {
-        syncAllClasses(site: $site) {
-          id
-        }
+        syncAllClasses(site: $site)
       }
     `
     const result = await this.authApiClient.mutate({
@@ -833,7 +831,7 @@ export class ApiService {
       fetchPolicy: 'no-cache'
     })
 
-    return result.data.syncAllClasses as Class[]
+    return result.data.syncAllClasses as boolean
   }
 
   async getCountries(): Promise<Country[]> {
@@ -1398,5 +1396,27 @@ export class ApiService {
     const classInfo = queryResult.data.classInfo as ClassInfo
 
     return classInfo.class.isSynchronizing
+  }
+
+  async checkIfAllClassAreSynchronized(site: SiteEnum): Promise<boolean> {
+    const query = gql`
+      query checkIfAllClassAreSynchronized($site: SiteEnum!) {
+        siteSettings(site: $site) {
+          isSynchronizingClasses
+        }
+      }
+    `
+
+    const queryResult = await this.authApiClient.query({
+      query: query,
+      variables: {
+        site: site
+      },
+      fetchPolicy: 'network-only'
+    })
+
+    const siteSetting = queryResult.data.siteSettings as SiteSetting
+
+    return siteSetting.isSynchronizingClasses
   }
 }

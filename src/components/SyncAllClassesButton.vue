@@ -11,7 +11,7 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<{
-  (e: 'afterSyncAllClasses'): void
+  (e: 'afterSyncAllClasses', isSynchronizingClasses: boolean): void
 }>()
 
 const apiService = inject<ApiService>('gqlApiService')!
@@ -22,8 +22,8 @@ async function syncAllClasses() {
   isSyncing.value = true
 
   try {
-    await apiService.syncAllClasses(appStore().site)
-    emits('afterSyncAllClasses')
+    const isSynchronizingClasses = await apiService.syncAllClasses(appStore().site)
+    emits('afterSyncAllClasses', isSynchronizingClasses)
   } catch (error) {
     errorModalIsVisible.value = true
   } finally {

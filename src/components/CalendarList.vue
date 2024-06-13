@@ -46,11 +46,14 @@ const weekSelectorIsVisible = ref<boolean>(false)
 
 const selectedClassId = ref<string | null>(null)
 
+const isSynchronizingClasses = ref(false)
+
 const emits = defineEmits<{
   (e: 'selectClass', classId: string | null): void
 }>()
 
 onMounted(() => {
+  checkIfAllClassAreSynchronized()
   getCalendarClasses()
 
   userCanSyncClasses.value = authService.userHasRole(Role.ROLE_SUPER_ADMIN)
@@ -59,6 +62,14 @@ onMounted(() => {
 defineExpose({
   getCalendarClasses
 })
+
+async function checkIfAllClassAreSynchronized() {
+  isSynchronizingClasses.value = await apiService.checkIfAllClassAreSynchronized(appStore().site)
+
+  if (isSynchronizingClasses.value) {
+    initIntervalCheckSynchronizationClasses()
+  }
+}
 
 async function getCalendarClasses(resetSelectedClass: boolean = true): Promise<void> {
   if (resetSelectedClass) selectClass(null)
@@ -131,6 +142,34 @@ function selectClass(classId: string | null): void {
 
 function onAfterChangingSite(): void {
   getCalendarClasses()
+}
+
+function afterSyncClasses(isSynchronizing: boolean) {
+  isSynchronizingClasses.value = isSynchronizing
+  if (isSynchronizing == false) {
+    getCalendarClasses()
+  } else {
+    initIntervalCheckSynchronizationClasses()
+  }
+}
+
+const intervalId = ref<number | null>(null)
+
+function initIntervalCheckSynchronizationClasses() {
+  intervalId.value = window.setInterval(async () => {
+    try {
+      const isSynchronizing = await apiService.checkIfAllClassAreSynchronized(appStore().site) // Reemplaza esto con tu llamada a la API
+      isSynchronizingClasses.value = isSynchronizing
+
+      if (!isSynchronizing) {
+        clearInterval(intervalId.value!)
+        intervalId.value = null
+        getCalendarClasses()
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }, 1000)
 }
 
 const handleDate = (modelData: [Date, Date]) => {
@@ -229,11 +268,19 @@ const format = (modelData: [Date, Date]) => {
     </div>
     <div class="row">
       <div class="col-12 text-center">
-        <SyncAllClassesButton
-          :disabled="false"
-          @after-sync-all-classes="getCalendarClasses(true)"
-          v-if="userCanSyncClasses"
-        ></SyncAllClassesButton>
+        <div v-if="isSynchronizingClasses">
+          <h6>
+            synchronizing...&nbsp;<span class="spinner-border spinner-border-sm crankSpiner"></span>
+          </h6>
+        </div>
+        <div v-else>
+          <SyncAllClassesButton
+            :disabled="false"
+            @after-sync-all-classes="afterSyncClasses"
+            v-if="userCanSyncClasses"
+          >
+          </SyncAllClassesButton>
+        </div>
       </div>
     </div>
   </div>
@@ -312,5 +359,9 @@ const format = (modelData: [Date, Date]) => {
 
 .disabledClass {
   background-color: #bdbdbd !important;
+}
+
+.crankSpiner {
+  color: #ff6f60;
 }
 </style>
