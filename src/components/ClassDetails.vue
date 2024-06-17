@@ -169,6 +169,7 @@ const spotAction = ref<SpotActionEnum>(SpotActionEnum.none)
 
 const userCanModifyClass = ref<boolean>(false)
 const userCanSyncClasses = ref<boolean>(false)
+const userCanSyncClassesWithPiq = ref<boolean>(false)
 const waitListAvailable = ref<boolean>(false)
 const userCanCheckInCheckOut = ref<boolean>(false)
 const checkingWaitlist = ref<boolean>(false)
@@ -235,6 +236,7 @@ onMounted(() => {
 function setPermissionsByRole() {
   userCanModifyClass.value = authService.userHasRole(Role.ROLE_STAFF)
   userCanSyncClasses.value = authService.userHasRole(Role.ROLE_STAFF)
+  userCanSyncClassesWithPiq.value = authService.userHasRole(Role.ROLE_SUPER_ADMIN)
   userCanCheckInCheckOut.value = authService.userHasRole(Role.ROLE_INSTRUCTOR)
 }
 
@@ -561,7 +563,7 @@ function disableSyncButtons(disabled: boolean) {
           </div>
           <div v-else>
             <SyncClassWithPiqButton
-              v-if="classInfo?.class.id && userCanSyncClasses"
+              v-if="classInfo?.class.id && userCanSyncClassesWithPiq"
               :class-id="classInfo?.class.id"
               @after-sync-class-with-piq="afterSyncClass"
               :disabled="syncWithPiqButtonIsDisabled"
