@@ -40,6 +40,7 @@ import type {
   SiteEnum,
   SiteUserInput,
   SwapSpotResultUnion,
+  UpdateUserPasswordInput,
   UserInClassRanking,
   UserInput,
   WaitlistEntry
@@ -1418,5 +1419,25 @@ export class ApiService {
     const siteSetting = queryResult.data.siteSettings as SiteSetting
 
     return siteSetting.isSynchronizingClasses
+  }
+
+  async updateUserPassword(userId: string, newPassword: string): Promise<boolean> {
+    const input = { userId, newPassword } as UpdateUserPasswordInput
+
+    const muration = gql`
+      mutation updateUserPassword($input: UpdateUserPasswordInput!) {
+        updateUserPassword(input: $input)
+      }
+    `
+
+    const result = await this.authApiClient.mutate({
+      mutation: muration,
+      variables: {
+        input: input
+      },
+      fetchPolicy: 'network-only'
+    })
+
+    return result.data.updateUserPassword as boolean
   }
 }
