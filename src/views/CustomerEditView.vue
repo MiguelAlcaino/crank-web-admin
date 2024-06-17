@@ -65,6 +65,7 @@ import { required, maxLength, helpers, minValue, minLength } from '@vuelidate/va
 import type { UserInput } from '@/gql/graphql'
 import type { ApiService } from '@/services/apiService'
 
+import UpdateUserPassword from '@/components/UpdateUserPassword.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
 import ResetUserPassword from '@/components/ResetUserPassword.vue'
 import ExternalUserIds from '@/components/ExternalUserIds.vue'
@@ -318,6 +319,8 @@ function onChangeCountry() {
   <form @submit.prevent="submitForm" autocomplete="off">
     <div class="field">
       <ResetUserPassword :email="userEmail"></ResetUserPassword>
+      &nbsp;
+      <UpdateUserPassword :userId="userId"></UpdateUserPassword>
       &nbsp;
       <!-- TODO: Implement ChangeUserPassword component -->
       <!-- <ChangeUserPassword :user-id="userId"></ChangeUserPassword> -->
