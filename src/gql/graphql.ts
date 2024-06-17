@@ -503,6 +503,7 @@ export type Mutation = {
   updateCurrentUser?: Maybe<User>
   /** Updates a user's password in all the sites */
   updateCurrentUserPassword?: Maybe<Scalars['Boolean']>
+  updateUserPassword?: Maybe<Scalars['Boolean']>
 }
 
 export type MutationAcceptLateCancelledSpotInClassArgs = {
@@ -664,6 +665,10 @@ export type MutationUpdateCurrentUserArgs = {
 export type MutationUpdateCurrentUserPasswordArgs = {
   input: UpdateCurrentUserPasswordInput
   site: SiteEnum
+}
+
+export type MutationUpdateUserPasswordArgs = {
+  input: UpdateUserPasswordInput
 }
 
 export type OtherUserHasThisExternalIdError = Error & {
@@ -1088,6 +1093,11 @@ export type UnknownError = Error & {
 export type UpdateCurrentUserPasswordInput = {
   currentPassword: Scalars['String']
   newPassword: Scalars['String']
+}
+
+export type UpdateUserPasswordInput = {
+  newPassword: Scalars['String']
+  userId: Scalars['ID']
 }
 
 export type User = {
