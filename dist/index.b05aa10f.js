@@ -12078,7 +12078,7 @@ const yE = /* @__PURE__ */ An(uE, [["render", vE]]), ur = kS({
     {
       path: "/admin/calendar-class",
       name: "admin_calendar_class",
-      component: () => import("./AdminClassView.a8737512.js")
+      component: () => import("./AdminClassView.acafb784.js")
     },
     {
       path: "/admin/room-layout/list",
@@ -12103,7 +12103,7 @@ const yE = /* @__PURE__ */ An(uE, [["render", vE]]), ur = kS({
     {
       path: "/customer-profile/:id",
       name: "customer_profile",
-      component: () => import("./CustomerProfileView.d87ac20c.js")
+      component: () => import("./CustomerProfileView.193f0008.js")
     }
   ]
 });
@@ -39123,7 +39123,7 @@ const lz = /* @__PURE__ */ An(oz, [["__scopeId", "data-v-f008912e"]]), cz = { cl
   }
 });
 var _s = /* @__PURE__ */ ((A) => (A.ROLE_SUPER_ADMIN = "ROLE_SUPER_ADMIN", A.ROLE_ADMIN_MANAGER = "ROLE_ADMIN_MANAGER", A.ROLE_STAFF = "ROLE_STAFF", A.ROLE_USER = "ROLE_USER", A.ROLE_MINDBODY_USER = "ROLE_MINDBODY_USER", A.ROLE_INSTRUCTOR = "ROLE_INSTRUCTOR", A))(_s || {});
-const sr = (A) => (gn("data-v-04a1cfd0"), A = A(), pn(), A), ej = { class: "ClassDetails" }, tj = { key: 0 }, nj = /* @__PURE__ */ sr(() => /* @__PURE__ */ $("h2", { style: { margin: "0 auto", "text-align": "center" } }, "Please select a class", -1)), rj = [
+const sr = (A) => (gn("data-v-43793719"), A = A(), pn(), A), ej = { class: "ClassDetails" }, tj = { key: 0 }, nj = /* @__PURE__ */ sr(() => /* @__PURE__ */ $("h2", { style: { margin: "0 auto", "text-align": "center" } }, "Please select a class", -1)), rj = [
   nj
 ], ij = { key: 1 }, aj = { class: "row" }, sj = { class: "col-12 text-center" }, oj = { key: 2 }, lj = { class: "row" }, cj = { class: "col-12 text-right" }, uj = { key: 0 }, dj = /* @__PURE__ */ sr(() => /* @__PURE__ */ $("h6", null, [
   /* @__PURE__ */ ve(" synchronizing...\xA0"),
@@ -39198,7 +39198,7 @@ const sr = (A) => (gn("data-v-04a1cfd0"), A = A(), pn(), A), ej = { class: "Clas
     }
     async function Y(_A) {
       var bA, DA, RA, BA, EA, WA, lA;
-      t.classId !== null && (X.value = {}, s.value = !0, l.value = await a.getClassInfoAdmin(
+      t.classId !== null && (X.value = {}, y.value = 0, s.value = !0, l.value = await a.getClassInfoAdmin(
         ut().site,
         t.classId
       ), M.value = (bA = l.value) == null ? void 0 : bA.class.isSynchronizing, M.value && NA(), O.value = (RA = (DA = l.value) == null ? void 0 : DA.class.waitListAvailable) != null ? RA : !1, f.value = (EA = (BA = l.value) == null ? void 0 : BA.enrollments.filter(
@@ -39568,7 +39568,7 @@ const sr = (A) => (gn("data-v-04a1cfd0"), A = A(), pn(), A), ej = { class: "Clas
     };
   }
 });
-const jj = /* @__PURE__ */ An(zj, [["__scopeId", "data-v-04a1cfd0"]]), Wj = /* @__PURE__ */ Pe({
+const jj = /* @__PURE__ */ An(zj, [["__scopeId", "data-v-43793719"]]), Wj = /* @__PURE__ */ Pe({
   __name: "SyncAllClassesButton",
   props: {
     disabled: { type: Boolean }
