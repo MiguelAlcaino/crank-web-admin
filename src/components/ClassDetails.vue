@@ -244,6 +244,7 @@ async function getClassInfo(checkWaitList?: boolean | null) {
   if (props.classId === null) return
 
   selectedSpot.value = {}
+  spotAction.value = SpotActionEnum.none
 
   isLoading.value = true
   classInfo.value = (await apiService.getClassInfoAdmin(
