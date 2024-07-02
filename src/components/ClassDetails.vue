@@ -167,6 +167,7 @@ const totalSignedIn = ref<number>(0)
 
 const spotAction = ref<SpotActionEnum>(SpotActionEnum.none)
 
+const userCanModifyLayoutClass = ref<boolean>(false)
 const userCanModifyClass = ref<boolean>(false)
 const userCanSyncClasses = ref<boolean>(false)
 const userCanSyncClassesWithPiq = ref<boolean>(false)
@@ -238,6 +239,7 @@ function setPermissionsByRole() {
   userCanSyncClasses.value = authService.userHasRole(Role.ROLE_STAFF)
   userCanSyncClassesWithPiq.value = authService.userHasRole(Role.ROLE_SUPER_ADMIN)
   userCanCheckInCheckOut.value = authService.userHasRole(Role.ROLE_INSTRUCTOR)
+  userCanModifyLayoutClass.value = authService.userHasRole(Role.ROLE_SUPER_ADMIN)
 }
 
 async function getClassInfo(checkWaitList?: boolean | null) {
@@ -608,7 +610,7 @@ function disableSyncButtons(disabled: boolean) {
       <div class="row" v-if="userCanModifyClass">
         <div class="col-md-12">
           <ChangeLayoutClass
-            v-if="classInfo"
+            v-if="classInfo && userCanModifyLayoutClass"
             :class-id="classId"
             :room-layout-id="classInfo?.roomLayout?.id"
             :max-capacity="classInfo?.class?.maxCapacity"
