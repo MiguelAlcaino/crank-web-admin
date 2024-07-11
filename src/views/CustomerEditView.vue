@@ -183,7 +183,7 @@ const validateUAEphone = (phone: string) =>
 const lengthUAEphone = (phone: string) =>
   phone.startsWith('+971') ? getFormattedPhoneNumber(phone).length === 13 : true
 
-const v$ = useVuelidate(rules, formData)
+const v$ = useVuelidate(rules, formData, { $scope: false })
 const apiService = inject<ApiService>('gqlApiService')!
 
 onMounted(() => {
@@ -316,18 +316,17 @@ function onChangeCountry() {
   <br />
   <h5>{{ userEmail }}</h5>
   <hr />
-  <form @submit.prevent="submitForm" autocomplete="off">
-    <div class="field">
-      <ResetUserPassword :email="userEmail"></ResetUserPassword>
-      &nbsp;
-      <UpdateUserPassword :userId="userId"></UpdateUserPassword>
-      &nbsp;
-      <!-- TODO: Implement ChangeUserPassword component -->
-      <!-- <ChangeUserPassword :user-id="userId"></ChangeUserPassword> -->
-      <ExternalUserIds :userId="userId"></ExternalUserIds>
-    </div>
-    <hr />
 
+  <ResetUserPassword :email="userEmail"></ResetUserPassword>
+  &nbsp;
+  <UpdateUserPassword :userId="userId"></UpdateUserPassword>
+  &nbsp;
+  <!-- TODO: Implement ChangeUserPassword component -->
+  <!-- <ChangeUserPassword :user-id="userId"></ChangeUserPassword> -->
+  <ExternalUserIds :userId="userId"></ExternalUserIds>
+
+  <hr />
+  <form @submit.prevent="submitForm" autocomplete="off">
     <!-- hideMetrics -->
     <div class="form-row">
       <div class="col-md-12 mb-3">
