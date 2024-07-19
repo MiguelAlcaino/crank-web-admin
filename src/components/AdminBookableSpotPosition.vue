@@ -21,6 +21,7 @@ interface Props {
   spotAction?: SpotActionEnum
   spotSelectionIsDisabled?: boolean
   isBookedForFree?: boolean | null
+  isSpotWithOnlyStats: boolean
 }
 </script>
 
@@ -95,7 +96,9 @@ function selectSpot() {
       v-else-if="enabled"
       :class="[
         spotSelectionIsDisabled ? 'spotEnabledNotClickable' : 'enabledSpot',
-        selected ? 'selectedSpot' : ''
+        selected ? 'selectedSpot' : '',
+        isSpotWithOnlyStats && !selected ? 'isSpotWithOnlyStats' : '',
+        isSpotWithOnlyStats && selected ? 'isSpotWithOnlyStatsSelected' : ''
       ]"
       @click="spotSelectionIsDisabled ? null : selectSpot()"
     >
@@ -255,5 +258,13 @@ function selectSpot() {
 
 .isBookedForFreeSelected {
   border: 2px dashed #ffd903 !important;
+}
+
+.isSpotWithOnlyStats {
+  border: 2px solid #8a00e7 !important;
+}
+
+.isSpotWithOnlyStatsSelected {
+  border: 2px dashed #8a00e7 !important;
 }
 </style>

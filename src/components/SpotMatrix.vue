@@ -21,6 +21,7 @@ interface SpotPosition {
   isCheckedIn?: boolean
   spotNumber?: number | null
   isBookedForFree?: boolean | null
+  isSpotWithOnlyStats?: boolean
 }
 
 interface ClassPosition {
@@ -84,6 +85,7 @@ interface Props {
   spotNumberBookedByCurrentUser?: number | null
   spotAction?: SpotActionEnum
   spotSelectionIsDisabled?: boolean
+  orphanedClassStatsSpots: number[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -132,7 +134,8 @@ function newSpotPosition(
       user: user,
       enabled: classPosition.enabled!,
       isCheckedIn: isCheckedIn,
-      isBookedForFree: isBookedForFree
+      isBookedForFree: isBookedForFree,
+      isSpotWithOnlyStats: props.orphanedClassStatsSpots.includes(classPosition.spotNumber!)
     }
   }
   return {
@@ -227,6 +230,7 @@ function onClickSpotAdmin(spotNumber: number) {
               :spot-action="spotAction"
               :spot-selection-is-disabled="spotSelectionIsDisabled"
               :is-booked-for-free="spot.isBookedForFree"
+              :is-spot-with-only-stats="spot.isSpotWithOnlyStats ?? false"
             />
             <icon-position-not-bookable v-else :icon="spot.icon" />
           </td>

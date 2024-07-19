@@ -138,6 +138,7 @@ export class ApiService {
             }
           }
           onHoldSpots
+          orphanedClassStatsSpots
         }
       }
     `

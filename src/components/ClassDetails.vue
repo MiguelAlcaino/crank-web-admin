@@ -9,6 +9,7 @@ interface ClassInfo {
   enrollments: EnrollmentInfo[]
   roomLayout?: RoomLayout
   onHoldSpots: number
+  orphanedClassStatsSpots: number[]
 }
 
 interface RoomLayout {
@@ -679,6 +680,7 @@ function disableSyncButtons(disabled: boolean) {
         :enrollments="enrollments"
         :spot-action="spotAction"
         :spot-selection-is-disabled="!userCanModifyClass && !userCanCheckInCheckOut"
+        :orphaned-class-stats-spots="classInfo.orphanedClassStatsSpots ?? []"
       >
       </SpotMatrix>
 
@@ -877,18 +879,20 @@ function disableSyncButtons(disabled: boolean) {
       <br />
       <br />
       <div
-        class="row"
+        class="row matrixSpotsLegend"
         v-if="
           classInfo !== null &&
           classInfo.roomLayout !== null &&
           classInfo.roomLayout?.matrix !== null
         "
       >
-        <div class="col-12" style="text-align: center">
-          <div class="matrixSpotsLegend">
-            <hr style="border: none; height: 2px; background-color: #ffd903; max-width: 20px" />
-            <small>Not Paid</small>
-          </div>
+        <div class="col-6" style="text-align: center">
+          <hr style="border: none; height: 2px; background-color: #ffd903; max-width: 20px" />
+          <small>Not Paid</small>
+        </div>
+        <div class="col-6" style="text-align: center">
+          <hr style="border: none; height: 2px; background-color: #8a00e7; max-width: 20px" />
+          <small>Spot With Stats</small>
         </div>
       </div>
 
