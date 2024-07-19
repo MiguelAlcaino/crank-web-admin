@@ -49,6 +49,7 @@ import type { SiteSetting } from '@/gql/graphql'
 import type { ApolloClient } from '@apollo/client/core'
 import dayjs from 'dayjs'
 import { ValidationError } from '@/utils/errors/saveUserErrors'
+import { GiftCard } from '@/modules/gift-cards/interfaces/gift-card.interface'
 
 export class ApiService {
   authApiClient: ApolloClient<any>
@@ -1439,5 +1440,21 @@ export class ApiService {
     })
 
     return result.data.updateUserPassword as boolean
+  }
+
+  async getGiftCards(): Promise<GiftCard[]> {
+    //TODO: Implement this method
+    const query = gql`
+      query giftCards() {  }
+      
+    `
+
+    const queryResult = await this.authApiClient.query({
+      query: query,
+      variables: {},
+      fetchPolicy: 'network-only'
+    })
+
+    return queryResult.data.giftcards as GiftCard[]
   }
 }
