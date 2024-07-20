@@ -178,6 +178,7 @@ export type ClassInfo = {
   class: Class
   enrollments: Array<EnrollmentInfoInterface>
   onHoldSpots: Scalars['Int']
+  orphanedClassStatsSpots: Array<Scalars['Int']>
   roomLayout?: Maybe<RoomLayout>
   usedSpots?: Maybe<Array<Scalars['Int']>>
 }
@@ -397,6 +398,17 @@ export type GenderRanking = {
   __typename: 'GenderRanking'
   gender?: Maybe<GenderEnum>
   ranking?: Maybe<UserRanking>
+}
+
+export type GiftCard = {
+  __typename: 'GiftCard'
+  description: Scalars['String']
+  grandTotal: Scalars['Float']
+  id: Scalars['ID']
+  purchaseUrl: Scalars['String']
+  salePrice: Scalars['Float']
+  site: Site
+  terms: Scalars['String']
 }
 
 export type IconPosition = ClassPositionInterface & {
@@ -776,6 +788,7 @@ export type Query = {
    */
   currentUserWorkoutStats: Array<Maybe<ClassStat>>
   currentUserWorkoutStatsPaginated: PaginatedClassStats
+  giftCards: Array<GiftCard>
   /** Returns a specific room layout */
   roomLayout?: Maybe<RoomLayout>
   /** Returns a list of available RoomLayouts for a site */
@@ -1018,6 +1031,12 @@ export type SimpleSiteUser = {
   __typename: 'SimpleSiteUser'
   externalUserId: Scalars['ID']
   site: SiteEnum
+}
+
+export type Site = {
+  __typename: 'Site'
+  code: SiteEnum
+  name: Scalars['String']
 }
 
 export enum SiteEnum {
@@ -1951,6 +1970,15 @@ export type CheckIfAllClassAreSynchronizedQueryVariables = Exact<{
 export type CheckIfAllClassAreSynchronizedQuery = {
   __typename: 'Query'
   siteSettings: { __typename: 'SiteSetting'; isSynchronizingClasses: boolean }
+}
+
+export type UpdateUserPasswordMutationVariables = Exact<{
+  input: UpdateUserPasswordInput
+}>
+
+export type UpdateUserPasswordMutation = {
+  __typename: 'Mutation'
+  updateUserPassword?: boolean | null
 }
 
 export const SiteSettingsDocument = {
@@ -4886,3 +4914,39 @@ export const CheckIfAllClassAreSynchronizedDocument = {
   CheckIfAllClassAreSynchronizedQuery,
   CheckIfAllClassAreSynchronizedQueryVariables
 >
+export const UpdateUserPasswordDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'updateUserPassword' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UpdateUserPasswordInput' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'updateUserPassword' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<UpdateUserPasswordMutation, UpdateUserPasswordMutationVariables>
