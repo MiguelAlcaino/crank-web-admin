@@ -5,6 +5,7 @@ import LoginView from '../views/LoginView.vue'
 import { authService } from '@/services/authService'
 import RoomLayoutListView from '@/views/RoomLayoutListView.vue'
 import HomeView from '@/views/HomeView.vue'
+import { giftCardRoute } from '@/modules/gift-card/router'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -58,6 +59,10 @@ const router = createRouter({
       path: '/customer-profile/:id',
       name: 'customer_profile',
       component: () => import('../views/CustomerProfileView.vue')
+    },
+    {
+      ...giftCardRoute,
+      path: '/gift-cards'
     }
   ]
 })
