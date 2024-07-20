@@ -22,6 +22,7 @@ import type {
   EditRoomLayoutInput,
   EditUserInput,
   EditUserResultUnion,
+  GiftCard,
   IdentifiableSiteUser,
   IdentifiableUser,
   PaginatedClassStats,
@@ -49,7 +50,6 @@ import type { SiteSetting } from '@/gql/graphql'
 import type { ApolloClient } from '@apollo/client/core'
 import dayjs from 'dayjs'
 import { ValidationError } from '@/utils/errors/saveUserErrors'
-import { GiftCard } from '@/modules/gift-cards/interfaces/gift-card.interface'
 
 export class ApiService {
   authApiClient: ApolloClient<any>
@@ -1443,18 +1443,26 @@ export class ApiService {
   }
 
   async getGiftCards(): Promise<GiftCard[]> {
-    //TODO: Implement this method
     const query = gql`
-      query giftCards() {  }
-      
+      query giftCards {
+        id
+        description
+        salePrice
+        grandTotal
+        terms
+        purchaseUrl
+        site {
+          name
+          code
+        }
+      }
     `
 
     const queryResult = await this.authApiClient.query({
       query: query,
-      variables: {},
       fetchPolicy: 'network-only'
     })
 
-    return queryResult.data.giftcards as GiftCard[]
+    return queryResult.data.giftCards as GiftCard[]
   }
 }
