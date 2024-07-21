@@ -515,6 +515,8 @@ export type Mutation = {
   updateCurrentUser?: Maybe<User>
   /** Updates a user's password in all the sites */
   updateCurrentUserPassword?: Maybe<Scalars['Boolean']>
+  /** Updates a gift card */
+  updateGiftCard: GiftCard
   updateUserPassword?: Maybe<Scalars['Boolean']>
 }
 
@@ -677,6 +679,10 @@ export type MutationUpdateCurrentUserArgs = {
 export type MutationUpdateCurrentUserPasswordArgs = {
   input: UpdateCurrentUserPasswordInput
   site: SiteEnum
+}
+
+export type MutationUpdateGiftCardArgs = {
+  input: UpdateGiftCardInput
 }
 
 export type MutationUpdateUserPasswordArgs = {
@@ -1112,6 +1118,11 @@ export type UnknownError = Error & {
 export type UpdateCurrentUserPasswordInput = {
   currentPassword: Scalars['String']
   newPassword: Scalars['String']
+}
+
+export type UpdateGiftCardInput = {
+  grandTotal?: InputMaybe<Scalars['Float']>
+  id: Scalars['ID']
 }
 
 export type UpdateUserPasswordInput = {
@@ -1979,6 +1990,22 @@ export type UpdateUserPasswordMutationVariables = Exact<{
 export type UpdateUserPasswordMutation = {
   __typename: 'Mutation'
   updateUserPassword?: boolean | null
+}
+
+export type GiftCardsQueryVariables = Exact<{ [key: string]: never }>
+
+export type GiftCardsQuery = {
+  __typename: 'Query'
+  giftCards: Array<{
+    __typename: 'GiftCard'
+    id: string
+    description: string
+    salePrice: number
+    grandTotal: number
+    terms: string
+    purchaseUrl: string
+    site: { __typename: 'Site'; name: string; code: SiteEnum }
+  }>
 }
 
 export const SiteSettingsDocument = {
@@ -4950,3 +4977,44 @@ export const UpdateUserPasswordDocument = {
     }
   ]
 } as unknown as DocumentNode<UpdateUserPasswordMutation, UpdateUserPasswordMutationVariables>
+export const GiftCardsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GiftCards' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'giftCards' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'salePrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'grandTotal' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'terms' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'purchaseUrl' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'site' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<GiftCardsQuery, GiftCardsQueryVariables>

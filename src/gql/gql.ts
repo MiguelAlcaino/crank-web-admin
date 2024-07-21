@@ -98,7 +98,9 @@ const documents = {
   '\n      query checkIfAllClassAreSynchronized($site: SiteEnum!) {\n        siteSettings(site: $site) {\n          isSynchronizingClasses\n        }\n      }\n    ':
     types.CheckIfAllClassAreSynchronizedDocument,
   '\n      mutation updateUserPassword($input: UpdateUserPasswordInput!) {\n        updateUserPassword(input: $input)\n      }\n    ':
-    types.UpdateUserPasswordDocument
+    types.UpdateUserPasswordDocument,
+  '\n      query GiftCards {\n        giftCards {\n          id\n          description\n          salePrice\n          grandTotal\n          terms\n          purchaseUrl\n          site {\n            name\n            code\n          }\n        }\n      }\n    ':
+    types.GiftCardsDocument
 }
 
 /**
@@ -373,6 +375,12 @@ export function graphql(
 export function graphql(
   source: '\n      mutation updateUserPassword($input: UpdateUserPasswordInput!) {\n        updateUserPassword(input: $input)\n      }\n    '
 ): (typeof documents)['\n      mutation updateUserPassword($input: UpdateUserPasswordInput!) {\n        updateUserPassword(input: $input)\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n      query GiftCards {\n        giftCards {\n          id\n          description\n          salePrice\n          grandTotal\n          terms\n          purchaseUrl\n          site {\n            name\n            code\n          }\n        }\n      }\n    '
+): (typeof documents)['\n      query GiftCards {\n        giftCards {\n          id\n          description\n          salePrice\n          grandTotal\n          terms\n          purchaseUrl\n          site {\n            name\n            code\n          }\n        }\n      }\n    ']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}
