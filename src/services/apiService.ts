@@ -41,6 +41,7 @@ import type {
   SiteEnum,
   SiteUserInput,
   SwapSpotResultUnion,
+  UpdateGiftCardInput,
   UpdateUserPasswordInput,
   UserInClassRanking,
   UserInput,
@@ -1466,5 +1467,36 @@ export class ApiService {
     })
 
     return queryResult.data.giftCards as GiftCard[]
+  }
+
+  async updateGiftCard(id: string, grandTotal: number): Promise<GiftCard> {
+    const input = { grandTotal, id } as UpdateGiftCardInput
+
+    const mutation = gql`
+      mutation UpdateGiftCard($input: UpdateGiftCardInput!) {
+        updateGiftCard(input: $input) {
+          id
+          description
+          salePrice
+          grandTotal
+          terms
+          purchaseUrl
+          site {
+            name
+            code
+          }
+        }
+      }
+    `
+
+    const result = await this.authApiClient.mutate({
+      mutation: mutation,
+      variables: {
+        input: input
+      },
+      fetchPolicy: 'network-only'
+    })
+
+    return result.data.updateGiftCard as GiftCard
   }
 }
