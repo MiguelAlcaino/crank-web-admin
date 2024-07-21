@@ -14,10 +14,7 @@ export const useGiftCard = () => {
       const apiService = inject<ApiService>('gqlApiService')!
 
       giftCards.value = await apiService.getGiftCards()
-
-      console.log(giftCards.value)
     } catch (error) {
-      console.error(error)
       hasError.value = true
     } finally {
       isLoading.value = false

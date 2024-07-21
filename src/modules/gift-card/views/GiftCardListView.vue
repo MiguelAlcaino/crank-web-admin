@@ -86,7 +86,7 @@ watch(hasError, (value) => {
 </template>
 
 <style scoped>
-a{
+a {
   font-family: 'BigJohn', sans-serif;
 }
 </style>
