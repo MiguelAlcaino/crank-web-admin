@@ -1444,16 +1444,18 @@ export class ApiService {
 
   async getGiftCards(): Promise<GiftCard[]> {
     const query = gql`
-      query giftCards {
-        id
-        description
-        salePrice
-        grandTotal
-        terms
-        purchaseUrl
-        site {
-          name
-          code
+      query GiftCards {
+        giftCards {
+          id
+          description
+          salePrice
+          grandTotal
+          terms
+          purchaseUrl
+          site {
+            name
+            code
+          }
         }
       }
     `
