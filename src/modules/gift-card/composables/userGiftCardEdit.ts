@@ -1,4 +1,4 @@
-import { ApiService } from '@/services/apiService'
+import type { ApiService } from '@/services/apiService'
 import { computed, reactive, ref } from 'vue'
 import type { GiftCard } from '../interfaces'
 import { helpers, minValue, required } from '@vuelidate/validators'

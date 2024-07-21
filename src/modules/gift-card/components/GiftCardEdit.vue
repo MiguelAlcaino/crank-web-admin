@@ -7,7 +7,7 @@ import type { GiftCard } from '../interfaces'
 
 import { useGiftCardEdit } from '../composables/userGiftCardEdit'
 import { inject } from 'vue'
-import { ApiService } from '@/services/apiService'
+import type { ApiService } from '@/services/apiService'
 
 interface Props {
   giftCard: GiftCard

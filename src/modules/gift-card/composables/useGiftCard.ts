@@ -1,4 +1,4 @@
-import { ApiService } from '@/services/apiService'
+import type { ApiService } from '@/services/apiService'
 import { inject, onMounted, ref } from 'vue'
 import type { GiftCard } from '../interfaces'
 
