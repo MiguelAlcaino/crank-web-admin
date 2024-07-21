@@ -240,3 +240,20 @@ export const startCustomerProfileApp = async function (
 
   app.mount(appDiv)
 }
+
+export const startGiftCardApp = async function (gqlUrl: string, token: string, appDiv: string) {
+  const app = createApp({
+    setup() {
+      provide(
+        'gqlApiService',
+        new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
+      )
+    },
+    render: () => h(CustomerCreateView)
+  })
+
+  app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
+  useAuthenticationStore().setSession(token)
+
+  app.mount(appDiv)
+}

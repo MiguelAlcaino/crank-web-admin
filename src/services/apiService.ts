@@ -22,6 +22,7 @@ import type {
   EditRoomLayoutInput,
   EditUserInput,
   EditUserResultUnion,
+  GiftCard,
   IdentifiableSiteUser,
   IdentifiableUser,
   PaginatedClassStats,
@@ -40,6 +41,7 @@ import type {
   SiteEnum,
   SiteUserInput,
   SwapSpotResultUnion,
+  UpdateGiftCardInput,
   UpdateUserPasswordInput,
   UserInClassRanking,
   UserInput,
@@ -1439,5 +1441,62 @@ export class ApiService {
     })
 
     return result.data.updateUserPassword as boolean
+  }
+
+  async getGiftCards(): Promise<GiftCard[]> {
+    const query = gql`
+      query GiftCards {
+        giftCards {
+          id
+          description
+          salePrice
+          grandTotal
+          terms
+          purchaseUrl
+          site {
+            name
+            code
+          }
+        }
+      }
+    `
+
+    const queryResult = await this.authApiClient.query({
+      query: query,
+      fetchPolicy: 'network-only'
+    })
+
+    return queryResult.data.giftCards as GiftCard[]
+  }
+
+  async updateGiftCard(id: string, grandTotal: number): Promise<GiftCard> {
+    const input = { grandTotal, id } as UpdateGiftCardInput
+
+    const mutation = gql`
+      mutation UpdateGiftCard($input: UpdateGiftCardInput!) {
+        updateGiftCard(input: $input) {
+          id
+          description
+          salePrice
+          grandTotal
+          terms
+          purchaseUrl
+          site {
+            name
+            code
+          }
+        }
+      }
+    `
+
+    const result = await this.authApiClient.mutate({
+      mutation: mutation,
+      variables: {
+        input: input
+      },
+      fetchPolicy: 'network-only'
+    })
+
+    return result.data.updateGiftCard as GiftCard
   }
 }
