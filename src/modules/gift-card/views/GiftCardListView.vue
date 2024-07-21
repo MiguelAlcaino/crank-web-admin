@@ -43,12 +43,7 @@ watch(hasError, (value) => {
             <td>{{ item.terms }}</td>
             <td class="text-center">
               <a
-                :href="
-                  'https://crank-fit.com/login-redirect?destination=' +
-                  encodeURIComponent('') +
-                  '&site=' +
-                  item.site.code
-                "
+                :href="item.purchaseUrl"
                 class="btn btn-sm btn-secondary"
                 >Link</a
               >
