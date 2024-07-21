@@ -22,7 +22,7 @@ watch(hasError, (value) => {
 <template>
   <div>
     <div class="table-responsive">
-      <table class="table table-sm">
+      <table class="table table-sm table-hover">
         <thead>
           <tr class="text-center">
             <th>SITE</th>
@@ -38,11 +38,26 @@ watch(hasError, (value) => {
           <tr v-for="(item, index) in giftCards" :key="index">
             <td class="text-center align-middle">{{ item.site.name }}</td>
             <td>{{ item.description }}</td>
-            <td class="text-right align-middle">{{ item.salePrice }}</td>
-            <td class="text-right align-middle">{{ item.grandTotal }}</td>
+            <td class="text-right align-middle">AED {{ item.salePrice }}</td>
+            <td class="text-right align-middle">AED {{ item.grandTotal }}</td>
             <td>{{ item.terms }}</td>
-            <td class="text-center"></td>
-            <td class="text-center"></td>
+            <td class="text-center">
+              <a
+                :href="
+                  'https://crank-fit.com/login-redirect?destination=' +
+                  encodeURIComponent('') +
+                  '&site=' +
+                  item.site.code
+                "
+                class="btn btn-sm btn-secondary"
+                >Link</a
+              >
+            </td>
+            <td class="text-center">
+              <a :href="'/admin/gift-card/' + item.id + '/edit'" class="btn btn-sm btn-primary"
+                >Edit</a
+              >
+            </td>
           </tr>
           <tr v-if="giftCards.length === 0 && !isLoading">
             <td colspan="7" class="text-center align-middle">
@@ -70,4 +85,8 @@ watch(hasError, (value) => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+a{
+  font-family: 'BigJohn', sans-serif;
+}
+</style>
