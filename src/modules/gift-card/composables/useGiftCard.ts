@@ -21,6 +21,19 @@ export const useGiftCard = () => {
     }
   }
 
+  const afterUpdateGiftCard = (giftCard: GiftCard) => {
+    try {
+      const index = giftCards.value.findIndex((g) => g.id === giftCard.id)    
+      if (index !== -1) {
+        const clonedGiftCards = [...giftCards.value]
+        clonedGiftCards.splice(index, 1, giftCard)
+        giftCards.value = clonedGiftCards
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   onMounted(() => {
     getGiftCards()
   })
@@ -28,6 +41,7 @@ export const useGiftCard = () => {
   return {
     isLoading,
     hasError,
-    giftCards
+    giftCards,
+    afterUpdateGiftCard
   }
 }

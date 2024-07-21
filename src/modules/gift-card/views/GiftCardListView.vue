@@ -1,22 +1,12 @@
 <script setup lang="ts">
-// TODO: Implement the logic to fetch the gift cards from the API
-import { ref, watch } from 'vue'
-
 import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIndicator.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
+import GiftCardEdit from '../components/GiftCardEdit.vue'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
 import { useGiftCard } from '../composables/useGiftCard'
 
-const { isLoading, giftCards, hasError } = useGiftCard()
-const errorModalIsVisible = ref<boolean>(false)
-
-watch(hasError, (value) => {
-  console.log('hasError', value)
-  if (value) {
-    errorModalIsVisible.value = true
-  }
-})
+const { isLoading, giftCards, hasError, afterUpdateGiftCard } = useGiftCard()
 </script>
 
 <template>
@@ -42,16 +32,13 @@ watch(hasError, (value) => {
             <td class="text-right align-middle">AED {{ item.grandTotal }}</td>
             <td>{{ item.terms }}</td>
             <td class="text-center">
-              <a
-                :href="item.purchaseUrl"
-                class="btn btn-sm btn-secondary"
-                >Link</a
-              >
+              <a :href="item.purchaseUrl" class="btn btn-sm btn-secondary">Link</a>
             </td>
-            <td class="text-center">
-              <a :href="'/admin/gift-card/' + item.id + '/edit'" class="btn btn-sm btn-primary"
-                >Edit</a
-              >
+            <td>
+              <GiftCardEdit
+                :giftCard="item"
+                @after-update-gift-card="afterUpdateGiftCard"
+              ></GiftCardEdit>
             </td>
           </tr>
           <tr v-if="giftCards.length === 0 && !isLoading">
@@ -70,11 +57,11 @@ watch(hasError, (value) => {
 
     <!-- Error Modal -->
     <ModalComponent
-      v-if="errorModalIsVisible"
+      v-if="hasError"
       title="Error"
       :message="ERROR_UNKNOWN"
       :cancel-text="null"
-      @on-ok="errorModalIsVisible = false"
+      @on-ok="hasError = false"
     >
     </ModalComponent>
   </div>
