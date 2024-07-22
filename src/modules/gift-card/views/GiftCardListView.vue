@@ -2,17 +2,38 @@
 import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIndicator.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
 import GiftCardEdit from '../components/GiftCardEdit.vue'
+import SyncAllGiftCards from '../components/SyncAllGiftCards.vue'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
 import { useGiftCard } from '../composables/useGiftCard'
+import { ApiService } from '@/services/apiService'
+import { inject } from 'vue'
 
-const { isLoading, giftCards, hasError, afterUpdateGiftCard } = useGiftCard()
+const { isLoading, giftCards, hasError, afterUpdateGiftCard, getGiftCards } = useGiftCard(
+  inject<ApiService>('gqlApiService')!
+)
+
+async function refreshGiftCards() {
+  await getGiftCards()
+}
 </script>
 
 <template>
-  <div>
-    <h4>Gift Cards</h4>
-    <hr />
+  <div class="row">
+    <div class="col-6">
+      <h4>Gift Cards</h4>
+    </div>
+    <div class="col-6 pull-right">
+      <SyncAllGiftCards @after-sync="refreshGiftCards"></SyncAllGiftCards>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <hr />
+    </div>
+  </div>
+
+  <div class="row">
     <div class="table-responsive">
       <table class="table table-sm table-hover">
         <thead>
@@ -56,21 +77,26 @@ const { isLoading, giftCards, hasError, afterUpdateGiftCard } = useGiftCard()
         </tbody>
       </table>
     </div>
-
-    <!-- Error Modal -->
-    <ModalComponent
-      v-if="hasError"
-      title="Error"
-      :message="ERROR_UNKNOWN"
-      :cancel-text="null"
-      @on-ok="hasError = false"
-    >
-    </ModalComponent>
   </div>
+
+  <!-- Error Modal -->
+  <ModalComponent
+    v-if="hasError"
+    title="Error"
+    :message="ERROR_UNKNOWN"
+    :cancel-text="null"
+    @on-ok="hasError = false"
+  >
+  </ModalComponent>
 </template>
 
 <style scoped>
 a {
   font-family: 'BigJohn', sans-serif;
+}
+
+.pull-right {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>
