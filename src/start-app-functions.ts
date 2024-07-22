@@ -16,6 +16,7 @@ import CustomerCreateView from '@/views/CustomerCreateView.vue'
 import CustomerEditView from '@/views/CustomerEditView.vue'
 import RoomLayoutView from '@/views/RoomLayoutView.vue'
 import CustomerProfileView from '@/views/CustomerProfileView.vue'
+import GiftCardListView from './modules/gift-card/views/GiftCardListView.vue'
 import { SiteEnum } from '@/gql/graphql'
 import { appStore } from '@/stores/appStorage'
 import AdminClassView from '@/views/AdminClassView.vue'
@@ -236,6 +237,23 @@ export const startCustomerProfileApp = async function (
   })
 
   app.use(createPinia()).use(router).use(SimpleTypeahead).use(VueApexCharts).use(ContextMenu)
+  useAuthenticationStore().setSession(token)
+
+  app.mount(appDiv)
+}
+
+export const startGiftCardApp = async function (gqlUrl: string, token: string, appDiv: string) {
+  const app = createApp({
+    setup() {
+      provide(
+        'gqlApiService',
+        new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
+      )
+    },
+    render: () => h(GiftCardListView)
+  })
+
+  app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
   useAuthenticationStore().setSession(token)
 
   app.mount(appDiv)
