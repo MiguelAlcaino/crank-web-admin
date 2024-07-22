@@ -1499,4 +1499,19 @@ export class ApiService {
 
     return result.data.updateGiftCard as GiftCard
   }
+
+  async syncAllGiftCards(): Promise<boolean> {
+    const query = gql`
+      mutation SyncAllGiftCards {
+        syncAllGiftCards
+      }
+    `
+
+    const result = await this.authApiClient.query({
+      query: query,
+      fetchPolicy: 'no-cache'
+    })
+
+    return result.data.syncAllGiftCards as boolean
+  }
 }
