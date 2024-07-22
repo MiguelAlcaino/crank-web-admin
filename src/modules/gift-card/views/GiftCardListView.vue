@@ -11,6 +11,8 @@ const { isLoading, giftCards, hasError, afterUpdateGiftCard } = useGiftCard()
 
 <template>
   <div>
+    <h4>Gift Cards</h4>
+    <hr />
     <div class="table-responsive">
       <table class="table table-sm table-hover">
         <thead>
