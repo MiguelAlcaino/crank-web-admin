@@ -6,7 +6,7 @@ import SyncAllGiftCards from '../components/SyncAllGiftCards.vue'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
 import { useGiftCard } from '../composables/useGiftCard'
-import { ApiService } from '@/services/apiService'
+import type { ApiService } from '@/services/apiService'
 import { inject } from 'vue'
 
 const { isLoading, giftCards, hasError, afterUpdateGiftCard, getGiftCards } = useGiftCard(
