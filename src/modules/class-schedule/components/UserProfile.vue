@@ -51,10 +51,10 @@ import { inject, ref } from 'vue'
 import dayjs from 'dayjs'
 
 import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue'
-import CustomerWorkoutSummary from '@/components/CustomerWorkoutSummary.vue'
+import CustomerWorkoutSummary from '@/modules/class-schedule/components/CustomerWorkoutSummary.vue'
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
-import SendClassStatsToEmail from '@/components/SendClassStatsToEmail.vue'
+import SendClassStatsToEmail from '@/modules/shared/components/SendClassStatsToEmail.vue'
 
 import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'

@@ -46,11 +46,11 @@ import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
 import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
-import RankWidget from '@/components/RankWidget.vue'
-import SpotIconWidget from '@/components/SpotIconWidget.vue'
-import StatIconWidget from '@/components/StatIconWidget.vue'
-import StatSlashWidget from '@/components/StatSlashWidget.vue'
-import WorkoutSummaryChart from '@/components/WorkoutSummaryChart.vue'
+import RankWidget from '@/modules/shared/components/RankWidget.vue'
+import SpotIconWidget from '@/modules/shared/components/SpotIconWidget.vue'
+import StatIconWidget from '@/modules/shared/components/StatIconWidget.vue'
+import StatSlashWidget from '@/modules/shared/components/StatSlashWidget.vue'
+import WorkoutSummaryChart from '@/modules/shared/components/WorkoutSummaryChart.vue'
 
 const apiService = inject<ApiService>('gqlApiService')!
 
