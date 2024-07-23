@@ -23,7 +23,7 @@ import { inject, onMounted, ref } from 'vue'
 import dayjs from 'dayjs'
 
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
-import ModalComponent from '@/components/ModalComponent.vue'
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 
 import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'

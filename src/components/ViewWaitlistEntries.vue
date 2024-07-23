@@ -28,7 +28,7 @@ interface RemoveFromWaitlistResult {
 
 <script setup lang="ts">
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
-import ModalComponent from '@/components/ModalComponent.vue'
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import type { ApiService } from '@/services/apiService'
 import { appStore } from '@/stores/appStorage'
 import { ERROR_UNKNOWN, ERROR_WAITLIST_ENTRY_NOT_FOUND } from '@/utils/errorMessages'

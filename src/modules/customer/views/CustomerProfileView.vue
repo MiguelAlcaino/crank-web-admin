@@ -64,7 +64,7 @@ import { useRoute } from 'vue-router'
 
 import CustomerWorkoutStats from '@/components/CustomerWorkoutStats.vue'
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
-import ModalComponent from '@/components/ModalComponent.vue'
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 
 import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'

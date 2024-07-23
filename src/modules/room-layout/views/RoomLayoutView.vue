@@ -59,7 +59,7 @@ import router from '@/router'
 import { appStore } from '@/stores/appStorage'
 import { ERROR_UNIQUE_NAMES_SPOTS_LAYOUT, ERROR_UNKNOWN } from '@/utils/errorMessages'
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
-import ModalComponent from '@/components/ModalComponent.vue'
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import { useRoute } from 'vue-router'
 import Slider from '@vueform/slider'
 

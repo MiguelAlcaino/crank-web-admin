@@ -4,7 +4,7 @@ import { computed, inject, reactive, ref } from 'vue'
 import type { ApiService } from '@/services/apiService'
 
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
-import ModalComponent from '@/components/ModalComponent.vue'
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import { email, helpers, required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'

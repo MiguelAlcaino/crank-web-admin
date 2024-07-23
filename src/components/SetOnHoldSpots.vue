@@ -7,7 +7,7 @@ import useVuelidate from '@vuelidate/core'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
-import ModalComponent from '@/components/ModalComponent.vue'
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 
 const apiService = inject<ApiService>('gqlApiService')!
 

@@ -9,7 +9,7 @@ import type {
 import type { ApiService } from '@/services/apiService'
 
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
-import ModalComponent from '@/components/ModalComponent.vue'
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import { SUCCESS_RESET_PASSWORD_LINK_SENT } from '@/utils/successMessages'
 

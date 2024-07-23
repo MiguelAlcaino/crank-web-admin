@@ -21,7 +21,7 @@ import type { ApiService } from '@/services/apiService'
 import { appStore } from '@/stores/appStorage'
 import { inject, ref } from 'vue'
 
-import ModalComponent from '@/components/ModalComponent.vue'
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import {
   ERROR_BOOKING_OVERLAPS_ANOTHER_ONE,
   ERROR_CLASS_IS_FULL,

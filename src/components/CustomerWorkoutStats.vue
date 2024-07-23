@@ -42,7 +42,7 @@ import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
 import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue'
 import CustomerWorkoutSummaryModal from '@/components/CustomerWorkoutSummaryModal.vue'
-import ModalComponent from '@/components/ModalComponent.vue'
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import SendClassStatsToEmail from '@/components/SendClassStatsToEmail.vue'
 import PaginationComponent from '@/components/PaginationComponent.vue'
 import { authService, type AdminSite } from '@/services/authService'

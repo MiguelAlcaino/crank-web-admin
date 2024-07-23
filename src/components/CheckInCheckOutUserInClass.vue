@@ -16,7 +16,7 @@ interface CheckoutResultUnion {
 import { inject, ref } from 'vue'
 
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
-import ModalComponent from '@/components/ModalComponent.vue'
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import { ERROR_ENROLLMENT_NOT_FOUND, ERROR_UNKNOWN } from '@/utils/errorMessages'
 import type { ApiService } from '@/services/apiService'
 import { appStore } from '@/stores/appStorage'

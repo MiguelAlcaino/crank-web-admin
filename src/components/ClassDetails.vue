@@ -111,7 +111,7 @@ import type { ApiService } from '@/services/apiService'
 import { appStore } from '@/stores/appStorage'
 
 import SpotMatrix from '@/components/SpotMatrix.vue'
-import ModalComponent from '@/components/ModalComponent.vue'
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import AdminBookedUsersList from '@/components/AdminBookedUsersList.vue'
 import EnrollSelectedMemberComponent from '@/components/EnrollSelectedMemberComponent.vue'
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'

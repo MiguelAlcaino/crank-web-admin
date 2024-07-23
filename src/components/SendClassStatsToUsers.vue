@@ -3,7 +3,7 @@ import { inject, ref } from 'vue'
 
 import type { ApiService } from '@/services/apiService'
 
-import ModalComponent from '@/components/ModalComponent.vue'
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import DefaultButtonComponent from '../modules/shared/components/DefaultButtonComponent.vue'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 

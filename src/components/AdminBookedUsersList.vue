@@ -41,7 +41,7 @@ interface Props {
 
 <script setup lang="ts">
 import { inject, ref } from 'vue'
-import ModalComponent from '@/components/ModalComponent.vue'
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import CheckInCheckOutUserInClass from '@/components/CheckInCheckOutUserInClass.vue'

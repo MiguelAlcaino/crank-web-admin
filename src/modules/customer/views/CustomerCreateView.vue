@@ -18,7 +18,7 @@ import { required, email, minLength, sameAs, maxLength, helpers } from '@vuelida
 import { GenderEnum, type RegisterUserInput, SiteEnum } from '@/gql/graphql'
 
 import type { ApiService } from '@/services/apiService'
-import ModalComponent from '@/components/ModalComponent.vue'
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import dayjs from 'dayjs'
 
