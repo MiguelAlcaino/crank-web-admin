@@ -20,7 +20,7 @@ import GiftCardListView from './modules/gift-card/views/GiftCardListView.vue'
 import { SiteEnum } from '@/gql/graphql'
 import { appStore } from '@/stores/appStorage'
 import AdminClassView from '@/views/AdminClassView.vue'
-import ClassSchedulesView from './views/ClassSchedulesView.vue'
+import ClassSchedulesView from './modules/class-schedule/views/ClassSchedulesView.vue'
 import VueApexCharts from 'vue3-apexcharts'
 
 export const startCustomerCreateApp = async function (
