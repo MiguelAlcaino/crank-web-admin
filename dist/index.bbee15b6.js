@@ -12055,7 +12055,7 @@ function C3(A, e) {
 const x3 = /* @__PURE__ */ Zt(f3, [["render", C3]]), vd = "gift-cards", w3 = {
   path: `/${vd}`,
   redirect: `/${vd}/list`,
-  component: () => import("./GiftCardLayout.5925f548.js"),
+  component: () => import("./GiftCardLayout.31687917.js"),
   children: [
     {
       path: `/${vd}/list`,
@@ -12089,7 +12089,7 @@ const x3 = /* @__PURE__ */ Zt(f3, [["render", C3]]), vd = "gift-cards", w3 = {
     {
       path: "/admin/calendar-class",
       name: "admin_calendar_class",
-      component: () => import("./AdminClassView.d923b575.js")
+      component: () => import("./AdminClassView.9896f039.js")
     },
     {
       path: "/admin/room-layout/list",
@@ -12114,7 +12114,7 @@ const x3 = /* @__PURE__ */ Zt(f3, [["render", C3]]), vd = "gift-cards", w3 = {
     {
       path: "/customer-profile/:id",
       name: "customer_profile",
-      component: () => import("./CustomerProfileView.a7154b9a.js")
+      component: () => import("./CustomerProfileView.57ff8793.js")
     },
     {
       ...w3,
@@ -40037,7 +40037,7 @@ const PW = /* @__PURE__ */ Zt(DW, [["__scopeId", "data-v-abf519a6"]]), OW = /* @
       [kn, a.value]
     ]);
   }
-}), qu = (A) => (hn("data-v-891dc1a6"), A = A(), fn(), A), MW = { class: "row ml-1" }, RW = { class: "col-lg-7 col-md-10 col-sm-12 ml-auto mr-3" }, LW = /* @__PURE__ */ qu(() => /* @__PURE__ */ $("hr", null, null, -1)), FW = { class: "ReservationClassList" }, VW = { id: "DateRangeSection" }, BW = { style: { display: "flex", "justify-content": "space-between", width: "100%" } }, UW = {
+}), qu = (A) => (hn("data-v-a1c11296"), A = A(), fn(), A), MW = { class: "row ml-1" }, RW = { class: "col-lg-7 col-md-10 col-sm-12 ml-auto mr-3" }, LW = /* @__PURE__ */ qu(() => /* @__PURE__ */ $("hr", null, null, -1)), FW = { class: "ReservationClassList" }, VW = { id: "DateRangeSection" }, BW = { style: { display: "flex", "justify-content": "space-between", width: "100%" } }, UW = {
   key: 2,
   id: "prev"
 }, YW = /* @__PURE__ */ qu(() => /* @__PURE__ */ $("i", {
@@ -40053,7 +40053,10 @@ const PW = /* @__PURE__ */ Zt(DW, [["__scopeId", "data-v-abf519a6"]]), OW = /* @
 ], XW = {
   key: 0,
   class: "row"
-}, GW = { class: "col-12 text-center" }, qW = { id: "ClassesSection" }, QW = { class: "day" }, KW = ["onClick"], ZW = { style: { display: "inline-block", width: "100%", "align-self": "stretch" } }, JW = { class: "row" }, AX = { class: "col-12 text-center" }, eX = { key: 0 }, tX = /* @__PURE__ */ qu(() => /* @__PURE__ */ $("h6", null, [
+}, GW = { class: "col-12 text-center" }, qW = {
+  id: "ClassesSection",
+  class: "scrollable-div"
+}, QW = { class: "day" }, KW = ["onClick"], ZW = { style: { display: "inline-block", width: "100%", "align-self": "stretch" } }, JW = { class: "row" }, AX = { class: "col-12 text-center" }, eX = { key: 0 }, tX = /* @__PURE__ */ qu(() => /* @__PURE__ */ $("h6", null, [
   /* @__PURE__ */ ve(" synchronizing...\xA0"),
   /* @__PURE__ */ $("span", { class: "spinner-border spinner-border-sm crankSpiner" })
 ], -1)), nX = [
@@ -40232,7 +40235,7 @@ const PW = /* @__PURE__ */ Zt(DW, [["__scopeId", "data-v-abf519a6"]]), OW = /* @
     ], 64));
   }
 });
-const aX = /* @__PURE__ */ Zt(iX, [["__scopeId", "data-v-891dc1a6"]]), sX = { class: "row" }, oX = { class: "col-lg-12" }, lX = { class: "row" }, cX = { class: "col-lg-3 col-md-6 col-sm-12 col-12" }, uX = { class: "col-lg-9 col-md-6 col-sm-12 col-12" }, dX = /* @__PURE__ */ ke({
+const aX = /* @__PURE__ */ Zt(iX, [["__scopeId", "data-v-a1c11296"]]), sX = { class: "row" }, oX = { class: "col-lg-12" }, lX = { class: "row" }, cX = { class: "col-lg-3 col-md-6 col-sm-12 col-12" }, uX = { class: "col-lg-9 col-md-6 col-sm-12 col-12" }, dX = /* @__PURE__ */ ke({
   __name: "AdminClassView",
   setup(A) {
     const e = mA(void 0), t = mA(void 0);
