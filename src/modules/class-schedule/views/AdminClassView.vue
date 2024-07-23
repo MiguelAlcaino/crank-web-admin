@@ -3,7 +3,7 @@ import { inject, onMounted, ref } from 'vue'
 
 import ClassDetails from '@/components/ClassDetails.vue'
 import CalendarList from '@/components/CalendarList.vue'
-import DefaultButtonComponent from '@/components/DefaultButtonComponent.vue'
+import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 
 const goBackUrl = ref<string | undefined | null>(undefined)
 const editCustomerProfileUrl = ref<string | undefined | null>(undefined)

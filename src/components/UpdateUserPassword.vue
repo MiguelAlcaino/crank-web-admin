@@ -3,7 +3,7 @@ import { computed, inject, reactive, ref } from 'vue'
 
 import type { ApiService } from '@/services/apiService'
 
-import DefaultButtonComponent from '@/components/DefaultButtonComponent.vue'
+import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import { helpers, minLength, required, sameAs } from '@vuelidate/validators'

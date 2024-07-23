@@ -6,7 +6,7 @@ import { helpers, minValue, required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
-import DefaultButtonComponent from '@/components/DefaultButtonComponent.vue'
+import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
 
 const apiService = inject<ApiService>('gqlApiService')!

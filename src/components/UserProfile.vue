@@ -52,7 +52,7 @@ import dayjs from 'dayjs'
 
 import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIndicator.vue'
 import CustomerWorkoutSummary from '@/components/CustomerWorkoutSummary.vue'
-import DefaultButtonComponent from '@/components/DefaultButtonComponent.vue'
+import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
 import SendClassStatsToEmail from '@/components/SendClassStatsToEmail.vue'
 

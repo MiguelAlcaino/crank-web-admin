@@ -5,7 +5,7 @@ import useVuelidate from '@vuelidate/core'
 
 import type { ApiService } from '@/services/apiService'
 import ModalComponent from '@/components/ModalComponent.vue'
-import DefaultButtonComponent from '@/components/DefaultButtonComponent.vue'
+import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import { SUCCESS_RESET_PASSWORD } from '@/utils/successMessages'

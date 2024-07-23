@@ -10,7 +10,7 @@ interface RoomLayout {
 <script setup lang="ts">
 import { inject, onMounted, ref } from 'vue'
 
-import DefaultButtonComponent from '@/components/DefaultButtonComponent.vue'
+import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import type { ApiService } from '@/services/apiService'
 import { appStore } from '@/stores/appStorage'
 import router from '@/router'

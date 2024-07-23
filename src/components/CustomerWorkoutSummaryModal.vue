@@ -45,7 +45,7 @@ import { secondsToMMSS } from '@/utils/utility-functions'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
 import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIndicator.vue'
-import DefaultButtonComponent from '@/components/DefaultButtonComponent.vue'
+import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
 import RankWidget from '@/components/RankWidget.vue'
 import SpotIconWidget from '@/components/SpotIconWidget.vue'
