@@ -123,7 +123,7 @@ import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCir
 import UserProfile from '@/modules/class-schedule/components/UserProfile.vue'
 import SyncClassButton from '@/modules/class-schedule/components/SyncClassButton.vue'
 import SyncClassWithPiqButton from '@/modules/class-schedule/components/SyncClassWithPiqButton.vue'
-import SendClassStatsToUsers from '@/components/SendClassStatsToUsers.vue'
+import SendClassStatsToUsers from '@/modules/class-schedule/components/SendClassStatsToUsers.vue'
 
 import {
   ERROR_CLIENT_IS_OUTSIDE_SCHEDULING_WINDOW,

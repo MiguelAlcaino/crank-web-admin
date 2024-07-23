@@ -21,17 +21,17 @@ const router = createRouter({
     {
       path: '/user/create',
       name: 'user_create',
-      component: () => import('../modules/customer/views/CustomerCreateView.vue')
+      component: () => import('@/modules/customer/views/CustomerCreateView.vue')
     },
     {
       path: '/user/edit/:id',
       name: 'user_edit',
-      component: () => import('../modules/customer/views/CustomerEditView.vue')
+      component: () => import('@/modules/customer/views/CustomerEditView.vue')
     },
     {
       path: '/admin/calendar-class',
       name: 'admin_calendar_class',
-      component: () => import('../modules/class-schedule/views/AdminClassView.vue')
+      component: () => import('@/modules/class-schedule/views/AdminClassView.vue')
     },
     {
       path: '/admin/room-layout/list',
@@ -41,22 +41,22 @@ const router = createRouter({
     {
       path: '/admin/room-layout/create',
       name: 'admin_room_layout_create',
-      component: () => import('../modules/room-layout/views/RoomLayoutView.vue')
+      component: () => import('@/modules/room-layout/views/RoomLayoutView.vue')
     },
     {
       path: '/admin/room-layout/edit/:id',
       name: 'admin_room_layout_edit',
-      component: () => import('../modules/room-layout/views/RoomLayoutView.vue')
+      component: () => import('@/modules/room-layout/views/RoomLayoutView.vue')
     },
     {
       path: '/class-schedules',
       name: 'class_schedules',
-      component: () => import('../modules/class-schedule/views/ClassSchedulesView.vue')
+      component: () => import('@/modules/class-schedule/views/ClassSchedulesView.vue')
     },
     {
       path: '/customer-profile/:id',
       name: 'customer_profile',
-      component: () => import('../modules/customer/views/CustomerProfileView.vue')
+      component: () => import('@/modules/customer/views/CustomerProfileView.vue')
     },
     {
       ...giftCardRoute,
