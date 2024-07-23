@@ -241,7 +241,7 @@ const format = (modelData: [Date, Date]) => {
         <CrankCircularProgressIndicator text="Loading..."></CrankCircularProgressIndicator>
       </div>
     </div>
-    <div id="ClassesSection">
+    <div id="ClassesSection" class="scrollable-div">
       <div class="ClassDate" v-for="wd in weekDays" :key="wd.date.toISOString">
         <span class="day">{{ dayjs(wd.date).format('ddd MMM D, YYYY') }}</span>
         <div
@@ -363,5 +363,10 @@ const format = (modelData: [Date, Date]) => {
 
 .crankSpiner {
   color: #ff6f60;
+}
+
+.scrollable-div {
+  height: 100vh;
+  overflow-y: scroll;
 }
 </style>
