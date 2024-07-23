@@ -40,7 +40,7 @@ import type { ApiService } from '@/services/apiService'
 
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
-import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIndicator.vue'
+import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue'
 import CustomerWorkoutSummaryModal from '@/components/CustomerWorkoutSummaryModal.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
 import SendClassStatsToEmail from '@/components/SendClassStatsToEmail.vue'

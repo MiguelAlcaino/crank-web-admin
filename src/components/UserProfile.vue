@@ -50,7 +50,7 @@ export enum GenderEnum {
 import { inject, ref } from 'vue'
 import dayjs from 'dayjs'
 
-import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIndicator.vue'
+import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue'
 import CustomerWorkoutSummary from '@/components/CustomerWorkoutSummary.vue'
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/components/ModalComponent.vue'
