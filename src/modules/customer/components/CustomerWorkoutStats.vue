@@ -41,7 +41,7 @@ import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
 import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue'
-import CustomerWorkoutSummaryModal from '@/components/CustomerWorkoutSummaryModal.vue'
+import CustomerWorkoutSummaryModal from '@/modules/customer/components/CustomerWorkoutSummaryModal.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import SendClassStatsToEmail from '@/components/SendClassStatsToEmail.vue'
 import PaginationComponent from '@/components/PaginationComponent.vue'

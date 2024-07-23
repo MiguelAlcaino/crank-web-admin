@@ -26,7 +26,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue'
 import SyncAllClassesButton from '@/modules/class-schedule/components/SyncAllClassesButton.vue'
-import SiteSelector from '@/components/SiteSelector.vue'
+import SiteSelector from '@/modules/customer/components/SiteSelector.vue'
 import { Role } from '@/utils/userRoles'
 import { authService } from '@/services/authService'
 

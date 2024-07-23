@@ -120,7 +120,7 @@ import ViewWaitlistEntries from '@/modules/class-schedule/components/ViewWaitlis
 import CheckInCheckOutUserInClass from '@/modules/class-schedule/components/CheckInCheckOutUserInClass.vue'
 import SetOnHoldSpots from '@/modules/class-schedule/components/SetOnHoldSpots.vue'
 import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue'
-import UserProfile from '@/components/UserProfile.vue'
+import UserProfile from '@/modules/class-schedule/components/UserProfile.vue'
 import SyncClassButton from '@/modules/class-schedule/components/SyncClassButton.vue'
 import SyncClassWithPiqButton from '@/modules/class-schedule/components/SyncClassWithPiqButton.vue'
 import SendClassStatsToUsers from '@/components/SendClassStatsToUsers.vue'

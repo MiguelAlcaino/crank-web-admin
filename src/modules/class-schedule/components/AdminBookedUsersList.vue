@@ -45,7 +45,7 @@ import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import CheckInCheckOutUserInClass from '@/modules/class-schedule/components/CheckInCheckOutUserInClass.vue'
-import UserProfile from '@/components/UserProfile.vue'
+import UserProfile from '@/modules/class-schedule/components/UserProfile.vue'
 
 withDefaults(defineProps<Props>(), {
   showEditOptions: false
