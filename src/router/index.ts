@@ -23,12 +23,12 @@ const router = createRouter({
     {
       path: '/user/create',
       name: 'user_create',
-      component: () => import('../views/CustomerCreateView.vue')
+      component: () => import('../modules/customer/views/CustomerCreateView.vue')
     },
     {
       path: '/user/edit/:id',
       name: 'user_edit',
-      component: () => import('../views/CustomerEditView.vue')
+      component: () => import('../modules/customer/views/CustomerEditView.vue')
     },
     {
       path: '/admin/calendar-class',
@@ -58,7 +58,7 @@ const router = createRouter({
     {
       path: '/customer-profile/:id',
       name: 'customer_profile',
-      component: () => import('../views/CustomerProfileView.vue')
+      component: () => import('../modules/customer/views/CustomerProfileView.vue')
     },
     {
       ...giftCardRoute,
