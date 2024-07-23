@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { inject, onMounted, ref } from 'vue'
 
-import ClassDetails from '@/components/ClassDetails.vue'
-import CalendarList from '@/components/CalendarList.vue'
+import ClassDetails from '@/modules/class-schedule/components/ClassDetails.vue'
+import CalendarList from '@/modules/class-schedule/components/CalendarList.vue'
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 
 const goBackUrl = ref<string | undefined | null>(undefined)

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 import IconPositionNotBookable from '@/components/icons/IconPositionNotBookable.vue'
-import AdminBookableSpotPosition from '@/components/AdminBookableSpotPosition.vue'
+import AdminBookableSpotPosition from '@/modules/class-schedule/components/AdminBookableSpotPosition.vue'
 
 enum PositionIconEnum {
   Empty = 'empty',
