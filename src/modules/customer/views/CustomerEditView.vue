@@ -65,10 +65,10 @@ import { required, maxLength, helpers, minValue, minLength } from '@vuelidate/va
 import type { UserInput } from '@/gql/graphql'
 import type { ApiService } from '@/services/apiService'
 
-import UpdateUserPassword from '@/components/UpdateUserPassword.vue'
+import UpdateUserPassword from '@/modules/customer/components/UpdateUserPassword.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
-import ResetUserPassword from '@/components/ResetUserPassword.vue'
-import ExternalUserIds from '@/components/ExternalUserIds.vue'
+import ResetUserPassword from '@/modules/customer/components/ResetUserPassword.vue'
+import ExternalUserIds from '@/modules/customer/components/ExternalUserIds.vue'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import dayjs from 'dayjs'
 

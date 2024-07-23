@@ -62,7 +62,7 @@ import { inject, onMounted, ref } from 'vue'
 import dayjs from 'dayjs'
 import { useRoute } from 'vue-router'
 
-import CustomerWorkoutStats from '@/components/CustomerWorkoutStats.vue'
+import CustomerWorkoutStats from '@/modules/customer/components/CustomerWorkoutStats.vue'
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 
