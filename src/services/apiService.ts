@@ -697,6 +697,7 @@ export class ApiService {
           totalBooked
           totalUnderMaintenanceSpots
           showAsDisabled
+          instructorName
         }
       }
     `

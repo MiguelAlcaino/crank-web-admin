@@ -7,6 +7,7 @@ interface Class {
   totalBooked: number
   totalUnderMaintenanceSpots: number
   showAsDisabled: boolean
+  instructorName: string
 }
 
 interface WeekDays {
@@ -56,7 +57,7 @@ onMounted(async () => {
   userCanSyncClasses.value = authService.userHasRole(Role.ROLE_SUPER_ADMIN)
 
   checkIfAllClassAreSynchronized()
-  
+
   await getCalendarClasses()
   scrollToTodayClass()
 })
@@ -109,7 +110,8 @@ async function getCalendarClasses(resetSelectedClass: boolean = true): Promise<v
         maxCapacity: calendarClass.maxCapacity,
         totalBooked: calendarClass.totalBooked,
         totalUnderMaintenanceSpots: calendarClass.totalUnderMaintenanceSpots,
-        showAsDisabled: calendarClass.showAsDisabled
+        showAsDisabled: calendarClass.showAsDisabled,
+        instructorName: calendarClass.instructorName
       })
     }
   } catch (error) {
@@ -253,7 +255,9 @@ function scrollToTodayClass() {
     </div>
     <div id="ClassesSection" class="scrollable-div">
       <div class="ClassDate" v-for="wd in weekDays" :key="wd.date.toISOString">
-        <span class="day" :id="`${dayjs(wd.date).format('YYYY-MM-DD')}`">{{ dayjs(wd.date).format('ddd MMM D, YYYY') }}</span>
+        <span class="day" :id="`${dayjs(wd.date).format('YYYY-MM-DD')}`">{{
+          dayjs(wd.date).format('ddd MMM D, YYYY')
+        }}</span>
         <div
           v-for="c in wd.classes"
           :key="c.id"
@@ -266,9 +270,9 @@ function scrollToTodayClass() {
         >
           <div>
             <time>{{ dayjs(c.startWithNoTimeZone).format('h:mm A') }}</time>
-            <desc style="display: inline-block; width: 100%; align-self: stretch">{{
-              c.name
-            }}</desc>
+            <desc style="display: inline-block; width: 100%; align-self: stretch">
+              {{ c.name }} - {{ c.instructorName }}
+            </desc>
             <span>
               {{ '(' + (c.totalBooked + c.totalUnderMaintenanceSpots) + '/' + c.maxCapacity + ')' }}
             </span>
