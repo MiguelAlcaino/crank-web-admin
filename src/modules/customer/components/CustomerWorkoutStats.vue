@@ -168,7 +168,11 @@ function onChangeSite() {
                 {{ item.enrollment.enrollmentInfo.spotNumber }}
               </td>
               <td class="text-center">
-                {{ dayjs(new Date(item.enrollment.class.startWithNoTimeZone)).format('DD/MM/YYYY h:mm A') }}
+                {{
+                  dayjs(new Date(item.enrollment.class.startWithNoTimeZone)).format(
+                    'DD/MM/YYYY h:mm A'
+                  )
+                }}
               </td>
               <td class="text-center">{{ item.enrollment.class.duration }} mins.</td>
               <td class="text-center">{{ item.totalEnergy?.toFixed(1) ?? '0' }}</td>
