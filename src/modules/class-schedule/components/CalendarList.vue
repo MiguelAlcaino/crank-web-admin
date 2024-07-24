@@ -52,11 +52,13 @@ const emits = defineEmits<{
   (e: 'selectClass', classId: string | null): void
 }>()
 
-onMounted(() => {
-  checkIfAllClassAreSynchronized()
-  getCalendarClasses()
-
+onMounted(async () => {
   userCanSyncClasses.value = authService.userHasRole(Role.ROLE_SUPER_ADMIN)
+
+  checkIfAllClassAreSynchronized()
+  
+  await getCalendarClasses()
+  scrollToTodayClass()
 })
 
 defineExpose({
@@ -184,6 +186,14 @@ const format = (modelData: [Date, Date]) => {
     'DD/MM/YYYY'
   )}`
 }
+
+function scrollToTodayClass() {
+  const today = dayjs().format('YYYY-MM-DD')
+  const todayClassElement = document.getElementById(`${today}`)
+  if (todayClassElement) {
+    todayClassElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+}
 </script>
 
 <template>
@@ -243,7 +253,7 @@ const format = (modelData: [Date, Date]) => {
     </div>
     <div id="ClassesSection" class="scrollable-div">
       <div class="ClassDate" v-for="wd in weekDays" :key="wd.date.toISOString">
-        <span class="day">{{ dayjs(wd.date).format('ddd MMM D, YYYY') }}</span>
+        <span class="day" :id="`${dayjs(wd.date).format('YYYY-MM-DD')}`">{{ dayjs(wd.date).format('ddd MMM D, YYYY') }}</span>
         <div
           v-for="c in wd.classes"
           :key="c.id"
@@ -368,5 +378,8 @@ const format = (modelData: [Date, Date]) => {
 .scrollable-div {
   height: 100vh;
   overflow-y: scroll;
+
+  max-height: 82vh;
+  overflow-y: auto;
 }
 </style>
