@@ -15,6 +15,7 @@ interface Class {
   name: string
   start: Date
   startWithNoTimeZone: Date
+  instructorName: string
 }
 
 interface EnrollmentInfo {
@@ -150,6 +151,7 @@ function onChangeSite() {
           <thead>
             <tr class="text-center">
               <th>DESCRIPTION</th>
+              <th>INSTRUCTOR</th>
               <th>SPOT</th>
               <th>DATE</th>
               <th>DURATION</th>
@@ -161,6 +163,7 @@ function onChangeSite() {
           <tbody>
             <tr v-for="(item, index) in classStats" :key="index">
               <td>{{ item.enrollment.class.name }}</td>
+              <td>{{ item.enrollment.class.instructorName }}</td>
               <td class="text-center">
                 {{ item.enrollment.enrollmentInfo.spotNumber }}
               </td>

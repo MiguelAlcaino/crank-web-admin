@@ -1331,6 +1331,7 @@ export class ApiService {
                 start
                 duration
                 startWithNoTimeZone
+                instructorName
               }
             }
             totalEnergy
