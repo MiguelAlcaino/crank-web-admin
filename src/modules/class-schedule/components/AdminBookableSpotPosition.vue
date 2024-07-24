@@ -154,7 +154,7 @@ function selectSpot() {
   align-items: center;
   color: #000;
   border: 2px #000000 solid;
-  font-weight: 400;
+  font-weight: bold;
   font-size: 9px;
   cursor: pointer;
 }
@@ -169,7 +169,7 @@ function selectSpot() {
   align-items: center;
   color: #000;
   border: 2px #000000 solid;
-  font-weight: 400;
+  font-weight: bold;
   font-size: 9px;
 }
 
@@ -183,7 +183,7 @@ function selectSpot() {
   align-items: center;
   color: #000;
   border: 2px #000000 solid;
-  font-weight: 400;
+  font-weight: bold;
   font-size: 9px;
 }
 
@@ -201,7 +201,7 @@ function selectSpot() {
   align-items: center;
   color: #000;
   border: 2px #000000 solid;
-  font-weight: 400;
+  font-weight: bold;
   font-size: 9px;
   cursor: pointer;
 }
@@ -216,7 +216,7 @@ function selectSpot() {
   align-items: center;
   color: #000;
   border: 2px #000000 solid;
-  font-weight: 400;
+  font-weight: bold;
   font-size: 9px;
 }
 
@@ -230,7 +230,7 @@ function selectSpot() {
   align-items: center;
   color: #000;
   border: 2px #000000 solid;
-  font-weight: 400;
+  font-weight: bold;
   font-size: 9px;
 }
 
@@ -244,7 +244,7 @@ function selectSpot() {
   align-items: center;
   color: #000;
   border: 2px #000000 solid;
-  font-weight: 400;
+  font-weight: bold;
   font-size: 9px;
   cursor: pointer;
 }
