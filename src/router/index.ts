@@ -31,7 +31,7 @@ const router = createRouter({
     {
       path: '/admin/calendar-class',
       name: 'admin_calendar_class',
-      component: () => import('@/modules/class-schedule/views/AdminClassView.vue')
+      component: () => import('@/modules/class-schedule/views/ClassScheduleView.vue')
     },
     {
       path: '/admin/room-layout/list',
@@ -51,7 +51,7 @@ const router = createRouter({
     {
       path: '/class-schedules',
       name: 'class_schedules',
-      component: () => import('@/modules/class-schedule/views/ClassSchedulesView.vue')
+      component: () => import('@/modules/class-schedule/views/ClassScheduleConfigView.vue')
     },
     {
       path: '/customer-profile/:id',
