@@ -18,13 +18,13 @@ defineProps<{
       ></i>
       <img
         v-if="className?.toUpperCase().includes('SHAPE')"
-        src="../assets/icons/shape_icon.png"
+        src="@/assets/icons/shape_icon.png"
         alt=""
         height="50"
       />
       <img
         v-if="className?.toUpperCase().includes('STRETCH')"
-        src="../assets/icons/stretch_icon.png"
+        src="@/assets/icons/stretch_icon.png"
         alt=""
         height="50"
       />
