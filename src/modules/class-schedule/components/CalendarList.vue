@@ -162,7 +162,7 @@ const intervalId = ref<number | null>(null)
 function initIntervalCheckSynchronizationClasses() {
   intervalId.value = window.setInterval(async () => {
     try {
-      const isSynchronizing = await apiService.checkIfAllClassAreSynchronized(appStore().site) // Reemplaza esto con tu llamada a la API
+      const isSynchronizing = await apiService.checkIfAllClassAreSynchronized(appStore().site)
       isSynchronizingClasses.value = isSynchronizing
 
       if (!isSynchronizing) {
