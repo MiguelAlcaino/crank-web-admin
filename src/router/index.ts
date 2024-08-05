@@ -1,9 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import LoginView from '../views/LoginView.vue'
-
 import { authService } from '@/services/authService'
-import RoomLayoutListView from '@/views/RoomLayoutListView.vue'
+import RoomLayoutListView from '@/modules/room-layout/views/RoomLayoutListView.vue'
 import HomeView from '@/views/HomeView.vue'
 import { giftCardRoute } from '@/modules/gift-card/router'
 
@@ -18,22 +16,22 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: import('@/modules/auth/views/LoginView.vue')
     },
     {
       path: '/user/create',
       name: 'user_create',
-      component: () => import('../views/CustomerCreateView.vue')
+      component: () => import('@/modules/customer/views/CustomerCreateView.vue')
     },
     {
       path: '/user/edit/:id',
       name: 'user_edit',
-      component: () => import('../views/CustomerEditView.vue')
+      component: () => import('@/modules/customer/views/CustomerEditView.vue')
     },
     {
       path: '/admin/calendar-class',
       name: 'admin_calendar_class',
-      component: () => import('../views/AdminClassView.vue')
+      component: () => import('@/modules/class-schedule/views/ClassScheduleView.vue')
     },
     {
       path: '/admin/room-layout/list',
@@ -43,22 +41,22 @@ const router = createRouter({
     {
       path: '/admin/room-layout/create',
       name: 'admin_room_layout_create',
-      component: () => import('../views/RoomLayoutView.vue')
+      component: () => import('@/modules/room-layout/views/RoomLayoutView.vue')
     },
     {
       path: '/admin/room-layout/edit/:id',
       name: 'admin_room_layout_edit',
-      component: () => import('../views/RoomLayoutView.vue')
+      component: () => import('@/modules/room-layout/views/RoomLayoutView.vue')
     },
     {
       path: '/class-schedules',
       name: 'class_schedules',
-      component: () => import('../views/ClassSchedulesView.vue')
+      component: () => import('@/modules/class-schedule/views/ClassScheduleConfigView.vue')
     },
     {
       path: '/customer-profile/:id',
       name: 'customer_profile',
-      component: () => import('../views/CustomerProfileView.vue')
+      component: () => import('@/modules/customer/views/CustomerProfileView.vue')
     },
     {
       ...giftCardRoute,
