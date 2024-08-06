@@ -70,27 +70,6 @@ export const authService = {
     useAuthenticationStore().deleteSession()
     await router.push({ name: 'login' })
   },
-  async validateResetPasswordToken(resetPasswordToken: string): Promise<string> {
-    try {
-      const response = await axios.get(
-        Config.AUTH_SERVICE_HOST + '/api/reset-password/validate-token/' + resetPasswordToken
-      )
-
-      useAuthenticationStore().setSession(response.data.token)
-      return 'success'
-    } catch (error) {
-      if (
-        error instanceof AxiosError &&
-        error.response?.data &&
-        error.response?.data.status &&
-        error.response?.data.status === 'error'
-      ) {
-        return error.response?.data.code
-      }
-
-      return 'unknown_error'
-    }
-  },
   userHasRole(role: Role): boolean {
     const token = useAuthenticationStore().token
 
