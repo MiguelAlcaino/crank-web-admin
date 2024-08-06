@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import { useAuthenticationStore } from '@/stores/authToken'
 import { IncorrectCredentialsLoginError } from '@/model/Exception'
 import router from '@/router'
