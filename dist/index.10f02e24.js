@@ -11198,7 +11198,7 @@ function NE(A, e) {
 const ME = /* @__PURE__ */ en(SE, [["render", NE]]), yd = "gift-cards", RE = {
   path: `/${yd}`,
   redirect: `/${yd}/list`,
-  component: () => import("./GiftCardLayout.dda65cac.js"),
+  component: () => import("./GiftCardLayout.bad61962.js"),
   children: [
     {
       path: `/${yd}/list`,
@@ -11217,7 +11217,7 @@ const ME = /* @__PURE__ */ en(SE, [["render", NE]]), yd = "gift-cards", RE = {
     {
       path: "/login",
       name: "login",
-      component: import("./LoginView.05aac576.js")
+      component: import("./LoginView.e1c6e530.js")
     },
     {
       path: "/user/create",
@@ -11232,7 +11232,7 @@ const ME = /* @__PURE__ */ en(SE, [["render", NE]]), yd = "gift-cards", RE = {
     {
       path: "/admin/calendar-class",
       name: "admin_calendar_class",
-      component: () => import("./ClassScheduleView.2c659935.js")
+      component: () => import("./ClassScheduleView.3a969a21.js")
     },
     {
       path: "/admin/room-layout/list",
@@ -11257,7 +11257,7 @@ const ME = /* @__PURE__ */ en(SE, [["render", NE]]), yd = "gift-cards", RE = {
     {
       path: "/customer-profile/:id",
       name: "customer_profile",
-      component: () => import("./CustomerProfileView.e9294574.js")
+      component: () => import("./CustomerProfileView.9d3d5d2e.js")
     },
     {
       ...RE,
@@ -39458,7 +39458,7 @@ const Mz = /* @__PURE__ */ en(Nz, [["__scopeId", "data-v-cab7108c"]]), Rz = { cl
   }
 });
 var Ma = /* @__PURE__ */ ((A) => (A.ROLE_SUPER_ADMIN = "ROLE_SUPER_ADMIN", A.ROLE_ADMIN_MANAGER = "ROLE_ADMIN_MANAGER", A.ROLE_STAFF = "ROLE_STAFF", A.ROLE_USER = "ROLE_USER", A.ROLE_MINDBODY_USER = "ROLE_MINDBODY_USER", A.ROLE_INSTRUCTOR = "ROLE_INSTRUCTOR", A))(Ma || {});
-const gr = (A) => (mn("data-v-20029b3b"), A = A(), vn(), A), Sj = { class: "ClassDetails" }, $j = { key: 0 }, Ej = /* @__PURE__ */ gr(() => /* @__PURE__ */ $("h2", { style: { margin: "0 auto", "text-align": "center" } }, "Please select a class", -1)), Dj = [
+const gr = (A) => (mn("data-v-7de1facb"), A = A(), vn(), A), Sj = { class: "ClassDetails" }, $j = { key: 0 }, Ej = /* @__PURE__ */ gr(() => /* @__PURE__ */ $("h2", { style: { margin: "0 auto", "text-align": "center" } }, "Please select a class", -1)), Dj = [
   Ej
 ], Pj = { key: 1 }, Oj = { class: "row" }, Tj = { class: "col-12 text-center" }, Nj = { key: 2 }, Mj = { class: "row" }, Rj = { class: "col-12 text-right" }, Lj = { key: 0 }, Fj = /* @__PURE__ */ gr(() => /* @__PURE__ */ $("h6", null, [
   /* @__PURE__ */ ve(" synchronizing...\xA0"),
@@ -39477,7 +39477,7 @@ const gr = (A) => (mn("data-v-20029b3b"), A = A(), vn(), A), Sj = { class: "Clas
 }, Kj = { class: "col-md-12" }, Zj = /* @__PURE__ */ gr(() => /* @__PURE__ */ $("hr", null, null, -1)), Jj = /* @__PURE__ */ gr(() => /* @__PURE__ */ $("hr", null, null, -1)), AW = /* @__PURE__ */ gr(() => /* @__PURE__ */ $("br", null, null, -1)), eW = { key: 6 }, tW = /* @__PURE__ */ gr(() => /* @__PURE__ */ $("h2", null, "Choose an action :", -1)), nW = { key: 7 }, rW = /* @__PURE__ */ gr(() => /* @__PURE__ */ $("h2", null, "Spot is under maintenance", -1)), iW = { key: 8 }, aW = { key: 15 }, sW = /* @__PURE__ */ gr(() => /* @__PURE__ */ $("hr", null, null, -1)), oW = /* @__PURE__ */ gr(() => /* @__PURE__ */ $("br", null, null, -1)), lW = /* @__PURE__ */ gr(() => /* @__PURE__ */ $("br", null, null, -1)), cW = {
   key: 16,
   class: "row matrixSpotsLegend"
-}, uW = /* @__PURE__ */ Ib('<div class="col-4" style="text-align:center;" data-v-20029b3b><hr style="border:none;height:2px;background-color:#ffd903;max-width:20px;" data-v-20029b3b><small data-v-20029b3b>Not Paid</small></div><div class="col-4" style="text-align:center;" data-v-20029b3b><hr style="border:none;height:2px;background-color:#8a00e7;max-width:20px;" data-v-20029b3b><small data-v-20029b3b>Spot With Stats</small></div><div class="col-4" style="text-align:center;" data-v-20029b3b><hr style="border:none;height:2px;background-color:#ff7e62;max-width:20px;" data-v-20029b3b><small data-v-20029b3b>Spot Without Stats</small></div>', 3), dW = [
+}, uW = /* @__PURE__ */ Ib('<div class="col-4" style="text-align:center;" data-v-7de1facb><hr style="border:none;height:2px;background-color:#ffd903;max-width:20px;" data-v-7de1facb><small data-v-7de1facb>Not Paid</small></div><div class="col-4" style="text-align:center;" data-v-7de1facb><hr style="border:none;height:2px;background-color:#8a00e7;max-width:20px;" data-v-7de1facb><small data-v-7de1facb>Spot With Stats</small></div><div class="col-4" style="text-align:center;" data-v-7de1facb><hr style="border:none;height:2px;background-color:#ff7e62;max-width:20px;" data-v-7de1facb><small data-v-7de1facb>Spot Without Stats</small></div>', 3), dW = [
   uW
 ], hW = /* @__PURE__ */ gr(() => /* @__PURE__ */ $("br", null, null, -1)), fW = { class: "row" }, gW = { class: "col-12" }, pW = /* @__PURE__ */ Se({
   __name: "ClassDetails",
@@ -39896,7 +39896,7 @@ const gr = (A) => (mn("data-v-20029b3b"), A = A(), vn(), A), Sj = { class: "Clas
     };
   }
 });
-const mW = /* @__PURE__ */ en(pW, [["__scopeId", "data-v-20029b3b"]]), vW = /* @__PURE__ */ Se({
+const mW = /* @__PURE__ */ en(pW, [["__scopeId", "data-v-7de1facb"]]), vW = /* @__PURE__ */ Se({
   __name: "SyncAllClassesButton",
   props: {
     disabled: { type: Boolean }
