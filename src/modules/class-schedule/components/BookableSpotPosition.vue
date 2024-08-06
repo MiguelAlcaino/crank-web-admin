@@ -138,36 +138,31 @@ function selectSpot() {
   color: #000;
   font-weight: bold;
   font-size: 9px;
+  border: 2px #000000 solid;
 }
 
 .disabledSpot {
   background: #f37676;
-  border: 2px #000000 solid;
   font-weight: 400;
   cursor: pointer;
 }
 
 .disabledSpotNotClickable {
   background: #f37676;
-  border: 2px #000000 solid;
   font-weight: 400;
 }
 
 .enabledSpot {
   background: #ffffff;
-  border: 2px #000000 solid;
   cursor: pointer;
 }
 
 .spotEnabledNotClickable {
   background: #ffffff;
-  border: 2px #000000 solid;
-  font-weight: bold;
 }
 
 .empty-spot-not-selectable {
   background: #ffffff;
-  border: 2px #000000 solid;
 }
 
 .selectedSpot {
@@ -176,23 +171,19 @@ function selectSpot() {
 
 .changeMemberSpot-spotAvailable {
   background: #ffebcd;
-  border: 2px #000000 solid;
   cursor: pointer;
 }
 
 .changeMemberSpot-disabledSpot {
   background: #f37676;
-  border: 2px #000000 solid;
 }
 
 .changeMemberSpot-bookedSpot {
   background: #ffffff;
-  border: 2px #000000 solid;
 }
 
 .swapMemberSpot-bookedSpot {
   background: #ffffff;
-  border: 2px #000000 solid;
   cursor: pointer;
 }
 
