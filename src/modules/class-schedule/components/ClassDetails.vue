@@ -68,15 +68,6 @@ interface User {
   leaderboardUsername?: string
 }
 
-enum PositionIconEnum {
-  Empty = 'empty',
-  Fan = 'fan',
-  Instructor = 'instructor',
-  Speaker = 'speaker',
-  Spot = 'spot',
-  Tv = 'tv'
-}
-
 enum SpotActionEnum {
   none,
   asignUserToSpot,
@@ -129,6 +120,7 @@ import {
 import { authService } from '@/services/authService'
 import { Role } from '@/utils/userRoles'
 import { EnrollmentStatusEnum } from '../interfaces'
+import { PositionIconEnum } from '@/modules/shared/interfaces'
 
 const props = defineProps<{
   classId: string | null

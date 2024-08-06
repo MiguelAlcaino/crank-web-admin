@@ -29,15 +29,6 @@ interface IconPositionInput {
   spotNumber?: number | null
 }
 
-enum PositionIconEnum {
-  Empty = 'empty',
-  Fan = 'fan',
-  Instructor = 'instructor',
-  Speaker = 'speaker',
-  Spot = 'spot',
-  Tv = 'tv'
-}
-
 interface RoomLayout {
   id: string
   name: string
@@ -62,6 +53,7 @@ import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonCom
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import { useRoute } from 'vue-router'
 import Slider from '@vueform/slider'
+import { PositionIconEnum } from '@/modules/shared/interfaces'
 
 const route = useRoute()
 const apiService = inject<ApiService>('gqlApiService')!
