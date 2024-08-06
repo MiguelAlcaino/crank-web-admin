@@ -2,15 +2,8 @@
 import { onMounted, ref, watch } from 'vue'
 import IconPositionNotBookable from '@/modules/class-schedule/components/icons/IconPositionNotBookable.vue'
 import AdminBookableSpotPosition from '@/modules/class-schedule/components/AdminBookableSpotPosition.vue'
-
-enum PositionIconEnum {
-  Empty = 'empty',
-  Fan = 'fan',
-  Instructor = 'instructor',
-  Speaker = 'speaker',
-  Spot = 'spot',
-  Tv = 'tv'
-}
+import { EnrollmentStatusEnum } from '../interfaces'
+import { PositionIconEnum } from '@/modules/shared/interfaces'
 
 interface SpotPosition {
   x: number
@@ -22,6 +15,7 @@ interface SpotPosition {
   spotNumber?: number | null
   isBookedForFree?: boolean | null
   isSpotWithOnlyStats?: boolean
+  hasStats?: boolean | null
 }
 
 interface ClassPosition {
@@ -50,6 +44,7 @@ interface EnrollmentInfo {
   isCheckedIn?: boolean
   spotNumber?: number | null
   isBookedForFree?: boolean | null
+  hasStats?: boolean | null
 }
 
 interface IdentifiableSiteUser {
@@ -60,14 +55,6 @@ interface IdentifiableSiteUser {
 interface IdentifiableUser {
   id?: string
   user?: User
-}
-
-enum EnrollmentStatusEnum {
-  Active = 'active',
-  Cancelled = 'cancelled',
-  LateCancelled = 'lateCancelled',
-  Unknown = 'unknown',
-  Waitlisted = 'waitlisted'
 }
 
 enum SpotActionEnum {
@@ -123,7 +110,8 @@ function newSpotPosition(
   classPosition: ClassPosition,
   user: User | null | undefined,
   isCheckedIn: boolean,
-  isBookedForFree: boolean
+  isBookedForFree: boolean,
+  hasStats?: boolean | null
 ): SpotPosition {
   if (classPosition.icon === PositionIconEnum.Spot) {
     return {
@@ -135,7 +123,8 @@ function newSpotPosition(
       enabled: classPosition.enabled!,
       isCheckedIn: isCheckedIn,
       isBookedForFree: isBookedForFree,
-      isSpotWithOnlyStats: props.orphanedClassStatsSpots.includes(classPosition.spotNumber!)
+      isSpotWithOnlyStats: props.orphanedClassStatsSpots.includes(classPosition.spotNumber!),
+      hasStats: hasStats
     }
   }
   return {
@@ -151,6 +140,7 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
   let user: User | null | undefined
   let isCheckedIn: boolean
   let isBookedForFree: boolean
+  let hasStats: boolean | null | undefined
 
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix.length; j++) {
@@ -163,6 +153,7 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
         user = null
         isCheckedIn = false
         isBookedForFree = false
+        hasStats = null
 
         if (classPosition.icon === PositionIconEnum.Spot) {
           if (classPosition.spotNumber && props.enrollments) {
@@ -172,7 +163,7 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
               if (enrollment.spotNumber === classPosition.spotNumber) {
                 isCheckedIn = enrollment.isCheckedIn ?? false
                 isBookedForFree = enrollment.isBookedForFree ?? false
-
+                hasStats = enrollment.hasStats
                 user = enrollment.identifiableSiteUser?.identifiableUser?.user
                 break
               }
@@ -180,7 +171,7 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
           }
         }
 
-        rows[i].push(newSpotPosition(classPosition, user, isCheckedIn, isBookedForFree))
+        rows[i].push(newSpotPosition(classPosition, user, isCheckedIn, isBookedForFree, hasStats))
       }
     }
   }
@@ -231,6 +222,7 @@ function onClickSpotAdmin(spotNumber: number) {
               :spot-selection-is-disabled="spotSelectionIsDisabled"
               :is-booked-for-free="spot.isBookedForFree"
               :is-spot-with-only-stats="spot.isSpotWithOnlyStats ?? false"
+              :has-stats="spot.hasStats"
             />
             <icon-position-not-bookable v-else :icon="spot.icon" />
           </td>

@@ -49,6 +49,7 @@ interface EnrollmentInfo {
   isCheckedIn?: boolean
   spotNumber?: number | null
   isBookedForFree?: boolean | null
+  hasStats?: boolean | null
 }
 
 interface IdentifiableSiteUser {

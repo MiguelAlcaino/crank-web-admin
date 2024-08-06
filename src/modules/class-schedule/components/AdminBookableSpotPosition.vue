@@ -22,6 +22,7 @@ interface Props {
   spotSelectionIsDisabled?: boolean
   isBookedForFree?: boolean | null
   isSpotWithOnlyStats: boolean
+  hasStats?: boolean | null
 }
 </script>
 

@@ -137,6 +137,7 @@ export class ApiService {
               isCheckedIn
               spotNumber
               isBookedForFree
+              hasStats
             }
           }
           onHoldSpots
