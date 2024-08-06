@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 import IconPositionNotBookable from '@/modules/class-schedule/components/icons/IconPositionNotBookable.vue'
-import AdminBookableSpotPosition from '@/modules/class-schedule/components/AdminBookableSpotPosition.vue'
+import BookableSpotPosition from '@/modules/class-schedule/components/BookableSpotPosition.vue'
 import { EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
 import { PositionIconEnum } from '@/modules/shared/interfaces'
 
@@ -202,7 +202,7 @@ function onClickSpotAdmin(spotNumber: number) {
       <tbody>
         <tr v-for="(colRow, rowKey) in spotsTable" :key="rowKey" class="text-center">
           <td class="class-position" v-for="(spot, columnKey) in colRow" :key="columnKey">
-            <admin-bookable-spot-position
+            <BookableSpotPosition
               v-if="spot.icon === PositionIconEnum.Spot"
               :spot-number="spot.spotNumber ?? 0"
               :is-booked="spot.user ? true : false"
