@@ -2630,16 +2630,12 @@
           },
           {
             "name": "hasStats",
-            "description": null,
+            "description": "Whether this enrollment has stats or not. If null, it means that the class that the enrollment belongs to\nhas not received stats yet. If the result is false, it means that the class has received stats but the enrollment\nhas not.",
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null

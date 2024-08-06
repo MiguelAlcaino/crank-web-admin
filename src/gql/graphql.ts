@@ -344,7 +344,12 @@ export type EnrollmentInfo = EnrollmentInfoInterface & {
   enrollmentDateTime: Scalars['DateTime']
   enrollmentDateTimeWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']
   enrollmentStatus: EnrollmentStatusEnum
-  hasStats: Scalars['Boolean']
+  /**
+   * Whether this enrollment has stats or not. If null, it means that the class that the enrollment belongs to
+   * has not received stats yet. If the result is false, it means that the class has received stats but the enrollment
+   * has not.
+   */
+  hasStats?: Maybe<Scalars['Boolean']>
   id: Scalars['ID']
   identifiableSiteUser?: Maybe<IdentifiableSiteUser>
   isBookedForFree: Scalars['Boolean']
