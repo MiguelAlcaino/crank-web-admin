@@ -502,7 +502,7 @@ function initIntervalCheckSynchronizationClass() {
       const isSynchronizingClass = await apiService.checkIfClassIsSynchronized(
         appStore().site,
         props.classId!
-      ) // Reemplaza esto con tu llamada a la API
+      )
       isSynchronizing.value = isSynchronizingClass
 
       if (!isSynchronizingClass) {
