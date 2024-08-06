@@ -38,7 +38,7 @@ import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import CheckInCheckOutUserInClass from '@/modules/class-schedule/components/CheckInCheckOutUserInClass.vue'
 import UserProfile from '@/modules/class-schedule/components/UserProfile.vue'
-import { EnrollmentStatusEnum } from '../interfaces'
+import type { EnrollmentStatusEnum } from '../interfaces'
 
 withDefaults(defineProps<Props>(), {
   showEditOptions: false

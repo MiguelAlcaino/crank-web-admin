@@ -1,4 +1,4 @@
-import { RoomLayout } from './room-layout.interface'
+import type { RoomLayout } from './room-layout.interface'
 
 export interface ClassSchedule {
   id: string

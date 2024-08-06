@@ -8,7 +8,7 @@ import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 
 import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
-import { ClassSchedule, RoomLayout } from '../interfaces'
+import type { ClassSchedule, RoomLayout } from '../interfaces'
 
 const apiService = inject<ApiService>('gqlApiService')!
 

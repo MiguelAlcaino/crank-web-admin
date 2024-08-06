@@ -2,7 +2,7 @@
 import { onMounted, ref, watch } from 'vue'
 import IconPositionNotBookable from '@/modules/class-schedule/components/icons/IconPositionNotBookable.vue'
 import BookableSpotPosition from '@/modules/class-schedule/components/BookableSpotPosition.vue'
-import { EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
+import type { EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
 import { PositionIconEnum } from '@/modules/shared/interfaces'
 
 interface SpotPosition {
