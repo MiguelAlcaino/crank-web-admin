@@ -130,7 +130,6 @@ import { authService } from '@/services/authService'
 import { Role } from '@/utils/userRoles'
 import { EnrollmentStatusEnum } from '../interfaces'
 
-
 const props = defineProps<{
   classId: string | null
   editCustomerProfileUrl?: string | null

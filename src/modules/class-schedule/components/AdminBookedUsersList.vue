@@ -40,7 +40,6 @@ import CheckInCheckOutUserInClass from '@/modules/class-schedule/components/Chec
 import UserProfile from '@/modules/class-schedule/components/UserProfile.vue'
 import { EnrollmentStatusEnum } from '../interfaces'
 
-
 withDefaults(defineProps<Props>(), {
   showEditOptions: false
 })

@@ -1,22 +1,3 @@
-<script lang="ts">
-interface ClassSchedule {
-  id: string
-  type: string
-  instructorName: string
-  dayOfWeek: string
-  startWithNoTimeZone: Date
-  endWithNoTimeZone: Date
-  roomLayout: RoomLayout
-  capacity: number
-}
-
-interface RoomLayout {
-  id: string
-  name: string
-  capacity: number
-}
-</script>
-
 <script setup lang="ts">
 import { appStore } from '@/stores/appStorage'
 import { inject, onMounted, ref } from 'vue'
@@ -27,6 +8,7 @@ import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 
 import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
+import { ClassSchedule, RoomLayout } from '../interfaces'
 
 const apiService = inject<ApiService>('gqlApiService')!
 
