@@ -137,9 +137,11 @@ export class ApiService {
               isCheckedIn
               spotNumber
               isBookedForFree
+              hasStats
             }
           }
           onHoldSpots
+          orphanedClassStatsSpots
         }
       }
     `
@@ -697,6 +699,7 @@ export class ApiService {
           totalBooked
           totalUnderMaintenanceSpots
           showAsDisabled
+          instructorName
         }
       }
     `
@@ -1330,6 +1333,8 @@ export class ApiService {
                 name
                 start
                 duration
+                startWithNoTimeZone
+                instructorName
               }
             }
             totalEnergy

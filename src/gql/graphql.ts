@@ -344,6 +344,12 @@ export type EnrollmentInfo = EnrollmentInfoInterface & {
   enrollmentDateTime: Scalars['DateTime']
   enrollmentDateTimeWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']
   enrollmentStatus: EnrollmentStatusEnum
+  /**
+   * Whether this enrollment has stats or not. If null, it means that the class that the enrollment belongs to
+   * has not received stats yet. If the result is false, it means that the class has received stats but the enrollment
+   * has not.
+   */
+  hasStats?: Maybe<Scalars['Boolean']>
   id: Scalars['ID']
   identifiableSiteUser?: Maybe<IdentifiableSiteUser>
   isBookedForFree: Scalars['Boolean']
@@ -507,6 +513,8 @@ export type Mutation = {
   swapSpot?: Maybe<SwapSpotResultUnion>
   /** Sync all classes */
   syncAllClasses: Scalars['Boolean']
+  /** Sync all gift cards from Mindbody with the local database */
+  syncAllGiftCards: Scalars['Boolean']
   /** Sync one class */
   syncClass: ClassInfo
   /** Sync a class with PIQ */
@@ -1254,6 +1262,7 @@ export type ClassInfoAdminQuery = {
   classInfo?: {
     __typename: 'ClassInfo'
     onHoldSpots: number
+    orphanedClassStatsSpots: Array<number>
     class: {
       __typename: 'Class'
       id: string
@@ -1602,6 +1611,7 @@ export type GetCalendarClassesForListQuery = {
     totalBooked: number
     totalUnderMaintenanceSpots: number
     showAsDisabled: boolean
+    instructorName: string
   }>
 }
 
@@ -1942,7 +1952,15 @@ export type UserWorkoutStatsPaginatedQuery = {
         enrollmentInfo:
           | { __typename: 'EnrollmentInfo'; spotNumber?: number | null; id: string }
           | { __typename: 'WaitlistEntry'; id: string }
-        class: { __typename: 'Class'; id: string; name: string; start: any; duration: number }
+        class: {
+          __typename: 'Class'
+          id: string
+          name: string
+          start: any
+          duration: number
+          startWithNoTimeZone: any
+          instructorName: string
+        }
       }
     }>
   }
@@ -2007,6 +2025,28 @@ export type GiftCardsQuery = {
     site: { __typename: 'Site'; name: string; code: SiteEnum }
   }>
 }
+
+export type UpdateGiftCardMutationVariables = Exact<{
+  input: UpdateGiftCardInput
+}>
+
+export type UpdateGiftCardMutation = {
+  __typename: 'Mutation'
+  updateGiftCard: {
+    __typename: 'GiftCard'
+    id: string
+    description: string
+    salePrice: number
+    grandTotal: number
+    terms: string
+    purchaseUrl: string
+    site: { __typename: 'Site'; name: string; code: SiteEnum }
+  }
+}
+
+export type SyncAllGiftCardsMutationVariables = Exact<{ [key: string]: never }>
+
+export type SyncAllGiftCardsMutation = { __typename: 'Mutation'; syncAllGiftCards: boolean }
 
 export const SiteSettingsDocument = {
   kind: 'Document',
@@ -2229,7 +2269,8 @@ export const ClassInfoAdminDocument = {
                     ]
                   }
                 },
-                { kind: 'Field', name: { kind: 'Name', value: 'onHoldSpots' } }
+                { kind: 'Field', name: { kind: 'Name', value: 'onHoldSpots' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'orphanedClassStatsSpots' } }
               ]
             }
           }
@@ -3380,7 +3421,8 @@ export const GetCalendarClassesForListDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'maxCapacity' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'totalBooked' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'totalUnderMaintenanceSpots' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'showAsDisabled' } }
+                { kind: 'Field', name: { kind: 'Name', value: 'showAsDisabled' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'instructorName' } }
               ]
             }
           }
@@ -4742,7 +4784,12 @@ export const UserWorkoutStatsPaginatedDocument = {
                                   { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                                   { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                                   { kind: 'Field', name: { kind: 'Name', value: 'start' } },
-                                  { kind: 'Field', name: { kind: 'Name', value: 'duration' } }
+                                  { kind: 'Field', name: { kind: 'Name', value: 'duration' } },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'startWithNoTimeZone' }
+                                  },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'instructorName' } }
                                 ]
                               }
                             }
@@ -5018,3 +5065,75 @@ export const GiftCardsDocument = {
     }
   ]
 } as unknown as DocumentNode<GiftCardsQuery, GiftCardsQueryVariables>
+export const UpdateGiftCardDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UpdateGiftCard' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UpdateGiftCardInput' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'updateGiftCard' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'salePrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'grandTotal' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'terms' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'purchaseUrl' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'site' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<UpdateGiftCardMutation, UpdateGiftCardMutationVariables>
+export const SyncAllGiftCardsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'SyncAllGiftCards' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [{ kind: 'Field', name: { kind: 'Name', value: 'syncAllGiftCards' } }]
+      }
+    }
+  ]
+} as unknown as DocumentNode<SyncAllGiftCardsMutation, SyncAllGiftCardsMutationVariables>
