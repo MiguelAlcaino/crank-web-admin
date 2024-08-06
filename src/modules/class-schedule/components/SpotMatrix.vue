@@ -2,7 +2,7 @@
 import { onMounted, ref, watch } from 'vue'
 import IconPositionNotBookable from '@/modules/class-schedule/components/icons/IconPositionNotBookable.vue'
 import AdminBookableSpotPosition from '@/modules/class-schedule/components/AdminBookableSpotPosition.vue'
-import { EnrollmentStatusEnum } from '../interfaces'
+import { EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
 import { PositionIconEnum } from '@/modules/shared/interfaces'
 
 interface SpotPosition {
@@ -55,13 +55,6 @@ interface IdentifiableSiteUser {
 interface IdentifiableUser {
   id?: string
   user?: User
-}
-
-enum SpotActionEnum {
-  none,
-  asignUserToSpot,
-  changeMemberSpot,
-  swapSpot
 }
 
 interface Props {

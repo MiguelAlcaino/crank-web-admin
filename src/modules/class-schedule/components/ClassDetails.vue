@@ -69,13 +69,6 @@ interface User {
   leaderboardUsername?: string
 }
 
-enum SpotActionEnum {
-  none,
-  asignUserToSpot,
-  changeMemberSpot,
-  swapSpot
-}
-
 interface SelectedSpot {
   spotNumber?: number | null
   isBooked?: boolean | null
@@ -120,7 +113,7 @@ import {
 } from '@/utils/errorMessages'
 import { authService } from '@/services/authService'
 import { Role } from '@/utils/userRoles'
-import { EnrollmentStatusEnum } from '../interfaces'
+import { EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
 import { PositionIconEnum } from '@/modules/shared/interfaces'
 
 const props = defineProps<{
@@ -872,13 +865,17 @@ function disableSyncButtons(disabled: boolean) {
           classInfo.roomLayout?.matrix !== null
         "
       >
-        <div class="col-6" style="text-align: center">
+        <div class="col-4" style="text-align: center">
           <hr style="border: none; height: 2px; background-color: #ffd903; max-width: 20px" />
           <small>Not Paid</small>
         </div>
-        <div class="col-6" style="text-align: center">
+        <div class="col-4" style="text-align: center">
           <hr style="border: none; height: 2px; background-color: #8a00e7; max-width: 20px" />
           <small>Spot With Stats</small>
+        </div>
+        <div class="col-4" style="text-align: center">
+          <hr style="border: none; height: 2px; background-color: #ff7e62; max-width: 20px" />
+          <small>Spot Without Stats</small>
         </div>
       </div>
 

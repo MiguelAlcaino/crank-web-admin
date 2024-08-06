@@ -4,13 +4,6 @@ interface User {
   lastName: string
 }
 
-enum SpotActionEnum {
-  none,
-  asignUserToSpot,
-  changeMemberSpot,
-  swapSpot
-}
-
 interface Props {
   spotNumber: number
   isBooked: boolean
@@ -27,6 +20,8 @@ interface Props {
 </script>
 
 <script setup lang="ts">
+import { SpotActionEnum } from '../interfaces'
+
 const props = withDefaults(defineProps<Props>(), {
   spotSelectionIsDisabled: false
 })
@@ -267,5 +262,13 @@ function selectSpot() {
 
 .isSpotWithOnlyStatsSelected {
   border: 2px dashed #8a00e7 !important;
+}
+
+.isSpotWithouttats {
+  border: 2px solid #ff7e62 !important;
+}
+
+.isSpotWithoutStatsSelected {
+  border: 2px dashed #ff7e62 !important;
 }
 </style>
