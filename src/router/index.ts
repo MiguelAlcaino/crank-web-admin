@@ -51,7 +51,7 @@ const router = createRouter({
     {
       path: '/class-schedules',
       name: 'class_schedules',
-      component: () => import('@/modules/class-schedule/views/ClassScheduleConfigView.vue')
+      component: () => import('@/modules/class-schedule-config/views/ClassScheduleConfigView.vue')
     },
     {
       path: '/customer-profile/:id',
