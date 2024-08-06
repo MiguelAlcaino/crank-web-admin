@@ -22,14 +22,6 @@ interface User {
   lastName: string
 }
 
-enum EnrollmentStatusEnum {
-  Active = 'active',
-  Cancelled = 'cancelled',
-  LateCancelled = 'lateCancelled',
-  Unknown = 'unknown',
-  Waitlisted = 'waitlisted'
-}
-
 interface Props {
   enrollments: EnrollmentInfo[]
   isLoading: boolean
@@ -46,6 +38,8 @@ import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import CheckInCheckOutUserInClass from '@/modules/class-schedule/components/CheckInCheckOutUserInClass.vue'
 import UserProfile from '@/modules/class-schedule/components/UserProfile.vue'
+import { EnrollmentStatusEnum } from '../interfaces'
+
 
 withDefaults(defineProps<Props>(), {
   showEditOptions: false

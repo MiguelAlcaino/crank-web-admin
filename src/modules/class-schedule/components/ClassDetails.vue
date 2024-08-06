@@ -68,14 +68,6 @@ interface User {
   leaderboardUsername?: string
 }
 
-enum EnrollmentStatusEnum {
-  Active = 'active',
-  Cancelled = 'cancelled',
-  LateCancelled = 'lateCancelled',
-  Unknown = 'unknown',
-  Waitlisted = 'waitlisted'
-}
-
 enum PositionIconEnum {
   Empty = 'empty',
   Fan = 'fan',
@@ -136,6 +128,8 @@ import {
 } from '@/utils/errorMessages'
 import { authService } from '@/services/authService'
 import { Role } from '@/utils/userRoles'
+import { EnrollmentStatusEnum } from '../interfaces'
+
 
 const props = defineProps<{
   classId: string | null
