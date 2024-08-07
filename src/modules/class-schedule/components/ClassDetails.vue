@@ -660,6 +660,11 @@ function disableSyncButtons(disabled: boolean) {
         :spot-action="spotAction"
         :spot-selection-is-disabled="!userCanModifyClass && !userCanCheckInCheckOut"
         :orphaned-class-stats-spots="classInfo.orphanedClassStatsSpots ?? []"
+        :edit-customer-profile-url="editCustomerProfileUrl"
+        :user-can-check-in-check-out="
+          userCanCheckInCheckOut && classInfo?.class?.showAsDisabled === false
+        "
+        @after-check-in-out="getClassInfo()"
       >
       </SpotMatrix>
 
