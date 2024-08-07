@@ -862,14 +862,7 @@ function disableSyncButtons(disabled: boolean) {
 
       <br />
       <br />
-      <div
-        class="row matrixSpotsLegend"
-        v-if="
-          classInfo !== null &&
-          classInfo.roomLayout !== null &&
-          classInfo.roomLayout?.matrix !== null
-        "
-      >
+      <div class="row matrixSpotsLegend" v-if="classInfo?.roomLayout?.matrix">
         <div class="col-4" style="text-align: center">
           <hr style="border: none; height: 2px; background-color: #ffd903; max-width: 20px" />
           <small>Not Paid</small>
