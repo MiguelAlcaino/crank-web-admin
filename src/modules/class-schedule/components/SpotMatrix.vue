@@ -1,15 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import Popper from 'vue3-popper'
-
 import IconPositionNotBookable from '@/modules/class-schedule/components/icons/IconPositionNotBookable.vue'
 import BookableSpotPosition from '@/modules/class-schedule/components/BookableSpotPosition.vue'
 import type { EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
 import { PositionIconEnum } from '@/modules/shared/interfaces'
-
-import { useClassSchedule } from '../composables/useClassSchedule'
-
-const { spotsTableModeEnabled, toggleSpotsMode } = useClassSchedule()
 
 interface SpotPosition {
   x: number
@@ -203,75 +197,31 @@ function onClickSpotAdmin(spotNumber: number) {
 </script>
 
 <template>
-  <div class="row">
-    <div class="col-12 text-right">
-      <Popper
-        :hover="true"
-        :arrow="true"
-        :content="spotsTableModeEnabled ? 'Show matrix view' : 'Show table view'"
-        class="popper-dark"
-      >
-        <i
-          :class="['bi', spotsTableModeEnabled ? 'bi-diagram-3' : 'bi-card-checklist']"
-          style="cursor: pointer; font-size: 24px"
-          @click="toggleSpotsMode"
-        ></i>
-      </Popper>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <div class="table-responsive">
-        <!-- matrix -->
-        <table
-          v-if="!spotsTableModeEnabled"
-          class="table table-sm table-borderless table-spot"
-          style="margin: 0 auto; margin-bottom: 35px"
-        >
-          <tbody>
-            <tr v-for="(colRow, rowKey) in spotsTable" :key="rowKey" class="text-center">
-              <td class="class-position" v-for="(spot, columnKey) in colRow" :key="columnKey">
-                <BookableSpotPosition
-                  v-if="spot.icon === PositionIconEnum.Spot"
-                  :spot-number="spot.spotNumber ?? 0"
-                  :is-booked="spot.user ? true : false"
-                  :user="spot.user!"
-                  :enabled="spot.enabled!"
-                  @click-spot="onClickSpotAdmin"
-                  :selected="props.selectedSpotNumber === spot?.spotNumber"
-                  :is-checked-in="spot.isCheckedIn"
-                  :spot-action="spotAction"
-                  :spot-selection-is-disabled="spotSelectionIsDisabled"
-                  :is-booked-for-free="spot.isBookedForFree"
-                  :is-spot-with-only-stats="spot.isSpotWithOnlyStats ?? false"
-                  :has-stats="spot.hasStats"
-                />
-                <icon-position-not-bookable v-else :icon="spot.icon" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <!-- table -->
-        <table class="table" v-else>
-          <thead>
-            <tr class="text-center">
-              <th scope="col">First Name</th>
-              <th scope="col">Last Name</th>
-              <th scope="col">Sign in</th>
-              <th scope="col">View Profile</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in enrollments" :key="item.id">
-              <td>{{ item.identifiableSiteUser?.identifiableUser?.user?.firstName }}</td>
-              <td>{{ item.identifiableSiteUser?.identifiableUser?.user?.lastName }}</td>
-              <td>{{ item.isCheckedIn }}</td>
-              <td>{{ item.identifiableSiteUser?.identifiableUser?.user}}</td>
-            </tr>          
-          </tbody>
-        </table>
-      </div>
-    </div>
+  <div class="table-responsive">
+    <table class="table table-sm table-borderless" style="margin: 0 auto; margin-bottom: 35px">
+      <tbody>
+        <tr v-for="(colRow, rowKey) in spotsTable" :key="rowKey" class="text-center">
+          <td class="class-position" v-for="(spot, columnKey) in colRow" :key="columnKey">
+            <BookableSpotPosition
+              v-if="spot.icon === PositionIconEnum.Spot"
+              :spot-number="spot.spotNumber ?? 0"
+              :is-booked="spot.user ? true : false"
+              :user="spot.user!"
+              :enabled="spot.enabled!"
+              @click-spot="onClickSpotAdmin"
+              :selected="props.selectedSpotNumber === spot?.spotNumber"
+              :is-checked-in="spot.isCheckedIn"
+              :spot-action="spotAction"
+              :spot-selection-is-disabled="spotSelectionIsDisabled"
+              :is-booked-for-free="spot.isBookedForFree"
+              :is-spot-with-only-stats="spot.isSpotWithOnlyStats ?? false"
+              :has-stats="spot.hasStats"
+            />
+            <icon-position-not-bookable v-else :icon="spot.icon" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -280,17 +230,7 @@ td.class-position {
   padding: 5px;
 }
 
-.table-spot {
+.table {
   width: 15%;
-}
-
-.popper-dark {
-  --popper-theme-background-color: #333333;
-  --popper-theme-background-color-hover: #333333;
-  --popper-theme-text-color: white;
-  --popper-theme-border-width: 0px;
-  --popper-theme-border-radius: 2px;
-  --popper-theme-padding: 4px;
-  --popper-theme-box-shadow: 0 6px 30px -6px rgba(0, 0, 0, 0.25);
 }
 </style>
