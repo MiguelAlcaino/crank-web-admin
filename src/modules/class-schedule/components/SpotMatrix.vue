@@ -246,7 +246,7 @@ function onClickSpotAdmin(spotNumber: number) {
                   :is-spot-with-only-stats="spot.isSpotWithOnlyStats ?? false"
                   :has-stats="spot.hasStats"
                 />
-                <IconPositionNotBookable v-else :icon="spot.icon" />
+                <icon-position-not-bookable v-else :icon="spot.icon" />
               </td>
             </tr>
           </tbody>
