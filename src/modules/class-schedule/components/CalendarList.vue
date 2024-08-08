@@ -51,8 +51,8 @@ async function checkIfAllClassAreSynchronized() {
   }
 }
 
-async function getCalendarClasses(resetSelectedClass: boolean = true): Promise<void> {
-  if (resetSelectedClass) selectClass(null)
+async function getCalendarClasses(): Promise<void> {
+  selectClass(null)
 
   dateRange.value = [dateRange.value[0], dateRange.value[1]]
 
