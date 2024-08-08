@@ -1,4 +1,4 @@
-import { CalendarListClass } from './calendar-list-class.interface'
+import type { CalendarListClass } from './calendar-list-class.interface'
 
 export interface CalendarListWeekDay {
   date: Date

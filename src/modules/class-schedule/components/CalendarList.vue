@@ -12,7 +12,7 @@ import SyncAllClassesButton from '@/modules/class-schedule/components/SyncAllCla
 import SiteSelector from '@/modules/customer/components/SiteSelector.vue'
 import { Role } from '@/utils/userRoles'
 import { authService } from '@/services/authService'
-import { CalendarListClass, CalendarListWeekDay } from '../interfaces'
+import type { CalendarListClass, CalendarListWeekDay } from '../interfaces'
 
 dayjs.Ls.en.weekStart = 1
 
