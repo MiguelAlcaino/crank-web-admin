@@ -1,21 +1,3 @@
-<script lang="ts">
-interface Class {
-  id: string
-  name: string
-  startWithNoTimeZone: Date
-  maxCapacity: number
-  totalBooked: number
-  totalUnderMaintenanceSpots: number
-  showAsDisabled: boolean
-  instructorName: string
-}
-
-interface WeekDays {
-  date: Date
-  classes: Class[]
-}
-</script>
-
 <script setup lang="ts">
 import type { ApiService } from '@/services/apiService'
 import { appStore } from '@/stores/appStorage'
@@ -30,6 +12,7 @@ import SyncAllClassesButton from '@/modules/class-schedule/components/SyncAllCla
 import SiteSelector from '@/modules/customer/components/SiteSelector.vue'
 import { Role } from '@/utils/userRoles'
 import { authService } from '@/services/authService'
+import { CalendarListClass, CalendarListWeekDay } from '../interfaces'
 
 dayjs.Ls.en.weekStart = 1
 
@@ -39,7 +22,7 @@ const isLoading = ref<boolean>(false)
 const errorModalIsVisible = ref<boolean>(false)
 const startDate = ref<Date>(dayjs(Date()).startOf('week').toDate())
 const endDate = ref<Date>(dayjs(Date()).endOf('week').toDate())
-const weekDays = ref<WeekDays[]>([])
+const weekDays = ref<CalendarListWeekDay[]>([])
 const userCanSyncClasses = ref<boolean>(false)
 
 const dateRange = ref<[Date, Date]>([startDate.value, endDate.value])
@@ -88,7 +71,7 @@ async function getCalendarClasses(resetSelectedClass: boolean = true): Promise<v
       appStore().site,
       startDate.value,
       endDate.value
-    )) as Class[]
+    )) as CalendarListClass[]
 
     let day: dayjs.Dayjs | null = null
     let weekDaysIndex = -1
