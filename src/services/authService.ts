@@ -7,11 +7,7 @@ import { Config } from '@/model/Config'
 import type { SiteEnum } from '@/gql/graphql'
 import { appStore } from '@/stores/appStorage'
 import type { Role } from '@/utils/userRoles'
-
-export interface AdminSite {
-  serviceKey: string
-  name: string
-}
+import type { AdminSite } from '@/modules/shared/interfaces'
 
 interface JwtTokenPayload {
   exp: number

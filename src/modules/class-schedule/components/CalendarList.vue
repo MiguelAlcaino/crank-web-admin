@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ApiService } from '@/services/apiService'
-import { appStore } from '@/stores/appStorage'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import dayjs from 'dayjs'
 import { inject, onMounted, ref } from 'vue'
@@ -9,11 +8,12 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue'
 import SyncAllClassesButton from '@/modules/class-schedule/components/SyncAllClassesButton.vue'
-import SiteSelector from '@/modules/customer/components/SiteSelector.vue'
 import type { CalendarListClass } from '../interfaces'
 
+import { SiteEnum } from '@/modules/shared/interfaces'
+
 import { useCalendarList } from '../composables/useCalendarList'
-const { weekDays } = useCalendarList()
+const { weekDays, sites, selectedSite } = useCalendarList()
 
 dayjs.Ls.en.weekStart = 1
 
@@ -37,6 +37,9 @@ const emits = defineEmits<{
 }>()
 
 onMounted(async () => {
+  if (selectedSite.value === null) {
+    return
+  }
   checkIfAllClassAreSynchronized()
 
   await getCalendarClasses()
@@ -44,7 +47,9 @@ onMounted(async () => {
 })
 
 async function checkIfAllClassAreSynchronized() {
-  isSynchronizingClasses.value = await apiService.checkIfAllClassAreSynchronized(appStore().site)
+  isSynchronizingClasses.value = await apiService.checkIfAllClassAreSynchronized(
+    selectedSite.value as SiteEnum
+  )
 
   if (isSynchronizingClasses.value) {
     initIntervalCheckSynchronizationClasses()
@@ -62,7 +67,7 @@ async function getCalendarClasses(): Promise<void> {
 
   try {
     const calendarClasses = (await apiService.getCalendarClassesForList(
-      appStore().site,
+      selectedSite.value as SiteEnum,
       dateRange.value[0],
       dateRange.value[1]
     )) as CalendarListClass[]
@@ -139,7 +144,9 @@ const intervalId = ref<number | null>(null)
 function initIntervalCheckSynchronizationClasses() {
   intervalId.value = window.setInterval(async () => {
     try {
-      const isSynchronizing = await apiService.checkIfAllClassAreSynchronized(appStore().site)
+      const isSynchronizing = await apiService.checkIfAllClassAreSynchronized(
+        selectedSite.value as SiteEnum
+      )
       isSynchronizingClasses.value = isSynchronizing
 
       if (!isSynchronizing) {
@@ -173,9 +180,23 @@ function scrollToTodayClass() {
 </script>
 
 <template>
+  <div v-if="selectedSite === null">
+    <p>The calendar cannot be displayed because your user does not have a site assigned.</p>
+  </div>
+
   <div class="row ml-1">
     <div class="col-lg-7 col-md-10 col-sm-12 ml-auto mr-3">
-      <SiteSelector @after-changing-site="onAfterChangingSite"></SiteSelector>
+      <select
+        class="custom-select"
+        v-model="selectedSite"
+        @change="onAfterChangingSite()"
+        id="countryRegistration"
+        required
+      >
+        <option v-for="(item, index) in sites" :key="index" :value="item.serviceKey">
+          {{ item.name }}
+        </option>
+      </select>
     </div>
   </div>
   <hr />
@@ -262,7 +283,12 @@ function scrollToTodayClass() {
           </h6>
         </div>
         <div v-else>
-          <SyncAllClassesButton :disabled="false" @after-sync-all-classes="afterSyncClasses">
+          <SyncAllClassesButton
+            v-if="selectedSite"
+            :disabled="false"
+            @after-sync-all-classes="afterSyncClasses"
+            :site="selectedSite as SiteEnum"
+          >
           </SyncAllClassesButton>
         </div>
       </div>

@@ -1,9 +1,25 @@
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import type { CalendarListWeekDay } from '../interfaces'
+import { authService } from '@/services/authService'
+import type { AdminSite } from '@/modules/shared/interfaces'
 
 const weekDays = ref<CalendarListWeekDay[]>([])
 
 export const useCalendarList = () => {
+  const sites = ref<AdminSite[]>([])
+  const selectedSite = ref<string | null>(null)
+
+  onMounted(() => {
+    getAvailableSites()
+  })
+
+  function getAvailableSites() {
+    sites.value = authService.getAvailableSites()
+    if (sites.value.length > 0) {
+      selectedSite.value = sites.value[0].serviceKey
+    }
+  }
+
   function updateTotalBooked(classId: string, operation: 'increase' | 'decrease') {
     let wasFound = false
     for (let i = 0; i < weekDays.value.length; i++) {
@@ -42,6 +58,8 @@ export const useCalendarList = () => {
 
   return {
     weekDays,
+    sites,
+    selectedSite,
     updateTotalBooked,
     updateTotalUnderMaintenanceSpots
   }

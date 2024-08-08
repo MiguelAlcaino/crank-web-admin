@@ -3,14 +3,15 @@ import { inject, onMounted, ref } from 'vue'
 
 import type { ApiService } from '@/services/apiService'
 import { authService } from '@/services/authService'
-import { appStore } from '@/stores/appStorage'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import { Role } from '@/utils/userRoles'
 
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 
 const props = defineProps<{
+  site: SiteEnum
   disabled: boolean
 }>()
 
@@ -31,7 +32,7 @@ async function syncAllClasses() {
   isSyncing.value = true
 
   try {
-    const isSynchronizingClasses = await apiService.syncAllClasses(appStore().site)
+    const isSynchronizingClasses = await apiService.syncAllClasses(props.site)
     emits('afterSyncAllClasses', isSynchronizingClasses)
   } catch (error) {
     errorModalIsVisible.value = true
