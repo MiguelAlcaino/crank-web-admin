@@ -10,7 +10,7 @@ import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCir
 import SyncAllClassesButton from '@/modules/class-schedule/components/SyncAllClassesButton.vue'
 import type { CalendarListClass } from '../interfaces'
 
-import { SiteEnum } from '@/modules/shared/interfaces'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 
 import { useCalendarList } from '../composables/useCalendarList'
 const { weekDays, sites, selectedSite } = useCalendarList()
