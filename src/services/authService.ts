@@ -1,11 +1,8 @@
 import axios from 'axios'
 import { useAuthenticationStore } from '@/stores/authToken'
-import { IncorrectCredentialsLoginError } from '@/model/Exception'
 import router from '@/router'
 import jwt_decode from 'jwt-decode'
 import { Config } from '@/model/Config'
-import type { SiteEnum } from '@/gql/graphql'
-import { appStore } from '@/stores/appStorage'
 import type { Role } from '@/utils/userRoles'
 import type { AdminSite } from '@/modules/shared/interfaces'
 
@@ -19,26 +16,6 @@ export const authService = {
   isLoggedId(): boolean {
     const store = useAuthenticationStore()
     return store.token !== null
-  },
-  async login(email: string, password: string, site: string): Promise<void> {
-    try {
-      const response = await axios.post(
-        Config.AUTH_SERVICE_HOST + '/api/login_check?site=' + site,
-        {
-          username: email,
-          password: password
-        }
-      )
-
-      const token = response.data.token
-      if (token) {
-        useAuthenticationStore().setSession(token)
-        appStore().setSite(site as SiteEnum)
-        this.startRefreshTokenTimer()
-      }
-    } catch (error) {
-      throw new IncorrectCredentialsLoginError()
-    }
   },
   startRefreshTokenTimer(): void {
     const decoded = jwt_decode<JwtTokenPayload>(useAuthenticationStore().token!)
