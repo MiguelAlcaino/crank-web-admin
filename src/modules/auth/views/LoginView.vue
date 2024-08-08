@@ -7,7 +7,6 @@ import useVuelidate from '@vuelidate/core'
 import { SiteEnum } from '@/gql/graphql'
 
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
-import dayjs from 'dayjs'
 import { appStore } from '@/stores/appStorage'
 import { useAuthenticationStore } from '@/stores/authToken'
 
