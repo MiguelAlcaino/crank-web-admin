@@ -38,18 +38,11 @@ async function login() {
   if (isValid) {
     displayLoginError.value = false
 
-    setCalendarDates()
-
     useAuthenticationStore().setSession(formData.token)
     appStore().setSite(selectedSite.value as SiteEnum)
 
     await router.push({ name: 'admin_calendar_class' })
   }
-}
-
-function setCalendarDates() {
-  const now = dayjs()
-  appStore().setCalendarDates(now.startOf('week').toDate(), now.endOf('week').toDate())
 }
 </script>
 
