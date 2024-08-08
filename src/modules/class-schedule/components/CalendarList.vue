@@ -10,7 +10,10 @@ import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue'
 import SyncAllClassesButton from '@/modules/class-schedule/components/SyncAllClassesButton.vue'
 import SiteSelector from '@/modules/customer/components/SiteSelector.vue'
-import type { CalendarListClass, CalendarListWeekDay } from '../interfaces'
+import type { CalendarListClass } from '../interfaces'
+
+import { useCalendarList } from '../composables/useCalendarList'
+const { weekDays } = useCalendarList()
 
 dayjs.Ls.en.weekStart = 1
 
@@ -18,7 +21,6 @@ const apiService = inject<ApiService>('gqlApiService')!
 
 const isLoading = ref<boolean>(false)
 const errorModalIsVisible = ref<boolean>(false)
-const weekDays = ref<CalendarListWeekDay[]>([])
 
 const dateRange = ref<[Date, Date]>([
   dayjs(Date()).startOf('week').toDate(),
@@ -39,10 +41,6 @@ onMounted(async () => {
 
   await getCalendarClasses()
   scrollToTodayClass()
-})
-
-defineExpose({
-  getCalendarClasses
 })
 
 async function checkIfAllClassAreSynchronized() {

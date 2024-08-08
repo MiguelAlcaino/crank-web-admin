@@ -116,13 +116,12 @@ import { Role } from '@/utils/userRoles'
 import { EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
 import { PositionIconEnum } from '@/modules/shared/interfaces'
 
+import { useCalendarList } from '../composables/useCalendarList'
+const { updateTotalBooked, updateTotalUnderMaintenanceSpots } = useCalendarList()
+
 const props = defineProps<{
   classId: string | null
   editCustomerProfileUrl?: string | null
-}>()
-
-const emits = defineEmits<{
-  (e: 'availableSpotsChanged'): void
 }>()
 
 watch(
@@ -325,7 +324,7 @@ async function clickPutUnderMaintenance() {
 
   if (response === 'Success') {
     await getClassInfo(true)
-    emits('availableSpotsChanged')
+    updateTotalUnderMaintenanceSpots(props.classId, 'increase')
   } else if (response === 'SpotNotFoundError') {
     errorModalData.value.message = ERROR_SPOT_NOT_FOUND
     errorModalData.value.isVisible = true
@@ -346,7 +345,7 @@ async function clickRecoverFromMaintenance() {
 
   if (response === 'Success') {
     await getClassInfo(true)
-    emits('availableSpotsChanged')
+    updateTotalUnderMaintenanceSpots(props.classId, 'decrease')
   } else if (response === 'SpotNotFoundError') {
     errorModalData.value.message = ERROR_SPOT_NOT_FOUND
     errorModalData.value.isVisible = true
@@ -372,7 +371,7 @@ async function removeUserFromClass() {
 
   if (response === 'CancelUserEnrollmentSuccess') {
     await getClassInfo(true)
-    emits('availableSpotsChanged')
+    updateTotalBooked(props.classId!, 'decrease')
   } else if (response === 'LateCancellationRequiredError') {
     confirmModalLateCancelReservationData.value.isLoading = false
     confirmModalLateCancelReservationData.value.isVisible = true
@@ -393,7 +392,7 @@ async function confirmLateCancelation() {
 
   if (response === 'CancelUserEnrollmentSuccess') {
     await getClassInfo(true)
-    emits('availableSpotsChanged')
+    updateTotalBooked(props.classId!, 'decrease')
   } else if (response === 'LateCancellationRequiredError') {
     confirmModalLateCancelReservationData.value.isLoading = false
     confirmModalLateCancelReservationData.value.isVisible = true
@@ -463,7 +462,12 @@ async function swapSpot(newSpotNumber: number) {
 }
 
 async function afterEnrollingUser() {
-  emits('availableSpotsChanged')
+  updateTotalBooked(props.classId!, 'increase')
+  await getClassInfo(true)
+}
+
+async function afterCancelEnrollingUser() {
+  updateTotalBooked(props.classId!, 'decrease')
   await getClassInfo(true)
 }
 
@@ -692,7 +696,7 @@ function disableSyncButtons(disabled: boolean) {
         v-if="classInfo !== null && classInfo.roomLayout === null && classInfo.enrollments !== null"
         :enrollments="enrollments"
         :isLoading="false"
-        @after-cancel-member-reservation="afterEnrollingUser()"
+        @after-cancel-member-reservation="afterCancelEnrollingUser()"
         :show-edit-options="userCanModifyClass && classInfo?.class?.showAsDisabled === false"
         :user-can-check-in-check-out="
           userCanCheckInCheckOut && classInfo?.class?.showAsDisabled === false
