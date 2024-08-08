@@ -10,8 +10,6 @@ import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue'
 import SyncAllClassesButton from '@/modules/class-schedule/components/SyncAllClassesButton.vue'
 import SiteSelector from '@/modules/customer/components/SiteSelector.vue'
-import { Role } from '@/utils/userRoles'
-import { authService } from '@/services/authService'
 import type { CalendarListClass, CalendarListWeekDay } from '../interfaces'
 
 dayjs.Ls.en.weekStart = 1
@@ -21,7 +19,6 @@ const apiService = inject<ApiService>('gqlApiService')!
 const isLoading = ref<boolean>(false)
 const errorModalIsVisible = ref<boolean>(false)
 const weekDays = ref<CalendarListWeekDay[]>([])
-const userCanSyncClasses = ref<boolean>(false)
 
 const dateRange = ref<[Date, Date]>([
   dayjs(Date()).startOf('week').toDate(),
@@ -38,8 +35,6 @@ const emits = defineEmits<{
 }>()
 
 onMounted(async () => {
-  userCanSyncClasses.value = authService.userHasRole(Role.ROLE_SUPER_ADMIN)
-
   checkIfAllClassAreSynchronized()
 
   await getCalendarClasses()
@@ -269,11 +264,7 @@ function scrollToTodayClass() {
           </h6>
         </div>
         <div v-else>
-          <SyncAllClassesButton
-            :disabled="false"
-            @after-sync-all-classes="afterSyncClasses"
-            v-if="userCanSyncClasses"
-          >
+          <SyncAllClassesButton :disabled="false" @after-sync-all-classes="afterSyncClasses">
           </SyncAllClassesButton>
         </div>
       </div>

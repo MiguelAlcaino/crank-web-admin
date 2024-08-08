@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
-import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
+import { inject, onMounted, ref } from 'vue'
+
 import type { ApiService } from '@/services/apiService'
+import { authService } from '@/services/authService'
 import { appStore } from '@/stores/appStorage'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
-import { inject, ref } from 'vue'
+import { Role } from '@/utils/userRoles'
+
+import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 
 const props = defineProps<{
   disabled: boolean
@@ -15,8 +19,13 @@ const emits = defineEmits<{
 }>()
 
 const apiService = inject<ApiService>('gqlApiService')!
-const isSyncing = ref(false)
-const errorModalIsVisible = ref(false)
+const isSyncing = ref<boolean>(false)
+const errorModalIsVisible = ref<boolean>(false)
+const userCanSyncClasses = ref<boolean>(false)
+
+onMounted(async () => {
+  userCanSyncClasses.value = authService.userHasRole(Role.ROLE_SUPER_ADMIN)
+})
 
 async function syncAllClasses() {
   isSyncing.value = true
@@ -39,6 +48,7 @@ async function syncAllClasses() {
     :is-loading="isSyncing"
     @on-click="syncAllClasses"
     :disabled="props.disabled"
+    v-if="userCanSyncClasses"
   ></DefaultButtonComponent>
 
   <!-- ERROR modal -->
