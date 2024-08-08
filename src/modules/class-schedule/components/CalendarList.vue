@@ -20,12 +20,13 @@ const apiService = inject<ApiService>('gqlApiService')!
 
 const isLoading = ref<boolean>(false)
 const errorModalIsVisible = ref<boolean>(false)
-const startDate = ref<Date>(dayjs(Date()).startOf('week').toDate())
-const endDate = ref<Date>(dayjs(Date()).endOf('week').toDate())
 const weekDays = ref<CalendarListWeekDay[]>([])
 const userCanSyncClasses = ref<boolean>(false)
 
-const dateRange = ref<[Date, Date]>([startDate.value, endDate.value])
+const dateRange = ref<[Date, Date]>([
+  dayjs(Date()).startOf('week').toDate(),
+  dayjs(Date()).endOf('week').toDate()
+])
 const weekSelectorIsVisible = ref<boolean>(false)
 
 const selectedClassId = ref<string | null>(null)
@@ -60,7 +61,7 @@ async function checkIfAllClassAreSynchronized() {
 async function getCalendarClasses(resetSelectedClass: boolean = true): Promise<void> {
   if (resetSelectedClass) selectClass(null)
 
-  dateRange.value = [startDate.value, endDate.value]
+  dateRange.value = [dateRange.value[0], dateRange.value[1]]
 
   weekDays.value = []
 
@@ -69,8 +70,8 @@ async function getCalendarClasses(resetSelectedClass: boolean = true): Promise<v
   try {
     const calendarClasses = (await apiService.getCalendarClassesForList(
       appStore().site,
-      startDate.value,
-      endDate.value
+      dateRange.value[0],
+      dateRange.value[1]
     )) as CalendarListClass[]
 
     let day: dayjs.Dayjs | null = null
@@ -105,19 +106,19 @@ async function getCalendarClasses(resetSelectedClass: boolean = true): Promise<v
 }
 
 function goToPrevWeek(): void {
-  const date = dayjs(startDate.value)
+  const date = dayjs(dateRange.value[0])
 
-  startDate.value = date.subtract(1, 'weeks').startOf('week').toDate()
-  endDate.value = date.subtract(1, 'weeks').endOf('week').toDate()
+  dateRange.value[0] = date.subtract(1, 'weeks').startOf('week').toDate()
+  dateRange.value[1] = date.subtract(1, 'weeks').endOf('week').toDate()
 
   getCalendarClasses()
 }
 
 function goToNextWeek(): void {
-  const date = dayjs(startDate.value)
+  const date = dayjs(dateRange.value[0])
 
-  startDate.value = date.add(1, 'weeks').startOf('week').toDate()
-  endDate.value = date.add(1, 'weeks').endOf('week').toDate()
+  dateRange.value[0] = date.add(1, 'weeks').startOf('week').toDate()
+  dateRange.value[1] = date.add(1, 'weeks').endOf('week').toDate()
 
   getCalendarClasses()
 }
@@ -159,10 +160,7 @@ function initIntervalCheckSynchronizationClasses() {
   }, 1000)
 }
 
-const handleDate = (modelData: [Date, Date]) => {
-  startDate.value = modelData[0]
-  endDate.value = modelData[1]
-
+const handleDate = () => {
   getCalendarClasses()
 }
 
@@ -221,8 +219,8 @@ function scrollToTodayClass() {
           v-if="!weekSelectorIsVisible"
           @click="weekSelectorIsVisible = !weekSelectorIsVisible"
         >
-          {{ dayjs(startDate).format('DD/MM/YYYY') }} to
-          {{ dayjs(endDate).format('DD/MM/YYYY') }}
+          {{ dayjs(dateRange[0]).format('DD/MM/YYYY') }} to
+          {{ dayjs(dateRange[1]).format('DD/MM/YYYY') }}
         </div>
         <div id="next" v-if="!weekSelectorIsVisible">
           <a href="#" @click.prevent="goToNextWeek()" style="color: black">
