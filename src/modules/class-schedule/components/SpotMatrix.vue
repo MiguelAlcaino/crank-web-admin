@@ -4,7 +4,7 @@ import Popper from 'vue3-popper'
 
 import IconPositionNotBookable from '@/modules/class-schedule/components/icons/IconPositionNotBookable.vue'
 import BookableSpotPosition from '@/modules/class-schedule/components/BookableSpotPosition.vue'
-import UserProfile from '@/modules/class-schedule/components/UserProfile.vue'
+import ViewUserProfileButton from '@/modules/class-schedule/components/ViewUserProfileButton.vue'
 import CheckInCheckOutUserInClass from '@/modules/class-schedule/components/CheckInCheckOutUserInClass.vue'
 
 import type { EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
@@ -281,11 +281,11 @@ function onClickSpotAdmin(spotNumber: number) {
                 ></CheckInCheckOutUserInClass>
               </td>
               <td class="center-content">
-                <UserProfile
+                <ViewUserProfileButton
                   v-if="item.identifiableSiteUser?.identifiableUser?.id"
                   :user-id="item.identifiableSiteUser?.identifiableUser?.id"
                   :edit-customer-profile-url="editCustomerProfileUrl"
-                ></UserProfile>
+                ></ViewUserProfileButton>
               </td>
             </tr>
           </tbody>

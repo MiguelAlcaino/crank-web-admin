@@ -37,7 +37,7 @@ import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import CheckInCheckOutUserInClass from '@/modules/class-schedule/components/CheckInCheckOutUserInClass.vue'
-import UserProfile from '@/modules/class-schedule/components/UserProfile.vue'
+import ViewUserProfileButton from '@/modules/class-schedule/components/ViewUserProfileButton.vue'
 import type { EnrollmentStatusEnum } from '../interfaces'
 
 withDefaults(defineProps<Props>(), {
@@ -126,11 +126,11 @@ async function removeUserFromClass(enrollmentId: string, lateCancel: boolean) {
             </button>
           </td>
           <td>
-            <UserProfile
+            <ViewUserProfileButton
               v-if="item.identifiableSiteUser?.identifiableUser?.id"
               :user-id="item.identifiableSiteUser?.identifiableUser?.id"
               :edit-customer-profile-url="editCustomerProfileUrl"
-            ></UserProfile>
+            ></ViewUserProfileButton>
           </td>
           <td>
             <span v-if="item.isBookedForFree === true" class="badge badge-warning">Not paid</span>

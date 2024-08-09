@@ -98,7 +98,7 @@ import ViewWaitlistEntries from '@/modules/class-schedule/components/ViewWaitlis
 import CheckInCheckOutUserInClass from '@/modules/class-schedule/components/CheckInCheckOutUserInClass.vue'
 import SetOnHoldSpots from '@/modules/class-schedule/components/SetOnHoldSpots.vue'
 import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue'
-import UserProfile from '@/modules/class-schedule/components/UserProfile.vue'
+import ViewUserProfileButton from '@/modules/class-schedule/components/ViewUserProfileButton.vue'
 import SyncClassButton from '@/modules/class-schedule/components/SyncClassButton.vue'
 import SyncClassWithPiqButton from '@/modules/class-schedule/components/SyncClassWithPiqButton.vue'
 import SendClassStatsToUsers from '@/modules/class-schedule/components/SendClassStatsToUsers.vue'
@@ -832,7 +832,7 @@ function disableSyncButtons(disabled: boolean) {
       >
       </CheckInCheckOutUserInClass>
 
-      <UserProfile
+      <ViewUserProfileButton
         v-if="
           selectedSpot.identifiableUser?.id &&
           spotAction !== SpotActionEnum.changeMemberSpot &&
@@ -842,7 +842,7 @@ function disableSyncButtons(disabled: boolean) {
         :enrollment-id="selectedSpot.enrollmentId"
         :class-id="classId"
         :edit-customer-profile-url="editCustomerProfileUrl"
-      ></UserProfile>
+      ></ViewUserProfileButton>
 
       <div v-if="userCanModifyClass && spotAction === SpotActionEnum.asignUserToSpot">
         <hr />
