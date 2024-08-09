@@ -657,8 +657,8 @@ function disableSyncButtons(disabled: boolean) {
         :user-can-check-in-check-out="userCanCheckInCheckOut"
         :wait-list-available="waitListAvailable"
         :enrollments="enrollments"
-        @after-enrolling-customer="afterEnrollingUser"
-        @after-unrolling-customer="afterCancelEnrollingUser"
+        @after-enrolling-customer="afterEnrollingUser()"
+        @after-unrolling-customer="afterCancelEnrollingUser()"
       ></ClassOptionsWithoutMatrix>
 
       <!-- With Matrix -->

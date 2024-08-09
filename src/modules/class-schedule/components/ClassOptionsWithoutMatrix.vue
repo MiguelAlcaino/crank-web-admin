@@ -53,7 +53,6 @@ const emits = defineEmits<{
 
 <template>
   <div>
-    logica nueva
     <!-- Enroll without matrix option -->
     <EnrollSelectedMemberComponent
       :class-id="classId"
