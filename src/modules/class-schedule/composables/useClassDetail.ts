@@ -1,6 +1,6 @@
 import { authService } from '@/services/authService'
 import { Role } from '@/utils/userRoles'
-import { onMounted, ref } from 'vue'
+import { onMounted, readonly, ref } from 'vue'
 
 export const useClassDetail = () => {
   const userCanCheckInCheckOut = ref<boolean>(false)
@@ -8,6 +8,8 @@ export const useClassDetail = () => {
   const userCanModifyLayoutClass = ref<boolean>(false)
   const userCanSyncClasses = ref<boolean>(false)
   const userCanSyncClassesWithPiq = ref<boolean>(false)
+
+  const isLoading = ref<boolean>(false)
 
   onMounted(() => {
     setPermissionsByRole()
@@ -22,10 +24,14 @@ export const useClassDetail = () => {
   }
 
   return {
-    userCanCheckInCheckOut,
-    userCanModifyClass,
-    userCanModifyLayoutClass,
-    userCanSyncClasses,
-    userCanSyncClassesWithPiq
+    // Properties
+    userCanCheckInCheckOut: readonly(userCanCheckInCheckOut),
+    userCanModifyClass: readonly(userCanModifyClass),
+    userCanModifyLayoutClass: readonly(userCanModifyLayoutClass),
+    userCanSyncClasses: readonly(userCanSyncClasses),
+    userCanSyncClassesWithPiq: readonly(userCanSyncClassesWithPiq),
+    isLoading
+
+    // Methods
   }
 }

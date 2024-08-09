@@ -124,7 +124,8 @@ const {
   userCanModifyClass,
   userCanModifyLayoutClass,
   userCanSyncClasses,
-  userCanSyncClassesWithPiq
+  userCanSyncClassesWithPiq,
+  isLoading
 } = useClassDetail()
 
 const props = defineProps<{
@@ -143,7 +144,7 @@ const setOnHoldSpotsIsVisible = false
 const putUnderMaintenanceIsVisible = false
 
 const apiService = inject<ApiService>('gqlApiService')!
-const isLoading = ref<boolean>(false)
+
 const classInfo = ref<ClassInfo | null>(null)
 const enrollments = ref<EnrollmentInfo[]>([])
 
@@ -650,7 +651,7 @@ function disableSyncButtons(disabled: boolean) {
           classInfo.roomLayout !== null &&
           classInfo.roomLayout?.matrix !== null
         "
-        :matrix="classInfo.roomLayout!.matrix!"     
+        :matrix="classInfo.roomLayout!.matrix!"
         :selectedSpotNumber="selectedSpot?.spotNumber"
         @click-spot="spotClicked"
         :enrollments="enrollments"
