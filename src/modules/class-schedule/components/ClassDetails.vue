@@ -645,28 +645,8 @@ function disableSyncButtons(disabled: boolean) {
 
       <hr />
       <br />
-      <!-- Matrix -->
-      <SpotMatrix
-        v-if="
-          classInfo !== null &&
-          classInfo.roomLayout !== null &&
-          classInfo.roomLayout?.matrix !== null
-        "
-        :matrix="classInfo.roomLayout!.matrix!"
-        :selectedSpotNumber="selectedSpot?.spotNumber"
-        @click-spot="spotClicked"
-        :enrollments="enrollments"
-        :spot-action="spotAction"
-        :spot-selection-is-disabled="!userCanModifyClass && !userCanCheckInCheckOut"
-        :orphaned-class-stats-spots="classInfo.orphanedClassStatsSpots ?? []"
-        :edit-customer-profile-url="editCustomerProfileUrl"
-        :user-can-check-in-check-out="
-          userCanCheckInCheckOut && classInfo?.class?.showAsDisabled === false
-        "
-        @after-check-in-out="getClassInfo()"
-      >
-      </SpotMatrix>
 
+      <!-- Without Matix -->
       <!-- Enroll without matrix option -->
       <EnrollSelectedMemberComponent
         :class-id="classId"
@@ -700,6 +680,29 @@ function disableSyncButtons(disabled: boolean) {
       >
       </AdminBookedUsersList>
 
+      <!-- With Matrix -->
+      <!-- Matrix -->
+      <SpotMatrix
+        v-if="
+          classInfo !== null &&
+          classInfo.roomLayout !== null &&
+          classInfo.roomLayout?.matrix !== null
+        "
+        :matrix="classInfo.roomLayout!.matrix!"
+        :selectedSpotNumber="selectedSpot?.spotNumber"
+        @click-spot="spotClicked"
+        :enrollments="enrollments"
+        :spot-action="spotAction"
+        :spot-selection-is-disabled="!userCanModifyClass && !userCanCheckInCheckOut"
+        :orphaned-class-stats-spots="classInfo.orphanedClassStatsSpots ?? []"
+        :edit-customer-profile-url="editCustomerProfileUrl"
+        :user-can-check-in-check-out="
+          userCanCheckInCheckOut && classInfo?.class?.showAsDisabled === false
+        "
+        @after-check-in-out="getClassInfo()"
+      >
+      </SpotMatrix>
+      <!-- Matrix components -->
       <!-- Select empty spot options -->
       <div
         v-if="
