@@ -90,7 +90,6 @@ import { appStore } from '@/stores/appStorage'
 
 import SpotMatrix from '@/modules/class-schedule/components/SpotMatrix.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
-import AdminBookedUsersList from '@/modules/class-schedule/components/AdminBookedUsersList.vue'
 import EnrollSelectedMemberComponent from '@/modules/class-schedule/components/EnrollSelectedMemberComponent.vue'
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ChangeLayoutClass from '@/modules/class-schedule/components/ChangeLayoutClass.vue'
@@ -98,10 +97,12 @@ import ViewWaitlistEntries from '@/modules/class-schedule/components/ViewWaitlis
 import CheckInCheckOutUserInClass from '@/modules/class-schedule/components/CheckInCheckOutUserInClass.vue'
 import SetOnHoldSpots from '@/modules/class-schedule/components/SetOnHoldSpots.vue'
 import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue'
-import UserProfile from '@/modules/class-schedule/components/UserProfile.vue'
+import ViewUserProfileButton from '@/modules/class-schedule/components/ViewUserProfileButton.vue'
 import SyncClassButton from '@/modules/class-schedule/components/SyncClassButton.vue'
 import SyncClassWithPiqButton from '@/modules/class-schedule/components/SyncClassWithPiqButton.vue'
 import SendClassStatsToUsers from '@/modules/class-schedule/components/SendClassStatsToUsers.vue'
+import SpotMatrixLegend from '@/modules/class-schedule/components/SpotMatrixLegend.vue'
+import ClassOptionsWithoutMatrix from '@/modules/class-schedule/components/ClassOptionsWithoutMatrix.vue'
 
 import {
   ERROR_CLIENT_IS_OUTSIDE_SCHEDULING_WINDOW,
@@ -111,18 +112,26 @@ import {
   ERROR_TRYING_TO_MOVE_SAME_SPOT,
   ERROR_UNKNOWN
 } from '@/utils/errorMessages'
-import { authService } from '@/services/authService'
-import { Role } from '@/utils/userRoles'
 import { EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
 import { PositionIconEnum } from '@/modules/shared/interfaces'
+
+import { useCalendarList } from '../composables/useCalendarList'
+import { useClassDetail } from '../composables/useClassDetail'
+
+const { updateTotalBooked, updateTotalUnderMaintenanceSpots } = useCalendarList()
+
+const {
+  userCanCheckInCheckOut,
+  userCanModifyClass,
+  userCanModifyLayoutClass,
+  userCanSyncClasses,
+  userCanSyncClassesWithPiq,
+  isLoading
+} = useClassDetail()
 
 const props = defineProps<{
   classId: string | null
   editCustomerProfileUrl?: string | null
-}>()
-
-const emits = defineEmits<{
-  (e: 'availableSpotsChanged'): void
 }>()
 
 watch(
@@ -136,7 +145,7 @@ const setOnHoldSpotsIsVisible = false
 const putUnderMaintenanceIsVisible = false
 
 const apiService = inject<ApiService>('gqlApiService')!
-const isLoading = ref<boolean>(false)
+
 const classInfo = ref<ClassInfo | null>(null)
 const enrollments = ref<EnrollmentInfo[]>([])
 
@@ -147,12 +156,7 @@ const totalSignedIn = ref<number>(0)
 
 const spotAction = ref<SpotActionEnum>(SpotActionEnum.none)
 
-const userCanModifyLayoutClass = ref<boolean>(false)
-const userCanModifyClass = ref<boolean>(false)
-const userCanSyncClasses = ref<boolean>(false)
-const userCanSyncClassesWithPiq = ref<boolean>(false)
 const waitListAvailable = ref<boolean>(false)
-const userCanCheckInCheckOut = ref<boolean>(false)
 const checkingWaitlist = ref<boolean>(false)
 const userIdsToHide = ref<string[]>([])
 
@@ -210,17 +214,8 @@ const successModalData = ref<{
 })
 
 onMounted(() => {
-  setPermissionsByRole()
   getClassInfo()
 })
-
-function setPermissionsByRole() {
-  userCanModifyClass.value = authService.userHasRole(Role.ROLE_STAFF)
-  userCanSyncClasses.value = authService.userHasRole(Role.ROLE_STAFF)
-  userCanSyncClassesWithPiq.value = authService.userHasRole(Role.ROLE_SUPER_ADMIN)
-  userCanCheckInCheckOut.value = authService.userHasRole(Role.ROLE_INSTRUCTOR)
-  userCanModifyLayoutClass.value = authService.userHasRole(Role.ROLE_SUPER_ADMIN)
-}
 
 async function getClassInfo(checkWaitList?: boolean | null) {
   if (props.classId === null) return
@@ -325,7 +320,7 @@ async function clickPutUnderMaintenance() {
 
   if (response === 'Success') {
     await getClassInfo(true)
-    emits('availableSpotsChanged')
+    updateTotalUnderMaintenanceSpots(props.classId, 'increase')
   } else if (response === 'SpotNotFoundError') {
     errorModalData.value.message = ERROR_SPOT_NOT_FOUND
     errorModalData.value.isVisible = true
@@ -346,7 +341,7 @@ async function clickRecoverFromMaintenance() {
 
   if (response === 'Success') {
     await getClassInfo(true)
-    emits('availableSpotsChanged')
+    updateTotalUnderMaintenanceSpots(props.classId, 'decrease')
   } else if (response === 'SpotNotFoundError') {
     errorModalData.value.message = ERROR_SPOT_NOT_FOUND
     errorModalData.value.isVisible = true
@@ -372,7 +367,7 @@ async function removeUserFromClass() {
 
   if (response === 'CancelUserEnrollmentSuccess') {
     await getClassInfo(true)
-    emits('availableSpotsChanged')
+    updateTotalBooked(props.classId!, 'decrease')
   } else if (response === 'LateCancellationRequiredError') {
     confirmModalLateCancelReservationData.value.isLoading = false
     confirmModalLateCancelReservationData.value.isVisible = true
@@ -393,7 +388,7 @@ async function confirmLateCancelation() {
 
   if (response === 'CancelUserEnrollmentSuccess') {
     await getClassInfo(true)
-    emits('availableSpotsChanged')
+    updateTotalBooked(props.classId!, 'decrease')
   } else if (response === 'LateCancellationRequiredError') {
     confirmModalLateCancelReservationData.value.isLoading = false
     confirmModalLateCancelReservationData.value.isVisible = true
@@ -463,7 +458,12 @@ async function swapSpot(newSpotNumber: number) {
 }
 
 async function afterEnrollingUser() {
-  emits('availableSpotsChanged')
+  updateTotalBooked(props.classId!, 'increase')
+  await getClassInfo(true)
+}
+
+async function afterCancelEnrollingUser() {
+  updateTotalBooked(props.classId!, 'decrease')
   await getClassInfo(true)
 }
 
@@ -645,6 +645,23 @@ function disableSyncButtons(disabled: boolean) {
 
       <hr />
       <br />
+
+      <!-- Class Without Matix -->
+      <ClassOptionsWithoutMatrix
+        v-if="classInfo != null && classInfo.roomLayout == null && classInfo.enrollments != null"
+        :class-id="classId"
+        :user-ids-to-hide="userIdsToHide"
+        :show-class-as-disabled="classInfo.class?.showAsDisabled ?? false"
+        :user-can-modify-class="userCanModifyClass"
+        :edit-customer-profile-url="editCustomerProfileUrl"
+        :user-can-check-in-check-out="userCanCheckInCheckOut"
+        :wait-list-available="waitListAvailable"
+        :enrollments="enrollments"
+        @after-enrolling-customer="afterEnrollingUser()"
+        @after-unrolling-customer="afterCancelEnrollingUser()"
+      ></ClassOptionsWithoutMatrix>
+
+      <!-- With Matrix -->
       <!-- Matrix -->
       <SpotMatrix
         v-if="
@@ -653,49 +670,20 @@ function disableSyncButtons(disabled: boolean) {
           classInfo.roomLayout?.matrix !== null
         "
         :matrix="classInfo.roomLayout!.matrix!"
-        :show-user-in-spots="true"
         :selectedSpotNumber="selectedSpot?.spotNumber"
         @click-spot="spotClicked"
         :enrollments="enrollments"
         :spot-action="spotAction"
         :spot-selection-is-disabled="!userCanModifyClass && !userCanCheckInCheckOut"
         :orphaned-class-stats-spots="classInfo.orphanedClassStatsSpots ?? []"
-      >
-      </SpotMatrix>
-
-      <!-- Enroll without matrix option -->
-      <EnrollSelectedMemberComponent
-        :class-id="classId"
-        v-if="
-          classInfo !== null &&
-          classInfo.roomLayout === null &&
-          classInfo.enrollments !== null &&
-          waitListAvailable === false &&
-          userCanModifyClass &&
-          classInfo?.class?.showAsDisabled === false
-        "
-        @after-enrolling="afterEnrollingUser()"
-        :spot-number="null"
-        enrollButtonText="BOOK"
-        :is-waitlist-booking="false"
-        :user-ids-to-hide="userIdsToHide"
-      >
-      </EnrollSelectedMemberComponent>
-
-      <!-- List enrollments -->
-      <AdminBookedUsersList
-        v-if="classInfo !== null && classInfo.roomLayout === null && classInfo.enrollments !== null"
-        :enrollments="enrollments"
-        :isLoading="false"
-        @after-cancel-member-reservation="afterEnrollingUser()"
-        :show-edit-options="userCanModifyClass && classInfo?.class?.showAsDisabled === false"
+        :edit-customer-profile-url="editCustomerProfileUrl"
         :user-can-check-in-check-out="
           userCanCheckInCheckOut && classInfo?.class?.showAsDisabled === false
         "
-        :edit-customer-profile-url="editCustomerProfileUrl"
+        @after-check-in-out="getClassInfo()"
       >
-      </AdminBookedUsersList>
-
+      </SpotMatrix>
+      <!-- Matrix components -->
       <!-- Select empty spot options -->
       <div
         v-if="
@@ -825,7 +813,7 @@ function disableSyncButtons(disabled: boolean) {
       >
       </CheckInCheckOutUserInClass>
 
-      <UserProfile
+      <ViewUserProfileButton
         v-if="
           selectedSpot.identifiableUser?.id &&
           spotAction !== SpotActionEnum.changeMemberSpot &&
@@ -835,7 +823,7 @@ function disableSyncButtons(disabled: boolean) {
         :enrollment-id="selectedSpot.enrollmentId"
         :class-id="classId"
         :edit-customer-profile-url="editCustomerProfileUrl"
-      ></UserProfile>
+      ></ViewUserProfileButton>
 
       <div v-if="userCanModifyClass && spotAction === SpotActionEnum.asignUserToSpot">
         <hr />
@@ -857,27 +845,7 @@ function disableSyncButtons(disabled: boolean) {
 
       <br />
       <br />
-      <div
-        class="row matrixSpotsLegend"
-        v-if="
-          classInfo !== null &&
-          classInfo.roomLayout !== null &&
-          classInfo.roomLayout?.matrix !== null
-        "
-      >
-        <div class="col-4" style="text-align: center">
-          <hr style="border: none; height: 2px; background-color: #ffd903; max-width: 20px" />
-          <small>Not Paid</small>
-        </div>
-        <div class="col-4" style="text-align: center">
-          <hr style="border: none; height: 2px; background-color: #8a00e7; max-width: 20px" />
-          <small>Spot With Stats</small>
-        </div>
-        <div class="col-4" style="text-align: center">
-          <hr style="border: none; height: 2px; background-color: #ff7e62; max-width: 20px" />
-          <small>Spot Without Stats</small>
-        </div>
-      </div>
+      <SpotMatrixLegend v-if="classInfo?.roomLayout?.matrix"></SpotMatrixLegend>
 
       <br />
       <div class="row">
@@ -944,15 +912,6 @@ function disableSyncButtons(disabled: boolean) {
   min-height: 300px;
   box-shadow: 0 0 2px 0 #888;
   padding: 30px;
-}
-
-.matrixSpotsLegend {
-  padding-top: 50px;
-  background-color: #f8f8f8;
-  min-height: 20px;
-  box-shadow: 0 0 2px 0 #888;
-  padding: 30px;
-  font-family: 'Avenir', sans-serif;
 }
 
 .crankSpiner {

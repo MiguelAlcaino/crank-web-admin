@@ -20,10 +20,6 @@ function selectClass(id: string | null) {
   classId.value = id
 }
 
-function availableSpotsChanged() {
-  calendarList.value?.getCalendarClasses(false)
-}
-
 async function goBack() {
   if (goBackUrl.value) {
     window.location.href = goBackUrl.value
@@ -52,7 +48,6 @@ async function goBack() {
     <div class="col-lg-9 col-md-6 col-sm-12 col-12">
       <ClassDetails
         :class-id="classId"
-        @available-spots-changed="availableSpotsChanged"
         :edit-customer-profile-url="editCustomerProfileUrl"
       ></ClassDetails>
     </div>
