@@ -10,9 +10,9 @@ import CheckInCheckOutUserInClass from '@/modules/class-schedule/components/Chec
 import type { EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
 import { PositionIconEnum } from '@/modules/shared/interfaces'
 
-import { useClassSchedule } from '../composables/useClassSchedule'
+import { useClassOptionsWithMatrix } from '../composables/useClassOptionsWithMatrix'
 
-const { spotsTableModeEnabled, toggleSpotsMode } = useClassSchedule()
+const { spotsTableModeEnabled, toggleSpotsMode } = useClassOptionsWithMatrix()
 
 interface SpotPosition {
   x: number
