@@ -204,6 +204,10 @@ function onClickSpotAdmin(spotNumber: number) {
     spotNumber: spotNumber
   } as BookableSpotClickedEvent)
 }
+
+function afterCheckInCheckout() {
+  emits('afterCheckInOut')
+}
 </script>
 
 <template>
@@ -276,7 +280,7 @@ function onClickSpotAdmin(spotNumber: number) {
                   v-if="item.id != null && item.isCheckedIn != null"
                   :enrollment-id="item.id"
                   :is-checked-in="item.isCheckedIn"
-                  @after-check-in-check-out="emits('afterCheckInOut')"
+                  @after-check-in-check-out="afterCheckInCheckout"
                   :disabled="false"
                 ></CheckInCheckOutUserInClass>
               </td>
