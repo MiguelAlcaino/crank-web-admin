@@ -650,8 +650,7 @@ function disableSyncButtons(disabled: boolean) {
           classInfo.roomLayout !== null &&
           classInfo.roomLayout?.matrix !== null
         "
-        :matrix="classInfo.roomLayout!.matrix!"
-        :show-user-in-spots="true"
+        :matrix="classInfo.roomLayout!.matrix!"     
         :selectedSpotNumber="selectedSpot?.spotNumber"
         @click-spot="spotClicked"
         :enrollments="enrollments"

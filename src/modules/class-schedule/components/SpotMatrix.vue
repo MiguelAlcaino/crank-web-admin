@@ -68,7 +68,6 @@ interface IdentifiableUser {
 
 interface Props {
   matrix?: ClassPosition[]
-  showUserInSpots?: boolean
   selectedSpotNumber?: number | null
   enrollments?: EnrollmentInfo[] | null
   spotNumberBookedByCurrentUser?: number | null
@@ -80,7 +79,6 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  showUserInSpots: false,
   spotSelectionIsDisabled: false
 })
 
