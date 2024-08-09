@@ -63,15 +63,6 @@ interface User {
   lastName: string
   leaderboardUsername?: string
 }
-
-interface SelectedSpot {
-  spotNumber?: number | null
-  isBooked?: boolean | null
-  enabled?: boolean | null
-  enrollmentId?: string | null
-  isCheckedIn?: boolean
-  identifiableUser?: IdentifiableUser | null
-}
 </script>
 
 <script setup lang="ts">
@@ -95,7 +86,7 @@ import SendClassStatsToUsers from '@/modules/class-schedule/components/SendClass
 import ClassOptionsWithoutMatrix from '@/modules/class-schedule/components/ClassOptionsWithoutMatrix.vue'
 import ClassOptionsWithMatrix from '@/modules/class-schedule/components/ClassOptionsWithMatrix.vue'
 
-import { EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
+import { EnrollmentStatusEnum } from '../interfaces'
 import { PositionIconEnum } from '@/modules/shared/interfaces'
 
 import { useCalendarList } from '../composables/useCalendarList'
@@ -119,7 +110,7 @@ const props = defineProps<{
 
 watch(
   () => props.classId,
-  (classId) => {
+  () => {
     getClassInfo()
   }
 )
