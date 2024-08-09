@@ -90,7 +90,6 @@ import { appStore } from '@/stores/appStorage'
 
 import SpotMatrix from '@/modules/class-schedule/components/SpotMatrix.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
-import AdminBookedUsersList from '@/modules/class-schedule/components/AdminBookedUsersList.vue'
 import EnrollSelectedMemberComponent from '@/modules/class-schedule/components/EnrollSelectedMemberComponent.vue'
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ChangeLayoutClass from '@/modules/class-schedule/components/ChangeLayoutClass.vue'
@@ -103,6 +102,7 @@ import SyncClassButton from '@/modules/class-schedule/components/SyncClassButton
 import SyncClassWithPiqButton from '@/modules/class-schedule/components/SyncClassWithPiqButton.vue'
 import SendClassStatsToUsers from '@/modules/class-schedule/components/SendClassStatsToUsers.vue'
 import SpotMatrixLegend from '@/modules/class-schedule/components/SpotMatrixLegend.vue'
+import ClassOptionsWithoutMatrix from '@/modules/class-schedule/components/ClassOptionsWithoutMatrix.vue'
 
 import {
   ERROR_CLIENT_IS_OUTSIDE_SCHEDULING_WINDOW,
@@ -646,39 +646,20 @@ function disableSyncButtons(disabled: boolean) {
       <hr />
       <br />
 
-      <!-- Without Matix -->
-      <!-- Enroll without matrix option -->
-      <EnrollSelectedMemberComponent
+      <!-- Class Without Matix -->
+      <ClassOptionsWithoutMatrix
+        v-if="classInfo != null && classInfo.roomLayout == null && classInfo.enrollments != null"
         :class-id="classId"
-        v-if="
-          classInfo !== null &&
-          classInfo.roomLayout === null &&
-          classInfo.enrollments !== null &&
-          waitListAvailable === false &&
-          userCanModifyClass &&
-          classInfo?.class?.showAsDisabled === false
-        "
-        @after-enrolling="afterEnrollingUser()"
-        :spot-number="null"
-        enrollButtonText="BOOK"
-        :is-waitlist-booking="false"
         :user-ids-to-hide="userIdsToHide"
-      >
-      </EnrollSelectedMemberComponent>
-
-      <!-- List enrollments -->
-      <AdminBookedUsersList
-        v-if="classInfo !== null && classInfo.roomLayout === null && classInfo.enrollments !== null"
-        :enrollments="enrollments"
-        :isLoading="false"
-        @after-cancel-member-reservation="afterCancelEnrollingUser()"
-        :show-edit-options="userCanModifyClass && classInfo?.class?.showAsDisabled === false"
-        :user-can-check-in-check-out="
-          userCanCheckInCheckOut && classInfo?.class?.showAsDisabled === false
-        "
+        :show-class-as-disabled="classInfo.class?.showAsDisabled ?? false"
+        :user-can-modify-class="userCanModifyClass"
         :edit-customer-profile-url="editCustomerProfileUrl"
-      >
-      </AdminBookedUsersList>
+        :user-can-check-in-check-out="userCanCheckInCheckOut"
+        :wait-list-available="waitListAvailable"
+        :enrollments="enrollments"
+        @after-enrolling-customer="afterEnrollingUser"
+        @after-unrolling-customer="afterCancelEnrollingUser"
+      ></ClassOptionsWithoutMatrix>
 
       <!-- With Matrix -->
       <!-- Matrix -->
