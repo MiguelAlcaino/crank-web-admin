@@ -111,13 +111,21 @@ import {
   ERROR_TRYING_TO_MOVE_SAME_SPOT,
   ERROR_UNKNOWN
 } from '@/utils/errorMessages'
-import { authService } from '@/services/authService'
-import { Role } from '@/utils/userRoles'
 import { EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
 import { PositionIconEnum } from '@/modules/shared/interfaces'
 
 import { useCalendarList } from '../composables/useCalendarList'
+import { useClassDetail } from '../composables/useClassDetail'
+
 const { updateTotalBooked, updateTotalUnderMaintenanceSpots } = useCalendarList()
+
+const {
+  userCanCheckInCheckOut,
+  userCanModifyClass,
+  userCanModifyLayoutClass,
+  userCanSyncClasses,
+  userCanSyncClassesWithPiq
+} = useClassDetail()
 
 const props = defineProps<{
   classId: string | null
@@ -146,12 +154,7 @@ const totalSignedIn = ref<number>(0)
 
 const spotAction = ref<SpotActionEnum>(SpotActionEnum.none)
 
-const userCanModifyLayoutClass = ref<boolean>(false)
-const userCanModifyClass = ref<boolean>(false)
-const userCanSyncClasses = ref<boolean>(false)
-const userCanSyncClassesWithPiq = ref<boolean>(false)
 const waitListAvailable = ref<boolean>(false)
-const userCanCheckInCheckOut = ref<boolean>(false)
 const checkingWaitlist = ref<boolean>(false)
 const userIdsToHide = ref<string[]>([])
 
@@ -209,17 +212,8 @@ const successModalData = ref<{
 })
 
 onMounted(() => {
-  setPermissionsByRole()
   getClassInfo()
 })
-
-function setPermissionsByRole() {
-  userCanModifyClass.value = authService.userHasRole(Role.ROLE_STAFF)
-  userCanSyncClasses.value = authService.userHasRole(Role.ROLE_STAFF)
-  userCanSyncClassesWithPiq.value = authService.userHasRole(Role.ROLE_SUPER_ADMIN)
-  userCanCheckInCheckOut.value = authService.userHasRole(Role.ROLE_INSTRUCTOR)
-  userCanModifyLayoutClass.value = authService.userHasRole(Role.ROLE_SUPER_ADMIN)
-}
 
 async function getClassInfo(checkWaitList?: boolean | null) {
   if (props.classId === null) return
