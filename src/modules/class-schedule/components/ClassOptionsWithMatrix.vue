@@ -484,7 +484,6 @@ function afterCheckInCheckOut(isCheckIn: boolean) {
     >
     </DefaultButtonComponent>
 
-    {{ selectedSpot.isCheckedIn }}
     <!-- Check In - Out button -->
     <CheckInCheckOutUserInClass
       v-if="
