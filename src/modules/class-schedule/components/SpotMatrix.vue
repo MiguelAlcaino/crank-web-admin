@@ -84,7 +84,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emits = defineEmits<{
   (e: 'clickSpot', event: BookableSpotClickedEvent): void
-  (e: 'afterCheckInOut'): void
 }>()
 
 const spotsTable = ref<Array<Array<SpotPosition>>>([])
@@ -99,6 +98,9 @@ watch(
   () => props.matrix,
   (matrix) => {
     spotsTable.value = getMatrixOfSpotPositions(matrix!)
+  },
+  {
+    deep: true
   }
 )
 
@@ -106,6 +108,9 @@ watch(
   () => props.enrollments,
   () => {
     spotsTable.value = getMatrixOfSpotPositions(props.matrix!)
+  },
+  {
+    deep: true
   }
 )
 
@@ -204,10 +209,6 @@ function onClickSpotAdmin(spotNumber: number) {
     spotNumber: spotNumber
   } as BookableSpotClickedEvent)
 }
-
-function afterCheckInCheckout() {
-  emits('afterCheckInOut')
-}
 </script>
 
 <template>
@@ -280,7 +281,6 @@ function afterCheckInCheckout() {
                   v-if="item.id != null && item.isCheckedIn != null"
                   :enrollment-id="item.id"
                   :is-checked-in="item.isCheckedIn"
-                  @after-check-in-check-out="afterCheckInCheckout"
                   :disabled="false"
                 ></CheckInCheckOutUserInClass>
               </td>

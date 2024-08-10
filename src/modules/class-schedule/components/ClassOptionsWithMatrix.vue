@@ -357,6 +357,10 @@ async function confirmLateCancelation() {
 function getClassInfo(checkWaitList?: boolean | null) {
   emits('getClassInfo', checkWaitList ?? false)
 }
+
+function afterCheckInCheckOut(isCheckIn: boolean) {
+  selectedSpot.value.isCheckedIn = isCheckIn
+}
 </script>
 <template>
   <div>
@@ -370,7 +374,6 @@ function getClassInfo(checkWaitList?: boolean | null) {
       :orphaned-class-stats-spots="orphanedClassStatsSpots"
       :edit-customer-profile-url="editCustomerProfileUrl"
       :user-can-check-in-check-out="userCanCheckInCheckOut && showClassAsDisabled === false"
-      @after-check-in-out="getClassInfo()"
     >
     </SpotMatrix>
 
@@ -481,6 +484,7 @@ function getClassInfo(checkWaitList?: boolean | null) {
     >
     </DefaultButtonComponent>
 
+    {{ selectedSpot.isCheckedIn }}
     <!-- Check In - Out button -->
     <CheckInCheckOutUserInClass
       v-if="
@@ -492,8 +496,8 @@ function getClassInfo(checkWaitList?: boolean | null) {
       "
       :enrollment-id="selectedSpot.enrollmentId"
       :is-checked-in="selectedSpot.isCheckedIn"
-      @after-check-in-check-out="getClassInfo()"
       :disabled="showClassAsDisabled === true"
+      @after-check-in-check-out="afterCheckInCheckOut"
     >
     </CheckInCheckOutUserInClass>
 

@@ -20,7 +20,6 @@ async function syncAllGiftCards() {
 
   try {
     var success = await apiService.syncAllGiftCards()
-    console.log(success)
     if (success) {
       emits('afterSync')
       successModalIsVisible.value = true

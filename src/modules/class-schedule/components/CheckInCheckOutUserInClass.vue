@@ -21,6 +21,10 @@ import { ERROR_ENROLLMENT_NOT_FOUND, ERROR_UNKNOWN } from '@/utils/errorMessages
 import type { ApiService } from '@/services/apiService'
 import { appStore } from '@/stores/appStorage'
 
+import { useClassDetail } from '../composables/useClassDetail'
+
+const { checkInEnrollment } = useClassDetail()
+
 const apiService = inject<ApiService>('gqlApiService')!
 
 const props = defineProps<{
@@ -30,7 +34,7 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<{
-  (e: 'afterCheckInCheckOut'): void
+  (e: 'afterCheckInCheckOut', isCheckIn: boolean): void
 }>()
 
 const isLoading = ref<boolean>(false)
@@ -50,7 +54,10 @@ async function checkinUserInClass() {
       errorModalIsVisible.value = true
     }
 
-    emits('afterCheckInCheckOut')
+    if (response.success) {
+      emits('afterCheckInCheckOut', true)
+      checkInEnrollment(props.enrollmentId, true)
+    }
   } catch (error) {
     errorModalMessage.value = ERROR_UNKNOWN
     errorModalIsVisible.value = true
@@ -72,7 +79,10 @@ async function checkOutUserInClass() {
       errorModalIsVisible.value = true
     }
 
-    emits('afterCheckInCheckOut')
+    if (response.success) {
+      emits('afterCheckInCheckOut', false)
+      checkInEnrollment(props.enrollmentId, false)
+    }
   } catch (error) {
     errorModalMessage.value = ERROR_UNKNOWN
     errorModalIsVisible.value = true

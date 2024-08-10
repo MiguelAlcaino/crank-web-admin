@@ -1,70 +1,3 @@
-<script lang="ts">
-interface ClassInfo {
-  class: Class
-  enrollments: EnrollmentInfo[]
-  roomLayout?: RoomLayout
-  onHoldSpots: number
-  orphanedClassStatsSpots: number[]
-}
-
-interface RoomLayout {
-  id: string
-  name: string
-  matrix?: Array<ClassPosition>
-}
-
-interface ClassPosition {
-  x: number
-  y: number
-  icon: PositionIconEnum
-  spotNumber?: number
-  enabled?: boolean
-}
-
-interface Class {
-  id: string
-  name: string
-  description: string
-  instructorName: string
-  startWithNoTimeZone: Date
-  duration: number
-  waitListAvailable: boolean
-  showAsDisabled: boolean
-  maxCapacity: number
-  isSubstitute: boolean
-  hasClassStats: boolean
-  isSynchronizing: boolean
-}
-
-interface EnrollmentInfo {
-  id: string
-  enrollmentStatus: EnrollmentStatusEnum
-  identifiableSiteUser?: IdentifiableSiteUser | null
-  enrollmentDateTime: Date
-  isCheckedIn?: boolean
-  spotNumber?: number | null
-  isBookedForFree?: boolean | null
-  hasStats?: boolean | null
-}
-
-interface IdentifiableSiteUser {
-  id: string
-  identifiableUser: IdentifiableUser
-}
-
-interface IdentifiableUser {
-  id?: string
-  user?: User
-}
-
-interface User {
-  email: string
-  firstName: string
-  lastName: string
-  leaderboardUsername?: string
-}
-</script>
-
 <script setup lang="ts">
 import { inject, onMounted, ref, watch } from 'vue'
 
@@ -87,10 +20,11 @@ import ClassOptionsWithoutMatrix from '@/modules/class-schedule/components/Class
 import ClassOptionsWithMatrix from '@/modules/class-schedule/components/ClassOptionsWithMatrix.vue'
 
 import { EnrollmentStatusEnum } from '../interfaces'
-import { PositionIconEnum } from '@/modules/shared/interfaces'
 
 import { useCalendarList } from '../composables/useCalendarList'
 import { useClassDetail } from '../composables/useClassDetail'
+
+import { ClassInfo } from '../interfaces/class-detail'
 
 const { updateTotalBooked } = useCalendarList()
 
@@ -100,7 +34,9 @@ const {
   userCanModifyLayoutClass,
   userCanSyncClasses,
   userCanSyncClassesWithPiq,
-  isLoading
+  isLoading,
+  classInfo,
+  enrollments
 } = useClassDetail()
 
 const props = defineProps<{
@@ -118,9 +54,6 @@ watch(
 const setOnHoldSpotsIsVisible = false
 
 const apiService = inject<ApiService>('gqlApiService')!
-
-const classInfo = ref<ClassInfo | null>(null)
-const enrollments = ref<EnrollmentInfo[]>([])
 
 const totalSignedIn = ref<number>(0)
 
@@ -384,7 +317,6 @@ function disableSyncButtons(disabled: boolean) {
 
       <hr />
       <br />
-
       <!-- Class Without Matix -->
       <ClassOptionsWithoutMatrix
         v-if="classInfo != null && classInfo.roomLayout == null && classInfo.enrollments != null"
