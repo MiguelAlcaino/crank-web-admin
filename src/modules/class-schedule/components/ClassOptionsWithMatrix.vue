@@ -361,19 +361,25 @@ function getClassInfo(checkWaitList?: boolean | null) {
 function afterCheckInCheckOut(isCheckIn: boolean) {
   selectedSpot.value.isCheckedIn = isCheckIn
 }
+
+function toggleSpotsModeView() {
+  selectedSpot.value = {}
+  
+}
 </script>
 <template>
   <div>
     <SpotMatrix
       :matrix="matrix!"
       :selectedSpotNumber="selectedSpot?.spotNumber"
-      @click-spot="spotClicked"
       :enrollments="enrollments"
       :spot-action="spotAction"
       :spot-selection-is-disabled="!userCanModifyClass && !userCanCheckInCheckOut"
       :orphaned-class-stats-spots="orphanedClassStatsSpots"
       :edit-customer-profile-url="editCustomerProfileUrl"
       :user-can-check-in-check-out="userCanCheckInCheckOut && showClassAsDisabled === false"
+      @click-spot="spotClicked"
+      @after-toggle-spots-mode="toggleSpotsModeView"
     >
     </SpotMatrix>
 

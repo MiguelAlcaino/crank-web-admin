@@ -84,6 +84,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emits = defineEmits<{
   (e: 'clickSpot', event: BookableSpotClickedEvent): void
+  (e: 'afterToggleSpotsMode'): void
 }>()
 
 const spotsTable = ref<Array<Array<SpotPosition>>>([])
@@ -209,6 +210,11 @@ function onClickSpotAdmin(spotNumber: number) {
     spotNumber: spotNumber
   } as BookableSpotClickedEvent)
 }
+
+function toggleSpotsModeView() {
+  toggleSpotsMode()
+  emits('afterToggleSpotsMode')
+}
 </script>
 
 <template>
@@ -223,7 +229,7 @@ function onClickSpotAdmin(spotNumber: number) {
         <i
           :class="['bi', spotsTableModeEnabled ? 'bi-diagram-3' : 'bi-card-checklist']"
           style="cursor: pointer; font-size: 24px"
-          @click="toggleSpotsMode"
+          @click="toggleSpotsModeView"
         ></i>
       </Popper>
     </div>
