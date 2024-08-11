@@ -14,7 +14,7 @@ export const useCalendarList = () => {
 
   function getAvailableSites() {
     sites.value = authService.getAvailableSites()
-    if (sites.value.length > 0) {
+    if (sites.value.length > 0 && selectedSite.value == null) {
       selectedSite.value = sites.value[0].serviceKey
     }
   }

@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
+import { SiteEnum } from '@/modules/shared/interfaces'
 import type { ApiService } from '@/services/apiService'
-import { appStore } from '@/stores/appStorage'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import { inject, ref } from 'vue'
+import { useCalendarList } from '../composables/useCalendarList'
 
 const props = defineProps<{
   classId: string
@@ -15,6 +16,8 @@ const emits = defineEmits<{
   (e: 'afterSyncClass', isSynchronizing: boolean): void
   (e: 'disableSyncButtons', disabled: boolean): void
 }>()
+
+const { selectedSite } = useCalendarList()
 
 const apiService = inject<ApiService>('gqlApiService')!
 const isSyncing = ref(false)
@@ -27,7 +30,7 @@ async function syncClass() {
   var isSynchronizing = false
 
   try {
-    isSynchronizing = await apiService.syncClass(appStore().site, props.classId)
+    isSynchronizing = await apiService.syncClass(selectedSite.value as SiteEnum, props.classId)
   } catch (error) {
     errorModalIsVisible.value = true
   } finally {

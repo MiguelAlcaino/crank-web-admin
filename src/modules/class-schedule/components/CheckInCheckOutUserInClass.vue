@@ -19,11 +19,13 @@ import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonCom
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import { ERROR_ENROLLMENT_NOT_FOUND, ERROR_UNKNOWN } from '@/utils/errorMessages'
 import type { ApiService } from '@/services/apiService'
-import { appStore } from '@/stores/appStorage'
 
 import { useClassDetail } from '../composables/useClassDetail'
+import { SiteEnum } from '@/modules/shared/interfaces'
+import { useCalendarList } from '../composables/useCalendarList'
 
 const { checkInEnrollment } = useClassDetail()
+const { selectedSite } = useCalendarList()
 
 const apiService = inject<ApiService>('gqlApiService')!
 
@@ -45,7 +47,7 @@ async function checkinUserInClass() {
   try {
     isLoading.value = true
 
-    var response = (await apiService.checkinUserInClass(appStore().site, {
+    var response = (await apiService.checkinUserInClass(selectedSite.value as SiteEnum, {
       enrollmentId: props.enrollmentId
     })) as CheckinResultUnion
 
@@ -70,7 +72,7 @@ async function checkOutUserInClass() {
   try {
     isLoading.value = true
 
-    var response = (await apiService.checkoutUserInClass(appStore().site, {
+    var response = (await apiService.checkoutUserInClass(selectedSite.value as SiteEnum, {
       enrollmentId: props.enrollmentId
     })) as CheckoutResultUnion
 

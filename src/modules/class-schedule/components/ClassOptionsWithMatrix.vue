@@ -57,10 +57,10 @@ import EnrollSelectedMemberComponent from '@/modules/class-schedule/components/E
 import SpotMatrixLegend from '@/modules/class-schedule/components/SpotMatrixLegend.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 
-import { PositionIconEnum } from '@/modules/shared/interfaces'
+import { PositionIconEnum, SiteEnum } from '@/modules/shared/interfaces'
 import { inject, ref, watch } from 'vue'
 import { EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
-import { appStore } from '@/stores/appStorage'
+
 import {
   ERROR_CLIENT_IS_OUTSIDE_SCHEDULING_WINDOW,
   ERROR_LATE_CANCELLATION_REQUIRED,
@@ -72,7 +72,7 @@ import {
 import { ApiService } from '@/services/apiService'
 import { useCalendarList } from '../composables/useCalendarList'
 
-const { updateTotalBooked, updateTotalUnderMaintenanceSpots } = useCalendarList()
+const { updateTotalBooked, updateTotalUnderMaintenanceSpots, selectedSite } = useCalendarList()
 
 const props = defineProps<{
   classId: string
@@ -210,7 +210,7 @@ async function changeSelectedMemberSpot(newSpotNumber: number) {
   changingMemberSpot.value = true
 
   try {
-    const response = await apiService.editEnrollment(appStore().site, {
+    const response = await apiService.editEnrollment(selectedSite.value as SiteEnum, {
       enrollmentId: selectedSpot.value.enrollmentId!,
       newSpotNumber: newSpotNumber
     })
@@ -242,7 +242,7 @@ async function swapSpot(newSpotNumber: number) {
   changingMemberSpot.value = true
 
   try {
-    const response = await apiService.swapSpot(appStore().site, {
+    const response = await apiService.swapSpot(selectedSite.value as SiteEnum, {
       enrollmentId: selectedSpot.value.enrollmentId!,
       newSpotNumber: newSpotNumber
     })

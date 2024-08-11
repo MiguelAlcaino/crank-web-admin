@@ -29,10 +29,13 @@ interface RemoveFromWaitlistResult {
 <script setup lang="ts">
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
+import { SiteEnum } from '@/modules/shared/interfaces'
 import type { ApiService } from '@/services/apiService'
-import { appStore } from '@/stores/appStorage'
 import { ERROR_UNKNOWN, ERROR_WAITLIST_ENTRY_NOT_FOUND } from '@/utils/errorMessages'
 import { inject, ref } from 'vue'
+import { useCalendarList } from '../composables/useCalendarList'
+
+const { selectedSite } = useCalendarList()
 
 const apiService = inject<ApiService>('gqlApiService')!
 
@@ -62,7 +65,7 @@ async function getWaitlistEntries() {
   try {
     isLoading.value = true
     waitlistEntries.value = (await apiService.getClassWaitlistEntries(
-      appStore().site,
+      selectedSite.value as SiteEnum,
       props.classId
     )) as WaitlistEntry[]
   } catch (error) {
