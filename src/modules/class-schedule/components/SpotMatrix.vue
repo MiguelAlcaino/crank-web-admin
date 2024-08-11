@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import Popper from 'vue3-popper'
 
 import IconPositionNotBookable from '@/modules/class-schedule/components/icons/IconPositionNotBookable.vue'
@@ -69,7 +69,7 @@ interface IdentifiableUser {
 interface Props {
   matrix?: ClassPosition[]
   selectedSpotNumber?: number | null
-  enrollments?: EnrollmentInfo[] | null
+  enrollments: EnrollmentInfo[]
   spotNumberBookedByCurrentUser?: number | null
   spotAction?: SpotActionEnum
   spotSelectionIsDisabled?: boolean
@@ -88,6 +88,8 @@ const emits = defineEmits<{
 }>()
 
 const spotsTable = ref<Array<Array<SpotPosition>>>([])
+const sortKey = ref<keyof User>('firstName')
+const sortOrder = ref<'asc' | 'desc'>('asc')
 
 onMounted(() => {
   if (props.matrix) {
@@ -109,11 +111,25 @@ watch(
   () => props.enrollments,
   () => {
     spotsTable.value = getMatrixOfSpotPositions(props.matrix!)
+    sortKey.value = 'firstName'
+    sortOrder.value = 'asc'
   },
   {
     deep: true
   }
 )
+
+const sortedEnrollments = computed(() => {
+  return [...props.enrollments].sort((a, b) => {
+    const aValue = a.identifiableSiteUser?.identifiableUser?.user?.[sortKey.value] || ''
+    const bValue = b.identifiableSiteUser?.identifiableUser?.user?.[sortKey.value] || ''
+    if (sortOrder.value === 'asc') {
+      return aValue.localeCompare(bValue)
+    } else {
+      return bValue.localeCompare(aValue)
+    }
+  })
+})
 
 function newSpotPosition(
   classPosition: ClassPosition,
@@ -215,6 +231,15 @@ function toggleSpotsModeView() {
   toggleSpotsMode()
   emits('afterToggleSpotsMode')
 }
+
+const sortBy = (key: keyof User) => {
+  if (sortKey.value === key) {
+    sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
+  } else {
+    sortKey.value = key
+    sortOrder.value = 'asc'
+  }
+}
 </script>
 
 <template>
@@ -270,15 +295,29 @@ function toggleSpotsModeView() {
         <table class="table" v-else>
           <thead>
             <tr class="text-center">
-              <th>First Name</th>
-              <th>Last Name</th>
+              <th @click="sortBy('firstName')" style="cursor: pointer">
+                First Name
+                <span v-if="sortKey === 'firstName'">
+                  <i
+                    :class="sortOrder === 'asc' ? 'bi bi-caret-up-fill' : 'bi bi-caret-down-fill'"
+                  ></i>
+                </span>
+              </th>
+              <th @click="sortBy('lastName')" style="cursor: pointer">
+                Last Name
+                <span v-if="sortKey === 'lastName'">
+                  <i
+                    :class="sortOrder === 'asc' ? 'bi bi-caret-up-fill' : 'bi bi-caret-down-fill'"
+                  ></i>
+                </span>
+              </th>
               <th>Spot</th>
               <th>Sign in</th>
               <th>View Profile</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in enrollments" :key="item.id">
+            <tr v-for="item in sortedEnrollments" :key="item.id">
               <td>{{ item.identifiableSiteUser?.identifiableUser?.user?.firstName }}</td>
               <td>{{ item.identifiableSiteUser?.identifiableUser?.user?.lastName }}</td>
               <td class="text-center">{{ item.spotNumber }}</td>

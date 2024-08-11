@@ -30,7 +30,10 @@ async function syncClassWithPIQ() {
   var isSynchronizing = false
 
   try {
-    isSynchronizing = await apiService.syncClassWithPIQ(selectedSite.value as SiteEnum, props.classId)
+    isSynchronizing = await apiService.syncClassWithPIQ(
+      selectedSite.value as SiteEnum,
+      props.classId
+    )
   } catch (error) {
     errorModalIsVisible.value = true
   } finally {
