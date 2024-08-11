@@ -4,11 +4,10 @@ import { authService } from '@/services/authService'
 import type { AdminSite } from '@/modules/shared/interfaces'
 
 const weekDays = ref<CalendarListWeekDay[]>([])
+const sites = ref<AdminSite[]>([])
+const selectedSite = ref<string | null>(null)
 
 export const useCalendarList = () => {
-  const sites = ref<AdminSite[]>([])
-  const selectedSite = ref<string | null>(null)
-
   onMounted(() => {
     getAvailableSites()
   })

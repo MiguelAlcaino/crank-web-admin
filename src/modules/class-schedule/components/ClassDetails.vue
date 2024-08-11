@@ -5,8 +5,6 @@ import dayjs from 'dayjs'
 
 import type { ApiService } from '@/services/apiService'
 
-import { appStore } from '@/stores/appStorage'
-
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import EnrollSelectedMemberComponent from '@/modules/class-schedule/components/EnrollSelectedMemberComponent.vue'
 import ChangeLayoutClass from '@/modules/class-schedule/components/ChangeLayoutClass.vue'
@@ -25,8 +23,9 @@ import { useCalendarList } from '../composables/useCalendarList'
 import { useClassDetail } from '../composables/useClassDetail'
 
 import { ClassInfo } from '../interfaces/class-detail'
+import { SiteEnum } from '@/gql/graphql'
 
-const { updateTotalBooked } = useCalendarList()
+const { updateTotalBooked, selectedSite } = useCalendarList()
 
 const {
   userCanCheckInCheckOut,
@@ -95,7 +94,7 @@ async function getClassInfo(checkWaitList?: boolean | null) {
 
   isLoading.value = true
   classInfo.value = (await apiService.getClassInfoAdmin(
-    appStore().site,
+    selectedSite.value as SiteEnum,
     props.classId
   )) as ClassInfo
 
@@ -146,7 +145,7 @@ async function checkWaitlistIsEnable() {
     await new Promise((f) => setTimeout(f, 5000))
 
     waitListAvailable.value = await apiService.classWaitlistIsEnabled(
-      appStore().site,
+      selectedSite.value as SiteEnum,
       props.classId!
     )
   } catch (error) {
@@ -172,7 +171,7 @@ function initIntervalCheckSynchronizationClass() {
   intervalId.value = window.setInterval(async () => {
     try {
       const isSynchronizingClass = await apiService.checkIfClassIsSynchronized(
-        appStore().site,
+        selectedSite.value as SiteEnum,
         props.classId!
       )
       isSynchronizing.value = isSynchronizingClass

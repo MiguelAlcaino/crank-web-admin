@@ -364,7 +364,6 @@ function afterCheckInCheckOut(isCheckIn: boolean) {
 
 function toggleSpotsModeView() {
   selectedSpot.value = {}
-  
 }
 </script>
 <template>
