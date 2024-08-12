@@ -1,5 +1,5 @@
-import { PositionIconEnum } from '@/modules/shared/interfaces'
-import { EnrollmentStatusEnum } from './enrollment-status.enum'
+import type { PositionIconEnum } from '@/modules/shared/interfaces'
+import type { EnrollmentStatusEnum } from './enrollment-status.enum'
 
 export interface ClassInfo {
   class: Class

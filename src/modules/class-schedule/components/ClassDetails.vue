@@ -22,8 +22,8 @@ import { EnrollmentStatusEnum } from '../interfaces'
 import { useCalendarList } from '../composables/useCalendarList'
 import { useClassDetail } from '../composables/useClassDetail'
 
-import { ClassInfo } from '../interfaces/class-detail'
-import { SiteEnum } from '@/gql/graphql'
+import type { ClassInfo } from '../interfaces/class-detail'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 
 const { updateTotalBooked, selectedSite } = useCalendarList()
 

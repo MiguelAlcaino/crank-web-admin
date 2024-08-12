@@ -21,7 +21,7 @@ import { ERROR_ENROLLMENT_NOT_FOUND, ERROR_UNKNOWN } from '@/utils/errorMessages
 import type { ApiService } from '@/services/apiService'
 
 import { useClassDetail } from '../composables/useClassDetail'
-import { SiteEnum } from '@/modules/shared/interfaces'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 import { useCalendarList } from '../composables/useCalendarList'
 
 const { checkInEnrollment } = useClassDetail()

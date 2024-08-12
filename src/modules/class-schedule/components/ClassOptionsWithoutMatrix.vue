@@ -1,5 +1,5 @@
 <script lang="ts">
-import { EnrollmentStatusEnum } from '../interfaces'
+import type { EnrollmentStatusEnum } from '../interfaces'
 
 interface IdentifiableSiteUser {
   id: string

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts">
 interface BookableSpotClickedEvent {
   spotNumber: number | null
   isBooked: boolean
@@ -48,6 +48,10 @@ interface IdentifiableSiteUser {
   id: string
   identifiableUser: IdentifiableUser
 }
+</script>
+
+<script setup lang="ts">
+import { inject, ref, watch } from 'vue'
 
 import SpotMatrix from '@/modules/class-schedule/components/SpotMatrix.vue'
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
@@ -58,8 +62,8 @@ import SpotMatrixLegend from '@/modules/class-schedule/components/SpotMatrixLege
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 
 import { PositionIconEnum, SiteEnum } from '@/modules/shared/interfaces'
-import { inject, ref, watch } from 'vue'
-import { EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
+
+import { type EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
 
 import {
   ERROR_CLIENT_IS_OUTSIDE_SCHEDULING_WINDOW,
@@ -69,7 +73,9 @@ import {
   ERROR_TRYING_TO_MOVE_SAME_SPOT,
   ERROR_UNKNOWN
 } from '@/utils/errorMessages'
-import { ApiService } from '@/services/apiService'
+
+import type { ApiService } from '@/services/apiService'
+
 import { useCalendarList } from '../composables/useCalendarList'
 
 const { updateTotalBooked, updateTotalUnderMaintenanceSpots, selectedSite } = useCalendarList()

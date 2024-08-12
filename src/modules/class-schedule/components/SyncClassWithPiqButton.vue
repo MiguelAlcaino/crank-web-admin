@@ -5,7 +5,7 @@ import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import { inject, ref } from 'vue'
 import { useCalendarList } from '../composables/useCalendarList'
-import { SiteEnum } from '@/modules/shared/interfaces'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 
 const { selectedSite } = useCalendarList()
 

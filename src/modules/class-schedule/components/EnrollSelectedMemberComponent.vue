@@ -32,7 +32,7 @@ import {
   ERROR_WAITLIST_FULL_ERROR
 } from '@/utils/errorMessages'
 import { SUCCESS_ADDED_USER_TO_WAITLIST } from '@/utils/successMessages'
-import { SiteEnum } from '@/modules/shared/interfaces'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 import { useCalendarList } from '../composables/useCalendarList'
 
 const { selectedSite } = useCalendarList()
