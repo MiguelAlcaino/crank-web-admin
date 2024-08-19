@@ -1,0 +1,6 @@
+// Vitest Snapshot v1
+
+exports[`<CrankCircularProgressIndicator /> > should match snapshot 1`] = `
+"<div data-v-4b55f3a8=\\"\\" class=\\"spinner-border crankSpiner\\" role=\\"status\\"><span data-v-4b55f3a8=\\"\\" class=\\"sr-only\\">Loading...</span></div>
+<!--v-if-->"
+`;
