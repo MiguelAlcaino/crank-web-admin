@@ -1301,6 +1301,7 @@ export type ClassInfoAdminQuery = {
           isCheckedIn: boolean
           spotNumber?: number | null
           isBookedForFree: boolean
+          hasStats?: boolean | null
           id: string
           enrollmentStatus: EnrollmentStatusEnum
           enrollmentDateTime: any
@@ -2262,7 +2263,8 @@ export const ClassInfoAdminDocument = {
                           selections: [
                             { kind: 'Field', name: { kind: 'Name', value: 'isCheckedIn' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'isBookedForFree' } }
+                            { kind: 'Field', name: { kind: 'Name', value: 'isBookedForFree' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'hasStats' } }
                           ]
                         }
                       }
