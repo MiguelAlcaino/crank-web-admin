@@ -16,6 +16,7 @@ interface SpotPosition {
   isBookedForFree?: boolean | null
   isSpotWithOnlyStats?: boolean
   hasStats?: boolean | null
+  isFirstTimeInAClass?: boolean
 }
 
 interface ClassPosition {
@@ -45,6 +46,7 @@ interface EnrollmentInfo {
   spotNumber?: number | null
   isBookedForFree?: boolean | null
   hasStats?: boolean | null
+  isFirstTimeInAClass: boolean
 }
 
 interface IdentifiableSiteUser {
@@ -104,7 +106,8 @@ function newSpotPosition(
   user: User | null | undefined,
   isCheckedIn: boolean,
   isBookedForFree: boolean,
-  hasStats?: boolean | null
+  hasStats?: boolean | null,
+  isFirstTimeInAClass?: boolean
 ): SpotPosition {
   if (classPosition.icon === PositionIconEnum.Spot) {
     return {
@@ -117,7 +120,8 @@ function newSpotPosition(
       isCheckedIn: isCheckedIn,
       isBookedForFree: isBookedForFree,
       isSpotWithOnlyStats: props.orphanedClassStatsSpots.includes(classPosition.spotNumber!),
-      hasStats: hasStats
+      hasStats: hasStats,
+      isFirstTimeInAClass: isFirstTimeInAClass
     }
   }
   return {
@@ -134,6 +138,7 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
   let isCheckedIn: boolean
   let isBookedForFree: boolean
   let hasStats: boolean | null | undefined
+  let isFirstTimeInAClass: boolean
 
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix.length; j++) {
@@ -147,6 +152,7 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
         isCheckedIn = false
         isBookedForFree = false
         hasStats = null
+        isFirstTimeInAClass = false
 
         if (classPosition.icon === PositionIconEnum.Spot) {
           if (classPosition.spotNumber && props.enrollments) {
@@ -158,13 +164,23 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
                 isBookedForFree = enrollment.isBookedForFree ?? false
                 hasStats = enrollment.hasStats
                 user = enrollment.identifiableSiteUser?.identifiableUser?.user
+                isFirstTimeInAClass = enrollment.isFirstTimeInAClass
                 break
               }
             }
           }
         }
 
-        rows[i].push(newSpotPosition(classPosition, user, isCheckedIn, isBookedForFree, hasStats))
+        rows[i].push(
+          newSpotPosition(
+            classPosition,
+            user,
+            isCheckedIn,
+            isBookedForFree,
+            hasStats,
+            isFirstTimeInAClass
+          )
+        )
       }
     }
   }
@@ -216,6 +232,7 @@ function onClickSpotAdmin(spotNumber: number) {
               :is-booked-for-free="spot.isBookedForFree"
               :is-spot-with-only-stats="spot.isSpotWithOnlyStats ?? false"
               :has-stats="spot.hasStats"
+              :is-first-time-in-a-class="spot.isFirstTimeInAClass ?? false"
             />
             <icon-position-not-bookable v-else :icon="spot.icon" />
           </td>

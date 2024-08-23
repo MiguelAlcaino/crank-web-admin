@@ -16,6 +16,7 @@ interface Props {
   isBookedForFree?: boolean | null
   isSpotWithOnlyStats: boolean
   hasStats?: boolean | null
+  isFirstTimeInAClass: boolean
 }
 </script>
 
@@ -89,9 +90,8 @@ function selectSpot() {
         spotSelectionIsDisabled ? 'spotEnabledNotClickable' : 'enabledSpot',
         selected ? 'selectedSpot' : '',
         isBookedForFree && !selected ? 'isBookedForFree' : '',
-        isBookedForFree && selected ? 'isBookedForFreeSelected' : '',
         hasStats === false && !selected ? 'isSpotWithouttats' : '',
-        hasStats === false && selected ? 'isSpotWithoutStatsSelected' : ''
+        isFirstTimeInAClass && !selected ? 'isFirstTimeInAClass' : ''
       ]"
     >
       {{ spotNumber + (isCheckedIn === true ? '✓' : '') }}
@@ -209,5 +209,13 @@ function selectSpot() {
 
 .isSpotWithoutStatsSelected {
   border: 2px dashed #ff7e62 !important;
+}
+
+.isFirstTimeInAClass {
+  border: 2px solid #00b9ff !important;
+}
+
+.isFirstTimeInAClassSelected {
+  border: 2px dashed #00b9ff !important;
 }
 </style>

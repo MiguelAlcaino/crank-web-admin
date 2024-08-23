@@ -50,6 +50,7 @@ interface EnrollmentInfo {
   spotNumber?: number | null
   isBookedForFree?: boolean | null
   hasStats?: boolean | null
+  isFirstTimeInAClass: boolean
 }
 
 interface IdentifiableSiteUser {
@@ -233,7 +234,7 @@ async function getClassInfo(checkWaitList?: boolean | null) {
   classInfo.value = (await apiService.getClassInfoAdmin(
     appStore().site,
     props.classId
-  )) as ClassInfo
+  )) as unknown as ClassInfo
 
   isSynchronizing.value = classInfo.value?.class.isSynchronizing
   if (isSynchronizing.value) {

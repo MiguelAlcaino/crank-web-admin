@@ -138,6 +138,7 @@ export class ApiService {
               spotNumber
               isBookedForFree
               hasStats
+              isFirstTimeInAClass
             }
           }
           onHoldSpots
