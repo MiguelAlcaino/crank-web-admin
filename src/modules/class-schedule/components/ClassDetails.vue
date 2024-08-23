@@ -50,6 +50,7 @@ interface EnrollmentInfo {
   spotNumber?: number | null
   isBookedForFree?: boolean | null
   hasStats?: boolean | null
+  isFirstTimeInAClass: boolean
 }
 
 interface IdentifiableSiteUser {
@@ -102,6 +103,7 @@ import UserProfile from '@/modules/class-schedule/components/UserProfile.vue'
 import SyncClassButton from '@/modules/class-schedule/components/SyncClassButton.vue'
 import SyncClassWithPiqButton from '@/modules/class-schedule/components/SyncClassWithPiqButton.vue'
 import SendClassStatsToUsers from '@/modules/class-schedule/components/SendClassStatsToUsers.vue'
+import ColorLegendInClass from '@/modules/class-schedule/components/ColorLegendInClass.vue'
 
 import {
   ERROR_CLIENT_IS_OUTSIDE_SCHEDULING_WINDOW,
@@ -232,7 +234,7 @@ async function getClassInfo(checkWaitList?: boolean | null) {
   classInfo.value = (await apiService.getClassInfoAdmin(
     appStore().site,
     props.classId
-  )) as ClassInfo
+  )) as unknown as ClassInfo
 
   isSynchronizing.value = classInfo.value?.class.isSynchronizing
   if (isSynchronizing.value) {
@@ -857,28 +859,7 @@ function disableSyncButtons(disabled: boolean) {
 
       <br />
       <br />
-      <div
-        class="row matrixSpotsLegend"
-        v-if="
-          classInfo !== null &&
-          classInfo.roomLayout !== null &&
-          classInfo.roomLayout?.matrix !== null
-        "
-      >
-        <div class="col-4" style="text-align: center">
-          <hr style="border: none; height: 2px; background-color: #ffd903; max-width: 20px" />
-          <small>Not Paid</small>
-        </div>
-        <div class="col-4" style="text-align: center">
-          <hr style="border: none; height: 2px; background-color: #8a00e7; max-width: 20px" />
-          <small>Spot With Stats</small>
-        </div>
-        <div class="col-4" style="text-align: center">
-          <hr style="border: none; height: 2px; background-color: #ff7e62; max-width: 20px" />
-          <small>Spot Without Stats</small>
-        </div>
-      </div>
-
+      <ColorLegendInClass />
       <br />
       <div class="row">
         <div class="col-12">
@@ -944,15 +925,6 @@ function disableSyncButtons(disabled: boolean) {
   min-height: 300px;
   box-shadow: 0 0 2px 0 #888;
   padding: 30px;
-}
-
-.matrixSpotsLegend {
-  padding-top: 50px;
-  background-color: #f8f8f8;
-  min-height: 20px;
-  box-shadow: 0 0 2px 0 #888;
-  padding: 30px;
-  font-family: 'Avenir', sans-serif;
 }
 
 .crankSpiner {
