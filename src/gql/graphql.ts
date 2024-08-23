@@ -354,6 +354,7 @@ export type EnrollmentInfo = EnrollmentInfoInterface & {
   identifiableSiteUser?: Maybe<IdentifiableSiteUser>
   isBookedForFree: Scalars['Boolean']
   isCheckedIn: Scalars['Boolean']
+  isFirstTimeInAClass: Scalars['Boolean']
   /** @deprecated Use spotNumber instead. */
   spotInfo?: Maybe<SpotInfo>
   spotNumber?: Maybe<Scalars['Int']>
