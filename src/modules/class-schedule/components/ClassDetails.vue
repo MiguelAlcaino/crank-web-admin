@@ -649,11 +649,7 @@ function disableSyncButtons(disabled: boolean) {
       <br />
       <!-- Matrix -->
       <SpotMatrix
-        v-if="
-          classInfo !== null &&
-          classInfo.roomLayout !== null &&
-          classInfo.roomLayout?.matrix !== null
-        "
+        v-if="classInfo?.roomLayout?.matrix"
         :matrix="classInfo.roomLayout!.matrix!"
         :show-user-in-spots="true"
         :selectedSpotNumber="selectedSpot?.spotNumber"
@@ -859,7 +855,7 @@ function disableSyncButtons(disabled: boolean) {
 
       <br />
       <br />
-      <ColorLegendInClass />
+      <ColorLegendInClass v-if="classInfo?.roomLayout?.matrix" />
       <br />
       <div class="row">
         <div class="col-12">
