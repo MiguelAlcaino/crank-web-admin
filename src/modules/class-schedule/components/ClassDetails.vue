@@ -5,7 +5,6 @@ import dayjs from 'dayjs'
 
 import type { ApiService } from '@/services/apiService'
 
-import SpotMatrix from '@/modules/class-schedule/components/SpotMatrix.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import EnrollSelectedMemberComponent from '@/modules/class-schedule/components/EnrollSelectedMemberComponent.vue'
 import ChangeLayoutClass from '@/modules/class-schedule/components/ChangeLayoutClass.vue'
@@ -15,7 +14,6 @@ import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCir
 import SyncClassButton from '@/modules/class-schedule/components/SyncClassButton.vue'
 import SyncClassWithPiqButton from '@/modules/class-schedule/components/SyncClassWithPiqButton.vue'
 import SendClassStatsToUsers from '@/modules/class-schedule/components/SendClassStatsToUsers.vue'
-import ColorLegendInClass from '@/modules/class-schedule/components/SpotMatrixLegend.vue'
 
 import ClassOptionsWithoutMatrix from '@/modules/class-schedule/components/ClassOptionsWithoutMatrix.vue'
 import ClassOptionsWithMatrix from '@/modules/class-schedule/components/ClassOptionsWithMatrix.vue'

@@ -299,6 +299,7 @@ const sortBy = (key: keyof User) => {
                   :is-booked-for-free="spot.isBookedForFree"
                   :is-spot-with-only-stats="spot.isSpotWithOnlyStats ?? false"
                   :has-stats="spot.hasStats"
+                  :is-first-time-in-a-class="spot.isFirstTimeInAClass ?? false"
                 />
                 <icon-position-not-bookable v-else :icon="spot.icon" />
               </td>
