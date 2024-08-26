@@ -2,9 +2,11 @@
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import type { ApiService } from '@/services/apiService'
-import { appStore } from '@/stores/appStorage'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import { inject, ref } from 'vue'
+import { useCalendarList } from '../composables/useCalendarList'
+import type { SiteEnum } from '@/modules/shared/interfaces'
+const { selectedSite } = useCalendarList()
 
 const props = defineProps<{
   classId: string
@@ -27,7 +29,10 @@ async function syncClassWithPIQ() {
   var isSynchronizing = false
 
   try {
-    isSynchronizing = await apiService.syncClassWithPIQ(appStore().site, props.classId)
+    isSynchronizing = await apiService.syncClassWithPIQ(
+      selectedSite.value as SiteEnum,
+      props.classId
+    )
   } catch (error) {
     errorModalIsVisible.value = true
   } finally {

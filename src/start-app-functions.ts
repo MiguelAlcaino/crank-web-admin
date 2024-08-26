@@ -19,7 +19,7 @@ import CustomerProfileView from '@/modules/customer/views/CustomerProfileView.vu
 import GiftCardListView from './modules/gift-card/views/GiftCardListView.vue'
 import { SiteEnum } from '@/gql/graphql'
 import { appStore } from '@/stores/appStorage'
-import AdminClassView from '@/modules/class-schedule/views/ClassScheduleView.vue'
+import ClassScheduleView from '@/modules/class-schedule/views/ClassScheduleView.vue'
 import ClassSchedulesView from './modules/class-schedule-config/views/ClassScheduleConfigView.vue'
 import VueApexCharts from 'vue3-apexcharts'
 
@@ -146,7 +146,6 @@ export const startRoomLayoutEditApp = async function (
 export const startCalendarApp = async function (
   gqlUrl: string,
   token: string,
-  site: string,
   appDiv: string,
   goBackUrl?: string | null | undefined,
   editCustomerProfileUrl?: string | null | undefined
@@ -160,23 +159,11 @@ export const startCalendarApp = async function (
       provide('goBackUrl', goBackUrl)
       provide('editCustomerProfileUrl', editCustomerProfileUrl)
     },
-    render: () => h(AdminClassView)
+    render: () => h(ClassScheduleView)
   })
 
   app.use(createPinia()).use(router).use(VueApexCharts).use(SimpleTypeahead)
   useAuthenticationStore().setSession(token)
-
-  if (site) {
-    if (site === SiteEnum.Dubai.toString()) {
-      appStore().setSite(SiteEnum.Dubai)
-    } else if (site === SiteEnum.AbuDhabi) {
-      appStore().setSite(SiteEnum.AbuDhabi)
-    } else {
-      throw Error
-    }
-  } else {
-    throw Error
-  }
 
   app.mount(appDiv)
 }

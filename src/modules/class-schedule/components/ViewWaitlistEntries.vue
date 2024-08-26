@@ -29,10 +29,14 @@ interface RemoveFromWaitlistResult {
 <script setup lang="ts">
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
+import type { SiteEnum } from '@/modules/shared/interfaces'
+
 import type { ApiService } from '@/services/apiService'
-import { appStore } from '@/stores/appStorage'
 import { ERROR_UNKNOWN, ERROR_WAITLIST_ENTRY_NOT_FOUND } from '@/utils/errorMessages'
 import { inject, ref } from 'vue'
+
+import { useCalendarList } from '../composables/useCalendarList'
+const { selectedSite } = useCalendarList()
 
 const apiService = inject<ApiService>('gqlApiService')!
 
@@ -62,7 +66,7 @@ async function getWaitlistEntries() {
   try {
     isLoading.value = true
     waitlistEntries.value = (await apiService.getClassWaitlistEntries(
-      appStore().site,
+      selectedSite.value as SiteEnum,
       props.classId
     )) as WaitlistEntry[]
   } catch (error) {
@@ -113,7 +117,8 @@ function showConfirmModal(waitlistEntry: WaitlistEntry) {
     type="button"
     @on-click="openModal()"
     :disabled="props.disabled"
-  ></DefaultButtonComponent>
+  >
+  </DefaultButtonComponent>
 
   <transition name="modal" v-if="modalIsVisible">
     <div class="modal-mask">
@@ -157,7 +162,8 @@ function showConfirmModal(waitlistEntry: WaitlistEntry) {
                           text="REMOVE"
                           type="button"
                           @on-click="showConfirmModal(item)"
-                        ></DefaultButtonComponent>
+                        >
+                        </DefaultButtonComponent>
                       </td>
                     </tr>
                     <tr v-if="waitlistEntries.length === 0 && !isLoading">

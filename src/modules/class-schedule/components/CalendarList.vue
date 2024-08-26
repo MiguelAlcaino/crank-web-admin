@@ -1,24 +1,5 @@
-<script lang="ts">
-interface Class {
-  id: string
-  name: string
-  startWithNoTimeZone: Date
-  maxCapacity: number
-  totalBooked: number
-  totalUnderMaintenanceSpots: number
-  showAsDisabled: boolean
-  instructorName: string
-}
-
-interface WeekDays {
-  date: Date
-  classes: Class[]
-}
-</script>
-
 <script setup lang="ts">
 import type { ApiService } from '@/services/apiService'
-import { appStore } from '@/stores/appStorage'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import dayjs from 'dayjs'
 import { inject, onMounted, ref } from 'vue'
@@ -27,9 +8,11 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue'
 import SyncAllClassesButton from '@/modules/class-schedule/components/SyncAllClassesButton.vue'
-import SiteSelector from '@/modules/customer/components/SiteSelector.vue'
-import { Role } from '@/utils/userRoles'
-import { authService } from '@/services/authService'
+
+import type { CalendarListClass } from '../interfaces'
+import type { SiteEnum } from '@/modules/shared/interfaces'
+import { useCalendarList } from '../composables/useCalendarList'
+const { weekDays, sites, selectedSite } = useCalendarList()
 
 dayjs.Ls.en.weekStart = 1
 
@@ -37,12 +20,12 @@ const apiService = inject<ApiService>('gqlApiService')!
 
 const isLoading = ref<boolean>(false)
 const errorModalIsVisible = ref<boolean>(false)
-const startDate = ref<Date>(dayjs(Date()).startOf('week').toDate())
-const endDate = ref<Date>(dayjs(Date()).endOf('week').toDate())
-const weekDays = ref<WeekDays[]>([])
-const userCanSyncClasses = ref<boolean>(false)
 
-const dateRange = ref<[Date, Date]>([startDate.value, endDate.value])
+const dateRange = ref<[Date, Date]>([
+  dayjs(Date()).startOf('week').toDate(),
+  dayjs(Date()).endOf('week').toDate()
+])
+
 const weekSelectorIsVisible = ref<boolean>(false)
 
 const selectedClassId = ref<string | null>(null)
@@ -54,30 +37,26 @@ const emits = defineEmits<{
 }>()
 
 onMounted(async () => {
-  userCanSyncClasses.value = authService.userHasRole(Role.ROLE_SUPER_ADMIN)
-
   checkIfAllClassAreSynchronized()
 
   await getCalendarClasses()
   scrollToTodayClass()
 })
 
-defineExpose({
-  getCalendarClasses
-})
-
 async function checkIfAllClassAreSynchronized() {
-  isSynchronizingClasses.value = await apiService.checkIfAllClassAreSynchronized(appStore().site)
+  isSynchronizingClasses.value = await apiService.checkIfAllClassAreSynchronized(
+    selectedSite.value as SiteEnum
+  )
 
   if (isSynchronizingClasses.value) {
     initIntervalCheckSynchronizationClasses()
   }
 }
 
-async function getCalendarClasses(resetSelectedClass: boolean = true): Promise<void> {
-  if (resetSelectedClass) selectClass(null)
+async function getCalendarClasses(): Promise<void> {
+  selectClass(null)
 
-  dateRange.value = [startDate.value, endDate.value]
+  dateRange.value = [dateRange.value[0], dateRange.value[1]]
 
   weekDays.value = []
 
@@ -85,10 +64,10 @@ async function getCalendarClasses(resetSelectedClass: boolean = true): Promise<v
 
   try {
     const calendarClasses = (await apiService.getCalendarClassesForList(
-      appStore().site,
-      startDate.value,
-      endDate.value
-    )) as Class[]
+      selectedSite.value as SiteEnum,
+      dateRange.value[0],
+      dateRange.value[1]
+    )) as CalendarListClass[]
 
     let day: dayjs.Dayjs | null = null
     let weekDaysIndex = -1
@@ -122,19 +101,19 @@ async function getCalendarClasses(resetSelectedClass: boolean = true): Promise<v
 }
 
 function goToPrevWeek(): void {
-  const date = dayjs(startDate.value)
+  const date = dayjs(dateRange.value[0])
 
-  startDate.value = date.subtract(1, 'weeks').startOf('week').toDate()
-  endDate.value = date.subtract(1, 'weeks').endOf('week').toDate()
+  dateRange.value[0] = date.subtract(1, 'weeks').startOf('week').toDate()
+  dateRange.value[1] = date.subtract(1, 'weeks').endOf('week').toDate()
 
   getCalendarClasses()
 }
 
 function goToNextWeek(): void {
-  const date = dayjs(startDate.value)
+  const date = dayjs(dateRange.value[0])
 
-  startDate.value = date.add(1, 'weeks').startOf('week').toDate()
-  endDate.value = date.add(1, 'weeks').endOf('week').toDate()
+  dateRange.value[0] = date.add(1, 'weeks').startOf('week').toDate()
+  dateRange.value[1] = date.add(1, 'weeks').endOf('week').toDate()
 
   getCalendarClasses()
 }
@@ -162,7 +141,9 @@ const intervalId = ref<number | null>(null)
 function initIntervalCheckSynchronizationClasses() {
   intervalId.value = window.setInterval(async () => {
     try {
-      const isSynchronizing = await apiService.checkIfAllClassAreSynchronized(appStore().site)
+      const isSynchronizing = await apiService.checkIfAllClassAreSynchronized(
+        selectedSite.value as SiteEnum
+      )
       isSynchronizingClasses.value = isSynchronizing
 
       if (!isSynchronizing) {
@@ -176,10 +157,7 @@ function initIntervalCheckSynchronizationClasses() {
   }, 1000)
 }
 
-const handleDate = (modelData: [Date, Date]) => {
-  startDate.value = modelData[0]
-  endDate.value = modelData[1]
-
+const handleDate = () => {
   getCalendarClasses()
 }
 
@@ -199,9 +177,22 @@ function scrollToTodayClass() {
 </script>
 
 <template>
+  <div v-if="selectedSite === null">
+    <p>The calendar cannot be displayed because your user does not have a site assigned.</p>
+  </div>
   <div class="row ml-1">
     <div class="col-lg-7 col-md-10 col-sm-12 ml-auto mr-3">
-      <SiteSelector @after-changing-site="onAfterChangingSite"></SiteSelector>
+      <select
+        class="custom-select"
+        v-model="selectedSite"
+        @change="onAfterChangingSite()"
+        id="countryRegistration"
+        required
+      >
+        <option v-for="(item, index) in sites" :key="index" :value="item.serviceKey">
+          {{ item.name }}
+        </option>
+      </select>
     </div>
   </div>
   <hr />
@@ -238,8 +229,8 @@ function scrollToTodayClass() {
           v-if="!weekSelectorIsVisible"
           @click="weekSelectorIsVisible = !weekSelectorIsVisible"
         >
-          {{ dayjs(startDate).format('DD/MM/YYYY') }} to
-          {{ dayjs(endDate).format('DD/MM/YYYY') }}
+          {{ dayjs(dateRange[0]).format('DD/MM/YYYY') }} to
+          {{ dayjs(dateRange[1]).format('DD/MM/YYYY') }}
         </div>
         <div id="next" v-if="!weekSelectorIsVisible">
           <a href="#" @click.prevent="goToNextWeek()" style="color: black">
@@ -289,9 +280,10 @@ function scrollToTodayClass() {
         </div>
         <div v-else>
           <SyncAllClassesButton
+            v-if="selectedSite"
             :disabled="false"
             @after-sync-all-classes="afterSyncClasses"
-            v-if="userCanSyncClasses"
+            :site="selectedSite as SiteEnum"
           >
           </SyncAllClassesButton>
         </div>

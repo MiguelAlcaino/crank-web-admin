@@ -47,7 +47,8 @@ import CustomerWorkoutSummaryModal from '@/modules/customer/components/CustomerW
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import SendClassStatsToEmail from '@/modules/shared/components/SendClassStatsToEmail.vue'
 import PaginationComponent from '@/modules/shared/components/PaginationComponent.vue'
-import { authService, type AdminSite } from '@/services/authService'
+import { authService } from '@/services/authService'
+import type { AdminSite } from '@/modules/shared/interfaces'
 
 const apiService = inject<ApiService>('gqlApiService')!
 

@@ -18,7 +18,6 @@ interface User {
 
 <script setup lang="ts">
 import type { ApiService } from '@/services/apiService'
-import { appStore } from '@/stores/appStorage'
 import { inject, ref } from 'vue'
 
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
@@ -32,6 +31,9 @@ import {
   ERROR_WAITLIST_FULL_ERROR
 } from '@/utils/errorMessages'
 import { SUCCESS_ADDED_USER_TO_WAITLIST } from '@/utils/successMessages'
+import type { SiteEnum } from '@/modules/shared/interfaces'
+import { useCalendarList } from '../composables/useCalendarList'
+const { selectedSite } = useCalendarList()
 
 const apiService = inject<ApiService>('gqlApiService')!
 
@@ -138,7 +140,7 @@ async function onInputEventHandler(event: any) {
   isLoading.value = true
 
   identifiableSiteUsers.value = (await apiService.searchSiteUser(
-    appStore().site,
+    selectedSite.value as SiteEnum,
     event.input
   )) as IdentifiableSiteUser[]
 

@@ -10,10 +10,13 @@ interface RoomLayout {
 <script setup lang="ts">
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 import type { ApiService } from '@/services/apiService'
-import { appStore } from '@/stores/appStorage'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import { inject, ref } from 'vue'
+
+import { useCalendarList } from '../composables/useCalendarList'
+const { selectedSite } = useCalendarList()
 
 const apiService = inject<ApiService>('gqlApiService')!
 
@@ -52,7 +55,7 @@ async function getRoomLayouts() {
 
   isLoading.value = true
   roomLayouts.value = (await apiService.roomLayouts(
-    appStore().site,
+    selectedSite.value as SiteEnum,
     props.maxCapacity
   )) as RoomLayout[]
   isLoading.value = false
@@ -91,7 +94,8 @@ async function assignRoomLayoutId() {
     type="button"
     @on-click="openModal()"
     :disabled="disabled"
-  ></DefaultButtonComponent>
+  >
+  </DefaultButtonComponent>
 
   <transition name="modal" v-if="modalIsVisible">
     <div class="modal-mask">
