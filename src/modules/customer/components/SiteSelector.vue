@@ -1,7 +1,8 @@
 <script lang="ts"></script>
 
 <script setup lang="ts">
-import { authService, type AdminSite } from '@/services/authService'
+import type { AdminSite } from '@/modules/shared/interfaces'
+import { authService } from '@/services/authService'
 import { appStore } from '@/stores/appStorage'
 import { onMounted, ref } from 'vue'
 
