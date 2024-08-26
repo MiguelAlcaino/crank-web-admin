@@ -329,6 +329,7 @@ const sortBy = (key: keyof User) => {
               <th>Spot</th>
               <th>Sign in</th>
               <th>View Profile</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -350,6 +351,14 @@ const sortBy = (key: keyof User) => {
                   :user-id="item.identifiableSiteUser?.identifiableUser?.id"
                   :edit-customer-profile-url="editCustomerProfileUrl"
                 ></ViewUserProfileButton>
+              </td>
+              <td>
+                <span v-if="item.isBookedForFree === true" class="badge badge-warning"
+                  >Not paid</span
+                >
+                <span v-if="item.isFirstTimeInAClass" class="badge badge-primary"
+                  >First Time In Class</span
+                >
               </td>
             </tr>
           </tbody>
