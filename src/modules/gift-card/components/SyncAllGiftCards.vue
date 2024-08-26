@@ -20,7 +20,6 @@ async function syncAllGiftCards() {
 
   try {
     var success = await apiService.syncAllGiftCards()
-    console.log(success)
     if (success) {
       emits('afterSync')
       successModalIsVisible.value = true
@@ -41,7 +40,8 @@ async function syncAllGiftCards() {
     type="button"
     @on-click="syncAllGiftCards"
     :is-loading="isLoading"
-  ></DefaultButtonComponent>
+  >
+  </DefaultButtonComponent>
 
   <!-- Success Modal -->
   <ModalComponent

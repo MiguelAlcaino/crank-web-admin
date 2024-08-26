@@ -7,7 +7,6 @@ import useVuelidate from '@vuelidate/core'
 import { SiteEnum } from '@/gql/graphql'
 
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
-import dayjs from 'dayjs'
 import { appStore } from '@/stores/appStorage'
 import { useAuthenticationStore } from '@/stores/authToken'
 
@@ -38,18 +37,11 @@ async function login() {
   if (isValid) {
     displayLoginError.value = false
 
-    setCalendarDates()
-
     useAuthenticationStore().setSession(formData.token)
     appStore().setSite(selectedSite.value as SiteEnum)
 
     await router.push({ name: 'admin_calendar_class' })
   }
-}
-
-function setCalendarDates() {
-  const now = dayjs()
-  appStore().setCalendarDates(now.startOf('week').toDate(), now.endOf('week').toDate())
 }
 </script>
 
@@ -124,6 +116,7 @@ function setCalendarDates() {
 p {
   font-family: 'Avenir', sans-serif;
 }
+
 .page-login-v3 .panel .panel-body {
   padding: 50px 40px 40px;
 }
