@@ -1,4 +1,4 @@
-import { H as s, J as r, C as p, I as e, K as o, L as C, D as A, E as m } from "./index.f11ba834.js";
+import { H as s, J as r, C as p, I as e, K as o, L as C, D as A, E as m } from "./index.75fc5b56.js";
 export {
   s as startCalendarApp,
   r as startClassScheduleApp,
