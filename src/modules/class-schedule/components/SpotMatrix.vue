@@ -361,6 +361,9 @@ const sortBy = (key: keyof User) => {
                 >
               </td>
             </tr>
+            <tr v-if="sortedEnrollments.length === 0">
+              <td colspan="6" class="text-center">There are no users enrolled in this class</td>
+            </tr>
           </tbody>
         </table>
       </div>
