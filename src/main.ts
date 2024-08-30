@@ -30,7 +30,6 @@ import { authService } from '@/services/authService'
 import { ApiService } from '@/services/apiService'
 import { newAnonymousClient, newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { useAuthenticationStore } from '@/stores/authToken'
-import { Config } from '@/model/Config'
 
 import SimpleTypeahead from 'vue3-simple-typeahead'
 import { appStore } from './stores/appStorage'
@@ -48,8 +47,8 @@ async function startApp() {
       provide(
         'gqlApiService',
         new ApiService(
-          newAuthenticatedApolloClient(Config.GRAPHQL_SERVICE_URL),
-          newAnonymousClient(Config.GRAPHQL_SERVICE_URL)
+          newAuthenticatedApolloClient(import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL),
+          newAnonymousClient(import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL)
         )
       )
     },
