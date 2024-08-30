@@ -2,7 +2,6 @@ import axios from 'axios'
 import { useAuthenticationStore } from '@/stores/authToken'
 import router from '@/router'
 import jwt_decode from 'jwt-decode'
-import { Config } from '@/model/Config'
 import type { Role } from '@/utils/userRoles'
 import type { AdminSite } from '@/modules/shared/interfaces'
 
@@ -13,6 +12,9 @@ interface JwtTokenPayload {
 }
 
 export const authService = {
+  getRestServerUrl(): string {
+    return import.meta.env.VITE_CRANK_REST_SERVER_URL
+  },
   isLoggedId(): boolean {
     const store = useAuthenticationStore()
     return store.token !== null
@@ -36,7 +38,7 @@ export const authService = {
     )
   },
   async refreshToken(): Promise<void> {
-    const response = await axios.post(Config.AUTH_SERVICE_HOST + '/api/token/refresh')
+    const response = await axios.post(this.getRestServerUrl() + 'token/refresh')
     useAuthenticationStore().setSession(response.data.token)
   },
   async logout(): Promise<void> {
