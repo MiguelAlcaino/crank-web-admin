@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import CrankCircularProgressIndicator from '@/components/CrankCircularProgressIndicator.vue'
-import ModalComponent from '@/components/ModalComponent.vue'
+import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue'
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import GiftCardEdit from '../components/GiftCardEdit.vue'
 import SyncAllGiftCards from '../components/SyncAllGiftCards.vue'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'

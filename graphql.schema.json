@@ -2629,6 +2629,18 @@
             "deprecationReason": null
           },
           {
+            "name": "hasStats",
+            "description": "Whether this enrollment has stats or not. If null, it means that the class that the enrollment belongs to\nhas not received stats yet. If the result is false, it means that the class has received stats but the enrollment\nhas not.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "id",
             "description": null,
             "args": [],
@@ -2674,6 +2686,22 @@
           },
           {
             "name": "isCheckedIn",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isFirstTimeInAClass",
             "description": null,
             "args": [],
             "type": {
@@ -4715,6 +4743,22 @@
                 "deprecationReason": null
               }
             ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "syncAllGiftCards",
+            "description": "Sync all gift cards from Mindbody with the local database",
+            "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,

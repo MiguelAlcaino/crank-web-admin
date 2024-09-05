@@ -12,15 +12,15 @@ import { ApiService } from '@/services/apiService'
 import { newAnonymousClient, newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { useAuthenticationStore } from '@/stores/authToken'
 import SimpleTypeahead from 'vue3-simple-typeahead'
-import CustomerCreateView from '@/views/CustomerCreateView.vue'
-import CustomerEditView from '@/views/CustomerEditView.vue'
-import RoomLayoutView from '@/views/RoomLayoutView.vue'
-import CustomerProfileView from '@/views/CustomerProfileView.vue'
+import CustomerCreateView from '@/modules/customer/views/CustomerCreateView.vue'
+import CustomerEditView from '@/modules/customer/views/CustomerEditView.vue'
+import RoomLayoutView from '@/modules/room-layout/views/RoomLayoutView.vue'
+import CustomerProfileView from '@/modules/customer/views/CustomerProfileView.vue'
 import GiftCardListView from './modules/gift-card/views/GiftCardListView.vue'
 import { SiteEnum } from '@/gql/graphql'
 import { appStore } from '@/stores/appStorage'
-import AdminClassView from '@/views/AdminClassView.vue'
-import ClassSchedulesView from './views/ClassSchedulesView.vue'
+import ClassScheduleView from '@/modules/class-schedule/views/ClassScheduleView.vue'
+import ClassSchedulesView from './modules/class-schedule-config/views/ClassScheduleConfigView.vue'
 import VueApexCharts from 'vue3-apexcharts'
 
 export const startCustomerCreateApp = async function (
@@ -146,7 +146,6 @@ export const startRoomLayoutEditApp = async function (
 export const startCalendarApp = async function (
   gqlUrl: string,
   token: string,
-  site: string,
   appDiv: string,
   goBackUrl?: string | null | undefined,
   editCustomerProfileUrl?: string | null | undefined
@@ -160,23 +159,11 @@ export const startCalendarApp = async function (
       provide('goBackUrl', goBackUrl)
       provide('editCustomerProfileUrl', editCustomerProfileUrl)
     },
-    render: () => h(AdminClassView)
+    render: () => h(ClassScheduleView)
   })
 
   app.use(createPinia()).use(router).use(VueApexCharts).use(SimpleTypeahead)
   useAuthenticationStore().setSession(token)
-
-  if (site) {
-    if (site === SiteEnum.Dubai.toString()) {
-      appStore().setSite(SiteEnum.Dubai)
-    } else if (site === SiteEnum.AbuDhabi) {
-      appStore().setSite(SiteEnum.AbuDhabi)
-    } else {
-      throw Error
-    }
-  } else {
-    throw Error
-  }
 
   app.mount(appDiv)
 }
