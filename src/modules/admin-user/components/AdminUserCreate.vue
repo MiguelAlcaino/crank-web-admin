@@ -100,7 +100,7 @@
                                                     :clear-on-select="false" :preserve-search="true"
                                                     placeholder="Admin sites" label="name" track-by="code"
                                                     :preselect-first="false" class="custom-multiselect"
-                                                    :loading="loadingSites">
+                                                    :loading="loadingSites" :searchable="false">
                                                 </multiselect>
                                             </div>
 
