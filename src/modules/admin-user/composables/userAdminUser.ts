@@ -64,7 +64,7 @@ export const useAdminUser = (apiService: ApiService) => {
         required: helpers.withMessage('Username is required', required)
       },
       email: {
-        required: helpers.withMessage('Username is required', required),
+        required: helpers.withMessage('Email is required', required),
         email: helpers.withMessage('The email address is not valid', email)
       },
       rol: {
@@ -146,7 +146,13 @@ export const useAdminUser = (apiService: ApiService) => {
   }
 
   const submitForm = async () => {
+    const isValid = await v$.value.$validate()
+
     console.log('formData', formData)
+
+    if (isValid) {
+      console.log('isValid', isValid)
+    }
   }
 
   async function getAvailableInstructors(): Promise<void> {

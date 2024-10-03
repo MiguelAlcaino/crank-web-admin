@@ -60,7 +60,7 @@
                                             </select>
                                         </div>
 
-                                        <small v-for="error in v$.email.$errors" :key="error.$uid" class="form-text"
+                                        <small v-for="error in v$.rol.$errors" :key="error.$uid" class="form-text"
                                             style="color: red">
                                             {{ error.$message }}
                                         </small>
