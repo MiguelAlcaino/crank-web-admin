@@ -34,12 +34,12 @@
                                 <li v-for="site in item.linkedSites" :key="site.code">{{ site.name }}</li>
                             </ul>
                         </td>
-                        <td>
-                            <ul class="no-bullets">
-                                <li v-for="role in item.roles" :key="role">{{ role }}</li>
-                            </ul>
+                        <td class="text-center">
+                            {{ item.rol }}
                         </td>
-                        <td class="text-center"></td>
+                        <td>
+                            <AdminUserEdit :admin-user="item"></AdminUserEdit>
+                        </td>
                     </tr>
                     <tr v-if="adminUsers.length === 0 && !isLoading">
                         <td colspan="5" class="text-center align-middle">
@@ -70,6 +70,7 @@ import { inject } from 'vue';
 import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue';
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue';
 import AdminUserCreate from '../components/AdminUserCreate.vue';
+import AdminUserEdit from '../components/AdminUserEdit.vue';
 
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 

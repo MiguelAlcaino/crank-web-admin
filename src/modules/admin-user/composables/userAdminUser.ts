@@ -7,6 +7,8 @@ import useVuelidate from '@vuelidate/core'
 import { email, helpers, required } from '@vuelidate/validators'
 import type { Site } from '@/modules/shared/interfaces/site'
 
+const selectedAdminUser = ref<AdminUser | null>(null)
+
 export const useAdminUser = (apiService: ApiService) => {
   const hasError = ref<boolean>(false)
   const isLoading = ref<boolean>(false)
@@ -30,8 +32,30 @@ export const useAdminUser = (apiService: ApiService) => {
     username: '',
     email: '',
     rol: null as Role | null,
-    linkedInstructorIds: [],
-    linkedSiteCodes: []
+    linkedInstructorIds: [] as string[],
+    linkedSiteCodes: [] as string[]
+  })
+
+  const selectedInstructors = computed({
+    get() {
+      return formData.linkedInstructorIds
+        .map((id) => instructors.value.find((instructor) => instructor.id === id))
+        .filter((instructor): instructor is Instructor => instructor !== undefined)
+    },
+    set(selected) {
+      formData.linkedInstructorIds = selected.map((instructor) => instructor.id)
+    }
+  })
+
+  const selectedSites = computed({
+    get() {
+      return formData.linkedSiteCodes
+        .map((code) => availableSites.value.find((site) => site.code === code))
+        .filter((site): site is Site => site !== undefined)
+    },
+    set(selected) {
+      formData.linkedSiteCodes = selected.map((site) => site.code)
+    }
   })
 
   const rules = computed(() => {
@@ -68,10 +92,17 @@ export const useAdminUser = (apiService: ApiService) => {
           email: 'username1@mail.com',
           id: '1',
           linkedInstructors: [
-            { id: '1', name: 'Instructor 1', site: { code: SiteEnum.Dubai, name: 'Dubai' } }
+            {
+              id: '45',
+              name: 'Miguel teacher',
+              site: {
+                name: 'Dubai',
+                code: SiteEnum.Dubai
+              }
+            }
           ],
           linkedSites: [{ name: 'Dubai', code: SiteEnum.Dubai }],
-          roles: [Role.ROLE_SUPER_ADMIN],
+          rol: Role.ROLE_SUPER_ADMIN,
           username: 'username1'
         }
       ] // await apiService.getAdminUsers()
@@ -83,10 +114,25 @@ export const useAdminUser = (apiService: ApiService) => {
   }
 
   const openModal = (data: AdminUser | null) => {
-    //giftCard = data
+    selectedAdminUser.value = data
 
-    //v$.value.$reset()
-    //formData.grandTotal = giftCard.grandTotal
+    v$.value.$reset()
+
+    if (data) {
+      formData.email = data.email
+      formData.username = data.username
+      formData.rol = data.rol
+      formData.linkedInstructorIds = data.linkedInstructors.map((i) => i.id)
+      formData.linkedSiteCodes = data.linkedSites.map((s) => s.code)
+
+      console.log('formData', formData)
+    } else {
+      formData.email = ''
+      formData.username = ''
+      formData.rol = null
+      formData.linkedInstructorIds = []
+      formData.linkedSiteCodes = []
+    }
 
     getAvailableSites()
     getAvailableInstructors()
@@ -95,11 +141,13 @@ export const useAdminUser = (apiService: ApiService) => {
   }
 
   const closeModal = () => {
-    //giftCard = null
+    selectedAdminUser.value = null
     modalIsVisible.value = false
   }
 
-  const submitForm = async () => {}
+  const submitForm = async () => {
+    console.log('formData', formData)
+  }
 
   async function getAvailableInstructors(): Promise<void> {
     instructors.value = []
@@ -132,15 +180,18 @@ export const useAdminUser = (apiService: ApiService) => {
     // Properties
     availableSites: readonly(availableSites),
     isLoading: readonly(isLoading),
-    adminUsers: readonly(adminUsers),
+    adminUsers: adminUsers,
     modalIsVisible: readonly(modalIsVisible),
     isSaving: readonly(isSaving),
     instructors: readonly(instructors),
     loadingInstructors: readonly(loadingInstructors),
     loadingSites: readonly(loadingSites),
+    selectedAdminUser: readonly(selectedAdminUser),
     hasError: hasError,
     v$,
     formData,
+    selectedInstructors,
+    selectedSites,
 
     // Methods
     openModal,

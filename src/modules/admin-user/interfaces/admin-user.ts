@@ -6,7 +6,7 @@ export interface AdminUser {
   id: string
   username: string
   email: string
-  roles: Role[]
+  rol: Role
   linkedInstructors: Instructor[]
   linkedSites: Site[]
 }

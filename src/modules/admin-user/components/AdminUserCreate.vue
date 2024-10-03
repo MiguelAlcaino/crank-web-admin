@@ -73,7 +73,7 @@
                                     <div class="col">
                                         <label for="linkedInstructorIds" class="input-label">Mindbody staff</label>
                                         <div>
-                                            <multiselect v-model="formData.linkedInstructorIds" :options="instructors"
+                                            <multiselect v-model="selectedInstructors" :options="instructors"
                                                 :multiple="true" :close-on-select="false" :clear-on-select="false"
                                                 :preserve-search="true" placeholder="Mindbody staff" label="name"
                                                 track-by="id" :preselect-first="true" class="custom-multiselect"
@@ -95,11 +95,10 @@
                                         <div>
 
                                             <div>
-                                                <multiselect v-model="formData.linkedSiteCodes"
-                                                    :options="availableSites" :multiple="true" :close-on-select="false"
-                                                    :clear-on-select="false" :preserve-search="true"
-                                                    placeholder="Admin sites" label="name" track-by="code"
-                                                    :preselect-first="false" class="custom-multiselect"
+                                                <multiselect v-model="selectedSites" :options="availableSites"
+                                                    :multiple="true" :close-on-select="false" :clear-on-select="false"
+                                                    :preserve-search="true" placeholder="Admin sites" label="name"
+                                                    track-by="code" :preselect-first="false" class="custom-multiselect"
                                                     :loading="loadingSites" :searchable="false">
                                                 </multiselect>
                                             </div>
@@ -136,14 +135,19 @@ import { useAdminUser } from '../composables/userAdminUser';
 import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 
-const { openModal, modalIsVisible, closeModal, v$, isSaving, submitForm, formData, roleOptions, availableSites, instructors, loadingInstructors, loadingSites } = useAdminUser(
-    inject<ApiService>('gqlApiService')!
-)
+
+const { openModal, modalIsVisible, closeModal, v$, isSaving, submitForm, formData,
+    roleOptions, availableSites, instructors, loadingInstructors, loadingSites,
+    selectedInstructors, selectedSites } = useAdminUser(
+        inject<ApiService>('gqlApiService')!
+    )
 
 function onCreateANewUser() {
     openModal(null)
 }
 </script>
+
+
 <style scoped></style>
 
 <style>
