@@ -1,11 +1,91 @@
 <template>
-    <div>
-
+    <div class="row">
+        <div class="col-6">
+            <h4>Users List</h4>
+        </div>
+        <div class="col-6 pull-right">
+            <AdminUserCreate></AdminUserCreate>
+        </div>
     </div>
+    <div class="row">
+        <div class="col-12">
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th>USERNAME</th>
+                        <th>EMAIL</th>
+                        <th>SITES</th>
+                        <th>ROLES</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in adminUsers" :key="index">
+                        <td>{{ item.username }}</td>
+                        <td>{{ item.email }}</td>
+                        <td>
+                            <ul class="no-bullets">
+                                <li v-for="site in item.linkedSites" :key="site.code">{{ site.name }}</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="no-bullets">
+                                <li v-for="role in item.roles" :key="role">{{ role }}</li>
+                            </ul>
+                        </td>
+                        <td class="text-center"></td>
+                    </tr>
+                    <tr v-if="adminUsers.length === 0 && !isLoading">
+                        <td colspan="5" class="text-center align-middle">
+                            <p>NO DATA AVAILABLE IN TABLE</p>
+                        </td>
+                    </tr>
+                    <tr v-if="isLoading">
+                        <td colspan="5" class="text-center">
+                            <CrankCircularProgressIndicator text="LOADING..."></CrankCircularProgressIndicator>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <ModalComponent v-if="hasError" title="Error" :message="ERROR_UNKNOWN" :cancel-text="null"
+        @on-ok="hasError = false">
+    </ModalComponent>
 </template>
 
 <script setup lang="ts">
+import type { ApiService } from '@/services/apiService';
+import { useAdminUser } from '../composables/userAdminUser';
+import { inject } from 'vue';
 
+import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue';
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue';
+import AdminUserCreate from '../components/AdminUserCreate.vue';
+
+import { ERROR_UNKNOWN } from '@/utils/errorMessages'
+
+const { isLoading, hasError, adminUsers } = useAdminUser(
+    inject<ApiService>('gqlApiService')!
+)
 </script>
 
-<style scoped></style>
+<style scoped>
+.no-bullets {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.pull-right {
+    display: flex;
+    justify-content: flex-end;
+}
+</style>

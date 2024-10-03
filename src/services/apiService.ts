@@ -1,5 +1,6 @@
 import { ApolloError, gql } from '@apollo/client'
 import type {
+  AdminUser,
   BookUserIntoClassInput,
   CalendarClassesParams,
   CancelEnrollmentInput,
@@ -25,6 +26,7 @@ import type {
   GiftCard,
   IdentifiableSiteUser,
   IdentifiableUser,
+  Instructor,
   PaginatedClassStats,
   PaginationInput,
   RegisterUserInput,
@@ -38,6 +40,7 @@ import type {
   SendClassStatsToEmailInput,
   SetRoomLayoutForClassSchedulesInput,
   SimpleSiteUser,
+  Site,
   SiteEnum,
   SiteUserInput,
   SwapSpotResultUnion,
@@ -1519,5 +1522,79 @@ export class ApiService {
     })
 
     return result.data.syncAllGiftCards as boolean
+  }
+
+  async getAvailableSites(): Promise<Site[]> {
+    const query = gql`
+      query availableSites {
+        availableSites {
+          name
+          code
+        }
+      }
+    `
+
+    const queryResult = await this.authApiClient.query({
+      query: query
+    })
+
+    return queryResult.data.availableSites as Site[]
+  }
+
+  async getAdminUser(id: string): Promise<AdminUser> {
+    const query = gql`
+      query adminUser($id: ID!) {
+        adminUser(id: $id) {
+          id
+          username
+          email
+          roles
+          linkedInstructors {
+            id
+            name
+            site {
+              code
+              name
+            }
+          }
+          linkedSites {
+            name
+            code
+          }
+        }
+      }
+    `
+    const queryResult = await this.authApiClient.query({
+      query: query,
+      variables: {
+        id: id
+      },
+      fetchPolicy: 'network-only'
+    })
+
+    return queryResult.data.adminUser as AdminUser
+  }
+
+  async getAdminUsers(): Promise<AdminUser[]> {
+    return []
+  }
+
+  async getAvailableInstructors(): Promise<Instructor[]> {
+    const query = gql`
+      query availableInstructors {
+        availableInstructors {
+          id
+          name
+          site {
+            name
+            code
+          }
+        }
+      }
+    `
+
+    const resultQuery = await this.authApiClient.query({ query: query })
+
+    return resultQuery.data.availableInstructors as Instructor[]
   }
 }
