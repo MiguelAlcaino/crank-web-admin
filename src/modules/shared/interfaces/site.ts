@@ -1,4 +1,4 @@
-import { SiteEnum } from './site.enum'
+import type { SiteEnum } from './site.enum'
 
 export interface Site {
   name: string

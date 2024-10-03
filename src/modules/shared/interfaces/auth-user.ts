@@ -1,4 +1,4 @@
-import { Role } from '@/utils/userRoles'
+import type { Role } from '@/utils/userRoles'
 
 export interface AuthUser {
   roles: Role[]

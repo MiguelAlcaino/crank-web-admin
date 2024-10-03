@@ -1,4 +1,4 @@
-import { Site } from '@/modules/shared/interfaces/site'
+import type { Site } from '@/modules/shared/interfaces/site'
 
 export interface Instructor {
   id: string
