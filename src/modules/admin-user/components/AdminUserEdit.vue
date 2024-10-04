@@ -201,7 +201,7 @@ import { useAdminUser } from '../composables/userAdminUser'
 
 import Multiselect from 'vue-multiselect'
 import 'vue-multiselect/dist/vue-multiselect.min.css'
-import { AdminUser } from '../interfaces'
+import type { AdminUser } from '../interfaces'
 
 const {
   openModal,
