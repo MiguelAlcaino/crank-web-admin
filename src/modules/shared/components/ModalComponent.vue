@@ -47,7 +47,7 @@ const emits = defineEmits<{
               </button>
             </div>
             <div class="modal-body">
-              <p>{{ message }}</p>
+              <div class="message-font" v-html="message"></div>
             </div>
             <div class="modal-footer border-0">
               <button
@@ -92,6 +92,11 @@ const emits = defineEmits<{
 p {
   font-family: 'Avenir', sans-serif;
 }
+
+.message-font {
+  text-transform: uppercase;
+}
+
 .modal-mask {
   position: fixed;
   z-index: 9998;
