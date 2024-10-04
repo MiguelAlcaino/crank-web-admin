@@ -1,6 +1,6 @@
-import { ApiService } from '@/services/apiService'
+import type { ApiService } from '@/services/apiService'
 import { onMounted, readonly, ref } from 'vue'
-import { AdminUser } from '../interfaces'
+import type { AdminUser } from '../interfaces'
 
 const adminUsers = ref<AdminUser[]>([])
 
@@ -30,7 +30,10 @@ export const useAdminUserList = (apiService: ApiService) => {
   return {
     // Properties
     isLoading: readonly(isLoading),
+    hasError: readonly(hasError),
     adminUsers: adminUsers,
-    hasError: hasError
+
+    // Methods
+    getAdminUsers
   }
 }
