@@ -1,7 +1,6 @@
 import type { ApiService } from '@/services/apiService'
 import { computed, onMounted, reactive, readonly, ref } from 'vue'
 import type { AdminUser, Instructor } from '../interfaces'
-import { SiteEnum } from '@/modules/shared/interfaces'
 import { Role } from '@/utils/userRoles'
 import useVuelidate from '@vuelidate/core'
 import { email, helpers, required } from '@vuelidate/validators'
@@ -31,7 +30,7 @@ export const useAdminUser = (apiService: ApiService) => {
     //adminUserId: 0,
     username: '',
     email: '',
-    rol: null as Role | null,
+    rol: null as string | null,
     linkedInstructorIds: [] as string[],
     linkedSiteCodes: [] as string[]
   })
@@ -84,28 +83,11 @@ export const useAdminUser = (apiService: ApiService) => {
   async function getAdminUsers() {
     hasError.value = false
     isLoading.value = true
+
     adminUsers.value = []
 
     try {
-      adminUsers.value = [
-        {
-          email: 'username1@mail.com',
-          id: '1',
-          linkedInstructors: [
-            {
-              id: '45',
-              name: 'Miguel teacher',
-              site: {
-                name: 'Dubai',
-                code: SiteEnum.Dubai
-              }
-            }
-          ],
-          linkedSites: [{ name: 'Dubai', code: SiteEnum.Dubai }],
-          rol: Role.ROLE_SUPER_ADMIN,
-          username: 'username1'
-        }
-      ] // await apiService.getAdminUsers()
+      adminUsers.value = (await apiService.getAdminUsers()) as AdminUser[]
     } catch (error) {
       hasError.value = true
     } finally {
@@ -119,11 +101,25 @@ export const useAdminUser = (apiService: ApiService) => {
     v$.value.$reset()
 
     if (data) {
+      let role = null as string | null
+
+      if (data.roles) {
+        if (data.roles.includes(Role.ROLE_SUPER_ADMIN)) {
+          role = Role.ROLE_SUPER_ADMIN
+        } else if (data.roles.includes(Role.ROLE_STAFF)) {
+          role = Role.ROLE_STAFF
+        } else if (data.roles.includes(Role.ROLE_INSTRUCTOR)) {
+          role = Role.ROLE_INSTRUCTOR
+        }
+      }
+
       formData.email = data.email
       formData.username = data.username
-      formData.rol = data.rol
-      formData.linkedInstructorIds = data.linkedInstructors.map((i) => i.id)
-      formData.linkedSiteCodes = data.linkedSites.map((s) => s.code)
+      formData.rol = role
+      formData.linkedInstructorIds = data.linkedInstructors
+        ? data.linkedInstructors.map((i) => i.id)
+        : []
+      formData.linkedSiteCodes = data.linkedSites ? data.linkedSites.map((s) => s.code) : []
 
       console.log('formData', formData)
     } else {

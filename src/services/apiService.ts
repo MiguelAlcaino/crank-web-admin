@@ -1576,7 +1576,32 @@ export class ApiService {
   }
 
   async getAdminUsers(): Promise<AdminUser[]> {
-    return []
+    const query = gql`
+      query adminUsers {
+        adminUsers {
+          id
+          username
+          email
+          roles
+          linkedInstructors {
+            id
+            name
+            site {
+              name
+              code
+            }
+          }
+          linkedSites {
+            name
+            code
+          }
+        }
+      }
+    `
+
+    const resultQuery = await this.authApiClient.query({ query: query })
+
+    return resultQuery.data.adminUsers as AdminUser[]
   }
 
   async getAvailableInstructors(): Promise<Instructor[]> {
