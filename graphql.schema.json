@@ -104,27 +104,6 @@
         "possibleTypes": null
       },
       {
-        "kind": "UNION",
-        "name": "AddAdminUserUnion",
-        "description": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": [
-          {
-            "kind": "OBJECT",
-            "name": "AdminUser",
-            "ofType": null
-          },
-          {
-            "kind": "OBJECT",
-            "name": "UserAlreadyExistsError",
-            "ofType": null
-          }
-        ]
-      },
-      {
         "kind": "OBJECT",
         "name": "AddedToWaitlistSuccess",
         "description": null,
@@ -299,7 +278,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "SCALAR",
-                  "name": "Int",
+                  "name": "ID",
                   "ofType": null
                 }
               }
@@ -329,10 +308,10 @@
             "deprecationReason": null
           },
           {
-            "name": "roles",
+            "name": "role",
             "description": null,
             "type": {
-              "kind": "LIST",
+              "kind": "NON_NULL",
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
@@ -360,6 +339,32 @@
         "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
+      },
+      {
+        "kind": "UNION",
+        "name": "AdminUserResultUnion",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": [
+          {
+            "kind": "OBJECT",
+            "name": "AdminUser",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "EmailAlreadyUsedError",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "UsernameAlreadyUsedError",
+            "ofType": null
+          }
+        ]
       },
       {
         "kind": "INPUT_OBJECT",
@@ -2765,6 +2770,39 @@
       },
       {
         "kind": "OBJECT",
+        "name": "EmailAlreadyUsedError",
+        "description": null,
+        "fields": [
+          {
+            "name": "code",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Error",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "Enrollment",
         "description": null,
         "fields": [
@@ -3242,6 +3280,11 @@
           },
           {
             "kind": "OBJECT",
+            "name": "EmailAlreadyUsedError",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
             "name": "EnrollmentNotFoundError",
             "ofType": null
           },
@@ -3328,6 +3371,11 @@
           {
             "kind": "OBJECT",
             "name": "UserPasswordDoesNotMatchError",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "UsernameAlreadyUsedError",
             "ofType": null
           },
           {
@@ -4037,8 +4085,8 @@
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "OBJECT",
-                "name": "AdminUser",
+                "kind": "UNION",
+                "name": "AdminUserResultUnion",
                 "ofType": null
               }
             },
@@ -5056,6 +5104,39 @@
             "deprecationReason": null
           },
           {
+            "name": "resetAdminUserPassword",
+            "description": "Resets the password of an admin user and sends an email with the new password",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "resetPasswordForCurrentUser",
             "description": "Resets the current user's password",
             "args": [
@@ -5396,8 +5477,8 @@
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "OBJECT",
-                "name": "AdminUser",
+                "kind": "UNION",
+                "name": "AdminUserResultUnion",
                 "ofType": null
               }
             },
@@ -9865,6 +9946,39 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "UsernameAlreadyUsedError",
+        "description": null,
+        "fields": [
+          {
+            "name": "code",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Error",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },

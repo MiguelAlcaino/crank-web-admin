@@ -35,8 +35,6 @@ export type AcceptLateCancelledSpotInClassSuccess = {
   success: Scalars['Boolean']
 }
 
-export type AddAdminUserUnion = AdminUser | UserAlreadyExistsError
-
 export type AddedToWaitlistSuccess = {
   __typename: 'AddedToWaitlistSuccess'
   status: Scalars['Boolean']
@@ -54,11 +52,13 @@ export type AdminUser = {
 
 export type AdminUserDataInput = {
   email?: InputMaybe<Scalars['String']>
-  linkedInstructorIds?: InputMaybe<Array<Scalars['Int']>>
+  linkedInstructorIds?: InputMaybe<Array<Scalars['ID']>>
   linkedSiteCodes?: InputMaybe<Array<SiteEnum>>
-  roles?: InputMaybe<Array<InputMaybe<Scalars['String']>>>
+  role: Scalars['String']
   username?: InputMaybe<Scalars['String']>
 }
+
+export type AdminUserResultUnion = AdminUser | EmailAlreadyUsedError | UsernameAlreadyUsedError
 
 export type BookClassInput = {
   classId: Scalars['ID']
@@ -353,6 +353,11 @@ export type EditUserInput = {
 
 export type EditUserResultUnion = IdentifiableUser | OtherUserHasThisExternalIdError
 
+export type EmailAlreadyUsedError = Error & {
+  __typename: 'EmailAlreadyUsedError'
+  code: Scalars['String']
+}
+
 export type Enrollment = {
   __typename: 'Enrollment'
   class: Class
@@ -498,7 +503,7 @@ export type Mutation = {
   /** Accepts a late-cancelled spot in a class */
   acceptLateCancelledSpotInClass?: Maybe<AcceptLateCancelledSpotInClassResultUnion>
   /** Creates a new admin user */
-  addAdminUser: AdminUser
+  addAdminUser: AdminUserResultUnion
   /** Adds a new device token to be used for device notifications */
   addDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']>
   /** Books the current user in a class */
@@ -551,6 +556,8 @@ export type Mutation = {
   requestPasswordLink?: Maybe<ResetPasswordLinkResultUnion>
   /** Requests an SMS validation code */
   requestSMSValidation?: Maybe<SmsValidationUnion>
+  /** Resets the password of an admin user and sends an email with the new password */
+  resetAdminUserPassword: Scalars['Boolean']
   /** Resets the current user's password */
   resetPasswordForCurrentUser?: Maybe<ResetPasswordForCurrentUserUnion>
   /** Sends a single class stats to an email */
@@ -570,7 +577,7 @@ export type Mutation = {
   /** Sync a class with PIQ */
   syncClassWithPIQ: ClassInfo
   /** Updates an admin user */
-  updateAdminUser: AdminUser
+  updateAdminUser: AdminUserResultUnion
   /** Updates the current user */
   updateCurrentUser?: Maybe<User>
   /** Updates a user's password in all the sites */
@@ -707,6 +714,10 @@ export type MutationRequestPasswordLinkArgs = {
 
 export type MutationRequestSmsValidationArgs = {
   input: RequestSmsValidationInput
+}
+
+export type MutationResetAdminUserPasswordArgs = {
+  id: Scalars['ID']
 }
 
 export type MutationResetPasswordForCurrentUserArgs = {
@@ -1339,6 +1350,11 @@ export type UserRanking = {
   __typename: 'UserRanking'
   positionInRanking?: Maybe<Scalars['Int']>
   totalMembersInRanking?: Maybe<Scalars['Int']>
+}
+
+export type UsernameAlreadyUsedError = Error & {
+  __typename: 'UsernameAlreadyUsedError'
+  code: Scalars['String']
 }
 
 export type ValidateResetPasswordTokenInput = {
@@ -2201,6 +2217,26 @@ export type AdminUserQuery = {
   } | null
 }
 
+export type AdminUsersQueryVariables = Exact<{ [key: string]: never }>
+
+export type AdminUsersQuery = {
+  __typename: 'Query'
+  adminUsers: Array<{
+    __typename: 'AdminUser'
+    id: string
+    username: string
+    email: string
+    roles?: Array<string> | null
+    linkedInstructors?: Array<{
+      __typename: 'Instructor'
+      id: string
+      name: string
+      site: { __typename: 'Site'; name: string; code: SiteEnum }
+    }> | null
+    linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
+  }>
+}
+
 export type AvailableInstructorsQueryVariables = Exact<{ [key: string]: never }>
 
 export type AvailableInstructorsQuery = {
@@ -2211,6 +2247,40 @@ export type AvailableInstructorsQuery = {
     name: string
     site: { __typename: 'Site'; name: string; code: SiteEnum }
   }>
+}
+
+export type ResetAdminUserPasswordMutationVariables = Exact<{
+  id: Scalars['ID']
+}>
+
+export type ResetAdminUserPasswordMutation = {
+  __typename: 'Mutation'
+  resetAdminUserPassword: boolean
+}
+
+export type UpdateAdminUserMutationVariables = Exact<{
+  input: UpdateAdminUserInput
+}>
+
+export type UpdateAdminUserMutation = {
+  __typename: 'Mutation'
+  updateAdminUser:
+    | {
+        __typename: 'AdminUser'
+        id: string
+        username: string
+        email: string
+        roles?: Array<string> | null
+        linkedInstructors?: Array<{
+          __typename: 'Instructor'
+          id: string
+          name: string
+          site: { __typename: 'Site'; name: string; code: SiteEnum }
+        }> | null
+        linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
+      }
+    | { __typename: 'EmailAlreadyUsedError'; code: string }
+    | { __typename: 'UsernameAlreadyUsedError'; code: string }
 }
 
 export const SiteSettingsDocument = {
@@ -5408,6 +5478,67 @@ export const AdminUserDocument = {
     }
   ]
 } as unknown as DocumentNode<AdminUserQuery, AdminUserQueryVariables>
+export const AdminUsersDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'adminUsers' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'adminUsers' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'roles' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'linkedInstructors' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'site' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'linkedSites' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<AdminUsersQuery, AdminUsersQueryVariables>
 export const AvailableInstructorsDocument = {
   kind: 'Document',
   definitions: [
@@ -5445,3 +5576,151 @@ export const AvailableInstructorsDocument = {
     }
   ]
 } as unknown as DocumentNode<AvailableInstructorsQuery, AvailableInstructorsQueryVariables>
+export const ResetAdminUserPasswordDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'resetAdminUserPassword' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'resetAdminUserPassword' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  ResetAdminUserPasswordMutation,
+  ResetAdminUserPasswordMutationVariables
+>
+export const UpdateAdminUserDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'updateAdminUser' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UpdateAdminUserInput' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'updateAdminUser' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'AdminUser' } },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'roles' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'linkedInstructors' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'site' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'linkedSites' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'EmailAlreadyUsedError' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'UsernameAlreadyUsedError' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<UpdateAdminUserMutation, UpdateAdminUserMutationVariables>

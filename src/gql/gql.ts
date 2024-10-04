@@ -109,8 +109,14 @@ const documents = {
     types.AvailableSitesDocument,
   '\n      query adminUser($id: ID!) {\n        adminUser(id: $id) {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              code\n              name\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n        }\n      }\n    ':
     types.AdminUserDocument,
+  '\n      query adminUsers {\n        adminUsers {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              name\n              code\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n        }\n      }\n    ':
+    types.AdminUsersDocument,
   '\n      query availableInstructors {\n        availableInstructors {\n          id\n          name\n          site {\n            name\n            code\n          }\n        }\n      }\n    ':
-    types.AvailableInstructorsDocument
+    types.AvailableInstructorsDocument,
+  '\n      mutation resetAdminUserPassword($id: ID!) {\n        resetAdminUserPassword(id: $id)\n      }\n    ':
+    types.ResetAdminUserPasswordDocument,
+  '\n      mutation updateAdminUser($input: UpdateAdminUserInput!) {\n        updateAdminUser(input: $input) {\n          ... on AdminUser {\n            id\n            username\n            email\n            roles\n            linkedInstructors {\n              id\n              name\n              site {\n                name\n                code\n              }\n            }\n            linkedSites {\n              name\n              code\n            }\n          }\n          ... on EmailAlreadyUsedError {\n            code\n          }\n          ... on UsernameAlreadyUsedError {\n            code\n          }\n        }\n      }\n    ':
+    types.UpdateAdminUserDocument
 }
 
 /**
@@ -419,8 +425,26 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
+  source: '\n      query adminUsers {\n        adminUsers {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              name\n              code\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n        }\n      }\n    '
+): (typeof documents)['\n      query adminUsers {\n        adminUsers {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              name\n              code\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n        }\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
   source: '\n      query availableInstructors {\n        availableInstructors {\n          id\n          name\n          site {\n            name\n            code\n          }\n        }\n      }\n    '
 ): (typeof documents)['\n      query availableInstructors {\n        availableInstructors {\n          id\n          name\n          site {\n            name\n            code\n          }\n        }\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n      mutation resetAdminUserPassword($id: ID!) {\n        resetAdminUserPassword(id: $id)\n      }\n    '
+): (typeof documents)['\n      mutation resetAdminUserPassword($id: ID!) {\n        resetAdminUserPassword(id: $id)\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n      mutation updateAdminUser($input: UpdateAdminUserInput!) {\n        updateAdminUser(input: $input) {\n          ... on AdminUser {\n            id\n            username\n            email\n            roles\n            linkedInstructors {\n              id\n              name\n              site {\n                name\n                code\n              }\n            }\n            linkedSites {\n              name\n              code\n            }\n          }\n          ... on EmailAlreadyUsedError {\n            code\n          }\n          ... on UsernameAlreadyUsedError {\n            code\n          }\n        }\n      }\n    '
+): (typeof documents)['\n      mutation updateAdminUser($input: UpdateAdminUserInput!) {\n        updateAdminUser(input: $input) {\n          ... on AdminUser {\n            id\n            username\n            email\n            roles\n            linkedInstructors {\n              id\n              name\n              site {\n                name\n                code\n              }\n            }\n            linkedSites {\n              name\n              code\n            }\n          }\n          ... on EmailAlreadyUsedError {\n            code\n          }\n          ... on UsernameAlreadyUsedError {\n            code\n          }\n        }\n      }\n    ']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}
