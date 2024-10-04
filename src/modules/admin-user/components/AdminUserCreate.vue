@@ -196,7 +196,7 @@
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import type { ApiService } from '@/services/apiService'
 import { inject } from 'vue'
-import { useAdminUser } from '../composables/userAdminUser'
+import { useAdminUser } from '../composables/useAdminUser'
 
 import Multiselect from 'vue-multiselect'
 import 'vue-multiselect/dist/vue-multiselect.min.css'

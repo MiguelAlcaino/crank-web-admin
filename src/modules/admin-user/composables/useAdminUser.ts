@@ -1,5 +1,5 @@
 import type { ApiService } from '@/services/apiService'
-import { computed, onMounted, reactive, readonly, ref } from 'vue'
+import { computed, reactive, readonly, ref } from 'vue'
 import type { AdminUser, Instructor } from '../interfaces'
 import { Role } from '@/utils/userRoles'
 import useVuelidate from '@vuelidate/core'
@@ -9,9 +9,6 @@ import type { Site } from '@/modules/shared/interfaces/site'
 const selectedAdminUser = ref<AdminUser | null>(null)
 
 export const useAdminUser = (apiService: ApiService) => {
-  const hasError = ref<boolean>(false)
-  const isLoading = ref<boolean>(false)
-  const adminUsers = ref<AdminUser[]>([])
   const modalIsVisible = ref<boolean>(false)
   const isSaving = ref<boolean>(false)
 
@@ -28,7 +25,6 @@ export const useAdminUser = (apiService: ApiService) => {
   ]
 
   const formData = reactive({
-    //adminUserId: 0,
     username: '',
     email: '',
     rol: null as string | null,
@@ -76,25 +72,6 @@ export const useAdminUser = (apiService: ApiService) => {
   })
 
   const v$ = useVuelidate(rules, formData, { $scope: false })
-
-  onMounted(() => {
-    getAdminUsers()
-  })
-
-  async function getAdminUsers() {
-    hasError.value = false
-    isLoading.value = true
-
-    adminUsers.value = []
-
-    try {
-      adminUsers.value = (await apiService.getAdminUsers()) as AdminUser[]
-    } catch (error) {
-      hasError.value = true
-    } finally {
-      isLoading.value = false
-    }
-  }
 
   const openModal = (data: AdminUser | null) => {
     formData.email = ''
@@ -189,8 +166,6 @@ export const useAdminUser = (apiService: ApiService) => {
 
     // Properties
     availableSites: readonly(availableSites),
-    isLoading: readonly(isLoading),
-    adminUsers: adminUsers,
     modalIsVisible: readonly(modalIsVisible),
     isSaving: readonly(isSaving),
     instructors: readonly(instructors),
@@ -198,7 +173,6 @@ export const useAdminUser = (apiService: ApiService) => {
     loadingSites: readonly(loadingSites),
     selectedAdminUser: readonly(selectedAdminUser),
     instructorsControlIsVisible: readonly(instructorsControlIsVisible),
-    hasError: hasError,
     v$,
     formData,
     selectedInstructors,
