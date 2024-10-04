@@ -19,6 +19,7 @@ export const useAdminUser = (apiService: ApiService) => {
   const loadingInstructors = ref<boolean>(false)
   const availableSites = ref<Site[]>([])
   const loadingSites = ref<boolean>(false)
+  const instructorsControlIsVisible = ref<boolean>(false)
 
   const roleOptions = [
     { label: 'Super Admin', value: Role.ROLE_SUPER_ADMIN },
@@ -96,6 +97,15 @@ export const useAdminUser = (apiService: ApiService) => {
   }
 
   const openModal = (data: AdminUser | null) => {
+    formData.email = ''
+    formData.username = ''
+    formData.rol = null
+    formData.linkedInstructorIds = []
+    formData.linkedSiteCodes = []
+    selectedInstructors.value = []
+    selectedSites.value = []
+
+    instructorsControlIsVisible.value = false
     selectedAdminUser.value = data
 
     v$.value.$reset()
@@ -110,6 +120,7 @@ export const useAdminUser = (apiService: ApiService) => {
           role = Role.ROLE_STAFF
         } else if (data.roles.includes(Role.ROLE_INSTRUCTOR)) {
           role = Role.ROLE_INSTRUCTOR
+          instructorsControlIsVisible.value = true
         }
       }
 
@@ -120,14 +131,6 @@ export const useAdminUser = (apiService: ApiService) => {
         ? data.linkedInstructors.map((i) => i.id)
         : []
       formData.linkedSiteCodes = data.linkedSites ? data.linkedSites.map((s) => s.code) : []
-
-      console.log('formData', formData)
-    } else {
-      formData.email = ''
-      formData.username = ''
-      formData.rol = null
-      formData.linkedInstructorIds = []
-      formData.linkedSiteCodes = []
     }
 
     getAvailableSites()
@@ -149,6 +152,11 @@ export const useAdminUser = (apiService: ApiService) => {
     if (isValid) {
       console.log('isValid', isValid)
     }
+  }
+
+  const onChangeRole = () => {
+    formData.linkedInstructorIds = []
+    instructorsControlIsVisible.value = formData.rol === Role.ROLE_INSTRUCTOR
   }
 
   async function getAvailableInstructors(): Promise<void> {
@@ -189,6 +197,7 @@ export const useAdminUser = (apiService: ApiService) => {
     loadingInstructors: readonly(loadingInstructors),
     loadingSites: readonly(loadingSites),
     selectedAdminUser: readonly(selectedAdminUser),
+    instructorsControlIsVisible: readonly(instructorsControlIsVisible),
     hasError: hasError,
     v$,
     formData,
@@ -198,6 +207,7 @@ export const useAdminUser = (apiService: ApiService) => {
     // Methods
     openModal,
     closeModal,
-    submitForm
+    submitForm,
+    onChangeRole
   }
 }

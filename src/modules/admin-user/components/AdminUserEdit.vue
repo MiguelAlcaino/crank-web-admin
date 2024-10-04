@@ -76,6 +76,7 @@
                         required
                         v-model="formData.rol"
                         placeholder="Rol"
+                        @change="onChangeRole"
                       >
                         <option
                           v-for="(item, index) in roleOptions"
@@ -99,7 +100,7 @@
                 </div>
 
                 <!-- Mindbody staff -->
-                <div class="form-row mb-3">
+                <div class="form-row mb-3" v-if="instructorsControlIsVisible">
                   <div class="col">
                     <label for="linkedInstructorIds" class="input-label">Mindbody staff</label>
                     <div>
@@ -182,7 +183,8 @@
                 type="button"
                 :is-loading="isSaving"
                 @on-click="submitForm"
-              ></DefaultButtonComponent>
+              >
+              </DefaultButtonComponent>
             </div>
           </div>
         </div>
@@ -216,7 +218,9 @@ const {
   loadingSites,
   selectedAdminUser,
   selectedInstructors,
-  selectedSites
+  selectedSites,
+  onChangeRole,
+  instructorsControlIsVisible
 } = useAdminUser(inject<ApiService>('gqlApiService')!)
 
 const props = defineProps<{

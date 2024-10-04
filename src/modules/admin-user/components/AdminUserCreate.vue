@@ -76,6 +76,7 @@
                         required
                         v-model="formData.rol"
                         placeholder="Rol"
+                        @change="onChangeRole"
                       >
                         <option
                           v-for="(item, index) in roleOptions"
@@ -99,7 +100,7 @@
                 </div>
 
                 <!-- Mindbody staff -->
-                <div class="form-row mb-3">
+                <div class="form-row mb-3" v-if="instructorsControlIsVisible">
                   <div class="col">
                     <label for="linkedInstructorIds" class="input-label">Mindbody staff</label>
                     <div>
@@ -113,7 +114,7 @@
                         placeholder="Mindbody staff"
                         label="name"
                         track-by="id"
-                        :preselect-first="true"
+                        :preselect-first="false"
                         class="custom-multiselect"
                         :loading="loadingInstructors"
                       >
@@ -214,7 +215,9 @@ const {
   loadingInstructors,
   loadingSites,
   selectedInstructors,
-  selectedSites
+  selectedSites,
+  onChangeRole,
+  instructorsControlIsVisible
 } = useAdminUser(inject<ApiService>('gqlApiService')!)
 
 function onCreateANewUser() {
