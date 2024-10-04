@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ApiService } from '@/services/apiService'
-import { useAdminUser } from '../composables/userAdminUser'
 import { inject } from 'vue'
 
 import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue'
@@ -10,8 +9,9 @@ import AdminUserEdit from '../components/AdminUserEdit.vue'
 
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import ResetPassword from '../components/ResetPassword.vue'
+import { useAdminUserList } from '../composables/useAdminUserList'
 
-const { isLoading, hasError, adminUsers } = useAdminUser(inject<ApiService>('gqlApiService')!)
+const { isLoading, hasError, adminUsers } = useAdminUserList(inject<ApiService>('gqlApiService')!)
 </script>
 
 <template>
