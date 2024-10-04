@@ -29,6 +29,8 @@ export type AcceptLateCancelledSpotInClassSuccess = {
   success: Scalars['Boolean'];
 };
 
+export type AddAdminUserUnion = AdminUser | UserAlreadyExistsError;
+
 export type AddedToWaitlistSuccess = {
   __typename: 'AddedToWaitlistSuccess';
   status: Scalars['Boolean'];
@@ -42,6 +44,14 @@ export type AdminUser = {
   linkedSites?: Maybe<Array<Site>>;
   roles?: Maybe<Array<Scalars['String']>>;
   username: Scalars['String'];
+};
+
+export type AdminUserDataInput = {
+  email?: InputMaybe<Scalars['String']>;
+  linkedInstructorIds?: InputMaybe<Array<Scalars['Int']>>;
+  linkedSiteCodes?: InputMaybe<Array<SiteEnum>>;
+  roles?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  username?: InputMaybe<Scalars['String']>;
 };
 
 export type BookClassInput = {
@@ -457,6 +467,8 @@ export type Mutation = {
   __typename: 'Mutation';
   /** Accepts a late-cancelled spot in a class */
   acceptLateCancelledSpotInClass?: Maybe<AcceptLateCancelledSpotInClassResultUnion>;
+  /** Creates a new admin user */
+  addAdminUser: AdminUser;
   /** Adds a new device token to be used for device notifications */
   addDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']>;
   /** Books the current user in a class */
@@ -542,6 +554,11 @@ export type Mutation = {
 export type MutationAcceptLateCancelledSpotInClassArgs = {
   input: AcceptLateCancelledSpotInClassInput;
   site?: InputMaybe<SiteEnum>;
+};
+
+
+export type MutationAddAdminUserArgs = {
+  input: AdminUserDataInput;
 };
 
 
@@ -833,6 +850,8 @@ export type Query = {
   __typename: 'Query';
   /** Returns a single admin user */
   adminUser?: Maybe<AdminUser>;
+  /** Lists all the admin users */
+  adminUsers: Array<AdminUser>;
   /** Returns a list of all the available class types for a given site */
   availableClassTypes: Array<Scalars['String']>;
   /** Returns a list of all the available instructors */
@@ -1250,11 +1269,7 @@ export type UnknownError = Error & {
 
 export type UpdateAdminUserInput = {
   adminUserId: Scalars['ID'];
-  email?: InputMaybe<Scalars['String']>;
-  linkedInstructorIds?: InputMaybe<Array<Scalars['Int']>>;
-  linkedSiteCodes?: InputMaybe<Array<SiteEnum>>;
-  roles?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  username?: InputMaybe<Scalars['String']>;
+  userDataInput: AdminUserDataInput;
 };
 
 export type UpdateCurrentUserPasswordInput = {
@@ -1716,6 +1731,23 @@ export type SyncAllGiftCardsMutationVariables = Exact<{ [key: string]: never; }>
 
 export type SyncAllGiftCardsMutation = { __typename: 'Mutation', syncAllGiftCards: boolean };
 
+export type AvailableSitesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AvailableSitesQuery = { __typename: 'Query', availableSites?: Array<{ __typename: 'Site', name: string, code: SiteEnum }> | null };
+
+export type AdminUserQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type AdminUserQuery = { __typename: 'Query', adminUser?: { __typename: 'AdminUser', id: string, username: string, email: string, roles?: Array<string> | null, linkedInstructors?: Array<{ __typename: 'Instructor', id: string, name: string, site: { __typename: 'Site', code: SiteEnum, name: string } }> | null, linkedSites?: Array<{ __typename: 'Site', name: string, code: SiteEnum }> | null } | null };
+
+export type AvailableInstructorsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AvailableInstructorsQuery = { __typename: 'Query', availableInstructors: Array<{ __typename: 'Instructor', id: string, name: string, site: { __typename: 'Site', name: string, code: SiteEnum } }> };
+
 
 export const SiteSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"siteSettings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"siteSettings"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"siteDateTimeNow"}}]}}]}}]} as unknown as DocumentNode<SiteSettingsQuery, SiteSettingsQueryVariables>;
 export const ClassInfoAdminDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"classInfoAdmin"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"classInfo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"class"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"instructorName"}},{"kind":"Field","name":{"kind":"Name","value":"start"}},{"kind":"Field","name":{"kind":"Name","value":"startWithNoTimeZone"}},{"kind":"Field","name":{"kind":"Name","value":"duration"}},{"kind":"Field","name":{"kind":"Name","value":"waitListAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"showAsDisabled"}},{"kind":"Field","name":{"kind":"Name","value":"maxCapacity"}},{"kind":"Field","name":{"kind":"Name","value":"isSubstitute"}},{"kind":"Field","name":{"kind":"Name","value":"hasClassStats"}},{"kind":"Field","name":{"kind":"Name","value":"isSynchronizing"}}]}},{"kind":"Field","name":{"kind":"Name","value":"roomLayout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"matrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"x"}},{"kind":"Field","name":{"kind":"Name","value":"y"}},{"kind":"Field","name":{"kind":"Name","value":"icon"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"BookableSpot"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"enabled"}},{"kind":"Field","name":{"kind":"Name","value":"spotNumber"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"enrollments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"status"},"value":{"kind":"EnumValue","value":"active"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"enrollmentStatus"}},{"kind":"Field","name":{"kind":"Name","value":"enrollmentDateTime"}},{"kind":"Field","name":{"kind":"Name","value":"identifiableSiteUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"identifiableUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"leaderboardUsername"}}]}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EnrollmentInfo"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isCheckedIn"}},{"kind":"Field","name":{"kind":"Name","value":"spotNumber"}},{"kind":"Field","name":{"kind":"Name","value":"isBookedForFree"}},{"kind":"Field","name":{"kind":"Name","value":"hasStats"}},{"kind":"Field","name":{"kind":"Name","value":"isFirstTimeInAClass"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"onHoldSpots"}},{"kind":"Field","name":{"kind":"Name","value":"orphanedClassStatsSpots"}}]}}]}}]} as unknown as DocumentNode<ClassInfoAdminQuery, ClassInfoAdminQueryVariables>;
@@ -1763,3 +1795,6 @@ export const UpdateUserPasswordDocument = {"kind":"Document","definitions":[{"ki
 export const GiftCardsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GiftCards"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"giftCards"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"salePrice"}},{"kind":"Field","name":{"kind":"Name","value":"grandTotal"}},{"kind":"Field","name":{"kind":"Name","value":"terms"}},{"kind":"Field","name":{"kind":"Name","value":"purchaseUrl"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<GiftCardsQuery, GiftCardsQueryVariables>;
 export const UpdateGiftCardDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGiftCard"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateGiftCardInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateGiftCard"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"salePrice"}},{"kind":"Field","name":{"kind":"Name","value":"grandTotal"}},{"kind":"Field","name":{"kind":"Name","value":"terms"}},{"kind":"Field","name":{"kind":"Name","value":"purchaseUrl"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateGiftCardMutation, UpdateGiftCardMutationVariables>;
 export const SyncAllGiftCardsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SyncAllGiftCards"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"syncAllGiftCards"}}]}}]} as unknown as DocumentNode<SyncAllGiftCardsMutation, SyncAllGiftCardsMutationVariables>;
+export const AvailableSitesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"availableSites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"availableSites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]} as unknown as DocumentNode<AvailableSitesQuery, AvailableSitesQueryVariables>;
+export const AdminUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"adminUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"adminUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"roles"}},{"kind":"Field","name":{"kind":"Name","value":"linkedInstructors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"linkedSites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<AdminUserQuery, AdminUserQueryVariables>;
+export const AvailableInstructorsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"availableInstructors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"availableInstructors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<AvailableInstructorsQuery, AvailableInstructorsQueryVariables>;
