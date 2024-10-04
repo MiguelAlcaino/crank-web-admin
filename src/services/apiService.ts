@@ -1622,4 +1622,22 @@ export class ApiService {
 
     return resultQuery.data.availableInstructors as Instructor[]
   }
+
+  async resetAdminUserPassword(id: string): Promise<boolean> {
+    const mutation = gql`
+      mutation resetAdminUserPassword($id: ID!) {
+        resetAdminUserPassword(id: $id)
+      }
+    `
+
+    const result = await this.authApiClient.mutate({
+      mutation: mutation,
+      variables: {
+        id: id
+      },
+      fetchPolicy: 'network-only'
+    })
+
+    return result.data.resetAdminUserPassword as boolean
+  }
 }

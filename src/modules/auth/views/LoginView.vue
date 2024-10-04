@@ -57,7 +57,12 @@ async function login() {
                 <option :value="SiteEnum.Dubai">Dubai</option>
                 <option :value="SiteEnum.AbuDhabi">Abu Dhabi</option>
               </select>
-              <small v-for="error in v$.location.$errors" :key="error.$uid" class="form-text" style="color: red">
+              <small
+                v-for="error in v$.location.$errors"
+                :key="error.$uid"
+                class="form-text"
+                style="color: red"
+              >
                 {{ error.$message }}
               </small>
             </div>
@@ -67,9 +72,21 @@ async function login() {
           <div class="form-row">
             <div class="col-md-12 mb-3">
               <label for="token" class="input-label">Token *</label>
-              <textarea type="text" v-model="formData.token" class="form-control" id="token" rows="6"
-                placeholder="Token" required></textarea>
-              <small v-for="error in v$.token.$errors" :key="error.$uid" class="form-text" style="color: red">
+              <textarea
+                type="text"
+                v-model="formData.token"
+                class="form-control"
+                id="token"
+                rows="6"
+                placeholder="Token"
+                required
+              ></textarea>
+              <small
+                v-for="error in v$.token.$errors"
+                :key="error.$uid"
+                class="form-text"
+                style="color: red"
+              >
                 {{ error.$message }}
               </small>
             </div>
@@ -82,7 +99,11 @@ async function login() {
           <!--submit button-->
           <div class="row">
             <div class="col-md-12 mb-3">
-              <DefaultButtonComponent class="btn-block" type="submit" text="Login"></DefaultButtonComponent>
+              <DefaultButtonComponent
+                class="btn-block"
+                type="submit"
+                text="Login"
+              ></DefaultButtonComponent>
             </div>
           </div>
         </form>

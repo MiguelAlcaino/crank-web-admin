@@ -8,7 +8,8 @@
     <RouterLink key="/admin/calendar-class" to="/admin/calendar-class"> Admin Class</RouterLink>
     <br />
     <RouterLink key="/admin/calendar-class" to="/admin/room-layout/list">
-      Admin Room Layout</RouterLink>
+      Admin Room Layout</RouterLink
+    >
     <br />
     <RouterLink key="/user/create" to="/user/create"> Create User</RouterLink>
     <br />
