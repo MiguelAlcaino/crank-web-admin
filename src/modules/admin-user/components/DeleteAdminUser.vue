@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { defineProps, inject, onMounted, ref } from 'vue'
-import { AdminUser } from '../interfaces'
+import type { AdminUser } from '../interfaces'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
-import { ApiService } from '@/services/apiService'
+import type { ApiService } from '@/services/apiService'
 
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'

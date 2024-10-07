@@ -11,8 +11,8 @@ import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonCom
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 
 import { Role } from '@/utils/userRoles'
-import { Site, SiteEnum } from '@/gql/graphql'
-import { Instructor } from '../interfaces'
+import type { Site, SiteEnum } from '@/gql/graphql'
+import type { Instructor } from '../interfaces'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
 const apiService = inject<ApiService>('gqlApiService')!
