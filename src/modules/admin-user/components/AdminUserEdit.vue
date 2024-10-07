@@ -400,7 +400,7 @@ async function getAvailableSites(): Promise<void> {
                 ></DefaultButtonComponent>
 
                 <DefaultButtonComponent
-                  text="Create"
+                  text="Update"
                   type="button"
                   :is-loading="isSaving"
                   :disabled="loadingSites || loadingInstructors"
