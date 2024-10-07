@@ -348,7 +348,7 @@ async function getAvailableSites(): Promise<void> {
                 <!-- Admin sites -->
                 <div class="form-row mb-3">
                   <div class="col">
-                    <label class="input-label">Admin sites *</label>
+                    <label class="input-label">Admin sites</label>
                     <div>
                       <div>
                         <multiselect
