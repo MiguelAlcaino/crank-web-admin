@@ -2,7 +2,7 @@
   <div class="unauthorized">
     <h1>Access Denied</h1>
     <p>You do not have permission to access this page.</p>
-    <router-link to="/">Go back to Home</router-link>
+    <a @click="$router.go(-1)" class="stretched-link" style="cursor: pointer;">Go back</a>
   </div>
 </template>
 
