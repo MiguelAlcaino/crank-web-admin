@@ -6,7 +6,8 @@ import {
   startRoomLayoutEditApp,
   startClassScheduleApp,
   startCustomerProfileApp,
-  startGiftCardApp
+  startGiftCardApp,
+  startUserAdminApp
 } from '@/start-app-functions'
 
 export {
@@ -17,5 +18,6 @@ export {
   startCustomerEditApp,
   startClassScheduleApp,
   startCustomerProfileApp,
-  startGiftCardApp
+  startGiftCardApp,
+  startUserAdminApp
 }

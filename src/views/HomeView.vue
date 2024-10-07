@@ -15,5 +15,7 @@
     <br />
     <RouterLink key="/class-schedules" to="/class-schedules"> Class Schedules</RouterLink>
     <br />
+    <RouterLink key="/admin-users" to="/admin-users"> Admin Users</RouterLink>
+    <br />
   </main>
 </template>

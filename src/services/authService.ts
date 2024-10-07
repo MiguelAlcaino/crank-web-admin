@@ -4,11 +4,13 @@ import router from '@/router'
 import jwt_decode from 'jwt-decode'
 import type { Role } from '@/utils/userRoles'
 import type { AdminSite } from '@/modules/shared/interfaces'
+import type { AuthUser } from '@/modules/shared/interfaces/auth-user'
 
 interface JwtTokenPayload {
   exp: number
   roles: string[]
   adminSites: AdminSite[]
+  username: string
 }
 
 export const authService = {
@@ -72,5 +74,18 @@ export const authService = {
     }
 
     return []
+  },
+  getUser(): AuthUser | null {
+    const token = useAuthenticationStore().token
+
+    if (!token) return null
+
+    const decoded = jwt_decode<JwtTokenPayload>(token)
+
+    return {
+      username: decoded.username as string,
+      roles: decoded.roles as Role[],
+      adminSites: decoded.adminSites as AdminSite[]
+    }
   }
 }

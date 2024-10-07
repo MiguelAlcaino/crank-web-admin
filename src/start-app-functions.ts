@@ -17,6 +17,7 @@ import CustomerEditView from '@/modules/customer/views/CustomerEditView.vue'
 import RoomLayoutView from '@/modules/room-layout/views/RoomLayoutView.vue'
 import CustomerProfileView from '@/modules/customer/views/CustomerProfileView.vue'
 import GiftCardListView from './modules/gift-card/views/GiftCardListView.vue'
+import AdminUserListView from './modules/admin-user/views/AdminUserListView.vue'
 import { SiteEnum } from '@/gql/graphql'
 import { appStore } from '@/stores/appStorage'
 import ClassScheduleView from '@/modules/class-schedule/views/ClassScheduleView.vue'
@@ -238,6 +239,23 @@ export const startGiftCardApp = async function (gqlUrl: string, token: string, a
       )
     },
     render: () => h(GiftCardListView)
+  })
+
+  app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
+  useAuthenticationStore().setSession(token)
+
+  app.mount(appDiv)
+}
+
+export const startUserAdminApp = async function (gqlUrl: string, token: string, appDiv: string) {
+  const app = createApp({
+    setup() {
+      provide(
+        'gqlApiService',
+        new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
+      )
+    },
+    render: () => h(AdminUserListView)
   })
 
   app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)

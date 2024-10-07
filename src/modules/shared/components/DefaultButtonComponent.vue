@@ -5,7 +5,7 @@ interface Props {
   disabled?: boolean
   type: 'button' | 'submit'
   block?: boolean
-  variant?: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary' | 'danger'
   size?: 'sm' | 'lg'
 }
 withDefaults(defineProps<Props>(), {
@@ -30,6 +30,7 @@ const emits = defineEmits<{
       'btn-block': block,
       'btn-primary': variant === 'primary',
       'btn-secondary': variant === 'secondary',
+      'btn-danger': variant === 'danger',
       'btn-sm': size === 'sm',
       'btn-lg': size === 'lg',
       disabled: disabled

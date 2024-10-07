@@ -1,5 +1,5 @@
-import { d as w, r as u, a as S, S as r, c as x, u as V, b as o, e, w as $, f as _, v as q, g as c, F as m, h as p, i as D, j as L, k as I, o as a, t as v, _ as M, p as T, l as A, m as f, n as h, q as B, s as E, x as N, y as j } from "./index.49246bf9.js";
-const C = (i) => (T("data-v-0c737a0e"), i = i(), A(), i), F = { class: "d-flex justify-content-center h-100" }, U = { class: "card" }, z = { class: "card-body mt-5" }, G = ["onSubmit"], H = { class: "form-row" }, J = { class: "col-md-12 mb-3" }, K = ["value"], O = ["value"], P = { class: "form-row" }, Q = { class: "col-md-12 mb-3" }, R = /* @__PURE__ */ C(() => /* @__PURE__ */ e("label", {
+import { d as w, r as u, a as S, S as r, c as x, u as V, b as o, e, w as $, f as _, v as q, g as c, F as m, h as p, i as D, j as L, k as I, o as a, t as f, _ as M, p as T, l as A, m as v, n as h, q as B, s as E, x as N, y as j } from "./index.afa8693b.js";
+const C = (i) => (T("data-v-136f860c"), i = i(), A(), i), F = { class: "d-flex justify-content-center h-100" }, U = { class: "card" }, z = { class: "card-body mt-5" }, G = ["onSubmit"], H = { class: "form-row" }, J = { class: "col-md-12 mb-3" }, K = ["value"], O = ["value"], P = { class: "form-row" }, Q = { class: "col-md-12 mb-3" }, R = /* @__PURE__ */ C(() => /* @__PURE__ */ e("label", {
   for: "token",
   class: "input-label"
 }, "Token *", -1)), W = {
@@ -14,14 +14,14 @@ const C = (i) => (T("data-v-0c737a0e"), i = i(), A(), i), F = { class: "d-flex j
       token: ""
     }), k = x(() => ({
       location: {
-        required: f.withMessage("Location is required", h)
+        required: v.withMessage("Location is required", h)
       },
       token: {
-        required: f.withMessage("Token is required", h)
+        required: v.withMessage("Token is required", h)
       }
     })), l = V(k, t);
     async function y() {
-      await l.value.$validate() && (d.value = !1, B().setSession(t.token), E().setSite(b.value), await N.push({ name: "admin_calendar_class" }));
+      await l.value.$validate() && (d.value = !1, B().setSession(t.token), E().setSite(b.value), await N.push({ name: "home" }));
     }
     return (g, n) => (a(), o("div", F, [
       e("div", U, [
@@ -50,7 +50,7 @@ const C = (i) => (T("data-v-0c737a0e"), i = i(), A(), i), F = { class: "d-flex j
                   key: s.$uid,
                   class: "form-text",
                   style: { color: "red" }
-                }, v(s.$message), 1))), 128))
+                }, f(s.$message), 1))), 128))
               ])
             ]),
             e("div", P, [
@@ -71,7 +71,7 @@ const C = (i) => (T("data-v-0c737a0e"), i = i(), A(), i), F = { class: "d-flex j
                   key: s.$uid,
                   class: "form-text",
                   style: { color: "red" }
-                }, v(s.$message), 1))), 128))
+                }, f(s.$message), 1))), 128))
               ])
             ]),
             d.value ? (a(), o("small", W, " Incorrect Login ")) : L("", !0),
@@ -90,7 +90,7 @@ const C = (i) => (T("data-v-0c737a0e"), i = i(), A(), i), F = { class: "d-flex j
     ]));
   }
 });
-const se = /* @__PURE__ */ j(Z, [["__scopeId", "data-v-0c737a0e"]]);
+const se = /* @__PURE__ */ j(Z, [["__scopeId", "data-v-136f860c"]]);
 export {
   se as default
 };

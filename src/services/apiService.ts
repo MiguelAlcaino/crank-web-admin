@@ -1,5 +1,8 @@
 import { ApolloError, gql } from '@apollo/client'
 import type {
+  AdminUser,
+  AdminUserDataInput,
+  AdminUserResultUnion,
   BookUserIntoClassInput,
   CalendarClassesParams,
   CancelEnrollmentInput,
@@ -25,6 +28,7 @@ import type {
   GiftCard,
   IdentifiableSiteUser,
   IdentifiableUser,
+  Instructor,
   PaginatedClassStats,
   PaginationInput,
   RegisterUserInput,
@@ -38,9 +42,11 @@ import type {
   SendClassStatsToEmailInput,
   SetRoomLayoutForClassSchedulesInput,
   SimpleSiteUser,
+  Site,
   SiteEnum,
   SiteUserInput,
   SwapSpotResultUnion,
+  UpdateAdminUserInput,
   UpdateGiftCardInput,
   UpdateUserPasswordInput,
   UserInClassRanking,
@@ -1519,5 +1525,229 @@ export class ApiService {
     })
 
     return result.data.syncAllGiftCards as boolean
+  }
+
+  async getAvailableSites(): Promise<Site[]> {
+    const query = gql`
+      query availableSites {
+        availableSites {
+          name
+          code
+        }
+      }
+    `
+
+    const queryResult = await this.authApiClient.query({
+      query: query
+    })
+
+    return queryResult.data.availableSites as Site[]
+  }
+
+  async getAdminUser(id: string): Promise<AdminUser> {
+    const query = gql`
+      query adminUser($id: ID!) {
+        adminUser(id: $id) {
+          id
+          username
+          email
+          roles
+          linkedInstructors {
+            id
+            name
+            site {
+              code
+              name
+            }
+          }
+          linkedSites {
+            name
+            code
+          }
+        }
+      }
+    `
+    const queryResult = await this.authApiClient.query({
+      query: query,
+      variables: {
+        id: id
+      },
+      fetchPolicy: 'network-only'
+    })
+
+    return queryResult.data.adminUser as AdminUser
+  }
+
+  async getAdminUsers(): Promise<AdminUser[]> {
+    const query = gql`
+      query adminUsers {
+        adminUsers {
+          id
+          username
+          email
+          roles
+          linkedInstructors {
+            id
+            name
+            site {
+              name
+              code
+            }
+          }
+          linkedSites {
+            name
+            code
+          }
+        }
+      }
+    `
+
+    const resultQuery = await this.authApiClient.query({
+      query: query,
+      fetchPolicy: 'network-only'
+    })
+
+    return resultQuery.data.adminUsers as AdminUser[]
+  }
+
+  async getAvailableInstructors(): Promise<Instructor[]> {
+    const query = gql`
+      query availableInstructors {
+        availableInstructors {
+          id
+          name
+          site {
+            name
+            code
+          }
+        }
+      }
+    `
+
+    const resultQuery = await this.authApiClient.query({ query: query })
+
+    return resultQuery.data.availableInstructors as Instructor[]
+  }
+
+  async resetAdminUserPassword(id: string): Promise<boolean> {
+    const mutation = gql`
+      mutation resetAdminUserPassword($id: ID!) {
+        resetAdminUserPassword(id: $id)
+      }
+    `
+
+    const result = await this.authApiClient.mutate({
+      mutation: mutation,
+      variables: {
+        id: id
+      },
+      fetchPolicy: 'network-only'
+    })
+
+    return result.data.resetAdminUserPassword as boolean
+  }
+
+  async updateAdminUser(input: UpdateAdminUserInput): Promise<AdminUserResultUnion> {
+    const mutation = gql`
+      mutation updateAdminUser($input: UpdateAdminUserInput!) {
+        updateAdminUser(input: $input) {
+          ... on AdminUser {
+            id
+            username
+            email
+            roles
+            linkedInstructors {
+              id
+              name
+              site {
+                name
+                code
+              }
+            }
+            linkedSites {
+              name
+              code
+            }
+          }
+          ... on EmailAlreadyUsedError {
+            code
+          }
+          ... on UsernameAlreadyUsedError {
+            code
+          }
+        }
+      }
+    `
+
+    const result = await this.authApiClient.mutate({
+      mutation: mutation,
+      variables: {
+        input: input
+      },
+      fetchPolicy: 'network-only'
+    })
+
+    return result.data.updateAdminUser as AdminUserResultUnion
+  }
+
+  async addAdminUser(input: AdminUserDataInput): Promise<AdminUserResultUnion> {
+    const mutation = gql`
+      mutation addAdminUser($input: AdminUserDataInput!) {
+        addAdminUser(input: $input) {
+          ... on AdminUser {
+            id
+            username
+            email
+            roles
+            linkedInstructors {
+              id
+              name
+              site {
+                name
+                code
+              }
+            }
+            linkedSites {
+              name
+              code
+            }
+          }
+          ... on EmailAlreadyUsedError {
+            code
+          }
+          ... on UsernameAlreadyUsedError {
+            code
+          }
+        }
+      }
+    `
+
+    const result = await this.authApiClient.mutate({
+      mutation: mutation,
+      variables: {
+        input: input
+      },
+      fetchPolicy: 'network-only'
+    })
+
+    return result.data.addAdminUser as AdminUserResultUnion
+  }
+
+  async removeAdminUser(id: string): Promise<boolean> {
+    const mutation = gql`
+      mutation removeAdminUser($id: ID!) {
+        removeAdminUser(id: $id)
+      }
+    `
+
+    const result = await this.authApiClient.mutate({
+      mutation: mutation,
+      variables: {
+        id: id
+      },
+      fetchPolicy: 'network-only'
+    })
+
+    return result.data.removeAdminUser as boolean
   }
 }

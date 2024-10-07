@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="spinner-border crankSpiner" role="status">
+  <div class="spinner-border crankSpinner" role="status">
     <span class="sr-only">Loading...</span>
   </div>
   <p v-if="text">
@@ -14,7 +14,7 @@ defineProps<{
 </template>
 
 <style scoped>
-.crankSpiner {
+.crankSpinner {
   color: #ff6f60;
 }
 
