@@ -383,10 +383,13 @@ async function getAvailableSites(): Promise<void> {
               </form>
             </div>
             <div class="modal-footer border-0 d-flex justify-content-between">
-              <DeleteAdminUser
-                :admin-user="adminUser"
-                @after-delete="emits('afterUpdate')"
-              ></DeleteAdminUser>
+              <div>
+                <DeleteAdminUser
+                  :admin-user="adminUser"
+                  @after-delete="emits('afterUpdate')"
+                ></DeleteAdminUser>
+              </div>
+
               <div>
                 <DefaultButtonComponent
                   text="Cancel"

@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { defineProps, inject, ref } from 'vue'
+import { defineProps, inject, onMounted, ref } from 'vue'
 import { AdminUser } from '../interfaces'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import { ApiService } from '@/services/apiService'
 
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
+import { authService } from '@/services/authService'
 
 const apiService = inject<ApiService>('gqlApiService')!
 
@@ -22,6 +23,12 @@ const modalIsVisible = ref<boolean>(false)
 const successModalIsVisible = ref<boolean>(false)
 const errorMessage = ref<string>('')
 const errorModalIsVisible = ref<boolean>(false)
+const deleteButtonIsVisible = ref<boolean>(true)
+
+onMounted(() => {
+  const user = authService.getUser()
+  deleteButtonIsVisible.value = !(user?.username === props.adminUser.username)
+})
 
 async function onConfirmDelete() {
   try {
@@ -55,6 +62,7 @@ function closeModal() {
     :variant="'danger'"
     :is-loading="false"
     @on-click="modalIsVisible = true"
+    v-if="deleteButtonIsVisible"
   >
   </DefaultButtonComponent>
 
