@@ -22,6 +22,10 @@ const props = defineProps<{
   adminUser: AdminUser
 }>()
 
+const emits = defineEmits<{
+  (e: 'afterUpdate'): void
+}>()
+
 const modalIsVisible = ref<boolean>(false)
 const isSaving = ref<boolean>(false)
 
@@ -137,8 +141,6 @@ const closeModal = () => {
 
 const submitForm = async () => {
   const isValid = await v$.value.$validate()
-
-  console.log('formData', formData)
 
   if (isValid) {
     try {
@@ -420,7 +422,7 @@ async function getAvailableSites(): Promise<void> {
     title="SUCCESS"
     message="user successfully updated."
     :closable="false"
-    @on-ok="successModalIsVisible = false"
+    @on-ok="emits('afterUpdate')"
     :cancel-text="null"
   >
   </ModalComponent>

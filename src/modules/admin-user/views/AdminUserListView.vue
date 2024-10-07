@@ -11,7 +11,13 @@ import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import ResetPassword from '../components/ResetPassword.vue'
 import { useAdminUserList } from '../composables/useAdminUserList'
 
-const { isLoading, hasError, adminUsers } = useAdminUserList(inject<ApiService>('gqlApiService')!)
+const { isLoading, hasError, adminUsers, getAdminUsers } = useAdminUserList(
+  inject<ApiService>('gqlApiService')!
+)
+
+function afterUpdateAdminUsers() {
+  getAdminUsers()
+}
 </script>
 
 <template>
@@ -58,7 +64,10 @@ const { isLoading, hasError, adminUsers } = useAdminUserList(inject<ApiService>(
               </td>
               <td class="d-flex align-items-center justify-content-center">
                 <div class="mr-2">
-                  <AdminUserEdit :admin-user="item"></AdminUserEdit>
+                  <AdminUserEdit
+                    :admin-user="item"
+                    @after-update="afterUpdateAdminUsers()"
+                  ></AdminUserEdit>
                 </div>
                 <ResetPassword :admin-user="item"></ResetPassword>
               </td>
