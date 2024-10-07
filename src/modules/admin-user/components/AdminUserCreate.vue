@@ -181,6 +181,11 @@ async function getAvailableSites(): Promise<void> {
     loadingSites.value = false
   }
 }
+
+function onConfirmSuccessModal() {
+  successModalIsVisible.value = false
+  emits('afterCreate')
+}
 </script>
 
 <template>
@@ -391,7 +396,7 @@ async function getAvailableSites(): Promise<void> {
     title="SUCCESS"
     message="user successfully created."
     :closable="false"
-    @on-ok="emits('afterCreate')"
+    @on-ok="onConfirmSuccessModal"
     :cancel-text="null"
   >
   </ModalComponent>

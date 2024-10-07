@@ -1602,7 +1602,10 @@ export class ApiService {
       }
     `
 
-    const resultQuery = await this.authApiClient.query({ query: query })
+    const resultQuery = await this.authApiClient.query({
+      query: query,
+      fetchPolicy: 'network-only'
+    })
 
     return resultQuery.data.adminUsers as AdminUser[]
   }

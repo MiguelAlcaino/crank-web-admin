@@ -15,6 +15,7 @@ import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
+import DeleteAdminUser from './DeleteAdminUser.vue'
 
 const apiService = inject<ApiService>('gqlApiService')!
 
@@ -381,23 +382,30 @@ async function getAvailableSites(): Promise<void> {
                 </div>
               </form>
             </div>
-            <div class="modal-footer border-0">
-              <DefaultButtonComponent
-                text="Cancel"
-                type="button"
-                :disabled="isSaving"
-                variant="secondary"
-                @on-click="closeModal"
-              ></DefaultButtonComponent>
+            <div class="modal-footer border-0 d-flex justify-content-between">
+              <DeleteAdminUser
+                :admin-user="adminUser"
+                @after-delete="emits('afterUpdate')"
+              ></DeleteAdminUser>
+              <div>
+                <DefaultButtonComponent
+                  text="Cancel"
+                  type="button"
+                  :disabled="isSaving"
+                  variant="secondary"
+                  @on-click="closeModal"
+                ></DefaultButtonComponent>
 
-              <DefaultButtonComponent
-                text="Update"
-                type="button"
-                :is-loading="isSaving"
-                :disabled="loadingSites || loadingInstructors"
-                @on-click="submitForm"
-              >
-              </DefaultButtonComponent>
+                <DefaultButtonComponent
+                  text="Create"
+                  type="button"
+                  :is-loading="isSaving"
+                  :disabled="loadingSites || loadingInstructors"
+                  @on-click="submitForm"
+                  class="ml-2"
+                >
+                </DefaultButtonComponent>
+              </div>
             </div>
           </div>
         </div>
