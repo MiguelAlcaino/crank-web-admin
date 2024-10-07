@@ -8973,7 +8973,7 @@ function k$(A, e) {
 const _$ = /* @__PURE__ */ Ht(x$, [["render", k$], ["__scopeId", "data-v-c095b3a1"]]), gd = "gift-cards", $$ = {
   path: `/${gd}`,
   redirect: `/${gd}/list`,
-  component: () => import("./GiftCardLayout.76bb9fc8.js"),
+  component: () => import("./GiftCardLayout.ace51a47.js"),
   children: [
     {
       path: `/${gd}/list`,
@@ -8984,7 +8984,7 @@ const _$ = /* @__PURE__ */ Ht(x$, [["render", k$], ["__scopeId", "data-v-c095b3a
 }, pd = "admin-user", D$ = {
   path: `/${pd}`,
   redirect: `/${pd}/list`,
-  component: () => import("./UserLayout.4cf5b72c.js"),
+  component: () => import("./UserLayout.26a6422e.js"),
   children: [
     {
       path: `/${pd}/list`,
@@ -9007,7 +9007,7 @@ const Jn = yk({
       path: "/login",
       name: "login",
       meta: { requiresAuth: !1 },
-      component: import("./LoginView.4900be6f.js")
+      component: import("./LoginView.471e6536.js")
     },
     {
       path: "/user/create",
@@ -9025,7 +9025,7 @@ const Jn = yk({
       path: "/admin/calendar-class",
       name: "admin_calendar_class",
       meta: { requiresAuth: !0 },
-      component: () => import("./ClassScheduleView.56c95362.js")
+      component: () => import("./ClassScheduleView.43b9804c.js")
     },
     {
       path: "/admin/room-layout/list",
@@ -9055,7 +9055,7 @@ const Jn = yk({
       path: "/customer-profile/:id",
       name: "customer_profile",
       meta: { requiresAuth: !0 },
-      component: () => import("./CustomerProfileView.3813864d.js")
+      component: () => import("./CustomerProfileView.c540a1d2.js")
     },
     {
       ...$$,
@@ -37434,7 +37434,7 @@ const qV = { class: "modal-mask" }, QV = { class: "modal-wrapper" }, KV = {
 }, pH = { class: "col" }, mH = /* @__PURE__ */ I("label", {
   for: "linkedInstructorIds",
   class: "input-label"
-}, "Mindbody staff", -1), vH = { class: "form-row mb-3" }, yH = { class: "col" }, bH = /* @__PURE__ */ I("label", { class: "input-label" }, "Admin sites *", -1), CH = { class: "modal-footer border-0" }, xH = /* @__PURE__ */ ye({
+}, "Mindbody staff", -1), vH = { class: "form-row mb-3" }, yH = { class: "col" }, bH = /* @__PURE__ */ I("label", { class: "input-label" }, "Admin sites", -1), CH = { class: "modal-footer border-0" }, xH = /* @__PURE__ */ ye({
   __name: "AdminUserCreate",
   emits: ["afterCreate"],
   setup(A, { emit: e }) {
@@ -37850,7 +37850,7 @@ const wH = { class: "modal-mask" }, IH = { class: "modal-wrapper" }, SH = {
 }, AY = { class: "col" }, eY = /* @__PURE__ */ I("label", {
   for: "linkedInstructorIds",
   class: "input-label"
-}, "Mindbody staff", -1), tY = { class: "form-row mb-3" }, nY = { class: "col" }, rY = /* @__PURE__ */ I("label", { class: "input-label" }, "Admin sites *", -1), iY = { class: "modal-footer border-0 d-flex justify-content-between" }, aY = /* @__PURE__ */ ye({
+}, "Mindbody staff", -1), tY = { class: "form-row mb-3" }, nY = { class: "col" }, rY = /* @__PURE__ */ I("label", { class: "input-label" }, "Admin sites", -1), iY = { class: "modal-footer border-0 d-flex justify-content-between" }, aY = /* @__PURE__ */ ye({
   __name: "AdminUserEdit",
   props: {
     adminUser: {}
