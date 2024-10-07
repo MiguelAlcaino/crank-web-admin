@@ -1727,7 +1727,7 @@ export class ApiService {
       fetchPolicy: 'network-only'
     })
 
-    return result.data.updateAdminUser as AdminUserResultUnion
+    return result.data.addAdminUser as AdminUserResultUnion
   }
 
   async removeAdminUser(id: string): Promise<boolean> {

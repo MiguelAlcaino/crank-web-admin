@@ -26,7 +26,7 @@ function afterUpdateAdminUsers() {
       <h4>Users List</h4>
     </div>
     <div class="col-6 pull-right">
-      <AdminUserCreate></AdminUserCreate>
+      <AdminUserCreate @after-create="afterUpdateAdminUsers()"></AdminUserCreate>
     </div>
   </div>
   <div class="row">
