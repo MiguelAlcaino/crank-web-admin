@@ -5,7 +5,7 @@ interface EnrollmentInfo {
   identifiableSiteUser?: IdentifiableSiteUser | null
   isCheckedIn?: boolean
   isBookedForFree?: boolean | null
-  isFirstTimeInAClass: boolean
+  isFirstTimeInThisTypeOfClass: boolean
 }
 
 interface IdentifiableSiteUser {
@@ -134,7 +134,7 @@ async function removeUserFromClass(enrollmentId: string, lateCancel: boolean) {
           </td>
           <td>
             <span v-if="item.isBookedForFree === true" class="badge badge-warning">Not paid</span>
-            <span v-if="item.isFirstTimeInAClass" class="badge badge-primary"
+            <span v-if="item.isFirstTimeInThisTypeOfClass" class="badge badge-primary"
               >First Time In Class</span
             >
           </td>
