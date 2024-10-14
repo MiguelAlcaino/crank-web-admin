@@ -379,7 +379,7 @@ export type EnrollmentInfo = EnrollmentInfoInterface & {
   identifiableSiteUser?: Maybe<IdentifiableSiteUser>
   isBookedForFree: Scalars['Boolean']
   isCheckedIn: Scalars['Boolean']
-  isFirstTimeInAClass: Scalars['Boolean']
+  isFirstTimeInThisTypeOfClass: Scalars['Boolean']
   /** @deprecated Use spotNumber instead. */
   spotInfo?: Maybe<SpotInfo>
   spotNumber?: Maybe<Scalars['Int']>
@@ -1440,7 +1440,7 @@ export type ClassInfoAdminQuery = {
           spotNumber?: number | null
           isBookedForFree: boolean
           hasStats?: boolean | null
-          isFirstTimeInAClass: boolean
+          isFirstTimeInThisTypeOfClass: boolean
           id: string
           enrollmentStatus: EnrollmentStatusEnum
           enrollmentDateTime: any
@@ -2283,6 +2283,37 @@ export type UpdateAdminUserMutation = {
     | { __typename: 'UsernameAlreadyUsedError'; code: string }
 }
 
+export type AddAdminUserMutationVariables = Exact<{
+  input: AdminUserDataInput
+}>
+
+export type AddAdminUserMutation = {
+  __typename: 'Mutation'
+  addAdminUser:
+    | {
+        __typename: 'AdminUser'
+        id: string
+        username: string
+        email: string
+        roles?: Array<string> | null
+        linkedInstructors?: Array<{
+          __typename: 'Instructor'
+          id: string
+          name: string
+          site: { __typename: 'Site'; name: string; code: SiteEnum }
+        }> | null
+        linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
+      }
+    | { __typename: 'EmailAlreadyUsedError'; code: string }
+    | { __typename: 'UsernameAlreadyUsedError'; code: string }
+}
+
+export type RemoveAdminUserMutationVariables = Exact<{
+  id: Scalars['ID']
+}>
+
+export type RemoveAdminUserMutation = { __typename: 'Mutation'; removeAdminUser: boolean }
+
 export const SiteSettingsDocument = {
   kind: 'Document',
   definitions: [
@@ -2499,7 +2530,10 @@ export const ClassInfoAdminDocument = {
                             { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'isBookedForFree' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'hasStats' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'isFirstTimeInAClass' } }
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'isFirstTimeInThisTypeOfClass' }
+                            }
                           ]
                         }
                       }
@@ -5724,3 +5758,148 @@ export const UpdateAdminUserDocument = {
     }
   ]
 } as unknown as DocumentNode<UpdateAdminUserMutation, UpdateAdminUserMutationVariables>
+export const AddAdminUserDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'addAdminUser' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'AdminUserDataInput' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'addAdminUser' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'AdminUser' } },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'roles' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'linkedInstructors' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'site' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'linkedSites' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'EmailAlreadyUsedError' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'UsernameAlreadyUsedError' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<AddAdminUserMutation, AddAdminUserMutationVariables>
+export const RemoveAdminUserDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'removeAdminUser' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'removeAdminUser' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<RemoveAdminUserMutation, RemoveAdminUserMutationVariables>

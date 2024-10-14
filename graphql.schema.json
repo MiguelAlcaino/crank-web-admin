@@ -2970,7 +2970,7 @@
             "deprecationReason": null
           },
           {
-            "name": "isFirstTimeInAClass",
+            "name": "isFirstTimeInThisTypeOfClass",
             "description": null,
             "args": [],
             "type": {
