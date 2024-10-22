@@ -26,7 +26,7 @@
       <small>User Birthday</small>
     </div>
     <div class="col-3" style="text-align: center">
-      <hr style="background-color: #008000" />
+      <hr style="background-color: red" />
       <small>Leaderboard</small>
     </div>
   </div>

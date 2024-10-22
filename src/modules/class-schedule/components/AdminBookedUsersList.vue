@@ -223,7 +223,7 @@ async function removeUserFromClass(enrollmentId: string, lateCancel: boolean) {
 }
 
 .isUserLeaderboardEnabled-badge {
-  background-color: #008000;
+  background-color: red;
   color: white;
   margin-right: 5px;
 }
