@@ -340,7 +340,7 @@ async function removeUserFromClass() {
   }
 }
 
-async function confirmLateCancelation() {
+async function confirmLateCancellation() {
   confirmModalLateCancelReservationData.value.isLoading = true
 
   const response = await apiService.removeUserFromClass(selectedSpot.value.enrollmentId!, true)
@@ -412,7 +412,7 @@ function toggleSpotsModeView() {
         v-if="putUnderMaintenanceIsVisible"
       ></DefaultButtonComponent>
     </div>
-    <!-- Select under manteince spot options -->
+    <!-- Select under maintenance spot options -->
     <div v-if="userCanModifyClass && selectedSpot.enabled === false">
       <h2>Spot is under maintenance</h2>
       <DefaultButtonComponent
@@ -572,7 +572,7 @@ function toggleSpotsModeView() {
     :ok-loading="confirmModalLateCancelReservationData.isLoading"
     @on-cancel="confirmModalLateCancelReservationData.isVisible = false"
     ok-text="CONFIRM"
-    @on-ok="confirmLateCancelation()"
+    @on-ok="confirmLateCancellation()"
     :closable="false"
   >
   </ModalComponent>
