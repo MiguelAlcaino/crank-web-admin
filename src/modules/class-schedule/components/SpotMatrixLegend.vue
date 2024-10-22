@@ -27,7 +27,7 @@
     </div>
     <div class="col-3" style="text-align: center">
       <hr style="background-color: #008000" />
-      <small>User Leaderboard Enabled</small>
+      <small>Leaderboard</small>
     </div>
   </div>
 </template>

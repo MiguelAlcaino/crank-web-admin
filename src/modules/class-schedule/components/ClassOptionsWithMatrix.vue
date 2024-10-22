@@ -43,6 +43,9 @@ interface Enrollment {
   isBookedForFree?: boolean | null
   hasStats?: boolean | null
   isFirstTimeInThisTypeOfClass: boolean
+  isFirstTimeWithThisInstructor: boolean
+  isTodayUserBirthday: boolean
+  isUserLeaderboardEnabled: boolean
 }
 
 interface IdentifiableSiteUser {

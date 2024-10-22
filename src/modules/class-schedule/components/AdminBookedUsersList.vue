@@ -147,7 +147,7 @@ async function removeUserFromClass(enrollmentId: string, lateCancel: boolean) {
             </span>
             <span
               class="badge isFirstTimeWithThisInstructor-badge"
-              v-if="item.isFirstTimeInThisTypeOfClass"
+              v-if="item.isFirstTimeWithThisInstructor"
             >
               First Time Instructor
             </span>

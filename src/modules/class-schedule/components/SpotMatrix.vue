@@ -24,6 +24,9 @@ interface SpotPosition {
   isSpotWithOnlyStats?: boolean
   hasStats?: boolean | null
   isFirstTimeInThisTypeOfClass?: boolean
+  isFirstTimeWithThisInstructor?: boolean
+  isTodayUserBirthday?: boolean
+  isUserLeaderboardEnabled?: boolean
 }
 
 interface ClassPosition {
@@ -54,6 +57,9 @@ interface EnrollmentInfo {
   isBookedForFree?: boolean | null
   hasStats?: boolean | null
   isFirstTimeInThisTypeOfClass: boolean
+  isFirstTimeWithThisInstructor: boolean
+  isTodayUserBirthday: boolean
+  isUserLeaderboardEnabled: boolean
 }
 
 interface IdentifiableSiteUser {
@@ -137,7 +143,11 @@ function newSpotPosition(
   isCheckedIn: boolean,
   isBookedForFree: boolean,
   hasStats?: boolean | null,
-  isFirstTimeInThisTypeOfClass?: boolean
+  isFirstTimeInThisTypeOfClass?: boolean,
+  isFirstTimeWithThisInstructor?: boolean,
+  isTodayUserBirthday?: boolean,
+  isUserLeaderboardEnabled?: boolean
+
 ): SpotPosition {
   if (classPosition.icon === PositionIconEnum.Spot) {
     return {
@@ -151,7 +161,10 @@ function newSpotPosition(
       isBookedForFree: isBookedForFree,
       isSpotWithOnlyStats: props.orphanedClassStatsSpots.includes(classPosition.spotNumber!),
       hasStats: hasStats,
-      isFirstTimeInThisTypeOfClass: isFirstTimeInThisTypeOfClass
+      isFirstTimeInThisTypeOfClass: isFirstTimeInThisTypeOfClass,
+      isFirstTimeWithThisInstructor: isFirstTimeWithThisInstructor,
+      isTodayUserBirthday: isTodayUserBirthday,
+      isUserLeaderboardEnabled: isUserLeaderboardEnabled
     }
   }
   return {
@@ -169,6 +182,9 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
   let isBookedForFree: boolean
   let hasStats: boolean | null | undefined
   let isFirstTimeInThisTypeOfClass: boolean
+  let   isFirstTimeWithThisInstructor: boolean
+  let isTodayUserBirthday: boolean
+  let isUserLeaderboardEnabled: boolean
 
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix.length; j++) {
@@ -183,6 +199,9 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
         isBookedForFree = false
         hasStats = null
         isFirstTimeInThisTypeOfClass = false
+        isFirstTimeWithThisInstructor = false
+        isTodayUserBirthday = false
+        isUserLeaderboardEnabled = false
 
         if (classPosition.icon === PositionIconEnum.Spot) {
           if (classPosition.spotNumber && props.enrollments) {
@@ -195,6 +214,9 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
                 hasStats = enrollment.hasStats
                 user = enrollment.identifiableSiteUser?.identifiableUser?.user
                 isFirstTimeInThisTypeOfClass = enrollment.isFirstTimeInThisTypeOfClass
+                isFirstTimeWithThisInstructor = enrollment.isFirstTimeWithThisInstructor
+                isTodayUserBirthday = enrollment.isTodayUserBirthday
+                isUserLeaderboardEnabled = enrollment.isUserLeaderboardEnabled
                 break
               }
             }
@@ -208,7 +230,10 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
             isCheckedIn,
             isBookedForFree,
             hasStats,
-            isFirstTimeInThisTypeOfClass
+            isFirstTimeInThisTypeOfClass,
+            isFirstTimeWithThisInstructor,
+            isTodayUserBirthday,
+            isUserLeaderboardEnabled
           )
         )
       }
@@ -300,6 +325,9 @@ const sortBy = (key: keyof User) => {
                   :is-spot-with-only-stats="spot.isSpotWithOnlyStats ?? false"
                   :has-stats="spot.hasStats"
                   :isFirstTimeInThisTypeOfClass="spot.isFirstTimeInThisTypeOfClass ?? false"
+                  :isFirstTimeWithThisInstructor="true"
+                  :isTodayUserBirthday="true"
+                  :isUserLeaderboardEnabled="true"
                 />
                 <icon-position-not-bookable v-else :icon="spot.icon" />
               </td>
@@ -353,12 +381,30 @@ const sortBy = (key: keyof User) => {
                 ></ViewUserProfileButton>
               </td>
               <td>
-                <span v-if="item.isBookedForFree === true" class="badge badge-warning"
-                  >Not paid</span
+                <span class="badge isBookedForFree-badge" v-if="item.isBookedForFree === true">
+                  Not paid
+                </span>
+                <span
+                  class="badge isFirstTimeInThisTypeOfClass-badge"
+                  v-if="item.isFirstTimeInThisTypeOfClass"
                 >
-                <span v-if="item.isFirstTimeInThisTypeOfClass" class="badge badge-primary"
-                  >First Time In Class</span
+                  First Time In Class
+                </span>
+                <span
+                  class="badge isFirstTimeWithThisInstructor-badge"
+                  v-if="item.isFirstTimeWithThisInstructor"
                 >
+                  First Time Instructor
+                </span>
+                <span class="badge isTodayUserBirthday-badge" v-if="item.isTodayUserBirthday">
+                  Today Birthday
+                </span>
+                <span
+                  class="badge isUserLeaderboardEnabled-badge"
+                  v-if="item.isUserLeaderboardEnabled"
+                >
+                  Leaderboard
+                </span>
               </td>
             </tr>
             <tr v-if="sortedEnrollments.length === 0">
@@ -394,5 +440,35 @@ td.class-position {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.isFirstTimeWithThisInstructor-badge {
+  background-color: #add8e6;
+  color: white;
+  margin-right: 5px;
+}
+
+.isTodayUserBirthday-badge {
+  background-color: #32cd32;
+  color: white;
+  margin-right: 5px;
+}
+
+.isUserLeaderboardEnabled-badge {
+  background-color: #008000;
+  color: white;
+  margin-right: 5px;
+}
+
+.isBookedForFree-badge {
+  background-color: #ffd903;
+  color: black;
+  margin-right: 5px;
+}
+
+.isFirstTimeInThisTypeOfClass-badge {
+  background-color: #00b9ff;
+  color: white;
+  margin-right: 5px;
 }
 </style>
