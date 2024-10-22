@@ -147,7 +147,6 @@ function newSpotPosition(
   isFirstTimeWithThisInstructor?: boolean,
   isTodayUserBirthday?: boolean,
   isUserLeaderboardEnabled?: boolean
-
 ): SpotPosition {
   if (classPosition.icon === PositionIconEnum.Spot) {
     return {
@@ -182,7 +181,7 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
   let isBookedForFree: boolean
   let hasStats: boolean | null | undefined
   let isFirstTimeInThisTypeOfClass: boolean
-  let   isFirstTimeWithThisInstructor: boolean
+  let isFirstTimeWithThisInstructor: boolean
   let isTodayUserBirthday: boolean
   let isUserLeaderboardEnabled: boolean
 
