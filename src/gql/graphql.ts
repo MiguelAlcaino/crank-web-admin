@@ -212,6 +212,27 @@ export type ClassIsFullError = Error & {
   code: Scalars['String']
 }
 
+export type ClassPackageProduct = SellableProductInterface & {
+  __typename: 'ClassPackageProduct'
+  alertBeforePurchasing?: Maybe<ProductAlertBeforePurchasing>
+  buttonText?: Maybe<Scalars['String']>
+  currency: Scalars['String']
+  id: Scalars['ID']
+  isVisible: Scalars['Boolean']
+  price: Scalars['Float']
+  subtitle: Scalars['String']
+  title: Scalars['String']
+  type?: Maybe<ClassPackageTypeEnum>
+}
+
+export enum ClassPackageTypeEnum {
+  Membership = 'membership',
+  Regular = 'regular',
+  Special = 'special',
+  Trial = 'trial',
+  Vod = 'vod'
+}
+
 export type ClassPositionInterface = {
   icon: PositionIconEnum
   x: Scalars['Int']
@@ -380,6 +401,12 @@ export type EnrollmentInfo = EnrollmentInfoInterface & {
   isBookedForFree: Scalars['Boolean']
   isCheckedIn: Scalars['Boolean']
   isFirstTimeInThisTypeOfClass: Scalars['Boolean']
+  /** Whether this is the first time of this Enrollment's user with this class' instructor */
+  isFirstTimeWithThisInstructor: Scalars['Boolean']
+  /** Returns true if today is the user's birthday */
+  isTodayUserBirthday: Scalars['Boolean']
+  /** Whether the user leaderboard is enabled */
+  isUserLeaderboardEnabled: Scalars['Boolean']
   /** @deprecated Use spotNumber instead. */
   spotInfo?: Maybe<SpotInfo>
   spotNumber?: Maybe<Scalars['Int']>
@@ -834,6 +861,20 @@ export enum PositionIconEnum {
   Tv = 'tv'
 }
 
+export type ProductAlertBeforePurchasing = {
+  __typename: 'ProductAlertBeforePurchasing'
+  description: Scalars['String']
+  title: Scalars['String']
+}
+
+export enum ProductType {
+  ClassPackage = 'classPackage'
+}
+
+export type ProductsInput = {
+  type?: InputMaybe<ProductType>
+}
+
 export type Purchase = {
   __typename: 'Purchase'
   activationDateTime: Scalars['DateTime']
@@ -893,6 +934,8 @@ export type Query = {
   giftCards: Array<GiftCard>
   /** Verifies whether an sms validation code is valid */
   isSMSValidationCodeValid?: Maybe<IsSmsValidationCodeValidUnion>
+  /** Returns a list of available products for a specific site */
+  products: Array<SellableProductInterface>
   /** Returns a specific room layout */
   roomLayout?: Maybe<RoomLayout>
   /** Returns a list of available RoomLayouts for a site */
@@ -980,6 +1023,11 @@ export type QueryCurrentUserWorkoutStatsPaginatedArgs = {
 
 export type QueryIsSmsValidationCodeValidArgs = {
   smsCode: Scalars['String']
+}
+
+export type QueryProductsArgs = {
+  input?: InputMaybe<ProductsInput>
+  site: SiteEnum
 }
 
 export type QueryRoomLayoutArgs = {
@@ -1153,6 +1201,17 @@ export type SmsValidationUnion =
   | MobilePhoneAlreadyVerifiedError
   | MobilePhoneNotValidError
   | SuccessfulRequestSmsValidation
+
+export type SellableProductInterface = {
+  alertBeforePurchasing?: Maybe<ProductAlertBeforePurchasing>
+  buttonText?: Maybe<Scalars['String']>
+  currency: Scalars['String']
+  id: Scalars['ID']
+  isVisible: Scalars['Boolean']
+  price: Scalars['Float']
+  subtitle: Scalars['String']
+  title: Scalars['String']
+}
 
 export type SendClassStatsToEmailInput = {
   email: Scalars['String']
