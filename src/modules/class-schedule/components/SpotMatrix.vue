@@ -23,7 +23,7 @@ interface SpotPosition {
   isBookedForFree?: boolean | null
   isSpotWithOnlyStats?: boolean
   hasStats?: boolean | null
-  isFirstTimeInAClass?: boolean
+  isFirstTimeInThisTypeOfClass?: boolean
 }
 
 interface ClassPosition {
@@ -53,7 +53,7 @@ interface EnrollmentInfo {
   spotNumber?: number | null
   isBookedForFree?: boolean | null
   hasStats?: boolean | null
-  isFirstTimeInAClass: boolean
+  isFirstTimeInThisTypeOfClass: boolean
 }
 
 interface IdentifiableSiteUser {
@@ -137,7 +137,7 @@ function newSpotPosition(
   isCheckedIn: boolean,
   isBookedForFree: boolean,
   hasStats?: boolean | null,
-  isFirstTimeInAClass?: boolean
+  isFirstTimeInThisTypeOfClass?: boolean
 ): SpotPosition {
   if (classPosition.icon === PositionIconEnum.Spot) {
     return {
@@ -151,7 +151,7 @@ function newSpotPosition(
       isBookedForFree: isBookedForFree,
       isSpotWithOnlyStats: props.orphanedClassStatsSpots.includes(classPosition.spotNumber!),
       hasStats: hasStats,
-      isFirstTimeInAClass: isFirstTimeInAClass
+      isFirstTimeInThisTypeOfClass: isFirstTimeInThisTypeOfClass
     }
   }
   return {
@@ -168,7 +168,7 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
   let isCheckedIn: boolean
   let isBookedForFree: boolean
   let hasStats: boolean | null | undefined
-  let isFirstTimeInAClass: boolean
+  let isFirstTimeInThisTypeOfClass: boolean
 
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix.length; j++) {
@@ -182,7 +182,7 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
         isCheckedIn = false
         isBookedForFree = false
         hasStats = null
-        isFirstTimeInAClass = false
+        isFirstTimeInThisTypeOfClass = false
 
         if (classPosition.icon === PositionIconEnum.Spot) {
           if (classPosition.spotNumber && props.enrollments) {
@@ -194,7 +194,7 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
                 isBookedForFree = enrollment.isBookedForFree ?? false
                 hasStats = enrollment.hasStats
                 user = enrollment.identifiableSiteUser?.identifiableUser?.user
-                isFirstTimeInAClass = enrollment.isFirstTimeInAClass
+                isFirstTimeInThisTypeOfClass = enrollment.isFirstTimeInThisTypeOfClass
                 break
               }
             }
@@ -208,7 +208,7 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
             isCheckedIn,
             isBookedForFree,
             hasStats,
-            isFirstTimeInAClass
+            isFirstTimeInThisTypeOfClass
           )
         )
       }
@@ -299,7 +299,7 @@ const sortBy = (key: keyof User) => {
                   :is-booked-for-free="spot.isBookedForFree"
                   :is-spot-with-only-stats="spot.isSpotWithOnlyStats ?? false"
                   :has-stats="spot.hasStats"
-                  :is-first-time-in-a-class="spot.isFirstTimeInAClass ?? false"
+                  :isFirstTimeInThisTypeOfClass="spot.isFirstTimeInThisTypeOfClass ?? false"
                 />
                 <icon-position-not-bookable v-else :icon="spot.icon" />
               </td>
@@ -356,7 +356,7 @@ const sortBy = (key: keyof User) => {
                 <span v-if="item.isBookedForFree === true" class="badge badge-warning"
                   >Not paid</span
                 >
-                <span v-if="item.isFirstTimeInAClass" class="badge badge-primary"
+                <span v-if="item.isFirstTimeInThisTypeOfClass" class="badge badge-primary"
                   >First Time In Class</span
                 >
               </td>

@@ -34,7 +34,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
       switch (err.message) {
         case 'jwt.expired_access_token':
           return new Observable<any>((observer) => {
-            // used an annonymous function for using an async function
+            // used an anonymous function for using an async function
             ;(async () => {
               try {
                 await authService.refreshToken()

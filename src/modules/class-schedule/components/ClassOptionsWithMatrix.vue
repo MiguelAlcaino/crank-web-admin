@@ -42,7 +42,7 @@ interface Enrollment {
   spotNumber?: number | null
   isBookedForFree?: boolean | null
   hasStats?: boolean | null
-  isFirstTimeInAClass: boolean
+  isFirstTimeInThisTypeOfClass: boolean
 }
 
 interface IdentifiableSiteUser {

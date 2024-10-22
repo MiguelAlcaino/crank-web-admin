@@ -40,7 +40,7 @@ async function login() {
     useAuthenticationStore().setSession(formData.token)
     appStore().setSite(selectedSite.value as SiteEnum)
 
-    await router.push({ name: 'admin_calendar_class' })
+    await router.push({ name: 'home' })
   }
 }
 </script>
