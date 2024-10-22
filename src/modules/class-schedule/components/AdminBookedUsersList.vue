@@ -6,6 +6,9 @@ interface EnrollmentInfo {
   isCheckedIn?: boolean
   isBookedForFree?: boolean | null
   isFirstTimeInThisTypeOfClass: boolean
+  isFirstTimeWithThisInstructor: boolean
+  isTodayUserBirthday: boolean
+  isUserLeaderboardEnabled: boolean
 }
 
 interface IdentifiableSiteUser {
@@ -133,10 +136,27 @@ async function removeUserFromClass(enrollmentId: string, lateCancel: boolean) {
             ></ViewUserProfileButton>
           </td>
           <td>
-            <span v-if="item.isBookedForFree === true" class="badge badge-warning">Not paid</span>
-            <span v-if="item.isFirstTimeInThisTypeOfClass" class="badge badge-primary"
-              >First Time In Class</span
+            <span class="badge isBookedForFree-badge" v-if="item.isBookedForFree === true">
+              Not paid
+            </span>
+            <span
+              class="badge isFirstTimeInThisTypeOfClass-badge"
+              v-if="item.isFirstTimeInThisTypeOfClass"
             >
+              First Time In Class
+            </span>
+            <span
+              class="badge isFirstTimeWithThisInstructor-badge"
+              v-if="item.isFirstTimeInThisTypeOfClass"
+            >
+              First Time Instructor
+            </span>
+            <span class="badge isTodayUserBirthday-badge" v-if="item.isTodayUserBirthday">
+              Today Birthday
+            </span>
+            <span class="badge isUserLeaderboardEnabled-badge" v-if="item.isUserLeaderboardEnabled">
+              Leaderboard
+            </span>
           </td>
         </tr>
         <tr v-if="!isLoading && enrollments.length === 0">
@@ -188,5 +208,35 @@ async function removeUserFromClass(enrollmentId: string, lateCancel: boolean) {
 <style scoped>
 .tableMessageNoRecords {
   text-align: center;
+}
+
+.isFirstTimeWithThisInstructor-badge {
+  background-color: #add8e6;
+  color: white;
+  margin-right: 5px;
+}
+
+.isTodayUserBirthday-badge {
+  background-color: #32cd32;
+  color: white;
+  margin-right: 5px;
+}
+
+.isUserLeaderboardEnabled-badge {
+  background-color: #008000;
+  color: white;
+  margin-right: 5px;
+}
+
+.isBookedForFree-badge {
+  background-color: #ffd903;
+  color: black;
+  margin-right: 5px;
+}
+
+.isFirstTimeInThisTypeOfClass-badge {
+  background-color: #00b9ff;
+  color: white;
+  margin-right: 5px;
 }
 </style>

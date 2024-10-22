@@ -17,6 +17,9 @@ interface Props {
   isSpotWithOnlyStats: boolean
   hasStats?: boolean | null
   isFirstTimeInThisTypeOfClass: boolean
+  isFirstTimeWithThisInstructor: boolean
+  isTodayUserBirthday: boolean
+  isUserLeaderboardEnabled: boolean
 }
 </script>
 

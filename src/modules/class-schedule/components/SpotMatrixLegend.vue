@@ -16,6 +16,19 @@
       <hr style="background-color: #00b9ff" />
       <small>First Time In Class</small>
     </div>
+
+    <div class="col-3" style="text-align: center">
+      <hr style="background-color: #add8e6" />
+      <small>First Time Instructor</small>
+    </div>
+    <div class="col-3" style="text-align: center">
+      <hr style="background-color: #32cd32" />
+      <small>User Birthday</small>
+    </div>
+    <div class="col-3" style="text-align: center">
+      <hr style="background-color: #008000" />
+      <small>User Leaderboard Enabled</small>
+    </div>
   </div>
 </template>
 
