@@ -90,7 +90,7 @@ function selectSpot() {
         spotSelectionIsDisabled ? 'spotEnabledNotClickable' : 'enabledSpot',
         selected ? 'selectedSpot' : '',
         isBookedForFree && !selected ? 'isBookedForFree' : '',
-        hasStats === false && !selected ? 'isSpotWithouttats' : '',
+        hasStats === false && !selected ? 'isSpotWithoutStats' : '',
         isFirstTimeInThisTypeOfClass && !selected ? 'isFirstTimeInThisTypeOfClass' : ''
       ]"
     >
@@ -106,7 +106,7 @@ function selectSpot() {
         selected ? 'selectedSpot' : '',
         isSpotWithOnlyStats && !selected ? 'isSpotWithOnlyStats' : '',
         isSpotWithOnlyStats && selected ? 'isSpotWithOnlyStatsSelected' : '',
-        hasStats === false && !selected ? 'isSpotWithouttats' : '',
+        hasStats === false && !selected ? 'isSpotWithoutStats' : '',
         hasStats === false && selected ? 'isSpotWithoutStatsSelected' : ''
       ]"
       @click="spotSelectionIsDisabled ? null : selectSpot()"
@@ -205,7 +205,7 @@ function selectSpot() {
   border: 2px dashed #8a00e7 !important;
 }
 
-.isSpotWithouttats {
+.isSpotWithoutStats {
   border: 2px solid #ff7e62 !important;
 }
 
