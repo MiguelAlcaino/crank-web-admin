@@ -1,7 +1,7 @@
 <template>
   <div class="row matrixSpotsLegend">
     <div class="col-3" style="text-align: center">
-      <div class="yellow-square"></div>
+      <div class="unpaid-square"></div>
       <br>
       <small>Unpaid</small>
     </div>
@@ -52,7 +52,7 @@ hr {
   max-width: 20px;
 }
 
-.yellow-square {
+.unpaid-square {
   width: 20px;
   height: 20px;
   background-color: #ffd903;

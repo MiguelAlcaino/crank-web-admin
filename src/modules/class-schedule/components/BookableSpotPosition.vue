@@ -92,9 +92,10 @@ function selectSpot() {
         'baseSpot',
         spotSelectionIsDisabled ? 'spotEnabledNotClickable' : 'enabledSpot',
         selected ? 'selectedSpot' : '',
-        isBookedForFree && !selected ? 'isBookedForFree' : '',
+        isBookedForFree && !selected ? 'isBookedForFree' : '',       
+        isFirstTimeInThisTypeOfClass && !selected ? 'isFirstTimeInThisTypeOfClass' : '',
+        isFirstTimeWithThisInstructor && !selected ? 'isFirstTimeWithThisInstructor' : '',
         hasStats === false && !selected ? 'isSpotWithoutStats' : '',
-        isFirstTimeInThisTypeOfClass && !selected ? 'isFirstTimeInThisTypeOfClass' : ''
       ]"
     >
       {{ spotNumber + (isCheckedIn === true ? '✓' : '') }}
@@ -111,9 +112,7 @@ function selectSpot() {
         spotSelectionIsDisabled ? 'spotEnabledNotClickable' : 'enabledSpot',
         selected ? 'selectedSpot' : '',
         isSpotWithOnlyStats && !selected ? 'isSpotWithOnlyStats' : '',
-        isSpotWithOnlyStats && selected ? 'isSpotWithOnlyStatsSelected' : '',
-        hasStats === false && !selected ? 'isSpotWithoutStats' : '',
-        hasStats === false && selected ? 'isSpotWithoutStatsSelected' : ''
+        isSpotWithOnlyStats && selected ? 'isSpotWithOnlyStatsSelected' : '',  
       ]"
       @click="spotSelectionIsDisabled ? null : selectSpot()"
     >
@@ -195,11 +194,11 @@ function selectSpot() {
 }
 
 .isBookedForFree {
-  border: 2px solid #ffd903 !important;
+  background-color: #ffd903;
 }
 
 .isBookedForFreeSelected {
-  border: 2px dashed #ffd903 !important;
+  background-color: #ffd903;
 }
 
 .isSpotWithOnlyStats {
@@ -214,16 +213,12 @@ function selectSpot() {
   border: 2px solid #ff7e62 !important;
 }
 
-.isSpotWithoutStatsSelected {
-  border: 2px dashed #ff7e62 !important;
-}
-
 .isFirstTimeInThisTypeOfClass {
   border: 2px solid #00b9ff !important;
 }
 
-.isFirstTimeInAClassSelected {
-  border: 2px dashed #00b9ff !important;
+.isFirstTimeWithThisInstructor {
+  box-shadow: 0 0 0 2px #add8e6;
 }
 
 .baseSpot .top-right {
