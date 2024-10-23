@@ -324,9 +324,9 @@ const sortBy = (key: keyof User) => {
                   :is-spot-with-only-stats="spot.isSpotWithOnlyStats ?? false"
                   :has-stats="spot.hasStats"
                   :isFirstTimeInThisTypeOfClass="spot.isFirstTimeInThisTypeOfClass ?? false"
-                  :isFirstTimeWithThisInstructor="true"
-                  :isTodayUserBirthday="true"
-                  :isUserLeaderboardEnabled="true"
+                  :isFirstTimeWithThisInstructor="spot.isFirstTimeWithThisInstructor ?? false"
+                  :isTodayUserBirthday="spot.isTodayUserBirthday ?? false"
+                  :isUserLeaderboardEnabled="spot.isUserLeaderboardEnabled ?? false"
                 />
                 <icon-position-not-bookable v-else :icon="spot.icon" />
               </td>
