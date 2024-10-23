@@ -100,6 +100,9 @@ function selectSpot() {
       {{ spotNumber + (isCheckedIn === true ? '✓' : '') }}
       <br />
       {{ user?.firstName }} {{ user?.lastName }}
+
+      <span class="badge badge-danger top-left" v-if="isUserLeaderboardEnabled">L</span>
+      <span class="badge badge-success top-right" v-if="isTodayUserBirthday">B</span>
     </div>
     <div
       v-else-if="enabled"
@@ -142,8 +145,7 @@ function selectSpot() {
   font-weight: bold;
   font-size: 9px;
   border: 2px #000000 solid;
-  /* box-shadow: 0 0 0 3px #ffd903,
-    0 0 0 6px #f37676; */
+  position: relative;
 }
 
 .disabledSpot {
@@ -222,5 +224,21 @@ function selectSpot() {
 
 .isFirstTimeInAClassSelected {
   border: 2px dashed #00b9ff !important;
+}
+
+.baseSpot .top-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 9px;
+  margin: 3px;
+}
+
+.baseSpot .top-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 9px;
+  margin: 3px;
 }
 </style>
