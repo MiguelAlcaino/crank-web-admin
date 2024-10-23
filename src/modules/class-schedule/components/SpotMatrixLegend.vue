@@ -2,7 +2,7 @@
   <div class="row matrixSpotsLegend">
     <div class="col-3" style="text-align: center">
       <div class="unpaid-square"></div>
-      <br>
+      <br />
       <small>Unpaid</small>
     </div>
     <div class="col-3" style="text-align: center">
@@ -22,13 +22,13 @@
       <small>First Time Instructor</small>
     </div>
     <div class="col-3" style="text-align: center">
-      <span class="badge" style="background-color: green; color: white;">B</span>
-      <br>
+      <span class="badge" style="background-color: green; color: white">B</span>
+      <br />
       <small>User Birthday</small>
     </div>
     <div class="col-3" style="text-align: center">
-      <span class="badge" style="background-color: red; color: white;">L</span>
-      <br>
+      <span class="badge" style="background-color: red; color: white">L</span>
+      <br />
       <small>Leaderboard</small>
     </div>
   </div>

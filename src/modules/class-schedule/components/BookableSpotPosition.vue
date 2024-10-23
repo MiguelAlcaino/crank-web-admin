@@ -92,18 +92,28 @@ function selectSpot() {
         'baseSpot',
         spotSelectionIsDisabled ? 'spotEnabledNotClickable' : 'enabledSpot',
         selected ? 'selectedSpot' : '',
-        isBookedForFree && !selected ? 'isBookedForFree' : '',       
+        isBookedForFree && !selected ? 'isBookedForFree' : '',
         isFirstTimeInThisTypeOfClass && !selected ? 'isFirstTimeInThisTypeOfClass' : '',
         isFirstTimeWithThisInstructor && !selected ? 'isFirstTimeWithThisInstructor' : '',
-        hasStats === false && !selected ? 'isSpotWithoutStats' : '',
+        hasStats === false && !selected ? 'isSpotWithoutStats' : ''
       ]"
     >
       {{ spotNumber + (isCheckedIn === true ? '✓' : '') }}
       <br />
       {{ user?.firstName }} {{ user?.lastName }}
 
-      <span class="badge top-left" style="background-color: red; color: white;" v-if="isUserLeaderboardEnabled">L</span>
-      <span class="badge top-right" style="background-color: green; color: white;" v-if="isTodayUserBirthday">B</span>
+      <span
+        class="badge top-left"
+        style="background-color: red; color: white"
+        v-if="isUserLeaderboardEnabled"
+        >L</span
+      >
+      <span
+        class="badge top-right"
+        style="background-color: green; color: white"
+        v-if="isTodayUserBirthday"
+        >B</span
+      >
     </div>
     <div
       v-else-if="enabled"
@@ -112,7 +122,7 @@ function selectSpot() {
         spotSelectionIsDisabled ? 'spotEnabledNotClickable' : 'enabledSpot',
         selected ? 'selectedSpot' : '',
         isSpotWithOnlyStats && !selected ? 'isSpotWithOnlyStats' : '',
-        isSpotWithOnlyStats && selected ? 'isSpotWithOnlyStatsSelected' : '',  
+        isSpotWithOnlyStats && selected ? 'isSpotWithOnlyStatsSelected' : ''
       ]"
       @click="spotSelectionIsDisabled ? null : selectSpot()"
     >

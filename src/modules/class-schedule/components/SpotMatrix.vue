@@ -5,6 +5,7 @@ import IconPositionNotBookable from '@/modules/class-schedule/components/icons/I
 import BookableSpotPosition from '@/modules/class-schedule/components/BookableSpotPosition.vue'
 import ViewUserProfileButton from '@/modules/class-schedule/components/ViewUserProfileButton.vue'
 import CheckInCheckOutUserInClass from '@/modules/class-schedule/components/CheckInCheckOutUserInClass.vue'
+import BadgeStateIndicator from '@/modules/class-schedule/components/BadgeStateIndicator.vue'
 
 import type { EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
 import { PositionIconEnum } from '@/modules/shared/interfaces'
@@ -380,30 +381,26 @@ const sortBy = (key: keyof User) => {
                 ></ViewUserProfileButton>
               </td>
               <td>
-                <span class="badge isBookedForFree-badge" v-if="item.isBookedForFree === true">
-                  Not paid
-                </span>
-                <span
-                  class="badge isFirstTimeInThisTypeOfClass-badge"
+                <BadgeStateIndicator
+                  type="isBookedForFree"
+                  v-if="item.isBookedForFree === true"
+                ></BadgeStateIndicator>
+                <BadgeStateIndicator
+                  type="isFirstTimeInThisTypeOfClass"
                   v-if="item.isFirstTimeInThisTypeOfClass"
-                >
-                  First Time In Class
-                </span>
-                <span
-                  class="badge isFirstTimeWithThisInstructor-badge"
+                ></BadgeStateIndicator>
+                <BadgeStateIndicator
+                  type="isFirstTimeWithThisInstructor"
                   v-if="item.isFirstTimeWithThisInstructor"
-                >
-                  First Time Instructor
-                </span>
-                <span class="badge isTodayUserBirthday-badge" v-if="item.isTodayUserBirthday">
-                  Today Birthday
-                </span>
-                <span
-                  class="badge isUserLeaderboardEnabled-badge"
+                ></BadgeStateIndicator>
+                <BadgeStateIndicator
+                  type="isTodayUserBirthday"
+                  v-if="item.isTodayUserBirthday"
+                ></BadgeStateIndicator>
+                <BadgeStateIndicator
+                  type="isUserLeaderboardEnabled"
                   v-if="item.isUserLeaderboardEnabled"
-                >
-                  Leaderboard
-                </span>
+                ></BadgeStateIndicator>
               </td>
             </tr>
             <tr v-if="sortedEnrollments.length === 0">
@@ -439,35 +436,5 @@ td.class-position {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.isFirstTimeWithThisInstructor-badge {
-  background-color: #add8e6;
-  color: white;
-  margin-right: 5px;
-}
-
-.isTodayUserBirthday-badge {
-  background-color: #32cd32;
-  color: white;
-  margin-right: 5px;
-}
-
-.isUserLeaderboardEnabled-badge {
-  background-color: red;
-  color: white;
-  margin-right: 5px;
-}
-
-.isBookedForFree-badge {
-  background-color: #ffd903;
-  color: black;
-  margin-right: 5px;
-}
-
-.isFirstTimeInThisTypeOfClass-badge {
-  background-color: #00b9ff;
-  color: white;
-  margin-right: 5px;
 }
 </style>
