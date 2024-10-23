@@ -59,7 +59,7 @@ const badgeClass = computed(() => {
 }
 
 .isTodayUserBirthday-badge {
-  background-color: #32cd32;
+  background-color: green;
   color: white;
   margin-right: 5px;
 }
