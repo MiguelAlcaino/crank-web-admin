@@ -83,7 +83,7 @@ function selectSpot() {
       {{ spotNumber }}
     </div>
   </div>
-  <!-- none || asignUserToSpot -->
+  <!-- none || assignUserToSpot -->
   <div v-else>
     <div
       v-if="isBooked"
@@ -132,8 +132,8 @@ function selectSpot() {
 
 <style scoped>
 .baseSpot {
-  height: 60px;
-  width: 60px;
+  height: 70px;
+  width: 70px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
