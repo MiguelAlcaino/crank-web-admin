@@ -454,7 +454,7 @@ td.class-position {
 }
 
 .isUserLeaderboardEnabled-badge {
-  background-color: #008000;
+  background-color: red;
   color: white;
   margin-right: 5px;
 }

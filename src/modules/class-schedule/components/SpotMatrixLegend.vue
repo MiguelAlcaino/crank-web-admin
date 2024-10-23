@@ -22,12 +22,12 @@
       <small>First Time Instructor</small>
     </div>
     <div class="col-3" style="text-align: center">
-      <span class="badge badge-success">B</span>
+      <span class="badge" style="background-color: green; color: white;">B</span>
       <br>
       <small>User Birthday</small>
     </div>
     <div class="col-3" style="text-align: center">
-      <span class="badge badge-danger">L</span>
+      <span class="badge" style="background-color: red; color: white;">L</span>
       <br>
       <small>Leaderboard</small>
     </div>

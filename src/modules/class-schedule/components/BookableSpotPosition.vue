@@ -102,8 +102,8 @@ function selectSpot() {
       <br />
       {{ user?.firstName }} {{ user?.lastName }}
 
-      <span class="badge badge-danger top-left" v-if="isUserLeaderboardEnabled">L</span>
-      <span class="badge badge-success top-right" v-if="isTodayUserBirthday">B</span>
+      <span class="badge top-left" style="background-color: red; color: white;" v-if="isUserLeaderboardEnabled">L</span>
+      <span class="badge top-right" style="background-color: green; color: white;" v-if="isTodayUserBirthday">B</span>
     </div>
     <div
       v-else-if="enabled"
