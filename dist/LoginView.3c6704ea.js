@@ -1,5 +1,5 @@
-import { d as w, r as u, a as S, S as r, c as x, u as V, b as o, e, w as $, f as _, v as q, g as c, F as m, h as p, i as D, j as L, k as I, o as a, t as f, _ as M, p as T, l as A, m as v, n as h, q as B, s as E, x as N, y as j } from "./index.f51c7654.js";
-const C = (i) => (T("data-v-136f860c"), i = i(), A(), i), F = { class: "d-flex justify-content-center h-100" }, U = { class: "card" }, z = { class: "card-body mt-5" }, G = ["onSubmit"], H = { class: "form-row" }, J = { class: "col-md-12 mb-3" }, K = ["value"], O = ["value"], P = { class: "form-row" }, Q = { class: "col-md-12 mb-3" }, R = /* @__PURE__ */ C(() => /* @__PURE__ */ e("label", {
+import { d as w, r as u, a as S, S as r, c as x, u as V, b as o, e, w as $, f as _, v as q, g as l, F as m, h as p, i as D, j as L, k as I, o as a, t as f, _ as M, p as T, l as A, m as v, n as h, q as B, s as E, x as N, y as j } from "./index.77d5a29b.js";
+const C = (i) => (T("data-v-931f824f"), i = i(), A(), i), F = { class: "d-flex justify-content-center h-100" }, U = { class: "card" }, z = { class: "card-body mt-5" }, G = ["onSubmit"], H = { class: "form-row" }, J = { class: "col-md-12 mb-3" }, K = ["value"], O = ["value"], P = { class: "form-row" }, Q = { class: "col-md-12 mb-3" }, R = /* @__PURE__ */ C(() => /* @__PURE__ */ e("label", {
   for: "token",
   class: "input-label"
 }, "Token *", -1)), W = {
@@ -19,9 +19,9 @@ const C = (i) => (T("data-v-136f860c"), i = i(), A(), i), F = { class: "d-flex j
       token: {
         required: v.withMessage("Token is required", h)
       }
-    })), l = V(k, t);
+    })), c = V(k, t);
     async function y() {
-      await l.value.$validate() && (d.value = !1, B().setSession(t.token), E().setSite(b.value), await N.push({ name: "home" }));
+      await c.value.$validate() && (d.value = !1, B().setSession(t.token), E().setSite(b.value), await N.push({ name: "home" }));
     }
     return (g, n) => (a(), o("div", F, [
       e("div", U, [
@@ -38,15 +38,15 @@ const C = (i) => (T("data-v-136f860c"), i = i(), A(), i), F = { class: "d-flex j
                   required: ""
                 }, [
                   e("option", {
-                    value: c(r).Dubai
+                    value: l(r).Dubai
                   }, "Dubai", 8, K),
                   e("option", {
-                    value: c(r).AbuDhabi
+                    value: l(r).AbuDhabi
                   }, "Abu Dhabi", 8, O)
                 ], 512), [
                   [q, t.location]
                 ]),
-                (a(!0), o(m, null, p(c(l).location.$errors, (s) => (a(), o("small", {
+                (a(!0), o(m, null, p(l(c).location.$errors, (s) => (a(), o("small", {
                   key: s.$uid,
                   class: "form-text",
                   style: { color: "red" }
@@ -67,7 +67,7 @@ const C = (i) => (T("data-v-136f860c"), i = i(), A(), i), F = { class: "d-flex j
                 }, null, 512), [
                   [D, t.token]
                 ]),
-                (a(!0), o(m, null, p(c(l).token.$errors, (s) => (a(), o("small", {
+                (a(!0), o(m, null, p(l(c).token.$errors, (s) => (a(), o("small", {
                   key: s.$uid,
                   class: "form-text",
                   style: { color: "red" }
@@ -90,7 +90,7 @@ const C = (i) => (T("data-v-136f860c"), i = i(), A(), i), F = { class: "d-flex j
     ]));
   }
 });
-const se = /* @__PURE__ */ j(Z, [["__scopeId", "data-v-136f860c"]]);
+const se = /* @__PURE__ */ j(Z, [["__scopeId", "data-v-931f824f"]]);
 export {
   se as default
 };
