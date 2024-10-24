@@ -5,6 +5,7 @@ import IconPositionNotBookable from '@/modules/class-schedule/components/icons/I
 import BookableSpotPosition from '@/modules/class-schedule/components/BookableSpotPosition.vue'
 import ViewUserProfileButton from '@/modules/class-schedule/components/ViewUserProfileButton.vue'
 import CheckInCheckOutUserInClass from '@/modules/class-schedule/components/CheckInCheckOutUserInClass.vue'
+import BadgeStateIndicator from '@/modules/class-schedule/components/BadgeStateIndicator.vue'
 
 import type { EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
 import { PositionIconEnum } from '@/modules/shared/interfaces'
@@ -24,6 +25,9 @@ interface SpotPosition {
   isSpotWithOnlyStats?: boolean
   hasStats?: boolean | null
   isFirstTimeInThisTypeOfClass?: boolean
+  isFirstTimeWithThisInstructor?: boolean
+  isTodayUserBirthday?: boolean
+  isUserLeaderboardEnabled?: boolean
 }
 
 interface ClassPosition {
@@ -54,6 +58,9 @@ interface EnrollmentInfo {
   isBookedForFree?: boolean | null
   hasStats?: boolean | null
   isFirstTimeInThisTypeOfClass: boolean
+  isFirstTimeWithThisInstructor: boolean
+  isTodayUserBirthday: boolean
+  isUserLeaderboardEnabled: boolean
 }
 
 interface IdentifiableSiteUser {
@@ -137,7 +144,10 @@ function newSpotPosition(
   isCheckedIn: boolean,
   isBookedForFree: boolean,
   hasStats?: boolean | null,
-  isFirstTimeInThisTypeOfClass?: boolean
+  isFirstTimeInThisTypeOfClass?: boolean,
+  isFirstTimeWithThisInstructor?: boolean,
+  isTodayUserBirthday?: boolean,
+  isUserLeaderboardEnabled?: boolean
 ): SpotPosition {
   if (classPosition.icon === PositionIconEnum.Spot) {
     return {
@@ -151,7 +161,10 @@ function newSpotPosition(
       isBookedForFree: isBookedForFree,
       isSpotWithOnlyStats: props.orphanedClassStatsSpots.includes(classPosition.spotNumber!),
       hasStats: hasStats,
-      isFirstTimeInThisTypeOfClass: isFirstTimeInThisTypeOfClass
+      isFirstTimeInThisTypeOfClass: isFirstTimeInThisTypeOfClass,
+      isFirstTimeWithThisInstructor: isFirstTimeWithThisInstructor,
+      isTodayUserBirthday: isTodayUserBirthday,
+      isUserLeaderboardEnabled: isUserLeaderboardEnabled
     }
   }
   return {
@@ -169,6 +182,9 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
   let isBookedForFree: boolean
   let hasStats: boolean | null | undefined
   let isFirstTimeInThisTypeOfClass: boolean
+  let isFirstTimeWithThisInstructor: boolean
+  let isTodayUserBirthday: boolean
+  let isUserLeaderboardEnabled: boolean
 
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix.length; j++) {
@@ -183,6 +199,9 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
         isBookedForFree = false
         hasStats = null
         isFirstTimeInThisTypeOfClass = false
+        isFirstTimeWithThisInstructor = false
+        isTodayUserBirthday = false
+        isUserLeaderboardEnabled = false
 
         if (classPosition.icon === PositionIconEnum.Spot) {
           if (classPosition.spotNumber && props.enrollments) {
@@ -195,6 +214,9 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
                 hasStats = enrollment.hasStats
                 user = enrollment.identifiableSiteUser?.identifiableUser?.user
                 isFirstTimeInThisTypeOfClass = enrollment.isFirstTimeInThisTypeOfClass
+                isFirstTimeWithThisInstructor = enrollment.isFirstTimeWithThisInstructor
+                isTodayUserBirthday = enrollment.isTodayUserBirthday
+                isUserLeaderboardEnabled = enrollment.isUserLeaderboardEnabled
                 break
               }
             }
@@ -208,7 +230,10 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
             isCheckedIn,
             isBookedForFree,
             hasStats,
-            isFirstTimeInThisTypeOfClass
+            isFirstTimeInThisTypeOfClass,
+            isFirstTimeWithThisInstructor,
+            isTodayUserBirthday,
+            isUserLeaderboardEnabled
           )
         )
       }
@@ -300,6 +325,9 @@ const sortBy = (key: keyof User) => {
                   :is-spot-with-only-stats="spot.isSpotWithOnlyStats ?? false"
                   :has-stats="spot.hasStats"
                   :isFirstTimeInThisTypeOfClass="spot.isFirstTimeInThisTypeOfClass ?? false"
+                  :isFirstTimeWithThisInstructor="spot.isFirstTimeWithThisInstructor ?? false"
+                  :isTodayUserBirthday="spot.isTodayUserBirthday ?? false"
+                  :isUserLeaderboardEnabled="spot.isUserLeaderboardEnabled ?? false"
                 />
                 <icon-position-not-bookable v-else :icon="spot.icon" />
               </td>
@@ -353,12 +381,26 @@ const sortBy = (key: keyof User) => {
                 ></ViewUserProfileButton>
               </td>
               <td>
-                <span v-if="item.isBookedForFree === true" class="badge badge-warning"
-                  >Not paid</span
-                >
-                <span v-if="item.isFirstTimeInThisTypeOfClass" class="badge badge-primary"
-                  >First Time In Class</span
-                >
+                <BadgeStateIndicator
+                  type="isBookedForFree"
+                  v-if="item.isBookedForFree === true"
+                ></BadgeStateIndicator>
+                <BadgeStateIndicator
+                  type="isFirstTimeInThisTypeOfClass"
+                  v-if="item.isFirstTimeInThisTypeOfClass"
+                ></BadgeStateIndicator>
+                <BadgeStateIndicator
+                  type="isFirstTimeWithThisInstructor"
+                  v-if="item.isFirstTimeWithThisInstructor"
+                ></BadgeStateIndicator>
+                <BadgeStateIndicator
+                  type="isTodayUserBirthday"
+                  v-if="item.isTodayUserBirthday"
+                ></BadgeStateIndicator>
+                <BadgeStateIndicator
+                  type="isUserLeaderboardEnabled"
+                  v-if="item.isUserLeaderboardEnabled"
+                ></BadgeStateIndicator>
               </td>
             </tr>
             <tr v-if="sortedEnrollments.length === 0">

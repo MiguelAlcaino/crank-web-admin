@@ -17,6 +17,9 @@ interface Props {
   isSpotWithOnlyStats: boolean
   hasStats?: boolean | null
   isFirstTimeInThisTypeOfClass: boolean
+  isFirstTimeWithThisInstructor: boolean
+  isTodayUserBirthday: boolean
+  isUserLeaderboardEnabled: boolean
 }
 </script>
 
@@ -80,7 +83,7 @@ function selectSpot() {
       {{ spotNumber }}
     </div>
   </div>
-  <!-- none || asignUserToSpot -->
+  <!-- none || assignUserToSpot -->
   <div v-else>
     <div
       v-if="isBooked"
@@ -90,13 +93,27 @@ function selectSpot() {
         spotSelectionIsDisabled ? 'spotEnabledNotClickable' : 'enabledSpot',
         selected ? 'selectedSpot' : '',
         isBookedForFree && !selected ? 'isBookedForFree' : '',
-        hasStats === false && !selected ? 'isSpotWithouttats' : '',
-        isFirstTimeInThisTypeOfClass && !selected ? 'isFirstTimeInThisTypeOfClass' : ''
+        isFirstTimeInThisTypeOfClass && !selected ? 'isFirstTimeInThisTypeOfClass' : '',
+        isFirstTimeWithThisInstructor && !selected ? 'isFirstTimeWithThisInstructor' : '',
+        hasStats === false && !selected ? 'isSpotWithoutStats' : ''
       ]"
     >
       {{ spotNumber + (isCheckedIn === true ? '✓' : '') }}
       <br />
       {{ user?.firstName }} {{ user?.lastName }}
+
+      <span
+        class="badge top-left"
+        style="background-color: red; color: white"
+        v-if="isUserLeaderboardEnabled"
+        >L</span
+      >
+      <span
+        class="badge top-right"
+        style="background-color: green; color: white"
+        v-if="isTodayUserBirthday"
+        >B</span
+      >
     </div>
     <div
       v-else-if="enabled"
@@ -105,9 +122,7 @@ function selectSpot() {
         spotSelectionIsDisabled ? 'spotEnabledNotClickable' : 'enabledSpot',
         selected ? 'selectedSpot' : '',
         isSpotWithOnlyStats && !selected ? 'isSpotWithOnlyStats' : '',
-        isSpotWithOnlyStats && selected ? 'isSpotWithOnlyStatsSelected' : '',
-        hasStats === false && !selected ? 'isSpotWithouttats' : '',
-        hasStats === false && selected ? 'isSpotWithoutStatsSelected' : ''
+        isSpotWithOnlyStats && selected ? 'isSpotWithOnlyStatsSelected' : ''
       ]"
       @click="spotSelectionIsDisabled ? null : selectSpot()"
     >
@@ -129,8 +144,8 @@ function selectSpot() {
 
 <style scoped>
 .baseSpot {
-  height: 60px;
-  width: 60px;
+  height: 70px;
+  width: 70px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -139,8 +154,7 @@ function selectSpot() {
   font-weight: bold;
   font-size: 9px;
   border: 2px #000000 solid;
-  /* box-shadow: 0 0 0 3px #ffd903,
-    0 0 0 6px #f37676; */
+  position: relative;
 }
 
 .disabledSpot {
@@ -190,11 +204,11 @@ function selectSpot() {
 }
 
 .isBookedForFree {
-  border: 2px solid #ffd903 !important;
+  background-color: #ffd903;
 }
 
 .isBookedForFreeSelected {
-  border: 2px dashed #ffd903 !important;
+  background-color: #ffd903;
 }
 
 .isSpotWithOnlyStats {
@@ -205,19 +219,31 @@ function selectSpot() {
   border: 2px dashed #8a00e7 !important;
 }
 
-.isSpotWithouttats {
+.isSpotWithoutStats {
   border: 2px solid #ff7e62 !important;
-}
-
-.isSpotWithoutStatsSelected {
-  border: 2px dashed #ff7e62 !important;
 }
 
 .isFirstTimeInThisTypeOfClass {
   border: 2px solid #00b9ff !important;
 }
 
-.isFirstTimeInAClassSelected {
-  border: 2px dashed #00b9ff !important;
+.isFirstTimeWithThisInstructor {
+  box-shadow: 0 0 0 2px #add8e6;
+}
+
+.baseSpot .top-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 9px;
+  margin: 3px;
+}
+
+.baseSpot .top-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 9px;
+  margin: 3px;
 }
 </style>

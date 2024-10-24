@@ -145,6 +145,9 @@ export class ApiService {
               isBookedForFree
               hasStats
               isFirstTimeInThisTypeOfClass
+              isFirstTimeWithThisInstructor
+              isTodayUserBirthday
+              isUserLeaderboardEnabled
             }
           }
           onHoldSpots
