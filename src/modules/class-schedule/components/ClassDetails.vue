@@ -208,7 +208,7 @@ function disableSyncButtons(disabled: boolean) {
           <div v-if="isSynchronizing">
             <h6>
               synchronizing...&nbsp;<span
-                class="spinner-border spinner-border-sm crankSpiner"
+                class="spinner-border spinner-border-sm crankSpinner"
               ></span>
             </h6>
           </div>
@@ -287,7 +287,7 @@ function disableSyncButtons(disabled: boolean) {
       <div class="row" v-if="checkingWaitlist">
         <div class="col-12 text-center">
           <CrankCircularProgressIndicator
-            text="Cheking waitlist status..."
+            text="Checking waitlist status..."
           ></CrankCircularProgressIndicator>
         </div>
       </div>
@@ -314,7 +314,7 @@ function disableSyncButtons(disabled: boolean) {
       <hr />
       <br />
 
-      <!-- Class Without Matix -->
+      <!-- Class Without Matrix -->
       <ClassOptionsWithoutMatrix
         v-if="classInfo != null && classInfo.roomLayout == null && classInfo.enrollments != null"
         :class-id="classId"
@@ -390,7 +390,7 @@ function disableSyncButtons(disabled: boolean) {
   padding: 30px;
 }
 
-.crankSpiner {
+.crankSpinner {
   color: #ff6f60;
 }
 </style>

@@ -6,6 +6,9 @@ interface EnrollmentInfo {
   isCheckedIn?: boolean
   isBookedForFree?: boolean | null
   isFirstTimeInThisTypeOfClass: boolean
+  isFirstTimeWithThisInstructor: boolean
+  isTodayUserBirthday: boolean
+  isUserLeaderboardEnabled: boolean
 }
 
 interface IdentifiableSiteUser {
@@ -39,6 +42,7 @@ import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import CheckInCheckOutUserInClass from '@/modules/class-schedule/components/CheckInCheckOutUserInClass.vue'
 import ViewUserProfileButton from '@/modules/class-schedule/components/ViewUserProfileButton.vue'
+import BadgeStateIndicator from '@/modules/class-schedule/components/BadgeStateIndicator.vue'
 import type { EnrollmentStatusEnum } from '../interfaces'
 
 withDefaults(defineProps<Props>(), {
@@ -133,10 +137,26 @@ async function removeUserFromClass(enrollmentId: string, lateCancel: boolean) {
             ></ViewUserProfileButton>
           </td>
           <td>
-            <span v-if="item.isBookedForFree === true" class="badge badge-warning">Not paid</span>
-            <span v-if="item.isFirstTimeInThisTypeOfClass" class="badge badge-primary"
-              >First Time In Class</span
-            >
+            <BadgeStateIndicator
+              type="isBookedForFree"
+              v-if="item.isBookedForFree === true"
+            ></BadgeStateIndicator>
+            <BadgeStateIndicator
+              type="isFirstTimeInThisTypeOfClass"
+              v-if="item.isFirstTimeInThisTypeOfClass"
+            ></BadgeStateIndicator>
+            <BadgeStateIndicator
+              type="isFirstTimeWithThisInstructor"
+              v-if="item.isFirstTimeWithThisInstructor"
+            ></BadgeStateIndicator>
+            <BadgeStateIndicator
+              type="isTodayUserBirthday"
+              v-if="item.isTodayUserBirthday"
+            ></BadgeStateIndicator>
+            <BadgeStateIndicator
+              type="isUserLeaderboardEnabled"
+              v-if="item.isUserLeaderboardEnabled"
+            ></BadgeStateIndicator>
           </td>
         </tr>
         <tr v-if="!isLoading && enrollments.length === 0">

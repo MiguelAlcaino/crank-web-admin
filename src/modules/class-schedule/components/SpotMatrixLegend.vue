@@ -1,8 +1,9 @@
 <template>
   <div class="row matrixSpotsLegend">
     <div class="col-3" style="text-align: center">
-      <hr style="background-color: #ffd903" />
-      <small>Not Paid</small>
+      <div class="unpaid-square"></div>
+      <br />
+      <small>Unpaid</small>
     </div>
     <div class="col-3" style="text-align: center">
       <hr style="background-color: #8a00e7" />
@@ -15,6 +16,20 @@
     <div class="col-3" style="text-align: center">
       <hr style="background-color: #00b9ff" />
       <small>First Time In Class</small>
+    </div>
+    <div class="col-3" style="text-align: center">
+      <hr style="background-color: #add8e6" />
+      <small>First Time Instructor</small>
+    </div>
+    <div class="col-3" style="text-align: center">
+      <span class="badge" style="background-color: green; color: white">B</span>
+      <br />
+      <small>User Birthday</small>
+    </div>
+    <div class="col-3" style="text-align: center">
+      <span class="badge" style="background-color: red; color: white">L</span>
+      <br />
+      <small>Leaderboard</small>
     </div>
   </div>
 </template>
@@ -35,5 +50,13 @@ hr {
   border: none;
   height: 2px;
   max-width: 20px;
+}
+
+.unpaid-square {
+  width: 20px;
+  height: 20px;
+  background-color: #ffd903;
+  display: inline-block;
+  margin-bottom: 3px;
 }
 </style>
