@@ -1547,6 +1547,7 @@ export type ClassInfoAdminQuery = {
           isFirstTimeWithThisInstructor: boolean
           isTodayUserBirthday: boolean
           isUserLeaderboardEnabled: boolean
+          bookedViaClassPass: boolean
           id: string
           enrollmentStatus: EnrollmentStatusEnum
           enrollmentDateTime: any
@@ -2648,7 +2649,8 @@ export const ClassInfoAdminDocument = {
                             {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'isUserLeaderboardEnabled' }
-                            }
+                            },
+                            { kind: 'Field', name: { kind: 'Name', value: 'bookedViaClassPass' } }
                           ]
                         }
                       }
