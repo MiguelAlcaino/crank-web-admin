@@ -31,6 +31,11 @@
       <br />
       <small>Leaderboard</small>
     </div>
+    <div class="col-3" style="text-align: center">
+      <span class="badge" style="background-color: #ff00ff; color: white">C</span>
+      <br />
+      <small>Class Pass</small>
+    </div>
   </div>
 </template>
 
