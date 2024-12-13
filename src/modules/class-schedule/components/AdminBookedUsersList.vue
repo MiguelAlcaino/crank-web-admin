@@ -9,6 +9,7 @@ interface EnrollmentInfo {
   isFirstTimeWithThisInstructor: boolean
   isTodayUserBirthday: boolean
   isUserLeaderboardEnabled: boolean
+  bookedViaClassPass: boolean
 }
 
 interface IdentifiableSiteUser {
@@ -156,6 +157,10 @@ async function removeUserFromClass(enrollmentId: string, lateCancel: boolean) {
             <BadgeStateIndicator
               type="isUserLeaderboardEnabled"
               v-if="item.isUserLeaderboardEnabled"
+            ></BadgeStateIndicator>
+            <BadgeStateIndicator
+              type="bookedViaClassPass"
+              v-if="item.bookedViaClassPass"
             ></BadgeStateIndicator>
           </td>
         </tr>

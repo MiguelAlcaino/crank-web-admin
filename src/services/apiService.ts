@@ -148,6 +148,7 @@ export class ApiService {
               isFirstTimeWithThisInstructor
               isTodayUserBirthday
               isUserLeaderboardEnabled
+              bookedViaClassPass
             }
           }
           onHoldSpots

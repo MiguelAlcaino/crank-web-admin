@@ -20,6 +20,7 @@ interface Props {
   isFirstTimeWithThisInstructor: boolean
   isTodayUserBirthday: boolean
   isUserLeaderboardEnabled: boolean
+  bookedViaClassPass: boolean
 }
 </script>
 
@@ -114,6 +115,12 @@ function selectSpot() {
         v-if="isTodayUserBirthday"
         >B</span
       >
+      <span
+        class="badge bottom-left"
+        style="background-color: #ff00ff; color: white"
+        v-if="bookedViaClassPass"
+        >C</span
+      >
     </div>
     <div
       v-else-if="enabled"
@@ -144,8 +151,8 @@ function selectSpot() {
 
 <style scoped>
 .baseSpot {
-  height: 70px;
-  width: 70px;
+  height: 80px;
+  width: 80px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -242,6 +249,14 @@ function selectSpot() {
 .baseSpot .top-left {
   position: absolute;
   top: 0;
+  left: 0;
+  font-size: 9px;
+  margin: 3px;
+}
+
+.baseSpot .bottom-left {
+  position: absolute;
+  bottom: 0;
   left: 0;
   font-size: 9px;
   margin: 3px;
