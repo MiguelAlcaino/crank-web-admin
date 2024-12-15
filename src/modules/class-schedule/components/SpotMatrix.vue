@@ -337,6 +337,7 @@ const sortBy = (key: keyof User) => {
                   :isTodayUserBirthday="spot.isTodayUserBirthday ?? false"
                   :isUserLeaderboardEnabled="spot.isUserLeaderboardEnabled ?? false"
                   :bookedViaClassPass="spot.bookedViaClassPass ?? false"
+                  :icon="spot.icon"
                 />
                 <icon-position-not-bookable v-else :icon="spot.icon" />
               </td>

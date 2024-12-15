@@ -496,7 +496,12 @@ async function goToRoomLayoutList() {
                     }"
                     v-model="spot.spotNumber"
                   />
-                  <img src="@/assets/icons/bench_icon.png" alt="" height="25" style="margin-top: 10px;"/>
+                  <img
+                    src="@/assets/icons/bench_icon.png"
+                    alt=""
+                    height="25"
+                    style="margin-top: 10px"
+                  />
                 </div>
                 <div v-else-if="spot.type === PositionIconEnum.Instructor">
                   <i class="bi bi-person-fill" style="font-size: 1.8rem"></i>
