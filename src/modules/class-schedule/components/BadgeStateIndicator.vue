@@ -8,6 +8,7 @@ const props = defineProps<{
     | 'isFirstTimeWithThisInstructor'
     | 'isTodayUserBirthday'
     | 'isUserLeaderboardEnabled'
+    | 'bookedViaClassPass'
 }>()
 
 const text = computed(() => {
@@ -22,6 +23,8 @@ const text = computed(() => {
       return 'Birthday'
     case 'isUserLeaderboardEnabled':
       return 'Leaderboard'
+    case 'bookedViaClassPass':
+      return 'Class Pass'
     default:
       return ''
   }
@@ -39,6 +42,8 @@ const badgeClass = computed(() => {
       return 'isTodayUserBirthday-badge'
     case 'isUserLeaderboardEnabled':
       return 'isUserLeaderboardEnabled-badge'
+    case 'bookedViaClassPass':
+      return 'bookedViaClassPass-badge'
     default:
       return ''
   }
@@ -78,6 +83,12 @@ const badgeClass = computed(() => {
 
 .isFirstTimeInThisTypeOfClass-badge {
   background-color: #00b9ff;
+  color: white;
+  margin-right: 5px;
+}
+
+.bookedViaClassPass-badge {
+  background-color: #ff00ff;
   color: white;
   margin-right: 5px;
 }

@@ -387,6 +387,8 @@ export type Enrollment = {
 
 export type EnrollmentInfo = EnrollmentInfoInterface & {
   __typename: 'EnrollmentInfo'
+  /** Returns true if the user was booked via ClassPass */
+  bookedViaClassPass: Scalars['Boolean']
   enrollmentDateTime: Scalars['DateTime']
   enrollmentDateTimeWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']
   enrollmentStatus: EnrollmentStatusEnum
@@ -510,6 +512,11 @@ export type IsSmsValidationCodeValidUnion =
   | SmsCodeValidatedSuccessfully
   | SmsValidationCodeError
 
+export type ItemToShoppingCartInput = {
+  quantity: Scalars['Int']
+  sellableProductId: Scalars['ID']
+}
+
 export type LateCancellationRequiredError = Error & {
   __typename: 'LateCancellationRequiredError'
   code: Scalars['String']
@@ -533,6 +540,8 @@ export type Mutation = {
   addAdminUser: AdminUserResultUnion
   /** Adds a new device token to be used for device notifications */
   addDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']>
+  /** Allows to add item to shopping cart */
+  addItemToShoppingCart: Scalars['Boolean']
   /** Books the current user in a class */
   bookClass: BookClassResultUnion
   /** Adds a user into a given class */
@@ -575,6 +584,8 @@ export type Mutation = {
   removeAdminUser: Scalars['Boolean']
   /** Removes the current user's waitlist entry from a class */
   removeCurrentUserFromWaitlist?: Maybe<RemoveCurrentUserFromWaitlistUnion>
+  /** Remove Item from shopping cart */
+  removeItemFromShoppingCart: Scalars['Boolean']
   /** Removes a user from a class */
   removeUserFromClass: CancelEnrollmentResultUnion
   /** Removes a waitlist entry */
@@ -611,6 +622,8 @@ export type Mutation = {
   updateCurrentUserPassword?: Maybe<Scalars['Boolean']>
   /** Updates a gift card */
   updateGiftCard: GiftCard
+  /** Allows to update an Item from Shopping Cart */
+  updateItemInShoppingCart: ShoppingCart
   updateUserPassword?: Maybe<Scalars['Boolean']>
 }
 
@@ -626,6 +639,10 @@ export type MutationAddAdminUserArgs = {
 export type MutationAddDeviceTokenToCurrentUserArgs = {
   input?: InputMaybe<DeviceTokenInput>
   site?: InputMaybe<SiteEnum>
+}
+
+export type MutationAddItemToShoppingCartArgs = {
+  input?: InputMaybe<ItemToShoppingCartInput>
 }
 
 export type MutationBookClassArgs = {
@@ -727,6 +744,10 @@ export type MutationRemoveCurrentUserFromWaitlistArgs = {
   site: SiteEnum
 }
 
+export type MutationRemoveItemFromShoppingCartArgs = {
+  id: Scalars['ID']
+}
+
 export type MutationRemoveUserFromClassArgs = {
   input: CancelEnrollmentInput
 }
@@ -797,6 +818,10 @@ export type MutationUpdateCurrentUserPasswordArgs = {
 
 export type MutationUpdateGiftCardArgs = {
   input: UpdateGiftCardInput
+}
+
+export type MutationUpdateItemInShoppingCartArgs = {
+  input?: InputMaybe<ItemToShoppingCartInput>
 }
 
 export type MutationUpdateUserPasswordArgs = {
@@ -1223,6 +1248,24 @@ export type SetRoomLayoutForClassSchedulesInput = {
   roomLayoutId?: InputMaybe<Scalars['ID']>
 }
 
+export type ShoppingCart = {
+  __typename: 'ShoppingCart'
+  currency: Scalars['String']
+  discountCode?: Maybe<Scalars['String']>
+  giftCardCode?: Maybe<Scalars['String']>
+  items: Array<ShoppingCartItem>
+  subTotal: Scalars['Float']
+  total: Scalars['Float']
+}
+
+export type ShoppingCartItem = {
+  __typename: 'ShoppingCartItem'
+  id: Scalars['ID']
+  product: SellableProductInterface
+  quantity: Scalars['Int']
+  subtotal: Scalars['Float']
+}
+
 export type SimpleSiteUser = {
   __typename: 'SimpleSiteUser'
   externalUserId: Scalars['ID']
@@ -1351,6 +1394,7 @@ export type User = {
   lastName: Scalars['String']
   leaderboardUsername?: Maybe<Scalars['String']>
   phone: Scalars['String']
+  shoppingCart?: Maybe<ShoppingCart>
   siteUsers: Array<SimpleSiteUser>
   state?: Maybe<State>
   weight?: Maybe<Scalars['Float']>
@@ -1500,6 +1544,10 @@ export type ClassInfoAdminQuery = {
           isBookedForFree: boolean
           hasStats?: boolean | null
           isFirstTimeInThisTypeOfClass: boolean
+          isFirstTimeWithThisInstructor: boolean
+          isTodayUserBirthday: boolean
+          isUserLeaderboardEnabled: boolean
+          bookedViaClassPass: boolean
           id: string
           enrollmentStatus: EnrollmentStatusEnum
           enrollmentDateTime: any
@@ -2592,7 +2640,17 @@ export const ClassInfoAdminDocument = {
                             {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'isFirstTimeInThisTypeOfClass' }
-                            }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'isFirstTimeWithThisInstructor' }
+                            },
+                            { kind: 'Field', name: { kind: 'Name', value: 'isTodayUserBirthday' } },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'isUserLeaderboardEnabled' }
+                            },
+                            { kind: 'Field', name: { kind: 'Name', value: 'bookedViaClassPass' } }
                           ]
                         }
                       }

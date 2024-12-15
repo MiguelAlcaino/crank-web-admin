@@ -28,6 +28,7 @@ interface SpotPosition {
   isFirstTimeWithThisInstructor?: boolean
   isTodayUserBirthday?: boolean
   isUserLeaderboardEnabled?: boolean
+  bookedViaClassPass?: boolean
 }
 
 interface ClassPosition {
@@ -61,6 +62,7 @@ interface EnrollmentInfo {
   isFirstTimeWithThisInstructor: boolean
   isTodayUserBirthday: boolean
   isUserLeaderboardEnabled: boolean
+  bookedViaClassPass: boolean
 }
 
 interface IdentifiableSiteUser {
@@ -147,7 +149,8 @@ function newSpotPosition(
   isFirstTimeInThisTypeOfClass?: boolean,
   isFirstTimeWithThisInstructor?: boolean,
   isTodayUserBirthday?: boolean,
-  isUserLeaderboardEnabled?: boolean
+  isUserLeaderboardEnabled?: boolean,
+  bookedViaClassPass?: boolean
 ): SpotPosition {
   if (classPosition.icon === PositionIconEnum.Spot) {
     return {
@@ -164,7 +167,8 @@ function newSpotPosition(
       isFirstTimeInThisTypeOfClass: isFirstTimeInThisTypeOfClass,
       isFirstTimeWithThisInstructor: isFirstTimeWithThisInstructor,
       isTodayUserBirthday: isTodayUserBirthday,
-      isUserLeaderboardEnabled: isUserLeaderboardEnabled
+      isUserLeaderboardEnabled: isUserLeaderboardEnabled,
+      bookedViaClassPass: bookedViaClassPass
     }
   }
   return {
@@ -185,6 +189,7 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
   let isFirstTimeWithThisInstructor: boolean
   let isTodayUserBirthday: boolean
   let isUserLeaderboardEnabled: boolean
+  let bookedViaClassPass: boolean
 
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix.length; j++) {
@@ -202,6 +207,7 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
         isFirstTimeWithThisInstructor = false
         isTodayUserBirthday = false
         isUserLeaderboardEnabled = false
+        bookedViaClassPass = false
 
         if (classPosition.icon === PositionIconEnum.Spot) {
           if (classPosition.spotNumber && props.enrollments) {
@@ -217,6 +223,7 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
                 isFirstTimeWithThisInstructor = enrollment.isFirstTimeWithThisInstructor
                 isTodayUserBirthday = enrollment.isTodayUserBirthday
                 isUserLeaderboardEnabled = enrollment.isUserLeaderboardEnabled
+                bookedViaClassPass = enrollment.bookedViaClassPass
                 break
               }
             }
@@ -233,7 +240,8 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
             isFirstTimeInThisTypeOfClass,
             isFirstTimeWithThisInstructor,
             isTodayUserBirthday,
-            isUserLeaderboardEnabled
+            isUserLeaderboardEnabled,
+            bookedViaClassPass
           )
         )
       }
@@ -328,6 +336,7 @@ const sortBy = (key: keyof User) => {
                   :isFirstTimeWithThisInstructor="spot.isFirstTimeWithThisInstructor ?? false"
                   :isTodayUserBirthday="spot.isTodayUserBirthday ?? false"
                   :isUserLeaderboardEnabled="spot.isUserLeaderboardEnabled ?? false"
+                  :bookedViaClassPass="spot.bookedViaClassPass ?? false"
                 />
                 <icon-position-not-bookable v-else :icon="spot.icon" />
               </td>
@@ -400,6 +409,10 @@ const sortBy = (key: keyof User) => {
                 <BadgeStateIndicator
                   type="isUserLeaderboardEnabled"
                   v-if="item.isUserLeaderboardEnabled"
+                ></BadgeStateIndicator>
+                <BadgeStateIndicator
+                  type="bookedViaClassPass"
+                  v-if="item.bookedViaClassPass"
                 ></BadgeStateIndicator>
               </td>
             </tr>
