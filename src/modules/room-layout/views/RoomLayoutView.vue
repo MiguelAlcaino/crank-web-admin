@@ -228,7 +228,10 @@ function setSpotType(spotType: PositionIconEnum) {
         roomLayout.value[i][j].selected = false
       }
 
-      if (roomLayout.value[i][j].type === PositionIconEnum.Spot) {
+      if (
+        roomLayout.value[i][j].type === PositionIconEnum.BikeSpot ||
+        roomLayout.value[i][j].type === PositionIconEnum.BenchSpot
+      ) {
         totalConfiguredSeats.value++
       }
     }
@@ -324,7 +327,10 @@ function spotNumbersAreValid(roomLayout: Array<Array<LayoutPosition>>): boolean 
     var row = roomLayout[i]
 
     for (var j = 0; j < row.length; j++) {
-      if (roomLayout[i][j].type === PositionIconEnum.Spot) {
+      if (
+        roomLayout[i][j].type === PositionIconEnum.BikeSpot ||
+        roomLayout[i][j].type === PositionIconEnum.BenchSpot
+      ) {
         if (roomLayout[i][j].spotNumber !== null && roomLayout[i][j].spotNumber !== undefined) {
           const spotNumber = Number(roomLayout[i][j].spotNumber)
 
@@ -466,7 +472,7 @@ async function goToRoomLayoutList() {
             >
               <div>
                 <div v-if="spot.type === PositionIconEnum.Empty">-</div>
-                <div v-else-if="spot.type === PositionIconEnum.Spot">
+                <div v-else-if="spot.type === PositionIconEnum.BikeSpot">
                   <input
                     type="number"
                     class="seat-number"
@@ -477,7 +483,20 @@ async function goToRoomLayoutList() {
                     }"
                     v-model="spot.spotNumber"
                   />
-                  <i class="bi bi-circle" style="font-size: 1.8rem"></i>
+                  <i class="bi bi-bicycle" style="font-size: 1.8rem"></i>
+                </div>
+                <div v-else-if="spot.type === PositionIconEnum.BenchSpot">
+                  <input
+                    type="number"
+                    class="seat-number"
+                    min="1"
+                    max="2500"
+                    :class="{
+                      hasError: spot.spotNumber === null || spot.spotNumber === undefined
+                    }"
+                    v-model="spot.spotNumber"
+                  />
+                  <img src="@/assets/icons/bench_icon.png" alt="" height="25" style="margin-top: 10px;"/>
                 </div>
                 <div v-else-if="spot.type === PositionIconEnum.Instructor">
                   <i class="bi bi-person-fill" style="font-size: 1.8rem"></i>
@@ -517,9 +536,14 @@ async function goToRoomLayoutList() {
       </template>
     </context-menu-item>
     <context-menu-sperator />
-    <context-menu-item label="Create Bike Spot" @click="setSpotType(PositionIconEnum.Spot)">
+    <context-menu-item label="Create Bike Spot" @click="setSpotType(PositionIconEnum.BikeSpot)">
       <template #icon>
-        <i class="bi bi-bicycle"></i>
+        <i class="bi bi-bicycle" style="font-size: 1.5rem"></i>
+      </template>
+    </context-menu-item>
+    <context-menu-item label="Create Bench Spot" @click="setSpotType(PositionIconEnum.BenchSpot)">
+      <template #icon>
+        <img src="@/assets/icons/bench_icon.png" alt="" height="20" />
       </template>
     </context-menu-item>
     <context-menu-item label="Create Fan Spot" @click="setSpotType(PositionIconEnum.Fan)">
