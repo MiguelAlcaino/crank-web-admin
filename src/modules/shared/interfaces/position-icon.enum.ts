@@ -7,7 +7,7 @@ export enum PositionIconEnum {
    * @deprecated Use benchSpot or bikeSpot instead.
    */
   Spot = 'spot',
-  BenchSpot = '',
+  BenchSpot = 'benchSpot',
   BikeSpot = 'bikeSpot',
   Tv = 'tv'
 }
