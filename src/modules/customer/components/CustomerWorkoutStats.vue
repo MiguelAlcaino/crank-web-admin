@@ -27,11 +27,6 @@ interface SimpleSiteUser {
   externalUserId: string
   site: SiteEnum
 }
-
-enum SiteEnum {
-  AbuDhabi = 'abu_dhabi',
-  Dubai = 'dubai'
-}
 </script>
 
 <script setup lang="ts">
@@ -48,7 +43,7 @@ import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import SendClassStatsToEmail from '@/modules/shared/components/SendClassStatsToEmail.vue'
 import PaginationComponent from '@/modules/shared/components/PaginationComponent.vue'
 import { authService } from '@/services/authService'
-import type { AdminSite } from '@/modules/shared/interfaces'
+import type { AdminSite, SiteEnum } from '@/modules/shared/interfaces'
 
 const apiService = inject<ApiService>('gqlApiService')!
 
