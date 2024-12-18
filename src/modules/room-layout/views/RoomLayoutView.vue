@@ -548,7 +548,7 @@ async function goToRoomLayoutList() {
     </context-menu-item>
     <context-menu-item label="Create Bench Spot" @click="setSpotType(PositionIconEnum.BenchSpot)">
       <template #icon>
-        <img src="@/assets/icons/bench_icon.png" alt="" height="20" />
+        <img src="@/assets/icons/bench_icon.png" alt="" height="10" />
       </template>
     </context-menu-item>
     <context-menu-item label="Create Fan Spot" @click="setSpotType(PositionIconEnum.Fan)">
