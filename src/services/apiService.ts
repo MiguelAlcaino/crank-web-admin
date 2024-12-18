@@ -464,7 +464,7 @@ export class ApiService {
   }
 
   async createRoomLayout(site: SiteEnum, input: RoomLayoutInput): Promise<RoomLayout | null> {
-    const muration = gql`
+    const mutation = gql`
       mutation createRoomLayout($site: SiteEnum!, $input: RoomLayoutInput!) {
         createRoomLayout(site: $site, input: $input) {
           id
@@ -474,7 +474,7 @@ export class ApiService {
 
     try {
       const result = await this.authApiClient.mutate({
-        mutation: muration,
+        mutation: mutation,
         variables: {
           site: site,
           input: input
@@ -489,7 +489,7 @@ export class ApiService {
   }
 
   async editRoomLayout(site: SiteEnum, input: EditRoomLayoutInput): Promise<RoomLayout | null> {
-    const muration = gql`
+    const mutation = gql`
       mutation editRoomLayout($site: SiteEnum!, $input: EditRoomLayoutInput!) {
         editRoomLayout(site: $site, input: $input) {
           id
@@ -499,7 +499,7 @@ export class ApiService {
 
     try {
       const result = await this.authApiClient.mutate({
-        mutation: muration,
+        mutation: mutation,
         variables: {
           site: site,
           input: input
@@ -554,7 +554,7 @@ export class ApiService {
   async removeUserFromWaitlist(waitlistEntryId: string): Promise<RemoveUserFromWaitlistUnion> {
     const input = { waitlistEntryId: waitlistEntryId } as RemoveUserFromWaitlistInput
 
-    const muration = gql`
+    const mutation = gql`
       mutation removeUserFromWaitlist($input: RemoveUserFromWaitlistInput!) {
         removeUserFromWaitlist(input: $input) {
           ... on RemoveFromWaitlistResult {
@@ -568,7 +568,7 @@ export class ApiService {
     `
 
     const result = await this.authApiClient.mutate({
-      mutation: muration,
+      mutation: mutation,
       variables: {
         input: input
       },
@@ -970,7 +970,7 @@ export class ApiService {
   async requestPasswordLink(email: string): Promise<ResetPasswordLinkResultUnion | null> {
     const input = { email: email } as RequestPasswordLinkInput
 
-    const muration = gql`
+    const mutation = gql`
       mutation requestPasswordLink($input: RequestPasswordLinkInput) {
         requestPasswordLink(input: $input) {
           ... on TooManyResetPasswordLinkRequestsError {
@@ -985,7 +985,7 @@ export class ApiService {
 
     try {
       const result = await this.authApiClient.mutate({
-        mutation: muration,
+        mutation: mutation,
         variables: {
           input: input
         },
@@ -1442,14 +1442,14 @@ export class ApiService {
   async updateUserPassword(userId: string, newPassword: string): Promise<boolean> {
     const input = { userId, newPassword } as UpdateUserPasswordInput
 
-    const muration = gql`
+    const mutation = gql`
       mutation updateUserPassword($input: UpdateUserPasswordInput!) {
         updateUserPassword(input: $input)
       }
     `
 
     const result = await this.authApiClient.mutate({
-      mutation: muration,
+      mutation: mutation,
       variables: {
         input: input
       },

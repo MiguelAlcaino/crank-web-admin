@@ -4,11 +4,10 @@ import router from '@/router'
 import { helpers, required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 
-import { SiteEnum } from '@/gql/graphql'
-
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import { appStore } from '@/stores/appStorage'
 import { useAuthenticationStore } from '@/stores/authToken'
+import { SiteEnum } from '@/modules/shared/interfaces'
 
 const displayLoginError = ref(false)
 const selectedSite = ref('dubai')
@@ -56,6 +55,7 @@ async function login() {
               <select class="custom-select" v-model="formData.location" required>
                 <option :value="SiteEnum.Dubai">Dubai</option>
                 <option :value="SiteEnum.AbuDhabi">Abu Dhabi</option>
+                <option :value="SiteEnum.TownSquare">Town Square</option>
               </select>
               <small
                 v-for="error in v$.location.$errors"

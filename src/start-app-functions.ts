@@ -18,11 +18,11 @@ import RoomLayoutView from '@/modules/room-layout/views/RoomLayoutView.vue'
 import CustomerProfileView from '@/modules/customer/views/CustomerProfileView.vue'
 import GiftCardListView from './modules/gift-card/views/GiftCardListView.vue'
 import AdminUserListView from './modules/admin-user/views/AdminUserListView.vue'
-import { SiteEnum } from '@/gql/graphql'
 import { appStore } from '@/stores/appStorage'
 import ClassScheduleView from '@/modules/class-schedule/views/ClassScheduleView.vue'
 import ClassSchedulesView from './modules/class-schedule-config/views/ClassScheduleConfigView.vue'
 import VueApexCharts from 'vue3-apexcharts'
+import { SiteEnum } from './modules/shared/interfaces'
 
 export const startCustomerCreateApp = async function (
   urlAfterSubmit: string,
@@ -96,6 +96,8 @@ export const startRoomLayoutCreateApp = async function (
       appStore().setSite(SiteEnum.Dubai)
     } else if (site === SiteEnum.AbuDhabi) {
       appStore().setSite(SiteEnum.AbuDhabi)
+    } else if (site === SiteEnum.TownSquare) {
+      appStore().setSite(SiteEnum.TownSquare)
     } else {
       throw Error
     }
@@ -134,6 +136,8 @@ export const startRoomLayoutEditApp = async function (
       appStore().setSite(SiteEnum.Dubai)
     } else if (site === SiteEnum.AbuDhabi) {
       appStore().setSite(SiteEnum.AbuDhabi)
+    } else if (site === SiteEnum.TownSquare) {
+      appStore().setSite(SiteEnum.TownSquare)
     } else {
       throw Error
     }
@@ -195,6 +199,8 @@ export const startClassScheduleApp = async function (
       appStore().setSite(SiteEnum.Dubai)
     } else if (site === SiteEnum.AbuDhabi) {
       appStore().setSite(SiteEnum.AbuDhabi)
+    } else if (site === SiteEnum.TownSquare) {
+      appStore().setSite(SiteEnum.TownSquare)
     } else {
       throw Error
     }

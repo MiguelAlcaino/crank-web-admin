@@ -33,8 +33,8 @@ import { useAuthenticationStore } from '@/stores/authToken'
 
 import SimpleTypeahead from 'vue3-simple-typeahead'
 import { appStore } from './stores/appStorage'
-import { SiteEnum } from './gql/graphql'
 import VueApexCharts from 'vue3-apexcharts'
+import { SiteEnum } from './modules/shared/interfaces'
 
 startApp()
 
@@ -77,6 +77,8 @@ async function startApp() {
       siteEnum = SiteEnum.Dubai
     } else if (site === SiteEnum.AbuDhabi) {
       siteEnum = SiteEnum.AbuDhabi
+    } else if (site === SiteEnum.TownSquare) {
+      siteEnum = SiteEnum.TownSquare
     } else {
       throw Error
     }
