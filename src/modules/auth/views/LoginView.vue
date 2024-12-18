@@ -4,8 +4,6 @@ import router from '@/router'
 import { helpers, required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 
-
-
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import { appStore } from '@/stores/appStorage'
 import { useAuthenticationStore } from '@/stores/authToken'
