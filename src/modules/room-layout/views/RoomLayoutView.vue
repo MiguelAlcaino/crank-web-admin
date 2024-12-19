@@ -228,7 +228,10 @@ function setSpotType(spotType: PositionIconEnum) {
         roomLayout.value[i][j].selected = false
       }
 
-      if (roomLayout.value[i][j].type === PositionIconEnum.Spot) {
+      if (
+        roomLayout.value[i][j].type === PositionIconEnum.Spot ||
+        roomLayout.value[i][j].type === PositionIconEnum.BikeSpot
+      ) {
         totalConfiguredSeats.value++
       }
     }
@@ -324,7 +327,10 @@ function spotNumbersAreValid(roomLayout: Array<Array<LayoutPosition>>): boolean 
     var row = roomLayout[i]
 
     for (var j = 0; j < row.length; j++) {
-      if (roomLayout[i][j].type === PositionIconEnum.Spot) {
+      if (
+        roomLayout[i][j].type === PositionIconEnum.Spot ||
+        roomLayout[i][j].type === PositionIconEnum.BikeSpot
+      ) {
         if (roomLayout[i][j].spotNumber !== null && roomLayout[i][j].spotNumber !== undefined) {
           const spotNumber = Number(roomLayout[i][j].spotNumber)
 
@@ -466,7 +472,11 @@ async function goToRoomLayoutList() {
             >
               <div>
                 <div v-if="spot.type === PositionIconEnum.Empty">-</div>
-                <div v-else-if="spot.type === PositionIconEnum.Spot">
+                <div
+                  v-else-if="
+                    spot.type === PositionIconEnum.Spot || spot.type === PositionIconEnum.BikeSpot
+                  "
+                >
                   <input
                     type="number"
                     class="seat-number"
