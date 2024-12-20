@@ -157,7 +157,10 @@ function newSpotPosition(
   isUserLeaderboardEnabled?: boolean,
   bookedViaClassPass?: boolean
 ): SpotPosition {
-  if (classPosition.icon === PositionIconEnum.Spot) {
+  if (
+    classPosition.icon === PositionIconEnum.Spot ||
+    classPosition.icon === PositionIconEnum.BikeSpot
+  ) {
     return {
       x: classPosition.x,
       y: classPosition.y,
@@ -214,7 +217,10 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
         isUserLeaderboardEnabled = false
         bookedViaClassPass = false
 
-        if (classPosition.icon === PositionIconEnum.Spot) {
+        if (
+          classPosition.icon === PositionIconEnum.Spot ||
+          classPosition.icon === PositionIconEnum.BikeSpot
+        ) {
           if (classPosition.spotNumber && props.enrollments) {
             for (let index = 0; index < props.enrollments.length; index++) {
               const enrollment = props.enrollments[index]
@@ -324,7 +330,9 @@ const sortBy = (key: keyof User) => {
             <tr v-for="(colRow, rowKey) in spotsTable" :key="rowKey" class="text-center">
               <td class="class-position" v-for="(spot, columnKey) in colRow" :key="columnKey">
                 <BookableSpotPosition
-                  v-if="spot.icon === PositionIconEnum.Spot"
+                  v-if="
+                    spot.icon === PositionIconEnum.Spot || spot.icon === PositionIconEnum.BikeSpot
+                  "
                   :spot-number="spot.spotNumber ?? 0"
                   :is-booked="spot.user ? true : false"
                   :user="spot.user!"
