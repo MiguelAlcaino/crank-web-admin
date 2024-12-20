@@ -63,7 +63,7 @@ import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 
 import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
-import { SiteEnum } from '@/modules/shared/interfaces'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 
 const route = useRoute()
 const apiService = inject<ApiService>('gqlApiService')!

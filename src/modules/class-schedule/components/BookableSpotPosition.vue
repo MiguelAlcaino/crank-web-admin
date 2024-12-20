@@ -26,7 +26,7 @@ interface Props {
 </script>
 
 <script setup lang="ts">
-import { PositionIconEnum } from '@/modules/shared/interfaces'
+import type { PositionIconEnum } from '@/modules/shared/interfaces'
 import { SpotActionEnum } from '../interfaces'
 import IconBookablePosition from './icons/IconBookablePosition.vue'
 

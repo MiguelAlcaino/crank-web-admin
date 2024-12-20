@@ -74,7 +74,7 @@ import 'vue-tel-input/vue-tel-input.css'
 import { getFormattedPhoneNumber } from '@/utils/utility-functions'
 import { SUCCESS_UPDATE_PROFILE } from '@/utils/successMessages'
 import { useRoute } from 'vue-router'
-import { SiteEnum } from '@/modules/shared/interfaces'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 
 const route = useRoute()
 
