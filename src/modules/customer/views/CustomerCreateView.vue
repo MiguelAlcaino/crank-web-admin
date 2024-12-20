@@ -29,7 +29,7 @@ import { VueTelInput } from 'vue-tel-input'
 import 'vue-tel-input/vue-tel-input.css'
 import { getFormattedPhoneNumber } from '@/utils/utility-functions'
 import { ValidationError } from '@/utils/errors/saveUserErrors'
-import { AdminSite } from '@/modules/shared/interfaces'
+import type { AdminSite } from '@/modules/shared/interfaces'
 
 const isSaving = ref(false)
 const isLoggingIn = ref(false)
