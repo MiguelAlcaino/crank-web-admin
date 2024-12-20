@@ -92,7 +92,7 @@ export const startRoomLayoutCreateApp = async function (
   useAuthenticationStore().setSession(token)
 
   if (site) {
-    if (site === SiteEnum.Dubai.toString()) {
+    if (site === SiteEnum.Dubai) {
       appStore().setSite(SiteEnum.Dubai)
     } else if (site === SiteEnum.AbuDhabi) {
       appStore().setSite(SiteEnum.AbuDhabi)
@@ -132,7 +132,7 @@ export const startRoomLayoutEditApp = async function (
   useAuthenticationStore().setSession(token)
 
   if (site) {
-    if (site === SiteEnum.Dubai.toString()) {
+    if (site === SiteEnum.Dubai) {
       appStore().setSite(SiteEnum.Dubai)
     } else if (site === SiteEnum.AbuDhabi) {
       appStore().setSite(SiteEnum.AbuDhabi)
@@ -195,7 +195,7 @@ export const startClassScheduleApp = async function (
   useAuthenticationStore().setSession(token)
 
   if (site) {
-    if (site === SiteEnum.Dubai.toString()) {
+    if (site === SiteEnum.Dubai) {
       appStore().setSite(SiteEnum.Dubai)
     } else if (site === SiteEnum.AbuDhabi) {
       appStore().setSite(SiteEnum.AbuDhabi)
