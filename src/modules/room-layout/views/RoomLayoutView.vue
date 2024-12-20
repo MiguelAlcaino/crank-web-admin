@@ -499,7 +499,7 @@ async function goToRoomLayoutList() {
                   <img
                     src="@/assets/icons/bench_icon.png"
                     alt=""
-                    height="25"
+                    height="18"
                     style="margin-top: 10px"
                   />
                 </div>
