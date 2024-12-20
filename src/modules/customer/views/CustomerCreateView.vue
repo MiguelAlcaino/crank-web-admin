@@ -15,7 +15,7 @@ interface State {
 import { onMounted, reactive, ref, computed, inject } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength, sameAs, maxLength, helpers } from '@vuelidate/validators'
-import { GenderEnum, type RegisterUserInput, SiteEnum } from '@/gql/graphql'
+import { GenderEnum, type RegisterUserInput } from '@/gql/graphql'
 
 import { authService } from '@/services/authService'
 import type { ApiService } from '@/services/apiService'
