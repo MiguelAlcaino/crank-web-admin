@@ -158,8 +158,8 @@ function newSpotPosition(
   bookedViaClassPass?: boolean
 ): SpotPosition {
   if (
-    classPosition.icon === PositionIconEnum.Spot ||
-    classPosition.icon === PositionIconEnum.BikeSpot
+    classPosition.icon === PositionIconEnum.BikeSpot ||
+    classPosition.icon === PositionIconEnum.BenchSpot
   ) {
     return {
       x: classPosition.x,
@@ -218,8 +218,8 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
         bookedViaClassPass = false
 
         if (
-          classPosition.icon === PositionIconEnum.Spot ||
-          classPosition.icon === PositionIconEnum.BikeSpot
+          classPosition.icon === PositionIconEnum.BikeSpot ||
+          classPosition.icon === PositionIconEnum.BenchSpot
         ) {
           if (classPosition.spotNumber && props.enrollments) {
             for (let index = 0; index < props.enrollments.length; index++) {
@@ -331,7 +331,8 @@ const sortBy = (key: keyof User) => {
               <td class="class-position" v-for="(spot, columnKey) in colRow" :key="columnKey">
                 <BookableSpotPosition
                   v-if="
-                    spot.icon === PositionIconEnum.Spot || spot.icon === PositionIconEnum.BikeSpot
+                    spot.icon === PositionIconEnum.BikeSpot ||
+                    spot.icon === PositionIconEnum.BenchSpot
                   "
                   :spot-number="spot.spotNumber ?? 0"
                   :is-booked="spot.user ? true : false"

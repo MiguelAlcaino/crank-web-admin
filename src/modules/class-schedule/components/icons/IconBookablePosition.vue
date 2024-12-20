@@ -7,15 +7,13 @@ defineProps<{
 </script>
 
 <template>
-  <i
-    v-if="icon == PositionIconEnum.BikeSpot || icon == PositionIconEnum.Spot"
-    class="bi bi-bicycle"
-  ></i>
+  <i v-if="icon == PositionIconEnum.BikeSpot" class="bi bi-bicycle"></i>
   <img
     v-else-if="icon == PositionIconEnum.BenchSpot"
     src="@/assets/icons/bench_icon.png"
-    alt=""
-    height="20"
+    alt="bench_icon"
+    height="10"
+    style="margin-bottom: 5px"
   />
   <div v-else></div>
 </template>
