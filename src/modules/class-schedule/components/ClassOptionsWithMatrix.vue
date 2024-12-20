@@ -180,8 +180,8 @@ async function spotClicked(event: BookableSpotClickedEvent) {
       const classPosition = props.matrix[index]
 
       if (
-        classPosition.icon === PositionIconEnum.Spot ||
-        classPosition.icon === PositionIconEnum.BikeSpot
+        classPosition.icon === PositionIconEnum.BikeSpot ||
+        classPosition.icon === PositionIconEnum.BenchSpot
       ) {
         if (classPosition.spotNumber === event.spotNumber) {
           let isBooked = false
