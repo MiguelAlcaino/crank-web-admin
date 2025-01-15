@@ -2359,6 +2359,7 @@ export type AdminUsersQuery = {
       site: { __typename: 'Site'; name: string; code: SiteEnum }
     }> | null
     linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
+    favoriteSite: { __typename: 'Site'; name: string; code: SiteEnum }
   }>
 }
 
@@ -5692,6 +5693,17 @@ export const AdminUsersDocument = {
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'linkedSites' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'favoriteSite' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [

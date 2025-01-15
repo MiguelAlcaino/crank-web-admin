@@ -1602,6 +1602,10 @@ export class ApiService {
             name
             code
           }
+          favoriteSite {
+            name
+            code
+          }
         }
       }
     `
