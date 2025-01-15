@@ -51,11 +51,12 @@ export type AdminUser = {
 }
 
 export type AdminUserDataInput = {
-  email?: InputMaybe<Scalars['String']>
+  email: Scalars['String']
+  favoriteSite?: InputMaybe<SiteEnum>
   linkedInstructorIds?: InputMaybe<Array<Scalars['ID']>>
   linkedSiteCodes?: InputMaybe<Array<SiteEnum>>
   role: Scalars['String']
-  username?: InputMaybe<Scalars['String']>
+  username: Scalars['String']
 }
 
 export type AdminUserResultUnion = AdminUser | EmailAlreadyUsedError | UsernameAlreadyUsedError
@@ -540,6 +541,10 @@ export type Mutation = {
   addAdminUser: AdminUserResultUnion
   /** Adds a new device token to be used for device notifications */
   addDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']>
+  /** Allows to add a discount code code to a shopping cart for current user */
+  addDiscountCodeToShoppingCart: Scalars['Boolean']
+  /** Allows to add a giftcard code to a shopping cart for current user */
+  addGiftCardCodeToShoppingCart: Scalars['Boolean']
   /** Allows to add item to shopping cart */
   addItemToShoppingCart: Scalars['Boolean']
   /** Books the current user in a class */
@@ -639,6 +644,14 @@ export type MutationAddAdminUserArgs = {
 export type MutationAddDeviceTokenToCurrentUserArgs = {
   input?: InputMaybe<DeviceTokenInput>
   site?: InputMaybe<SiteEnum>
+}
+
+export type MutationAddDiscountCodeToShoppingCartArgs = {
+  discountCode: Scalars['String']
+}
+
+export type MutationAddGiftCardCodeToShoppingCartArgs = {
+  giftcard: Scalars['ID']
 }
 
 export type MutationAddItemToShoppingCartArgs = {
@@ -1283,7 +1296,8 @@ export type Site = {
 
 export enum SiteEnum {
   AbuDhabi = 'abu_dhabi',
-  Dubai = 'dubai'
+  Dubai = 'dubai',
+  TownSquare = 'town_square'
 }
 
 export type SiteSetting = {
