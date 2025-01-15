@@ -21,11 +21,14 @@ interface Props {
   isTodayUserBirthday: boolean
   isUserLeaderboardEnabled: boolean
   bookedViaClassPass: boolean
+  icon: PositionIconEnum
 }
 </script>
 
 <script setup lang="ts">
+import type { PositionIconEnum } from '@/modules/shared/interfaces'
 import { SpotActionEnum } from '../interfaces'
+import IconBookablePosition from './icons/IconBookablePosition.vue'
 
 const props = withDefaults(defineProps<Props>(), {
   spotSelectionIsDisabled: false
@@ -47,19 +50,30 @@ function selectSpot() {
       v-if="isBooked"
       :class="['baseSpot', 'changeMemberSpot-bookedSpot', selected ? 'selectedSpot' : '']"
     >
-      {{ spotNumber + (isCheckedIn === true ? '✓' : '') }}
-      <br />
-      {{ user?.firstName }} {{ user?.lastName }}
+      <IconBookablePosition :icon="icon" class="type-spot-icon-position"></IconBookablePosition>
+
+      <div class="center-content">
+        <div class="center-number">{{ spotNumber + (isCheckedIn === true ? '✓' : '') }}</div>
+        <div class="center-name">{{ user?.firstName }} {{ user?.lastName }}</div>
+      </div>
     </div>
     <div
       v-else-if="enabled"
       :class="['baseSpot', 'changeMemberSpot-spotAvailable']"
       @click="spotSelectionIsDisabled ? null : selectSpot()"
     >
-      {{ spotNumber }}
+      <IconBookablePosition :icon="icon" class="type-spot-icon-position"></IconBookablePosition>
+
+      <div class="center-content">
+        <div class="center-number">{{ spotNumber }}</div>
+      </div>
     </div>
     <div v-else :class="['baseSpot', 'changeMemberSpot-disabledSpot']">
-      {{ spotNumber }}
+      <IconBookablePosition :icon="icon" class="type-spot-icon-position"></IconBookablePosition>
+
+      <div class="center-content">
+        <div class="center-number">{{ spotNumber }}</div>
+      </div>
     </div>
   </div>
   <!-- swapSpot -->
@@ -73,15 +87,28 @@ function selectSpot() {
         selected ? 'selectedSpot' : 'swapMemberSpot-bookedSpot'
       ]"
     >
-      {{ spotNumber + (isCheckedIn === true ? '✓' : '') }}
-      <br />
-      {{ user?.firstName }} {{ user?.lastName }}
+      <IconBookablePosition :icon="icon" class="type-spot-icon-position"></IconBookablePosition>
+
+      <div class="center-content">
+        <div class="center-number">
+          {{ spotNumber + (isCheckedIn === true ? '✓' : '') }}
+        </div>
+        <div class="center-name">{{ user?.firstName }} {{ user?.lastName }}</div>
+      </div>
     </div>
     <div v-else-if="enabled" :class="['baseSpot', 'empty-spot-not-selectable']">
-      {{ spotNumber }}
+      <IconBookablePosition :icon="icon" class="type-spot-icon-position"></IconBookablePosition>
+
+      <div class="center-content">
+        <div class="center-number">{{ spotNumber }}</div>
+      </div>
     </div>
     <div v-else :class="['baseSpot', 'changeMemberSpot-disabledSpot']">
-      {{ spotNumber }}
+      <IconBookablePosition :icon="icon" class="type-spot-icon-position"></IconBookablePosition>
+
+      <div class="center-content">
+        <div class="center-number">{{ spotNumber }}</div>
+      </div>
     </div>
   </div>
   <!-- none || assignUserToSpot -->
@@ -99,10 +126,6 @@ function selectSpot() {
         hasStats === false && !selected ? 'isSpotWithoutStats' : ''
       ]"
     >
-      {{ spotNumber + (isCheckedIn === true ? '✓' : '') }}
-      <br />
-      {{ user?.firstName }} {{ user?.lastName }}
-
       <span
         class="badge top-left"
         style="background-color: red; color: white"
@@ -115,6 +138,13 @@ function selectSpot() {
         v-if="isTodayUserBirthday"
         >B</span
       >
+      <IconBookablePosition :icon="icon" class="type-spot-icon-position"></IconBookablePosition>
+
+      <div class="center-content">
+        <div class="center-number">{{ spotNumber + (isCheckedIn === true ? '✓' : '') }}</div>
+        <div class="center-name">{{ user?.firstName }} {{ user?.lastName }}</div>
+      </div>
+
       <span
         class="badge bottom-left"
         style="background-color: #ff00ff; color: white"
@@ -133,7 +163,11 @@ function selectSpot() {
       ]"
       @click="spotSelectionIsDisabled ? null : selectSpot()"
     >
-      {{ spotNumber }}
+      <IconBookablePosition :icon="icon" class="type-spot-icon-position"></IconBookablePosition>
+
+      <div class="center-content">
+        <div class="center-number">{{ spotNumber }}</div>
+      </div>
     </div>
     <div
       v-else
@@ -144,15 +178,19 @@ function selectSpot() {
       ]"
       @click="spotSelectionIsDisabled ? null : selectSpot()"
     >
-      {{ spotNumber }}
+      <IconBookablePosition :icon="icon" class="type-spot-icon-position"></IconBookablePosition>
+
+      <div class="center-content">
+        <div class="center-number">{{ spotNumber }}</div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
 .baseSpot {
-  height: 80px;
-  width: 80px;
+  height: 90px;
+  width: 90px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -260,5 +298,32 @@ function selectSpot() {
   left: 0;
   font-size: 9px;
   margin: 3px;
+}
+
+.center-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.center-number {
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.center-name {
+  font-size: 8px;
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+.type-spot-icon-position {
+  position: absolute;
+  bottom: 0px;
+  right: 0;
+  transform: translateX(-50%);
+  font-size: 18px;
 }
 </style>

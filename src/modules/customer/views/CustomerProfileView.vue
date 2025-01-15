@@ -42,11 +42,6 @@ interface SimpleSiteUser {
   site: SiteEnum
 }
 
-enum SiteEnum {
-  AbuDhabi = 'abu_dhabi',
-  Dubai = 'dubai'
-}
-
 export enum GenderEnum {
   /** Feminine */
   F = 'F',
@@ -68,6 +63,7 @@ import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 
 import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 
 const route = useRoute()
 const apiService = inject<ApiService>('gqlApiService')!

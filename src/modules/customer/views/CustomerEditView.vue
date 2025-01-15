@@ -51,11 +51,6 @@ enum GenderEnum {
   /** Not defined */
   N = 'N'
 }
-
-enum SiteEnum {
-  AbuDhabi = 'abu_dhabi',
-  Dubai = 'dubai'
-}
 </script>
 
 <script setup lang="ts">
@@ -79,6 +74,7 @@ import 'vue-tel-input/vue-tel-input.css'
 import { getFormattedPhoneNumber } from '@/utils/utility-functions'
 import { SUCCESS_UPDATE_PROFILE } from '@/utils/successMessages'
 import { useRoute } from 'vue-router'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 
 const route = useRoute()
 

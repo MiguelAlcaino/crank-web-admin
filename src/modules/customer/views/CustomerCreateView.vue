@@ -15,8 +15,9 @@ interface State {
 import { onMounted, reactive, ref, computed, inject } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength, sameAs, maxLength, helpers } from '@vuelidate/validators'
-import { GenderEnum, type RegisterUserInput, SiteEnum } from '@/gql/graphql'
+import { GenderEnum, type RegisterUserInput } from '@/gql/graphql'
 
+import { authService } from '@/services/authService'
 import type { ApiService } from '@/services/apiService'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
@@ -28,6 +29,7 @@ import { VueTelInput } from 'vue-tel-input'
 import 'vue-tel-input/vue-tel-input.css'
 import { getFormattedPhoneNumber } from '@/utils/utility-functions'
 import { ValidationError } from '@/utils/errors/saveUserErrors'
+import type { AdminSite } from '@/modules/shared/interfaces'
 
 const isSaving = ref(false)
 const isLoggingIn = ref(false)
@@ -46,7 +48,7 @@ const defaultPassword = 'crank123'
 const userId = ref<string | null>(null)
 
 const formData = reactive({
-  location: SiteEnum.Dubai,
+  location: null,
   firstName: '',
   lastName: '',
   email: '',
@@ -156,15 +158,22 @@ const lengthUAEphone = (phone: string) =>
 const v$ = useVuelidate(rules, formData)
 const apiService = inject<ApiService>('gqlApiService')!
 
+const sites = ref<AdminSite[]>([])
+
 onMounted(() => {
   let _urlAfterSubmit = inject<string | undefined>('url-after-submit')
   if (_urlAfterSubmit) {
     urlAfterSubmit.value = _urlAfterSubmit
   }
 
+  getAvailableSites()
   getCountries()
   getCountryStates('AE')
 })
+
+function getAvailableSites() {
+  sites.value = authService.getAvailableSites()
+}
 
 const submitForm = async () => {
   const isValid = await v$.value.$validate()
@@ -252,8 +261,9 @@ async function goToUrlAfterSubmit() {
     <div class="form-row">
       <div class="col-md-6 mb-3">
         <select class="custom-select" v-model="formData.location" required>
-          <option :value="SiteEnum.Dubai">Dubai</option>
-          <option :value="SiteEnum.AbuDhabi">Abu Dhabi</option>
+          <option v-for="(item, index) in sites" :key="index" :value="item.serviceKey">
+            {{ item.name }}
+          </option>
         </select>
         <small
           v-for="error in v$.location.$errors"

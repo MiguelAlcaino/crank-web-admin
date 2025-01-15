@@ -6,7 +6,7 @@ import BookableSpotPosition from '@/modules/class-schedule/components/BookableSp
 import ViewUserProfileButton from '@/modules/class-schedule/components/ViewUserProfileButton.vue'
 import CheckInCheckOutUserInClass from '@/modules/class-schedule/components/CheckInCheckOutUserInClass.vue'
 import BadgeStateIndicator from '@/modules/class-schedule/components/BadgeStateIndicator.vue'
-
+import IconBookablePosition from '@/modules/class-schedule/components/icons/IconBookablePosition.vue'
 import type { EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
 import { PositionIconEnum } from '@/modules/shared/interfaces'
 
@@ -140,6 +140,11 @@ const sortedEnrollments = computed(() => {
   })
 })
 
+function getIcon(spotNumber: number): PositionIconEnum {
+  const spot = props.matrix?.find((spot) => spot.spotNumber === spotNumber)
+  return spot ? spot.icon : PositionIconEnum.Empty
+}
+
 function newSpotPosition(
   classPosition: ClassPosition,
   user: User | null | undefined,
@@ -153,8 +158,8 @@ function newSpotPosition(
   bookedViaClassPass?: boolean
 ): SpotPosition {
   if (
-    classPosition.icon === PositionIconEnum.Spot ||
-    classPosition.icon === PositionIconEnum.BikeSpot
+    classPosition.icon === PositionIconEnum.BikeSpot ||
+    classPosition.icon === PositionIconEnum.BenchSpot
   ) {
     return {
       x: classPosition.x,
@@ -213,8 +218,8 @@ function getMatrixOfSpotPositions(matrix: ClassPosition[]): SpotPosition[][] {
         bookedViaClassPass = false
 
         if (
-          classPosition.icon === PositionIconEnum.Spot ||
-          classPosition.icon === PositionIconEnum.BikeSpot
+          classPosition.icon === PositionIconEnum.BikeSpot ||
+          classPosition.icon === PositionIconEnum.BenchSpot
         ) {
           if (classPosition.spotNumber && props.enrollments) {
             for (let index = 0; index < props.enrollments.length; index++) {
@@ -326,7 +331,8 @@ const sortBy = (key: keyof User) => {
               <td class="class-position" v-for="(spot, columnKey) in colRow" :key="columnKey">
                 <BookableSpotPosition
                   v-if="
-                    spot.icon === PositionIconEnum.Spot || spot.icon === PositionIconEnum.BikeSpot
+                    spot.icon === PositionIconEnum.BikeSpot ||
+                    spot.icon === PositionIconEnum.BenchSpot
                   "
                   :spot-number="spot.spotNumber ?? 0"
                   :is-booked="spot.user ? true : false"
@@ -345,6 +351,7 @@ const sortBy = (key: keyof User) => {
                   :isTodayUserBirthday="spot.isTodayUserBirthday ?? false"
                   :isUserLeaderboardEnabled="spot.isUserLeaderboardEnabled ?? false"
                   :bookedViaClassPass="spot.bookedViaClassPass ?? false"
+                  :icon="spot.icon"
                 />
                 <icon-position-not-bookable v-else :icon="spot.icon" />
               </td>
@@ -381,7 +388,13 @@ const sortBy = (key: keyof User) => {
             <tr v-for="item in sortedEnrollments" :key="item.id">
               <td>{{ item.identifiableSiteUser?.identifiableUser?.user?.firstName }}</td>
               <td>{{ item.identifiableSiteUser?.identifiableUser?.user?.lastName }}</td>
-              <td class="text-center">{{ item.spotNumber }}</td>
+              <td class="text-center">
+                <IconBookablePosition
+                  :icon="getIcon(item.spotNumber!)"
+                  class="spot-type-icon"
+                ></IconBookablePosition>
+                {{ item.spotNumber }}
+              </td>
               <td class="text-center">
                 <CheckInCheckOutUserInClass
                   v-if="item.id != null && item.isCheckedIn != null"
@@ -457,5 +470,9 @@ td.class-position {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.spot-type-icon {
+  font-size: 20px;
 }
 </style>
