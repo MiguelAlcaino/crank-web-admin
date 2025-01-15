@@ -43,6 +43,7 @@ export type AddedToWaitlistSuccess = {
 export type AdminUser = {
   __typename: 'AdminUser'
   email: Scalars['String']
+  favoriteSite: Site
   id: Scalars['ID']
   linkedInstructors?: Maybe<Array<Instructor>>
   linkedSites?: Maybe<Array<Site>>
