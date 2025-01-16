@@ -951,6 +951,8 @@ export type Query = {
   countries?: Maybe<Array<Maybe<Country>>>
   /** Returns a specific country by a given country code */
   country?: Maybe<Country>
+  /** Returns the current AdminUser */
+  currentAdminUser: AdminUser
   /** Returns the current user by the given Authentication header */
   currentUser?: Maybe<User>
   /**

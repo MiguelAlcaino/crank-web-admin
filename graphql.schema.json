@@ -7103,6 +7103,22 @@
             "deprecationReason": null
           },
           {
+            "name": "currentAdminUser",
+            "description": "Returns the current AdminUser",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "AdminUser",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "currentUser",
             "description": "Returns the current user by the given Authentication header",
             "args": [],
