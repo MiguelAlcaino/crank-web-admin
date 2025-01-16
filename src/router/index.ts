@@ -7,6 +7,7 @@ import UnauthorizedView from '@/modules/auth/views/UnauthorizedView.vue'
 import { giftCardRoute } from '@/modules/gift-card/router'
 import { adminUsersRoute } from '@/modules/admin-user/router'
 import { Role } from '@/utils/userRoles'
+import { myAdminSettingsRoute } from '@/modules/my-admin-settings/router'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -85,6 +86,11 @@ const router = createRouter({
       path: '/unauthorized',
       name: 'unauthorized',
       component: UnauthorizedView
+    },
+    {
+      ...myAdminSettingsRoute,
+      path: '/my-admin-settings',
+      meta: { requiresAuth: true }
     }
   ]
 })

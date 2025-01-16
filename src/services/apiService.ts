@@ -47,6 +47,7 @@ import type {
   SiteUserInput,
   SwapSpotResultUnion,
   UpdateAdminUserInput,
+  UpdateCurrentUserPasswordInput,
   UpdateGiftCardInput,
   UpdateUserPasswordInput,
   UserInClassRanking,
@@ -1781,5 +1782,38 @@ export class ApiService {
     })
 
     return resultQuery.data.currentAdminUser as AdminUser
+  }
+
+  async updateCurrentAdminUserPassword(input: UpdateCurrentUserPasswordInput): Promise<string> {
+    const mutation = gql`
+      mutation updateCurrentAdminUserPassword($input: UpdateCurrentUserPasswordInput!) {
+        updateCurrentAdminUserPassword(input: $input)
+      }
+    `
+
+    try {
+      await this.authApiClient.mutate({
+        mutation: mutation,
+        variables: {
+          input: input
+        },
+        fetchPolicy: 'network-only'
+      })
+
+      return 'Success'
+    } catch (error) {
+      if (error instanceof ApolloError) {
+        if (error.graphQLErrors[0].message === 'password_must_contain_letter_or_number') {
+          return 'PasswordMustContainLetterOrNumberException'
+        } else if (error.graphQLErrors[0].message === 'minimum_password_length_is_four_chars') {
+          return 'MinimumPasswordLengthException'
+        } else if (error.graphQLErrors[0].message === 'incorrect_password') {
+          return 'IncorrectPasswordException'
+        } else {
+          return 'UnknownError'
+        }
+      }
+      return 'UnknownError'
+    }
   }
 }
