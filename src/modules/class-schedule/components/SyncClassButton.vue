@@ -12,14 +12,14 @@ const props = defineProps<{
   disabled: boolean
 }>()
 
-const { selectedSite } = useCalendarList()
+const apiService = inject<ApiService>('gqlApiService')!
+const { selectedSite } = useCalendarList(apiService)
 
 const emits = defineEmits<{
   (e: 'afterSyncClass', isSynchronizing: boolean): void
   (e: 'disableSyncButtons', disabled: boolean): void
 }>()
 
-const apiService = inject<ApiService>('gqlApiService')!
 const isSyncing = ref(false)
 const errorModalIsVisible = ref(false)
 

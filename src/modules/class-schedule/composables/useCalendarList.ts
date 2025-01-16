@@ -1,7 +1,7 @@
 import { onMounted, readonly, ref } from 'vue'
 import type { CalendarListWeekDay } from '../interfaces'
 import type { SiteEnum } from '@/modules/shared/interfaces'
-import { ApiService } from '@/services/apiService'
+import type { ApiService } from '@/services/apiService'
 import type { AdminUserSites } from '../interfaces/admin-user-sites'
 import type { Site } from '@/modules/shared/interfaces/site'
 

@@ -24,7 +24,8 @@ import { useClassDetail } from '../composables/useClassDetail'
 import type { ClassInfo } from '../interfaces/class-detail'
 import type { SiteEnum } from '@/modules/shared/interfaces'
 
-const { updateTotalBooked, selectedSite } = useCalendarList()
+const apiService = inject<ApiService>('gqlApiService')!
+const { updateTotalBooked, selectedSite } = useCalendarList(apiService)
 const {
   userCanCheckInCheckOut,
   userCanModifyClass,
@@ -49,8 +50,6 @@ watch(
 )
 
 const setOnHoldSpotsIsVisible = false
-
-const apiService = inject<ApiService>('gqlApiService')!
 
 const totalSignedIn = ref<number>(0)
 const waitListAvailable = ref<boolean>(false)

@@ -36,9 +36,9 @@ import { ERROR_UNKNOWN, ERROR_WAITLIST_ENTRY_NOT_FOUND } from '@/utils/errorMess
 import { inject, ref } from 'vue'
 
 import { useCalendarList } from '../composables/useCalendarList'
-const { selectedSite } = useCalendarList()
 
 const apiService = inject<ApiService>('gqlApiService')!
+const { selectedSite } = useCalendarList(apiService)
 
 const props = defineProps<{
   classId: string

@@ -83,7 +83,9 @@ import type { ApiService } from '@/services/apiService'
 
 import { useCalendarList } from '../composables/useCalendarList'
 
-const { updateTotalBooked, updateTotalUnderMaintenanceSpots, selectedSite } = useCalendarList()
+const apiService = inject<ApiService>('gqlApiService')!
+const { updateTotalBooked, updateTotalUnderMaintenanceSpots, selectedSite } =
+  useCalendarList(apiService)
 
 const props = defineProps<{
   classId: string
@@ -102,8 +104,6 @@ const emits = defineEmits<{
   (e: 'afterUnrollingCustomer'): void
   (e: 'getClassInfo', checkWaitList: boolean): void
 }>()
-
-const apiService = inject<ApiService>('gqlApiService')!
 
 const selectedSpot = ref<SelectedSpot>({
   spotNumber: null,

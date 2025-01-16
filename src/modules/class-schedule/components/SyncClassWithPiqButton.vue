@@ -6,7 +6,9 @@ import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import { inject, ref } from 'vue'
 import { useCalendarList } from '../composables/useCalendarList'
 import type { SiteEnum } from '@/modules/shared/interfaces'
-const { selectedSite } = useCalendarList()
+
+const apiService = inject<ApiService>('gqlApiService')!
+const { selectedSite } = useCalendarList(apiService)
 
 const props = defineProps<{
   classId: string
@@ -18,7 +20,6 @@ const emits = defineEmits<{
   (e: 'disableSyncButtons', disabled: boolean): void
 }>()
 
-const apiService = inject<ApiService>('gqlApiService')!
 const isSyncing = ref(false)
 const errorModalIsVisible = ref(false)
 

@@ -24,9 +24,9 @@ import { useClassDetail } from '../composables/useClassDetail'
 import type { SiteEnum } from '@/modules/shared/interfaces'
 import { useCalendarList } from '../composables/useCalendarList'
 const { checkInEnrollment } = useClassDetail()
-const { selectedSite } = useCalendarList()
 
 const apiService = inject<ApiService>('gqlApiService')!
+const { selectedSite } = useCalendarList(apiService)
 
 const props = defineProps<{
   enrollmentId: string

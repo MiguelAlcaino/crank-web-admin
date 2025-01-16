@@ -33,9 +33,9 @@ import {
 import { SUCCESS_ADDED_USER_TO_WAITLIST } from '@/utils/successMessages'
 import type { SiteEnum } from '@/modules/shared/interfaces'
 import { useCalendarList } from '../composables/useCalendarList'
-const { selectedSite } = useCalendarList()
 
 const apiService = inject<ApiService>('gqlApiService')!
+const { selectedSite } = useCalendarList(apiService)
 
 const props = defineProps<{
   classId: string

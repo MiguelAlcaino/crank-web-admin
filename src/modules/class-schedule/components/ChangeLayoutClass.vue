@@ -16,9 +16,9 @@ import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import { inject, ref } from 'vue'
 
 import { useCalendarList } from '../composables/useCalendarList'
-const { selectedSite } = useCalendarList()
 
 const apiService = inject<ApiService>('gqlApiService')!
+const { selectedSite } = useCalendarList(apiService)
 
 const props = defineProps<{
   classId: string

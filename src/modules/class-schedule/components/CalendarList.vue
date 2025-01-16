@@ -12,13 +12,12 @@ import SyncAllClassesButton from '@/modules/class-schedule/components/SyncAllCla
 import type { CalendarListClass } from '../interfaces'
 import type { SiteEnum } from '@/modules/shared/interfaces'
 import { useCalendarList } from '../composables/useCalendarList'
-const { weekDays, sites, selectedSite, isLoadingSites, getAvailableSites } = useCalendarList(
-  inject<ApiService>('gqlApiService')!
-)
-
-dayjs.Ls.en.weekStart = 1
 
 const apiService = inject<ApiService>('gqlApiService')!
+const { weekDays, sites, selectedSite, isLoadingSites, getAvailableSites } =
+  useCalendarList(apiService)
+
+dayjs.Ls.en.weekStart = 1
 
 const isLoading = ref<boolean>(false)
 const errorModalIsVisible = ref<boolean>(false)
