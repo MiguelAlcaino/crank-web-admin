@@ -1,21 +1,41 @@
-import { onMounted, ref } from 'vue'
+import { onMounted, readonly, ref } from 'vue'
 import type { CalendarListWeekDay } from '../interfaces'
-import { authService } from '@/services/authService'
-import type { AdminSite } from '@/modules/shared/interfaces'
+import type { SiteEnum } from '@/modules/shared/interfaces'
+import { ApiService } from '@/services/apiService'
+import type { AdminUserSites } from '../interfaces/admin-user-sites'
+import type { Site } from '@/modules/shared/interfaces/site'
 
 const weekDays = ref<CalendarListWeekDay[]>([])
-const sites = ref<AdminSite[]>([])
+const sites = ref<Site[]>([])
 const selectedSite = ref<string | null>(null)
+const isLoadingSites = ref(false)
 
-export const useCalendarList = () => {
-  onMounted(() => {
-    getAvailableSites()
-  })
+export const useCalendarList = (apiService: ApiService) => {
+  onMounted(() => {})
 
-  function getAvailableSites() {
-    sites.value = authService.getAvailableSites()
-    if (sites.value.length > 0 && selectedSite.value == null) {
-      selectedSite.value = sites.value[0].serviceKey
+  async function getAvailableSites() {
+    sites.value = []
+    isLoadingSites.value = true
+
+    try {
+      const adminUserSites = (await apiService.getCurrentAdminUserSites()) as AdminUserSites
+
+      sites.value = adminUserSites.linkedSites
+
+      if (adminUserSites.favoriteSite !== null) {
+        let selectedSiteCode = adminUserSites.favoriteSite.code as SiteEnum | null
+        if (sites.value.filter((site: Site) => site.code === selectedSiteCode).length === 0) {
+          selectedSiteCode = sites.value.length > 0 ? sites.value[0].code : null
+        }
+
+        selectedSite.value = selectedSiteCode
+      } else {
+        selectedSite.value = sites.value.length > 0 ? sites.value[0].code : null
+      }
+    } catch (error) {
+      sites.value = []
+    } finally {
+      isLoadingSites.value = false
     }
   }
 
@@ -59,7 +79,9 @@ export const useCalendarList = () => {
     weekDays,
     sites,
     selectedSite,
+    isLoadingSites: readonly(isLoadingSites),
     updateTotalBooked,
-    updateTotalUnderMaintenanceSpots
+    updateTotalUnderMaintenanceSpots,
+    getAvailableSites
   }
 }

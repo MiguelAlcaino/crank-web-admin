@@ -1602,6 +1602,10 @@ export class ApiService {
             name
             code
           }
+          favoriteSite {
+            name
+            code
+          }
         }
       }
     `
@@ -1753,5 +1757,29 @@ export class ApiService {
     })
 
     return result.data.removeAdminUser as boolean
+  }
+
+  async getCurrentAdminUserSites(): Promise<AdminUser> {
+    const query = gql`
+      query currentAdminUserSites {
+        currentAdminUser {
+          linkedSites {
+            name
+            code
+          }
+          favoriteSite {
+            name
+            code
+          }
+        }
+      }
+    `
+
+    const resultQuery = await this.authApiClient.query({
+      query: query,
+      fetchPolicy: 'network-only'
+    })
+
+    return resultQuery.data.currentAdminUser as AdminUser
   }
 }

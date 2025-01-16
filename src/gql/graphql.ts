@@ -43,6 +43,7 @@ export type AddedToWaitlistSuccess = {
 export type AdminUser = {
   __typename: 'AdminUser'
   email: Scalars['String']
+  favoriteSite: Site
   id: Scalars['ID']
   linkedInstructors?: Maybe<Array<Instructor>>
   linkedSites?: Maybe<Array<Site>>
@@ -51,11 +52,12 @@ export type AdminUser = {
 }
 
 export type AdminUserDataInput = {
-  email?: InputMaybe<Scalars['String']>
+  email: Scalars['String']
+  favoriteSite?: InputMaybe<SiteEnum>
   linkedInstructorIds?: InputMaybe<Array<Scalars['ID']>>
   linkedSiteCodes?: InputMaybe<Array<SiteEnum>>
   role: Scalars['String']
-  username?: InputMaybe<Scalars['String']>
+  username: Scalars['String']
 }
 
 export type AdminUserResultUnion = AdminUser | EmailAlreadyUsedError | UsernameAlreadyUsedError
@@ -949,6 +951,8 @@ export type Query = {
   countries?: Maybe<Array<Maybe<Country>>>
   /** Returns a specific country by a given country code */
   country?: Maybe<Country>
+  /** Returns the current AdminUser */
+  currentAdminUser: AdminUser
   /** Returns the current user by the given Authentication header */
   currentUser?: Maybe<User>
   /**
@@ -2357,6 +2361,7 @@ export type AdminUsersQuery = {
       site: { __typename: 'Site'; name: string; code: SiteEnum }
     }> | null
     linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
+    favoriteSite: { __typename: 'Site'; name: string; code: SiteEnum }
   }>
 }
 
@@ -5690,6 +5695,17 @@ export const AdminUsersDocument = {
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'linkedSites' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'favoriteSite' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [

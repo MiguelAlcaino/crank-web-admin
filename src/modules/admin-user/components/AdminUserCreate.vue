@@ -45,7 +45,8 @@ const formData = reactive({
   email: '',
   role: null as string | null,
   linkedInstructorIds: [] as string[],
-  linkedSiteCodes: [] as SiteEnum[]
+  linkedSiteCodes: [] as SiteEnum[],
+  favoriteSite: null as SiteEnum | null
 })
 
 const selectedInstructors = computed({
@@ -83,7 +84,15 @@ const rules = computed(() => {
       required: helpers.withMessage('Rol is required', required)
     },
     linkedInstructorIds: {},
-    linkedSiteCodes: {}
+    linkedSiteCodes: {},
+    favoriteSite: {
+      requiredIfLinkedSiteCodesSelected: helpers.withMessage(
+        'Favorite Site is required',
+        (value, { linkedSiteCodes }) => {
+          return linkedSiteCodes.length === 0 || !!value
+        }
+      )
+    }
   }
 })
 
@@ -95,6 +104,7 @@ const openModal = () => {
   formData.role = null
   formData.linkedInstructorIds = []
   formData.linkedSiteCodes = []
+  formData.favoriteSite = null
 
   selectedInstructors.value = []
   selectedSites.value = []
@@ -125,7 +135,8 @@ const submitForm = async () => {
         email: formData.email,
         role: formData.role!,
         linkedInstructorIds: formData.linkedInstructorIds,
-        linkedSiteCodes: formData.linkedSiteCodes
+        linkedSiteCodes: formData.linkedSiteCodes,
+        favoriteSite: formData.favoriteSite
       })
 
       if (response.__typename == 'AdminUser') {
@@ -353,6 +364,38 @@ function onConfirmSuccessModal() {
                         {{ error.$message }}
                       </small>
                     </div>
+                  </div>
+                </div>
+
+                <!-- Favorite Site -->
+                <div class="form-row mb-3" v-if="formData.linkedSiteCodes.length > 0">
+                  <div class="col">
+                    <label for="favoriteSite" class="input-label">Favorite Site *</label>
+                    <div class="input-group">
+                      <select
+                        class="custom-select"
+                        required
+                        v-model="formData.favoriteSite"
+                        placeholder="Favorite Site"
+                      >
+                        <option
+                          v-for="(item, index) in selectedSites"
+                          :key="index"
+                          :value="item.code"
+                        >
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+
+                    <small
+                      v-for="error in v$.favoriteSite.$errors"
+                      :key="error.$uid"
+                      class="form-text"
+                      style="color: red"
+                    >
+                      {{ error.$message }}
+                    </small>
                   </div>
                 </div>
               </form>

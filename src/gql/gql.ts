@@ -109,7 +109,7 @@ const documents = {
     types.AvailableSitesDocument,
   '\n      query adminUser($id: ID!) {\n        adminUser(id: $id) {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              code\n              name\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n        }\n      }\n    ':
     types.AdminUserDocument,
-  '\n      query adminUsers {\n        adminUsers {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              name\n              code\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n        }\n      }\n    ':
+  '\n      query adminUsers {\n        adminUsers {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              name\n              code\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    ':
     types.AdminUsersDocument,
   '\n      query availableInstructors {\n        availableInstructors {\n          id\n          name\n          site {\n            name\n            code\n          }\n        }\n      }\n    ':
     types.AvailableInstructorsDocument,
@@ -429,8 +429,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n      query adminUsers {\n        adminUsers {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              name\n              code\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n        }\n      }\n    '
-): (typeof documents)['\n      query adminUsers {\n        adminUsers {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              name\n              code\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n        }\n      }\n    ']
+  source: '\n      query adminUsers {\n        adminUsers {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              name\n              code\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    '
+): (typeof documents)['\n      query adminUsers {\n        adminUsers {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              name\n              code\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    ']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

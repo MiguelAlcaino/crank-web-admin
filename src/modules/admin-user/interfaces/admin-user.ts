@@ -8,4 +8,5 @@ export interface AdminUser {
   roles?: string[]
   linkedInstructors?: Instructor[]
   linkedSites?: Site[]
+  favoriteSite?: Site
 }

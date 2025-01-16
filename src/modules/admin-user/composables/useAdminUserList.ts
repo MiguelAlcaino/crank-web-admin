@@ -30,7 +30,7 @@ export const useAdminUserList = (apiService: ApiService) => {
   return {
     // Properties
     isLoading: readonly(isLoading),
-    hasError: readonly(hasError),
+    hasError: hasError,
     adminUsers: adminUsers,
 
     // Methods
