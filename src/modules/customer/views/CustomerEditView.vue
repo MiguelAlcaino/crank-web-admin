@@ -317,8 +317,6 @@ function onChangeCountry() {
   &nbsp;
   <UpdateUserPassword :userId="userId"></UpdateUserPassword>
   &nbsp;
-  <!-- TODO: Implement ChangeUserPassword component -->
-  <!-- <ChangeUserPassword :user-id="userId"></ChangeUserPassword> -->
   <ExternalUserIds :userId="userId"></ExternalUserIds>
 
   <hr />
