@@ -10,7 +10,7 @@ export const myAdminSettingsRoute: RouteRecordRaw = {
     {
       path: `/${ROUTE_NAME}`,
       name: 'my-admin-settings',
-      component: () => import('@/modules/my-admin-settings/views/MyAdminSettings.vue')
+      component: () => import('@/modules/my-admin-settings/views/MyAdminSettingsView.vue')
     }
   ]
 }

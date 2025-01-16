@@ -12,17 +12,20 @@ import { ApiService } from '@/services/apiService'
 import { newAnonymousClient, newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { useAuthenticationStore } from '@/stores/authToken'
 import SimpleTypeahead from 'vue3-simple-typeahead'
+import VueApexCharts from 'vue3-apexcharts'
+import { appStore } from '@/stores/appStorage'
+
+import { SiteEnum } from './modules/shared/interfaces'
+
+import AdminUserListView from './modules/admin-user/views/AdminUserListView.vue'
+import ClassSchedulesView from './modules/class-schedule-config/views/ClassScheduleConfigView.vue'
+import ClassScheduleView from '@/modules/class-schedule/views/ClassScheduleView.vue'
 import CustomerCreateView from '@/modules/customer/views/CustomerCreateView.vue'
 import CustomerEditView from '@/modules/customer/views/CustomerEditView.vue'
-import RoomLayoutView from '@/modules/room-layout/views/RoomLayoutView.vue'
 import CustomerProfileView from '@/modules/customer/views/CustomerProfileView.vue'
 import GiftCardListView from './modules/gift-card/views/GiftCardListView.vue'
-import AdminUserListView from './modules/admin-user/views/AdminUserListView.vue'
-import { appStore } from '@/stores/appStorage'
-import ClassScheduleView from '@/modules/class-schedule/views/ClassScheduleView.vue'
-import ClassSchedulesView from './modules/class-schedule-config/views/ClassScheduleConfigView.vue'
-import VueApexCharts from 'vue3-apexcharts'
-import { SiteEnum } from './modules/shared/interfaces'
+import MyAdminSettingsView from './modules/my-admin-settings/views/MyAdminSettingsView.vue'
+import RoomLayoutView from '@/modules/room-layout/views/RoomLayoutView.vue'
 
 export const startCustomerCreateApp = async function (
   urlAfterSubmit: string,
@@ -262,6 +265,27 @@ export const startUserAdminApp = async function (gqlUrl: string, token: string, 
       )
     },
     render: () => h(AdminUserListView)
+  })
+
+  app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
+  useAuthenticationStore().setSession(token)
+
+  app.mount(appDiv)
+}
+
+export const startMyAdminSettingsApp = async function (
+  gqlUrl: string,
+  token: string,
+  appDiv: string
+) {
+  const app = createApp({
+    setup() {
+      provide(
+        'gqlApiService',
+        new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
+      )
+    },
+    render: () => h(MyAdminSettingsView)
   })
 
   app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
