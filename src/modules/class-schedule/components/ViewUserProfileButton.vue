@@ -211,13 +211,13 @@ async function getUser(userId: string) {
                   <div class="row">
                     <div class="col">
                       <p>
-                        Adress Line 1:
+                        Address Line 1:
                         <b>{{ identifiableUser?.user?.address1 }}</b>
                       </p>
                     </div>
                     <div class="col">
                       <p>
-                        Adress Line 2:
+                        Address Line 2:
                         <b>{{ identifiableUser?.user?.address2 }}</b>
                       </p>
                     </div>
