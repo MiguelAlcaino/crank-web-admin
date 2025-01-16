@@ -12,7 +12,9 @@ import SyncAllClassesButton from '@/modules/class-schedule/components/SyncAllCla
 import type { CalendarListClass } from '../interfaces'
 import type { SiteEnum } from '@/modules/shared/interfaces'
 import { useCalendarList } from '../composables/useCalendarList'
-const { weekDays, sites, selectedSite } = useCalendarList()
+const { weekDays, sites, selectedSite, isLoadingSites, getAvailableSites } = useCalendarList(
+  inject<ApiService>('gqlApiService')!
+)
 
 dayjs.Ls.en.weekStart = 1
 
@@ -37,10 +39,13 @@ const emits = defineEmits<{
 }>()
 
 onMounted(async () => {
-  checkIfAllClassAreSynchronized()
+  await getAvailableSites()
 
-  await getCalendarClasses()
-  scrollToTodayClass()
+  if (selectedSite.value) {
+    checkIfAllClassAreSynchronized()
+    await getCalendarClasses()
+    scrollToTodayClass()
+  }
 })
 
 async function checkIfAllClassAreSynchronized() {
@@ -177,22 +182,31 @@ function scrollToTodayClass() {
 </script>
 
 <template>
-  <div v-if="selectedSite === null">
+  <div v-if="!isLoadingSites && sites.length === 0">
     <p>The calendar cannot be displayed because your user does not have a site assigned.</p>
   </div>
   <div class="row ml-1">
     <div class="col-lg-7 col-md-10 col-sm-12 ml-auto mr-3">
-      <select
-        class="custom-select"
-        v-model="selectedSite"
-        @change="onAfterChangingSite()"
-        id="countryRegistration"
-        required
-      >
-        <option v-for="(item, index) in sites" :key="index" :value="item.serviceKey">
-          {{ item.name }}
-        </option>
-      </select>
+      <div class="position-relative">
+        <select
+          class="custom-select"
+          v-model="selectedSite"
+          required
+          :disabled="isLoadingSites || isLoading"
+          @change="onAfterChangingSite()"
+        >
+          <option v-for="site in sites" :key="site.code" :value="site.code">
+            {{ site.name }}
+          </option>
+        </select>
+        <div
+          v-if="isLoadingSites"
+          class="spinner-border text-primary position-absolute custom-select-spinner"
+          role="status"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
     </div>
   </div>
   <hr />
@@ -377,5 +391,14 @@ function scrollToTodayClass() {
 
   max-height: 82vh;
   overflow-y: auto;
+}
+
+.custom-select-spinner {
+  color: #ff7f61 !important;
+  top: 30%;
+  right: 28px;
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.2em;
 }
 </style>
