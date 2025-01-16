@@ -120,7 +120,9 @@ const documents = {
   '\n      mutation addAdminUser($input: AdminUserDataInput!) {\n        addAdminUser(input: $input) {\n          ... on AdminUser {\n            id\n            username\n            email\n            roles\n            linkedInstructors {\n              id\n              name\n              site {\n                name\n                code\n              }\n            }\n            linkedSites {\n              name\n              code\n            }\n          }\n          ... on EmailAlreadyUsedError {\n            code\n          }\n          ... on UsernameAlreadyUsedError {\n            code\n          }\n        }\n      }\n    ':
     types.AddAdminUserDocument,
   '\n      mutation removeAdminUser($id: ID!) {\n        removeAdminUser(id: $id)\n      }\n    ':
-    types.RemoveAdminUserDocument
+    types.RemoveAdminUserDocument,
+  '\n      query currentAdminUserSites {\n        currentAdminUser {\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    ':
+    types.CurrentAdminUserSitesDocument
 }
 
 /**
@@ -461,6 +463,12 @@ export function graphql(
 export function graphql(
   source: '\n      mutation removeAdminUser($id: ID!) {\n        removeAdminUser(id: $id)\n      }\n    '
 ): (typeof documents)['\n      mutation removeAdminUser($id: ID!) {\n        removeAdminUser(id: $id)\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n      query currentAdminUserSites {\n        currentAdminUser {\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    '
+): (typeof documents)['\n      query currentAdminUserSites {\n        currentAdminUser {\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    ']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}

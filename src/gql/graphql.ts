@@ -622,6 +622,7 @@ export type Mutation = {
   syncClassWithPIQ: ClassInfo
   /** Updates an admin user */
   updateAdminUser: AdminUserResultUnion
+  updateCurrentAdminUserPassword?: Maybe<Scalars['Boolean']>
   /** Updates the current user */
   updateCurrentUser?: Maybe<User>
   /** Updates a user's password in all the sites */
@@ -819,6 +820,10 @@ export type MutationSyncClassWithPiqArgs = {
 
 export type MutationUpdateAdminUserArgs = {
   input: UpdateAdminUserInput
+}
+
+export type MutationUpdateCurrentAdminUserPasswordArgs = {
+  input: UpdateCurrentUserPasswordInput
 }
 
 export type MutationUpdateCurrentUserArgs = {
@@ -2441,6 +2446,17 @@ export type RemoveAdminUserMutationVariables = Exact<{
 }>
 
 export type RemoveAdminUserMutation = { __typename: 'Mutation'; removeAdminUser: boolean }
+
+export type CurrentAdminUserSitesQueryVariables = Exact<{ [key: string]: never }>
+
+export type CurrentAdminUserSitesQuery = {
+  __typename: 'Query'
+  currentAdminUser: {
+    __typename: 'AdminUser'
+    linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
+    favoriteSite: { __typename: 'Site'; name: string; code: SiteEnum }
+  }
+}
 
 export const SiteSettingsDocument = {
   kind: 'Document',
@@ -6052,3 +6068,49 @@ export const RemoveAdminUserDocument = {
     }
   ]
 } as unknown as DocumentNode<RemoveAdminUserMutation, RemoveAdminUserMutationVariables>
+export const CurrentAdminUserSitesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'currentAdminUserSites' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'currentAdminUser' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'linkedSites' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'favoriteSite' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<CurrentAdminUserSitesQuery, CurrentAdminUserSitesQueryVariables>
