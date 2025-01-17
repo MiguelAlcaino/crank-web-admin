@@ -191,12 +191,12 @@ async function goToLegacyView() {
       <div class="row">
         <div class="col">
           <p>
-            Adress Line 1: <b>{{ identifiableUser?.user?.address1 }}</b>
+            Address Line 1: <b>{{ identifiableUser?.user?.address1 }}</b>
           </p>
         </div>
         <div class="col">
           <p>
-            Adress Line 2: <b>{{ identifiableUser?.user?.address2 }}</b>
+            Address Line 2: <b>{{ identifiableUser?.user?.address2 }}</b>
           </p>
         </div>
       </div>
