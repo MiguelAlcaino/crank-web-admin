@@ -47,6 +47,7 @@ import type {
   SiteUserInput,
   SwapSpotResultUnion,
   UpdateAdminUserInput,
+  UpdateCurrentAdminUserFavoriteSiteInput,
   UpdateCurrentUserPasswordInput,
   UpdateGiftCardInput,
   UpdateUserPasswordInput,
@@ -1815,5 +1816,34 @@ export class ApiService {
       }
       return 'UnknownError'
     }
+  }
+
+  async updateCurrentAdminUserFavoriteSite(
+    input: UpdateCurrentAdminUserFavoriteSiteInput
+  ): Promise<AdminUser> {
+    const mutation = gql`
+      mutation updateCurrentAdminUserFavoriteSite($input: UpdateCurrentAdminUserFavoriteSiteInput) {
+        updateCurrentAdminUserFavoriteSite(input: $input) {
+          linkedSites {
+            name
+            code
+          }
+          favoriteSite {
+            name
+            code
+          }
+        }
+      }
+    `
+
+    const result = await this.authApiClient.mutate({
+      mutation: mutation,
+      variables: {
+        input: input
+      },
+      fetchPolicy: 'network-only'
+    })
+
+    return result.data.updateCurrentAdminUserFavoriteSite as AdminUser
   }
 }
