@@ -122,7 +122,11 @@ const documents = {
   '\n      mutation removeAdminUser($id: ID!) {\n        removeAdminUser(id: $id)\n      }\n    ':
     types.RemoveAdminUserDocument,
   '\n      query currentAdminUserSites {\n        currentAdminUser {\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    ':
-    types.CurrentAdminUserSitesDocument
+    types.CurrentAdminUserSitesDocument,
+  '\n      mutation updateCurrentAdminUserPassword($input: UpdateCurrentUserPasswordInput!) {\n        updateCurrentAdminUserPassword(input: $input)\n      }\n    ':
+    types.UpdateCurrentAdminUserPasswordDocument,
+  '\n      mutation updateCurrentAdminUserFavoriteSite($input: UpdateCurrentAdminUserFavoriteSiteInput) {\n        updateCurrentAdminUserFavoriteSite(input: $input){\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    ':
+    types.UpdateCurrentAdminUserFavoriteSiteDocument
 }
 
 /**
@@ -469,6 +473,18 @@ export function graphql(
 export function graphql(
   source: '\n      query currentAdminUserSites {\n        currentAdminUser {\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    '
 ): (typeof documents)['\n      query currentAdminUserSites {\n        currentAdminUser {\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n      mutation updateCurrentAdminUserPassword($input: UpdateCurrentUserPasswordInput!) {\n        updateCurrentAdminUserPassword(input: $input)\n      }\n    '
+): (typeof documents)['\n      mutation updateCurrentAdminUserPassword($input: UpdateCurrentUserPasswordInput!) {\n        updateCurrentAdminUserPassword(input: $input)\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n      mutation updateCurrentAdminUserFavoriteSite($input: UpdateCurrentAdminUserFavoriteSiteInput) {\n        updateCurrentAdminUserFavoriteSite(input: $input){\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    '
+): (typeof documents)['\n      mutation updateCurrentAdminUserFavoriteSite($input: UpdateCurrentAdminUserFavoriteSiteInput) {\n        updateCurrentAdminUserFavoriteSite(input: $input){\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    ']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}
