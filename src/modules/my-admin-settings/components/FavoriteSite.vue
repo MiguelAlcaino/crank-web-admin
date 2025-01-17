@@ -9,7 +9,7 @@ import type { SiteEnum } from '@/modules/shared/interfaces'
 
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
-import { ApiService } from '@/services/apiService'
+import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
 const apiService = inject<ApiService>('gqlApiService')!
