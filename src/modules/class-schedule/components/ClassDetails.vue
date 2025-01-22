@@ -212,15 +212,6 @@ function disableSyncButtons(disabled: boolean) {
             </h6>
           </div>
           <div v-else>
-            <SyncClassWithPiqButton
-              v-if="classInfo?.class.id && userCanSyncClassesWithPiq"
-              :class-id="classInfo?.class.id"
-              @after-sync-class-with-piq="afterSyncClass"
-              :disabled="syncWithPiqButtonIsDisabled"
-              @disableSyncButtons="disableSyncButtons"
-            >
-            </SyncClassWithPiqButton>
-            &nbsp;
             <SyncClassButton
               v-if="classInfo?.class.id && userCanSyncClasses"
               :class-id="classInfo?.class.id"
