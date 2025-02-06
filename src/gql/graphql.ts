@@ -48,6 +48,7 @@ export type AdminUser = {
   linkedInstructors?: Maybe<Array<Instructor>>
   linkedSites?: Maybe<Array<Site>>
   roles?: Maybe<Array<Scalars['String']>>
+  showCancelledClasses?: Maybe<Scalars['Boolean']>
   username: Scalars['String']
 }
 
@@ -2535,6 +2536,30 @@ export type UpdateCurrentAdminUserFavoriteSiteMutation = {
   __typename: 'Mutation'
   updateCurrentAdminUserFavoriteSite: {
     __typename: 'AdminUser'
+    linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
+    favoriteSite: { __typename: 'Site'; name: string; code: SiteEnum }
+  }
+}
+
+export type UpdateCurrentAdminUserMutationVariables = Exact<{
+  input: UpdateCurrentAdminUserInput
+}>
+
+export type UpdateCurrentAdminUserMutation = {
+  __typename: 'Mutation'
+  updateCurrentAdminUser: {
+    __typename: 'AdminUser'
+    id: string
+    username: string
+    email: string
+    roles?: Array<string> | null
+    showCancelledClasses?: boolean | null
+    linkedInstructors?: Array<{
+      __typename: 'Instructor'
+      id: string
+      name: string
+      site: { __typename: 'Site'; code: SiteEnum; name: string }
+    }> | null
     linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
     favoriteSite: { __typename: 'Site'; name: string; code: SiteEnum }
   }
@@ -6303,4 +6328,100 @@ export const UpdateCurrentAdminUserFavoriteSiteDocument = {
 } as unknown as DocumentNode<
   UpdateCurrentAdminUserFavoriteSiteMutation,
   UpdateCurrentAdminUserFavoriteSiteMutationVariables
+>
+export const UpdateCurrentAdminUserDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'updateCurrentAdminUser' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'UpdateCurrentAdminUserInput' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'updateCurrentAdminUser' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'roles' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'linkedInstructors' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'site' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'code' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'linkedSites' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'favoriteSite' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'showCancelledClasses' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  UpdateCurrentAdminUserMutation,
+  UpdateCurrentAdminUserMutationVariables
 >
