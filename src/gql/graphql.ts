@@ -48,6 +48,7 @@ export type AdminUser = {
   linkedInstructors?: Maybe<Array<Instructor>>
   linkedSites?: Maybe<Array<Site>>
   roles?: Maybe<Array<Scalars['String']>>
+  showCancelledClasses?: Maybe<Scalars['Boolean']>
   username: Scalars['String']
 }
 
@@ -143,6 +144,18 @@ export type CancelEnrollmentResultUnion =
 export type CancelUserEnrollmentSuccess = {
   __typename: 'CancelUserEnrollmentSuccess'
   status?: Maybe<Scalars['Boolean']>
+}
+
+export type ChallengeDisplay = {
+  __typename: 'ChallengeDisplay'
+  firstLine?: Maybe<Scalars['String']>
+  secondLine?: Maybe<Scalars['String']>
+  thirdLine?: Maybe<Scalars['String']>
+}
+
+export type ChallengeInterface = {
+  challengeDisplay: ChallengeDisplay
+  id: Scalars['ID']
 }
 
 export type ChartPoint = {
@@ -336,6 +349,26 @@ export type DisableEnableSpotResult = {
 }
 
 export type DisableEnableSpotResultUnion = DisableEnableSpotResult | SpotNotFoundError
+
+export type DistanceChallenge = ChallengeInterface & {
+  __typename: 'DistanceChallenge'
+  challengeDisplay: ChallengeDisplay
+  goalInKM: Scalars['Int']
+  id: Scalars['ID']
+  ranking?: Maybe<DistanceRanking>
+}
+
+export type DistanceChallengeRankingPosition = {
+  __typename: 'DistanceChallengeRankingPosition'
+  totalKm: Scalars['Float']
+  userPositionInRanking: UserPositionInRanking
+}
+
+export type DistanceRanking = {
+  __typename: 'DistanceRanking'
+  amountOfUsersInRanking: Scalars['Int']
+  rankingPositions: Array<DistanceChallengeRankingPosition>
+}
 
 export type EditClassInput = {
   classId: Scalars['ID']
@@ -622,6 +655,8 @@ export type Mutation = {
   syncClassWithPIQ: ClassInfo
   /** Updates an admin user */
   updateAdminUser: AdminUserResultUnion
+  /** Allows to update the current AdminUser */
+  updateCurrentAdminUser: AdminUser
   /** Allows to update the favorite site for a AdminUser */
   updateCurrentAdminUserFavoriteSite: AdminUser
   updateCurrentAdminUserPassword?: Maybe<Scalars['Boolean']>
@@ -824,6 +859,10 @@ export type MutationUpdateAdminUserArgs = {
   input: UpdateAdminUserInput
 }
 
+export type MutationUpdateCurrentAdminUserArgs = {
+  input: UpdateCurrentAdminUserInput
+}
+
 export type MutationUpdateCurrentAdminUserFavoriteSiteArgs = {
   input?: InputMaybe<UpdateCurrentAdminUserFavoriteSiteInput>
 }
@@ -964,6 +1003,8 @@ export type Query = {
   country?: Maybe<Country>
   /** Returns the current AdminUser */
   currentAdminUser: AdminUser
+  /** Returns information of the current CRANK challenge */
+  currentCRANKChallenge: ChallengeInterface
   /** Returns the current user by the given Authentication header */
   currentUser?: Maybe<User>
   /**
@@ -1393,6 +1434,10 @@ export type UpdateCurrentAdminUserFavoriteSiteInput = {
   favoriteSite?: InputMaybe<SiteEnum>
 }
 
+export type UpdateCurrentAdminUserInput = {
+  showCancelledClasses: Scalars['Boolean']
+}
+
 export type UpdateCurrentUserPasswordInput = {
   currentPassword: Scalars['String']
   newPassword: Scalars['String']
@@ -1482,6 +1527,12 @@ export type UserInput = {
 export type UserPasswordDoesNotMatchError = Error & {
   __typename: 'UserPasswordDoesNotMatchError'
   code: Scalars['String']
+}
+
+export type UserPositionInRanking = {
+  __typename: 'UserPositionInRanking'
+  positionInRanking: Scalars['Int']
+  user: User
 }
 
 export type UserRanking = {
@@ -2485,6 +2536,30 @@ export type UpdateCurrentAdminUserFavoriteSiteMutation = {
   __typename: 'Mutation'
   updateCurrentAdminUserFavoriteSite: {
     __typename: 'AdminUser'
+    linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
+    favoriteSite: { __typename: 'Site'; name: string; code: SiteEnum }
+  }
+}
+
+export type UpdateCurrentAdminUserMutationVariables = Exact<{
+  input: UpdateCurrentAdminUserInput
+}>
+
+export type UpdateCurrentAdminUserMutation = {
+  __typename: 'Mutation'
+  updateCurrentAdminUser: {
+    __typename: 'AdminUser'
+    id: string
+    username: string
+    email: string
+    roles?: Array<string> | null
+    showCancelledClasses?: boolean | null
+    linkedInstructors?: Array<{
+      __typename: 'Instructor'
+      id: string
+      name: string
+      site: { __typename: 'Site'; code: SiteEnum; name: string }
+    }> | null
     linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
     favoriteSite: { __typename: 'Site'; name: string; code: SiteEnum }
   }
@@ -6253,4 +6328,100 @@ export const UpdateCurrentAdminUserFavoriteSiteDocument = {
 } as unknown as DocumentNode<
   UpdateCurrentAdminUserFavoriteSiteMutation,
   UpdateCurrentAdminUserFavoriteSiteMutationVariables
+>
+export const UpdateCurrentAdminUserDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'updateCurrentAdminUser' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'UpdateCurrentAdminUserInput' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'updateCurrentAdminUser' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'roles' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'linkedInstructors' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'site' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'code' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'linkedSites' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'favoriteSite' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'showCancelledClasses' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  UpdateCurrentAdminUserMutation,
+  UpdateCurrentAdminUserMutationVariables
 >

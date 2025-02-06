@@ -19,6 +19,7 @@ module.exports = {
     ecmaVersion: "latest",
   },
   rules: {
-    'prettier/prettier': 'off'
+    'prettier/prettier': 'off',
+    '@typescript-eslint/consistent-type-imports': 'error',
   }
 };

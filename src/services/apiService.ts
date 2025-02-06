@@ -48,6 +48,7 @@ import type {
   SwapSpotResultUnion,
   UpdateAdminUserInput,
   UpdateCurrentAdminUserFavoriteSiteInput,
+  UpdateCurrentAdminUserInput,
   UpdateCurrentUserPasswordInput,
   UpdateGiftCardInput,
   UpdateUserPasswordInput,
@@ -1845,5 +1846,62 @@ export class ApiService {
     })
 
     return result.data.updateCurrentAdminUserFavoriteSite as AdminUser
+  }
+
+  async updateCurrentAdminUser(input: UpdateCurrentAdminUserInput): Promise<AdminUser> {
+    const mutation = gql`
+      mutation updateCurrentAdminUser($input: UpdateCurrentAdminUserInput!) {
+        updateCurrentAdminUser(input: $input) {
+          id
+          username
+          email
+          roles
+          linkedInstructors {
+            id
+            name
+            site {
+              code
+              name
+            }
+          }
+          linkedSites {
+            name
+            code
+          }
+          favoriteSite {
+            name
+            code
+          }
+          showCancelledClasses
+        }
+      }
+    `
+
+    const result = await this.authApiClient.mutate({
+      mutation: mutation,
+      variables: { input: input },
+      fetchPolicy: 'network-only'
+    })
+
+    return result.data.updateCurrentAdminUser as AdminUser
+  }
+
+  async getCurrentAdminUser(fields: string[]): Promise<AdminUser> {
+    const selectedFields = fields.join('\n')
+
+    const query = gql`
+      query currentAdminUser {
+        currentAdminUser {
+          ${selectedFields}
+        }
+      }
+    `
+
+    const resultQuery = await this.authApiClient.query({
+      query: query,
+      fetchPolicy: 'network-only'
+    })
+
+    return resultQuery.data.currentAdminUser as AdminUser
   }
 }
