@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { inject, onMounted, ref } from 'vue'
 
-import { ApiService } from '@/services/apiService'
+import type { ApiService } from '@/services/apiService'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
