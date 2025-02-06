@@ -7,6 +7,10 @@ import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
 const apiService = inject<ApiService>('gqlApiService')!
 
+const props = defineProps<{
+  disabled: boolean
+}>()
+
 const emits = defineEmits<{
   (e: 'afterChange'): void
 }>()
@@ -64,7 +68,7 @@ const handleCheckboxChange = async () => {
       id="toggleSwitch"
       v-model="showCancelledClasses"
       @change="handleCheckboxChange"
-      :disabled="isLoading"
+      :disabled="isLoading || props.disabled"
     />
     <label class="custom-control-label" for="toggleSwitch">
       {{ showCancelledClasses ? 'Hide cancelled classes' : 'Show cancelled classes' }}

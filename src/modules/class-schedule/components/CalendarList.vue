@@ -209,7 +209,10 @@ function scrollToTodayClass() {
       </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 col-6 d-flex align-items-center">
-      <ShowCancelledClasses @after-change="getCalendarClasses"></ShowCancelledClasses>
+      <ShowCancelledClasses
+        @after-change="getCalendarClasses"
+        :disabled="isLoadingSites || isLoading"
+      ></ShowCancelledClasses>
     </div>
   </div>
   <hr />
