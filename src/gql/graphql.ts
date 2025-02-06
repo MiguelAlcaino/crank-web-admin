@@ -145,6 +145,18 @@ export type CancelUserEnrollmentSuccess = {
   status?: Maybe<Scalars['Boolean']>
 }
 
+export type ChallengeDisplay = {
+  __typename: 'ChallengeDisplay'
+  firstLine?: Maybe<Scalars['String']>
+  secondLine?: Maybe<Scalars['String']>
+  thirdLine?: Maybe<Scalars['String']>
+}
+
+export type ChallengeInterface = {
+  challengeDisplay: ChallengeDisplay
+  id: Scalars['ID']
+}
+
 export type ChartPoint = {
   __typename: 'ChartPoint'
   power?: Maybe<Scalars['Int']>
@@ -336,6 +348,26 @@ export type DisableEnableSpotResult = {
 }
 
 export type DisableEnableSpotResultUnion = DisableEnableSpotResult | SpotNotFoundError
+
+export type DistanceChallenge = ChallengeInterface & {
+  __typename: 'DistanceChallenge'
+  challengeDisplay: ChallengeDisplay
+  goalInKM: Scalars['Int']
+  id: Scalars['ID']
+  ranking?: Maybe<DistanceRanking>
+}
+
+export type DistanceChallengeRankingPosition = {
+  __typename: 'DistanceChallengeRankingPosition'
+  totalKm: Scalars['Float']
+  userPositionInRanking: UserPositionInRanking
+}
+
+export type DistanceRanking = {
+  __typename: 'DistanceRanking'
+  amountOfUsersInRanking: Scalars['Int']
+  rankingPositions: Array<DistanceChallengeRankingPosition>
+}
 
 export type EditClassInput = {
   classId: Scalars['ID']
@@ -622,6 +654,8 @@ export type Mutation = {
   syncClassWithPIQ: ClassInfo
   /** Updates an admin user */
   updateAdminUser: AdminUserResultUnion
+  /** Allows to update the current AdminUser */
+  updateCurrentAdminUser: AdminUser
   /** Allows to update the favorite site for a AdminUser */
   updateCurrentAdminUserFavoriteSite: AdminUser
   updateCurrentAdminUserPassword?: Maybe<Scalars['Boolean']>
@@ -824,6 +858,10 @@ export type MutationUpdateAdminUserArgs = {
   input: UpdateAdminUserInput
 }
 
+export type MutationUpdateCurrentAdminUserArgs = {
+  input: UpdateCurrentAdminUserInput
+}
+
 export type MutationUpdateCurrentAdminUserFavoriteSiteArgs = {
   input?: InputMaybe<UpdateCurrentAdminUserFavoriteSiteInput>
 }
@@ -964,6 +1002,8 @@ export type Query = {
   country?: Maybe<Country>
   /** Returns the current AdminUser */
   currentAdminUser: AdminUser
+  /** Returns information of the current CRANK challenge */
+  currentCRANKChallenge: ChallengeInterface
   /** Returns the current user by the given Authentication header */
   currentUser?: Maybe<User>
   /**
@@ -1393,6 +1433,10 @@ export type UpdateCurrentAdminUserFavoriteSiteInput = {
   favoriteSite?: InputMaybe<SiteEnum>
 }
 
+export type UpdateCurrentAdminUserInput = {
+  showCancelledClasses: Scalars['Boolean']
+}
+
 export type UpdateCurrentUserPasswordInput = {
   currentPassword: Scalars['String']
   newPassword: Scalars['String']
@@ -1482,6 +1526,12 @@ export type UserInput = {
 export type UserPasswordDoesNotMatchError = Error & {
   __typename: 'UserPasswordDoesNotMatchError'
   code: Scalars['String']
+}
+
+export type UserPositionInRanking = {
+  __typename: 'UserPositionInRanking'
+  positionInRanking: Scalars['Int']
+  user: User
 }
 
 export type UserRanking = {

@@ -125,7 +125,7 @@ const documents = {
     types.CurrentAdminUserSitesDocument,
   '\n      mutation updateCurrentAdminUserPassword($input: UpdateCurrentUserPasswordInput!) {\n        updateCurrentAdminUserPassword(input: $input)\n      }\n    ':
     types.UpdateCurrentAdminUserPasswordDocument,
-  '\n      mutation updateCurrentAdminUserFavoriteSite($input: UpdateCurrentAdminUserFavoriteSiteInput) {\n        updateCurrentAdminUserFavoriteSite(input: $input){\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    ':
+  '\n      mutation updateCurrentAdminUserFavoriteSite($input: UpdateCurrentAdminUserFavoriteSiteInput) {\n        updateCurrentAdminUserFavoriteSite(input: $input) {\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    ':
     types.UpdateCurrentAdminUserFavoriteSiteDocument
 }
 
@@ -483,8 +483,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n      mutation updateCurrentAdminUserFavoriteSite($input: UpdateCurrentAdminUserFavoriteSiteInput) {\n        updateCurrentAdminUserFavoriteSite(input: $input){\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    '
-): (typeof documents)['\n      mutation updateCurrentAdminUserFavoriteSite($input: UpdateCurrentAdminUserFavoriteSiteInput) {\n        updateCurrentAdminUserFavoriteSite(input: $input){\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    ']
+  source: '\n      mutation updateCurrentAdminUserFavoriteSite($input: UpdateCurrentAdminUserFavoriteSiteInput) {\n        updateCurrentAdminUserFavoriteSite(input: $input) {\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    '
+): (typeof documents)['\n      mutation updateCurrentAdminUserFavoriteSite($input: UpdateCurrentAdminUserFavoriteSiteInput) {\n        updateCurrentAdminUserFavoriteSite(input: $input) {\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    ']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}
