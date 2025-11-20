@@ -48,7 +48,7 @@ export type AdminUser = {
   linkedInstructors?: Maybe<Array<Instructor>>
   linkedSites?: Maybe<Array<Site>>
   roles?: Maybe<Array<Scalars['String']>>
-  showCancelledClasses?: Maybe<Scalars['Boolean']>
+  showCancelledClasses: Scalars['Boolean']
   username: Scalars['String']
 }
 
@@ -318,6 +318,13 @@ export type CreateCurrentUserInSiteSuccess = {
 }
 
 export type CreateCurrentUserInSiteUnion = CreateCurrentUserInSiteSuccess | UserAlreadyExistsError
+
+export type CreatePaymentLinkInput = {
+  amount: Scalars['Int']
+  currency: Scalars['String']
+  site: SiteEnum
+  title: Scalars['String']
+}
 
 export type CurrentUserEnrollmentsParams = {
   endDate?: InputMaybe<Scalars['Date']>
@@ -593,12 +600,16 @@ export type Mutation = {
   checkoutUserInClass?: Maybe<CheckoutResultUnion>
   /** Creates a copy of the current user in the given site */
   createCurrentUserInSite?: Maybe<CreateCurrentUserInSiteUnion>
+  /** Creates a new payment link */
+  createPaymentLink: PaymentLink
   /** Creates a new room layout */
   createRoomLayout: RoomLayout
   /** It deletes the current user's account */
   deleteCurrentUserAccount?: Maybe<DeleteCurrentUserAccountUnion>
   /** Removes a devices token */
   deleteDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']>
+  /** Soft deletes a payment link */
+  deletePaymentLink: Scalars['Boolean']
   /** Disables a spot in a class */
   disableSpot?: Maybe<DisableEnableSpotResultUnion>
   /** Edits a class */
@@ -668,6 +679,8 @@ export type Mutation = {
   updateGiftCard: GiftCard
   /** Allows to update an Item from Shopping Cart */
   updateItemInShoppingCart: ShoppingCart
+  /** Updates a payment link */
+  updatePaymentLink: PaymentLink
   updateUserPassword?: Maybe<Scalars['Boolean']>
 }
 
@@ -726,6 +739,10 @@ export type MutationCreateCurrentUserInSiteArgs = {
   toSite: SiteEnum
 }
 
+export type MutationCreatePaymentLinkArgs = {
+  input: CreatePaymentLinkInput
+}
+
 export type MutationCreateRoomLayoutArgs = {
   input: RoomLayoutInput
   site: SiteEnum
@@ -739,6 +756,10 @@ export type MutationDeleteCurrentUserAccountArgs = {
 export type MutationDeleteDeviceTokenToCurrentUserArgs = {
   input?: InputMaybe<DeviceTokenInput>
   site?: InputMaybe<SiteEnum>
+}
+
+export type MutationDeletePaymentLinkArgs = {
+  id: Scalars['ID']
 }
 
 export type MutationDisableSpotArgs = {
@@ -888,6 +909,10 @@ export type MutationUpdateItemInShoppingCartArgs = {
   input?: InputMaybe<ItemToShoppingCartInput>
 }
 
+export type MutationUpdatePaymentLinkArgs = {
+  input: UpdatePaymentLinkInput
+}
+
 export type MutationUpdateUserPasswordArgs = {
   input: UpdateUserPasswordInput
 }
@@ -928,6 +953,16 @@ export type PaginationInput = {
 export type PasswordsDontMatchError = Error & {
   __typename: 'PasswordsDontMatchError'
   code: Scalars['String']
+}
+
+export type PaymentLink = {
+  __typename: 'PaymentLink'
+  amount: Scalars['Int']
+  currency: Scalars['String']
+  id: Scalars['ID']
+  site: Site
+  title: Scalars['String']
+  url: Scalars['String']
 }
 
 /** Error returned when a client does not have enough credit or allowance to book a class */
@@ -1030,6 +1065,10 @@ export type Query = {
   giftCards: Array<GiftCard>
   /** Verifies whether an sms validation code is valid */
   isSMSValidationCodeValid?: Maybe<IsSmsValidationCodeValidUnion>
+  /** Returns a single payment link by ID */
+  paymentLink?: Maybe<PaymentLink>
+  /** Returns a list of payment links */
+  paymentLinks: Array<PaymentLink>
   /** Returns a list of available products for a specific site */
   products: Array<SellableProductInterface>
   /** Returns a specific room layout */
@@ -1119,6 +1158,14 @@ export type QueryCurrentUserWorkoutStatsPaginatedArgs = {
 
 export type QueryIsSmsValidationCodeValidArgs = {
   smsCode: Scalars['String']
+}
+
+export type QueryPaymentLinkArgs = {
+  id: Scalars['ID']
+}
+
+export type QueryPaymentLinksArgs = {
+  site?: InputMaybe<SiteEnum>
 }
 
 export type QueryProductsArgs = {
@@ -1446,6 +1493,14 @@ export type UpdateCurrentUserPasswordInput = {
 export type UpdateGiftCardInput = {
   grandTotal?: InputMaybe<Scalars['Float']>
   id: Scalars['ID']
+}
+
+export type UpdatePaymentLinkInput = {
+  amount?: InputMaybe<Scalars['Int']>
+  currency?: InputMaybe<Scalars['String']>
+  id: Scalars['ID']
+  site?: InputMaybe<SiteEnum>
+  title?: InputMaybe<Scalars['String']>
 }
 
 export type UpdateUserPasswordInput = {
@@ -2553,7 +2608,7 @@ export type UpdateCurrentAdminUserMutation = {
     username: string
     email: string
     roles?: Array<string> | null
-    showCancelledClasses?: boolean | null
+    showCancelledClasses: boolean
     linkedInstructors?: Array<{
       __typename: 'Instructor'
       id: string
