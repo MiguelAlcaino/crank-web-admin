@@ -1887,18 +1887,17 @@ export class ApiService {
   }
 
   async getCurrentAdminUser(fields: string[]): Promise<AdminUser> {
-    const selectedFields = fields.join('\n')
-
-    const query = gql`
+    // Create dynamic query using DocumentNode instead of template literal interpolation
+    const queryString = `
       query currentAdminUser {
         currentAdminUser {
-          ${selectedFields}
+          ${fields.join('\n          ')}
         }
       }
     `
 
     const resultQuery = await this.authApiClient.query({
-      query: query,
+      query: gql(queryString),
       fetchPolicy: 'network-only'
     })
 
