@@ -59,7 +59,7 @@ const v$ = useVuelidate(rules, formData, { $scope: false })
 
 const openModal = () => {
   formData.title = ''
-  formData.currency = currencyOptions.value[0]
+  formData.currency = currencyOptions[0]
   formData.site = null
   formData.amount = 0
 
@@ -234,7 +234,7 @@ function onConfirmSuccessModal() {
                         :loading="loadingSites"
                         :searchable="false"
                         :allow-empty="false"
-                        deselect-label="" 
+                        deselect-label=""
                       >
                       </multiselect>
                     </div>

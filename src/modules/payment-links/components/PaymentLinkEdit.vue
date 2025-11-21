@@ -66,7 +66,7 @@ const openModal = () => {
   formData.title = props.paymentLink.title
   formData.amount = props.paymentLink.amount
   formData.currency =
-    currencyOptions.value.find((option) => option.code === props.paymentLink.currency) || null
+    currencyOptions.find((option) => option.code === props.paymentLink.currency) || null
   formData.site = props.paymentLink.site
 
   getAvailableSites()
@@ -243,7 +243,7 @@ function onSuccessOk() {
                         :loading="loadingSites"
                         :searchable="false"
                         :allow-empty="false"
-                        deselect-label="" 
+                        deselect-label=""
                       >
                       </multiselect>
                     </div>

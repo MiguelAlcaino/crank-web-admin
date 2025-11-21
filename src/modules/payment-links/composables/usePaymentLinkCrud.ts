@@ -122,7 +122,7 @@ export const usePaymentLinkCrud = (apiService: ApiService) => {
     isLoading: readonly(isLoading),
     hasError: readonly(hasError),
     paymentLinks: readonly(paymentLinks),
-    currencyOptions: readonly(ref(currencyOptions)),
+    currencyOptions: readonly(currencyOptions),
 
     sites: readonly(sites),
     loadingSites: readonly(loadingSites),
