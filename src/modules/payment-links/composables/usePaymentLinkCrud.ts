@@ -52,8 +52,10 @@ export const usePaymentLinkCrud = (apiService: ApiService) => {
     hasError.value = false
 
     try {
-      await apiService.createPaymentLink(paymentLinkData)
-      await getPaymentLinks() // Refresh list
+      const created = await apiService.createPaymentLink(paymentLinkData)
+      const newArr = paymentLinks.value.slice()
+      newArr.push(created)
+      paymentLinks.value = newArr
       return true
     } catch (error) {
       hasError.value = true
@@ -77,10 +79,16 @@ export const usePaymentLinkCrud = (apiService: ApiService) => {
     hasError.value = false
 
     try {
-      await apiService.updatePaymentLink(paymentLinkData)
-      await getPaymentLinks() // Refresh list
+      const updated = await apiService.updatePaymentLink(paymentLinkData)
+      const idx = paymentLinks.value.findIndex((l) => l.id === updated.id)
+      if (idx !== -1) {
+        const newArr = paymentLinks.value.slice()
+        newArr[idx] = updated
+        paymentLinks.value = newArr
+      }
       return true
     } catch (error) {
+      console.log(error)
       hasError.value = true
       return false
     } finally {
@@ -95,7 +103,10 @@ export const usePaymentLinkCrud = (apiService: ApiService) => {
     try {
       const success = await apiService.deletePaymentLink(id)
       if (success) {
-        await getPaymentLinks()
+        const idx = paymentLinks.value.findIndex((l) => l.id === id)
+        const newArr = paymentLinks.value.slice()
+        newArr.splice(idx, 1)
+        paymentLinks.value = newArr
       }
       return success
     } catch (error) {
