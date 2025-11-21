@@ -10,7 +10,7 @@ export const paymentLinksRoute: RouteRecordRaw = {
     {
       path: `/${ROUTE_NAME}`,
       name: 'payment-links',
-      component: () => import('@/modules/payment-links/views/PaymentLinkList.vue')
+      component: () => import('@/modules/payment-links/views/PaymentLinkListView.vue')
     }
   ]
 }
