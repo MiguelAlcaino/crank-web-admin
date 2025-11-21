@@ -234,6 +234,7 @@ function onConfirmSuccessModal() {
                         :loading="loadingSites"
                         :searchable="false"
                         :allow-empty="false"
+                        deselect-label="" 
                       >
                       </multiselect>
                     </div>
