@@ -2,6 +2,7 @@ import type { ApiService } from '@/services/apiService'
 import { readonly, ref } from 'vue'
 import type { PaymentLink } from '../interfaces'
 import type { SiteEnum } from '@/modules/shared/interfaces'
+import type { Site } from '@/modules/shared/interfaces/site'
 
 const paymentLinks = ref<PaymentLink[]>([])
 
@@ -11,6 +12,21 @@ export const usePaymentLinkCrud = (apiService: ApiService) => {
   const isSaving = ref<boolean>(false)
 
   const currencyOptions = [{ name: 'AED', code: 'AED' }]
+
+  const sites = ref<Site[]>([])
+  const loadingSites = ref(false)
+
+  async function getAvailableSites() {
+    sites.value = []
+    loadingSites.value = true
+    try {
+      sites.value = await apiService.getAvailableSites()
+    } catch (error) {
+      // ignore
+    } finally {
+      loadingSites.value = false
+    }
+  }
 
   async function getPaymentLinks() {
     hasError.value = false
@@ -97,10 +113,14 @@ export const usePaymentLinkCrud = (apiService: ApiService) => {
     paymentLinks: readonly(paymentLinks),
     currencyOptions: readonly(ref(currencyOptions)),
 
+    sites: readonly(sites),
+    loadingSites: readonly(loadingSites),
+
     // Methods
     getPaymentLinks,
     createPaymentLink,
     updatePaymentLink,
-    deletePaymentLink
+    deletePaymentLink,
+    getAvailableSites
   }
 }

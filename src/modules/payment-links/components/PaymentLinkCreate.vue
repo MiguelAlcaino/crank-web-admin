@@ -20,16 +20,12 @@ const apiService = inject<ApiService>('gqlApiService')!
 const modalIsVisible = ref<boolean>(false)
 const isSaving = ref<boolean>(false)
 
-const sites = ref<Site[]>([])
-const loadingSites = ref<boolean>(false)
-
 const successModalIsVisible = ref<boolean>(false)
 const errorMessage = ref<string>('')
 const errorModalIsVisible = ref<boolean>(false)
 
-const { createPaymentLink, currencyOptions } = usePaymentLinkCrud(
-  inject<ApiService>('gqlApiService')!
-)
+const { createPaymentLink, currencyOptions, sites, loadingSites, getAvailableSites } =
+  usePaymentLinkCrud(apiService)
 
 const formData = reactive({
   title: '',
@@ -105,18 +101,6 @@ const submitForm = async () => {
     } finally {
       isSaving.value = false
     }
-  }
-}
-
-async function getAvailableSites(): Promise<void> {
-  sites.value = []
-  loadingSites.value = true
-  try {
-    sites.value = await apiService.getAvailableSites()
-  } catch (error) {
-    // ignore
-  } finally {
-    loadingSites.value = false
   }
 }
 

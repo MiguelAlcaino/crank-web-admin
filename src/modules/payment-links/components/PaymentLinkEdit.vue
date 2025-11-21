@@ -16,7 +16,8 @@ import { usePaymentLinkCrud } from '../composables/usePaymentLinkCrud'
 import Multiselect from 'vue-multiselect'
 
 const apiService = inject<ApiService>('gqlApiService')!
-const { updatePaymentLink, currencyOptions } = usePaymentLinkCrud(apiService)
+const { updatePaymentLink, currencyOptions, sites, loadingSites, getAvailableSites } =
+  usePaymentLinkCrud(apiService)
 
 const props = defineProps<{
   paymentLink: PaymentLink
@@ -24,9 +25,6 @@ const props = defineProps<{
 
 const modalIsVisible = ref<boolean>(false)
 const isSaving = ref<boolean>(false)
-
-const sites = ref<Site[]>([])
-const loadingSites = ref<boolean>(false)
 
 const successModalIsVisible = ref<boolean>(false)
 const errorMessage = ref<string>('')
@@ -108,18 +106,6 @@ const submitForm = async () => {
     } finally {
       isSaving.value = false
     }
-  }
-}
-
-async function getAvailableSites(): Promise<void> {
-  sites.value = []
-  loadingSites.value = true
-  try {
-    sites.value = await apiService.getAvailableSites()
-  } catch (error) {
-    // ignore
-  } finally {
-    loadingSites.value = false
   }
 }
 
