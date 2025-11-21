@@ -15,6 +15,7 @@ import type {
   ClassSchedule,
   ClassStat,
   Country,
+  CreatePaymentLinkInput,
   DisableEnableSpotInput,
   DisableEnableSpotResult,
   DisableEnableSpotResultUnion,
@@ -31,6 +32,7 @@ import type {
   Instructor,
   PaginatedClassStats,
   PaginationInput,
+  PaymentLink,
   RegisterUserInput,
   RemoveUserFromWaitlistInput,
   RemoveUserFromWaitlistUnion,
@@ -51,6 +53,7 @@ import type {
   UpdateCurrentAdminUserInput,
   UpdateCurrentUserPasswordInput,
   UpdateGiftCardInput,
+  UpdatePaymentLinkInput,
   UpdateUserPasswordInput,
   UserInClassRanking,
   UserInput,
@@ -1902,5 +1905,136 @@ export class ApiService {
     })
 
     return resultQuery.data.currentAdminUser as AdminUser
+  }
+
+  // Payment Links
+  async getPaymentLinks(site: SiteEnum | null): Promise<PaymentLink[]> {
+    const PAYMENT_LINKS_QUERY = gql`
+      query PaymentLinks($site: SiteEnum) {
+        paymentLinks(site: $site) {
+          id
+          title
+          amount
+          currency
+          url
+          site {
+            name
+            code
+          }
+        }
+      }
+    `
+
+    try {
+      const resultQuery = await this.authApiClient.query({
+        query: PAYMENT_LINKS_QUERY,
+        variables: { site: site },
+        fetchPolicy: 'network-only'
+      })
+
+      return resultQuery.data.paymentLinks as PaymentLink[]
+    } catch (error) {
+      return []
+    }
+  }
+
+  async getPaymentLink(id: string): Promise<PaymentLink> {
+    const PAYMENT_LINKS_QUERY = gql`
+      query PaymentLink($id: ID!) {
+        paymentLink(id: $id) {
+          id
+          title
+          amount
+          currency
+          url
+          site {
+            name
+            code
+          }
+        }
+      }
+    `
+
+    try {
+      const resultQuery = await this.authApiClient.query({
+        query: PAYMENT_LINKS_QUERY,
+        variables: { id: id },
+        fetchPolicy: 'network-only'
+      })
+
+      return resultQuery.data.paymentLink as PaymentLink
+    } catch (error) {
+      return null as unknown as PaymentLink
+    }
+  }
+
+  async updatePaymentLink(input: UpdatePaymentLinkInput): Promise<PaymentLink> {
+    const mutation = gql`
+      mutation UpdatePaymentLink($input: UpdatePaymentLinkInput!) {
+        updatePaymentLink(input: $input) {
+          id
+          title
+          amount
+          currency
+          url
+          site {
+            name
+            code
+          }
+        }
+      }
+    `
+
+    const result = await this.authApiClient.mutate({
+      mutation: mutation,
+      variables: { input: input },
+      fetchPolicy: 'network-only'
+    })
+
+    return result.data.updatePaymentLink as PaymentLink
+  }
+
+  async createPaymentLink(input: CreatePaymentLinkInput): Promise<PaymentLink> {
+    const mutation = gql`
+      mutation CreatePaymentLink($input: CreatePaymentLinkInput!) {
+        createPaymentLink(input: $input) {
+          id
+          title
+          amount
+          currency
+          url
+          site {
+            name
+            code
+          }
+        }
+      }
+    `
+
+    const result = await this.authApiClient.mutate({
+      mutation: mutation,
+      variables: { input: input },
+      fetchPolicy: 'network-only'
+    })
+
+    return result.data.createPaymentLink as PaymentLink
+  }
+
+  async deletePaymentLink(id: string): Promise<boolean> {
+    const mutation = gql`
+      mutation DeletePaymentLink($id: ID!) {
+        deletePaymentLink(id: $id)
+      }
+    `
+
+    const result = await this.authApiClient.mutate({
+      mutation: mutation,
+      variables: {
+        id: id
+      },
+      fetchPolicy: 'network-only'
+    })
+
+    return result.data.deletePaymentLink as boolean
   }
 }
