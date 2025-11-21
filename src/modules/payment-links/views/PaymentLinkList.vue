@@ -22,7 +22,7 @@ function afterUpdate() {
 
   <div class="row">
     <div class="col-12 d-flex justify-content-end">
-      <PaymentLinkCreate @afterCreate="getPaymentLinks"></PaymentLinkCreate>
+      <PaymentLinkCreate></PaymentLinkCreate>
     </div>
   </div>
   <br />

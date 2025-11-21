@@ -10,11 +10,7 @@ export const usePaymentLinkCrud = (apiService: ApiService) => {
   const isLoading = ref<boolean>(false)
   const isSaving = ref<boolean>(false)
 
-  const currencyOptions = [
-    { name: 'AED', code: 'AED' },
-    { name: 'USD', code: 'USD' },
-    { name: 'EUR', code: 'EUR' }
-  ]
+  const currencyOptions = [{ name: 'AED', code: 'AED' }]
 
   async function getPaymentLinks() {
     hasError.value = false

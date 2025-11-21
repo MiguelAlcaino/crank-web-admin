@@ -31,10 +31,6 @@ const { createPaymentLink, currencyOptions } = usePaymentLinkCrud(
   inject<ApiService>('gqlApiService')!
 )
 
-const emits = defineEmits<{
-  (e: 'afterCreate'): void
-}>()
-
 const formData = reactive({
   title: '',
   currency: null as { name: string; code: string } | null,
@@ -60,7 +56,6 @@ const rules = computed(() => {
 const v$ = useVuelidate(rules, formData, { $scope: false })
 
 const openModal = () => {
-  console.log('open modal')
   formData.title = ''
   formData.currency = currencyOptions.value[0]
   formData.site = null
@@ -121,7 +116,6 @@ async function getAvailableSites(): Promise<void> {
 
 function onConfirmSuccessModal() {
   successModalIsVisible.value = false
-  emits('afterCreate')
 }
 </script>
 
@@ -212,6 +206,7 @@ function onConfirmSuccessModal() {
                         class="custom-multiselect"
                         :loading="false"
                         :searchable="false"
+                        :allow-empty="false"
                       >
                       </multiselect>
                     </div>
