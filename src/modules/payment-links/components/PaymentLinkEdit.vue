@@ -4,7 +4,7 @@ import { computed, inject, reactive, ref } from 'vue'
 import type { ApiService } from '@/services/apiService'
 import 'vue-multiselect/dist/vue-multiselect.min.css'
 import type { Site } from '@/modules/shared/interfaces/site'
-import { helpers, required } from '@vuelidate/validators'
+import { helpers, required, minLength, maxLength, minValue, maxValue } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
@@ -20,10 +20,6 @@ const { updatePaymentLink, currencyOptions } = usePaymentLinkCrud(apiService)
 
 const props = defineProps<{
   paymentLink: PaymentLink
-}>()
-
-const emits = defineEmits<{
-  (e: 'afterUpdate'): void
 }>()
 
 const modalIsVisible = ref<boolean>(false)
@@ -46,10 +42,14 @@ const formData = reactive({
 const rules = computed(() => {
   return {
     title: {
-      required: helpers.withMessage('Title is required', required)
+      required: helpers.withMessage('Title is required', required),
+      minLength: helpers.withMessage('Title must be at least 3 characters', minLength(3)),
+      maxLength: helpers.withMessage('Title must not exceed 256 characters', maxLength(256))
     },
     amount: {
-      required: helpers.withMessage('Amount is required', required)
+      required: helpers.withMessage('Amount is required', required),
+      minValue: helpers.withMessage('Amount must be greater than 0', minValue(0.01)),
+      maxValue: helpers.withMessage('Amount must not exceed 999999.99', maxValue(999999.99))
     },
     currency: {
       required: helpers.withMessage('Currency is required', required)
@@ -125,7 +125,6 @@ async function getAvailableSites(): Promise<void> {
 
 function onSuccessOk() {
   successModalIsVisible.value = false
-  emits('afterUpdate')
 }
 </script>
 
@@ -159,6 +158,7 @@ function onSuccessOk() {
                         type="text"
                         placeholder="Title"
                         required
+                        maxlength="256"
                       />
                     </div>
 
@@ -220,6 +220,8 @@ function onSuccessOk() {
                         class="custom-multiselect"
                         :loading="false"
                         :searchable="false"
+                        :allow-empty="false"
+                        deselectLabel=""
                       >
                       </multiselect>
                     </div>
@@ -254,6 +256,7 @@ function onSuccessOk() {
                         class="custom-multiselect"
                         :loading="loadingSites"
                         :searchable="false"
+                        :allow-empty="false"
                       >
                       </multiselect>
                     </div>
@@ -272,10 +275,7 @@ function onSuccessOk() {
             </div>
             <div class="modal-footer border-0 d-flex justify-content-between">
               <div>
-                <PaymentLinkDelete
-                  :payment-link="paymentLink"
-                  @after-delete="emits('afterUpdate')"
-                ></PaymentLinkDelete>
+                <PaymentLinkDelete :payment-link="paymentLink"></PaymentLinkDelete>
               </div>
 
               <div>

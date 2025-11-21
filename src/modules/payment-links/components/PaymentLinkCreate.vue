@@ -3,7 +3,7 @@ import type { ApiService } from '@/services/apiService'
 import { computed, inject, reactive, ref } from 'vue'
 
 import 'vue-multiselect/dist/vue-multiselect.min.css'
-import { helpers, required } from '@vuelidate/validators'
+import { helpers, required, minLength, maxLength, minValue, maxValue } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 import Multiselect from 'vue-multiselect'
 
@@ -40,7 +40,11 @@ const formData = reactive({
 
 const rules = computed(() => {
   return {
-    title: { required: helpers.withMessage('Title is required', required) },
+    title: {
+      required: helpers.withMessage('Title is required', required),
+      minLength: helpers.withMessage('Title must be at least 3 characters', minLength(3)),
+      maxLength: helpers.withMessage('Title must not exceed 256 characters', maxLength(256))
+    },
     currency: {
       required: helpers.withMessage('Currency is required', required)
     },
@@ -48,7 +52,9 @@ const rules = computed(() => {
       required: helpers.withMessage('Site is required', required)
     },
     amount: {
-      required: helpers.withMessage('Amount is required', required)
+      required: helpers.withMessage('Amount is required', required),
+      minValue: helpers.withMessage('Amount must be greater than 0', minValue(0.01)),
+      maxValue: helpers.withMessage('Amount must not exceed 999999.99', maxValue(999999.99))
     }
   }
 })
@@ -147,6 +153,7 @@ function onConfirmSuccessModal() {
                         type="text"
                         placeholder="Title"
                         required
+                        maxlength="256"
                       />
                     </div>
 
@@ -207,6 +214,7 @@ function onConfirmSuccessModal() {
                         :loading="false"
                         :searchable="false"
                         :allow-empty="false"
+                        deselectLabel=""
                       >
                       </multiselect>
                     </div>
@@ -241,6 +249,7 @@ function onConfirmSuccessModal() {
                         class="custom-multiselect"
                         :loading="loadingSites"
                         :searchable="false"
+                        :allow-empty="false"
                       >
                       </multiselect>
                     </div>

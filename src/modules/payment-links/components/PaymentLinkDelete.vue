@@ -14,10 +14,6 @@ const props = defineProps<{
   paymentLink: PaymentLink
 }>()
 
-const emits = defineEmits<{
-  (e: 'afterDelete'): void
-}>()
-
 const isLoading = ref<boolean>(false)
 const modalIsVisible = ref<boolean>(false)
 const successModalIsVisible = ref<boolean>(false)
@@ -51,7 +47,6 @@ async function onConfirmDelete() {
 
 function onSuccessOk() {
   successModalIsVisible.value = false
-  emits('afterDelete')
 }
 </script>
 

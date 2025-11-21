@@ -11,10 +11,6 @@ const { isLoading, paymentLinks, getPaymentLinks } = usePaymentLinkCrud(apiServi
 onMounted(() => {
   getPaymentLinks()
 })
-
-function afterUpdate() {
-  getPaymentLinks()
-}
 </script>
 
 <template>
@@ -47,7 +43,7 @@ function afterUpdate() {
             </td>
             <td class="text-center">{{ item.site.name }}</td>
             <td>
-              <PaymentLinkEdit :payment-link="item" @after-update="afterUpdate"></PaymentLinkEdit>
+              <PaymentLinkEdit :payment-link="item"></PaymentLinkEdit>
             </td>
           </tr>
           <tr v-if="!isLoading && paymentLinks?.length === 0">
