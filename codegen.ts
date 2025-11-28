@@ -6,7 +6,7 @@ const env = loadEnv('development', process.cwd(), '')
 const config: CodegenConfig = {
   overwrite: true,
   schema: env.VITE_CRANK_GRAPHQL_SERVER_URL,
-  documents: ['src/**/*.vue', 'src/**/*.ts'],
+  documents: ['src/**/*.ts', 'src/**/*.graphql'],
   generates: {
     './src/gql/': {
       preset: 'client',
