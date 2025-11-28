@@ -49,12 +49,12 @@ onMounted(() => {
             </td>
           </tr>
           <tr v-if="!isLoading && paymentLinks?.length === 0">
-            <td colspan="5" class="text-center">
+            <td colspan="6" class="text-center">
               <p>NO DATA AVAILABLE IN TABLE</p>
             </td>
           </tr>
           <tr v-if="isLoading">
-            <td colspan="5" class="text-center">LOADING...</td>
+            <td colspan="6" class="text-center">LOADING...</td>
           </tr>
         </tbody>
       </table>
