@@ -99,7 +99,7 @@ const submitForm = async () => {
     try {
       isSaving.value = true
 
-      var success = await createPaymentLink({
+      const success = await createPaymentLink({
         title: formData.title,
         currency: formData.currency!.code,
         site: formData.site!.code,

@@ -66,17 +66,14 @@ export const usePaymentLinkCrud = (apiService: ApiService) => {
     }
   }
 
-  async function updatePaymentLink(
-    id: string,
-    paymentLinkData: {
-      amount?: number
-      currency?: string
-      id: string
-      site?: SiteEnum
-      title?: string
-      notificationEmailAddress: string
-    }
-  ) {
+  async function updatePaymentLink(paymentLinkData: {
+    id: string
+    amount?: number
+    currency?: string
+    site?: SiteEnum
+    title?: string
+    notificationEmailAddress: string
+  }) {
     isSaving.value = true
     hasError.value = false
 
