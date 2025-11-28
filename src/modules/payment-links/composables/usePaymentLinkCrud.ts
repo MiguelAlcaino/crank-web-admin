@@ -7,6 +7,7 @@ import type { Site } from '@/modules/shared/interfaces/site'
 const paymentLinks = ref<PaymentLink[]>([])
 
 export const usePaymentLinkCrud = (apiService: ApiService) => {
+  const hasLoadError = ref<boolean>(false)
   const hasError = ref<boolean>(false)
   const isLoading = ref<boolean>(false)
   const isSaving = ref<boolean>(false)
@@ -29,14 +30,14 @@ export const usePaymentLinkCrud = (apiService: ApiService) => {
   }
 
   async function getPaymentLinks() {
-    hasError.value = false
+    hasLoadError.value = false
     isLoading.value = true
     paymentLinks.value = []
 
     try {
       paymentLinks.value = (await apiService.getPaymentLinks(null)) as PaymentLink[]
     } catch (error) {
-      hasError.value = true
+      hasLoadError.value = true
     } finally {
       isLoading.value = false
     }
@@ -120,6 +121,7 @@ export const usePaymentLinkCrud = (apiService: ApiService) => {
     // Properties
     isLoading: readonly(isLoading),
     hasError: readonly(hasError),
+    hasLoadError: readonly(hasLoadError),
     paymentLinks: readonly(paymentLinks),
     currencyOptions: readonly(currencyOptions),
 

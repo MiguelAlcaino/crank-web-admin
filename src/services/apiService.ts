@@ -1915,29 +1915,47 @@ export class ApiService {
   // Payment Links
   async getPaymentLinks(site: SiteEnum | null): Promise<PaymentLink[]> {
     try {
-      const resultQuery = await this.authApiClient.query({
+      const { data, errors } = await this.authApiClient.query({
         query: PaymentLinksDocument,
         variables: { site: site },
         fetchPolicy: 'network-only'
       })
 
-      return resultQuery.data.paymentLinks as PaymentLink[]
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.paymentLinks) {
+        throw new Error('No data returned from paymentLinks query')
+      }
+
+      return data.paymentLinks as PaymentLink[]
     } catch (error) {
-      return []
+      console.error('Error fetching payment links:', error)
+      throw error
     }
   }
 
-  async getPaymentLink(id: string): Promise<PaymentLink> {
+  async getPaymentLink(id: string): Promise<PaymentLink | null> {
     try {
-      const resultQuery = await this.authApiClient.query({
+      const { data, errors } = await this.authApiClient.query({
         query: PaymentLinkDocument,
         variables: { id: id },
         fetchPolicy: 'network-only'
       })
 
-      return resultQuery.data.paymentLink as PaymentLink
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.paymentLink) {
+        return null
+      }
+
+      return data.paymentLink as PaymentLink
     } catch (error) {
-      return null as unknown as PaymentLink
+      console.error('Error fetching payment link:', error)
+      throw error
     }
   }
 

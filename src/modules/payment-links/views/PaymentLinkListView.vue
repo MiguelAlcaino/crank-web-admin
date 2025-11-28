@@ -1,15 +1,24 @@
 <script setup lang="ts">
-import { inject, onMounted } from 'vue'
+import { inject, onMounted, ref, watch } from 'vue'
 
 import type { ApiService } from '@/services/apiService'
 import { usePaymentLinkCrud } from '../composables/usePaymentLinkCrud'
 import PaymentLinkEdit from '../components/PaymentLinkEdit.vue'
 import PaymentLinkCreate from '../components/PaymentLinkCreate.vue'
+import { ERROR_UNKNOWN } from '@/utils/errorMessages'
+import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
+
 const apiService = inject<ApiService>('gqlApiService')!
-const { isLoading, paymentLinks, getPaymentLinks } = usePaymentLinkCrud(apiService)
+const { isLoading, paymentLinks, hasLoadError, getPaymentLinks } = usePaymentLinkCrud(apiService)
+
+const errorModalVisible = ref<boolean>(false)
 
 onMounted(() => {
   getPaymentLinks()
+})
+
+watch(hasLoadError, (val) => {
+  if (val) errorModalVisible.value = true
 })
 </script>
 
@@ -60,4 +69,15 @@ onMounted(() => {
       </table>
     </div>
   </div>
+
+  <!-- Error Modal -->
+  <ModalComponent
+    v-if="errorModalVisible"
+    title="ERROR"
+    :message="ERROR_UNKNOWN"
+    :closable="false"
+    @on-ok="errorModalVisible = false"
+    :cancel-text="null"
+  >
+  </ModalComponent>
 </template>
