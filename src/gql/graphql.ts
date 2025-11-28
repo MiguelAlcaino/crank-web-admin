@@ -1873,6 +1873,30 @@ export type WaitlistFullError = Error & {
   code: Scalars['String']
 }
 
+export type CreatePaymentLinkMutationVariables = Exact<{
+  input: CreatePaymentLinkInput
+}>
+
+export type CreatePaymentLinkMutation = {
+  __typename: 'Mutation'
+  createPaymentLink: {
+    __typename: 'PaymentLink'
+    id: string
+    title: string
+    amount: number
+    currency: string
+    url: string
+    notificationEmailAddress: string
+    site: { __typename: 'Site'; name: string; code: SiteEnum }
+  }
+}
+
+export type DeletePaymentLinkMutationVariables = Exact<{
+  id: Scalars['ID']
+}>
+
+export type DeletePaymentLinkMutation = { __typename: 'Mutation'; deletePaymentLink: boolean }
+
 export type PaymentLinkQueryVariables = Exact<{
   id: Scalars['ID']
 }>
@@ -2922,29 +2946,100 @@ export type UpdateCurrentAdminUserMutation = {
   }
 }
 
-export type CreatePaymentLinkMutationVariables = Exact<{
-  input: CreatePaymentLinkInput
-}>
-
-export type CreatePaymentLinkMutation = {
-  __typename: 'Mutation'
-  createPaymentLink: {
-    __typename: 'PaymentLink'
-    id: string
-    title: string
-    amount: number
-    currency: string
-    url: string
-    site: { __typename: 'Site'; name: string; code: SiteEnum }
-  }
-}
-
-export type DeletePaymentLinkMutationVariables = Exact<{
-  id: Scalars['ID']
-}>
-
-export type DeletePaymentLinkMutation = { __typename: 'Mutation'; deletePaymentLink: boolean }
-
+export const CreatePaymentLinkDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreatePaymentLink' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'CreatePaymentLinkInput' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createPaymentLink' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'currency' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'notificationEmailAddress' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'site' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<CreatePaymentLinkMutation, CreatePaymentLinkMutationVariables>
+export const DeletePaymentLinkDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'DeletePaymentLink' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'deletePaymentLink' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<DeletePaymentLinkMutation, DeletePaymentLinkMutationVariables>
 export const PaymentLinkDocument = {
   kind: 'Document',
   definitions: [
@@ -6976,96 +7071,3 @@ export const UpdateCurrentAdminUserDocument = {
   UpdateCurrentAdminUserMutation,
   UpdateCurrentAdminUserMutationVariables
 >
-export const CreatePaymentLinkDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'CreatePaymentLink' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'CreatePaymentLinkInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'createPaymentLink' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'currency' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'site' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<CreatePaymentLinkMutation, CreatePaymentLinkMutationVariables>
-export const DeletePaymentLinkDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'DeletePaymentLink' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'deletePaymentLink' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<DeletePaymentLinkMutation, DeletePaymentLinkMutationVariables>

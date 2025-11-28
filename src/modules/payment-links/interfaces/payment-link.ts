@@ -6,5 +6,6 @@ export interface PaymentLink {
   amount: number
   currency: string
   url: string
+  notificationEmailAddress: string
   site: Site
 }

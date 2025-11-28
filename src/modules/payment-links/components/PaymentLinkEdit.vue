@@ -4,7 +4,15 @@ import { computed, inject, reactive, ref } from 'vue'
 import type { ApiService } from '@/services/apiService'
 import 'vue-multiselect/dist/vue-multiselect.min.css'
 import type { Site } from '@/modules/shared/interfaces/site'
-import { helpers, required, minLength, maxLength, minValue, maxValue } from '@vuelidate/validators'
+import {
+  helpers,
+  required,
+  minLength,
+  maxLength,
+  minValue,
+  maxValue,
+  email
+} from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
@@ -34,6 +42,7 @@ const formData = reactive({
   title: '',
   amount: null as number | null,
   currency: null as { name: string; code: string } | null,
+  notificationEmailAddress: null as string | null,
   site: null as Site | null
 })
 
@@ -52,6 +61,14 @@ const rules = computed(() => {
     currency: {
       required: helpers.withMessage('Currency is required', required)
     },
+    notificationEmailAddress: {
+      required: helpers.withMessage('Notification email is required', required),
+      email: helpers.withMessage('The email address is not valid', email),
+      maxLength: helpers.withMessage(
+        'Notification email must not exceed 256 characters',
+        maxLength(256)
+      )
+    },
     site: {
       required: helpers.withMessage('Site is required', required)
     }
@@ -67,6 +84,7 @@ const openModal = () => {
   formData.amount = props.paymentLink.amount
   formData.currency =
     currencyOptions.find((option) => option.code === props.paymentLink.currency) || null
+  formData.notificationEmailAddress = props.paymentLink.notificationEmailAddress
   formData.site = props.paymentLink.site
 
   getAvailableSites()
@@ -90,6 +108,7 @@ const submitForm = async () => {
         title: formData.title,
         amount: formData.amount!,
         currency: formData.currency!.code,
+        notificationEmailAddress: formData.notificationEmailAddress!,
         site: formData.site!.code
       })
 
@@ -214,6 +233,35 @@ function onSuccessOk() {
 
                     <small
                       v-for="error in v$.currency.$errors"
+                      :key="error.$uid"
+                      class="form-text"
+                      style="color: red"
+                    >
+                      {{ error.$message }}
+                    </small>
+                  </div>
+                </div>
+
+                <!-- Notification Email Address -->
+                <div class="form-row mb-3">
+                  <div class="col">
+                    <label for="notificationEmailAddress" class="input-label"
+                      >Notification Email *</label
+                    >
+                    <div class="input-group">
+                      <input
+                        id="notificationEmailAddress"
+                        class="form-control"
+                        v-model="formData.notificationEmailAddress"
+                        type="email"
+                        placeholder="notification@example.com"
+                        required
+                        maxlength="256"
+                      />
+                    </div>
+
+                    <small
+                      v-for="error in v$.notificationEmailAddress.$errors"
                       :key="error.$uid"
                       class="form-text"
                       style="color: red"

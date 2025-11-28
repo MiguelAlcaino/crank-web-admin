@@ -13,6 +13,10 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
+  'mutation CreatePaymentLink($input: CreatePaymentLinkInput!) {\n  createPaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}':
+    types.CreatePaymentLinkDocument,
+  'mutation DeletePaymentLink($id: ID!) {\n  deletePaymentLink(id: $id)\n}':
+    types.DeletePaymentLinkDocument,
   'query PaymentLink($id: ID!) {\n  paymentLink(id: $id) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}':
     types.PaymentLinkDocument,
   'query PaymentLinks($site: SiteEnum) {\n  paymentLinks(site: $site) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}':
@@ -134,11 +138,7 @@ const documents = {
   '\n      mutation updateCurrentAdminUserFavoriteSite($input: UpdateCurrentAdminUserFavoriteSiteInput) {\n        updateCurrentAdminUserFavoriteSite(input: $input) {\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    ':
     types.UpdateCurrentAdminUserFavoriteSiteDocument,
   '\n      mutation updateCurrentAdminUser($input: UpdateCurrentAdminUserInput!) {\n        updateCurrentAdminUser(input: $input) {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              code\n              name\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n          showCancelledClasses\n        }\n      }\n    ':
-    types.UpdateCurrentAdminUserDocument,
-  '\n      mutation CreatePaymentLink($input: CreatePaymentLinkInput!) {\n        createPaymentLink(input: $input) {\n          id\n          title\n          amount\n          currency\n          url\n          site {\n            name\n            code\n          }\n        }\n      }\n    ':
-    types.CreatePaymentLinkDocument,
-  '\n      mutation DeletePaymentLink($id: ID!) {\n        deletePaymentLink(id: $id)\n      }\n    ':
-    types.DeletePaymentLinkDocument
+    types.UpdateCurrentAdminUserDocument
 }
 
 /**
@@ -155,6 +155,18 @@ const documents = {
  */
 export function graphql(source: string): unknown
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation CreatePaymentLink($input: CreatePaymentLinkInput!) {\n  createPaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}'
+): (typeof documents)['mutation CreatePaymentLink($input: CreatePaymentLinkInput!) {\n  createPaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation DeletePaymentLink($id: ID!) {\n  deletePaymentLink(id: $id)\n}'
+): (typeof documents)['mutation DeletePaymentLink($id: ID!) {\n  deletePaymentLink(id: $id)\n}']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -521,18 +533,6 @@ export function graphql(
 export function graphql(
   source: '\n      mutation updateCurrentAdminUser($input: UpdateCurrentAdminUserInput!) {\n        updateCurrentAdminUser(input: $input) {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              code\n              name\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n          showCancelledClasses\n        }\n      }\n    '
 ): (typeof documents)['\n      mutation updateCurrentAdminUser($input: UpdateCurrentAdminUserInput!) {\n        updateCurrentAdminUser(input: $input) {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              code\n              name\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n          showCancelledClasses\n        }\n      }\n    ']
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: '\n      mutation CreatePaymentLink($input: CreatePaymentLinkInput!) {\n        createPaymentLink(input: $input) {\n          id\n          title\n          amount\n          currency\n          url\n          site {\n            name\n            code\n          }\n        }\n      }\n    '
-): (typeof documents)['\n      mutation CreatePaymentLink($input: CreatePaymentLinkInput!) {\n        createPaymentLink(input: $input) {\n          id\n          title\n          amount\n          currency\n          url\n          site {\n            name\n            code\n          }\n        }\n      }\n    ']
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: '\n      mutation DeletePaymentLink($id: ID!) {\n        deletePaymentLink(id: $id)\n      }\n    '
-): (typeof documents)['\n      mutation DeletePaymentLink($id: ID!) {\n        deletePaymentLink(id: $id)\n      }\n    ']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}

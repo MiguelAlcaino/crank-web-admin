@@ -30,6 +30,7 @@ onMounted(() => {
             <th class="text-center">TITLE</th>
             <th class="text-center">AMOUNT</th>
             <th class="text-center">URL</th>
+            <th class="text-center">NOTIFICATION EMAIL</th>
             <th class="text-center">SITE</th>
             <th class="text-center"></th>
           </tr>
@@ -41,6 +42,7 @@ onMounted(() => {
             <td class="text-center">
               <a :href="item.url" target="_blank">{{ item.url }}</a>
             </td>
+            <td class="text-center">{{ item.notificationEmailAddress }}</td>
             <td class="text-center">{{ item.site.name }}</td>
             <td>
               <PaymentLinkEdit :payment-link="item"></PaymentLinkEdit>

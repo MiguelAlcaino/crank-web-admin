@@ -47,6 +47,7 @@ export const usePaymentLinkCrud = (apiService: ApiService) => {
     currency: string
     site: SiteEnum
     title: string
+    notificationEmailAddress: string
   }) {
     isSaving.value = true
     hasError.value = false
@@ -73,6 +74,7 @@ export const usePaymentLinkCrud = (apiService: ApiService) => {
       id: string
       site?: SiteEnum
       title?: string
+      notificationEmailAddress: string
     }
   ) {
     isSaving.value = true
