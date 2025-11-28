@@ -103,7 +103,7 @@ const submitForm = async () => {
     try {
       isSaving.value = true
 
-      var success = await updatePaymentLink(props.paymentLink.id, {
+      const success = await updatePaymentLink(props.paymentLink.id, {
         id: props.paymentLink.id,
         title: formData.title,
         amount: formData.amount!,
