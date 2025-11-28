@@ -10,7 +10,8 @@ import {
   maxLength,
   minValue,
   maxValue,
-  email
+  email,
+  integer
 } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 import Multiselect from 'vue-multiselect'
@@ -66,8 +67,9 @@ const rules = computed(() => {
     },
     amount: {
       required: helpers.withMessage('Amount is required', required),
-      minValue: helpers.withMessage('Amount must be greater than 0', minValue(0.01)),
-      maxValue: helpers.withMessage('Amount must not exceed 999999.99', maxValue(999999.99))
+      minValue: helpers.withMessage('Amount must be greater than 0', minValue(1)),
+      maxValue: helpers.withMessage('Amount must not exceed 999999', maxValue(999999)),
+      integer: helpers.withMessage('Amount must be an integer', integer)
     }
   }
 })
@@ -180,7 +182,7 @@ function onConfirmSuccessModal() {
                         class="form-control"
                         v-model="formData.amount"
                         type="number"
-                        step="0.01"
+                        step="1"
                         min="0"
                         placeholder="Amount"
                         required
