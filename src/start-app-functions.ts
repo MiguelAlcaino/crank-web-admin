@@ -295,11 +295,7 @@ export const startMyAdminSettingsApp = async function (
   app.mount(appDiv)
 }
 
-export const startPaymentLinksApp = async function (
-  gqlUrl: string,
-  token: string,
-  appDiv: string
-) {
+export const startPaymentLinksApp = async function (gqlUrl: string, token: string, appDiv: string) {
   const app = createApp({
     setup() {
       provide(

@@ -234,10 +234,11 @@ export type ClassPackageProduct = SellableProductInterface & {
   currency: Scalars['String']
   id: Scalars['ID']
   isVisible: Scalars['Boolean']
-  price: Scalars['Float']
-  subtitle: Scalars['String']
+  position?: Maybe<Scalars['Int']>
+  subtitle?: Maybe<Scalars['String']>
   title: Scalars['String']
   type?: Maybe<ClassPackageTypeEnum>
+  variants: Array<Variant>
 }
 
 export enum ClassPackageTypeEnum {
@@ -305,6 +306,11 @@ export type ClientIsOutsideSchedulingWindowError = Error & {
   code: Scalars['String']
 }
 
+export type ClientNotFoundInMindbody = Error & {
+  __typename: 'ClientNotFoundInMindbody'
+  code: Scalars['String']
+}
+
 export type Country = {
   __typename: 'Country'
   code: Scalars['String']
@@ -322,6 +328,8 @@ export type CreateCurrentUserInSiteUnion = CreateCurrentUserInSiteSuccess | User
 export type CreatePaymentLinkInput = {
   amount: Scalars['Int']
   currency: Scalars['String']
+  /** After a successful purchase an email will be sent to this email address with details about the payment (meant to be used by admins) */
+  notificationEmailAddress: Scalars['String']
   site: SiteEnum
   title: Scalars['String']
 }
@@ -329,6 +337,19 @@ export type CreatePaymentLinkInput = {
 export type CurrentUserEnrollmentsParams = {
   endDate?: InputMaybe<Scalars['Date']>
   enrollmentType?: InputMaybe<EnrollmentTypeEnum>
+  startDate?: InputMaybe<Scalars['Date']>
+}
+
+export type CurrentUserPurchasesPaginatedParams = {
+  filter?: InputMaybe<ServiceStatusEnum>
+}
+
+export type CurrentUserWorkoutStatsPaginatedParams = {
+  dateRange?: InputMaybe<DateRange>
+}
+
+export type DateRange = {
+  endDate?: InputMaybe<Scalars['Date']>
   startDate?: InputMaybe<Scalars['Date']>
 }
 
@@ -357,6 +378,16 @@ export type DisableEnableSpotResult = {
 
 export type DisableEnableSpotResultUnion = DisableEnableSpotResult | SpotNotFoundError
 
+export type DiscountCodeIsEmpty = Error & {
+  __typename: 'DiscountCodeIsEmpty'
+  code: Scalars['String']
+}
+
+export type DiscountCodeIsInvalid = Error & {
+  __typename: 'DiscountCodeIsInvalid'
+  code: Scalars['String']
+}
+
 export type DistanceChallenge = ChallengeInterface & {
   __typename: 'DistanceChallenge'
   challengeDisplay: ChallengeDisplay
@@ -375,6 +406,11 @@ export type DistanceRanking = {
   __typename: 'DistanceRanking'
   amountOfUsersInRanking: Scalars['Int']
   rankingPositions: Array<DistanceChallengeRankingPosition>
+}
+
+export type DontNeedMoreGiftCards = Error & {
+  __typename: 'DontNeedMoreGiftCards'
+  code: Scalars['String']
 }
 
 export type EditClassInput = {
@@ -503,15 +539,42 @@ export type GenderRanking = {
   ranking?: Maybe<UserRanking>
 }
 
-export type GiftCard = {
+export type GiftCard = SellableProductInterface & {
   __typename: 'GiftCard'
+  alertBeforePurchasing?: Maybe<ProductAlertBeforePurchasing>
+  buttonText?: Maybe<Scalars['String']>
+  currency: Scalars['String']
+  /** @deprecated Use title instead */
   description: Scalars['String']
+  /** @deprecated Use price instead */
   grandTotal: Scalars['Float']
   id: Scalars['ID']
+  isVisible: Scalars['Boolean']
+  position?: Maybe<Scalars['Int']>
   purchaseUrl: Scalars['String']
+  /** @deprecated Use price instead */
   salePrice: Scalars['Float']
   site: Site
+  subtitle?: Maybe<Scalars['String']>
+  /** @deprecated Use alertBeforePurchasing instead */
   terms: Scalars['String']
+  title: Scalars['String']
+  variants: Array<Variant>
+}
+
+export type GiftCardAlreadyRegisteredForCurrentShoppingCart = Error & {
+  __typename: 'GiftCardAlreadyRegisteredForCurrentShoppingCart'
+  code: Scalars['String']
+}
+
+export type GiftCardIsNotUsable = Error & {
+  __typename: 'GiftCardIsNotUsable'
+  code: Scalars['String']
+}
+
+export type GiftCardNotRegisteredOnCurrentShoppingCart = Error & {
+  __typename: 'GiftCardNotRegisteredOnCurrentShoppingCart'
+  code: Scalars['String']
 }
 
 export type IconPosition = ClassPositionInterface & {
@@ -583,11 +646,11 @@ export type Mutation = {
   /** Adds a new device token to be used for device notifications */
   addDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']>
   /** Allows to add a discount code code to a shopping cart for current user */
-  addDiscountCodeToShoppingCart: Scalars['Boolean']
+  addDiscountCodeToShoppingCart: ShoppingCartResultUnion
   /** Allows to add a giftcard code to a shopping cart for current user */
-  addGiftCardCodeToShoppingCart: Scalars['Boolean']
+  addGiftCardCodeToShoppingCart: ShoppingCartResultUnion
   /** Allows to add item to shopping cart */
-  addItemToShoppingCart: Scalars['Boolean']
+  addItemToShoppingCart: ShoppingCartResultUnion
   /** Books the current user in a class */
   bookClass: BookClassResultUnion
   /** Adds a user into a given class */
@@ -622,8 +685,16 @@ export type Mutation = {
   editRoomLayout: RoomLayout
   /** Edits a user */
   editUser?: Maybe<EditUserResultUnion>
+  /** Allows to remove all items from the shoppingcart */
+  emptyShoppingCart: ShoppingCartResultUnion
   /** Enabled a spot in a class */
   enableSpot?: Maybe<DisableEnableSpotResultUnion>
+  /** Generate a unique Merchant Reference */
+  generateMerchantReference: Scalars['ID']
+  /** To lock the shoppingcart when the user is in the payment process */
+  lockShoppingCart: Scalars['Boolean']
+  /** Returns the html of a payment form to be used to pay */
+  payfortForm: PayfortFormResult
   /** Registers a new user and returns an IdentifiableUser type */
   registerIdentifiableUser?: Maybe<IdentifiableSiteUser>
   /** Registers a new user */
@@ -634,8 +705,12 @@ export type Mutation = {
   removeAdminUser: Scalars['Boolean']
   /** Removes the current user's waitlist entry from a class */
   removeCurrentUserFromWaitlist?: Maybe<RemoveCurrentUserFromWaitlistUnion>
+  /** Remove discount code from current shopping cart */
+  removeDiscountCodeForCurrentShoppingCart: ShoppingCartResultUnion
+  /** Allows to remove a GiftCard by code */
+  removeGiftCardFromCurrentShoppingCart: ShoppingCartResultUnion
   /** Remove Item from shopping cart */
-  removeItemFromShoppingCart: Scalars['Boolean']
+  removeItemFromShoppingCart: ShoppingCartResultUnion
   /** Removes a user from a class */
   removeUserFromClass: CancelEnrollmentResultUnion
   /** Removes a waitlist entry */
@@ -678,7 +753,7 @@ export type Mutation = {
   /** Updates a gift card */
   updateGiftCard: GiftCard
   /** Allows to update an Item from Shopping Cart */
-  updateItemInShoppingCart: ShoppingCart
+  updateItemInShoppingCart: ShoppingCartResultUnion
   /** Updates a payment link */
   updatePaymentLink: PaymentLink
   updateUserPassword?: Maybe<Scalars['Boolean']>
@@ -700,14 +775,17 @@ export type MutationAddDeviceTokenToCurrentUserArgs = {
 
 export type MutationAddDiscountCodeToShoppingCartArgs = {
   discountCode: Scalars['String']
+  site: SiteEnum
 }
 
 export type MutationAddGiftCardCodeToShoppingCartArgs = {
   giftcard: Scalars['ID']
+  site: SiteEnum
 }
 
 export type MutationAddItemToShoppingCartArgs = {
   input?: InputMaybe<ItemToShoppingCartInput>
+  site: SiteEnum
 }
 
 export type MutationBookClassArgs = {
@@ -789,8 +867,25 @@ export type MutationEditUserArgs = {
   input: EditUserInput
 }
 
+export type MutationEmptyShoppingCartArgs = {
+  site: SiteEnum
+}
+
 export type MutationEnableSpotArgs = {
   input?: InputMaybe<DisableEnableSpotInput>
+}
+
+export type MutationGenerateMerchantReferenceArgs = {
+  site: SiteEnum
+}
+
+export type MutationLockShoppingCartArgs = {
+  site: SiteEnum
+}
+
+export type MutationPayfortFormArgs = {
+  input: PayfortFormInput
+  site: SiteEnum
 }
 
 export type MutationRegisterIdentifiableUserArgs = {
@@ -817,8 +912,18 @@ export type MutationRemoveCurrentUserFromWaitlistArgs = {
   site: SiteEnum
 }
 
+export type MutationRemoveDiscountCodeForCurrentShoppingCartArgs = {
+  site: SiteEnum
+}
+
+export type MutationRemoveGiftCardFromCurrentShoppingCartArgs = {
+  giftCardCode: Scalars['String']
+  site: SiteEnum
+}
+
 export type MutationRemoveItemFromShoppingCartArgs = {
-  id: Scalars['ID']
+  shoppingCartItemId: Scalars['ID']
+  site: SiteEnum
 }
 
 export type MutationRemoveUserFromClassArgs = {
@@ -906,7 +1011,9 @@ export type MutationUpdateGiftCardArgs = {
 }
 
 export type MutationUpdateItemInShoppingCartArgs = {
-  input?: InputMaybe<ItemToShoppingCartInput>
+  quantity?: InputMaybe<Scalars['Int']>
+  shoppingCartItemId: Scalars['ID']
+  site: SiteEnum
 }
 
 export type MutationUpdatePaymentLinkArgs = {
@@ -955,11 +1062,23 @@ export type PasswordsDontMatchError = Error & {
   code: Scalars['String']
 }
 
+export type PayfortFormInput = {
+  deviceFingerprint: Scalars['String']
+  merchantReference: Scalars['ID']
+  savePaymentCard: Scalars['Boolean']
+}
+
+export type PayfortFormResult = {
+  __typename: 'PayfortFormResult'
+  htmlForm: Scalars['String']
+}
+
 export type PaymentLink = {
   __typename: 'PaymentLink'
   amount: Scalars['Int']
   currency: Scalars['String']
   id: Scalars['ID']
+  notificationEmailAddress: Scalars['String']
   site: Site
   title: Scalars['String']
   url: Scalars['String']
@@ -970,6 +1089,24 @@ export type PaymentRequiredError = Error & {
   __typename: 'PaymentRequiredError'
   code: Scalars['String']
 }
+
+export type PaymentTransactionStatus = {
+  __typename: 'PaymentTransactionStatus'
+  status: PaymentTransactionStatusEnum
+}
+
+export enum PaymentTransactionStatusEnum {
+  Refunded = 'refunded',
+  Rejected = 'rejected',
+  Successful = 'successful',
+  WaitingConfirmation = 'waitingConfirmation'
+}
+
+export type PaymentTransactionStatusInput = {
+  merchantReference: Scalars['ID']
+}
+
+export type PaymentTransactionUnion = PaymentTransactionStatus | TemporalTransactionNotFound
 
 export type PositionAlreadyTakenError = Error & {
   __typename: 'PositionAlreadyTakenError'
@@ -994,8 +1131,14 @@ export type ProductAlertBeforePurchasing = {
   title: Scalars['String']
 }
 
+export type ProductNotFound = Error & {
+  __typename: 'ProductNotFound'
+  code: Scalars['String']
+}
+
 export enum ProductType {
-  ClassPackage = 'classPackage'
+  ClassPackage = 'classPackage',
+  GiftCard = 'giftCard'
 }
 
 export type ProductsInput = {
@@ -1026,6 +1169,8 @@ export type Query = {
   availableInstructors: Array<Instructor>
   /** Returns a list of all the available sites */
   availableSites?: Maybe<Array<Site>>
+  /** Return the total for the current shoppingCart for the current user */
+  calculateTotalForShoppingCart: ShoppingCartResultUnion
   /** Get next classes */
   calendarClasses: Array<Class>
   /** Get a single class information */
@@ -1069,6 +1214,8 @@ export type Query = {
   paymentLink?: Maybe<PaymentLink>
   /** Returns a list of payment links */
   paymentLinks: Array<PaymentLink>
+  /** Allows to get the status of a transaction  */
+  paymentTransactionStatus: PaymentTransactionUnion
   /** Returns a list of available products for a specific site */
   products: Array<SellableProductInterface>
   /** Returns a specific room layout */
@@ -1098,6 +1245,10 @@ export type QueryAdminUserArgs = {
 
 export type QueryAvailableClassTypesArgs = {
   site?: InputMaybe<SiteEnum>
+}
+
+export type QueryCalculateTotalForShoppingCartArgs = {
+  site: SiteEnum
 }
 
 export type QueryCalendarClassesArgs = {
@@ -1135,6 +1286,7 @@ export type QueryCurrentUserPurchasesArgs = {
 
 export type QueryCurrentUserPurchasesPaginatedArgs = {
   pagination?: InputMaybe<PaginationInput>
+  params: CurrentUserPurchasesPaginatedParams
   site?: InputMaybe<SiteEnum>
 }
 
@@ -1153,6 +1305,7 @@ export type QueryCurrentUserWorkoutStatsArgs = {
 
 export type QueryCurrentUserWorkoutStatsPaginatedArgs = {
   pagination?: InputMaybe<PaginationInput>
+  params?: InputMaybe<CurrentUserWorkoutStatsPaginatedParams>
   site: SiteEnum
 }
 
@@ -1166,6 +1319,10 @@ export type QueryPaymentLinkArgs = {
 
 export type QueryPaymentLinksArgs = {
   site?: InputMaybe<SiteEnum>
+}
+
+export type QueryPaymentTransactionStatusArgs = {
+  input?: InputMaybe<PaymentTransactionStatusInput>
 }
 
 export type QueryProductsArgs = {
@@ -1252,6 +1409,13 @@ export type RejectLateCancelledSpotInClassInput = {
 export type RejectLateCancelledSpotInClassSuccess = {
   __typename: 'RejectLateCancelledSpotInClassSuccess'
   success: Scalars['Boolean']
+}
+
+export type RemainingCreditsResultUnion = ClientNotFoundInMindbody | RemainingCreditsSuccess
+
+export type RemainingCreditsSuccess = {
+  __typename: 'RemainingCreditsSuccess'
+  credits: Scalars['Int']
 }
 
 export type RemoveCurrentUserFromWaitlistInput = {
@@ -1351,14 +1515,21 @@ export type SellableProductInterface = {
   currency: Scalars['String']
   id: Scalars['ID']
   isVisible: Scalars['Boolean']
-  price: Scalars['Float']
-  subtitle: Scalars['String']
+  position?: Maybe<Scalars['Int']>
+  subtitle?: Maybe<Scalars['String']>
   title: Scalars['String']
+  variants: Array<Variant>
 }
 
 export type SendClassStatsToEmailInput = {
   email: Scalars['String']
   enrollmentId: Scalars['ID']
+}
+
+export enum ServiceStatusEnum {
+  ActiveOnly = 'activeOnly',
+  All = 'all',
+  ExpiredOnly = 'expiredOnly'
 }
 
 export type SetRoomLayoutForClassSchedulesInput = {
@@ -1370,19 +1541,61 @@ export type ShoppingCart = {
   __typename: 'ShoppingCart'
   currency: Scalars['String']
   discountCode?: Maybe<Scalars['String']>
-  giftCardCode?: Maybe<Scalars['String']>
+  giftCardsCodes?: Maybe<Array<Maybe<Scalars['String']>>>
+  id: Scalars['ID']
   items: Array<ShoppingCartItem>
-  subTotal: Scalars['Float']
-  total: Scalars['Float']
+  total?: Maybe<ShoppingCartTotalResultUnion>
+}
+
+export type ShoppingCartIsEmpty = Error & {
+  __typename: 'ShoppingCartIsEmpty'
+  code: Scalars['String']
 }
 
 export type ShoppingCartItem = {
   __typename: 'ShoppingCartItem'
   id: Scalars['ID']
-  product: SellableProductInterface
   quantity: Scalars['Int']
-  subtotal: Scalars['Float']
+  subtotal?: Maybe<Scalars['Float']>
+  variant: Variant
 }
+
+export type ShoppingCartItemNotFound = Error & {
+  __typename: 'ShoppingCartItemNotFound'
+  code: Scalars['String']
+}
+
+export type ShoppingCartNotFound = Error & {
+  __typename: 'ShoppingCartNotFound'
+  code: Scalars['String']
+}
+
+export type ShoppingCartResultUnion =
+  | DiscountCodeIsEmpty
+  | DiscountCodeIsInvalid
+  | DontNeedMoreGiftCards
+  | GiftCardAlreadyRegisteredForCurrentShoppingCart
+  | GiftCardIsNotUsable
+  | GiftCardNotRegisteredOnCurrentShoppingCart
+  | ProductNotFound
+  | ShoppingCart
+  | ShoppingCartIsEmpty
+  | ShoppingCartItemNotFound
+  | ShoppingCartNotFound
+
+export type ShoppingCartTotal = {
+  __typename: 'ShoppingCartTotal'
+  amountToPay?: Maybe<Scalars['Float']>
+  giftCardAmount?: Maybe<Scalars['Float']>
+  subTotal?: Maybe<Scalars['Float']>
+  total?: Maybe<Scalars['Float']>
+}
+
+export type ShoppingCartTotalResultUnion =
+  | GiftCardIsNotUsable
+  | ShoppingCartTotal
+  | UserAlreadyHaveFirstTimerPackage
+  | UserCanNotBuyFirstTimerPackage
 
 export type SimpleSiteUser = {
   __typename: 'SimpleSiteUser'
@@ -1456,6 +1669,11 @@ export type SwapSpotSuccess = {
   selectedEnrollment: EnrollmentInfoInterface
 }
 
+export type TemporalTransactionNotFound = Error & {
+  __typename: 'TemporalTransactionNotFound'
+  code: Scalars['String']
+}
+
 export type TooManyResetPasswordLinkRequestsError = Error & {
   __typename: 'TooManyResetPasswordLinkRequestsError'
   availableAgainAt?: Maybe<Scalars['DateTime']>
@@ -1499,6 +1717,8 @@ export type UpdatePaymentLinkInput = {
   amount?: InputMaybe<Scalars['Int']>
   currency?: InputMaybe<Scalars['String']>
   id: Scalars['ID']
+  /** After a successful purchase an email will be sent to this email address with details about the payment (meant to be used by admins) */
+  notificationEmailAddress: Scalars['String']
   site?: InputMaybe<SiteEnum>
   title?: InputMaybe<Scalars['String']>
 }
@@ -1529,7 +1749,8 @@ export type User = {
   lastName: Scalars['String']
   leaderboardUsername?: Maybe<Scalars['String']>
   phone: Scalars['String']
-  shoppingCart?: Maybe<ShoppingCart>
+  remainingCreditsBySite?: Maybe<RemainingCreditsResultUnion>
+  shoppingCart: ShoppingCart
   siteUsers: Array<SimpleSiteUser>
   state?: Maybe<State>
   weight?: Maybe<Scalars['Float']>
@@ -1544,8 +1765,26 @@ export type UserEnrollmentInClassArgs = {
   classId: Scalars['ID']
 }
 
+export type UserRemainingCreditsBySiteArgs = {
+  site: SiteEnum
+}
+
+export type UserShoppingCartArgs = {
+  site: SiteEnum
+}
+
 export type UserAlreadyExistsError = Error & {
   __typename: 'UserAlreadyExistsError'
+  code: Scalars['String']
+}
+
+export type UserAlreadyHaveFirstTimerPackage = Error & {
+  __typename: 'UserAlreadyHaveFirstTimerPackage'
+  code: Scalars['String']
+}
+
+export type UserCanNotBuyFirstTimerPackage = Error & {
+  __typename: 'UserCanNotBuyFirstTimerPackage'
   code: Scalars['String']
 }
 
@@ -1605,6 +1844,15 @@ export type ValidateResetPasswordTokenInput = {
   token: Scalars['String']
 }
 
+export type Variant = {
+  __typename: 'Variant'
+  id: Scalars['String']
+  name?: Maybe<Scalars['String']>
+  position: Scalars['Int']
+  price: Scalars['Float']
+  product: SellableProductInterface
+}
+
 export type WaitlistEntry = EnrollmentInfoInterface & {
   __typename: 'WaitlistEntry'
   canBeTurnedIntoEnrollment: Scalars['Boolean']
@@ -1623,6 +1871,60 @@ export type WaitlistEntryNotFoundError = Error & {
 export type WaitlistFullError = Error & {
   __typename: 'WaitlistFullError'
   code: Scalars['String']
+}
+
+export type PaymentLinkQueryVariables = Exact<{
+  id: Scalars['ID']
+}>
+
+export type PaymentLinkQuery = {
+  __typename: 'Query'
+  paymentLink?: {
+    __typename: 'PaymentLink'
+    id: string
+    title: string
+    amount: number
+    currency: string
+    url: string
+    notificationEmailAddress: string
+    site: { __typename: 'Site'; name: string; code: SiteEnum }
+  } | null
+}
+
+export type PaymentLinksQueryVariables = Exact<{
+  site?: InputMaybe<SiteEnum>
+}>
+
+export type PaymentLinksQuery = {
+  __typename: 'Query'
+  paymentLinks: Array<{
+    __typename: 'PaymentLink'
+    id: string
+    title: string
+    amount: number
+    currency: string
+    url: string
+    notificationEmailAddress: string
+    site: { __typename: 'Site'; name: string; code: SiteEnum }
+  }>
+}
+
+export type UpdatePaymentLinkMutationVariables = Exact<{
+  input: UpdatePaymentLinkInput
+}>
+
+export type UpdatePaymentLinkMutation = {
+  __typename: 'Mutation'
+  updatePaymentLink: {
+    __typename: 'PaymentLink'
+    id: string
+    title: string
+    amount: number
+    currency: string
+    url: string
+    notificationEmailAddress: string
+    site: { __typename: 'Site'; name: string; code: SiteEnum }
+  }
 }
 
 export type SiteSettingsQueryVariables = Exact<{
@@ -2620,6 +2922,200 @@ export type UpdateCurrentAdminUserMutation = {
   }
 }
 
+export type CreatePaymentLinkMutationVariables = Exact<{
+  input: CreatePaymentLinkInput
+}>
+
+export type CreatePaymentLinkMutation = {
+  __typename: 'Mutation'
+  createPaymentLink: {
+    __typename: 'PaymentLink'
+    id: string
+    title: string
+    amount: number
+    currency: string
+    url: string
+    site: { __typename: 'Site'; name: string; code: SiteEnum }
+  }
+}
+
+export type DeletePaymentLinkMutationVariables = Exact<{
+  id: Scalars['ID']
+}>
+
+export type DeletePaymentLinkMutation = { __typename: 'Mutation'; deletePaymentLink: boolean }
+
+export const PaymentLinkDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'PaymentLink' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'paymentLink' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'currency' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'notificationEmailAddress' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'site' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<PaymentLinkQuery, PaymentLinkQueryVariables>
+export const PaymentLinksDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'PaymentLinks' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'paymentLinks' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'site' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'currency' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'notificationEmailAddress' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'site' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<PaymentLinksQuery, PaymentLinksQueryVariables>
+export const UpdatePaymentLinkDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UpdatePaymentLink' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UpdatePaymentLinkInput' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'updatePaymentLink' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'currency' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'notificationEmailAddress' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'site' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<UpdatePaymentLinkMutation, UpdatePaymentLinkMutationVariables>
 export const SiteSettingsDocument = {
   kind: 'Document',
   definitions: [
@@ -6480,3 +6976,96 @@ export const UpdateCurrentAdminUserDocument = {
   UpdateCurrentAdminUserMutation,
   UpdateCurrentAdminUserMutationVariables
 >
+export const CreatePaymentLinkDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreatePaymentLink' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'CreatePaymentLinkInput' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createPaymentLink' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'currency' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'site' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<CreatePaymentLinkMutation, CreatePaymentLinkMutationVariables>
+export const DeletePaymentLinkDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'DeletePaymentLink' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'deletePaymentLink' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<DeletePaymentLinkMutation, DeletePaymentLinkMutationVariables>

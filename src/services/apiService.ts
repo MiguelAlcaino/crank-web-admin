@@ -1,63 +1,68 @@
 import { ApolloError, gql } from '@apollo/client'
-import type {
-  AdminUser,
-  AdminUserDataInput,
-  AdminUserResultUnion,
-  BookUserIntoClassInput,
-  CalendarClassesParams,
-  CancelEnrollmentInput,
-  CheckinResultUnion,
-  CheckinUserInClass,
-  CheckoutResultUnion,
-  CheckoutUserInClass,
-  Class,
-  ClassInfo,
-  ClassSchedule,
-  ClassStat,
-  Country,
-  CreatePaymentLinkInput,
-  DisableEnableSpotInput,
-  DisableEnableSpotResult,
-  DisableEnableSpotResultUnion,
-  EditClassInput,
-  EditClassResultUnion,
-  EditEnrollmentInput,
-  EditEnrollmentResultUnion,
-  EditRoomLayoutInput,
-  EditUserInput,
-  EditUserResultUnion,
-  GiftCard,
-  IdentifiableSiteUser,
-  IdentifiableUser,
-  Instructor,
-  PaginatedClassStats,
-  PaginationInput,
-  PaymentLink,
-  RegisterUserInput,
-  RemoveUserFromWaitlistInput,
-  RemoveUserFromWaitlistUnion,
-  RequestPasswordLinkInput,
-  ResetPasswordLinkResultUnion,
-  RoomLayout,
-  RoomLayoutInput,
-  RoomLayoutsInput,
-  SendClassStatsToEmailInput,
-  SetRoomLayoutForClassSchedulesInput,
-  SimpleSiteUser,
-  Site,
-  SiteEnum,
-  SiteUserInput,
-  SwapSpotResultUnion,
-  UpdateAdminUserInput,
-  UpdateCurrentAdminUserFavoriteSiteInput,
-  UpdateCurrentAdminUserInput,
-  UpdateCurrentUserPasswordInput,
-  UpdateGiftCardInput,
-  UpdatePaymentLinkInput,
-  UpdateUserPasswordInput,
-  UserInClassRanking,
-  UserInput,
-  WaitlistEntry
+import {
+  CreatePaymentLinkDocument,
+  DeletePaymentLinkDocument,
+  PaymentLinkDocument,
+  PaymentLinksDocument,
+  UpdatePaymentLinkDocument,
+  type AdminUser,
+  type AdminUserDataInput,
+  type AdminUserResultUnion,
+  type BookUserIntoClassInput,
+  type CalendarClassesParams,
+  type CancelEnrollmentInput,
+  type CheckinResultUnion,
+  type CheckinUserInClass,
+  type CheckoutResultUnion,
+  type CheckoutUserInClass,
+  type Class,
+  type ClassInfo,
+  type ClassSchedule,
+  type ClassStat,
+  type Country,
+  type CreatePaymentLinkInput,
+  type DisableEnableSpotInput,
+  type DisableEnableSpotResult,
+  type DisableEnableSpotResultUnion,
+  type EditClassInput,
+  type EditClassResultUnion,
+  type EditEnrollmentInput,
+  type EditEnrollmentResultUnion,
+  type EditRoomLayoutInput,
+  type EditUserInput,
+  type EditUserResultUnion,
+  type GiftCard,
+  type IdentifiableSiteUser,
+  type IdentifiableUser,
+  type Instructor,
+  type PaginatedClassStats,
+  type PaginationInput,
+  type PaymentLink,
+  type RegisterUserInput,
+  type RemoveUserFromWaitlistInput,
+  type RemoveUserFromWaitlistUnion,
+  type RequestPasswordLinkInput,
+  type ResetPasswordLinkResultUnion,
+  type RoomLayout,
+  type RoomLayoutInput,
+  type RoomLayoutsInput,
+  type SendClassStatsToEmailInput,
+  type SetRoomLayoutForClassSchedulesInput,
+  type SimpleSiteUser,
+  type Site,
+  type SiteEnum,
+  type SiteUserInput,
+  type SwapSpotResultUnion,
+  type UpdateAdminUserInput,
+  type UpdateCurrentAdminUserFavoriteSiteInput,
+  type UpdateCurrentAdminUserInput,
+  type UpdateCurrentUserPasswordInput,
+  type UpdateGiftCardInput,
+  type UpdatePaymentLinkInput,
+  type UpdateUserPasswordInput,
+  type UserInClassRanking,
+  type UserInput,
+  type WaitlistEntry
 } from '@/gql/graphql'
 import type { SiteSetting } from '@/gql/graphql'
 import type { ApolloClient } from '@apollo/client/core'
@@ -1909,25 +1914,9 @@ export class ApiService {
 
   // Payment Links
   async getPaymentLinks(site: SiteEnum | null): Promise<PaymentLink[]> {
-    const PAYMENT_LINKS_QUERY = gql`
-      query PaymentLinks($site: SiteEnum) {
-        paymentLinks(site: $site) {
-          id
-          title
-          amount
-          currency
-          url
-          site {
-            name
-            code
-          }
-        }
-      }
-    `
-
     try {
       const resultQuery = await this.authApiClient.query({
-        query: PAYMENT_LINKS_QUERY,
+        query: PaymentLinksDocument,
         variables: { site: site },
         fetchPolicy: 'network-only'
       })
@@ -1939,25 +1928,9 @@ export class ApiService {
   }
 
   async getPaymentLink(id: string): Promise<PaymentLink> {
-    const PAYMENT_LINKS_QUERY = gql`
-      query PaymentLink($id: ID!) {
-        paymentLink(id: $id) {
-          id
-          title
-          amount
-          currency
-          url
-          site {
-            name
-            code
-          }
-        }
-      }
-    `
-
     try {
       const resultQuery = await this.authApiClient.query({
-        query: PAYMENT_LINKS_QUERY,
+        query: PaymentLinkDocument,
         variables: { id: id },
         fetchPolicy: 'network-only'
       })
@@ -1969,72 +1942,71 @@ export class ApiService {
   }
 
   async updatePaymentLink(input: UpdatePaymentLinkInput): Promise<PaymentLink> {
-    const mutation = gql`
-      mutation UpdatePaymentLink($input: UpdatePaymentLinkInput!) {
-        updatePaymentLink(input: $input) {
-          id
-          title
-          amount
-          currency
-          url
-          site {
-            name
-            code
-          }
-        }
+    try {
+      const { data, errors } = await this.authApiClient.mutate({
+        mutation: UpdatePaymentLinkDocument,
+        variables: { input: input },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
       }
-    `
 
-    const result = await this.authApiClient.mutate({
-      mutation: mutation,
-      variables: { input: input },
-      fetchPolicy: 'network-only'
-    })
+      if (!data || !data.updatePaymentLink) {
+        throw new Error('No data returned from updatePaymentLink mutation')
+      }
 
-    return result.data.updatePaymentLink as PaymentLink
+      return data.updatePaymentLink as PaymentLink
+    } catch (error) {
+      console.error('Error updating payment link:', error)
+      throw error
+    }
   }
 
   async createPaymentLink(input: CreatePaymentLinkInput): Promise<PaymentLink> {
-    const mutation = gql`
-      mutation CreatePaymentLink($input: CreatePaymentLinkInput!) {
-        createPaymentLink(input: $input) {
-          id
-          title
-          amount
-          currency
-          url
-          site {
-            name
-            code
-          }
-        }
+    try {
+      const { data, errors } = await this.authApiClient.mutate({
+        mutation: CreatePaymentLinkDocument,
+        variables: { input: input },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
       }
-    `
 
-    const result = await this.authApiClient.mutate({
-      mutation: mutation,
-      variables: { input: input },
-      fetchPolicy: 'network-only'
-    })
+      if (!data || !data.createPaymentLink) {
+        throw new Error('No data returned from createPaymentLink mutation')
+      }
 
-    return result.data.createPaymentLink as PaymentLink
+      return data.createPaymentLink as PaymentLink
+    } catch (error) {
+      console.error('Error creating payment link:', error)
+      throw error
+    }
   }
 
   async deletePaymentLink(id: string): Promise<boolean> {
-    const mutation = gql`
-      mutation DeletePaymentLink($id: ID!) {
-        deletePaymentLink(id: $id)
+    try {
+      const { data, errors } = await this.authApiClient.mutate({
+        mutation: DeletePaymentLinkDocument,
+        variables: { id: id },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
       }
-    `
 
-    const result = await this.authApiClient.mutate({
-      mutation: mutation,
-      variables: {
-        id: id
-      },
-      fetchPolicy: 'network-only'
-    })
+      if (!data || data.deletePaymentLink === undefined) {
+        throw new Error('No data returned from deletePaymentLink mutation')
+      }
 
-    return result.data.deletePaymentLink as boolean
+      return data.deletePaymentLink as boolean
+    } catch (error) {
+      console.error('Error deleting payment link:', error)
+      throw error
+    }
   }
 }
