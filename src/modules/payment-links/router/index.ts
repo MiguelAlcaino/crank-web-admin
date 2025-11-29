@@ -4,7 +4,6 @@ const ROUTE_NAME = 'payment-links'
 
 export const paymentLinksRoute: RouteRecordRaw = {
   path: `/${ROUTE_NAME}`,
-  redirect: `/${ROUTE_NAME}`,
   component: () => import('@/modules/payment-links/layouts/PaymentLinksLayout.vue'),
   children: [
     {
