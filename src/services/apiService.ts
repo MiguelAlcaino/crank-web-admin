@@ -1894,22 +1894,21 @@ export class ApiService {
     return result.data.updateCurrentAdminUser as AdminUser
   }
 
-  async getCurrentAdminUser(fields: string[]): Promise<AdminUser> {
-    // Create dynamic query using DocumentNode instead of template literal interpolation
-    const queryString = `
-      query currentAdminUser {
+  async getShowCancelledClassesForCurrentAdminUser(): Promise<boolean> {
+    const query = gql`
+      query GetShowCancelledClasses {
         currentAdminUser {
-          ${fields.join('\n          ')}
+          showCancelledClasses
         }
       }
     `
 
-    const resultQuery = await this.authApiClient.query({
-      query: gql(queryString),
-      fetchPolicy: 'network-only'
+    const result = await this.authApiClient.query({
+      query,
+      fetchPolicy: 'no-cache'
     })
 
-    return resultQuery.data.currentAdminUser as AdminUser
+    return result.data.currentAdminUser?.showCancelledClasses ?? false
   }
 
   // Payment Links
