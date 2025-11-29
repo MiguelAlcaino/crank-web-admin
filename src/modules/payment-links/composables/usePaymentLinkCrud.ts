@@ -87,7 +87,7 @@ export const usePaymentLinkCrud = (apiService: ApiService) => {
         paymentLinks.value = newArr
       }
       return true
-    } catch (error) {  
+    } catch (error) {
       hasError.value = true
       return false
     } finally {
@@ -103,9 +103,12 @@ export const usePaymentLinkCrud = (apiService: ApiService) => {
       const success = await apiService.deletePaymentLink(id)
       if (success) {
         const idx = paymentLinks.value.findIndex((l) => l.id === id)
-        const newArr = paymentLinks.value.slice()
-        newArr.splice(idx, 1)
-        paymentLinks.value = newArr
+
+        if (idx !== -1) {
+          const newArr = paymentLinks.value.slice()
+          newArr.splice(idx, 1)
+          paymentLinks.value = newArr
+        }
       }
       return success
     } catch (error) {
