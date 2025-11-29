@@ -87,8 +87,7 @@ export const usePaymentLinkCrud = (apiService: ApiService) => {
         paymentLinks.value = newArr
       }
       return true
-    } catch (error) {
-      console.log(error)
+    } catch (error) {  
       hasError.value = true
       return false
     } finally {
