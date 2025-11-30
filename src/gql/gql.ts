@@ -13,6 +13,16 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
+  'mutation CreatePaymentLink($input: CreatePaymentLinkInput!) {\n  createPaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}':
+    types.CreatePaymentLinkDocument,
+  'mutation DeletePaymentLink($id: ID!) {\n  deletePaymentLink(id: $id)\n}':
+    types.DeletePaymentLinkDocument,
+  'query PaymentLink($id: ID!) {\n  paymentLink(id: $id) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}':
+    types.PaymentLinkDocument,
+  'query PaymentLinks($site: SiteEnum) {\n  paymentLinks(site: $site) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}':
+    types.PaymentLinksDocument,
+  'mutation UpdatePaymentLink($input: UpdatePaymentLinkInput!) {\n  updatePaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}':
+    types.UpdatePaymentLinkDocument,
   '\n      query siteSettings($site: SiteEnum!) {\n        siteSettings(site: $site) {\n          siteDateTimeNow\n        }\n      }\n    ':
     types.SiteSettingsDocument,
   '\n      query classInfoAdmin($site: SiteEnum!, $id: ID!) {\n        classInfo(site: $site, id: $id) {\n          class {\n            id\n            name\n            description\n            instructorName\n            start\n            startWithNoTimeZone\n            duration\n            waitListAvailable\n            showAsDisabled\n            maxCapacity\n            isSubstitute\n            hasClassStats\n            isSynchronizing\n          }\n          roomLayout {\n            id\n            name\n            matrix {\n              x\n              y\n              icon\n              ... on BookableSpot {\n                enabled\n                spotNumber\n              }\n            }\n          }\n          enrollments(status: active) {\n            id\n            enrollmentStatus\n            enrollmentDateTime\n            identifiableSiteUser {\n              id\n              identifiableUser {\n                id\n                user {\n                  firstName\n                  lastName\n                  email\n                  leaderboardUsername\n                }\n              }\n            }\n\n            ... on EnrollmentInfo {\n              isCheckedIn\n              spotNumber\n              isBookedForFree\n              hasStats\n              isFirstTimeInThisTypeOfClass\n              isFirstTimeWithThisInstructor\n              isTodayUserBirthday\n              isUserLeaderboardEnabled\n              bookedViaClassPass\n            }\n          }\n          onHoldSpots\n          orphanedClassStatsSpots\n        }\n      }\n    ':
@@ -128,7 +138,9 @@ const documents = {
   '\n      mutation updateCurrentAdminUserFavoriteSite($input: UpdateCurrentAdminUserFavoriteSiteInput) {\n        updateCurrentAdminUserFavoriteSite(input: $input) {\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    ':
     types.UpdateCurrentAdminUserFavoriteSiteDocument,
   '\n      mutation updateCurrentAdminUser($input: UpdateCurrentAdminUserInput!) {\n        updateCurrentAdminUser(input: $input) {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              code\n              name\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n          showCancelledClasses\n        }\n      }\n    ':
-    types.UpdateCurrentAdminUserDocument
+    types.UpdateCurrentAdminUserDocument,
+  '\n      query GetShowCancelledClasses {\n        currentAdminUser {\n          showCancelledClasses\n        }\n      }\n    ':
+    types.GetShowCancelledClassesDocument
 }
 
 /**
@@ -145,6 +157,36 @@ const documents = {
  */
 export function graphql(source: string): unknown
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation CreatePaymentLink($input: CreatePaymentLinkInput!) {\n  createPaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}'
+): (typeof documents)['mutation CreatePaymentLink($input: CreatePaymentLinkInput!) {\n  createPaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation DeletePaymentLink($id: ID!) {\n  deletePaymentLink(id: $id)\n}'
+): (typeof documents)['mutation DeletePaymentLink($id: ID!) {\n  deletePaymentLink(id: $id)\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'query PaymentLink($id: ID!) {\n  paymentLink(id: $id) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}'
+): (typeof documents)['query PaymentLink($id: ID!) {\n  paymentLink(id: $id) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'query PaymentLinks($site: SiteEnum) {\n  paymentLinks(site: $site) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}'
+): (typeof documents)['query PaymentLinks($site: SiteEnum) {\n  paymentLinks(site: $site) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation UpdatePaymentLink($input: UpdatePaymentLinkInput!) {\n  updatePaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}'
+): (typeof documents)['mutation UpdatePaymentLink($input: UpdatePaymentLinkInput!) {\n  updatePaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -493,6 +535,12 @@ export function graphql(
 export function graphql(
   source: '\n      mutation updateCurrentAdminUser($input: UpdateCurrentAdminUserInput!) {\n        updateCurrentAdminUser(input: $input) {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              code\n              name\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n          showCancelledClasses\n        }\n      }\n    '
 ): (typeof documents)['\n      mutation updateCurrentAdminUser($input: UpdateCurrentAdminUserInput!) {\n        updateCurrentAdminUser(input: $input) {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              code\n              name\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n          showCancelledClasses\n        }\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n      query GetShowCancelledClasses {\n        currentAdminUser {\n          showCancelledClasses\n        }\n      }\n    '
+): (typeof documents)['\n      query GetShowCancelledClasses {\n        currentAdminUser {\n          showCancelledClasses\n        }\n      }\n    ']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}

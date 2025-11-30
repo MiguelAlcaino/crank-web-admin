@@ -27,11 +27,7 @@ const getShowCancelledClasses = async () => {
   try {
     isLoading.value = true
 
-    var response = await apiService.getCurrentAdminUser(['showCancelledClasses'])
-
-    if (response) {
-      showCancelledClasses.value = response.showCancelledClasses ?? false
-    }
+    showCancelledClasses.value = await apiService.getShowCancelledClassesForCurrentAdminUser()
   } catch (error) {
     errorModalIsVisible.value = true
   } finally {

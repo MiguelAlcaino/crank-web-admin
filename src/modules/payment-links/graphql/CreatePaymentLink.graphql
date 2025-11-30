@@ -1,0 +1,14 @@
+mutation CreatePaymentLink($input: CreatePaymentLinkInput!) {
+  createPaymentLink(input: $input) {
+    id
+    title
+    amount
+    currency
+    url
+    notificationEmailAddress
+    site {
+      name
+      code
+    }
+  }
+}

@@ -1,60 +1,68 @@
 import { ApolloError, gql } from '@apollo/client'
-import type {
-  AdminUser,
-  AdminUserDataInput,
-  AdminUserResultUnion,
-  BookUserIntoClassInput,
-  CalendarClassesParams,
-  CancelEnrollmentInput,
-  CheckinResultUnion,
-  CheckinUserInClass,
-  CheckoutResultUnion,
-  CheckoutUserInClass,
-  Class,
-  ClassInfo,
-  ClassSchedule,
-  ClassStat,
-  Country,
-  DisableEnableSpotInput,
-  DisableEnableSpotResult,
-  DisableEnableSpotResultUnion,
-  EditClassInput,
-  EditClassResultUnion,
-  EditEnrollmentInput,
-  EditEnrollmentResultUnion,
-  EditRoomLayoutInput,
-  EditUserInput,
-  EditUserResultUnion,
-  GiftCard,
-  IdentifiableSiteUser,
-  IdentifiableUser,
-  Instructor,
-  PaginatedClassStats,
-  PaginationInput,
-  RegisterUserInput,
-  RemoveUserFromWaitlistInput,
-  RemoveUserFromWaitlistUnion,
-  RequestPasswordLinkInput,
-  ResetPasswordLinkResultUnion,
-  RoomLayout,
-  RoomLayoutInput,
-  RoomLayoutsInput,
-  SendClassStatsToEmailInput,
-  SetRoomLayoutForClassSchedulesInput,
-  SimpleSiteUser,
-  Site,
-  SiteEnum,
-  SiteUserInput,
-  SwapSpotResultUnion,
-  UpdateAdminUserInput,
-  UpdateCurrentAdminUserFavoriteSiteInput,
-  UpdateCurrentAdminUserInput,
-  UpdateCurrentUserPasswordInput,
-  UpdateGiftCardInput,
-  UpdateUserPasswordInput,
-  UserInClassRanking,
-  UserInput,
-  WaitlistEntry
+import {
+  CreatePaymentLinkDocument,
+  DeletePaymentLinkDocument,
+  PaymentLinkDocument,
+  PaymentLinksDocument,
+  UpdatePaymentLinkDocument,
+  type AdminUser,
+  type AdminUserDataInput,
+  type AdminUserResultUnion,
+  type BookUserIntoClassInput,
+  type CalendarClassesParams,
+  type CancelEnrollmentInput,
+  type CheckinResultUnion,
+  type CheckinUserInClass,
+  type CheckoutResultUnion,
+  type CheckoutUserInClass,
+  type Class,
+  type ClassInfo,
+  type ClassSchedule,
+  type ClassStat,
+  type Country,
+  type CreatePaymentLinkInput,
+  type DisableEnableSpotInput,
+  type DisableEnableSpotResult,
+  type DisableEnableSpotResultUnion,
+  type EditClassInput,
+  type EditClassResultUnion,
+  type EditEnrollmentInput,
+  type EditEnrollmentResultUnion,
+  type EditRoomLayoutInput,
+  type EditUserInput,
+  type EditUserResultUnion,
+  type GiftCard,
+  type IdentifiableSiteUser,
+  type IdentifiableUser,
+  type Instructor,
+  type PaginatedClassStats,
+  type PaginationInput,
+  type PaymentLink,
+  type RegisterUserInput,
+  type RemoveUserFromWaitlistInput,
+  type RemoveUserFromWaitlistUnion,
+  type RequestPasswordLinkInput,
+  type ResetPasswordLinkResultUnion,
+  type RoomLayout,
+  type RoomLayoutInput,
+  type RoomLayoutsInput,
+  type SendClassStatsToEmailInput,
+  type SetRoomLayoutForClassSchedulesInput,
+  type SimpleSiteUser,
+  type Site,
+  type SiteEnum,
+  type SiteUserInput,
+  type SwapSpotResultUnion,
+  type UpdateAdminUserInput,
+  type UpdateCurrentAdminUserFavoriteSiteInput,
+  type UpdateCurrentAdminUserInput,
+  type UpdateCurrentUserPasswordInput,
+  type UpdateGiftCardInput,
+  type UpdatePaymentLinkInput,
+  type UpdateUserPasswordInput,
+  type UserInClassRanking,
+  type UserInput,
+  type WaitlistEntry
 } from '@/gql/graphql'
 import type { SiteSetting } from '@/gql/graphql'
 import type { ApolloClient } from '@apollo/client/core'
@@ -1886,22 +1894,136 @@ export class ApiService {
     return result.data.updateCurrentAdminUser as AdminUser
   }
 
-  async getCurrentAdminUser(fields: string[]): Promise<AdminUser> {
-    const selectedFields = fields.join('\n')
-
+  async getShowCancelledClassesForCurrentAdminUser(): Promise<boolean> {
     const query = gql`
-      query currentAdminUser {
+      query GetShowCancelledClasses {
         currentAdminUser {
-          ${selectedFields}
+          showCancelledClasses
         }
       }
     `
 
-    const resultQuery = await this.authApiClient.query({
-      query: query,
-      fetchPolicy: 'network-only'
+    const result = await this.authApiClient.query({
+      query,
+      fetchPolicy: 'no-cache'
     })
 
-    return resultQuery.data.currentAdminUser as AdminUser
+    return result.data.currentAdminUser?.showCancelledClasses ?? false
+  }
+
+  // Payment Links
+  async getPaymentLinks(site: SiteEnum | null): Promise<PaymentLink[]> {
+    try {
+      const { data, errors } = await this.authApiClient.query({
+        query: PaymentLinksDocument,
+        variables: { site: site },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.paymentLinks) {
+        throw new Error('No data returned from paymentLinks query')
+      }
+
+      return data.paymentLinks as PaymentLink[]
+    } catch (error) {
+      console.error('Error fetching payment links:', error)
+      throw error
+    }
+  }
+
+  async getPaymentLink(id: string): Promise<PaymentLink | null> {
+    try {
+      const { data, errors } = await this.authApiClient.query({
+        query: PaymentLinkDocument,
+        variables: { id: id },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.paymentLink) {
+        return null
+      }
+
+      return data.paymentLink as PaymentLink
+    } catch (error) {
+      console.error('Error fetching payment link:', error)
+      throw error
+    }
+  }
+
+  async updatePaymentLink(input: UpdatePaymentLinkInput): Promise<PaymentLink> {
+    try {
+      const { data, errors } = await this.authApiClient.mutate({
+        mutation: UpdatePaymentLinkDocument,
+        variables: { input: input },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.updatePaymentLink) {
+        throw new Error('No data returned from updatePaymentLink mutation')
+      }
+
+      return data.updatePaymentLink as PaymentLink
+    } catch (error) {
+      console.error('Error updating payment link:', error)
+      throw error
+    }
+  }
+
+  async createPaymentLink(input: CreatePaymentLinkInput): Promise<PaymentLink> {
+    try {
+      const { data, errors } = await this.authApiClient.mutate({
+        mutation: CreatePaymentLinkDocument,
+        variables: { input: input },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.createPaymentLink) {
+        throw new Error('No data returned from createPaymentLink mutation')
+      }
+
+      return data.createPaymentLink as PaymentLink
+    } catch (error) {
+      console.error('Error creating payment link:', error)
+      throw error
+    }
+  }
+
+  async deletePaymentLink(id: string): Promise<boolean> {
+    try {
+      const { data, errors } = await this.authApiClient.mutate({
+        mutation: DeletePaymentLinkDocument,
+        variables: { id: id },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || data.deletePaymentLink === undefined) {
+        throw new Error('No data returned from deletePaymentLink mutation')
+      }
+
+      return data.deletePaymentLink as boolean
+    } catch (error) {
+      console.error('Error deleting payment link:', error)
+      throw error
+    }
   }
 }
