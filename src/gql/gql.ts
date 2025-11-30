@@ -138,7 +138,9 @@ const documents = {
   '\n      mutation updateCurrentAdminUserFavoriteSite($input: UpdateCurrentAdminUserFavoriteSiteInput) {\n        updateCurrentAdminUserFavoriteSite(input: $input) {\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n        }\n      }\n    ':
     types.UpdateCurrentAdminUserFavoriteSiteDocument,
   '\n      mutation updateCurrentAdminUser($input: UpdateCurrentAdminUserInput!) {\n        updateCurrentAdminUser(input: $input) {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              code\n              name\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n          showCancelledClasses\n        }\n      }\n    ':
-    types.UpdateCurrentAdminUserDocument
+    types.UpdateCurrentAdminUserDocument,
+  '\n      query GetShowCancelledClasses {\n        currentAdminUser {\n          showCancelledClasses\n        }\n      }\n    ':
+    types.GetShowCancelledClassesDocument
 }
 
 /**
@@ -533,6 +535,12 @@ export function graphql(
 export function graphql(
   source: '\n      mutation updateCurrentAdminUser($input: UpdateCurrentAdminUserInput!) {\n        updateCurrentAdminUser(input: $input) {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              code\n              name\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n          showCancelledClasses\n        }\n      }\n    '
 ): (typeof documents)['\n      mutation updateCurrentAdminUser($input: UpdateCurrentAdminUserInput!) {\n        updateCurrentAdminUser(input: $input) {\n          id\n          username\n          email\n          roles\n          linkedInstructors {\n            id\n            name\n            site {\n              code\n              name\n            }\n          }\n          linkedSites {\n            name\n            code\n          }\n          favoriteSite {\n            name\n            code\n          }\n          showCancelledClasses\n        }\n      }\n    ']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n      query GetShowCancelledClasses {\n        currentAdminUser {\n          showCancelledClasses\n        }\n      }\n    '
+): (typeof documents)['\n      query GetShowCancelledClasses {\n        currentAdminUser {\n          showCancelledClasses\n        }\n      }\n    ']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}
