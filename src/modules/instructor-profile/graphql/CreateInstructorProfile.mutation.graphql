@@ -1,0 +1,22 @@
+mutation CreateInstructorProfile($input: CreateInstructorProfileInput!) {
+  createInstructorProfile(input: $input) {
+    ... on InstructorProfile {
+      id
+      name
+      description
+      profilePictureUrl
+      active
+      createdAt
+      updatedAt
+      mindbodyStaffs {
+        id
+        firstName
+        lastName
+        email
+      }
+    }
+    ... on UploadedFileIsNotAnImage {
+      code
+    }
+  }
+}

@@ -1,0 +1,25 @@
+mutation LinkMindbodyStaffToProfile($profileId: ID!, $mindbodyStaffIds: [ID!]!) {
+    linkMindbodyStaffToProfile(profileId: $profileId, mindbodyStaffIds: $mindbodyStaffIds) {
+        ... on InstructorProfile {
+            id
+            name
+            description
+            profilePictureUrl
+            active
+            createdAt
+            updatedAt
+            mindbodyStaffs {
+                id
+                firstName
+                lastName
+                email
+            }
+        }
+        ... on InstructorProfileNotFoundError {
+            code
+        }
+        ... on UploadedFileIsNotAnImage {
+            code
+        }
+    }
+}

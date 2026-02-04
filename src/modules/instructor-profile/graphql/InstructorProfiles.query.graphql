@@ -1,0 +1,17 @@
+query InstructorProfiles($activeOnly: Boolean) {
+  instructorProfiles(activeOnly: $activeOnly) {
+    id
+    name
+    description
+    profilePictureUrl
+    active
+    createdAt
+    updatedAt
+    mindbodyStaffs {
+      id
+      firstName
+      lastName
+      email
+    }
+  }
+}
