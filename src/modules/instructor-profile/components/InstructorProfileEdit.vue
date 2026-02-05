@@ -107,6 +107,23 @@ function onSuccessOk() {
             <!-- Body-->
             <div class="modal-body">
               <InstructorProfileForm ref="formRef" :initialData="instructorProfile" />
+
+              <!-- Mindbody Staffs Section -->
+              <div v-if="instructorProfile.mindbodyStaffs && instructorProfile.mindbodyStaffs.length > 0" class="mt-4">
+                <h6>Associated Mindbody Staffs</h6>
+                <div class="list-group">
+                  <div
+                    v-for="staff in instructorProfile.mindbodyStaffs"
+                    :key="staff.id"
+                    class="list-group-item"
+                  >
+                    <div class="d-flex justify-content-between">
+                      <strong>{{ staff.firstName }} {{ staff.lastName }}</strong>
+                      <span class="text-muted">{{ staff.email }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <!-- Footer: Specific actions for Edit (Delete, Cancel, Update) -->

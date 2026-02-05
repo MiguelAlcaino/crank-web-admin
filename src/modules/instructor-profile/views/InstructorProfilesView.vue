@@ -45,6 +45,7 @@ onMounted(() => {
             <th class="text-center">DESCRIPTION</th>
             <th class="text-center">PROFILE PICTURE URL</th>
             <th class="text-center">ACTIVE</th>
+            <th class="text-center">MINDBODY STAFFS</th>
             <th class="text-center">CREATED AT</th>
             <th class="text-center">UPDATED AT</th>
             <th></th>
@@ -59,6 +60,12 @@ onMounted(() => {
               <a :href="item.profilePictureUrl" target="_blank">{{ item.profilePictureUrl }}</a>
             </td>
             <td class="text-center">{{ item.active }}</td>
+            <td class="text-center">
+              <span v-if="item.mindbodyStaffs && item.mindbodyStaffs.length > 0">
+                {{ item.mindbodyStaffs.map((s) => `${s.firstName} ${s.lastName}`).join(', ') }}
+              </span>
+              <span v-else>-</span>
+            </td>
             <td class="text-center">{{ formatDate(item.createdAt) }}</td>
             <td class="text-center">{{ formatDate(item.updatedAt) }}</td>
             <td>
@@ -66,12 +73,12 @@ onMounted(() => {
             </td>
           </tr>
           <tr v-if="!isLoading && instructorProfiles?.length === 0">
-            <td colspan="8" class="text-center">
+            <td colspan="9" class="text-center">
               <p>NO DATA AVAILABLE IN TABLE</p>
             </td>
           </tr>
           <tr v-if="isLoading">
-            <td colspan="8" class="text-center">LOADING...</td>
+            <td colspan="9" class="text-center">LOADING...</td>
           </tr>
         </tbody>
       </table>
