@@ -1,3 +1,3 @@
 mutation DeleteInstructorProfile($id: ID!) {
-    deleteInstructorProfile(id: $id)
+  deleteInstructorProfile(id: $id)
 }

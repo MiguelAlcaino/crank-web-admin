@@ -1,25 +1,25 @@
 mutation UpdateInstructorProfile($id: ID!, $input: UpdateInstructorProfileInput!) {
-    updateInstructorProfile(id: $id, input: $input) {
-        ... on InstructorProfile {
-            id
-            name
-            description
-            profilePictureUrl
-            active
-            createdAt
-            updatedAt
-            mindbodyStaffs {
-                id
-                firstName
-                lastName
-                email
-            }
-        }
-        ... on UploadedFileIsNotAnImage {
-            code
-        }
-        ... on InstructorProfileNotFoundError {
-            code
-        }
+  updateInstructorProfile(id: $id, input: $input) {
+    ... on InstructorProfile {
+      id
+      name
+      description
+      profilePictureUrl
+      active
+      createdAt
+      updatedAt
+      mindbodyStaffs {
+        id
+        firstName
+        lastName
+        email
+      }
     }
+    ... on UploadedFileIsNotAnImage {
+      code
+    }
+    ... on InstructorProfileNotFoundError {
+      code
+    }
+  }
 }

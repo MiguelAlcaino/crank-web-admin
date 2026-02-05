@@ -1,10 +1,14 @@
 import { ApolloError, gql } from '@apollo/client'
 import {
+  CreateInstructorProfileDocument,
   CreatePaymentLinkDocument,
+  DeleteInstructorProfileDocument,
   DeletePaymentLinkDocument,
+  InstructorProfilesDocument,
   PaymentLinkDocument,
   PaymentLinksDocument,
   UpdatePaymentLinkDocument,
+  UpdateInstructorProfileDocument,
   type AdminUser,
   type AdminUserDataInput,
   type AdminUserResultUnion,
@@ -64,7 +68,12 @@ import {
   type UserInput,
   type WaitlistEntry
 } from '@/gql/graphql'
-import type { SiteSetting } from '@/gql/graphql'
+import type {
+  CreateInstructorProfileInput,
+  InstructorProfile,
+  SiteSetting,
+  UpdateInstructorProfileInput
+} from '@/gql/graphql'
 import type { ApolloClient } from '@apollo/client/core'
 import dayjs from 'dayjs'
 import { ValidationError } from '@/utils/errors/saveUserErrors'
@@ -2023,6 +2032,106 @@ export class ApiService {
       return data.deletePaymentLink as boolean
     } catch (error) {
       console.error('Error deleting payment link:', error)
+      throw error
+    }
+  }
+
+  // Instructor Profiles
+  async getInstructorProfiles(activeOnly: boolean | null): Promise<InstructorProfile[]> {
+    try {
+      const { data, errors } = await this.authApiClient.query({
+        query: InstructorProfilesDocument,
+        variables: { activeOnly: activeOnly },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.instructorProfiles) {
+        throw new Error('No data returned from instructorProfiles query')
+      }
+
+      return data.instructorProfiles.map((profile: any) => ({
+        ...profile,
+        createdAt: new Date(profile.createdAt),
+        updatedAt: new Date(profile.updatedAt)
+      })) as InstructorProfile[]
+    } catch (error) {
+      console.error('Error fetching instructor profiles:', error)
+      throw error
+    }
+  }
+
+  async createInstructorProfile(input: CreateInstructorProfileInput): Promise<InstructorProfile> {
+    try {
+      const { data, errors } = await this.authApiClient.mutate({
+        mutation: CreateInstructorProfileDocument,
+        variables: { input: input },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.createInstructorProfile) {
+        throw new Error('No data returned from createInstructorProfile mutation')
+      }
+
+      return data.createInstructorProfile as InstructorProfile
+    } catch (error) {
+      console.error('Error creating instructor profile:', error)
+      throw error
+    }
+  }
+
+  async updateInstructorProfile(
+    id: string,
+    input: UpdateInstructorProfileInput
+  ): Promise<InstructorProfile> {
+    try {
+      const { data, errors } = await this.authApiClient.mutate({
+        mutation: UpdateInstructorProfileDocument,
+        variables: { id, input },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.updateInstructorProfile) {
+        throw new Error('No data returned from updateInstructorProfile mutation')
+      }
+
+      return data.updateInstructorProfile as InstructorProfile
+    } catch (error) {
+      console.error('Error updating instructor profile:', error)
+      throw error
+    }
+  }
+
+  async deleteInstructorProfile(id: string): Promise<boolean> {
+    try {
+      const { data, errors } = await this.authApiClient.mutate({
+        mutation: DeleteInstructorProfileDocument,
+        variables: { id: id },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || data.deleteInstructorProfile === undefined) {
+        throw new Error('No data returned from deleteInstructorProfile mutation')
+      }
+
+      return data.deleteInstructorProfile as boolean
+    } catch (error) {
+      console.error('Error deleting instructor profile:', error)
       throw error
     }
   }

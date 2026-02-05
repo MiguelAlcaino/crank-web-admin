@@ -1,25 +1,25 @@
 mutation UnlinkMindbodyStaffFromProfile($profileId: ID!, $mindbodyStaffIds: [ID!]!) {
-    unlinkMindbodyStaffFromProfile(profileId: $profileId, mindbodyStaffIds: $mindbodyStaffIds) {
-        ... on InstructorProfile {
-            id
-            name
-            description
-            profilePictureUrl
-            active
-            createdAt
-            updatedAt
-            mindbodyStaffs {
-                id
-                firstName
-                lastName
-                email
-            }
-        }
-        ... on InstructorProfileNotFoundError {
-            code
-        }
-        ... on UploadedFileIsNotAnImage {
-            code
-        }
+  unlinkMindbodyStaffFromProfile(profileId: $profileId, mindbodyStaffIds: $mindbodyStaffIds) {
+    ... on InstructorProfile {
+      id
+      name
+      description
+      profilePictureUrl
+      active
+      createdAt
+      updatedAt
+      mindbodyStaffs {
+        id
+        firstName
+        lastName
+        email
+      }
     }
+    ... on InstructorProfileNotFoundError {
+      code
+    }
+    ... on UploadedFileIsNotAnImage {
+      code
+    }
+  }
 }
