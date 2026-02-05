@@ -5,8 +5,10 @@ import {
   DeleteInstructorProfileDocument,
   DeletePaymentLinkDocument,
   InstructorProfilesDocument,
+  LinkMindbodyStaffToProfileDocument,
   PaymentLinkDocument,
   PaymentLinksDocument,
+  UnlinkMindbodyStaffFromProfileDocument,
   UpdatePaymentLinkDocument,
   UpdateInstructorProfileDocument,
   type AdminUser,
@@ -2138,6 +2140,68 @@ export class ApiService {
     }
   }
 
+  async linkMindbodyStaffToProfile(
+    profileId: string,
+    mindbodyStaffIds: string[]
+  ): Promise<InstructorProfile> {
+    try {
+      const { data, errors } = await this.authApiClient.mutate({
+        mutation: LinkMindbodyStaffToProfileDocument,
+        variables: { profileId, mindbodyStaffIds },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.linkMindbodyStaffToProfile) {
+        throw new Error('No data returned from linkMindbodyStaffToProfile mutation')
+      }
+
+      const result = data.linkMindbodyStaffToProfile
+      if (result.__typename === 'InstructorProfile') {
+        return result as InstructorProfile
+      } else {
+        throw new Error(`Error: ${result.__typename}`)
+      }
+    } catch (error) {
+      console.error('Error linking mindbody staff:', error)
+      throw error
+    }
+  }
+
+  async unlinkMindbodyStaffFromProfile(
+    profileId: string,
+    mindbodyStaffIds: string[]
+  ): Promise<InstructorProfile> {
+    try {
+      const { data, errors } = await this.authApiClient.mutate({
+        mutation: UnlinkMindbodyStaffFromProfileDocument,
+        variables: { profileId, mindbodyStaffIds },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.unlinkMindbodyStaffFromProfile) {
+        throw new Error('No data returned from unlinkMindbodyStaffFromProfile mutation')
+      }
+
+      const result = data.unlinkMindbodyStaffFromProfile
+      if (result.__typename === 'InstructorProfile') {
+        return result as InstructorProfile
+      } else {
+        throw new Error(`Error: ${result.__typename}`)
+      }
+    } catch (error) {
+      console.error('Error unlinking mindbody staff:', error)
+      throw error
+    }
+  }
+
   async getMindbodyStaffs(): Promise<MindbodyStaffInfo[]> {
     try {
       const { data, errors } = await this.authApiClient.query({
@@ -2159,4 +2223,5 @@ export class ApiService {
       throw error
     }
   }
+
 }

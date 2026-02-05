@@ -5,7 +5,7 @@ import useVuelidate from '@vuelidate/core'
 
 export interface InstructorProfileFormState {
   name: string
-  description: string
+  description: string | null | undefined
   active: boolean
   profilePictureFile: File | null
 }
@@ -14,11 +14,11 @@ const props = defineProps<{
   initialData?: Partial<InstructorProfileFormState>
 }>()
 
-const formData = reactive<InstructorProfileFormState>({
+const formData = reactive({
   name: '',
   description: '',
   active: true,
-  profilePictureFile: null
+  profilePictureFile: null as File | null
 })
 
 const rules = computed(() => ({
@@ -29,7 +29,9 @@ const rules = computed(() => ({
   },
   description: {
     maxLength: helpers.withMessage('Description must not exceed 1024 characters', maxLength(1024))
-  }
+  },
+  active: {},
+  profilePictureFile: {}
 }))
 
 const v$ = useVuelidate(rules, formData, { $scope: false })
@@ -58,7 +60,7 @@ const validateAndGetValues = async () => {
 
   return {
     name: formData.name,
-    description: formData.description.trim() ? formData.description : undefined,
+    description: formData.description?.trim() ? formData.description : undefined,
     active: formData.active,
     profilePictureFile: formData.profilePictureFile ?? undefined
   }

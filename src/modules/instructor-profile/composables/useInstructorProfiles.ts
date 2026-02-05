@@ -109,6 +109,48 @@ export const useInstructorProfiles = (apiService: ApiService) => {
     }
   }
 
+  async function linkMindbodyStaff(profileId: string, staffIds: string[]) {
+    isSaving.value = true
+    hasError.value = false
+
+    try {
+      const updated = await apiService.linkMindbodyStaffToProfile(profileId, staffIds)
+      const idx = instructorProfiles.value.findIndex((p) => p.id === profileId)
+      if (idx !== -1) {
+        const newArr = instructorProfiles.value.slice()
+        newArr[idx] = updated
+        instructorProfiles.value = newArr
+      }
+      return true
+    } catch (error) {
+      hasError.value = true
+      return false
+    } finally {
+      isSaving.value = false
+    }
+  }
+
+  async function unlinkMindbodyStaff(profileId: string, staffIds: string[]) {
+    isSaving.value = true
+    hasError.value = false
+
+    try {
+      const updated = await apiService.unlinkMindbodyStaffFromProfile(profileId, staffIds)
+      const idx = instructorProfiles.value.findIndex((p) => p.id === profileId)
+      if (idx !== -1) {
+        const newArr = instructorProfiles.value.slice()
+        newArr[idx] = updated
+        instructorProfiles.value = newArr
+      }
+      return true
+    } catch (error) {
+      hasError.value = true
+      return false
+    } finally {
+      isSaving.value = false
+    }
+  }
+
   return {
     // Properties
     isLoading: readonly(isLoading),
@@ -122,6 +164,8 @@ export const useInstructorProfiles = (apiService: ApiService) => {
     getInstructorProfiles,
     createInstructorProfile,
     updateInstructorProfile,
-    deleteInstructorProfile
+    deleteInstructorProfile,
+    linkMindbodyStaff,
+    unlinkMindbodyStaff
   }
 }
