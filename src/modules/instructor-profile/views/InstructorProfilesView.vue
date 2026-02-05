@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ApiService } from '@/services/apiService'
-import { inject, onMounted, ref, watch } from 'vue'
+import { inject, onMounted, ref } from 'vue'
 import { useInstructorProfiles } from '../composables/useInstructorProfiles'
 import InstructorProfileCreate from '../components/InstructorProfileCreate.vue'
 import InstructorProfileEdit from '../components/InstructorProfileEdit.vue'
@@ -20,10 +20,9 @@ const formatDate = (date: Date): string => {
 
 onMounted(() => {
   getInstructorProfiles()
-})
-
-watch(hasLoadError, (val) => {
-  if (val) errorModalVisible.value = true
+  if (hasLoadError.value) {
+    errorModalVisible.value = true
+  }
 })
 </script>
 
