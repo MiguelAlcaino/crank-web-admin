@@ -66,11 +66,13 @@ import {
   type UpdateUserPasswordInput,
   type UserInClassRanking,
   type UserInput,
-  type WaitlistEntry
+  type WaitlistEntry,
+  MindbodyStaffsDocument
 } from '@/gql/graphql'
 import type {
   CreateInstructorProfileInput,
   InstructorProfile,
+  MindbodyStaffInfo,
   SiteSetting,
   UpdateInstructorProfileInput
 } from '@/gql/graphql'
@@ -2132,6 +2134,28 @@ export class ApiService {
       return data.deleteInstructorProfile as boolean
     } catch (error) {
       console.error('Error deleting instructor profile:', error)
+      throw error
+    }
+  }
+
+  async getMindbodyStaffs(): Promise<MindbodyStaffInfo[]> {
+    try {
+      const { data, errors } = await this.authApiClient.query({
+        query: MindbodyStaffsDocument,
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.mindbodyStaffs) {
+        throw new Error('No data returned from mindbodyStaffs query')
+      }
+
+      return data.mindbodyStaffs
+    } catch (error) {
+      console.error('Error fetching instructor profiles:', error)
       throw error
     }
   }

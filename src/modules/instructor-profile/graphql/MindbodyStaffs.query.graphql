@@ -1,0 +1,8 @@
+query MindbodyStaffs {
+  mindbodyStaffs {
+    id
+    firstName
+    lastName
+    email
+  }
+}

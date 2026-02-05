@@ -2227,6 +2227,19 @@ export type LinkMindbodyStaffToProfileMutation = {
     | { __typename: 'UploadedFileIsNotAnImage'; code: string }
 }
 
+export type MindbodyStaffsQueryVariables = Exact<{ [key: string]: never }>
+
+export type MindbodyStaffsQuery = {
+  __typename: 'Query'
+  mindbodyStaffs: Array<{
+    __typename: 'MindbodyStaffInfo'
+    id: string
+    firstName: string
+    lastName: string
+    email?: string | null
+  }>
+}
+
 export type UnlinkMindbodyStaffFromProfileMutationVariables = Exact<{
   profileId: Scalars['ID']
   mindbodyStaffIds: Array<Scalars['ID']> | Scalars['ID']
@@ -3669,6 +3682,34 @@ export const LinkMindbodyStaffToProfileDocument = {
   LinkMindbodyStaffToProfileMutation,
   LinkMindbodyStaffToProfileMutationVariables
 >
+export const MindbodyStaffsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'MindbodyStaffs' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'mindbodyStaffs' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'firstName' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'lastName' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MindbodyStaffsQuery, MindbodyStaffsQueryVariables>
 export const UnlinkMindbodyStaffFromProfileDocument = {
   kind: 'Document',
   definitions: [
