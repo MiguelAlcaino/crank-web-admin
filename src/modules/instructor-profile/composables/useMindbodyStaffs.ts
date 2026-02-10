@@ -13,16 +13,12 @@ export const useMindbodyStaffs = (apiService: ApiService) => {
     availableStaffs.value = []
 
     try {
-    availableStaffs.value = await apiService.getMindbodyStaffs()
+      availableStaffs.value = await apiService.getMindbodyStaffs()
     } catch (error) {
       hasError.value = true
     } finally {
       isLoadingStaffs.value = false
     }
-  }
-
-  function getStaffsNotLinked(linkedStaffIds: string[]): MindbodyStaff[] {
-    return availableStaffs.value.filter((staff) => !linkedStaffIds.includes(staff.id))
   }
 
   return {
@@ -32,7 +28,6 @@ export const useMindbodyStaffs = (apiService: ApiService) => {
     hasError: readonly(hasError),
 
     // Methods
-    getAvailableStaffs,
-    getStaffsNotLinked
+    getAvailableStaffs
   }
 }

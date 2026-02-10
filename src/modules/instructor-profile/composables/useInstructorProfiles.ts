@@ -1,6 +1,8 @@
-import type { ApiService } from '@/services/apiService'
-import { readonly, ref } from 'vue'
 import type { InstructorProfile } from '@/modules/instructor-profile/interfaces/Instructor-profile'
+import type { SiteEnum } from '@/modules/shared/interfaces'
+import type { ApiService } from '@/services/apiService'
+import { appStore } from '@/stores/appStorage'
+import { readonly, ref } from 'vue'
 
 const instructorProfiles = ref<InstructorProfile[]>([])
 
@@ -19,6 +21,7 @@ export const useInstructorProfiles = (apiService: ApiService) => {
 
     try {
       instructorProfiles.value = (await apiService.getInstructorProfiles(
+        appStore().site,
         null
       )) as InstructorProfile[]
     } catch (error) {
@@ -29,10 +32,12 @@ export const useInstructorProfiles = (apiService: ApiService) => {
   }
 
   async function createInstructorProfile(instructorProfileData: {
+    site: SiteEnum
     name: string
     description?: string | null
     active?: boolean
     profilePictureFile?: File
+    linkedMindbodyStaffs?: string[]
   }) {
     isSaving.value = true
     hasError.value = false
@@ -60,6 +65,7 @@ export const useInstructorProfiles = (apiService: ApiService) => {
       description?: string | null
       active?: boolean
       profilePictureFile?: File
+      linkedMindbodyStaffs?: string[]
     }
   ) {
     isSaving.value = true
@@ -109,48 +115,6 @@ export const useInstructorProfiles = (apiService: ApiService) => {
     }
   }
 
-  async function linkMindbodyStaff(profileId: string, staffIds: string[]) {
-    isSaving.value = true
-    hasError.value = false
-
-    try {
-      const updated = await apiService.linkMindbodyStaffToProfile(profileId, staffIds)
-      const idx = instructorProfiles.value.findIndex((p) => p.id === profileId)
-      if (idx !== -1) {
-        const newArr = instructorProfiles.value.slice()
-        newArr[idx] = updated
-        instructorProfiles.value = newArr
-      }
-      return true
-    } catch (error) {
-      hasError.value = true
-      return false
-    } finally {
-      isSaving.value = false
-    }
-  }
-
-  async function unlinkMindbodyStaff(profileId: string, staffIds: string[]) {
-    isSaving.value = true
-    hasError.value = false
-
-    try {
-      const updated = await apiService.unlinkMindbodyStaffFromProfile(profileId, staffIds)
-      const idx = instructorProfiles.value.findIndex((p) => p.id === profileId)
-      if (idx !== -1) {
-        const newArr = instructorProfiles.value.slice()
-        newArr[idx] = updated
-        instructorProfiles.value = newArr
-      }
-      return true
-    } catch (error) {
-      hasError.value = true
-      return false
-    } finally {
-      isSaving.value = false
-    }
-  }
-
   return {
     // Properties
     isLoading: readonly(isLoading),
@@ -164,8 +128,6 @@ export const useInstructorProfiles = (apiService: ApiService) => {
     getInstructorProfiles,
     createInstructorProfile,
     updateInstructorProfile,
-    deleteInstructorProfile,
-    linkMindbodyStaff,
-    unlinkMindbodyStaff
+    deleteInstructorProfile
   }
 }

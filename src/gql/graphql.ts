@@ -388,8 +388,10 @@ export type CreateCurrentUserInSiteUnion = CreateCurrentUserInSiteSuccess | User
 export type CreateInstructorProfileInput = {
   active?: InputMaybe<Scalars['Boolean']>
   description?: InputMaybe<Scalars['String']>
+  linkedMindbodyStaffs?: InputMaybe<Array<Scalars['ID']>>
   name: Scalars['String']
   profilePictureFile?: InputMaybe<Scalars['File']>
+  site: SiteEnum
 }
 
 export type CreateInstructorProfileResultUnion = InstructorProfile | UploadedFileIsNotAnImage
@@ -814,8 +816,6 @@ export type Mutation = {
    * @deprecated Use newLockShoppingCart instead
    */
   generateMerchantReference: Scalars['ID']
-  /** Links MindbodyStaff records to an instructor profile */
-  linkMindbodyStaffToProfile: UpdateInstructorProfileResultUnion
   /**
    * To lock the shoppingcart when the user is in the payment process
    * @deprecated Use newLockShoppingCart instead
@@ -871,8 +871,6 @@ export type Mutation = {
   syncClass: ClassInfo
   /** Sync a class with PIQ */
   syncClassWithPIQ: ClassInfo
-  /** Unlinks MindbodyStaff records from an instructor profile */
-  unlinkMindbodyStaffFromProfile: UpdateInstructorProfileResultUnion
   /** Updates an admin user */
   updateAdminUser: AdminUserResultUnion
   /** Allows to update product */
@@ -1029,11 +1027,6 @@ export type MutationGenerateMerchantReferenceArgs = {
   site: SiteEnum
 }
 
-export type MutationLinkMindbodyStaffToProfileArgs = {
-  mindbodyStaffIds: Array<Scalars['ID']>
-  profileId: Scalars['ID']
-}
-
 export type MutationLockShoppingCartArgs = {
   site: SiteEnum
 }
@@ -1142,11 +1135,6 @@ export type MutationSyncClassArgs = {
 export type MutationSyncClassWithPiqArgs = {
   classId: Scalars['ID']
   site: SiteEnum
-}
-
-export type MutationUnlinkMindbodyStaffFromProfileArgs = {
-  mindbodyStaffIds: Array<Scalars['ID']>
-  profileId: Scalars['ID']
 }
 
 export type MutationUpdateAdminUserArgs = {
@@ -1535,6 +1523,7 @@ export type QueryInstructorProfileArgs = {
 
 export type QueryInstructorProfilesArgs = {
   activeOnly?: InputMaybe<Scalars['Boolean']>
+  site: SiteEnum
 }
 
 export type QueryIsSmsValidationCodeValidArgs = {
@@ -1960,6 +1949,7 @@ export type UpdateInstructorInput = {
 export type UpdateInstructorProfileInput = {
   active?: InputMaybe<Scalars['Boolean']>
   description?: InputMaybe<Scalars['String']>
+  linkedMindbodyStaffs?: InputMaybe<Array<Scalars['ID']>>
   name?: InputMaybe<Scalars['String']>
   profilePictureFile?: InputMaybe<Scalars['File']>
 }
@@ -2175,6 +2165,7 @@ export type DeleteInstructorProfileMutation = {
 
 export type InstructorProfilesQueryVariables = Exact<{
   activeOnly?: InputMaybe<Scalars['Boolean']>
+  site: SiteEnum
 }>
 
 export type InstructorProfilesQuery = {
@@ -2198,35 +2189,6 @@ export type InstructorProfilesQuery = {
   }>
 }
 
-export type LinkMindbodyStaffToProfileMutationVariables = Exact<{
-  profileId: Scalars['ID']
-  mindbodyStaffIds: Array<Scalars['ID']> | Scalars['ID']
-}>
-
-export type LinkMindbodyStaffToProfileMutation = {
-  __typename: 'Mutation'
-  linkMindbodyStaffToProfile:
-    | {
-        __typename: 'InstructorProfile'
-        id: string
-        name: string
-        description?: string | null
-        profilePictureUrl?: string | null
-        active: boolean
-        createdAt: any
-        updatedAt: any
-        mindbodyStaffs: Array<{
-          __typename: 'MindbodyStaffInfo'
-          id: string
-          firstName: string
-          lastName: string
-          email?: string | null
-        }>
-      }
-    | { __typename: 'InstructorProfileNotFoundError'; code: string }
-    | { __typename: 'UploadedFileIsNotAnImage'; code: string }
-}
-
 export type MindbodyStaffsQueryVariables = Exact<{ [key: string]: never }>
 
 export type MindbodyStaffsQuery = {
@@ -2238,35 +2200,6 @@ export type MindbodyStaffsQuery = {
     lastName: string
     email?: string | null
   }>
-}
-
-export type UnlinkMindbodyStaffFromProfileMutationVariables = Exact<{
-  profileId: Scalars['ID']
-  mindbodyStaffIds: Array<Scalars['ID']> | Scalars['ID']
-}>
-
-export type UnlinkMindbodyStaffFromProfileMutation = {
-  __typename: 'Mutation'
-  unlinkMindbodyStaffFromProfile:
-    | {
-        __typename: 'InstructorProfile'
-        id: string
-        name: string
-        description?: string | null
-        profilePictureUrl?: string | null
-        active: boolean
-        createdAt: any
-        updatedAt: any
-        mindbodyStaffs: Array<{
-          __typename: 'MindbodyStaffInfo'
-          id: string
-          firstName: string
-          lastName: string
-          email?: string | null
-        }>
-      }
-    | { __typename: 'InstructorProfileNotFoundError'; code: string }
-    | { __typename: 'UploadedFileIsNotAnImage'; code: string }
 }
 
 export type UpdateInstructorProfileMutationVariables = Exact<{
@@ -3519,6 +3452,14 @@ export const InstructorProfilesDocument = {
           kind: 'VariableDefinition',
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'activeOnly' } },
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'Boolean' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
+          }
         }
       ],
       selectionSet: {
@@ -3532,6 +3473,11 @@ export const InstructorProfilesDocument = {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'activeOnly' },
                 value: { kind: 'Variable', name: { kind: 'Name', value: 'activeOnly' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'site' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
               }
             ],
             selectionSet: {
@@ -3565,123 +3511,6 @@ export const InstructorProfilesDocument = {
     }
   ]
 } as unknown as DocumentNode<InstructorProfilesQuery, InstructorProfilesQueryVariables>
-export const LinkMindbodyStaffToProfileDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'LinkMindbodyStaffToProfile' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'profileId' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'mindbodyStaffIds' } },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'ListType',
-              type: {
-                kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-              }
-            }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'linkMindbodyStaffToProfile' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'profileId' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'profileId' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'mindbodyStaffIds' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'mindbodyStaffIds' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'InstructorProfile' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'profilePictureUrl' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'active' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'mindbodyStaffs' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'firstName' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'lastName' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'email' } }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'InstructorProfileNotFoundError' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'UploadedFileIsNotAnImage' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<
-  LinkMindbodyStaffToProfileMutation,
-  LinkMindbodyStaffToProfileMutationVariables
->
 export const MindbodyStaffsDocument = {
   kind: 'Document',
   definitions: [
@@ -3710,123 +3539,6 @@ export const MindbodyStaffsDocument = {
     }
   ]
 } as unknown as DocumentNode<MindbodyStaffsQuery, MindbodyStaffsQueryVariables>
-export const UnlinkMindbodyStaffFromProfileDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'UnlinkMindbodyStaffFromProfile' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'profileId' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'mindbodyStaffIds' } },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'ListType',
-              type: {
-                kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-              }
-            }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'unlinkMindbodyStaffFromProfile' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'profileId' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'profileId' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'mindbodyStaffIds' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'mindbodyStaffIds' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'InstructorProfile' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'profilePictureUrl' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'active' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'mindbodyStaffs' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'firstName' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'lastName' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'email' } }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'InstructorProfileNotFoundError' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'UploadedFileIsNotAnImage' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<
-  UnlinkMindbodyStaffFromProfileMutation,
-  UnlinkMindbodyStaffFromProfileMutationVariables
->
 export const UpdateInstructorProfileDocument = {
   kind: 'Document',
   definitions: [

@@ -17,14 +17,10 @@ const documents = {
     types.CreateInstructorProfileDocument,
   'mutation DeleteInstructorProfile($id: ID!) {\n  deleteInstructorProfile(id: $id)\n}':
     types.DeleteInstructorProfileDocument,
-  'query InstructorProfiles($activeOnly: Boolean) {\n  instructorProfiles(activeOnly: $activeOnly) {\n    id\n    name\n    description\n    profilePictureUrl\n    active\n    createdAt\n    updatedAt\n    mindbodyStaffs {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}':
+  'query InstructorProfiles($activeOnly: Boolean, $site: SiteEnum!) {\n  instructorProfiles(activeOnly: $activeOnly, site: $site) {\n    id\n    name\n    description\n    profilePictureUrl\n    active\n    createdAt\n    updatedAt\n    mindbodyStaffs {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}':
     types.InstructorProfilesDocument,
-  'mutation LinkMindbodyStaffToProfile($profileId: ID!, $mindbodyStaffIds: [ID!]!) {\n  linkMindbodyStaffToProfile(\n    profileId: $profileId\n    mindbodyStaffIds: $mindbodyStaffIds\n  ) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on InstructorProfileNotFoundError {\n      code\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}':
-    types.LinkMindbodyStaffToProfileDocument,
   'query MindbodyStaffs {\n  mindbodyStaffs {\n    id\n    firstName\n    lastName\n    email\n  }\n}':
     types.MindbodyStaffsDocument,
-  'mutation UnlinkMindbodyStaffFromProfile($profileId: ID!, $mindbodyStaffIds: [ID!]!) {\n  unlinkMindbodyStaffFromProfile(\n    profileId: $profileId\n    mindbodyStaffIds: $mindbodyStaffIds\n  ) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on InstructorProfileNotFoundError {\n      code\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}':
-    types.UnlinkMindbodyStaffFromProfileDocument,
   'mutation UpdateInstructorProfile($id: ID!, $input: UpdateInstructorProfileInput!) {\n  updateInstructorProfile(id: $id, input: $input) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n    ... on InstructorProfileNotFoundError {\n      code\n    }\n  }\n}':
     types.UpdateInstructorProfileDocument,
   'mutation CreatePaymentLink($input: CreatePaymentLinkInput!) {\n  createPaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}':
@@ -187,26 +183,14 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query InstructorProfiles($activeOnly: Boolean) {\n  instructorProfiles(activeOnly: $activeOnly) {\n    id\n    name\n    description\n    profilePictureUrl\n    active\n    createdAt\n    updatedAt\n    mindbodyStaffs {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}'
-): (typeof documents)['query InstructorProfiles($activeOnly: Boolean) {\n  instructorProfiles(activeOnly: $activeOnly) {\n    id\n    name\n    description\n    profilePictureUrl\n    active\n    createdAt\n    updatedAt\n    mindbodyStaffs {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}']
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: 'mutation LinkMindbodyStaffToProfile($profileId: ID!, $mindbodyStaffIds: [ID!]!) {\n  linkMindbodyStaffToProfile(\n    profileId: $profileId\n    mindbodyStaffIds: $mindbodyStaffIds\n  ) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on InstructorProfileNotFoundError {\n      code\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}'
-): (typeof documents)['mutation LinkMindbodyStaffToProfile($profileId: ID!, $mindbodyStaffIds: [ID!]!) {\n  linkMindbodyStaffToProfile(\n    profileId: $profileId\n    mindbodyStaffIds: $mindbodyStaffIds\n  ) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on InstructorProfileNotFoundError {\n      code\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}']
+  source: 'query InstructorProfiles($activeOnly: Boolean, $site: SiteEnum!) {\n  instructorProfiles(activeOnly: $activeOnly, site: $site) {\n    id\n    name\n    description\n    profilePictureUrl\n    active\n    createdAt\n    updatedAt\n    mindbodyStaffs {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}'
+): (typeof documents)['query InstructorProfiles($activeOnly: Boolean, $site: SiteEnum!) {\n  instructorProfiles(activeOnly: $activeOnly, site: $site) {\n    id\n    name\n    description\n    profilePictureUrl\n    active\n    createdAt\n    updatedAt\n    mindbodyStaffs {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
   source: 'query MindbodyStaffs {\n  mindbodyStaffs {\n    id\n    firstName\n    lastName\n    email\n  }\n}'
 ): (typeof documents)['query MindbodyStaffs {\n  mindbodyStaffs {\n    id\n    firstName\n    lastName\n    email\n  }\n}']
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: 'mutation UnlinkMindbodyStaffFromProfile($profileId: ID!, $mindbodyStaffIds: [ID!]!) {\n  unlinkMindbodyStaffFromProfile(\n    profileId: $profileId\n    mindbodyStaffIds: $mindbodyStaffIds\n  ) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on InstructorProfileNotFoundError {\n      code\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}'
-): (typeof documents)['mutation UnlinkMindbodyStaffFromProfile($profileId: ID!, $mindbodyStaffIds: [ID!]!) {\n  unlinkMindbodyStaffFromProfile(\n    profileId: $profileId\n    mindbodyStaffIds: $mindbodyStaffIds\n  ) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on InstructorProfileNotFoundError {\n      code\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

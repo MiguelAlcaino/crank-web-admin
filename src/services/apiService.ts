@@ -1,16 +1,21 @@
-import { ApolloError, gql } from '@apollo/client'
+import type {
+  CreateInstructorProfileInput,
+  InstructorProfile,
+  MindbodyStaffInfo,
+  SiteSetting,
+  UpdateInstructorProfileInput
+} from '@/gql/graphql'
 import {
   CreateInstructorProfileDocument,
   CreatePaymentLinkDocument,
   DeleteInstructorProfileDocument,
   DeletePaymentLinkDocument,
   InstructorProfilesDocument,
-  LinkMindbodyStaffToProfileDocument,
+  MindbodyStaffsDocument,
   PaymentLinkDocument,
   PaymentLinksDocument,
-  UnlinkMindbodyStaffFromProfileDocument,
-  UpdatePaymentLinkDocument,
   UpdateInstructorProfileDocument,
+  UpdatePaymentLinkDocument,
   type AdminUser,
   type AdminUserDataInput,
   type AdminUserResultUnion,
@@ -68,19 +73,12 @@ import {
   type UpdateUserPasswordInput,
   type UserInClassRanking,
   type UserInput,
-  type WaitlistEntry,
-  MindbodyStaffsDocument
+  type WaitlistEntry
 } from '@/gql/graphql'
-import type {
-  CreateInstructorProfileInput,
-  InstructorProfile,
-  MindbodyStaffInfo,
-  SiteSetting,
-  UpdateInstructorProfileInput
-} from '@/gql/graphql'
+import { ValidationError } from '@/utils/errors/saveUserErrors'
+import { ApolloError, gql } from '@apollo/client'
 import type { ApolloClient } from '@apollo/client/core'
 import dayjs from 'dayjs'
-import { ValidationError } from '@/utils/errors/saveUserErrors'
 
 export class ApiService {
   authApiClient: ApolloClient<any>
@@ -2041,11 +2039,14 @@ export class ApiService {
   }
 
   // Instructor Profiles
-  async getInstructorProfiles(activeOnly: boolean | null): Promise<InstructorProfile[]> {
+  async getInstructorProfiles(
+    site: SiteEnum,
+    activeOnly: boolean | null
+  ): Promise<InstructorProfile[]> {
     try {
       const { data, errors } = await this.authApiClient.query({
         query: InstructorProfilesDocument,
-        variables: { activeOnly: activeOnly },
+        variables: { site: site, activeOnly: activeOnly },
         fetchPolicy: 'network-only'
       })
 
@@ -2140,68 +2141,6 @@ export class ApiService {
     }
   }
 
-  async linkMindbodyStaffToProfile(
-    profileId: string,
-    mindbodyStaffIds: string[]
-  ): Promise<InstructorProfile> {
-    try {
-      const { data, errors } = await this.authApiClient.mutate({
-        mutation: LinkMindbodyStaffToProfileDocument,
-        variables: { profileId, mindbodyStaffIds },
-        fetchPolicy: 'network-only'
-      })
-
-      if (errors && errors.length > 0) {
-        throw new Error(`GraphQL Error: ${errors[0].message}`)
-      }
-
-      if (!data || !data.linkMindbodyStaffToProfile) {
-        throw new Error('No data returned from linkMindbodyStaffToProfile mutation')
-      }
-
-      const result = data.linkMindbodyStaffToProfile
-      if (result.__typename === 'InstructorProfile') {
-        return result as InstructorProfile
-      } else {
-        throw new Error(`Error: ${result.__typename}`)
-      }
-    } catch (error) {
-      console.error('Error linking mindbody staff:', error)
-      throw error
-    }
-  }
-
-  async unlinkMindbodyStaffFromProfile(
-    profileId: string,
-    mindbodyStaffIds: string[]
-  ): Promise<InstructorProfile> {
-    try {
-      const { data, errors } = await this.authApiClient.mutate({
-        mutation: UnlinkMindbodyStaffFromProfileDocument,
-        variables: { profileId, mindbodyStaffIds },
-        fetchPolicy: 'network-only'
-      })
-
-      if (errors && errors.length > 0) {
-        throw new Error(`GraphQL Error: ${errors[0].message}`)
-      }
-
-      if (!data || !data.unlinkMindbodyStaffFromProfile) {
-        throw new Error('No data returned from unlinkMindbodyStaffFromProfile mutation')
-      }
-
-      const result = data.unlinkMindbodyStaffFromProfile
-      if (result.__typename === 'InstructorProfile') {
-        return result as InstructorProfile
-      } else {
-        throw new Error(`Error: ${result.__typename}`)
-      }
-    } catch (error) {
-      console.error('Error unlinking mindbody staff:', error)
-      throw error
-    }
-  }
-
   async getMindbodyStaffs(): Promise<MindbodyStaffInfo[]> {
     try {
       const { data, errors } = await this.authApiClient.query({
@@ -2223,5 +2162,4 @@ export class ApiService {
       throw error
     }
   }
-
 }

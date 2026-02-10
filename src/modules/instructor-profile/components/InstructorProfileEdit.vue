@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, ref, onMounted } from 'vue'
+import { inject, ref, computed } from 'vue'
 
 // Interfaces and Services
 import type { ApiService } from '@/services/apiService'
@@ -13,13 +13,13 @@ import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonCom
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import InstructorProfileDelete from './InstructorProfileDelete.vue'
 import InstructorProfileForm from './InstructorProfileForm.vue'
+import MindbodyStaffDraggable from './MindbodyStaffDraggable.vue'
+import type { MindbodyStaff } from '../interfaces'
 
 // Dependency Injection
 const apiService = inject<ApiService>('gqlApiService')!
-const { updateInstructorProfile, unlinkMindbodyStaff, linkMindbodyStaff } =
-  useInstructorProfiles(apiService)
-const { availableStaffs, isLoadingStaffs, getAvailableStaffs, getStaffsNotLinked } =
-  useMindbodyStaffs(apiService)
+const { updateInstructorProfile } = useInstructorProfiles(apiService)
+const { availableStaffs, isLoadingStaffs, getAvailableStaffs } = useMindbodyStaffs(apiService)
 
 // Props
 const props = defineProps<{
@@ -29,9 +29,13 @@ const props = defineProps<{
 // Local States
 const modalIsVisible = ref(false)
 const isSaving = ref(false)
-const isUnlinkingStaff = ref(false)
-const isLinkingStaff = ref(false)
-const selectedStaffIds = ref<string[]>([])
+
+// Staff management
+const assignedStaff = ref<MindbodyStaff[]>([])
+const availableStaffComputed = computed(() => {
+  const assignedIds = assignedStaff.value.map((s) => s.id)
+  return availableStaffs.value.filter((staff) => !assignedIds.includes(staff.id))
+})
 
 // States for Error and Success Handling
 const successModalIsVisible = ref(false)
@@ -44,34 +48,34 @@ const formRef = ref<InstanceType<typeof InstructorProfileForm> | null>(null)
 // Open the main modal
 const openModal = () => {
   modalIsVisible.value = true
-  selectedStaffIds.value = []
+  assignedStaff.value = props.instructorProfile.mindbodyStaffs
+    ? [...props.instructorProfile.mindbodyStaffs]
+    : []
   getAvailableStaffs()
 }
 
 // Close the main modal
 const closeModal = () => {
   modalIsVisible.value = false
-  selectedStaffIds.value = []
+  assignedStaff.value = []
 }
 
 // Save logic
 const submitForm = async () => {
-  // 1. Check child component is mounted
   if (!formRef.value) return
 
-  // 2. Ask the child to validate and give us the clean data
   const data = await formRef.value.validateAndGetValues()
 
   if (data) {
     try {
       isSaving.value = true
 
-      // 3. Call API to update
       const success = await updateInstructorProfile(props.instructorProfile.id, {
         name: data.name,
         description: data.description,
         active: data.active,
-        profilePictureFile: data.profilePictureFile
+        profilePictureFile: data.profilePictureFile,
+        linkedMindbodyStaffs: assignedStaff.value.map((s) => s.id)
       })
 
       if (success) {
@@ -93,50 +97,6 @@ const submitForm = async () => {
 // Close success modal
 function onSuccessOk() {
   successModalIsVisible.value = false
-}
-
-// Unlink staff function
-async function onUnlinkStaff(staffId: string) {
-  try {
-    isUnlinkingStaff.value = true
-    const success = await unlinkMindbodyStaff(props.instructorProfile.id, [staffId])
-
-    if (!success) {
-      errorMessage.value = ERROR_UNKNOWN
-      errorModalIsVisible.value = true
-    }
-  } catch (error) {
-    errorMessage.value = ERROR_UNKNOWN
-    errorModalIsVisible.value = true
-  } finally {
-    isUnlinkingStaff.value = false
-  }
-}
-
-// Link staff function
-async function onLinkStaffs() {
-  if (selectedStaffIds.value.length === 0) {
-    errorMessage.value = 'Please select at least one staff member'
-    errorModalIsVisible.value = true
-    return
-  }
-
-  try {
-    isLinkingStaff.value = true
-    const success = await linkMindbodyStaff(props.instructorProfile.id, selectedStaffIds.value)
-
-    if (success) {
-      selectedStaffIds.value = []
-    } else {
-      errorMessage.value = ERROR_UNKNOWN
-      errorModalIsVisible.value = true
-    }
-  } catch (error) {
-    errorMessage.value = ERROR_UNKNOWN
-    errorModalIsVisible.value = true
-  } finally {
-    isLinkingStaff.value = false
-  }
 }
 </script>
 
@@ -166,66 +126,12 @@ async function onLinkStaffs() {
               <div class="mt-4">
                 <h6>Associated Mindbody Staffs</h6>
 
-                <!-- Current Staffs -->
-                <div
-                  v-if="instructorProfile.mindbodyStaffs && instructorProfile.mindbodyStaffs.length > 0"
-                  class="list-group mb-3"
-                >
-                  <div
-                    v-for="staff in instructorProfile.mindbodyStaffs"
-                    :key="staff.id"
-                    class="list-group-item d-flex justify-content-between align-items-center"
-                  >
-                    <div>
-                      <strong>{{ staff.firstName }} {{ staff.lastName }}</strong>
-                      <br />
-                      <small class="text-muted">{{ staff.email }}</small>
-                    </div>
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-outline-danger"
-                      @click="onUnlinkStaff(staff.id)"
-                      :disabled="isUnlinkingStaff"
-                    >
-                      <i class="bi bi-trash"></i>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Add New Staffs -->
-                <div class="card p-3">
-                  <h6 class="mb-2">Add Mindbody Staff</h6>
-                  <div class="form-group mb-2">
-                    <label for="staffSelect" class="form-label">Select staff member(s)</label>
-                    <select
-                      id="staffSelect"
-                      class="form-control"
-                      multiple
-                      v-model="selectedStaffIds"
-                      :disabled="isLoadingStaffs || isLinkingStaff"
-                    >
-                      <option
-                        v-for="staff in getStaffsNotLinked(
-                          instructorProfile.mindbodyStaffs?.map((s) => s.id) || []
-                        )"
-                        :key="staff.id"
-                        :value="staff.id"
-                      >
-                        {{ staff.firstName }} {{ staff.lastName }} ({{ staff.email }})
-                      </option>
-                    </select>
-                    <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple</small>
-                  </div>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-primary"
-                    @click="onLinkStaffs"
-                    :disabled="isLinkingStaff || selectedStaffIds.length === 0"
-                    :class="{ 'spinner-border spinner-border-sm': isLinkingStaff }"
-                  >
-                    <span v-if="!isLinkingStaff">Add Staff</span>
-                  </button>
-                </div>
+                <MindbodyStaffDraggable
+                  :availableStaff="availableStaffComputed"
+                  :assignedStaff="assignedStaff"
+                  :isLoading="isLoadingStaffs"
+                  @update:assignedStaff="assignedStaff = $event"
+                />
               </div>
             </div>
 

@@ -4,7 +4,7 @@ export interface InstructorProfile {
   id: string
   name: string
   description?: string | null
-  profilePictureUrl?: string | null
+  profilePictureUrl?: string
   active: boolean
   createdAt: Date
   updatedAt: Date
