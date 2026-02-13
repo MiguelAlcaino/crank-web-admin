@@ -6,6 +6,7 @@ import { useInstructorProfiles } from '../composables/useInstructorProfiles'
 import type { InstructorProfile } from '../interfaces/Instructor-profile'
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
+import { getInstructorProfileErrorMessage } from '../utils/getInstructorProfileErrorMessage'
 
 const apiService = inject<ApiService>('gqlApiService')!
 const { deleteInstructorProfile } = useInstructorProfiles(apiService)
@@ -39,8 +40,8 @@ async function onConfirmDelete() {
       errorMessage.value = ERROR_UNKNOWN
     }
   } catch (error) {
+    errorMessage.value = getInstructorProfileErrorMessage(error)
     errorModalIsVisible.value = true
-    errorMessage.value = ERROR_UNKNOWN
   } finally {
     isLoading.value = false
   }

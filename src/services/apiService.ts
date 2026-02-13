@@ -75,6 +75,7 @@ import {
   type UserInput,
   type WaitlistEntry
 } from '@/gql/graphql'
+import { DomainError } from '@/utils/errors/domainError'
 import { ValidationError } from '@/utils/errors/saveUserErrors'
 import { ApolloError, gql } from '@apollo/client'
 import type { ApolloClient } from '@apollo/client/core'
@@ -2070,52 +2071,53 @@ export class ApiService {
   }
 
   async createInstructorProfile(input: CreateInstructorProfileInput): Promise<InstructorProfile> {
-    try {
-      const { data, errors } = await this.authApiClient.mutate({
-        mutation: CreateInstructorProfileDocument,
-        variables: { input: input },
-        fetchPolicy: 'network-only'
-      })
+    const { data, errors } = await this.authApiClient.mutate({
+      mutation: CreateInstructorProfileDocument,
+      variables: { input: input },
+      fetchPolicy: 'network-only'
+    })
 
-      if (errors && errors.length > 0) {
-        throw new Error(`GraphQL Error: ${errors[0].message}`)
-      }
-
-      if (!data || !data.createInstructorProfile) {
-        throw new Error('No data returned from createInstructorProfile mutation')
-      }
-
-      return data.createInstructorProfile as InstructorProfile
-    } catch (error) {
-      console.error('Error creating instructor profile:', error)
-      throw error
+    if (errors?.length) {
+      throw new Error(`GraphQL Error: ${errors[0].message}`)
     }
+
+    const result = data?.createInstructorProfile
+
+    if (!result) {
+      throw new Error('No data returned from createInstructorProfile mutation')
+    }
+
+    if (result.__typename !== 'InstructorProfile') {
+      throw new DomainError(result.code, 'Create instructor profile failed')
+    }
+
+    return result
   }
 
   async updateInstructorProfile(
     id: string,
     input: UpdateInstructorProfileInput
   ): Promise<InstructorProfile> {
-    try {
-      const { data, errors } = await this.authApiClient.mutate({
-        mutation: UpdateInstructorProfileDocument,
-        variables: { id, input },
-        fetchPolicy: 'network-only'
-      })
+    const { data, errors } = await this.authApiClient.mutate({
+      mutation: UpdateInstructorProfileDocument,
+      variables: { id, input },
+      fetchPolicy: 'network-only'
+    })
 
-      if (errors && errors.length > 0) {
-        throw new Error(`GraphQL Error: ${errors[0].message}`)
-      }
-
-      if (!data || !data.updateInstructorProfile) {
-        throw new Error('No data returned from updateInstructorProfile mutation')
-      }
-
-      return data.updateInstructorProfile as InstructorProfile
-    } catch (error) {
-      console.error('Error updating instructor profile:', error)
-      throw error
+    if (errors?.length) {
+      throw new Error(`GraphQL Error: ${errors[0].message}`)
     }
+
+    const result = data?.updateInstructorProfile
+    if (!result) {
+      throw new Error('No data returned from updateInstructorProfile mutation')
+    }
+
+    if (result.__typename !== 'InstructorProfile') {
+      throw new DomainError(result.code, 'Update instructor profile failed')
+    }
+
+    return result
   }
 
   async deleteInstructorProfile(id: string): Promise<boolean> {

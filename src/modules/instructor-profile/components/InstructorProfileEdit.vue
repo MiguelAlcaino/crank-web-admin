@@ -15,6 +15,7 @@ import InstructorProfileDelete from './InstructorProfileDelete.vue'
 import InstructorProfileForm from './InstructorProfileForm.vue'
 import MindbodyStaffDraggable from './MindbodyStaffDraggable.vue'
 import type { MindbodyStaff } from '../interfaces'
+import { getInstructorProfileErrorMessage } from '../utils/getInstructorProfileErrorMessage'
 
 // Dependency Injection
 const apiService = inject<ApiService>('gqlApiService')!
@@ -86,7 +87,7 @@ const submitForm = async () => {
         errorModalIsVisible.value = true
       }
     } catch (error) {
-      errorMessage.value = ERROR_UNKNOWN
+      errorMessage.value = getInstructorProfileErrorMessage(error)
       errorModalIsVisible.value = true
     } finally {
       isSaving.value = false

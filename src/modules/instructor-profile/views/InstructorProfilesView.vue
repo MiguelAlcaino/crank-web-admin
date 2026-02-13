@@ -18,8 +18,8 @@ const formatDate = (date: Date): string => {
   return dayjs(date).format('DD/MM/YYYY HH:mm:ss')
 }
 
-onMounted(() => {
-  getInstructorProfiles()
+onMounted(async () => {
+  await getInstructorProfiles()
   if (hasLoadError.value) {
     errorModalVisible.value = true
   }

@@ -52,7 +52,7 @@ export const useInstructorProfiles = (apiService: ApiService) => {
       return true
     } catch (error) {
       hasError.value = true
-      return false
+      throw error
     } finally {
       isSaving.value = false
     }
@@ -85,7 +85,7 @@ export const useInstructorProfiles = (apiService: ApiService) => {
       return true
     } catch (error) {
       hasError.value = true
-      return false
+      throw error
     } finally {
       isSaving.value = false
     }
@@ -109,7 +109,7 @@ export const useInstructorProfiles = (apiService: ApiService) => {
       return success
     } catch (error) {
       hasError.value = true
-      return false
+      throw error
     } finally {
       isSaving.value = false
     }
