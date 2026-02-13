@@ -43,7 +43,7 @@ onMounted(async () => {
             <th class="text-center">ID</th>
             <th class="text-center">NAME</th>
             <th class="text-center">DESCRIPTION</th>
-            <th class="text-center">PROFILE PICTURE URL</th>
+            <th class="text-center">PROFILE PICTURE</th>
             <th class="text-center">ACTIVE</th>
             <th class="text-center">MINDBODY STAFFS</th>
             <th class="text-center">CREATED AT</th>
@@ -57,7 +57,19 @@ onMounted(async () => {
             <td class="text-center">{{ item.name }}</td>
             <td class="text-center">{{ item.description }}</td>
             <td class="text-center">
-              <a :href="item.profilePictureUrl" target="_blank">{{ item.profilePictureUrl }}</a>
+              <a
+                v-if="item.profilePictureUrl"
+                :href="item.profilePictureUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  :src="item.profilePictureUrl"
+                  :alt="`${item.name} profile picture`"
+                  class="profile-picture-thumb"
+                />
+              </a>
+              <span v-else>-</span>
             </td>
             <td class="text-center">{{ item.active }}</td>
             <td class="text-center">
@@ -97,4 +109,12 @@ onMounted(async () => {
   </ModalComponent>
 </template>
 
-<style scoped></style>
+<style scoped>
+.profile-picture-thumb {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #dee2e6;
+}
+</style>
