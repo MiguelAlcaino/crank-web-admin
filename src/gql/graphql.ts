@@ -16,6 +16,7 @@ export type Scalars = {
   Date: any
   DateTime: any
   DateTimeWithoutTimeZone: any
+  File: any
 }
 
 export type AcceptLateCancelledSpotInClassInput = {
@@ -120,14 +121,31 @@ export type BookingOverlapsAnotherOneError = Error & {
   code: Scalars['String']
 }
 
+/**
+ * Defines the time window during which a class can be booked or cancelled.
+ *
+ * Users cannot book or cancel outside this window. The window typically opens several days
+ * before the class and closes a few hours before the class starts.
+ */
 export type BookingWindow = {
   __typename: 'BookingWindow'
+  /** The latest date and time when booking is allowed for this class */
   endDateTime: Scalars['DateTime']
+  /** The earliest date and time when booking becomes available for this class */
   startDateTime: Scalars['DateTime']
 }
 
+/**
+ * Filters for querying classes within a specific date range.
+ *
+ * If no dates are provided, returns classes starting from the current date and time.
+ */
 export type CalendarClassesParams = {
+  /** End date for the class search range (format: YYYY-MM-DD). If omitted, it defaults to +1 week from now. */
   endDate?: InputMaybe<Scalars['Date']>
+  /** Filter classes by instructor profile (the instructor 'face' in the app). When provided, shows only classes taught by any MindbodyStaff linked to this profile. */
+  instructorProfileId?: InputMaybe<Scalars['ID']>
+  /** Start date for the class search range (format: YYYY-MM-DD). If omitted, defaults to current date. If provided and end date should also be provided. */
   startDate?: InputMaybe<Scalars['Date']>
 }
 
@@ -187,24 +205,45 @@ export type CheckoutUserInClass = {
   enrollmentId: Scalars['ID']
 }
 
+/**
+ * Represents a fitness class session with booking and scheduling information.
+ *
+ * Contains all details needed to display and book a class, including instructor information,
+ * timing, capacity, and booking rules.
+ */
 export type Class = {
   __typename: 'Class'
+  /** Time window during which users can book or cancel this class */
   bookingWindow: BookingWindow
+  /** Detailed description of the class */
   description: Scalars['String']
+  /** Duration of the class in minutes */
   duration: Scalars['Int']
+  /** Whether performance statistics are available for this class */
   hasClassStats: Scalars['Boolean']
+  /** Unique identifier for the class */
   id: Scalars['ID']
+  /** Full name of the instructor leading the class */
   instructorName: Scalars['String']
+  /** Whether this class has a substitute instructor (different from the regularly scheduled instructor) */
   isSubstitute: Scalars['Boolean']
+  /** Whether this class is currently being synchronized with external systems */
   isSynchronizing: Scalars['Boolean']
+  /** Maximum number of participants that can book this class */
   maxCapacity: Scalars['Int']
+  /** Name/type of the class (e.g., 'CRANK', 'RIDE', 'POWER') */
   name: Scalars['String']
+  /** Whether this class should be displayed as disabled in the UI (typically for cancelled or past classes) */
   showAsDisabled: Scalars['Boolean']
+  /** Class start date and time with timezone (ISO 8601 format) */
   start: Scalars['DateTime']
   /** Same as start but without timezone. If start is 2023-11-04T10:15:00+04:00 then this value will be 2023-11-04T10:15:00 */
   startWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']
+  /** Current number of participants booked in this class */
   totalBooked: Scalars['Int']
+  /** Number of spots marked as under maintenance or disabled */
   totalUnderMaintenanceSpots: Scalars['Int']
+  /** Whether the waitlist is available for this class when it's full */
   waitListAvailable: Scalars['Boolean']
 }
 
@@ -232,12 +271,19 @@ export type ClassPackageProduct = SellableProductInterface & {
   alertBeforePurchasing?: Maybe<ProductAlertBeforePurchasing>
   buttonText?: Maybe<Scalars['String']>
   currency: Scalars['String']
+  doesItRequireSmsAuth?: Maybe<Scalars['Boolean']>
+  doestItActivateVodForClients?: Maybe<Scalars['Boolean']>
   id: Scalars['ID']
+  isCLassPassPackage?: Maybe<Scalars['Boolean']>
+  isMembership?: Maybe<Scalars['Boolean']>
+  isTrialPackage?: Maybe<Scalars['Boolean']>
   isVisible: Scalars['Boolean']
-  price: Scalars['Float']
-  subtitle: Scalars['String']
+  position?: Maybe<Scalars['Int']>
+  subtitle?: Maybe<Scalars['String']>
   title: Scalars['String']
   type?: Maybe<ClassPackageTypeEnum>
+  variants: Array<Variant>
+  vodAmountOfDays?: Maybe<Scalars['Int']>
 }
 
 export enum ClassPackageTypeEnum {
@@ -247,6 +293,8 @@ export enum ClassPackageTypeEnum {
   Trial = 'trial',
   Vod = 'vod'
 }
+
+export type ClassPackageUpdateResultUnion = ClassPackageProduct | ProductNotFound | UnknownError
 
 export type ClassPositionInterface = {
   icon: PositionIconEnum
@@ -305,6 +353,11 @@ export type ClientIsOutsideSchedulingWindowError = Error & {
   code: Scalars['String']
 }
 
+export type ClientNotFoundInMindbody = Error & {
+  __typename: 'ClientNotFoundInMindbody'
+  code: Scalars['String']
+}
+
 export type Country = {
   __typename: 'Country'
   code: Scalars['String']
@@ -312,12 +365,36 @@ export type Country = {
   states?: Maybe<Array<Maybe<State>>>
 }
 
+export type CrankInstructor = {
+  __typename: 'CrankInstructor'
+  firstName?: Maybe<Scalars['String']>
+  id: Scalars['ID']
+  lastName?: Maybe<Scalars['String']>
+  profilePictureFile?: Maybe<Scalars['String']>
+}
+
+export type CrankInstructorResultUnion =
+  | CrankInstructor
+  | InstructorNotFound
+  | UploadedFileIsNotAnImage
+
 export type CreateCurrentUserInSiteSuccess = {
   __typename: 'CreateCurrentUserInSiteSuccess'
   result: Scalars['Boolean']
 }
 
 export type CreateCurrentUserInSiteUnion = CreateCurrentUserInSiteSuccess | UserAlreadyExistsError
+
+export type CreateInstructorProfileInput = {
+  active?: InputMaybe<Scalars['Boolean']>
+  description?: InputMaybe<Scalars['String']>
+  linkedMindbodyStaffs?: InputMaybe<Array<Scalars['ID']>>
+  name: Scalars['String']
+  profilePictureFile?: InputMaybe<Scalars['File']>
+  site: SiteEnum
+}
+
+export type CreateInstructorProfileResultUnion = InstructorProfile | UploadedFileIsNotAnImage
 
 export type CreatePaymentLinkInput = {
   amount: Scalars['Int']
@@ -331,6 +408,19 @@ export type CreatePaymentLinkInput = {
 export type CurrentUserEnrollmentsParams = {
   endDate?: InputMaybe<Scalars['Date']>
   enrollmentType?: InputMaybe<EnrollmentTypeEnum>
+  startDate?: InputMaybe<Scalars['Date']>
+}
+
+export type CurrentUserPurchasesPaginatedParams = {
+  filter?: InputMaybe<ServiceStatusEnum>
+}
+
+export type CurrentUserWorkoutStatsPaginatedParams = {
+  dateRange?: InputMaybe<DateRange>
+}
+
+export type DateRange = {
+  endDate?: InputMaybe<Scalars['Date']>
   startDate?: InputMaybe<Scalars['Date']>
 }
 
@@ -359,6 +449,16 @@ export type DisableEnableSpotResult = {
 
 export type DisableEnableSpotResultUnion = DisableEnableSpotResult | SpotNotFoundError
 
+export type DiscountCodeIsEmpty = Error & {
+  __typename: 'DiscountCodeIsEmpty'
+  code: Scalars['String']
+}
+
+export type DiscountCodeIsInvalid = Error & {
+  __typename: 'DiscountCodeIsInvalid'
+  code: Scalars['String']
+}
+
 export type DistanceChallenge = ChallengeInterface & {
   __typename: 'DistanceChallenge'
   challengeDisplay: ChallengeDisplay
@@ -377,6 +477,11 @@ export type DistanceRanking = {
   __typename: 'DistanceRanking'
   amountOfUsersInRanking: Scalars['Int']
   rankingPositions: Array<DistanceChallengeRankingPosition>
+}
+
+export type DontNeedMoreGiftCards = Error & {
+  __typename: 'DontNeedMoreGiftCards'
+  code: Scalars['String']
 }
 
 export type EditClassInput = {
@@ -505,15 +610,53 @@ export type GenderRanking = {
   ranking?: Maybe<UserRanking>
 }
 
-export type GiftCard = {
+export type GiftCard = SellableProductInterface & {
   __typename: 'GiftCard'
+  alertBeforePurchasing?: Maybe<ProductAlertBeforePurchasing>
+  buttonText?: Maybe<Scalars['String']>
+  currency: Scalars['String']
+  /** @deprecated Use title instead */
   description: Scalars['String']
+  /** @deprecated Use price instead */
   grandTotal: Scalars['Float']
   id: Scalars['ID']
+  isVisible: Scalars['Boolean']
+  position?: Maybe<Scalars['Int']>
   purchaseUrl: Scalars['String']
+  /** @deprecated Use price instead */
   salePrice: Scalars['Float']
   site: Site
+  subtitle?: Maybe<Scalars['String']>
+  /** @deprecated Use alertBeforePurchasing instead */
   terms: Scalars['String']
+  title: Scalars['String']
+  variants: Array<Variant>
+}
+
+export type GiftCardAlreadyRegisteredForCurrentShoppingCart = Error & {
+  __typename: 'GiftCardAlreadyRegisteredForCurrentShoppingCart'
+  code: Scalars['String']
+}
+
+export type GiftCardIsNotUsable = Error & {
+  __typename: 'GiftCardIsNotUsable'
+  code: Scalars['String']
+}
+
+export type GiftCardNotRegisteredOnCurrentShoppingCart = Error & {
+  __typename: 'GiftCardNotRegisteredOnCurrentShoppingCart'
+  code: Scalars['String']
+}
+
+export type GiftcardInput = {
+  alertBeforePurchasing?: InputMaybe<ProductAlertBeforePurchasingInput>
+  buttonText?: InputMaybe<Scalars['String']>
+  currency?: InputMaybe<Scalars['String']>
+  isVisible?: InputMaybe<Scalars['Boolean']>
+  position?: InputMaybe<Scalars['Int']>
+  purchaseUrl?: InputMaybe<Scalars['String']>
+  subtitle?: InputMaybe<Scalars['String']>
+  title?: InputMaybe<Scalars['String']>
 }
 
 export type IconPosition = ClassPositionInterface & {
@@ -550,6 +693,28 @@ export type Instructor = {
   site: Site
 }
 
+export type InstructorNotFound = Error & {
+  __typename: 'InstructorNotFound'
+  code: Scalars['String']
+}
+
+export type InstructorProfile = {
+  __typename: 'InstructorProfile'
+  active: Scalars['Boolean']
+  createdAt: Scalars['DateTime']
+  description?: Maybe<Scalars['String']>
+  id: Scalars['ID']
+  mindbodyStaffs: Array<MindbodyStaffInfo>
+  name: Scalars['String']
+  profilePictureUrl?: Maybe<Scalars['String']>
+  updatedAt: Scalars['DateTime']
+}
+
+export type InstructorProfileNotFoundError = Error & {
+  __typename: 'InstructorProfileNotFoundError'
+  code: Scalars['String']
+}
+
 export type IsSmsValidationCodeValidUnion =
   | MobilePhoneAlreadyVerifiedError
   | RequestSmsValidationNeededError
@@ -564,6 +729,20 @@ export type ItemToShoppingCartInput = {
 export type LateCancellationRequiredError = Error & {
   __typename: 'LateCancellationRequiredError'
   code: Scalars['String']
+}
+
+export type LockShoppingCartResponse = {
+  __typename: 'LockShoppingCartResponse'
+  isLocked: Scalars['Boolean']
+  merchantReference: Scalars['ID']
+}
+
+export type MindbodyStaffInfo = {
+  __typename: 'MindbodyStaffInfo'
+  email?: Maybe<Scalars['String']>
+  firstName: Scalars['String']
+  id: Scalars['ID']
+  lastName: Scalars['String']
 }
 
 export type MobilePhoneAlreadyVerifiedError = Error & {
@@ -585,11 +764,11 @@ export type Mutation = {
   /** Adds a new device token to be used for device notifications */
   addDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']>
   /** Allows to add a discount code code to a shopping cart for current user */
-  addDiscountCodeToShoppingCart: Scalars['Boolean']
+  addDiscountCodeToShoppingCart: ShoppingCartResultUnion
   /** Allows to add a giftcard code to a shopping cart for current user */
-  addGiftCardCodeToShoppingCart: Scalars['Boolean']
+  addGiftCardCodeToShoppingCart: ShoppingCartResultUnion
   /** Allows to add item to shopping cart */
-  addItemToShoppingCart: Scalars['Boolean']
+  addItemToShoppingCart: ShoppingCartResultUnion
   /** Books the current user in a class */
   bookClass: BookClassResultUnion
   /** Adds a user into a given class */
@@ -602,6 +781,8 @@ export type Mutation = {
   checkoutUserInClass?: Maybe<CheckoutResultUnion>
   /** Creates a copy of the current user in the given site */
   createCurrentUserInSite?: Maybe<CreateCurrentUserInSiteUnion>
+  /** Creates a new instructor profile */
+  createInstructorProfile: CreateInstructorProfileResultUnion
   /** Creates a new payment link */
   createPaymentLink: PaymentLink
   /** Creates a new room layout */
@@ -610,6 +791,8 @@ export type Mutation = {
   deleteCurrentUserAccount?: Maybe<DeleteCurrentUserAccountUnion>
   /** Removes a devices token */
   deleteDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']>
+  /** Deletes an instructor profile */
+  deleteInstructorProfile: Scalars['Boolean']
   /** Soft deletes a payment link */
   deletePaymentLink: Scalars['Boolean']
   /** Disables a spot in a class */
@@ -624,8 +807,24 @@ export type Mutation = {
   editRoomLayout: RoomLayout
   /** Edits a user */
   editUser?: Maybe<EditUserResultUnion>
+  /** Allows to remove all items from the shoppingcart */
+  emptyShoppingCart: ShoppingCartResultUnion
   /** Enabled a spot in a class */
   enableSpot?: Maybe<DisableEnableSpotResultUnion>
+  /**
+   * Generate a unique Merchant Reference
+   * @deprecated Use newLockShoppingCart instead
+   */
+  generateMerchantReference: Scalars['ID']
+  /**
+   * To lock the shoppingcart when the user is in the payment process
+   * @deprecated Use newLockShoppingCart instead
+   */
+  lockShoppingCart: Scalars['Boolean']
+  /** Allows to lock shoppingcart and generate merchant reference */
+  newLockShoppingCart?: Maybe<LockShoppingCartResponse>
+  /** Returns the html of a payment form to be used to pay */
+  payfortForm: PayfortFormResult
   /** Registers a new user and returns an IdentifiableUser type */
   registerIdentifiableUser?: Maybe<IdentifiableSiteUser>
   /** Registers a new user */
@@ -636,8 +835,12 @@ export type Mutation = {
   removeAdminUser: Scalars['Boolean']
   /** Removes the current user's waitlist entry from a class */
   removeCurrentUserFromWaitlist?: Maybe<RemoveCurrentUserFromWaitlistUnion>
+  /** Remove discount code from current shopping cart */
+  removeDiscountCodeForCurrentShoppingCart: ShoppingCartResultUnion
+  /** Allows to remove a GiftCard by code */
+  removeGiftCardFromCurrentShoppingCart: ShoppingCartResultUnion
   /** Remove Item from shopping cart */
-  removeItemFromShoppingCart: Scalars['Boolean']
+  removeItemFromShoppingCart: ShoppingCartResultUnion
   /** Removes a user from a class */
   removeUserFromClass: CancelEnrollmentResultUnion
   /** Removes a waitlist entry */
@@ -662,12 +865,16 @@ export type Mutation = {
   syncAllClasses: Scalars['Boolean']
   /** Sync all gift cards from Mindbody with the local database */
   syncAllGiftCards: Scalars['Boolean']
+  /** Allows to syncronize all packages by site */
+  syncAllPackagesBySite: Array<ClassPackageProduct>
   /** Sync one class */
   syncClass: ClassInfo
   /** Sync a class with PIQ */
   syncClassWithPIQ: ClassInfo
   /** Updates an admin user */
   updateAdminUser: AdminUserResultUnion
+  /** Allows to update product */
+  updateClassPackage?: Maybe<ClassPackageUpdateResultUnion>
   /** Allows to update the current AdminUser */
   updateCurrentAdminUser: AdminUser
   /** Allows to update the favorite site for a AdminUser */
@@ -679,8 +886,14 @@ export type Mutation = {
   updateCurrentUserPassword?: Maybe<Scalars['Boolean']>
   /** Updates a gift card */
   updateGiftCard: GiftCard
+  /** Allows to update variant */
+  updateGiftCardNew?: Maybe<UpdateGiftcardResiltUnion>
+  /** Allows to update an Instructor */
+  updateInstructor?: Maybe<CrankInstructorResultUnion>
+  /** Updates an instructor profile */
+  updateInstructorProfile: UpdateInstructorProfileResultUnion
   /** Allows to update an Item from Shopping Cart */
-  updateItemInShoppingCart: ShoppingCart
+  updateItemInShoppingCart: ShoppingCartResultUnion
   /** Updates a payment link */
   updatePaymentLink: PaymentLink
   updateUserPassword?: Maybe<Scalars['Boolean']>
@@ -702,14 +915,17 @@ export type MutationAddDeviceTokenToCurrentUserArgs = {
 
 export type MutationAddDiscountCodeToShoppingCartArgs = {
   discountCode: Scalars['String']
+  site: SiteEnum
 }
 
 export type MutationAddGiftCardCodeToShoppingCartArgs = {
   giftcard: Scalars['ID']
+  site: SiteEnum
 }
 
 export type MutationAddItemToShoppingCartArgs = {
   input?: InputMaybe<ItemToShoppingCartInput>
+  site: SiteEnum
 }
 
 export type MutationBookClassArgs = {
@@ -741,6 +957,10 @@ export type MutationCreateCurrentUserInSiteArgs = {
   toSite: SiteEnum
 }
 
+export type MutationCreateInstructorProfileArgs = {
+  input: CreateInstructorProfileInput
+}
+
 export type MutationCreatePaymentLinkArgs = {
   input: CreatePaymentLinkInput
 }
@@ -758,6 +978,10 @@ export type MutationDeleteCurrentUserAccountArgs = {
 export type MutationDeleteDeviceTokenToCurrentUserArgs = {
   input?: InputMaybe<DeviceTokenInput>
   site?: InputMaybe<SiteEnum>
+}
+
+export type MutationDeleteInstructorProfileArgs = {
+  id: Scalars['ID']
 }
 
 export type MutationDeletePaymentLinkArgs = {
@@ -791,8 +1015,29 @@ export type MutationEditUserArgs = {
   input: EditUserInput
 }
 
+export type MutationEmptyShoppingCartArgs = {
+  site: SiteEnum
+}
+
 export type MutationEnableSpotArgs = {
   input?: InputMaybe<DisableEnableSpotInput>
+}
+
+export type MutationGenerateMerchantReferenceArgs = {
+  site: SiteEnum
+}
+
+export type MutationLockShoppingCartArgs = {
+  site: SiteEnum
+}
+
+export type MutationNewLockShoppingCartArgs = {
+  site: SiteEnum
+}
+
+export type MutationPayfortFormArgs = {
+  input: PayfortFormInput
+  site: SiteEnum
 }
 
 export type MutationRegisterIdentifiableUserArgs = {
@@ -819,8 +1064,18 @@ export type MutationRemoveCurrentUserFromWaitlistArgs = {
   site: SiteEnum
 }
 
+export type MutationRemoveDiscountCodeForCurrentShoppingCartArgs = {
+  site: SiteEnum
+}
+
+export type MutationRemoveGiftCardFromCurrentShoppingCartArgs = {
+  giftCardCode: Scalars['String']
+  site: SiteEnum
+}
+
 export type MutationRemoveItemFromShoppingCartArgs = {
-  id: Scalars['ID']
+  shoppingCartItemId: Scalars['ID']
+  site: SiteEnum
 }
 
 export type MutationRemoveUserFromClassArgs = {
@@ -868,6 +1123,10 @@ export type MutationSyncAllClassesArgs = {
   site: SiteEnum
 }
 
+export type MutationSyncAllPackagesBySiteArgs = {
+  site?: InputMaybe<SiteEnum>
+}
+
 export type MutationSyncClassArgs = {
   classId: Scalars['ID']
   site: SiteEnum
@@ -880,6 +1139,11 @@ export type MutationSyncClassWithPiqArgs = {
 
 export type MutationUpdateAdminUserArgs = {
   input: UpdateAdminUserInput
+}
+
+export type MutationUpdateClassPackageArgs = {
+  id: Scalars['ID']
+  input: ProductInput
 }
 
 export type MutationUpdateCurrentAdminUserArgs = {
@@ -907,8 +1171,25 @@ export type MutationUpdateGiftCardArgs = {
   input: UpdateGiftCardInput
 }
 
+export type MutationUpdateGiftCardNewArgs = {
+  id: Scalars['ID']
+  input: GiftcardInput
+}
+
+export type MutationUpdateInstructorArgs = {
+  id: Scalars['ID']
+  input: UpdateInstructorInput
+}
+
+export type MutationUpdateInstructorProfileArgs = {
+  id: Scalars['ID']
+  input: UpdateInstructorProfileInput
+}
+
 export type MutationUpdateItemInShoppingCartArgs = {
-  input?: InputMaybe<ItemToShoppingCartInput>
+  quantity?: InputMaybe<Scalars['Int']>
+  shoppingCartItemId: Scalars['ID']
+  site: SiteEnum
 }
 
 export type MutationUpdatePaymentLinkArgs = {
@@ -957,6 +1238,17 @@ export type PasswordsDontMatchError = Error & {
   code: Scalars['String']
 }
 
+export type PayfortFormInput = {
+  deviceFingerprint: Scalars['String']
+  merchantReference: Scalars['ID']
+  savePaymentCard: Scalars['Boolean']
+}
+
+export type PayfortFormResult = {
+  __typename: 'PayfortFormResult'
+  htmlForm: Scalars['String']
+}
+
 export type PaymentLink = {
   __typename: 'PaymentLink'
   amount: Scalars['Int']
@@ -973,6 +1265,24 @@ export type PaymentRequiredError = Error & {
   __typename: 'PaymentRequiredError'
   code: Scalars['String']
 }
+
+export type PaymentTransactionStatus = {
+  __typename: 'PaymentTransactionStatus'
+  status: PaymentTransactionStatusEnum
+}
+
+export enum PaymentTransactionStatusEnum {
+  Refunded = 'refunded',
+  Rejected = 'rejected',
+  Successful = 'successful',
+  WaitingConfirmation = 'waitingConfirmation'
+}
+
+export type PaymentTransactionStatusInput = {
+  merchantReference: Scalars['ID']
+}
+
+export type PaymentTransactionUnion = PaymentTransactionStatus | TemporalTransactionNotFound
 
 export type PositionAlreadyTakenError = Error & {
   __typename: 'PositionAlreadyTakenError'
@@ -997,8 +1307,35 @@ export type ProductAlertBeforePurchasing = {
   title: Scalars['String']
 }
 
+export type ProductAlertBeforePurchasingInput = {
+  description: Scalars['String']
+  title: Scalars['String']
+}
+
+export type ProductInput = {
+  alertBeforePurchasing?: InputMaybe<ProductAlertBeforePurchasingInput>
+  buttonText?: InputMaybe<Scalars['String']>
+  currency?: InputMaybe<Scalars['String']>
+  doesItRequiredSmsAuth?: InputMaybe<Scalars['Boolean']>
+  doestItActivateVodForClients?: InputMaybe<Scalars['Boolean']>
+  isCLassPassPackage?: InputMaybe<Scalars['Boolean']>
+  isMembership?: InputMaybe<Scalars['Boolean']>
+  isTrialPackage?: InputMaybe<Scalars['Boolean']>
+  isVisible?: InputMaybe<Scalars['Boolean']>
+  position?: InputMaybe<Scalars['Int']>
+  subtitle?: InputMaybe<Scalars['String']>
+  title?: InputMaybe<Scalars['String']>
+  vodAmountOfDays?: InputMaybe<Scalars['Int']>
+}
+
+export type ProductNotFound = Error & {
+  __typename: 'ProductNotFound'
+  code: Scalars['String']
+}
+
 export enum ProductType {
-  ClassPackage = 'classPackage'
+  ClassPackage = 'classPackage',
+  GiftCard = 'giftCard'
 }
 
 export type ProductsInput = {
@@ -1029,7 +1366,14 @@ export type Query = {
   availableInstructors: Array<Instructor>
   /** Returns a list of all the available sites */
   availableSites?: Maybe<Array<Site>>
-  /** Get next classes */
+  /** Return the total for the current shoppingCart for the current user */
+  calculateTotalForShoppingCart: ShoppingCartResultUnion
+  /**
+   * Returns a list of upcoming fitness classes for a specific site within an optional date range.
+   *
+   * Use this query to retrieve the class schedule, including details like instructor name, start time,
+   * duration, capacity, and booking availability. Results are ordered chronologically by class start time.
+   */
   calendarClasses: Array<Class>
   /** Get a single class information */
   classInfo?: Maybe<ClassInfo>
@@ -1066,12 +1410,20 @@ export type Query = {
   currentUserWorkoutStatsPaginated: PaginatedClassStats
   /** Returns the list of all the available gift cards */
   giftCards: Array<GiftCard>
+  /** Returns a single instructor profile by ID */
+  instructorProfile?: Maybe<InstructorProfile>
+  /** Returns a list of all instructor profiles */
+  instructorProfiles: Array<InstructorProfile>
   /** Verifies whether an sms validation code is valid */
   isSMSValidationCodeValid?: Maybe<IsSmsValidationCodeValidUnion>
+  /** Returns a list of all MindbodyStaff records */
+  mindbodyStaffs: Array<MindbodyStaffInfo>
   /** Returns a single payment link by ID */
   paymentLink?: Maybe<PaymentLink>
   /** Returns a list of payment links */
   paymentLinks: Array<PaymentLink>
+  /** Allows to get the status of a transaction  */
+  paymentTransactionStatus: PaymentTransactionUnion
   /** Returns a list of available products for a specific site */
   products: Array<SellableProductInterface>
   /** Returns a specific room layout */
@@ -1101,6 +1453,10 @@ export type QueryAdminUserArgs = {
 
 export type QueryAvailableClassTypesArgs = {
   site?: InputMaybe<SiteEnum>
+}
+
+export type QueryCalculateTotalForShoppingCartArgs = {
+  site: SiteEnum
 }
 
 export type QueryCalendarClassesArgs = {
@@ -1138,6 +1494,7 @@ export type QueryCurrentUserPurchasesArgs = {
 
 export type QueryCurrentUserPurchasesPaginatedArgs = {
   pagination?: InputMaybe<PaginationInput>
+  params: CurrentUserPurchasesPaginatedParams
   site?: InputMaybe<SiteEnum>
 }
 
@@ -1156,6 +1513,16 @@ export type QueryCurrentUserWorkoutStatsArgs = {
 
 export type QueryCurrentUserWorkoutStatsPaginatedArgs = {
   pagination?: InputMaybe<PaginationInput>
+  params?: InputMaybe<CurrentUserWorkoutStatsPaginatedParams>
+  site: SiteEnum
+}
+
+export type QueryInstructorProfileArgs = {
+  id: Scalars['ID']
+}
+
+export type QueryInstructorProfilesArgs = {
+  activeOnly?: InputMaybe<Scalars['Boolean']>
   site: SiteEnum
 }
 
@@ -1169,6 +1536,10 @@ export type QueryPaymentLinkArgs = {
 
 export type QueryPaymentLinksArgs = {
   site?: InputMaybe<SiteEnum>
+}
+
+export type QueryPaymentTransactionStatusArgs = {
+  input?: InputMaybe<PaymentTransactionStatusInput>
 }
 
 export type QueryProductsArgs = {
@@ -1255,6 +1626,13 @@ export type RejectLateCancelledSpotInClassInput = {
 export type RejectLateCancelledSpotInClassSuccess = {
   __typename: 'RejectLateCancelledSpotInClassSuccess'
   success: Scalars['Boolean']
+}
+
+export type RemainingCreditsResultUnion = ClientNotFoundInMindbody | RemainingCreditsSuccess
+
+export type RemainingCreditsSuccess = {
+  __typename: 'RemainingCreditsSuccess'
+  credits: Scalars['Int']
 }
 
 export type RemoveCurrentUserFromWaitlistInput = {
@@ -1354,14 +1732,21 @@ export type SellableProductInterface = {
   currency: Scalars['String']
   id: Scalars['ID']
   isVisible: Scalars['Boolean']
-  price: Scalars['Float']
-  subtitle: Scalars['String']
+  position?: Maybe<Scalars['Int']>
+  subtitle?: Maybe<Scalars['String']>
   title: Scalars['String']
+  variants: Array<Variant>
 }
 
 export type SendClassStatsToEmailInput = {
   email: Scalars['String']
   enrollmentId: Scalars['ID']
+}
+
+export enum ServiceStatusEnum {
+  ActiveOnly = 'activeOnly',
+  All = 'all',
+  ExpiredOnly = 'expiredOnly'
 }
 
 export type SetRoomLayoutForClassSchedulesInput = {
@@ -1373,19 +1758,61 @@ export type ShoppingCart = {
   __typename: 'ShoppingCart'
   currency: Scalars['String']
   discountCode?: Maybe<Scalars['String']>
-  giftCardCode?: Maybe<Scalars['String']>
+  giftCardsCodes?: Maybe<Array<Maybe<Scalars['String']>>>
+  id: Scalars['ID']
   items: Array<ShoppingCartItem>
-  subTotal: Scalars['Float']
-  total: Scalars['Float']
+  total?: Maybe<ShoppingCartTotalResultUnion>
+}
+
+export type ShoppingCartIsEmpty = Error & {
+  __typename: 'ShoppingCartIsEmpty'
+  code: Scalars['String']
 }
 
 export type ShoppingCartItem = {
   __typename: 'ShoppingCartItem'
   id: Scalars['ID']
-  product: SellableProductInterface
   quantity: Scalars['Int']
-  subtotal: Scalars['Float']
+  subtotal?: Maybe<Scalars['Float']>
+  variant: Variant
 }
+
+export type ShoppingCartItemNotFound = Error & {
+  __typename: 'ShoppingCartItemNotFound'
+  code: Scalars['String']
+}
+
+export type ShoppingCartNotFound = Error & {
+  __typename: 'ShoppingCartNotFound'
+  code: Scalars['String']
+}
+
+export type ShoppingCartResultUnion =
+  | DiscountCodeIsEmpty
+  | DiscountCodeIsInvalid
+  | DontNeedMoreGiftCards
+  | GiftCardAlreadyRegisteredForCurrentShoppingCart
+  | GiftCardIsNotUsable
+  | GiftCardNotRegisteredOnCurrentShoppingCart
+  | ProductNotFound
+  | ShoppingCart
+  | ShoppingCartIsEmpty
+  | ShoppingCartItemNotFound
+  | ShoppingCartNotFound
+
+export type ShoppingCartTotal = {
+  __typename: 'ShoppingCartTotal'
+  amountToPay?: Maybe<Scalars['Float']>
+  giftCardAmount?: Maybe<Scalars['Float']>
+  subTotal?: Maybe<Scalars['Float']>
+  total?: Maybe<Scalars['Float']>
+}
+
+export type ShoppingCartTotalResultUnion =
+  | GiftCardIsNotUsable
+  | ShoppingCartTotal
+  | UserAlreadyHaveFirstTimerPackage
+  | UserCanNotBuyFirstTimerPackage
 
 export type SimpleSiteUser = {
   __typename: 'SimpleSiteUser'
@@ -1399,9 +1826,17 @@ export type Site = {
   name: Scalars['String']
 }
 
+/**
+ * Available CRANK fitness studio locations.
+ *
+ * Each site has its own class schedule, instructors, and facility configuration.
+ */
 export enum SiteEnum {
+  /** CRANK Abu Dhabi location */
   AbuDhabi = 'abu_dhabi',
+  /** CRANK Dubai location */
   Dubai = 'dubai',
+  /** CRANK Town Square location */
   TownSquare = 'town_square'
 }
 
@@ -1459,6 +1894,11 @@ export type SwapSpotSuccess = {
   selectedEnrollment: EnrollmentInfoInterface
 }
 
+export type TemporalTransactionNotFound = Error & {
+  __typename: 'TemporalTransactionNotFound'
+  code: Scalars['String']
+}
+
 export type TooManyResetPasswordLinkRequestsError = Error & {
   __typename: 'TooManyResetPasswordLinkRequestsError'
   availableAgainAt?: Maybe<Scalars['DateTime']>
@@ -1498,6 +1938,27 @@ export type UpdateGiftCardInput = {
   id: Scalars['ID']
 }
 
+export type UpdateGiftcardResiltUnion = GiftCard | ProductNotFound | UnknownError
+
+export type UpdateInstructorInput = {
+  firstName?: InputMaybe<Scalars['String']>
+  lastName?: InputMaybe<Scalars['String']>
+  profilePictureFile?: InputMaybe<Scalars['File']>
+}
+
+export type UpdateInstructorProfileInput = {
+  active?: InputMaybe<Scalars['Boolean']>
+  description?: InputMaybe<Scalars['String']>
+  linkedMindbodyStaffs?: InputMaybe<Array<Scalars['ID']>>
+  name?: InputMaybe<Scalars['String']>
+  profilePictureFile?: InputMaybe<Scalars['File']>
+}
+
+export type UpdateInstructorProfileResultUnion =
+  | InstructorProfile
+  | InstructorProfileNotFoundError
+  | UploadedFileIsNotAnImage
+
 export type UpdatePaymentLinkInput = {
   amount?: InputMaybe<Scalars['Int']>
   currency?: InputMaybe<Scalars['String']>
@@ -1511,6 +1972,11 @@ export type UpdatePaymentLinkInput = {
 export type UpdateUserPasswordInput = {
   newPassword: Scalars['String']
   userId: Scalars['ID']
+}
+
+export type UploadedFileIsNotAnImage = Error & {
+  __typename: 'UploadedFileIsNotAnImage'
+  code: Scalars['String']
 }
 
 export type User = {
@@ -1531,10 +1997,14 @@ export type User = {
   firstName: Scalars['String']
   gender?: Maybe<GenderEnum>
   hideMetrics?: Maybe<Scalars['Boolean']>
+  isMobilePhoneVerified: Scalars['Boolean']
   lastName: Scalars['String']
   leaderboardUsername?: Maybe<Scalars['String']>
   phone: Scalars['String']
-  shoppingCart?: Maybe<ShoppingCart>
+  /** Allows to get remaining credits for current user for all sites */
+  remainingCredits: RemainingCreditsResultUnion
+  remainingCreditsBySite?: Maybe<RemainingCreditsResultUnion>
+  shoppingCart: ShoppingCart
   siteUsers: Array<SimpleSiteUser>
   state?: Maybe<State>
   weight?: Maybe<Scalars['Float']>
@@ -1549,8 +2019,26 @@ export type UserEnrollmentInClassArgs = {
   classId: Scalars['ID']
 }
 
+export type UserRemainingCreditsBySiteArgs = {
+  site: SiteEnum
+}
+
+export type UserShoppingCartArgs = {
+  site: SiteEnum
+}
+
 export type UserAlreadyExistsError = Error & {
   __typename: 'UserAlreadyExistsError'
+  code: Scalars['String']
+}
+
+export type UserAlreadyHaveFirstTimerPackage = Error & {
+  __typename: 'UserAlreadyHaveFirstTimerPackage'
+  code: Scalars['String']
+}
+
+export type UserCanNotBuyFirstTimerPackage = Error & {
+  __typename: 'UserCanNotBuyFirstTimerPackage'
   code: Scalars['String']
 }
 
@@ -1610,6 +2098,15 @@ export type ValidateResetPasswordTokenInput = {
   token: Scalars['String']
 }
 
+export type Variant = {
+  __typename: 'Variant'
+  id: Scalars['String']
+  name?: Maybe<Scalars['String']>
+  position: Scalars['Int']
+  price: Scalars['Float']
+  product: SellableProductInterface
+}
+
 export type WaitlistEntry = EnrollmentInfoInterface & {
   __typename: 'WaitlistEntry'
   canBeTurnedIntoEnrollment: Scalars['Boolean']
@@ -1628,6 +2125,110 @@ export type WaitlistEntryNotFoundError = Error & {
 export type WaitlistFullError = Error & {
   __typename: 'WaitlistFullError'
   code: Scalars['String']
+}
+
+export type CreateInstructorProfileMutationVariables = Exact<{
+  input: CreateInstructorProfileInput
+}>
+
+export type CreateInstructorProfileMutation = {
+  __typename: 'Mutation'
+  createInstructorProfile:
+    | {
+        __typename: 'InstructorProfile'
+        id: string
+        name: string
+        description?: string | null
+        profilePictureUrl?: string | null
+        active: boolean
+        createdAt: any
+        updatedAt: any
+        mindbodyStaffs: Array<{
+          __typename: 'MindbodyStaffInfo'
+          id: string
+          firstName: string
+          lastName: string
+          email?: string | null
+        }>
+      }
+    | { __typename: 'UploadedFileIsNotAnImage'; code: string }
+}
+
+export type DeleteInstructorProfileMutationVariables = Exact<{
+  id: Scalars['ID']
+}>
+
+export type DeleteInstructorProfileMutation = {
+  __typename: 'Mutation'
+  deleteInstructorProfile: boolean
+}
+
+export type InstructorProfilesQueryVariables = Exact<{
+  activeOnly?: InputMaybe<Scalars['Boolean']>
+  site: SiteEnum
+}>
+
+export type InstructorProfilesQuery = {
+  __typename: 'Query'
+  instructorProfiles: Array<{
+    __typename: 'InstructorProfile'
+    id: string
+    name: string
+    description?: string | null
+    profilePictureUrl?: string | null
+    active: boolean
+    createdAt: any
+    updatedAt: any
+    mindbodyStaffs: Array<{
+      __typename: 'MindbodyStaffInfo'
+      id: string
+      firstName: string
+      lastName: string
+      email?: string | null
+    }>
+  }>
+}
+
+export type MindbodyStaffsQueryVariables = Exact<{ [key: string]: never }>
+
+export type MindbodyStaffsQuery = {
+  __typename: 'Query'
+  mindbodyStaffs: Array<{
+    __typename: 'MindbodyStaffInfo'
+    id: string
+    firstName: string
+    lastName: string
+    email?: string | null
+  }>
+}
+
+export type UpdateInstructorProfileMutationVariables = Exact<{
+  id: Scalars['ID']
+  input: UpdateInstructorProfileInput
+}>
+
+export type UpdateInstructorProfileMutation = {
+  __typename: 'Mutation'
+  updateInstructorProfile:
+    | {
+        __typename: 'InstructorProfile'
+        id: string
+        name: string
+        description?: string | null
+        profilePictureUrl?: string | null
+        active: boolean
+        createdAt: any
+        updatedAt: any
+        mindbodyStaffs: Array<{
+          __typename: 'MindbodyStaffInfo'
+          id: string
+          firstName: string
+          lastName: string
+          email?: string | null
+        }>
+      }
+    | { __typename: 'InstructorProfileNotFoundError'; code: string }
+    | { __typename: 'UploadedFileIsNotAnImage'; code: string }
 }
 
 export type CreatePaymentLinkMutationVariables = Exact<{
@@ -2710,6 +3311,348 @@ export type GetShowCancelledClassesQuery = {
   currentAdminUser: { __typename: 'AdminUser'; showCancelledClasses: boolean }
 }
 
+export const CreateInstructorProfileDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreateInstructorProfile' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'CreateInstructorProfileInput' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createInstructorProfile' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'InstructorProfile' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'profilePictureUrl' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'active' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'mindbodyStaffs' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'firstName' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'lastName' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'email' } }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'UploadedFileIsNotAnImage' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  CreateInstructorProfileMutation,
+  CreateInstructorProfileMutationVariables
+>
+export const DeleteInstructorProfileDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'DeleteInstructorProfile' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'deleteInstructorProfile' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  DeleteInstructorProfileMutation,
+  DeleteInstructorProfileMutationVariables
+>
+export const InstructorProfilesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'InstructorProfiles' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'activeOnly' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Boolean' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'instructorProfiles' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'activeOnly' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'activeOnly' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'site' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'profilePictureUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'active' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'mindbodyStaffs' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'firstName' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'lastName' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'email' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<InstructorProfilesQuery, InstructorProfilesQueryVariables>
+export const MindbodyStaffsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'MindbodyStaffs' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'mindbodyStaffs' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'firstName' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'lastName' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MindbodyStaffsQuery, MindbodyStaffsQueryVariables>
+export const UpdateInstructorProfileDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UpdateInstructorProfile' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'UpdateInstructorProfileInput' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'updateInstructorProfile' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'InstructorProfile' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'profilePictureUrl' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'active' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'mindbodyStaffs' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'firstName' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'lastName' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'email' } }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'UploadedFileIsNotAnImage' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'InstructorProfileNotFoundError' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  UpdateInstructorProfileMutation,
+  UpdateInstructorProfileMutationVariables
+>
 export const CreatePaymentLinkDocument = {
   kind: 'Document',
   definitions: [

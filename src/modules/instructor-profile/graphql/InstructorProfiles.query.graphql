@@ -1,0 +1,17 @@
+query InstructorProfiles($activeOnly: Boolean, $site: SiteEnum!) {
+  instructorProfiles(activeOnly: $activeOnly, site: $site) {
+    id
+    name
+    description
+    profilePictureUrl
+    active
+    createdAt
+    updatedAt
+    mindbodyStaffs {
+      id
+      firstName
+      lastName
+      email
+    }
+  }
+}

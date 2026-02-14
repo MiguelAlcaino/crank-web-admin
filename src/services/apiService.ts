@@ -1,9 +1,20 @@
-import { ApolloError, gql } from '@apollo/client'
+import type {
+  CreateInstructorProfileInput,
+  InstructorProfile,
+  MindbodyStaffInfo,
+  SiteSetting,
+  UpdateInstructorProfileInput
+} from '@/gql/graphql'
 import {
+  CreateInstructorProfileDocument,
   CreatePaymentLinkDocument,
+  DeleteInstructorProfileDocument,
   DeletePaymentLinkDocument,
+  InstructorProfilesDocument,
+  MindbodyStaffsDocument,
   PaymentLinkDocument,
   PaymentLinksDocument,
+  UpdateInstructorProfileDocument,
   UpdatePaymentLinkDocument,
   type AdminUser,
   type AdminUserDataInput,
@@ -64,10 +75,11 @@ import {
   type UserInput,
   type WaitlistEntry
 } from '@/gql/graphql'
-import type { SiteSetting } from '@/gql/graphql'
+import { DomainError } from '@/utils/errors/domainError'
+import { ValidationError } from '@/utils/errors/saveUserErrors'
+import { ApolloError, gql } from '@apollo/client'
 import type { ApolloClient } from '@apollo/client/core'
 import dayjs from 'dayjs'
-import { ValidationError } from '@/utils/errors/saveUserErrors'
 
 export class ApiService {
   authApiClient: ApolloClient<any>
@@ -2023,6 +2035,132 @@ export class ApiService {
       return data.deletePaymentLink as boolean
     } catch (error) {
       console.error('Error deleting payment link:', error)
+      throw error
+    }
+  }
+
+  // Instructor Profiles
+  async getInstructorProfiles(
+    site: SiteEnum,
+    activeOnly: boolean | null
+  ): Promise<InstructorProfile[]> {
+    try {
+      const { data, errors } = await this.authApiClient.query({
+        query: InstructorProfilesDocument,
+        variables: { site: site, activeOnly: activeOnly },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.instructorProfiles) {
+        throw new Error('No data returned from instructorProfiles query')
+      }
+
+      return data.instructorProfiles.map((profile: any) => ({
+        ...profile,
+        createdAt: new Date(profile.createdAt),
+        updatedAt: new Date(profile.updatedAt)
+      })) as InstructorProfile[]
+    } catch (error) {
+      console.error('Error fetching instructor profiles:', error)
+      throw error
+    }
+  }
+
+  async createInstructorProfile(input: CreateInstructorProfileInput): Promise<InstructorProfile> {
+    const { data, errors } = await this.authApiClient.mutate({
+      mutation: CreateInstructorProfileDocument,
+      variables: { input: input },
+      fetchPolicy: 'network-only'
+    })
+
+    if (errors?.length) {
+      throw new Error(`GraphQL Error: ${errors[0].message}`)
+    }
+
+    const result = data?.createInstructorProfile
+
+    if (!result) {
+      throw new Error('No data returned from createInstructorProfile mutation')
+    }
+
+    if (result.__typename !== 'InstructorProfile') {
+      throw new DomainError(result.code, 'Create instructor profile failed')
+    }
+
+    return result
+  }
+
+  async updateInstructorProfile(
+    id: string,
+    input: UpdateInstructorProfileInput
+  ): Promise<InstructorProfile> {
+    const { data, errors } = await this.authApiClient.mutate({
+      mutation: UpdateInstructorProfileDocument,
+      variables: { id, input },
+      fetchPolicy: 'network-only'
+    })
+
+    if (errors?.length) {
+      throw new Error(`GraphQL Error: ${errors[0].message}`)
+    }
+
+    const result = data?.updateInstructorProfile
+    if (!result) {
+      throw new Error('No data returned from updateInstructorProfile mutation')
+    }
+
+    if (result.__typename !== 'InstructorProfile') {
+      throw new DomainError(result.code, 'Update instructor profile failed')
+    }
+
+    return result
+  }
+
+  async deleteInstructorProfile(id: string): Promise<boolean> {
+    try {
+      const { data, errors } = await this.authApiClient.mutate({
+        mutation: DeleteInstructorProfileDocument,
+        variables: { id: id },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || data.deleteInstructorProfile === undefined) {
+        throw new Error('No data returned from deleteInstructorProfile mutation')
+      }
+
+      return data.deleteInstructorProfile as boolean
+    } catch (error) {
+      console.error('Error deleting instructor profile:', error)
+      throw error
+    }
+  }
+
+  async getMindbodyStaffs(): Promise<MindbodyStaffInfo[]> {
+    try {
+      const { data, errors } = await this.authApiClient.query({
+        query: MindbodyStaffsDocument,
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.mindbodyStaffs) {
+        throw new Error('No data returned from mindbodyStaffs query')
+      }
+
+      return data.mindbodyStaffs
+    } catch (error) {
+      console.error('Error fetching instructor profiles:', error)
       throw error
     }
   }

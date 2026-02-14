@@ -13,6 +13,16 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
+  'mutation CreateInstructorProfile($input: CreateInstructorProfileInput!) {\n  createInstructorProfile(input: $input) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}':
+    types.CreateInstructorProfileDocument,
+  'mutation DeleteInstructorProfile($id: ID!) {\n  deleteInstructorProfile(id: $id)\n}':
+    types.DeleteInstructorProfileDocument,
+  'query InstructorProfiles($activeOnly: Boolean, $site: SiteEnum!) {\n  instructorProfiles(activeOnly: $activeOnly, site: $site) {\n    id\n    name\n    description\n    profilePictureUrl\n    active\n    createdAt\n    updatedAt\n    mindbodyStaffs {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}':
+    types.InstructorProfilesDocument,
+  'query MindbodyStaffs {\n  mindbodyStaffs {\n    id\n    firstName\n    lastName\n    email\n  }\n}':
+    types.MindbodyStaffsDocument,
+  'mutation UpdateInstructorProfile($id: ID!, $input: UpdateInstructorProfileInput!) {\n  updateInstructorProfile(id: $id, input: $input) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n    ... on InstructorProfileNotFoundError {\n      code\n    }\n  }\n}':
+    types.UpdateInstructorProfileDocument,
   'mutation CreatePaymentLink($input: CreatePaymentLinkInput!) {\n  createPaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}':
     types.CreatePaymentLinkDocument,
   'mutation DeletePaymentLink($id: ID!) {\n  deletePaymentLink(id: $id)\n}':
@@ -157,6 +167,36 @@ const documents = {
  */
 export function graphql(source: string): unknown
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation CreateInstructorProfile($input: CreateInstructorProfileInput!) {\n  createInstructorProfile(input: $input) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}'
+): (typeof documents)['mutation CreateInstructorProfile($input: CreateInstructorProfileInput!) {\n  createInstructorProfile(input: $input) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation DeleteInstructorProfile($id: ID!) {\n  deleteInstructorProfile(id: $id)\n}'
+): (typeof documents)['mutation DeleteInstructorProfile($id: ID!) {\n  deleteInstructorProfile(id: $id)\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'query InstructorProfiles($activeOnly: Boolean, $site: SiteEnum!) {\n  instructorProfiles(activeOnly: $activeOnly, site: $site) {\n    id\n    name\n    description\n    profilePictureUrl\n    active\n    createdAt\n    updatedAt\n    mindbodyStaffs {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}'
+): (typeof documents)['query InstructorProfiles($activeOnly: Boolean, $site: SiteEnum!) {\n  instructorProfiles(activeOnly: $activeOnly, site: $site) {\n    id\n    name\n    description\n    profilePictureUrl\n    active\n    createdAt\n    updatedAt\n    mindbodyStaffs {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'query MindbodyStaffs {\n  mindbodyStaffs {\n    id\n    firstName\n    lastName\n    email\n  }\n}'
+): (typeof documents)['query MindbodyStaffs {\n  mindbodyStaffs {\n    id\n    firstName\n    lastName\n    email\n  }\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation UpdateInstructorProfile($id: ID!, $input: UpdateInstructorProfileInput!) {\n  updateInstructorProfile(id: $id, input: $input) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n    ... on InstructorProfileNotFoundError {\n      code\n    }\n  }\n}'
+): (typeof documents)['mutation UpdateInstructorProfile($id: ID!, $input: UpdateInstructorProfileInput!) {\n  updateInstructorProfile(id: $id, input: $input) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n    ... on InstructorProfileNotFoundError {\n      code\n    }\n  }\n}']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
