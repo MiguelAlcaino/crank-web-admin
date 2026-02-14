@@ -8,6 +8,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import CrankCircularProgressIndicator from '@/modules/shared/components/CrankCircularProgressIndicator.vue'
 import SyncAllClassesButton from '@/modules/class-schedule/components/SyncAllClassesButton.vue'
+import ShowCancelledClasses from '@/modules/class-schedule/components/ShowCancelledClasses.vue'
 
 import type { CalendarListClass } from '../interfaces'
 import type { SiteEnum } from '@/modules/shared/interfaces'
@@ -185,7 +186,7 @@ function scrollToTodayClass() {
     <p>The calendar cannot be displayed because your user does not have a site assigned.</p>
   </div>
   <div class="row ml-1">
-    <div class="col-lg-7 col-md-10 col-sm-12 ml-auto mr-3">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-6">
       <div class="position-relative">
         <select
           class="custom-select"
@@ -206,6 +207,12 @@ function scrollToTodayClass() {
           <span class="sr-only">Loading...</span>
         </div>
       </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-6 d-flex align-items-center">
+      <ShowCancelledClasses
+        @after-change="getCalendarClasses"
+        :disabled="isLoadingSites || isLoading"
+      ></ShowCancelledClasses>
     </div>
   </div>
   <hr />

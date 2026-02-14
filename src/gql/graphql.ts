@@ -48,6 +48,7 @@ export type AdminUser = {
   linkedInstructors?: Maybe<Array<Instructor>>
   linkedSites?: Maybe<Array<Site>>
   roles?: Maybe<Array<Scalars['String']>>
+  showCancelledClasses: Scalars['Boolean']
   username: Scalars['String']
 }
 
@@ -143,6 +144,18 @@ export type CancelEnrollmentResultUnion =
 export type CancelUserEnrollmentSuccess = {
   __typename: 'CancelUserEnrollmentSuccess'
   status?: Maybe<Scalars['Boolean']>
+}
+
+export type ChallengeDisplay = {
+  __typename: 'ChallengeDisplay'
+  firstLine?: Maybe<Scalars['String']>
+  secondLine?: Maybe<Scalars['String']>
+  thirdLine?: Maybe<Scalars['String']>
+}
+
+export type ChallengeInterface = {
+  challengeDisplay: ChallengeDisplay
+  id: Scalars['ID']
 }
 
 export type ChartPoint = {
@@ -306,6 +319,15 @@ export type CreateCurrentUserInSiteSuccess = {
 
 export type CreateCurrentUserInSiteUnion = CreateCurrentUserInSiteSuccess | UserAlreadyExistsError
 
+export type CreatePaymentLinkInput = {
+  amount: Scalars['Int']
+  currency: Scalars['String']
+  /** After a successful purchase an email will be sent to this email address with details about the payment (meant to be used by admins) */
+  notificationEmailAddress: Scalars['String']
+  site: SiteEnum
+  title: Scalars['String']
+}
+
 export type CurrentUserEnrollmentsParams = {
   endDate?: InputMaybe<Scalars['Date']>
   enrollmentType?: InputMaybe<EnrollmentTypeEnum>
@@ -336,6 +358,26 @@ export type DisableEnableSpotResult = {
 }
 
 export type DisableEnableSpotResultUnion = DisableEnableSpotResult | SpotNotFoundError
+
+export type DistanceChallenge = ChallengeInterface & {
+  __typename: 'DistanceChallenge'
+  challengeDisplay: ChallengeDisplay
+  goalInKM: Scalars['Int']
+  id: Scalars['ID']
+  ranking?: Maybe<DistanceRanking>
+}
+
+export type DistanceChallengeRankingPosition = {
+  __typename: 'DistanceChallengeRankingPosition'
+  totalKm: Scalars['Float']
+  userPositionInRanking: UserPositionInRanking
+}
+
+export type DistanceRanking = {
+  __typename: 'DistanceRanking'
+  amountOfUsersInRanking: Scalars['Int']
+  rankingPositions: Array<DistanceChallengeRankingPosition>
+}
 
 export type EditClassInput = {
   classId: Scalars['ID']
@@ -560,12 +602,16 @@ export type Mutation = {
   checkoutUserInClass?: Maybe<CheckoutResultUnion>
   /** Creates a copy of the current user in the given site */
   createCurrentUserInSite?: Maybe<CreateCurrentUserInSiteUnion>
+  /** Creates a new payment link */
+  createPaymentLink: PaymentLink
   /** Creates a new room layout */
   createRoomLayout: RoomLayout
   /** It deletes the current user's account */
   deleteCurrentUserAccount?: Maybe<DeleteCurrentUserAccountUnion>
   /** Removes a devices token */
   deleteDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']>
+  /** Soft deletes a payment link */
+  deletePaymentLink: Scalars['Boolean']
   /** Disables a spot in a class */
   disableSpot?: Maybe<DisableEnableSpotResultUnion>
   /** Edits a class */
@@ -622,6 +668,8 @@ export type Mutation = {
   syncClassWithPIQ: ClassInfo
   /** Updates an admin user */
   updateAdminUser: AdminUserResultUnion
+  /** Allows to update the current AdminUser */
+  updateCurrentAdminUser: AdminUser
   /** Allows to update the favorite site for a AdminUser */
   updateCurrentAdminUserFavoriteSite: AdminUser
   updateCurrentAdminUserPassword?: Maybe<Scalars['Boolean']>
@@ -633,6 +681,8 @@ export type Mutation = {
   updateGiftCard: GiftCard
   /** Allows to update an Item from Shopping Cart */
   updateItemInShoppingCart: ShoppingCart
+  /** Updates a payment link */
+  updatePaymentLink: PaymentLink
   updateUserPassword?: Maybe<Scalars['Boolean']>
 }
 
@@ -691,6 +741,10 @@ export type MutationCreateCurrentUserInSiteArgs = {
   toSite: SiteEnum
 }
 
+export type MutationCreatePaymentLinkArgs = {
+  input: CreatePaymentLinkInput
+}
+
 export type MutationCreateRoomLayoutArgs = {
   input: RoomLayoutInput
   site: SiteEnum
@@ -704,6 +758,10 @@ export type MutationDeleteCurrentUserAccountArgs = {
 export type MutationDeleteDeviceTokenToCurrentUserArgs = {
   input?: InputMaybe<DeviceTokenInput>
   site?: InputMaybe<SiteEnum>
+}
+
+export type MutationDeletePaymentLinkArgs = {
+  id: Scalars['ID']
 }
 
 export type MutationDisableSpotArgs = {
@@ -824,6 +882,10 @@ export type MutationUpdateAdminUserArgs = {
   input: UpdateAdminUserInput
 }
 
+export type MutationUpdateCurrentAdminUserArgs = {
+  input: UpdateCurrentAdminUserInput
+}
+
 export type MutationUpdateCurrentAdminUserFavoriteSiteArgs = {
   input?: InputMaybe<UpdateCurrentAdminUserFavoriteSiteInput>
 }
@@ -847,6 +909,10 @@ export type MutationUpdateGiftCardArgs = {
 
 export type MutationUpdateItemInShoppingCartArgs = {
   input?: InputMaybe<ItemToShoppingCartInput>
+}
+
+export type MutationUpdatePaymentLinkArgs = {
+  input: UpdatePaymentLinkInput
 }
 
 export type MutationUpdateUserPasswordArgs = {
@@ -889,6 +955,17 @@ export type PaginationInput = {
 export type PasswordsDontMatchError = Error & {
   __typename: 'PasswordsDontMatchError'
   code: Scalars['String']
+}
+
+export type PaymentLink = {
+  __typename: 'PaymentLink'
+  amount: Scalars['Int']
+  currency: Scalars['String']
+  id: Scalars['ID']
+  notificationEmailAddress: Scalars['String']
+  site: Site
+  title: Scalars['String']
+  url: Scalars['String']
 }
 
 /** Error returned when a client does not have enough credit or allowance to book a class */
@@ -964,6 +1041,8 @@ export type Query = {
   country?: Maybe<Country>
   /** Returns the current AdminUser */
   currentAdminUser: AdminUser
+  /** Returns information of the current CRANK challenge */
+  currentCRANKChallenge: ChallengeInterface
   /** Returns the current user by the given Authentication header */
   currentUser?: Maybe<User>
   /**
@@ -989,6 +1068,10 @@ export type Query = {
   giftCards: Array<GiftCard>
   /** Verifies whether an sms validation code is valid */
   isSMSValidationCodeValid?: Maybe<IsSmsValidationCodeValidUnion>
+  /** Returns a single payment link by ID */
+  paymentLink?: Maybe<PaymentLink>
+  /** Returns a list of payment links */
+  paymentLinks: Array<PaymentLink>
   /** Returns a list of available products for a specific site */
   products: Array<SellableProductInterface>
   /** Returns a specific room layout */
@@ -1078,6 +1161,14 @@ export type QueryCurrentUserWorkoutStatsPaginatedArgs = {
 
 export type QueryIsSmsValidationCodeValidArgs = {
   smsCode: Scalars['String']
+}
+
+export type QueryPaymentLinkArgs = {
+  id: Scalars['ID']
+}
+
+export type QueryPaymentLinksArgs = {
+  site?: InputMaybe<SiteEnum>
 }
 
 export type QueryProductsArgs = {
@@ -1393,6 +1484,10 @@ export type UpdateCurrentAdminUserFavoriteSiteInput = {
   favoriteSite?: InputMaybe<SiteEnum>
 }
 
+export type UpdateCurrentAdminUserInput = {
+  showCancelledClasses: Scalars['Boolean']
+}
+
 export type UpdateCurrentUserPasswordInput = {
   currentPassword: Scalars['String']
   newPassword: Scalars['String']
@@ -1401,6 +1496,16 @@ export type UpdateCurrentUserPasswordInput = {
 export type UpdateGiftCardInput = {
   grandTotal?: InputMaybe<Scalars['Float']>
   id: Scalars['ID']
+}
+
+export type UpdatePaymentLinkInput = {
+  amount?: InputMaybe<Scalars['Int']>
+  currency?: InputMaybe<Scalars['String']>
+  id: Scalars['ID']
+  /** After a successful purchase an email will be sent to this email address with details about the payment (meant to be used by admins) */
+  notificationEmailAddress: Scalars['String']
+  site?: InputMaybe<SiteEnum>
+  title?: InputMaybe<Scalars['String']>
 }
 
 export type UpdateUserPasswordInput = {
@@ -1484,6 +1589,12 @@ export type UserPasswordDoesNotMatchError = Error & {
   code: Scalars['String']
 }
 
+export type UserPositionInRanking = {
+  __typename: 'UserPositionInRanking'
+  positionInRanking: Scalars['Int']
+  user: User
+}
+
 export type UserRanking = {
   __typename: 'UserRanking'
   positionInRanking?: Maybe<Scalars['Int']>
@@ -1517,6 +1628,84 @@ export type WaitlistEntryNotFoundError = Error & {
 export type WaitlistFullError = Error & {
   __typename: 'WaitlistFullError'
   code: Scalars['String']
+}
+
+export type CreatePaymentLinkMutationVariables = Exact<{
+  input: CreatePaymentLinkInput
+}>
+
+export type CreatePaymentLinkMutation = {
+  __typename: 'Mutation'
+  createPaymentLink: {
+    __typename: 'PaymentLink'
+    id: string
+    title: string
+    amount: number
+    currency: string
+    url: string
+    notificationEmailAddress: string
+    site: { __typename: 'Site'; name: string; code: SiteEnum }
+  }
+}
+
+export type DeletePaymentLinkMutationVariables = Exact<{
+  id: Scalars['ID']
+}>
+
+export type DeletePaymentLinkMutation = { __typename: 'Mutation'; deletePaymentLink: boolean }
+
+export type PaymentLinkQueryVariables = Exact<{
+  id: Scalars['ID']
+}>
+
+export type PaymentLinkQuery = {
+  __typename: 'Query'
+  paymentLink?: {
+    __typename: 'PaymentLink'
+    id: string
+    title: string
+    amount: number
+    currency: string
+    url: string
+    notificationEmailAddress: string
+    site: { __typename: 'Site'; name: string; code: SiteEnum }
+  } | null
+}
+
+export type PaymentLinksQueryVariables = Exact<{
+  site?: InputMaybe<SiteEnum>
+}>
+
+export type PaymentLinksQuery = {
+  __typename: 'Query'
+  paymentLinks: Array<{
+    __typename: 'PaymentLink'
+    id: string
+    title: string
+    amount: number
+    currency: string
+    url: string
+    notificationEmailAddress: string
+    site: { __typename: 'Site'; name: string; code: SiteEnum }
+  }>
+}
+
+export type UpdatePaymentLinkMutationVariables = Exact<{
+  input: UpdatePaymentLinkInput
+}>
+
+export type UpdatePaymentLinkMutation = {
+  __typename: 'Mutation'
+  updatePaymentLink: {
+    __typename: 'PaymentLink'
+    id: string
+    title: string
+    amount: number
+    currency: string
+    url: string
+    notificationEmailAddress: string
+    site: { __typename: 'Site'; name: string; code: SiteEnum }
+  }
 }
 
 export type SiteSettingsQueryVariables = Exact<{
@@ -2490,6 +2679,302 @@ export type UpdateCurrentAdminUserFavoriteSiteMutation = {
   }
 }
 
+export type UpdateCurrentAdminUserMutationVariables = Exact<{
+  input: UpdateCurrentAdminUserInput
+}>
+
+export type UpdateCurrentAdminUserMutation = {
+  __typename: 'Mutation'
+  updateCurrentAdminUser: {
+    __typename: 'AdminUser'
+    id: string
+    username: string
+    email: string
+    roles?: Array<string> | null
+    showCancelledClasses: boolean
+    linkedInstructors?: Array<{
+      __typename: 'Instructor'
+      id: string
+      name: string
+      site: { __typename: 'Site'; code: SiteEnum; name: string }
+    }> | null
+    linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
+    favoriteSite: { __typename: 'Site'; name: string; code: SiteEnum }
+  }
+}
+
+export type GetShowCancelledClassesQueryVariables = Exact<{ [key: string]: never }>
+
+export type GetShowCancelledClassesQuery = {
+  __typename: 'Query'
+  currentAdminUser: { __typename: 'AdminUser'; showCancelledClasses: boolean }
+}
+
+export const CreatePaymentLinkDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreatePaymentLink' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'CreatePaymentLinkInput' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createPaymentLink' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'currency' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'notificationEmailAddress' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'site' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<CreatePaymentLinkMutation, CreatePaymentLinkMutationVariables>
+export const DeletePaymentLinkDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'DeletePaymentLink' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'deletePaymentLink' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<DeletePaymentLinkMutation, DeletePaymentLinkMutationVariables>
+export const PaymentLinkDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'PaymentLink' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'paymentLink' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'currency' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'notificationEmailAddress' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'site' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<PaymentLinkQuery, PaymentLinkQueryVariables>
+export const PaymentLinksDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'PaymentLinks' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'paymentLinks' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'site' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'currency' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'notificationEmailAddress' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'site' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<PaymentLinksQuery, PaymentLinksQueryVariables>
+export const UpdatePaymentLinkDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UpdatePaymentLink' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UpdatePaymentLinkInput' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'updatePaymentLink' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'currency' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'notificationEmailAddress' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'site' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<UpdatePaymentLinkMutation, UpdatePaymentLinkMutationVariables>
 export const SiteSettingsDocument = {
   kind: 'Document',
   definitions: [
@@ -6254,3 +6739,122 @@ export const UpdateCurrentAdminUserFavoriteSiteDocument = {
   UpdateCurrentAdminUserFavoriteSiteMutation,
   UpdateCurrentAdminUserFavoriteSiteMutationVariables
 >
+export const UpdateCurrentAdminUserDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'updateCurrentAdminUser' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'UpdateCurrentAdminUserInput' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'updateCurrentAdminUser' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'roles' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'linkedInstructors' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'site' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'code' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'linkedSites' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'favoriteSite' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'showCancelledClasses' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  UpdateCurrentAdminUserMutation,
+  UpdateCurrentAdminUserMutationVariables
+>
+export const GetShowCancelledClassesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetShowCancelledClasses' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'currentAdminUser' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'showCancelledClasses' } }]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<GetShowCancelledClassesQuery, GetShowCancelledClassesQueryVariables>

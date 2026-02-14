@@ -1,0 +1,14 @@
+query PaymentLinks($site: SiteEnum) {
+  paymentLinks(site: $site) {
+    id
+    title
+    amount
+    currency
+    url
+    notificationEmailAddress
+    site {
+      name
+      code
+    }
+  }
+}

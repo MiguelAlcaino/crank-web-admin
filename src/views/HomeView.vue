@@ -18,5 +18,7 @@
     <RouterLink key="/admin-users" to="/admin-users"> Admin Users</RouterLink>
     <br />
     <RouterLink key="/my-admin-settings" to="/my-admin-settings"> My Admin Settings</RouterLink>
+    <br />
+    <RouterLink key="/payment-links" to="/payment-links"> Payment Links</RouterLink>
   </main>
 </template>

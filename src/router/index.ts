@@ -8,6 +8,7 @@ import { giftCardRoute } from '@/modules/gift-card/router'
 import { adminUsersRoute } from '@/modules/admin-user/router'
 import { Role } from '@/utils/userRoles'
 import { myAdminSettingsRoute } from '@/modules/my-admin-settings/router'
+import { paymentLinksRoute } from '@/modules/payment-links/router'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -91,7 +92,8 @@ const router = createRouter({
       ...myAdminSettingsRoute,
       path: '/my-admin-settings',
       meta: { requiresAuth: true }
-    }
+    },
+    { ...paymentLinksRoute, path: '/payment-links', meta: { requiresAuth: true } }
   ]
 })
 
