@@ -22,7 +22,7 @@ export const useInstructorProfiles = (apiService: ApiService) => {
     try {
       instructorProfiles.value = (await apiService.getInstructorProfiles(
         appStore().site,
-        null
+        false
       )) as InstructorProfile[]
     } catch (error) {
       hasLoadError.value = true

@@ -44,7 +44,7 @@ onMounted(async () => {
             <th class="text-center">NAME</th>
             <th class="text-center">DESCRIPTION</th>
             <th class="text-center">PROFILE PICTURE</th>
-            <th class="text-center">ACTIVE</th>
+            <th class="text-center">STATUS</th>
             <th class="text-center">MINDBODY STAFFS</th>
             <th class="text-center">CREATED AT</th>
             <th class="text-center">UPDATED AT</th>
@@ -71,7 +71,16 @@ onMounted(async () => {
               </a>
               <span v-else>-</span>
             </td>
-            <td class="text-center">{{ item.active }}</td>
+            <td class="text-center">
+              <span
+                :class="[
+                  'status-badge',
+                  item.active ? 'status-badge-active' : 'status-badge-inactive'
+                ]"
+              >
+                {{ item.active ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
             <td class="text-center">
               <span v-if="item.mindbodyStaffs && item.mindbodyStaffs.length > 0">
                 {{ item.mindbodyStaffs.map((s) => `${s.firstName} ${s.lastName}`).join(', ') }}
@@ -116,5 +125,24 @@ onMounted(async () => {
   object-fit: cover;
   border-radius: 50%;
   border: 1px solid #dee2e6;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.status-badge-active {
+  background-color: rgba(255, 138, 115, 1);
+  color: rgb(255, 255, 255);
+}
+
+.status-badge-inactive {
+  background-color: rgba(231, 231, 231, 1);
+  color: rgba(138, 138, 138, 1);
 }
 </style>
