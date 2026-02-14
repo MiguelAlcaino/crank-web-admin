@@ -43,6 +43,7 @@ const fileInputLabel = computed(() =>
   formData.profilePictureFile ? formData.profilePictureFile.name : 'Choose file'
 )
 const selectedPicturePreviewUrl = ref<string | null>(null)
+const removeImageBtnIsVisible = false
 
 watch(
   () => formData.profilePictureFile,
@@ -105,8 +106,8 @@ const validateAndGetValues = async () => {
     profilePictureFile: formData.profilePictureFile
       ? formData.profilePictureFile
       : formData.removeCurrentProfilePicture
-        ? null
-        : undefined
+      ? null
+      : undefined
   }
 }
 
@@ -196,7 +197,11 @@ defineExpose({
       <div class="col">
         <label for="profilePictureFile" class="input-label">Profile picture</label>
         <div
-          v-if="props.initialData?.profilePictureUrl && !formData.removeCurrentProfilePicture && !formData.profilePictureFile"
+          v-if="
+            props.initialData?.profilePictureUrl &&
+            !formData.removeCurrentProfilePicture &&
+            !formData.profilePictureFile
+          "
           class="current-picture-row"
         >
           <img
@@ -208,6 +213,7 @@ defineExpose({
             type="button"
             class="btn btn-outline-danger btn-sm"
             @click="removeCurrentImage"
+            v-if="removeImageBtnIsVisible"
           >
             Remove current image
           </button>
@@ -225,7 +231,10 @@ defineExpose({
             {{ fileInputLabel }}
           </label>
         </div>
-        <div v-if="formData.profilePictureFile && selectedPicturePreviewUrl" class="selected-picture-row">
+        <div
+          v-if="formData.profilePictureFile && selectedPicturePreviewUrl"
+          class="selected-picture-row"
+        >
           <img
             :src="selectedPicturePreviewUrl"
             alt="Selected profile picture preview"
