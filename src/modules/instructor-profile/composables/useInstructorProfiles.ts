@@ -64,7 +64,7 @@ export const useInstructorProfiles = (apiService: ApiService) => {
       name?: string
       description?: string | null
       active?: boolean
-      profilePictureFile?: File
+      profilePictureFile?: File | null
       linkedMindbodyStaffs?: string[]
     }
   ) {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, onMounted } from 'vue'
+import { computed, reactive, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { helpers, required, minLength, maxLength } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 
@@ -8,6 +8,7 @@ export interface InstructorProfileFormState {
   description: string | null | undefined
   active: boolean
   profilePictureFile: File | null
+  profilePictureUrl?: string
 }
 
 const props = defineProps<{
@@ -18,7 +19,8 @@ const formData = reactive({
   name: '',
   description: '',
   active: true,
-  profilePictureFile: null as File | null
+  profilePictureFile: null as File | null,
+  removeCurrentProfilePicture: false
 })
 
 const rules = computed(() => ({
@@ -35,6 +37,32 @@ const rules = computed(() => ({
 }))
 
 const v$ = useVuelidate(rules, formData, { $scope: false })
+const profilePictureInputRef = ref<HTMLInputElement | null>(null)
+const profilePictureInputId = 'profilePictureFile'
+const fileInputLabel = computed(() =>
+  formData.profilePictureFile ? formData.profilePictureFile.name : 'Choose file'
+)
+const selectedPicturePreviewUrl = ref<string | null>(null)
+
+watch(
+  () => formData.profilePictureFile,
+  (file) => {
+    if (selectedPicturePreviewUrl.value) {
+      URL.revokeObjectURL(selectedPicturePreviewUrl.value)
+      selectedPicturePreviewUrl.value = null
+    }
+
+    if (file) {
+      selectedPicturePreviewUrl.value = URL.createObjectURL(file)
+    }
+  }
+)
+
+onBeforeUnmount(() => {
+  if (selectedPicturePreviewUrl.value) {
+    URL.revokeObjectURL(selectedPicturePreviewUrl.value)
+  }
+})
 
 onMounted(() => {
   populateForm()
@@ -47,11 +75,23 @@ function populateForm() {
   formData.description = props.initialData.description ?? ''
   formData.active = props.initialData.active ?? true
   formData.profilePictureFile = props.initialData.profilePictureFile ?? null
+  formData.removeCurrentProfilePicture = false
 }
 
 function onFileChange(event: Event) {
   const target = event.target as HTMLInputElement
   formData.profilePictureFile = target.files?.[0] ?? null
+  if (formData.profilePictureFile) {
+    formData.removeCurrentProfilePicture = false
+  }
+}
+
+function removeCurrentImage() {
+  formData.profilePictureFile = null
+  formData.removeCurrentProfilePicture = true
+  if (profilePictureInputRef.value) {
+    profilePictureInputRef.value.value = ''
+  }
 }
 
 const validateAndGetValues = async () => {
@@ -62,7 +102,11 @@ const validateAndGetValues = async () => {
     name: formData.name,
     description: formData.description?.trim() ? formData.description : undefined,
     active: formData.active,
-    profilePictureFile: formData.profilePictureFile ?? undefined
+    profilePictureFile: formData.profilePictureFile
+      ? formData.profilePictureFile
+      : formData.removeCurrentProfilePicture
+        ? null
+        : undefined
   }
 }
 
@@ -72,6 +116,10 @@ const reset = () => {
   formData.description = ''
   formData.active = true
   formData.profilePictureFile = null
+  formData.removeCurrentProfilePicture = false
+  if (profilePictureInputRef.value) {
+    profilePictureInputRef.value.value = ''
+  }
 }
 
 defineExpose({
@@ -146,22 +194,73 @@ defineExpose({
     <!-- Profile Picture -->
     <div class="form-row mb-3">
       <div class="col">
-        <label for="profilePictureFile" class="custom-file-label">Profile picture</label>
-        <div class="input-group">
+        <label for="profilePictureFile" class="input-label">Profile picture</label>
+        <div
+          v-if="props.initialData?.profilePictureUrl && !formData.removeCurrentProfilePicture && !formData.profilePictureFile"
+          class="current-picture-row"
+        >
+          <img
+            :src="props.initialData.profilePictureUrl"
+            alt="Current profile picture"
+            class="profile-picture-preview"
+          />
+          <button
+            type="button"
+            class="btn btn-outline-danger btn-sm"
+            @click="removeCurrentImage"
+          >
+            Remove current image
+          </button>
+        </div>
+        <div class="custom-file">
           <input
-            id="profilePictureFile"
-            class="form-control-file"
+            ref="profilePictureInputRef"
+            :id="profilePictureInputId"
+            class="custom-file-input"
             type="file"
             accept="image/*"
             @change="onFileChange"
           />
+          <label class="custom-file-label" :for="profilePictureInputId" data-browse="Browse">
+            {{ fileInputLabel }}
+          </label>
         </div>
-        <small v-if="formData.profilePictureFile" class="form-text">
-          Selected: {{ formData.profilePictureFile.name }}
+        <div v-if="formData.profilePictureFile && selectedPicturePreviewUrl" class="selected-picture-row">
+          <img
+            :src="selectedPicturePreviewUrl"
+            alt="Selected profile picture preview"
+            class="profile-picture-preview"
+          />
+          <small class="form-text mb-0">{{ formData.profilePictureFile.name }}</small>
+        </div>
+        <small v-if="formData.removeCurrentProfilePicture" class="form-text text-danger">
+          Current image will be removed when saving.
         </small>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.current-picture-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.selected-picture-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.profile-picture-preview {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #dee2e6;
+}
+</style>
