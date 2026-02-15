@@ -2,6 +2,5 @@ query MindbodySessionTypes($site: SiteEnum!) {
   mindbodySessionTypes(site: $site) {
     id
     name
-    isAvailableForPIQSoftware
   }
 }

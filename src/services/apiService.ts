@@ -1,19 +1,28 @@
 import type {
+  CreateSessionTypeInput,
   CreateInstructorProfileInput,
   InstructorProfile,
+  MindbodySessionTypeInfo,
   MindbodyStaffInfo,
+  SessionType,
   SiteSetting,
+  UpdateSessionTypeInput,
   UpdateInstructorProfileInput
 } from '@/gql/graphql'
 import {
+  CreateSessionTypeDocument,
   CreateInstructorProfileDocument,
   CreatePaymentLinkDocument,
+  DeleteSessionTypeDocument,
   DeleteInstructorProfileDocument,
   DeletePaymentLinkDocument,
   InstructorProfilesDocument,
+  MindbodySessionTypesDocument,
   MindbodyStaffsDocument,
   PaymentLinkDocument,
   PaymentLinksDocument,
+  SessionTypesDocument,
+  UpdateSessionTypeDocument,
   UpdateInstructorProfileDocument,
   UpdatePaymentLinkDocument,
   type AdminUser,
@@ -2035,6 +2044,123 @@ export class ApiService {
       return data.deletePaymentLink as boolean
     } catch (error) {
       console.error('Error deleting payment link:', error)
+      throw error
+    }
+  }
+
+  // Session Types
+  async getSessionTypes(site: SiteEnum): Promise<SessionType[]> {
+    try {
+      const { data, errors } = await this.authApiClient.query({
+        query: SessionTypesDocument,
+        variables: { site: site },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.sessionTypes) {
+        throw new Error('No data returned from sessionTypes query')
+      }
+
+      return data.sessionTypes as SessionType[]
+    } catch (error) {
+      console.error('Error fetching session types:', error)
+      throw error
+    }
+  }
+
+  async createSessionType(input: CreateSessionTypeInput): Promise<SessionType> {
+    const { data, errors } = await this.authApiClient.mutate({
+      mutation: CreateSessionTypeDocument,
+      variables: { input: input },
+      fetchPolicy: 'network-only'
+    })
+
+    if (errors?.length) {
+      throw new Error(`GraphQL Error: ${errors[0].message}`)
+    }
+
+    const result = data?.createSessionType
+
+    if (!result) {
+      throw new Error('No data returned from createSessionType mutation')
+    }
+
+    if (result.__typename !== 'SessionType') {
+      throw new DomainError(result.code, 'Create session type failed')
+    }
+
+    return result
+  }
+
+  async updateSessionType(id: string, input: UpdateSessionTypeInput): Promise<SessionType> {
+    const { data, errors } = await this.authApiClient.mutate({
+      mutation: UpdateSessionTypeDocument,
+      variables: { id, input },
+      fetchPolicy: 'network-only'
+    })
+
+    if (errors?.length) {
+      throw new Error(`GraphQL Error: ${errors[0].message}`)
+    }
+
+    const result = data?.updateSessionType
+    if (!result) {
+      throw new Error('No data returned from updateSessionType mutation')
+    }
+
+    if (result.__typename !== 'SessionType') {
+      throw new DomainError(result.code, 'Update session type failed')
+    }
+
+    return result
+  }
+
+  async deleteSessionType(id: string): Promise<boolean> {
+    try {
+      const { data, errors } = await this.authApiClient.mutate({
+        mutation: DeleteSessionTypeDocument,
+        variables: { id: id },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || data.deleteSessionType === undefined) {
+        throw new Error('No data returned from deleteSessionType mutation')
+      }
+
+      return data.deleteSessionType as boolean
+    } catch (error) {
+      console.error('Error deleting session type:', error)
+      throw error
+    }
+  }
+
+  async getMindbodySessionTypes(site: SiteEnum): Promise<MindbodySessionTypeInfo[]> {
+    try {
+      const { data, errors } = await this.authApiClient.query({
+        query: MindbodySessionTypesDocument,
+        variables: { site: site },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.mindbodySessionTypes) {
+        throw new Error('No data returned from mindbodySessionTypes query')
+      }
+
+      return data.mindbodySessionTypes
+    } catch (error) {
+      console.error('Error fetching mindbody session types:', error)
       throw error
     }
   }

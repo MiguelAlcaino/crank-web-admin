@@ -33,15 +33,15 @@ const documents = {
     types.PaymentLinksDocument,
   'mutation UpdatePaymentLink($input: UpdatePaymentLinkInput!) {\n  updatePaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}':
     types.UpdatePaymentLinkDocument,
-  'mutation CreateSessionType($input: CreateSessionTypeInput!) {\n  createSessionType(input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      mindbodySessionTypes {\n        id\n        name\n        isAvailableForPIQSoftware\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}':
+  'mutation CreateSessionType($input: CreateSessionTypeInput!) {\n  createSessionType(input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      mindbodySessionTypes {\n        id\n        name\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}':
     types.CreateSessionTypeDocument,
   'mutation DeleteSessionType($id: ID!) {\n  deleteSessionType(id: $id)\n}':
     types.DeleteSessionTypeDocument,
-  'query MindbodySessionTypes($site: SiteEnum!) {\n  mindbodySessionTypes(site: $site) {\n    id\n    name\n    isAvailableForPIQSoftware\n  }\n}':
+  'query MindbodySessionTypes($site: SiteEnum!) {\n  mindbodySessionTypes(site: $site) {\n    id\n    name\n  }\n}':
     types.MindbodySessionTypesDocument,
-  'query SessionTypes($site: SiteEnum!) {\n  sessionTypes(site: $site) {\n    id\n    name\n    active\n    bannerImagePath\n    mindbodySessionTypes {\n      id\n      name\n      isAvailableForPIQSoftware\n    }\n  }\n}':
+  'query SessionTypes($site: SiteEnum!) {\n  sessionTypes(site: $site) {\n    id\n    name\n    active\n    bannerImagePath\n    mindbodySessionTypes {\n      id\n      name\n    }\n  }\n}':
     types.SessionTypesDocument,
-  'mutation UpdateSessionType($id: ID!, $input: UpdateSessionTypeInput!) {\n  updateSessionType(id: $id, input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      mindbodySessionTypes {\n        id\n        name\n        isAvailableForPIQSoftware\n      }\n    }\n    ... on SessionTypeNotFoundError {\n      id\n      code\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}':
+  'mutation UpdateSessionType($id: ID!, $input: UpdateSessionTypeInput!) {\n  updateSessionType(id: $id, input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      mindbodySessionTypes {\n        id\n        name\n      }\n    }\n    ... on SessionTypeNotFoundError {\n      id\n      code\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}':
     types.UpdateSessionTypeDocument,
   '\n      query siteSettings($site: SiteEnum!) {\n        siteSettings(site: $site) {\n          siteDateTimeNow\n        }\n      }\n    ':
     types.SiteSettingsDocument,
@@ -241,8 +241,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'mutation CreateSessionType($input: CreateSessionTypeInput!) {\n  createSessionType(input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      mindbodySessionTypes {\n        id\n        name\n        isAvailableForPIQSoftware\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}'
-): (typeof documents)['mutation CreateSessionType($input: CreateSessionTypeInput!) {\n  createSessionType(input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      mindbodySessionTypes {\n        id\n        name\n        isAvailableForPIQSoftware\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}']
+  source: 'mutation CreateSessionType($input: CreateSessionTypeInput!) {\n  createSessionType(input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      mindbodySessionTypes {\n        id\n        name\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}'
+): (typeof documents)['mutation CreateSessionType($input: CreateSessionTypeInput!) {\n  createSessionType(input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      mindbodySessionTypes {\n        id\n        name\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -253,20 +253,20 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query MindbodySessionTypes($site: SiteEnum!) {\n  mindbodySessionTypes(site: $site) {\n    id\n    name\n    isAvailableForPIQSoftware\n  }\n}'
-): (typeof documents)['query MindbodySessionTypes($site: SiteEnum!) {\n  mindbodySessionTypes(site: $site) {\n    id\n    name\n    isAvailableForPIQSoftware\n  }\n}']
+  source: 'query MindbodySessionTypes($site: SiteEnum!) {\n  mindbodySessionTypes(site: $site) {\n    id\n    name\n  }\n}'
+): (typeof documents)['query MindbodySessionTypes($site: SiteEnum!) {\n  mindbodySessionTypes(site: $site) {\n    id\n    name\n  }\n}']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query SessionTypes($site: SiteEnum!) {\n  sessionTypes(site: $site) {\n    id\n    name\n    active\n    bannerImagePath\n    mindbodySessionTypes {\n      id\n      name\n      isAvailableForPIQSoftware\n    }\n  }\n}'
-): (typeof documents)['query SessionTypes($site: SiteEnum!) {\n  sessionTypes(site: $site) {\n    id\n    name\n    active\n    bannerImagePath\n    mindbodySessionTypes {\n      id\n      name\n      isAvailableForPIQSoftware\n    }\n  }\n}']
+  source: 'query SessionTypes($site: SiteEnum!) {\n  sessionTypes(site: $site) {\n    id\n    name\n    active\n    bannerImagePath\n    mindbodySessionTypes {\n      id\n      name\n    }\n  }\n}'
+): (typeof documents)['query SessionTypes($site: SiteEnum!) {\n  sessionTypes(site: $site) {\n    id\n    name\n    active\n    bannerImagePath\n    mindbodySessionTypes {\n      id\n      name\n    }\n  }\n}']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'mutation UpdateSessionType($id: ID!, $input: UpdateSessionTypeInput!) {\n  updateSessionType(id: $id, input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      mindbodySessionTypes {\n        id\n        name\n        isAvailableForPIQSoftware\n      }\n    }\n    ... on SessionTypeNotFoundError {\n      id\n      code\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}'
-): (typeof documents)['mutation UpdateSessionType($id: ID!, $input: UpdateSessionTypeInput!) {\n  updateSessionType(id: $id, input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      mindbodySessionTypes {\n        id\n        name\n        isAvailableForPIQSoftware\n      }\n    }\n    ... on SessionTypeNotFoundError {\n      id\n      code\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}']
+  source: 'mutation UpdateSessionType($id: ID!, $input: UpdateSessionTypeInput!) {\n  updateSessionType(id: $id, input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      mindbodySessionTypes {\n        id\n        name\n      }\n    }\n    ... on SessionTypeNotFoundError {\n      id\n      code\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}'
+): (typeof documents)['mutation UpdateSessionType($id: ID!, $input: UpdateSessionTypeInput!) {\n  updateSessionType(id: $id, input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      mindbodySessionTypes {\n        id\n        name\n      }\n    }\n    ... on SessionTypeNotFoundError {\n      id\n      code\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

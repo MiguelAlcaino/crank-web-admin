@@ -145,6 +145,8 @@ export type CalendarClassesParams = {
   endDate?: InputMaybe<Scalars['Date']>
   /** Filter classes by instructor profile (the instructor 'face' in the app). When provided, shows only classes taught by any MindbodyStaff linked to this profile. */
   instructorProfileId?: InputMaybe<Scalars['ID']>
+  /** Filter classes by session type. When provided, shows only classes that match the given SessionType. */
+  sessionTypeId?: InputMaybe<Scalars['ID']>
   /** Start date for the class search range (format: YYYY-MM-DD). If omitted, defaults to current date. If provided and end date should also be provided. */
   startDate?: InputMaybe<Scalars['Date']>
 }
@@ -750,7 +752,6 @@ export type LockShoppingCartResponse = {
 export type MindbodySessionTypeInfo = {
   __typename: 'MindbodySessionTypeInfo'
   id: Scalars['ID']
-  isAvailableForPIQSoftware: Scalars['Boolean']
   name: Scalars['String']
 }
 
@@ -2401,7 +2402,6 @@ export type CreateSessionTypeMutation = {
           __typename: 'MindbodySessionTypeInfo'
           id: string
           name: string
-          isAvailableForPIQSoftware: boolean
         }>
       }
     | { __typename: 'UploadedFileIsNotAnImage'; code: string }
@@ -2419,12 +2419,7 @@ export type MindbodySessionTypesQueryVariables = Exact<{
 
 export type MindbodySessionTypesQuery = {
   __typename: 'Query'
-  mindbodySessionTypes: Array<{
-    __typename: 'MindbodySessionTypeInfo'
-    id: string
-    name: string
-    isAvailableForPIQSoftware: boolean
-  }>
+  mindbodySessionTypes: Array<{ __typename: 'MindbodySessionTypeInfo'; id: string; name: string }>
 }
 
 export type SessionTypesQueryVariables = Exact<{
@@ -2439,12 +2434,7 @@ export type SessionTypesQuery = {
     name: string
     active: boolean
     bannerImagePath?: string | null
-    mindbodySessionTypes: Array<{
-      __typename: 'MindbodySessionTypeInfo'
-      id: string
-      name: string
-      isAvailableForPIQSoftware: boolean
-    }>
+    mindbodySessionTypes: Array<{ __typename: 'MindbodySessionTypeInfo'; id: string; name: string }>
   }>
 }
 
@@ -2466,7 +2456,6 @@ export type UpdateSessionTypeMutation = {
           __typename: 'MindbodySessionTypeInfo'
           id: string
           name: string
-          isAvailableForPIQSoftware: boolean
         }>
       }
     | { __typename: 'SessionTypeNotFoundError'; id: string; code: string }
@@ -4135,11 +4124,7 @@ export const CreateSessionTypeDocument = {
                           kind: 'SelectionSet',
                           selections: [
                             { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'isAvailableForPIQSoftware' }
-                            }
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
                           ]
                         }
                       }
@@ -4235,8 +4220,7 @@ export const MindbodySessionTypesDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'isAvailableForPIQSoftware' } }
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } }
               ]
             }
           }
@@ -4289,8 +4273,7 @@ export const SessionTypesDocument = {
                     kind: 'SelectionSet',
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'isAvailableForPIQSoftware' } }
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } }
                     ]
                   }
                 }
@@ -4368,11 +4351,7 @@ export const UpdateSessionTypeDocument = {
                           kind: 'SelectionSet',
                           selections: [
                             { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'isAvailableForPIQSoftware' }
-                            }
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
                           ]
                         }
                       }

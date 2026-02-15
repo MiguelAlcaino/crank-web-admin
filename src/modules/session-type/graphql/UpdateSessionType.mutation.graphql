@@ -8,7 +8,6 @@ mutation UpdateSessionType($id: ID!, $input: UpdateSessionTypeInput!) {
       mindbodySessionTypes {
         id
         name
-        isAvailableForPIQSoftware
       }
     }
     ... on SessionTypeNotFoundError {

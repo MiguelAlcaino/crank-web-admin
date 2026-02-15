@@ -8,7 +8,6 @@ mutation CreateSessionType($input: CreateSessionTypeInput!) {
       mindbodySessionTypes {
         id
         name
-        isAvailableForPIQSoftware
       }
     }
     ... on UploadedFileIsNotAnImage {
