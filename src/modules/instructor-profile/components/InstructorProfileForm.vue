@@ -2,6 +2,7 @@
 import { computed, reactive, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { helpers, required, minLength, maxLength } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
+import ToggleSwitchComponent from '@/modules/shared/components/ToggleSwitchComponent.vue'
 
 export interface InstructorProfileFormState {
   name: string
@@ -185,10 +186,11 @@ defineExpose({
     <!-- Active -->
     <div class="form-row mb-3">
       <div class="col">
-        <div class="form-check">
-          <input id="active" class="form-check-input" type="checkbox" v-model="formData.active" />
-          <label class="form-check-label" for="active">Active</label>
-        </div>
+        <ToggleSwitchComponent
+          id="instructor-profile-active"
+          v-model="formData.active"
+          label="Active"
+        />
       </div>
     </div>
 

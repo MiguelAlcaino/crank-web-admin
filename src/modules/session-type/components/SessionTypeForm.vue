@@ -2,6 +2,7 @@
 import useVuelidate from '@vuelidate/core'
 import { helpers, maxLength, minLength, required } from '@vuelidate/validators'
 import { computed, reactive, ref, watch } from 'vue'
+import ToggleSwitchComponent from '@/modules/shared/components/ToggleSwitchComponent.vue'
 
 export interface SessionTypeFormState {
   name: string
@@ -46,7 +47,12 @@ function populateForm() {
 }
 
 watch(
-  () => props.initialData,
+  [
+    () => props.initialData?.name,
+    () => props.initialData?.active,
+    () => props.initialData?.bannerImagePath,
+    () => props.initialData?.bannerImageFile
+  ],
   () => {
     populateForm()
   },
@@ -114,10 +120,7 @@ defineExpose({
 
     <div class="form-row mb-3">
       <div class="col">
-        <div class="form-check">
-          <input id="active" class="form-check-input" type="checkbox" v-model="formData.active" />
-          <label class="form-check-label" for="active">Active</label>
-        </div>
+        <ToggleSwitchComponent id="session-type-active" v-model="formData.active" label="Active" />
       </div>
     </div>
 
