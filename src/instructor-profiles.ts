@@ -4,7 +4,6 @@ const selection = <HTMLElement | null>document.querySelector('#vue-app-parameter
 
 const appDiv = selection?.dataset.appDiv as string
 const gqlUrl = selection?.dataset.gqlUrl as string
-const site = selection?.dataset.site as string
 const token = selection?.dataset.token as string
 
-startInstructorProfilesApp(gqlUrl, token, site, appDiv)
+startInstructorProfilesApp(gqlUrl, token, appDiv)
