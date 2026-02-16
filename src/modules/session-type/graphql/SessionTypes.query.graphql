@@ -1,0 +1,12 @@
+query SessionTypes($site: SiteEnum!) {
+  sessionTypes(site: $site) {
+    id
+    name
+    active
+    bannerImagePath
+    mindbodySessionTypes {
+      id
+      name
+    }
+  }
+}

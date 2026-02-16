@@ -1,0 +1,17 @@
+mutation CreateSessionType($input: CreateSessionTypeInput!) {
+  createSessionType(input: $input) {
+    ... on SessionType {
+      id
+      name
+      active
+      bannerImagePath
+      mindbodySessionTypes {
+        id
+        name
+      }
+    }
+    ... on UploadedFileIsNotAnImage {
+      code
+    }
+  }
+}

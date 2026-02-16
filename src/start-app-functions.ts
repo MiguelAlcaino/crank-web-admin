@@ -28,6 +28,7 @@ import MyAdminSettingsView from './modules/my-admin-settings/views/MyAdminSettin
 import RoomLayoutView from '@/modules/room-layout/views/RoomLayoutView.vue'
 import PaymentLinkListView from '@/modules/payment-links/views/PaymentLinkListView.vue'
 import InstructorProfilesView from '@/modules/instructor-profile/views/InstructorProfilesView.vue'
+import SessionTypesView from '@/modules/session-type/views/SessionTypesView.vue'
 
 export const startCustomerCreateApp = async function (
   urlAfterSubmit: string,
@@ -327,6 +328,42 @@ export const startInstructorProfilesApp = async function (
       )
     },
     render: () => h(InstructorProfilesView)
+  })
+
+  app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
+  useAuthenticationStore().setSession(token)
+
+  if (site) {
+    if (site === SiteEnum.Dubai) {
+      appStore().setSite(SiteEnum.Dubai)
+    } else if (site === SiteEnum.AbuDhabi) {
+      appStore().setSite(SiteEnum.AbuDhabi)
+    } else if (site === SiteEnum.TownSquare) {
+      appStore().setSite(SiteEnum.TownSquare)
+    } else {
+      throw Error
+    }
+  } else {
+    throw Error
+  }
+
+  app.mount(appDiv)
+}
+
+export const startSessionTypesApp = async function (
+  gqlUrl: string,
+  token: string,
+  site: string,
+  appDiv: string
+) {
+  const app = createApp({
+    setup() {
+      provide(
+        'gqlApiService',
+        new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
+      )
+    },
+    render: () => h(SessionTypesView)
   })
 
   app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)

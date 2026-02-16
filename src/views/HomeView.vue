@@ -24,5 +24,7 @@
     <RouterLink key="/instructor-profiles" to="/instructor-profiles">
       Instructor Profiles</RouterLink
     >
+    <br />
+    <RouterLink key="/session-types" to="/session-types"> Session Types</RouterLink>
   </main>
 </template>

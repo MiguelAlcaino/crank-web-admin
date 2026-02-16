@@ -145,6 +145,8 @@ export type CalendarClassesParams = {
   endDate?: InputMaybe<Scalars['Date']>
   /** Filter classes by instructor profile (the instructor 'face' in the app). When provided, shows only classes taught by any MindbodyStaff linked to this profile. */
   instructorProfileId?: InputMaybe<Scalars['ID']>
+  /** Filter classes by session type. When provided, shows only classes that match the given SessionType. */
+  sessionTypeId?: InputMaybe<Scalars['ID']>
   /** Start date for the class search range (format: YYYY-MM-DD). If omitted, defaults to current date. If provided and end date should also be provided. */
   startDate?: InputMaybe<Scalars['Date']>
 }
@@ -404,6 +406,16 @@ export type CreatePaymentLinkInput = {
   site: SiteEnum
   title: Scalars['String']
 }
+
+export type CreateSessionTypeInput = {
+  active?: InputMaybe<Scalars['Boolean']>
+  bannerImageFile?: InputMaybe<Scalars['File']>
+  mindbodySessionTypeIds?: InputMaybe<Array<Scalars['ID']>>
+  name: Scalars['String']
+  site: SiteEnum
+}
+
+export type CreateSessionTypeResultUnion = SessionType | UploadedFileIsNotAnImage
 
 export type CurrentUserEnrollmentsParams = {
   endDate?: InputMaybe<Scalars['Date']>
@@ -737,6 +749,12 @@ export type LockShoppingCartResponse = {
   merchantReference: Scalars['ID']
 }
 
+export type MindbodySessionTypeInfo = {
+  __typename: 'MindbodySessionTypeInfo'
+  id: Scalars['ID']
+  name: Scalars['String']
+}
+
 export type MindbodyStaffInfo = {
   __typename: 'MindbodyStaffInfo'
   email?: Maybe<Scalars['String']>
@@ -787,6 +805,8 @@ export type Mutation = {
   createPaymentLink: PaymentLink
   /** Creates a new room layout */
   createRoomLayout: RoomLayout
+  /** Creates a new session type */
+  createSessionType: CreateSessionTypeResultUnion
   /** It deletes the current user's account */
   deleteCurrentUserAccount?: Maybe<DeleteCurrentUserAccountUnion>
   /** Removes a devices token */
@@ -795,6 +815,8 @@ export type Mutation = {
   deleteInstructorProfile: Scalars['Boolean']
   /** Soft deletes a payment link */
   deletePaymentLink: Scalars['Boolean']
+  /** Deletes a session type */
+  deleteSessionType: Scalars['Boolean']
   /** Disables a spot in a class */
   disableSpot?: Maybe<DisableEnableSpotResultUnion>
   /** Edits a class */
@@ -896,6 +918,8 @@ export type Mutation = {
   updateItemInShoppingCart: ShoppingCartResultUnion
   /** Updates a payment link */
   updatePaymentLink: PaymentLink
+  /** Updates a session type */
+  updateSessionType: UpdateSessionTypeResultUnion
   updateUserPassword?: Maybe<Scalars['Boolean']>
 }
 
@@ -970,6 +994,10 @@ export type MutationCreateRoomLayoutArgs = {
   site: SiteEnum
 }
 
+export type MutationCreateSessionTypeArgs = {
+  input: CreateSessionTypeInput
+}
+
 export type MutationDeleteCurrentUserAccountArgs = {
   site: SiteEnum
   userPassword: Scalars['String']
@@ -985,6 +1013,10 @@ export type MutationDeleteInstructorProfileArgs = {
 }
 
 export type MutationDeletePaymentLinkArgs = {
+  id: Scalars['ID']
+}
+
+export type MutationDeleteSessionTypeArgs = {
   id: Scalars['ID']
 }
 
@@ -1194,6 +1226,11 @@ export type MutationUpdateItemInShoppingCartArgs = {
 
 export type MutationUpdatePaymentLinkArgs = {
   input: UpdatePaymentLinkInput
+}
+
+export type MutationUpdateSessionTypeArgs = {
+  id: Scalars['ID']
+  input: UpdateSessionTypeInput
 }
 
 export type MutationUpdateUserPasswordArgs = {
@@ -1416,6 +1453,8 @@ export type Query = {
   instructorProfiles: Array<InstructorProfile>
   /** Verifies whether an sms validation code is valid */
   isSMSValidationCodeValid?: Maybe<IsSmsValidationCodeValidUnion>
+  /** Returns a list of all MindbodySessionType records for a site */
+  mindbodySessionTypes: Array<MindbodySessionTypeInfo>
   /** Returns a list of all MindbodyStaff records */
   mindbodyStaffs: Array<MindbodyStaffInfo>
   /** Returns a single payment link by ID */
@@ -1432,6 +1471,8 @@ export type Query = {
   roomLayouts: Array<RoomLayout>
   /** Returns the matched users given the query provided */
   searchSiteUser?: Maybe<Array<Maybe<IdentifiableSiteUser>>>
+  /** Returns a list of all session types for a site */
+  sessionTypes: Array<SessionType>
   /** Returns a single workout stat */
   singleWorkoutStat?: Maybe<ClassStat>
   /** Settings of a site */
@@ -1530,6 +1571,10 @@ export type QueryIsSmsValidationCodeValidArgs = {
   smsCode: Scalars['String']
 }
 
+export type QueryMindbodySessionTypesArgs = {
+  site: SiteEnum
+}
+
 export type QueryPaymentLinkArgs = {
   id: Scalars['ID']
 }
@@ -1560,6 +1605,10 @@ export type QueryRoomLayoutsArgs = {
 export type QuerySearchSiteUserArgs = {
   query?: InputMaybe<Scalars['String']>
   site?: InputMaybe<SiteEnum>
+}
+
+export type QuerySessionTypesArgs = {
+  site: SiteEnum
 }
 
 export type QuerySingleWorkoutStatArgs = {
@@ -1747,6 +1796,21 @@ export enum ServiceStatusEnum {
   ActiveOnly = 'activeOnly',
   All = 'all',
   ExpiredOnly = 'expiredOnly'
+}
+
+export type SessionType = {
+  __typename: 'SessionType'
+  active: Scalars['Boolean']
+  bannerImagePath?: Maybe<Scalars['String']>
+  id: Scalars['ID']
+  mindbodySessionTypes: Array<MindbodySessionTypeInfo>
+  name: Scalars['String']
+}
+
+export type SessionTypeNotFoundError = Error & {
+  __typename: 'SessionTypeNotFoundError'
+  code: Scalars['String']
+  id: Scalars['ID']
 }
 
 export type SetRoomLayoutForClassSchedulesInput = {
@@ -1968,6 +2032,18 @@ export type UpdatePaymentLinkInput = {
   site?: InputMaybe<SiteEnum>
   title?: InputMaybe<Scalars['String']>
 }
+
+export type UpdateSessionTypeInput = {
+  active?: InputMaybe<Scalars['Boolean']>
+  bannerImageFile?: InputMaybe<Scalars['File']>
+  mindbodySessionTypeIds?: InputMaybe<Array<Scalars['ID']>>
+  name?: InputMaybe<Scalars['String']>
+}
+
+export type UpdateSessionTypeResultUnion =
+  | SessionType
+  | SessionTypeNotFoundError
+  | UploadedFileIsNotAnImage
 
 export type UpdateUserPasswordInput = {
   newPassword: Scalars['String']
@@ -2307,6 +2383,83 @@ export type UpdatePaymentLinkMutation = {
     notificationEmailAddress: string
     site: { __typename: 'Site'; name: string; code: SiteEnum }
   }
+}
+
+export type CreateSessionTypeMutationVariables = Exact<{
+  input: CreateSessionTypeInput
+}>
+
+export type CreateSessionTypeMutation = {
+  __typename: 'Mutation'
+  createSessionType:
+    | {
+        __typename: 'SessionType'
+        id: string
+        name: string
+        active: boolean
+        bannerImagePath?: string | null
+        mindbodySessionTypes: Array<{
+          __typename: 'MindbodySessionTypeInfo'
+          id: string
+          name: string
+        }>
+      }
+    | { __typename: 'UploadedFileIsNotAnImage'; code: string }
+}
+
+export type DeleteSessionTypeMutationVariables = Exact<{
+  id: Scalars['ID']
+}>
+
+export type DeleteSessionTypeMutation = { __typename: 'Mutation'; deleteSessionType: boolean }
+
+export type MindbodySessionTypesQueryVariables = Exact<{
+  site: SiteEnum
+}>
+
+export type MindbodySessionTypesQuery = {
+  __typename: 'Query'
+  mindbodySessionTypes: Array<{ __typename: 'MindbodySessionTypeInfo'; id: string; name: string }>
+}
+
+export type SessionTypesQueryVariables = Exact<{
+  site: SiteEnum
+}>
+
+export type SessionTypesQuery = {
+  __typename: 'Query'
+  sessionTypes: Array<{
+    __typename: 'SessionType'
+    id: string
+    name: string
+    active: boolean
+    bannerImagePath?: string | null
+    mindbodySessionTypes: Array<{ __typename: 'MindbodySessionTypeInfo'; id: string; name: string }>
+  }>
+}
+
+export type UpdateSessionTypeMutationVariables = Exact<{
+  id: Scalars['ID']
+  input: UpdateSessionTypeInput
+}>
+
+export type UpdateSessionTypeMutation = {
+  __typename: 'Mutation'
+  updateSessionType:
+    | {
+        __typename: 'SessionType'
+        id: string
+        name: string
+        active: boolean
+        bannerImagePath?: string | null
+        mindbodySessionTypes: Array<{
+          __typename: 'MindbodySessionTypeInfo'
+          id: string
+          name: string
+        }>
+      }
+    | { __typename: 'SessionTypeNotFoundError'; id: string; code: string }
+    | { __typename: 'UploadedFileIsNotAnImage'; code: string }
 }
 
 export type SiteSettingsQueryVariables = Exact<{
@@ -3918,6 +4071,326 @@ export const UpdatePaymentLinkDocument = {
     }
   ]
 } as unknown as DocumentNode<UpdatePaymentLinkMutation, UpdatePaymentLinkMutationVariables>
+export const CreateSessionTypeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreateSessionType' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'CreateSessionTypeInput' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createSessionType' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'SessionType' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'active' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'bannerImagePath' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'mindbodySessionTypes' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'UploadedFileIsNotAnImage' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<CreateSessionTypeMutation, CreateSessionTypeMutationVariables>
+export const DeleteSessionTypeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'DeleteSessionType' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'deleteSessionType' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<DeleteSessionTypeMutation, DeleteSessionTypeMutationVariables>
+export const MindbodySessionTypesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'MindbodySessionTypes' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'mindbodySessionTypes' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'site' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MindbodySessionTypesQuery, MindbodySessionTypesQueryVariables>
+export const SessionTypesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'SessionTypes' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'sessionTypes' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'site' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'active' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'bannerImagePath' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'mindbodySessionTypes' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<SessionTypesQuery, SessionTypesQueryVariables>
+export const UpdateSessionTypeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UpdateSessionType' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UpdateSessionTypeInput' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'updateSessionType' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'SessionType' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'active' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'bannerImagePath' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'mindbodySessionTypes' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'SessionTypeNotFoundError' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'UploadedFileIsNotAnImage' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<UpdateSessionTypeMutation, UpdateSessionTypeMutationVariables>
 export const SiteSettingsDocument = {
   kind: 'Document',
   definitions: [

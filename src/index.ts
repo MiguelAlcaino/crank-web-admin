@@ -10,7 +10,8 @@ import {
   startUserAdminApp,
   startMyAdminSettingsApp,
   startPaymentLinksApp,
-  startInstructorProfilesApp
+  startInstructorProfilesApp,
+  startSessionTypesApp
 } from '@/start-app-functions'
 
 export {
@@ -25,5 +26,6 @@ export {
   startUserAdminApp,
   startMyAdminSettingsApp,
   startPaymentLinksApp,
-  startInstructorProfilesApp
+  startInstructorProfilesApp,
+  startSessionTypesApp
 }
