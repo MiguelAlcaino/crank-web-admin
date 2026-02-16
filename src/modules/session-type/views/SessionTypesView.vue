@@ -18,11 +18,14 @@ const errorModalVisible = ref<boolean>(false)
 const sites = ref<Site[]>([])
 const isLoadingSites = ref(false)
 const selectedSite = ref<SiteEnum | null>(null)
+const loadedSite = ref<SiteEnum | null>(null)
 
 onMounted(async () => {
+  sessionTypes.value = []
   await getAvailableSites()
   if (selectedSite.value) {
     await getSessionTypes(selectedSite.value)
+    loadedSite.value = selectedSite.value
   }
   if (hasLoadError.value) {
     errorModalVisible.value = true
@@ -68,9 +71,13 @@ async function onSiteChange(site: SiteEnum | null) {
   if (!site) {
     return
   }
+  if (site === loadedSite.value) {
+    return
+  }
 
   selectedSite.value = site
   await getSessionTypes(site)
+  loadedSite.value = site
 }
 </script>
 
@@ -107,7 +114,12 @@ async function onSiteChange(site: SiteEnum | null) {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in sessionTypes" v-bind:key="item.id" v-bind:index="index">
+          <tr
+            v-for="(item, index) in sessionTypes"
+            v-bind:key="item.id"
+            v-bind:index="index"
+            v-if="!isLoading && !isLoadingSites"
+          >
             <td class="text-center">{{ item.id }}</td>
             <td class="text-center">{{ item.name }}</td>
             <td class="text-center">
@@ -145,12 +157,12 @@ async function onSiteChange(site: SiteEnum | null) {
               <SessionTypeEdit :session-type="item" :site="selectedSite as SiteEnum" />
             </td>
           </tr>
-          <tr v-if="!isLoading && sessionTypes?.length === 0">
+          <tr v-if="!isLoading && !isLoadingSites && sessionTypes?.length === 0">
             <td colspan="6" class="text-center">
               <p>NO DATA AVAILABLE IN TABLE</p>
             </td>
           </tr>
-          <tr v-if="isLoading">
+          <tr v-if="isLoading || isLoadingSites">
             <td colspan="6" class="text-center">LOADING...</td>
           </tr>
         </tbody>
