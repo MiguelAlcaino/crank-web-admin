@@ -1,4 +1,5 @@
 import type { ApiService } from '@/services/apiService'
+import { appStore } from '@/stores/appStorage'
 import { readonly, ref } from 'vue'
 import type { MindbodyStaff } from '../interfaces/mindbody-staff'
 
@@ -13,7 +14,7 @@ export const useMindbodyStaffs = (apiService: ApiService) => {
     availableStaffs.value = []
 
     try {
-      availableStaffs.value = await apiService.getMindbodyStaffs()
+      availableStaffs.value = await apiService.getMindbodyStaffs(appStore().site)
     } catch (error) {
       hasError.value = true
     } finally {

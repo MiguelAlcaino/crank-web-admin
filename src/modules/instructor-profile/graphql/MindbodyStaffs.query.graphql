@@ -1,5 +1,5 @@
-query MindbodyStaffs {
-  mindbodyStaffs {
+query MindbodyStaffs($site: SiteEnum!) {
+  mindbodyStaffs(site: $site) {
     id
     firstName
     lastName

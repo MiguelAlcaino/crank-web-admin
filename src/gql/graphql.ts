@@ -1575,6 +1575,10 @@ export type QueryMindbodySessionTypesArgs = {
   site: SiteEnum
 }
 
+export type QueryMindbodyStaffsArgs = {
+  site: SiteEnum
+}
+
 export type QueryPaymentLinkArgs = {
   id: Scalars['ID']
 }
@@ -2265,7 +2269,9 @@ export type InstructorProfilesQuery = {
   }>
 }
 
-export type MindbodyStaffsQueryVariables = Exact<{ [key: string]: never }>
+export type MindbodyStaffsQueryVariables = Exact<{
+  site: SiteEnum
+}>
 
 export type MindbodyStaffsQuery = {
   __typename: 'Query'
@@ -3671,12 +3677,29 @@ export const MindbodyStaffsDocument = {
       kind: 'OperationDefinition',
       operation: 'query',
       name: { kind: 'Name', value: 'MindbodyStaffs' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
+          }
+        }
+      ],
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'mindbodyStaffs' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'site' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
+              }
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [

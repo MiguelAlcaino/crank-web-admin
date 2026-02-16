@@ -1,30 +1,30 @@
 import type {
-  CreateSessionTypeInput,
   CreateInstructorProfileInput,
+  CreateSessionTypeInput,
   InstructorProfile,
   MindbodySessionTypeInfo,
   MindbodyStaffInfo,
   SessionType,
   SiteSetting,
-  UpdateSessionTypeInput,
-  UpdateInstructorProfileInput
+  UpdateInstructorProfileInput,
+  UpdateSessionTypeInput
 } from '@/gql/graphql'
 import {
-  CreateSessionTypeDocument,
   CreateInstructorProfileDocument,
   CreatePaymentLinkDocument,
-  DeleteSessionTypeDocument,
+  CreateSessionTypeDocument,
   DeleteInstructorProfileDocument,
   DeletePaymentLinkDocument,
+  DeleteSessionTypeDocument,
   InstructorProfilesDocument,
   MindbodySessionTypesDocument,
   MindbodyStaffsDocument,
   PaymentLinkDocument,
   PaymentLinksDocument,
   SessionTypesDocument,
-  UpdateSessionTypeDocument,
   UpdateInstructorProfileDocument,
   UpdatePaymentLinkDocument,
+  UpdateSessionTypeDocument,
   type AdminUser,
   type AdminUserDataInput,
   type AdminUserResultUnion,
@@ -2269,10 +2269,11 @@ export class ApiService {
     }
   }
 
-  async getMindbodyStaffs(): Promise<MindbodyStaffInfo[]> {
+  async getMindbodyStaffs(site: SiteEnum): Promise<MindbodyStaffInfo[]> {
     try {
       const { data, errors } = await this.authApiClient.query({
         query: MindbodyStaffsDocument,
+        variables: { site: site },
         fetchPolicy: 'network-only'
       })
 

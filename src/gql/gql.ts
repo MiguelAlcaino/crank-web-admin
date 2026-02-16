@@ -19,7 +19,7 @@ const documents = {
     types.DeleteInstructorProfileDocument,
   'query InstructorProfiles($activeOnly: Boolean, $site: SiteEnum!) {\n  instructorProfiles(activeOnly: $activeOnly, site: $site) {\n    id\n    name\n    description\n    profilePictureUrl\n    active\n    createdAt\n    updatedAt\n    mindbodyStaffs {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}':
     types.InstructorProfilesDocument,
-  'query MindbodyStaffs {\n  mindbodyStaffs {\n    id\n    firstName\n    lastName\n    email\n  }\n}':
+  'query MindbodyStaffs($site: SiteEnum!) {\n  mindbodyStaffs(site: $site) {\n    id\n    firstName\n    lastName\n    email\n  }\n}':
     types.MindbodyStaffsDocument,
   'mutation UpdateInstructorProfile($id: ID!, $input: UpdateInstructorProfileInput!) {\n  updateInstructorProfile(id: $id, input: $input) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n    ... on InstructorProfileNotFoundError {\n      code\n    }\n  }\n}':
     types.UpdateInstructorProfileDocument,
@@ -199,8 +199,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query MindbodyStaffs {\n  mindbodyStaffs {\n    id\n    firstName\n    lastName\n    email\n  }\n}'
-): (typeof documents)['query MindbodyStaffs {\n  mindbodyStaffs {\n    id\n    firstName\n    lastName\n    email\n  }\n}']
+  source: 'query MindbodyStaffs($site: SiteEnum!) {\n  mindbodyStaffs(site: $site) {\n    id\n    firstName\n    lastName\n    email\n  }\n}'
+): (typeof documents)['query MindbodyStaffs($site: SiteEnum!) {\n  mindbodyStaffs(site: $site) {\n    id\n    firstName\n    lastName\n    email\n  }\n}']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
