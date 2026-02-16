@@ -71,7 +71,7 @@ async function getAvailableSites() {
 }
 
 async function onSiteChange(site: SiteEnum | null) {
-  if (!site || site === selectedSite.value) {
+  if (!site) {
     return
   }
 
