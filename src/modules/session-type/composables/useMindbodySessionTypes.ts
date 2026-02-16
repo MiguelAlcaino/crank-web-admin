@@ -1,6 +1,6 @@
 import type { MindbodySessionType } from '@/modules/session-type/interfaces'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 import type { ApiService } from '@/services/apiService'
-import { appStore } from '@/stores/appStorage'
 import { readonly, ref } from 'vue'
 
 export const useMindbodySessionTypes = (apiService: ApiService) => {
@@ -8,13 +8,13 @@ export const useMindbodySessionTypes = (apiService: ApiService) => {
   const isLoadingSessionTypes = ref<boolean>(false)
   const hasError = ref<boolean>(false)
 
-  async function getAvailableSessionTypes() {
+  async function getAvailableSessionTypes(site: SiteEnum) {
     isLoadingSessionTypes.value = true
     hasError.value = false
     availableSessionTypes.value = []
 
     try {
-      availableSessionTypes.value = await apiService.getMindbodySessionTypes(appStore().site)
+      availableSessionTypes.value = await apiService.getMindbodySessionTypes(site)
     } catch (error) {
       hasError.value = true
     } finally {

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 import type { ApiService } from '@/services/apiService'
-import { appStore } from '@/stores/appStorage'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import { computed, inject, ref } from 'vue'
 import { useMindbodySessionTypes } from '../composables/useMindbodySessionTypes'
@@ -16,6 +16,9 @@ const apiService = inject<ApiService>('gqlApiService')!
 const { createSessionType } = useSessionTypes(apiService)
 const { availableSessionTypes, isLoadingSessionTypes, getAvailableSessionTypes } =
   useMindbodySessionTypes(apiService)
+const props = defineProps<{
+  site: SiteEnum | null
+}>()
 
 const modalIsVisible = ref(false)
 const isSaving = ref(false)
@@ -32,9 +35,10 @@ const availableSessionTypesComputed = computed(() => {
 const formRef = ref<InstanceType<typeof SessionTypeForm> | null>(null)
 
 const openModal = () => {
+  if (!props.site) return
   modalIsVisible.value = true
   assignedSessionTypes.value = []
-  getAvailableSessionTypes()
+  getAvailableSessionTypes(props.site)
 }
 
 const closeModal = () => {
@@ -44,6 +48,7 @@ const closeModal = () => {
 
 const submitForm = async () => {
   if (!formRef.value) return
+  if (!props.site) return
 
   const data = await formRef.value.validateAndGetValues()
 
@@ -52,7 +57,7 @@ const submitForm = async () => {
       isSaving.value = true
 
       const success = await createSessionType({
-        site: appStore().site,
+        site: props.site,
         name: data.name,
         active: data.active,
         bannerImageFile: data.bannerImageFile,
@@ -81,7 +86,12 @@ function onSuccessOk() {
 </script>
 
 <template>
-  <DefaultButtonComponent text="Create session type" type="button" @on-click="openModal()" />
+  <DefaultButtonComponent
+    text="Create session type"
+    type="button"
+    :disabled="!site"
+    @on-click="openModal()"
+  />
 
   <transition name="modal" v-if="modalIsVisible">
     <div class="modal-mask">

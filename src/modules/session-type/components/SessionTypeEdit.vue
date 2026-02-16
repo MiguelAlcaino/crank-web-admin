@@ -2,6 +2,7 @@
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import type { SessionType } from '@/modules/session-type/interfaces'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import { computed, inject, ref } from 'vue'
@@ -20,6 +21,7 @@ const { availableSessionTypes, isLoadingSessionTypes, getAvailableSessionTypes }
 
 const props = defineProps<{
   sessionType: SessionType
+  site: SiteEnum
 }>()
 
 const modalIsVisible = ref(false)
@@ -41,7 +43,7 @@ const openModal = () => {
   assignedSessionTypes.value = props.sessionType.mindbodySessionTypes
     ? [...props.sessionType.mindbodySessionTypes]
     : []
-  getAvailableSessionTypes()
+  getAvailableSessionTypes(props.site)
 }
 
 const closeModal = () => {

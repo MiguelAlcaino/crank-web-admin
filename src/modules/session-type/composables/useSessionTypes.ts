@@ -1,7 +1,6 @@
 import type { SessionType } from '@/modules/session-type/interfaces'
 import type { SiteEnum } from '@/modules/shared/interfaces'
 import type { ApiService } from '@/services/apiService'
-import { appStore } from '@/stores/appStorage'
 import { readonly, ref } from 'vue'
 
 const sessionTypes = ref<SessionType[]>([])
@@ -12,13 +11,13 @@ export const useSessionTypes = (apiService: ApiService) => {
   const isLoading = ref<boolean>(false)
   const isSaving = ref<boolean>(false)
 
-  async function getSessionTypes() {
+  async function getSessionTypes(site: SiteEnum) {
     hasLoadError.value = false
     isLoading.value = true
     sessionTypes.value = []
 
     try {
-      sessionTypes.value = await apiService.getSessionTypes(appStore().site)
+      sessionTypes.value = await apiService.getSessionTypes(site)
     } catch (error) {
       hasLoadError.value = true
     } finally {

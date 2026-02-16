@@ -7,7 +7,6 @@ import { inject, onMounted, ref } from 'vue'
 import SessionTypeCreate from '../components/SessionTypeCreate.vue'
 import SessionTypeEdit from '../components/SessionTypeEdit.vue'
 import { useSessionTypes } from '../composables/useSessionTypes'
-import { appStore } from '@/stores/appStorage'
 import type { Site } from '@/modules/shared/interfaces/site'
 import type { SiteEnum } from '@/modules/shared/interfaces'
 import type { AdminUserSites } from '@/modules/class-schedule/interfaces/admin-user-sites'
@@ -18,11 +17,13 @@ const { isLoading, sessionTypes, hasLoadError, getSessionTypes } = useSessionTyp
 const errorModalVisible = ref<boolean>(false)
 const sites = ref<Site[]>([])
 const isLoadingSites = ref(false)
-const selectedSite = ref<SiteEnum | null>(appStore().site)
+const selectedSite = ref<SiteEnum | null>(null)
 
 onMounted(async () => {
   await getAvailableSites()
-  await getSessionTypes()
+  if (selectedSite.value) {
+    await getSessionTypes(selectedSite.value)
+  }
   if (hasLoadError.value) {
     errorModalVisible.value = true
   }
@@ -38,29 +39,38 @@ async function getAvailableSites() {
 
     if (sites.value.length === 0) {
       selectedSite.value = null
+      sessionTypes.value = []
       return
     }
 
-    const hasCurrentSite = sites.value.some((site) => site.code === selectedSite.value)
-    if (!hasCurrentSite) {
-      selectedSite.value = sites.value[0].code
-      appStore().setSite(selectedSite.value)
+    let selectedSiteCode: SiteEnum | null =
+      adminUserSites.favoriteSite !== null ? (adminUserSites.favoriteSite.code as SiteEnum) : null
+
+    const hasSelectedSite = selectedSiteCode
+      ? sites.value.some((site) => site.code === selectedSiteCode)
+      : false
+
+    if (!hasSelectedSite) {
+      selectedSiteCode = sites.value[0].code
     }
+
+    selectedSite.value = selectedSiteCode
   } catch (error) {
     sites.value = []
+    selectedSite.value = null
+    sessionTypes.value = []
   } finally {
     isLoadingSites.value = false
   }
 }
 
 async function onSiteChange(site: SiteEnum | null) {
-  if (!site || site === appStore().site) {
+  if (!site || site === selectedSite.value) {
     return
   }
 
-  appStore().setSite(site)
   selectedSite.value = site
-  await getSessionTypes()
+  await getSessionTypes(site)
 }
 </script>
 
@@ -79,7 +89,7 @@ async function onSiteChange(site: SiteEnum | null) {
       />
     </div>
     <div class="col-md-8 col-sm-6 col-12 d-flex justify-content-sm-end justify-content-start">
-      <SessionTypeCreate />
+      <SessionTypeCreate :site="selectedSite" />
     </div>
   </div>
   <br />
@@ -132,7 +142,7 @@ async function onSiteChange(site: SiteEnum | null) {
               <span v-else>-</span>
             </td>
             <td>
-              <SessionTypeEdit :session-type="item" />
+              <SessionTypeEdit :session-type="item" :site="selectedSite as SiteEnum" />
             </td>
           </tr>
           <tr v-if="!isLoading && sessionTypes?.length === 0">
