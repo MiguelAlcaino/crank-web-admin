@@ -13,13 +13,16 @@ import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonCom
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import InstructorProfileForm from './InstructorProfileForm.vue'
 import MindbodyStaffDraggable from './MindbodyStaffDraggable.vue'
-import { appStore } from '@/stores/appStorage'
 import { getInstructorProfileErrorMessage } from '../utils/getInstructorProfileErrorMessage'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 
 // Dependency Injection
 const apiService = inject<ApiService>('gqlApiService')!
 const { createInstructorProfile } = useInstructorProfiles(apiService)
 const { availableStaffs, isLoadingStaffs, getAvailableStaffs } = useMindbodyStaffs(apiService)
+const props = defineProps<{
+  site: SiteEnum | null
+}>()
 
 // Local States
 const modalIsVisible = ref(false)
@@ -42,9 +45,10 @@ const formRef = ref<InstanceType<typeof InstructorProfileForm> | null>(null)
 
 // Open the main modal
 const openModal = () => {
+  if (!props.site) return
   modalIsVisible.value = true
   assignedStaff.value = []
-  getAvailableStaffs()
+  getAvailableStaffs(props.site)
 }
 
 // Close the main modal
@@ -56,6 +60,7 @@ const closeModal = () => {
 // Save logic
 const submitForm = async () => {
   if (!formRef.value) return
+  if (!props.site) return
 
   const data = await formRef.value.validateAndGetValues()
 
@@ -64,7 +69,7 @@ const submitForm = async () => {
       isSaving.value = true
 
       const success = await createInstructorProfile({
-        site: appStore().site,
+        site: props.site,
         name: data.name,
         description: data.description,
         active: data.active,
@@ -96,7 +101,12 @@ function onSuccessOk() {
 
 <template>
   <!-- Button -->
-  <DefaultButtonComponent text="Create instructor profile" type="button" @on-click="openModal()" />
+  <DefaultButtonComponent
+    text="Create instructor profile"
+    type="button"
+    :disabled="!site"
+    @on-click="openModal()"
+  />
 
   <!-- Modal -->
   <transition name="modal" v-if="modalIsVisible">

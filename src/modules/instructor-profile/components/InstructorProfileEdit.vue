@@ -16,6 +16,7 @@ import InstructorProfileForm from './InstructorProfileForm.vue'
 import MindbodyStaffDraggable from './MindbodyStaffDraggable.vue'
 import type { MindbodyStaff } from '../interfaces'
 import { getInstructorProfileErrorMessage } from '../utils/getInstructorProfileErrorMessage'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 
 // Dependency Injection
 const apiService = inject<ApiService>('gqlApiService')!
@@ -25,6 +26,7 @@ const { availableStaffs, isLoadingStaffs, getAvailableStaffs } = useMindbodyStaf
 // Props
 const props = defineProps<{
   instructorProfile: InstructorProfile
+  site: SiteEnum
 }>()
 
 // Local States
@@ -52,7 +54,7 @@ const openModal = () => {
   assignedStaff.value = props.instructorProfile.mindbodyStaffs
     ? [...props.instructorProfile.mindbodyStaffs]
     : []
-  getAvailableStaffs()
+  getAvailableStaffs(props.site)
 }
 
 // Close the main modal

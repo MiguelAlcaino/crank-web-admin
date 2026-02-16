@@ -1,34 +1,34 @@
-import { createApp, h, provide } from 'vue'
-import { createPinia } from 'pinia'
-import router from './router'
-import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
-import ContextMenu from '@imengyu/vue3-context-menu'
-import 'vue3-simple-typeahead/dist/vue3-simple-typeahead.css'
-import '@vueform/slider/themes/default.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap-icons/font/bootstrap-icons.css'
-import './assets/main.css'
 import { ApiService } from '@/services/apiService'
 import { newAnonymousClient, newAuthenticatedApolloClient } from '@/services/graphqlClient'
-import { useAuthenticationStore } from '@/stores/authToken'
-import SimpleTypeahead from 'vue3-simple-typeahead'
-import VueApexCharts from 'vue3-apexcharts'
 import { appStore } from '@/stores/appStorage'
+import { useAuthenticationStore } from '@/stores/authToken'
+import ContextMenu from '@imengyu/vue3-context-menu'
+import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
+import '@vueform/slider/themes/default.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { createPinia } from 'pinia'
+import { createApp, h, provide } from 'vue'
+import VueApexCharts from 'vue3-apexcharts'
+import SimpleTypeahead from 'vue3-simple-typeahead'
+import 'vue3-simple-typeahead/dist/vue3-simple-typeahead.css'
+import './assets/main.css'
+import router from './router'
 
 import { SiteEnum } from './modules/shared/interfaces'
 
-import AdminUserListView from './modules/admin-user/views/AdminUserListView.vue'
-import ClassSchedulesView from './modules/class-schedule-config/views/ClassScheduleConfigView.vue'
 import ClassScheduleView from '@/modules/class-schedule/views/ClassScheduleView.vue'
 import CustomerCreateView from '@/modules/customer/views/CustomerCreateView.vue'
 import CustomerEditView from '@/modules/customer/views/CustomerEditView.vue'
 import CustomerProfileView from '@/modules/customer/views/CustomerProfileView.vue'
+import InstructorProfilesView from '@/modules/instructor-profile/views/InstructorProfilesView.vue'
+import PaymentLinkListView from '@/modules/payment-links/views/PaymentLinkListView.vue'
+import RoomLayoutView from '@/modules/room-layout/views/RoomLayoutView.vue'
+import SessionTypesView from '@/modules/session-type/views/SessionTypesView.vue'
+import AdminUserListView from './modules/admin-user/views/AdminUserListView.vue'
+import ClassSchedulesView from './modules/class-schedule-config/views/ClassScheduleConfigView.vue'
 import GiftCardListView from './modules/gift-card/views/GiftCardListView.vue'
 import MyAdminSettingsView from './modules/my-admin-settings/views/MyAdminSettingsView.vue'
-import RoomLayoutView from '@/modules/room-layout/views/RoomLayoutView.vue'
-import PaymentLinkListView from '@/modules/payment-links/views/PaymentLinkListView.vue'
-import InstructorProfilesView from '@/modules/instructor-profile/views/InstructorProfilesView.vue'
-import SessionTypesView from '@/modules/session-type/views/SessionTypesView.vue'
 
 export const startCustomerCreateApp = async function (
   urlAfterSubmit: string,
@@ -317,7 +317,6 @@ export const startPaymentLinksApp = async function (gqlUrl: string, token: strin
 export const startInstructorProfilesApp = async function (
   gqlUrl: string,
   token: string,
-  site: string,
   appDiv: string
 ) {
   const app = createApp({
@@ -333,29 +332,10 @@ export const startInstructorProfilesApp = async function (
   app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
   useAuthenticationStore().setSession(token)
 
-  if (site) {
-    if (site === SiteEnum.Dubai) {
-      appStore().setSite(SiteEnum.Dubai)
-    } else if (site === SiteEnum.AbuDhabi) {
-      appStore().setSite(SiteEnum.AbuDhabi)
-    } else if (site === SiteEnum.TownSquare) {
-      appStore().setSite(SiteEnum.TownSquare)
-    } else {
-      throw Error
-    }
-  } else {
-    throw Error
-  }
-
   app.mount(appDiv)
 }
 
-export const startSessionTypesApp = async function (
-  gqlUrl: string,
-  token: string,
-  site: string,
-  appDiv: string
-) {
+export const startSessionTypesApp = async function (gqlUrl: string, token: string, appDiv: string) {
   const app = createApp({
     setup() {
       provide(
@@ -368,20 +348,6 @@ export const startSessionTypesApp = async function (
 
   app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
   useAuthenticationStore().setSession(token)
-
-  if (site) {
-    if (site === SiteEnum.Dubai) {
-      appStore().setSite(SiteEnum.Dubai)
-    } else if (site === SiteEnum.AbuDhabi) {
-      appStore().setSite(SiteEnum.AbuDhabi)
-    } else if (site === SiteEnum.TownSquare) {
-      appStore().setSite(SiteEnum.TownSquare)
-    } else {
-      throw Error
-    }
-  } else {
-    throw Error
-  }
 
   app.mount(appDiv)
 }

@@ -1,7 +1,6 @@
 import type { InstructorProfile } from '@/modules/instructor-profile/interfaces/Instructor-profile'
 import type { SiteEnum } from '@/modules/shared/interfaces'
 import type { ApiService } from '@/services/apiService'
-import { appStore } from '@/stores/appStorage'
 import { readonly, ref } from 'vue'
 
 const instructorProfiles = ref<InstructorProfile[]>([])
@@ -14,14 +13,14 @@ export const useInstructorProfiles = (apiService: ApiService) => {
 
   const loadingSites = ref(false)
 
-  async function getInstructorProfiles() {
+  async function getInstructorProfiles(site: SiteEnum) {
     hasLoadError.value = false
     isLoading.value = true
     instructorProfiles.value = []
 
     try {
       instructorProfiles.value = (await apiService.getInstructorProfiles(
-        appStore().site,
+        site,
         false
       )) as InstructorProfile[]
     } catch (error) {

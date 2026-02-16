@@ -8,7 +8,6 @@ import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import SiteSelector from '@/modules/shared/components/SiteSelector.vue'
 import dayjs from 'dayjs'
-import { appStore } from '@/stores/appStorage'
 import type { Site } from '@/modules/shared/interfaces/site'
 import type { SiteEnum } from '@/modules/shared/interfaces'
 import type { AdminUserSites } from '@/modules/class-schedule/interfaces/admin-user-sites'
@@ -20,7 +19,7 @@ const { isLoading, instructorProfiles, hasLoadError, getInstructorProfiles } =
 const errorModalVisible = ref<boolean>(false)
 const sites = ref<Site[]>([])
 const isLoadingSites = ref(false)
-const selectedSite = ref<SiteEnum | null>(appStore().site)
+const selectedSite = ref<SiteEnum | null>(null)
 
 const formatDate = (date: Date): string => {
   return dayjs(date).format('DD/MM/YYYY HH:mm:ss')
@@ -28,7 +27,9 @@ const formatDate = (date: Date): string => {
 
 onMounted(async () => {
   await getAvailableSites()
-  await getInstructorProfiles()
+  if (selectedSite.value) {
+    await getInstructorProfiles(selectedSite.value)
+  }
   if (hasLoadError.value) {
     errorModalVisible.value = true
   }
@@ -44,29 +45,38 @@ async function getAvailableSites() {
 
     if (sites.value.length === 0) {
       selectedSite.value = null
+      instructorProfiles.value = []
       return
     }
 
-    const hasCurrentSite = sites.value.some((site) => site.code === selectedSite.value)
-    if (!hasCurrentSite) {
-      selectedSite.value = sites.value[0].code
-      appStore().setSite(selectedSite.value)
+    let selectedSiteCode: SiteEnum | null =
+      adminUserSites.favoriteSite !== null ? (adminUserSites.favoriteSite.code as SiteEnum) : null
+
+    const hasSelectedSite = selectedSiteCode
+      ? sites.value.some((site) => site.code === selectedSiteCode)
+      : false
+
+    if (!hasSelectedSite) {
+      selectedSiteCode = sites.value[0].code
     }
+
+    selectedSite.value = selectedSiteCode
   } catch (error) {
     sites.value = []
+    selectedSite.value = null
+    instructorProfiles.value = []
   } finally {
     isLoadingSites.value = false
   }
 }
 
 async function onSiteChange(site: SiteEnum | null) {
-  if (!site || site === appStore().site) {
+  if (!site || site === selectedSite.value) {
     return
   }
 
-  appStore().setSite(site)
   selectedSite.value = site
-  await getInstructorProfiles()
+  await getInstructorProfiles(site)
 }
 </script>
 
@@ -85,7 +95,7 @@ async function onSiteChange(site: SiteEnum | null) {
       />
     </div>
     <div class="col-md-8 col-sm-6 col-12 d-flex justify-content-sm-end justify-content-start">
-      <InstructorProfileCreate />
+      <InstructorProfileCreate :site="selectedSite" />
     </div>
   </div>
   <br />
@@ -144,7 +154,7 @@ async function onSiteChange(site: SiteEnum | null) {
             <td class="text-center">{{ formatDate(item.createdAt) }}</td>
             <td class="text-center">{{ formatDate(item.updatedAt) }}</td>
             <td>
-              <InstructorProfileEdit :instructorProfile="item" />
+              <InstructorProfileEdit :instructorProfile="item" :site="selectedSite as SiteEnum" />
             </td>
           </tr>
           <tr v-if="!isLoading && instructorProfiles?.length === 0">
