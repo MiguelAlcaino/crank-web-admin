@@ -4,12 +4,15 @@ import type { ApiService } from '@/services/apiService'
 import { readonly, ref } from 'vue'
 
 const sessionTypes = ref<SessionType[]>([])
+const sortSessionTypesByPosition = (items: SessionType[]) =>
+  items.slice().sort((a, b) => (a.position ?? Number.MAX_SAFE_INTEGER) - (b.position ?? Number.MAX_SAFE_INTEGER))
 
 export const useSessionTypes = (apiService: ApiService) => {
   const hasLoadError = ref<boolean>(false)
   const hasError = ref<boolean>(false)
   const isLoading = ref<boolean>(false)
   const isSaving = ref<boolean>(false)
+  const updatingPositionIds = ref<string[]>([])
 
   async function getSessionTypes(site: SiteEnum, activeOnly: boolean | null = null) {
     hasLoadError.value = false
@@ -17,7 +20,9 @@ export const useSessionTypes = (apiService: ApiService) => {
     sessionTypes.value = []
 
     try {
-      sessionTypes.value = await apiService.getSessionTypes(site, activeOnly)
+      sessionTypes.value = sortSessionTypesByPosition(
+        await apiService.getSessionTypes(site, activeOnly)
+      )
     } catch (error) {
       hasLoadError.value = true
     } finally {
@@ -30,7 +35,6 @@ export const useSessionTypes = (apiService: ApiService) => {
     name: string
     active?: boolean
     color?: string | null
-    position?: number | null
     bannerImageFile?: File | null
     mindbodySessionTypeIds?: string[]
   }) {
@@ -38,10 +42,18 @@ export const useSessionTypes = (apiService: ApiService) => {
     hasError.value = false
 
     try {
-      const created = await apiService.createSessionType(sessionTypeData)
+      const maxPosition = sessionTypes.value.reduce((max, item) => {
+        const position = item.position ?? 0
+        return position > max ? position : max
+      }, 0)
+
+      const created = await apiService.createSessionType({
+        ...sessionTypeData,
+        position: maxPosition + 1
+      })
       const newArr = sessionTypes.value.slice()
       newArr.push(created)
-      sessionTypes.value = newArr
+      sessionTypes.value = sortSessionTypesByPosition(newArr)
       return true
     } catch (error) {
       hasError.value = true
@@ -71,7 +83,7 @@ export const useSessionTypes = (apiService: ApiService) => {
       if (idx !== -1) {
         const newArr = sessionTypes.value.slice()
         newArr[idx] = updated
-        sessionTypes.value = newArr
+        sessionTypes.value = sortSessionTypesByPosition(newArr)
       }
       return true
     } catch (error) {
@@ -105,15 +117,62 @@ export const useSessionTypes = (apiService: ApiService) => {
     }
   }
 
+  async function reorderSessionTypes(orderedIds: string[]) {
+    isSaving.value = true
+    hasError.value = false
+    const previous = sessionTypes.value.slice()
+
+    try {
+      const byId = new Map(previous.map((item) => [item.id, item]))
+      const reordered: SessionType[] = []
+      for (let i = 0; i < orderedIds.length; i++) {
+        const found = byId.get(orderedIds[i])
+        if (!found) {
+          continue
+        }
+        reordered.push({ ...found, position: i + 1 })
+      }
+      sessionTypes.value = reordered
+
+      const changed = orderedIds
+        .map((id, index) => {
+          const previousItem = byId.get(id)
+          const newPosition = index + 1
+          if (previousItem?.position === newPosition) {
+            return null
+          }
+          return { id, position: newPosition }
+        })
+        .filter((item): item is { id: string; position: number } => item !== null)
+
+      updatingPositionIds.value = changed.map((item) => item.id)
+
+      for (const item of changed) {
+        await apiService.updateSessionType(item.id, { position: item.position })
+      }
+
+      return true
+    } catch (error) {
+      sessionTypes.value = previous
+      hasError.value = true
+      throw error
+    } finally {
+      updatingPositionIds.value = []
+      isSaving.value = false
+    }
+  }
+
   return {
     isLoading: readonly(isLoading),
     isSaving: readonly(isSaving),
+    updatingPositionIds: readonly(updatingPositionIds),
     hasError: readonly(hasError),
     hasLoadError: readonly(hasLoadError),
     sessionTypes: sessionTypes,
     getSessionTypes,
     createSessionType,
     updateSessionType,
-    deleteSessionType
+    deleteSessionType,
+    reorderSessionTypes
   }
 }

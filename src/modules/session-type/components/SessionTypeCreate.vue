@@ -18,6 +18,7 @@ const { availableSessionTypes, isLoadingSessionTypes, getAvailableSessionTypes }
   useMindbodySessionTypes(apiService)
 const props = defineProps<{
   site: SiteEnum | null
+  disabled?: boolean
 }>()
 
 const modalIsVisible = ref(false)
@@ -36,6 +37,7 @@ const formRef = ref<InstanceType<typeof SessionTypeForm> | null>(null)
 
 const openModal = () => {
   if (!props.site) return
+  if (props.disabled) return
   modalIsVisible.value = true
   assignedSessionTypes.value = []
   getAvailableSessionTypes(props.site)
@@ -61,7 +63,6 @@ const submitForm = async () => {
         name: data.name,
         active: data.active,
         color: data.color,
-        position: data.position,
         bannerImageFile: data.bannerImageFile,
         mindbodySessionTypeIds: assignedSessionTypes.value.map((s) => s.id)
       })
@@ -91,7 +92,7 @@ function onSuccessOk() {
   <DefaultButtonComponent
     text="Create session type"
     type="button"
-    :disabled="!site"
+    :disabled="!site || !!disabled"
     @on-click="openModal()"
   />
 

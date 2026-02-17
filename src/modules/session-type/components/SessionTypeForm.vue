@@ -8,7 +8,6 @@ export interface SessionTypeFormState {
   name: string
   active: boolean
   color?: string | null
-  position?: number | null
   bannerImageFile: File | null
   bannerImagePath?: string | null
 }
@@ -21,7 +20,6 @@ const formData = reactive({
   name: '',
   active: true,
   color: '',
-  position: null as number | null,
   bannerImageFile: null as File | null
 })
 
@@ -33,7 +31,6 @@ const rules = computed(() => ({
   },
   active: {},
   color: {},
-  position: {},
   bannerImageFile: {}
 }))
 
@@ -69,7 +66,6 @@ function populateForm() {
   formData.name = props.initialData.name ?? ''
   formData.active = props.initialData.active ?? true
   formData.color = props.initialData.color ?? ''
-  formData.position = props.initialData.position ?? null
   formData.bannerImageFile = props.initialData.bannerImageFile ?? null
 }
 
@@ -78,7 +74,6 @@ watch(
     () => props.initialData?.name,
     () => props.initialData?.active,
     () => props.initialData?.color,
-    () => props.initialData?.position,
     () => props.initialData?.bannerImagePath,
     () => props.initialData?.bannerImageFile
   ],
@@ -101,7 +96,6 @@ const validateAndGetValues = async () => {
     name: formData.name,
     active: formData.active,
     color: formData.color || undefined,
-    position: formData.position,
     bannerImageFile: formData.bannerImageFile ?? undefined
   }
 }
@@ -111,7 +105,6 @@ const reset = () => {
   formData.name = ''
   formData.active = true
   formData.color = ''
-  formData.position = null
   formData.bannerImageFile = null
   if (bannerImageInputRef.value) {
     bannerImageInputRef.value.value = ''
@@ -173,18 +166,6 @@ defineExpose({
           />
         </div>
         <small class="text-muted">Selected: {{ formData.color || 'None' }}</small>
-      </div>
-      <div class="col-md-6 col-12 mt-3 mt-md-0">
-        <label for="position" class="input-label">Position</label>
-        <input
-          id="position"
-          class="form-control"
-          v-model.number="formData.position"
-          type="number"
-          placeholder="1"
-          min="0"
-          step="1"
-        />
       </div>
     </div>
 

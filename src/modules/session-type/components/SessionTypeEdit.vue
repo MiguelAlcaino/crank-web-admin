@@ -22,6 +22,7 @@ const { availableSessionTypes, isLoadingSessionTypes, getAvailableSessionTypes }
 const props = defineProps<{
   sessionType: SessionType
   site: SiteEnum
+  disabled?: boolean
 }>()
 
 const modalIsVisible = ref(false)
@@ -39,6 +40,7 @@ const availableSessionTypesComputed = computed(() => {
 const formRef = ref<InstanceType<typeof SessionTypeForm> | null>(null)
 
 const openModal = () => {
+  if (props.disabled) return
   modalIsVisible.value = true
   assignedSessionTypes.value = props.sessionType.mindbodySessionTypes
     ? [...props.sessionType.mindbodySessionTypes]
@@ -64,7 +66,6 @@ const submitForm = async () => {
         name: data.name,
         active: data.active,
         color: data.color,
-        position: data.position,
         bannerImageFile: data.bannerImageFile,
         mindbodySessionTypeIds: assignedSessionTypes.value.map((s) => s.id)
       })
@@ -91,7 +92,7 @@ function onSuccessOk() {
 </script>
 
 <template>
-  <button type="button" class="btn btn-link btn-sm" @click="openModal">
+  <button type="button" class="btn btn-link btn-sm" :disabled="!!disabled" @click="openModal">
     <i class="bi bi-pencil-fill"></i>
   </button>
 
@@ -112,7 +113,6 @@ function onSuccessOk() {
                   name: sessionType.name,
                   active: sessionType.active,
                   color: sessionType.color,
-                  position: sessionType.position,
                   bannerImagePath: sessionType.bannerImagePath
                 }"
               />
