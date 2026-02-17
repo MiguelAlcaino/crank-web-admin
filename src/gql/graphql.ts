@@ -235,6 +235,8 @@ export type Class = {
   maxCapacity: Scalars['Int']
   /** Name/type of the class (e.g., 'CRANK', 'RIDE', 'POWER') */
   name: Scalars['String']
+  /** The session type associated with this class */
+  sessionTypes: Array<SessionType>
   /** Whether this class should be displayed as disabled in the UI (typically for cancelled or past classes) */
   showAsDisabled: Scalars['Boolean']
   /** Class start date and time with timezone (ISO 8601 format) */
@@ -410,8 +412,10 @@ export type CreatePaymentLinkInput = {
 export type CreateSessionTypeInput = {
   active?: InputMaybe<Scalars['Boolean']>
   bannerImageFile?: InputMaybe<Scalars['File']>
+  color?: InputMaybe<Scalars['String']>
   mindbodySessionTypeIds?: InputMaybe<Array<Scalars['ID']>>
   name: Scalars['String']
+  position?: InputMaybe<Scalars['Int']>
   site: SiteEnum
 }
 
@@ -1612,6 +1616,7 @@ export type QuerySearchSiteUserArgs = {
 }
 
 export type QuerySessionTypesArgs = {
+  activeOnly?: InputMaybe<Scalars['Boolean']>
   site: SiteEnum
 }
 
@@ -1806,9 +1811,11 @@ export type SessionType = {
   __typename: 'SessionType'
   active: Scalars['Boolean']
   bannerImagePath?: Maybe<Scalars['String']>
+  color?: Maybe<Scalars['String']>
   id: Scalars['ID']
   mindbodySessionTypes: Array<MindbodySessionTypeInfo>
   name: Scalars['String']
+  position?: Maybe<Scalars['Int']>
 }
 
 export type SessionTypeNotFoundError = Error & {
@@ -2040,8 +2047,10 @@ export type UpdatePaymentLinkInput = {
 export type UpdateSessionTypeInput = {
   active?: InputMaybe<Scalars['Boolean']>
   bannerImageFile?: InputMaybe<Scalars['File']>
+  color?: InputMaybe<Scalars['String']>
   mindbodySessionTypeIds?: InputMaybe<Array<Scalars['ID']>>
   name?: InputMaybe<Scalars['String']>
+  position?: InputMaybe<Scalars['Int']>
 }
 
 export type UpdateSessionTypeResultUnion =
@@ -2404,6 +2413,8 @@ export type CreateSessionTypeMutation = {
         name: string
         active: boolean
         bannerImagePath?: string | null
+        color?: string | null
+        position?: number | null
         mindbodySessionTypes: Array<{
           __typename: 'MindbodySessionTypeInfo'
           id: string
@@ -2430,6 +2441,7 @@ export type MindbodySessionTypesQuery = {
 
 export type SessionTypesQueryVariables = Exact<{
   site: SiteEnum
+  activeOnly?: InputMaybe<Scalars['Boolean']>
 }>
 
 export type SessionTypesQuery = {
@@ -2440,6 +2452,8 @@ export type SessionTypesQuery = {
     name: string
     active: boolean
     bannerImagePath?: string | null
+    color?: string | null
+    position?: number | null
     mindbodySessionTypes: Array<{ __typename: 'MindbodySessionTypeInfo'; id: string; name: string }>
   }>
 }
@@ -2458,6 +2472,8 @@ export type UpdateSessionTypeMutation = {
         name: string
         active: boolean
         bannerImagePath?: string | null
+        color?: string | null
+        position?: number | null
         mindbodySessionTypes: Array<{
           __typename: 'MindbodySessionTypeInfo'
           id: string
@@ -4140,6 +4156,8 @@ export const CreateSessionTypeDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'active' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'bannerImagePath' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'color' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'position' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'mindbodySessionTypes' },
@@ -4267,6 +4285,11 @@ export const SessionTypesDocument = {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
           }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'activeOnly' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Boolean' } }
         }
       ],
       selectionSet: {
@@ -4280,6 +4303,11 @@ export const SessionTypesDocument = {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'site' },
                 value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'activeOnly' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'activeOnly' } }
               }
             ],
             selectionSet: {
@@ -4289,6 +4317,8 @@ export const SessionTypesDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'active' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'bannerImagePath' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'color' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'position' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'mindbodySessionTypes' },
@@ -4367,6 +4397,8 @@ export const UpdateSessionTypeDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'active' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'bannerImagePath' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'color' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'position' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'mindbodySessionTypes' },

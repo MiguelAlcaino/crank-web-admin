@@ -11,13 +11,13 @@ export const useSessionTypes = (apiService: ApiService) => {
   const isLoading = ref<boolean>(false)
   const isSaving = ref<boolean>(false)
 
-  async function getSessionTypes(site: SiteEnum) {
+  async function getSessionTypes(site: SiteEnum, activeOnly: boolean | null = null) {
     hasLoadError.value = false
     isLoading.value = true
     sessionTypes.value = []
 
     try {
-      sessionTypes.value = await apiService.getSessionTypes(site)
+      sessionTypes.value = await apiService.getSessionTypes(site, activeOnly)
     } catch (error) {
       hasLoadError.value = true
     } finally {
@@ -29,6 +29,8 @@ export const useSessionTypes = (apiService: ApiService) => {
     site: SiteEnum
     name: string
     active?: boolean
+    color?: string | null
+    position?: number | null
     bannerImageFile?: File | null
     mindbodySessionTypeIds?: string[]
   }) {
@@ -54,6 +56,8 @@ export const useSessionTypes = (apiService: ApiService) => {
     sessionTypeData: {
       name?: string
       active?: boolean
+      color?: string | null
+      position?: number | null
       bannerImageFile?: File | null
       mindbodySessionTypeIds?: string[]
     }

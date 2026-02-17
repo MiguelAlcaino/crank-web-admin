@@ -24,7 +24,7 @@ onMounted(async () => {
   sessionTypes.value = []
   await getAvailableSites()
   if (selectedSite.value) {
-    await getSessionTypes(selectedSite.value)
+    await getSessionTypes(selectedSite.value, false)
     loadedSite.value = selectedSite.value
   }
   if (hasLoadError.value) {
@@ -76,7 +76,7 @@ async function onSiteChange(site: SiteEnum | null) {
   }
 
   selectedSite.value = site
-  await getSessionTypes(site)
+  await getSessionTypes(site, false)
   loadedSite.value = site
 }
 </script>
@@ -108,6 +108,8 @@ async function onSiteChange(site: SiteEnum | null) {
             <th class="text-center">ID</th>
             <th class="text-center">NAME</th>
             <th class="text-center">STATUS</th>
+            <th class="text-center">COLOR</th>
+            <th class="text-center">POSITION</th>
             <th class="text-center">BANNER</th>
             <th class="text-center">MINDBODY SESSION TYPES</th>
             <th></th>
@@ -132,6 +134,14 @@ async function onSiteChange(site: SiteEnum | null) {
                 {{ item.active ? 'Active' : 'Inactive' }}
               </span>
             </td>
+            <td class="text-center">
+              <span v-if="item.color" class="color-cell">
+                <span class="color-dot" :style="{ backgroundColor: item.color }"></span>
+                {{ item.color }}
+              </span>
+              <span v-else>-</span>
+            </td>
+            <td class="text-center">{{ item.position ?? '-' }}</td>
             <td class="text-center">
               <a
                 v-if="item.bannerImagePath"
@@ -158,12 +168,12 @@ async function onSiteChange(site: SiteEnum | null) {
             </td>
           </tr>
           <tr v-if="!isLoading && !isLoadingSites && sessionTypes?.length === 0">
-            <td colspan="6" class="text-center">
+            <td colspan="8" class="text-center">
               <p>NO DATA AVAILABLE IN TABLE</p>
             </td>
           </tr>
           <tr v-if="isLoading || isLoadingSites">
-            <td colspan="6" class="text-center">LOADING...</td>
+            <td colspan="8" class="text-center">LOADING...</td>
           </tr>
         </tbody>
       </table>
@@ -207,5 +217,19 @@ async function onSiteChange(site: SiteEnum | null) {
 .status-badge-inactive {
   background-color: rgba(231, 231, 231, 1);
   color: rgba(138, 138, 138, 1);
+}
+
+.color-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.color-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid #ced4da;
+  display: inline-block;
 }
 </style>

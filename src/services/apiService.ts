@@ -2049,11 +2049,11 @@ export class ApiService {
   }
 
   // Session Types
-  async getSessionTypes(site: SiteEnum): Promise<SessionType[]> {
+  async getSessionTypes(site: SiteEnum, activeOnly: boolean | null = null): Promise<SessionType[]> {
     try {
       const { data, errors } = await this.authApiClient.query({
         query: SessionTypesDocument,
-        variables: { site: site },
+        variables: { site: site, activeOnly: activeOnly },
         fetchPolicy: 'network-only'
       })
 

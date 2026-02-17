@@ -60,6 +60,8 @@ const submitForm = async () => {
         site: props.site,
         name: data.name,
         active: data.active,
+        color: data.color,
+        position: data.position,
         bannerImageFile: data.bannerImageFile,
         mindbodySessionTypeIds: assignedSessionTypes.value.map((s) => s.id)
       })

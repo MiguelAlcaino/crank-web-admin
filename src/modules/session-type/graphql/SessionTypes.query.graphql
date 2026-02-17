@@ -1,9 +1,11 @@
-query SessionTypes($site: SiteEnum!) {
-  sessionTypes(site: $site) {
+query SessionTypes($site: SiteEnum!, $activeOnly: Boolean) {
+  sessionTypes(site: $site, activeOnly: $activeOnly) {
     id
     name
     active
     bannerImagePath
+    color
+    position
     mindbodySessionTypes {
       id
       name

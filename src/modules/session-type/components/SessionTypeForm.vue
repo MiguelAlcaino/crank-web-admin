@@ -7,6 +7,8 @@ import ToggleSwitchComponent from '@/modules/shared/components/ToggleSwitchCompo
 export interface SessionTypeFormState {
   name: string
   active: boolean
+  color?: string | null
+  position?: number | null
   bannerImageFile: File | null
   bannerImagePath?: string | null
 }
@@ -18,6 +20,8 @@ const props = defineProps<{
 const formData = reactive({
   name: '',
   active: true,
+  color: '',
+  position: null as number | null,
   bannerImageFile: null as File | null
 })
 
@@ -28,6 +32,8 @@ const rules = computed(() => ({
     maxLength: helpers.withMessage('Name must not exceed 256 characters', maxLength(256))
   },
   active: {},
+  color: {},
+  position: {},
   bannerImageFile: {}
 }))
 
@@ -37,12 +43,33 @@ const bannerImageInputId = 'bannerImageFile'
 const fileInputLabel = computed(() =>
   formData.bannerImageFile ? formData.bannerImageFile.name : 'Choose file'
 )
+const colorPalette = [
+  '#000000',
+  '#FFFFFF',
+  '#FF8A73',
+  '#89D0C8',
+  '#FEC30D',
+  '#F9F9F9',
+  '#F3F3F3',
+  '#E7E7E7',
+  '#8A8A8A'
+]
+
+function selectColor(color: string) {
+  formData.color = color
+}
+
+function isSelectedColor(color: string) {
+  return formData.color.trim().toUpperCase() === color.toUpperCase()
+}
 
 function populateForm() {
   if (!props.initialData) return
 
   formData.name = props.initialData.name ?? ''
   formData.active = props.initialData.active ?? true
+  formData.color = props.initialData.color ?? ''
+  formData.position = props.initialData.position ?? null
   formData.bannerImageFile = props.initialData.bannerImageFile ?? null
 }
 
@@ -50,6 +77,8 @@ watch(
   [
     () => props.initialData?.name,
     () => props.initialData?.active,
+    () => props.initialData?.color,
+    () => props.initialData?.position,
     () => props.initialData?.bannerImagePath,
     () => props.initialData?.bannerImageFile
   ],
@@ -71,6 +100,8 @@ const validateAndGetValues = async () => {
   return {
     name: formData.name,
     active: formData.active,
+    color: formData.color || undefined,
+    position: formData.position,
     bannerImageFile: formData.bannerImageFile ?? undefined
   }
 }
@@ -79,6 +110,8 @@ const reset = () => {
   v$.value.$reset()
   formData.name = ''
   formData.active = true
+  formData.color = ''
+  formData.position = null
   formData.bannerImageFile = null
   if (bannerImageInputRef.value) {
     bannerImageInputRef.value.value = ''
@@ -125,6 +158,37 @@ defineExpose({
     </div>
 
     <div class="form-row mb-3">
+      <div class="col-md-6 col-12">
+        <label class="input-label">Color</label>
+        <div class="color-palette mb-2">
+          <button
+            v-for="color in colorPalette"
+            :key="color"
+            type="button"
+            class="color-swatch"
+            :class="{ 'color-swatch-selected': isSelectedColor(color) }"
+            :style="{ backgroundColor: color }"
+            :title="color"
+            @click="selectColor(color)"
+          />
+        </div>
+        <small class="text-muted">Selected: {{ formData.color || 'None' }}</small>
+      </div>
+      <div class="col-md-6 col-12 mt-3 mt-md-0">
+        <label for="position" class="input-label">Position</label>
+        <input
+          id="position"
+          class="form-control"
+          v-model.number="formData.position"
+          type="number"
+          placeholder="1"
+          min="0"
+          step="1"
+        />
+      </div>
+    </div>
+
+    <div class="form-row mb-3">
       <div class="col">
         <label for="bannerImageFile" class="input-label">Banner image</label>
         <div v-if="props.initialData?.bannerImagePath && !formData.bannerImageFile" class="mb-2">
@@ -159,5 +223,23 @@ defineExpose({
   object-fit: cover;
   border: 1px solid #dee2e6;
   border-radius: 4px;
+}
+
+.color-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.color-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  cursor: pointer;
+}
+
+.color-swatch-selected {
+  box-shadow: 0 0 0 2px #343a40;
 }
 </style>
