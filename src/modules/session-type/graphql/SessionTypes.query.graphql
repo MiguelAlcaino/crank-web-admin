@@ -4,6 +4,7 @@ query SessionTypes($site: SiteEnum!, $activeOnly: Boolean) {
     name
     active
     bannerImagePath
+    icon
     color
     position
     mindbodySessionTypes {

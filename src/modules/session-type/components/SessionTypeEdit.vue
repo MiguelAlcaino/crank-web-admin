@@ -67,6 +67,7 @@ const submitForm = async () => {
         active: data.active,
         color: data.color,
         bannerImageFile: data.bannerImageFile,
+        iconFile: data.iconFile,
         mindbodySessionTypeIds: assignedSessionTypes.value.map((s) => s.id)
       })
 
@@ -113,7 +114,8 @@ function onSuccessOk() {
                   name: sessionType.name,
                   active: sessionType.active,
                   color: sessionType.color,
-                  bannerImagePath: sessionType.bannerImagePath
+                  bannerImagePath: sessionType.bannerImagePath,
+                  icon: sessionType.icon
                 }"
               />
               <div class="mt-4">

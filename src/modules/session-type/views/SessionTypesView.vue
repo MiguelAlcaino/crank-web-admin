@@ -135,20 +135,21 @@ async function onOrderChanged() {
             <th class="text-center">COLOR</th>
             <th class="text-center">POSITION</th>
             <th class="text-center">BANNER</th>
+            <th class="text-center">ICON</th>
             <th class="text-center">MINDBODY SESSION TYPES</th>
             <th></th>
           </tr>
         </thead>
         <tbody v-if="!isLoading && !isLoadingSites && sessionTypes?.length === 0">
           <tr>
-            <td colspan="9" class="text-center">
+            <td colspan="10" class="text-center">
               <p>NO DATA AVAILABLE IN TABLE</p>
             </td>
           </tr>
         </tbody>
         <tbody v-else-if="isLoading || isLoadingSites">
           <tr>
-            <td colspan="9" class="text-center">LOADING...</td>
+            <td colspan="10" class="text-center">LOADING...</td>
           </tr>
         </tbody>
         <Draggable
@@ -218,6 +219,12 @@ async function onOrderChanged() {
                 <span v-else>-</span>
               </td>
               <td class="text-center">
+                <a v-if="item.icon" :href="item.icon" target="_blank" rel="noopener noreferrer">
+                  <img :src="item.icon" :alt="`${item.name} icon`" class="icon-thumb" />
+                </a>
+                <span v-else>-</span>
+              </td>
+              <td class="text-center">
                 <span v-if="item.mindbodySessionTypes && item.mindbodySessionTypes.length > 0">
                   {{ item.mindbodySessionTypes.map((s: MindbodySessionType) => s.name).join(', ') }}
                 </span>
@@ -255,6 +262,15 @@ async function onOrderChanged() {
   object-fit: cover;
   border-radius: 6px;
   border: 1px solid #dee2e6;
+}
+
+.icon-thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 1px solid #dee2e6;
+  background-color: #fff;
 }
 
 .status-badge {

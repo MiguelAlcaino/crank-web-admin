@@ -64,6 +64,7 @@ const submitForm = async () => {
         active: data.active,
         color: data.color,
         bannerImageFile: data.bannerImageFile,
+        iconFile: data.iconFile,
         mindbodySessionTypeIds: assignedSessionTypes.value.map((s) => s.id)
       })
 

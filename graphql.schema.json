@@ -3171,6 +3171,18 @@
             "deprecationReason": null
           },
           {
+            "name": "iconFile",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "File",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "mindbodySessionTypeIds",
             "description": null,
             "type": {
@@ -13285,6 +13297,18 @@
             "deprecationReason": null
           },
           {
+            "name": "icon",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "id",
             "description": null,
             "args": [],
@@ -15041,6 +15065,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "iconFile",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "File",
               "ofType": null
             },
             "defaultValue": null,

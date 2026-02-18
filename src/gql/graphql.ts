@@ -413,6 +413,7 @@ export type CreateSessionTypeInput = {
   active?: InputMaybe<Scalars['Boolean']>
   bannerImageFile?: InputMaybe<Scalars['File']>
   color?: InputMaybe<Scalars['String']>
+  iconFile?: InputMaybe<Scalars['File']>
   mindbodySessionTypeIds?: InputMaybe<Array<Scalars['ID']>>
   name: Scalars['String']
   position?: InputMaybe<Scalars['Int']>
@@ -1812,6 +1813,7 @@ export type SessionType = {
   active: Scalars['Boolean']
   bannerImagePath?: Maybe<Scalars['String']>
   color?: Maybe<Scalars['String']>
+  icon?: Maybe<Scalars['String']>
   id: Scalars['ID']
   mindbodySessionTypes: Array<MindbodySessionTypeInfo>
   name: Scalars['String']
@@ -2048,6 +2050,7 @@ export type UpdateSessionTypeInput = {
   active?: InputMaybe<Scalars['Boolean']>
   bannerImageFile?: InputMaybe<Scalars['File']>
   color?: InputMaybe<Scalars['String']>
+  iconFile?: InputMaybe<Scalars['File']>
   mindbodySessionTypeIds?: InputMaybe<Array<Scalars['ID']>>
   name?: InputMaybe<Scalars['String']>
   position?: InputMaybe<Scalars['Int']>
@@ -2413,6 +2416,7 @@ export type CreateSessionTypeMutation = {
         name: string
         active: boolean
         bannerImagePath?: string | null
+        icon?: string | null
         color?: string | null
         position?: number | null
         mindbodySessionTypes: Array<{
@@ -2452,6 +2456,7 @@ export type SessionTypesQuery = {
     name: string
     active: boolean
     bannerImagePath?: string | null
+    icon?: string | null
     color?: string | null
     position?: number | null
     mindbodySessionTypes: Array<{ __typename: 'MindbodySessionTypeInfo'; id: string; name: string }>
@@ -2472,6 +2477,7 @@ export type UpdateSessionTypeMutation = {
         name: string
         active: boolean
         bannerImagePath?: string | null
+        icon?: string | null
         color?: string | null
         position?: number | null
         mindbodySessionTypes: Array<{
@@ -4156,6 +4162,7 @@ export const CreateSessionTypeDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'active' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'bannerImagePath' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'icon' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'color' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'position' } },
                       {
@@ -4317,6 +4324,7 @@ export const SessionTypesDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'active' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'bannerImagePath' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'icon' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'color' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'position' } },
                 {
@@ -4397,6 +4405,7 @@ export const UpdateSessionTypeDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'active' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'bannerImagePath' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'icon' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'color' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'position' } },
                       {

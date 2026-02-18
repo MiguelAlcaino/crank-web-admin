@@ -5,6 +5,7 @@ export interface SessionType {
   name: string
   active: boolean
   bannerImagePath?: string | null
+  icon?: string | null
   color?: string | null
   position?: number | null
   mindbodySessionTypes: MindbodySessionType[]

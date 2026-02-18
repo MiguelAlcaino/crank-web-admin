@@ -5,7 +5,11 @@ import { readonly, ref } from 'vue'
 
 const sessionTypes = ref<SessionType[]>([])
 const sortSessionTypesByPosition = (items: SessionType[]) =>
-  items.slice().sort((a, b) => (a.position ?? Number.MAX_SAFE_INTEGER) - (b.position ?? Number.MAX_SAFE_INTEGER))
+  items
+    .slice()
+    .sort(
+      (a, b) => (a.position ?? Number.MAX_SAFE_INTEGER) - (b.position ?? Number.MAX_SAFE_INTEGER)
+    )
 
 export const useSessionTypes = (apiService: ApiService) => {
   const hasLoadError = ref<boolean>(false)
@@ -36,6 +40,7 @@ export const useSessionTypes = (apiService: ApiService) => {
     active?: boolean
     color?: string | null
     bannerImageFile?: File | null
+    iconFile?: File | null
     mindbodySessionTypeIds?: string[]
   }) {
     isSaving.value = true
@@ -71,6 +76,7 @@ export const useSessionTypes = (apiService: ApiService) => {
       color?: string | null
       position?: number | null
       bannerImageFile?: File | null
+      iconFile?: File | null
       mindbodySessionTypeIds?: string[]
     }
   ) {

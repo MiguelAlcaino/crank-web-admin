@@ -5,6 +5,7 @@ mutation UpdateSessionType($id: ID!, $input: UpdateSessionTypeInput!) {
       name
       active
       bannerImagePath
+      icon
       color
       position
       mindbodySessionTypes {

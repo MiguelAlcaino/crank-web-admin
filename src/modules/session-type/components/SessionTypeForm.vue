@@ -10,6 +10,8 @@ export interface SessionTypeFormState {
   color?: string | null
   bannerImageFile: File | null
   bannerImagePath?: string | null
+  iconFile: File | null
+  icon?: string | null
 }
 
 const props = defineProps<{
@@ -20,7 +22,8 @@ const formData = reactive({
   name: '',
   active: true,
   color: '',
-  bannerImageFile: null as File | null
+  bannerImageFile: null as File | null,
+  iconFile: null as File | null
 })
 
 const rules = computed(() => ({
@@ -31,14 +34,24 @@ const rules = computed(() => ({
   },
   active: {},
   color: {},
-  bannerImageFile: {}
+  bannerImageFile: {},
+  iconFile: {}
 }))
 
 const v$ = useVuelidate(rules, formData, { $scope: false })
 const bannerImageInputRef = ref<HTMLInputElement | null>(null)
 const bannerImageInputId = 'bannerImageFile'
+const iconInputRef = ref<HTMLInputElement | null>(null)
+const iconInputId = 'iconFile'
+const iconFileError = ref('')
+const ICON_MAX_FILE_SIZE_BYTES = 100 * 1024
+const ICON_MIN_SIZE_PX = 48
+const ICON_MAX_SIZE_PX = 1024
 const fileInputLabel = computed(() =>
   formData.bannerImageFile ? formData.bannerImageFile.name : 'Choose file'
+)
+const iconFileInputLabel = computed(() =>
+  formData.iconFile ? formData.iconFile.name : 'Choose file'
 )
 const colorPalette = [
   '#000000',
@@ -67,6 +80,7 @@ function populateForm() {
   formData.active = props.initialData.active ?? true
   formData.color = props.initialData.color ?? ''
   formData.bannerImageFile = props.initialData.bannerImageFile ?? null
+  formData.iconFile = props.initialData.iconFile ?? null
 }
 
 watch(
@@ -75,7 +89,9 @@ watch(
     () => props.initialData?.active,
     () => props.initialData?.color,
     () => props.initialData?.bannerImagePath,
-    () => props.initialData?.bannerImageFile
+    () => props.initialData?.bannerImageFile,
+    () => props.initialData?.icon,
+    () => props.initialData?.iconFile
   ],
   () => {
     populateForm()
@@ -83,20 +99,96 @@ watch(
   { immediate: true }
 )
 
-function onFileChange(event: Event) {
+function onBannerImageChange(event: Event) {
   const target = event.target as HTMLInputElement
   formData.bannerImageFile = target.files?.[0] ?? null
 }
 
+function getImageDimensions(file: File): Promise<{ width: number; height: number }> {
+  return new Promise((resolve, reject) => {
+    const objectUrl = URL.createObjectURL(file)
+    const image = new Image()
+
+    image.onload = () => {
+      const width = image.naturalWidth
+      const height = image.naturalHeight
+      URL.revokeObjectURL(objectUrl)
+      resolve({ width, height })
+    }
+
+    image.onerror = () => {
+      URL.revokeObjectURL(objectUrl)
+      reject(new Error('Could not read image dimensions'))
+    }
+
+    image.src = objectUrl
+  })
+}
+
+async function onIconChange(event: Event) {
+  const target = event.target as HTMLInputElement
+  const selectedFile = target.files?.[0] ?? null
+
+  if (!selectedFile) {
+    formData.iconFile = null
+    iconFileError.value = ''
+    return
+  }
+
+  const isPngMimeType = selectedFile.type === 'image/png'
+  const hasPngExtension = selectedFile.name.toLowerCase().endsWith('.png')
+
+  if (!isPngMimeType && !hasPngExtension) {
+    formData.iconFile = null
+    iconFileError.value = 'Icon must be a PNG (.png).'
+    target.value = ''
+    return
+  }
+
+  if (selectedFile.size > ICON_MAX_FILE_SIZE_BYTES) {
+    formData.iconFile = null
+    iconFileError.value = 'Icon file size must be 100 KB or less.'
+    target.value = ''
+    return
+  }
+
+  try {
+    const { width, height } = await getImageDimensions(selectedFile)
+
+    if (width < ICON_MIN_SIZE_PX || height < ICON_MIN_SIZE_PX) {
+      formData.iconFile = null
+      iconFileError.value = 'Icon must be at least 48x48 px.'
+      target.value = ''
+      return
+    }
+
+    if (width > ICON_MAX_SIZE_PX || height > ICON_MAX_SIZE_PX) {
+      formData.iconFile = null
+      iconFileError.value = 'Icon must be 1024x1024 px or smaller.'
+      target.value = ''
+      return
+    }
+  } catch {
+    formData.iconFile = null
+    iconFileError.value = 'Invalid icon image.'
+    target.value = ''
+    return
+  }
+
+  formData.iconFile = selectedFile
+  iconFileError.value = ''
+}
+
 const validateAndGetValues = async () => {
   const isValid = await v$.value.$validate()
-  if (!isValid) return null
+  if (!isValid || iconFileError.value) return null
 
   return {
     name: formData.name,
     active: formData.active,
     color: formData.color || undefined,
-    bannerImageFile: formData.bannerImageFile ?? undefined
+    bannerImageFile: formData.bannerImageFile ?? undefined,
+    iconFile: formData.iconFile ?? undefined
   }
 }
 
@@ -106,8 +198,13 @@ const reset = () => {
   formData.active = true
   formData.color = ''
   formData.bannerImageFile = null
+  formData.iconFile = null
+  iconFileError.value = ''
   if (bannerImageInputRef.value) {
     bannerImageInputRef.value.value = ''
+  }
+  if (iconInputRef.value) {
+    iconInputRef.value.value = ''
   }
 }
 
@@ -186,12 +283,40 @@ defineExpose({
             class="custom-file-input"
             type="file"
             accept="image/*"
-            @change="onFileChange"
+            @change="onBannerImageChange"
           />
           <label class="custom-file-label" :for="bannerImageInputId" data-browse="Browse">
             {{ fileInputLabel }}
           </label>
         </div>
+      </div>
+    </div>
+
+    <div class="form-row mb-3">
+      <div class="col">
+        <label for="iconFile" class="input-label">Icon</label>
+        <small class="d-block text-muted mb-2"
+          >PNG, 48-1024 px, max 100 KB. Square recommended.</small
+        >
+        <div v-if="props.initialData?.icon && !formData.iconFile" class="mb-2">
+          <img :src="props.initialData.icon" alt="Current icon" class="icon-image-preview" />
+        </div>
+        <div class="custom-file">
+          <input
+            ref="iconInputRef"
+            :id="iconInputId"
+            class="custom-file-input"
+            type="file"
+            accept="image/png"
+            @change="onIconChange"
+          />
+          <label class="custom-file-label" :for="iconInputId" data-browse="Browse">
+            {{ iconFileInputLabel }}
+          </label>
+        </div>
+        <small v-if="iconFileError" class="form-text" style="color: red">
+          {{ iconFileError }}
+        </small>
       </div>
     </div>
   </div>
@@ -204,6 +329,15 @@ defineExpose({
   object-fit: cover;
   border: 1px solid #dee2e6;
   border-radius: 4px;
+}
+
+.icon-image-preview {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  background-color: #fff;
 }
 
 .color-palette {
