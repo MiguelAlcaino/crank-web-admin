@@ -113,7 +113,7 @@ function onSuccessOk() {
   <transition name="modal" v-if="modalIsVisible">
     <div class="modal-mask">
       <div class="modal-wrapper">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
           <div class="modal-content">
             <!-- Header -->
             <div class="modal-header border-0">

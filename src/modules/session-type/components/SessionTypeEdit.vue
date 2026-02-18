@@ -100,7 +100,7 @@ function onSuccessOk() {
   <transition name="modal" v-if="modalIsVisible">
     <div class="modal-mask">
       <div class="modal-wrapper">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header border-0">
               <h5 class="modal-title">Edit session type '{{ sessionType?.name }}'</h5>
