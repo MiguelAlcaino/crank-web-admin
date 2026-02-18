@@ -19940,7 +19940,7 @@ function n4(A, e) {
 const r4 = /* @__PURE__ */ vt(J8, [["render", n4], ["__scopeId", "data-v-a0fcba93"]]), Dh = "gift-cards", a4 = {
   path: `/${Dh}`,
   redirect: `/${Dh}/list`,
-  component: () => import("./GiftCardLayout.65b722d3.js"),
+  component: () => import("./GiftCardLayout.b375c757.js"),
   children: [
     {
       path: `/${Dh}/list`,
@@ -19951,7 +19951,7 @@ const r4 = /* @__PURE__ */ vt(J8, [["render", n4], ["__scopeId", "data-v-a0fcba9
 }, _h = "admin-user", i4 = {
   path: `/${_h}`,
   redirect: `/${_h}/list`,
-  component: () => import("./UserLayout.15242293.js"),
+  component: () => import("./UserLayout.30c668d3.js"),
   children: [
     {
       path: `/${_h}/list`,
@@ -19964,27 +19964,27 @@ var Cn = /* @__PURE__ */ ((A) => (A.ROLE_SUPER_ADMIN = "ROLE_SUPER_ADMIN", A.ROL
 const Oh = "my-admin-settings", s4 = {
   path: `/${Oh}`,
   redirect: `/${Oh}`,
-  component: () => import("./MyAdminSettingsLayout.890d4b48.js"),
+  component: () => import("./MyAdminSettingsLayout.b6350bf8.js"),
   children: [
     {
       path: `/${Oh}`,
       name: "my-admin-settings",
-      component: () => import("./MyAdminSettingsView.66fb2264.js")
+      component: () => import("./MyAdminSettingsView.39c426f0.js")
     }
   ]
 }, Db = "payment-links", o4 = {
   path: `/${Db}`,
-  component: () => import("./PaymentLinksLayout.eb35d21a.js"),
+  component: () => import("./PaymentLinksLayout.15285e1a.js"),
   children: [
     {
       path: `/${Db}`,
       name: "payment-links",
-      component: () => import("./PaymentLinkListView.b7f32ab5.js")
+      component: () => import("./PaymentLinkListView.ddeb3732.js")
     }
   ]
 }, l4 = "instructor-profiles", c4 = {
   path: `/${l4}`,
-  component: () => import("./InstructorProfileLayout.4c4ef029.js"),
+  component: () => import("./InstructorProfileLayout.2de89ac2.js"),
   children: [
     {
       path: "",
@@ -19994,7 +19994,7 @@ const Oh = "my-admin-settings", s4 = {
   ]
 }, u4 = "session-types", d4 = {
   path: `/${u4}`,
-  component: () => import("./SessionTypeLayout.42280c08.js"),
+  component: () => import("./SessionTypeLayout.38fad03a.js"),
   children: [
     {
       path: "",
@@ -20015,7 +20015,7 @@ const Oh = "my-admin-settings", s4 = {
       path: "/login",
       name: "login",
       meta: { requiresAuth: !1 },
-      component: import("./LoginView.2afddd08.js")
+      component: import("./LoginView.71fc9698.js")
     },
     {
       path: "/user/create",
@@ -20033,7 +20033,7 @@ const Oh = "my-admin-settings", s4 = {
       path: "/admin/calendar-class",
       name: "admin_calendar_class",
       meta: { requiresAuth: !0 },
-      component: () => import("./ClassScheduleView.f1f4f8e1.js")
+      component: () => import("./ClassScheduleView.6a7d6dc0.js")
     },
     {
       path: "/admin/room-layout/list",
@@ -20063,7 +20063,7 @@ const Oh = "my-admin-settings", s4 = {
       path: "/customer-profile/:id",
       name: "customer_profile",
       meta: { requiresAuth: !0 },
-      component: () => import("./CustomerProfileView.bcd8f8df.js")
+      component: () => import("./CustomerProfileView.87066617.js")
     },
     {
       ...a4,
@@ -54225,7 +54225,7 @@ function ny(A) {
     }
   return Ne;
 }
-const JZ = { class: "modal-mask" }, AJ = { class: "modal-wrapper" }, eJ = { class: "modal-dialog modal-lg" }, tJ = { class: "modal-content" }, nJ = /* @__PURE__ */ b("h5", { class: "modal-title" }, "Create instructor profile", -1), rJ = /* @__PURE__ */ b("span", null, "\xD7", -1), aJ = [
+const JZ = { class: "modal-mask" }, AJ = { class: "modal-wrapper" }, eJ = { class: "modal-dialog modal-lg modal-dialog-scrollable" }, tJ = { class: "modal-content" }, nJ = /* @__PURE__ */ b("h5", { class: "modal-title" }, "Create instructor profile", -1), rJ = /* @__PURE__ */ b("span", null, "\xD7", -1), aJ = [
   rJ
 ], iJ = { class: "modal-body" }, sJ = { class: "mt-4" }, oJ = /* @__PURE__ */ b("h6", null, "Associate Mindbody Staffs", -1), lJ = { class: "modal-footer border-0" }, cJ = /* @__PURE__ */ de({
   __name: "InstructorProfileCreate",
@@ -54445,7 +54445,7 @@ const JZ = { class: "modal-mask" }, AJ = { class: "modal-wrapper" }, eJ = { clas
   }
 }), yJ = /* @__PURE__ */ b("i", { class: "bi bi-pencil-fill" }, null, -1), bJ = [
   yJ
-], CJ = { class: "modal-mask" }, xJ = { class: "modal-wrapper" }, IJ = { class: "modal-dialog modal-lg" }, wJ = { class: "modal-content" }, SJ = { class: "modal-header border-0" }, kJ = { class: "modal-title" }, PJ = /* @__PURE__ */ b("span", null, "\xD7", -1), EJ = [
+], CJ = { class: "modal-mask" }, xJ = { class: "modal-wrapper" }, IJ = { class: "modal-dialog modal-lg modal-dialog-scrollable" }, wJ = { class: "modal-content" }, SJ = { class: "modal-header border-0" }, kJ = { class: "modal-title" }, PJ = /* @__PURE__ */ b("span", null, "\xD7", -1), EJ = [
   PJ
 ], $J = { class: "modal-body" }, DJ = { class: "mt-4" }, _J = /* @__PURE__ */ b("h6", null, "Associated Mindbody Staffs", -1), OJ = { class: "modal-footer border-0 d-flex justify-content-between" }, TJ = /* @__PURE__ */ de({
   __name: "InstructorProfileEdit",
@@ -58072,7 +58072,7 @@ const F2 = /* @__PURE__ */ vt(cnA, [["__scopeId", "data-v-6fa2b60b"]]), au = (A)
     };
   }
 });
-const B2 = /* @__PURE__ */ vt(FnA, [["__scopeId", "data-v-2b7e80e9"]]), BnA = { class: "modal-mask" }, UnA = { class: "modal-wrapper" }, VnA = { class: "modal-dialog modal-lg" }, WnA = { class: "modal-content" }, HnA = /* @__PURE__ */ b("h5", { class: "modal-title" }, "Create session type", -1), jnA = /* @__PURE__ */ b("span", null, "\xD7", -1), YnA = [
+const B2 = /* @__PURE__ */ vt(FnA, [["__scopeId", "data-v-2b7e80e9"]]), BnA = { class: "modal-mask" }, UnA = { class: "modal-wrapper" }, VnA = { class: "modal-dialog modal-lg modal-dialog-scrollable" }, WnA = { class: "modal-content" }, HnA = /* @__PURE__ */ b("h5", { class: "modal-title" }, "Create session type", -1), jnA = /* @__PURE__ */ b("span", null, "\xD7", -1), YnA = [
   jnA
 ], znA = { class: "modal-body" }, GnA = { class: "mt-4" }, XnA = /* @__PURE__ */ b("h6", null, "Associate Mindbody Session Types", -1), qnA = { class: "modal-footer border-0" }, QnA = /* @__PURE__ */ de({
   __name: "SessionTypeCreate",
@@ -58293,7 +58293,7 @@ const B2 = /* @__PURE__ */ vt(FnA, [["__scopeId", "data-v-2b7e80e9"]]), BnA = { 
   }
 }), arA = ["disabled"], irA = /* @__PURE__ */ b("i", { class: "bi bi-pencil-fill" }, null, -1), srA = [
   irA
-], orA = { class: "modal-mask" }, lrA = { class: "modal-wrapper" }, crA = { class: "modal-dialog modal-lg" }, urA = { class: "modal-content" }, drA = { class: "modal-header border-0" }, frA = { class: "modal-title" }, hrA = /* @__PURE__ */ b("span", null, "\xD7", -1), grA = [
+], orA = { class: "modal-mask" }, lrA = { class: "modal-wrapper" }, crA = { class: "modal-dialog modal-lg modal-dialog-scrollable" }, urA = { class: "modal-content" }, drA = { class: "modal-header border-0" }, frA = { class: "modal-title" }, hrA = /* @__PURE__ */ b("span", null, "\xD7", -1), grA = [
   hrA
 ], prA = { class: "modal-body" }, mrA = { class: "mt-4" }, vrA = /* @__PURE__ */ b("h6", null, "Associated Mindbody Session Types", -1), yrA = { class: "modal-footer border-0 d-flex justify-content-between" }, brA = /* @__PURE__ */ de({
   __name: "SessionTypeEdit",
