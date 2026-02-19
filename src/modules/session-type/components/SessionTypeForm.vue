@@ -45,7 +45,7 @@ const iconInputRef = ref<HTMLInputElement | null>(null)
 const iconInputId = 'iconFile'
 const bannerFileError = ref('')
 const iconFileError = ref('')
-const BANNER_MAX_FILE_SIZE_BYTES = 500 * 1024
+const BANNER_MAX_FILE_SIZE_BYTES = 300 * 1024
 const ICON_MAX_FILE_SIZE_BYTES = 100 * 1024
 const ICON_MIN_SIZE_PX = 48
 const ICON_MAX_SIZE_PX = 1024
@@ -128,7 +128,7 @@ async function onBannerImageChange(event: Event) {
 
   if (selectedFile.size > BANNER_MAX_FILE_SIZE_BYTES) {
     formData.bannerImageFile = null
-    bannerFileError.value = 'Banner file size must be 500 KB or less.'
+    bannerFileError.value = 'Banner file size must be 300 KB or less.'
     target.value = ''
     return
   }
@@ -312,7 +312,7 @@ defineExpose({
     <div class="form-row mb-3">
       <div class="col">
         <label for="bannerImageFile" class="input-label">Banner image</label>
-        <small class="d-block text-muted mb-2">JPG, PNG, or WEBP. Max 500 KB.</small>
+        <small class="d-block text-muted mb-2">JPG, PNG, or WEBP. Max 300 KB.</small>
         <div v-if="props.initialData?.bannerImagePath && !formData.bannerImageFile" class="mb-2">
           <img
             :src="props.initialData.bannerImagePath"
