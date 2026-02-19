@@ -43,7 +43,9 @@ const bannerImageInputRef = ref<HTMLInputElement | null>(null)
 const bannerImageInputId = 'bannerImageFile'
 const iconInputRef = ref<HTMLInputElement | null>(null)
 const iconInputId = 'iconFile'
+const bannerFileError = ref('')
 const iconFileError = ref('')
+const BANNER_MAX_FILE_SIZE_BYTES = 500 * 1024
 const ICON_MAX_FILE_SIZE_BYTES = 100 * 1024
 const ICON_MIN_SIZE_PX = 48
 const ICON_MAX_SIZE_PX = 1024
@@ -99,9 +101,49 @@ watch(
   { immediate: true }
 )
 
-function onBannerImageChange(event: Event) {
+async function onBannerImageChange(event: Event) {
   const target = event.target as HTMLInputElement
-  formData.bannerImageFile = target.files?.[0] ?? null
+  const selectedFile = target.files?.[0] ?? null
+
+  if (!selectedFile) {
+    formData.bannerImageFile = null
+    bannerFileError.value = ''
+    return
+  }
+
+  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp']
+  const allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp']
+  const fileNameLower = selectedFile.name.toLowerCase()
+  const hasAllowedMimeType = allowedMimeTypes.includes(selectedFile.type)
+  const hasAllowedExtension = allowedExtensions.some((extension) =>
+    fileNameLower.endsWith(extension)
+  )
+
+  if (!hasAllowedMimeType && !hasAllowedExtension) {
+    formData.bannerImageFile = null
+    bannerFileError.value = 'Banner must be JPG, PNG, or WEBP.'
+    target.value = ''
+    return
+  }
+
+  if (selectedFile.size > BANNER_MAX_FILE_SIZE_BYTES) {
+    formData.bannerImageFile = null
+    bannerFileError.value = 'Banner file size must be 500 KB or less.'
+    target.value = ''
+    return
+  }
+
+  try {
+    await getImageDimensions(selectedFile)
+  } catch {
+    formData.bannerImageFile = null
+    bannerFileError.value = 'Invalid banner image.'
+    target.value = ''
+    return
+  }
+
+  formData.bannerImageFile = selectedFile
+  bannerFileError.value = ''
 }
 
 function getImageDimensions(file: File): Promise<{ width: number; height: number }> {
@@ -181,7 +223,7 @@ async function onIconChange(event: Event) {
 
 const validateAndGetValues = async () => {
   const isValid = await v$.value.$validate()
-  if (!isValid || iconFileError.value) return null
+  if (!isValid || bannerFileError.value || iconFileError.value) return null
 
   return {
     name: formData.name,
@@ -199,6 +241,7 @@ const reset = () => {
   formData.color = ''
   formData.bannerImageFile = null
   formData.iconFile = null
+  bannerFileError.value = ''
   iconFileError.value = ''
   if (bannerImageInputRef.value) {
     bannerImageInputRef.value.value = ''
@@ -269,6 +312,7 @@ defineExpose({
     <div class="form-row mb-3">
       <div class="col">
         <label for="bannerImageFile" class="input-label">Banner image</label>
+        <small class="d-block text-muted mb-2">JPG, PNG, or WEBP. Max 500 KB.</small>
         <div v-if="props.initialData?.bannerImagePath && !formData.bannerImageFile" class="mb-2">
           <img
             :src="props.initialData.bannerImagePath"
@@ -282,13 +326,16 @@ defineExpose({
             :id="bannerImageInputId"
             class="custom-file-input"
             type="file"
-            accept="image/*"
+            accept="image/jpeg,image/png,image/webp"
             @change="onBannerImageChange"
           />
           <label class="custom-file-label" :for="bannerImageInputId" data-browse="Browse">
             {{ fileInputLabel }}
           </label>
         </div>
+        <small v-if="bannerFileError" class="form-text" style="color: red">
+          {{ bannerFileError }}
+        </small>
       </div>
     </div>
 
