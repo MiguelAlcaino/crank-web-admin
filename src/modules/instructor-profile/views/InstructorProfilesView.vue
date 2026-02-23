@@ -158,9 +158,18 @@ async function onSiteChange(site: SiteEnum | null) {
               </span>
             </td>
             <td class="text-center">
-              <span v-if="item.mindbodyStaffs && item.mindbodyStaffs.length > 0">
-                {{ item.mindbodyStaffs.map((s) => `${s.firstName} ${s.lastName}`).join(', ') }}
-              </span>
+              <div
+                v-if="item.mindbodyStaffs && item.mindbodyStaffs.length > 0"
+                class="staff-badges"
+              >
+                <span
+                  v-for="staff in item.mindbodyStaffs"
+                  :key="staff.id"
+                  class="staff-badge"
+                >
+                  {{ staff.firstName }} {{ staff.lastName }}
+                </span>
+              </div>
               <span v-else>-</span>
             </td>
             <td class="text-center">{{ formatDate(item.createdAt) }}</td>
@@ -220,5 +229,24 @@ async function onSiteChange(site: SiteEnum | null) {
 .status-badge-inactive {
   background-color: rgba(231, 231, 231, 1);
   color: rgba(138, 138, 138, 1);
+}
+
+.staff-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: center;
+}
+
+.staff-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 </style>

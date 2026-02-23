@@ -8,7 +8,6 @@ import Draggable from 'vuedraggable'
 import SessionTypeCreate from '../components/SessionTypeCreate.vue'
 import SessionTypeEdit from '../components/SessionTypeEdit.vue'
 import { useSessionTypes } from '../composables/useSessionTypes'
-import type { MindbodySessionType } from '../interfaces'
 import type { Site } from '@/modules/shared/interfaces/site'
 import type { SiteEnum } from '@/modules/shared/interfaces'
 import type { AdminUserSites } from '@/modules/class-schedule/interfaces/admin-user-sites'
@@ -225,9 +224,18 @@ async function onOrderChanged() {
                 <span v-else>-</span>
               </td>
               <td class="text-center">
-                <span v-if="item.mindbodySessionTypes && item.mindbodySessionTypes.length > 0">
-                  {{ item.mindbodySessionTypes.map((s: MindbodySessionType) => s.name).join(', ') }}
-                </span>
+                <div
+                  v-if="item.mindbodySessionTypes && item.mindbodySessionTypes.length > 0"
+                  class="session-type-badges"
+                >
+                  <span
+                    v-for="sessionType in item.mindbodySessionTypes"
+                    :key="sessionType.id"
+                    class="session-type-badge"
+                  >
+                    {{ sessionType.name }}
+                  </span>
+                </div>
                 <span v-else>-</span>
               </td>
               <td>
@@ -319,5 +327,24 @@ async function onOrderChanged() {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+}
+
+.session-type-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: center;
+}
+
+.session-type-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 </style>
