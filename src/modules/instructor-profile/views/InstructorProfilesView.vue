@@ -223,5 +223,4 @@ async function onSiteChange(site: SiteEnum | null) {
   background-color: rgba(231, 231, 231, 1);
   color: rgba(138, 138, 138, 1);
 }
-
 </style>

@@ -32,11 +32,7 @@ const resolveKey = (item: BadgeItem, index: number) => {
     v-if="items && items.length > 0"
     :class="['badge-list', { 'badge-list-centered': centered }]"
   >
-    <span
-      v-for="(item, index) in items"
-      :key="resolveKey(item, index)"
-      class="badge-list-item"
-    >
+    <span v-for="(item, index) in items" :key="resolveKey(item, index)" class="badge-list-item">
       {{ getLabel(item) }}
     </span>
   </div>

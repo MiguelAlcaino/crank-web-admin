@@ -43,16 +43,18 @@ const matchesSessionType = (sessionType: MindbodySessionType, search: string) =>
   return sessionType.name.toLowerCase().includes(term)
 }
 
-const visibleAvailableCount = computed(() =>
-  props.availableSessionTypes.filter((sessionType) =>
-    matchesSessionType(sessionType, availableSearch.value)
-  ).length
+const visibleAvailableCount = computed(
+  () =>
+    props.availableSessionTypes.filter((sessionType) =>
+      matchesSessionType(sessionType, availableSearch.value)
+    ).length
 )
 
-const visibleAssignedCount = computed(() =>
-  props.assignedSessionTypes.filter((sessionType) =>
-    matchesSessionType(sessionType, assignedSearch.value)
-  ).length
+const visibleAssignedCount = computed(
+  () =>
+    props.assignedSessionTypes.filter((sessionType) =>
+      matchesSessionType(sessionType, assignedSearch.value)
+    ).length
 )
 </script>
 
@@ -82,10 +84,7 @@ const visibleAssignedCount = computed(() =>
           :empty-insert-threshold="0"
         >
           <template #item="{ element }">
-            <div
-              v-show="matchesSessionType(element, availableSearch)"
-              class="session-type-item"
-            >
+            <div v-show="matchesSessionType(element, availableSearch)" class="session-type-item">
               {{ element.name }}
             </div>
           </template>
@@ -126,10 +125,7 @@ const visibleAssignedCount = computed(() =>
           :empty-insert-threshold="0"
         >
           <template #item="{ element }">
-            <div
-              v-show="matchesSessionType(element, assignedSearch)"
-              class="session-type-item"
-            >
+            <div v-show="matchesSessionType(element, assignedSearch)" class="session-type-item">
               {{ element.name }}
             </div>
           </template>

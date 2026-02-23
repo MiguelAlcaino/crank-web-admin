@@ -46,12 +46,12 @@ const matchesStaff = (staff: MindbodyStaff, search: string) => {
   return `${staff.firstName} ${staff.lastName}`.toLowerCase().includes(term)
 }
 
-const visibleAvailableCount = computed(() =>
-  props.availableStaff.filter((staff) => matchesStaff(staff, availableSearch.value)).length
+const visibleAvailableCount = computed(
+  () => props.availableStaff.filter((staff) => matchesStaff(staff, availableSearch.value)).length
 )
 
-const visibleAssignedCount = computed(() =>
-  props.assignedStaff.filter((staff) => matchesStaff(staff, assignedSearch.value)).length
+const visibleAssignedCount = computed(
+  () => props.assignedStaff.filter((staff) => matchesStaff(staff, assignedSearch.value)).length
 )
 </script>
 
@@ -80,10 +80,7 @@ const visibleAssignedCount = computed(() =>
           :empty-insert-threshold="0"
         >
           <template #item="{ element }">
-            <div
-              v-show="matchesStaff(element, availableSearch)"
-              class="staff-item"
-            >
+            <div v-show="matchesStaff(element, availableSearch)" class="staff-item">
               {{ element.firstName }} {{ element.lastName }}
             </div>
           </template>
@@ -123,10 +120,7 @@ const visibleAssignedCount = computed(() =>
           :empty-insert-threshold="0"
         >
           <template #item="{ element }">
-            <div
-              v-show="matchesStaff(element, assignedSearch)"
-              class="staff-item"
-            >
+            <div v-show="matchesStaff(element, assignedSearch)" class="staff-item">
               {{ element.firstName }} {{ element.lastName }}
             </div>
           </template>
