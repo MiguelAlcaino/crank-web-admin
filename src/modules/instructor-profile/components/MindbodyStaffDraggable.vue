@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import Draggable from 'vuedraggable'
 import type { MindbodyStaff } from '../interfaces'
 
@@ -32,6 +32,27 @@ const dragOptions = {
   disabled: false,
   ghostClass: 'ghost'
 }
+
+const availableSearch = ref('')
+const assignedSearch = ref('')
+
+const normalize = (value: string) => value.trim().toLowerCase()
+
+const matchesStaff = (staff: MindbodyStaff, search: string) => {
+  const term = normalize(search)
+
+  if (!term) return true
+
+  return `${staff.firstName} ${staff.lastName}`.toLowerCase().includes(term)
+}
+
+const visibleAvailableCount = computed(() =>
+  props.availableStaff.filter((staff) => matchesStaff(staff, availableSearch.value)).length
+)
+
+const visibleAssignedCount = computed(() =>
+  props.assignedStaff.filter((staff) => matchesStaff(staff, assignedSearch.value)).length
+)
 </script>
 
 <template>
@@ -39,11 +60,18 @@ const dragOptions = {
     <!-- Available Staff -->
     <div class="list">
       <h5>Available Mindbody Staff</h5>
+      <input
+        v-model="availableSearch"
+        type="text"
+        class="list-search"
+        placeholder="Search available staff..."
+      />
       <div v-if="isLoading" class="text-center p-3">
         <span class="spinner-border spinner-border-sm"></span> Loading...
       </div>
       <div v-else-if="availableStaff.length === 0" class="text-muted p-3">No available staff</div>
       <div v-else class="scroll-wrapper">
+        <div v-if="visibleAvailableCount === 0" class="text-muted p-2">No matches found</div>
         <Draggable
           v-model="localAvailable"
           v-bind="dragOptions"
@@ -52,7 +80,12 @@ const dragOptions = {
           :empty-insert-threshold="0"
         >
           <template #item="{ element }">
-            <div class="staff-item">{{ element.firstName }} {{ element.lastName }}</div>
+            <div
+              v-show="matchesStaff(element, availableSearch)"
+              class="staff-item"
+            >
+              {{ element.firstName }} {{ element.lastName }}
+            </div>
           </template>
         </Draggable>
       </div>
@@ -61,6 +94,12 @@ const dragOptions = {
     <!-- Assigned Staff -->
     <div class="list">
       <h5>Assigned to Profile</h5>
+      <input
+        v-model="assignedSearch"
+        type="text"
+        class="list-search"
+        placeholder="Search assigned staff..."
+      />
       <div v-if="assignedStaff.length === 0" class="scroll-wrapper">
         <Draggable
           v-model="localAssigned"
@@ -75,6 +114,7 @@ const dragOptions = {
         </Draggable>
       </div>
       <div v-else class="scroll-wrapper">
+        <div v-if="visibleAssignedCount === 0" class="text-muted p-2">No matches found</div>
         <Draggable
           v-model="localAssigned"
           v-bind="dragOptions"
@@ -83,7 +123,12 @@ const dragOptions = {
           :empty-insert-threshold="0"
         >
           <template #item="{ element }">
-            <div class="staff-item">{{ element.firstName }} {{ element.lastName }}</div>
+            <div
+              v-show="matchesStaff(element, assignedSearch)"
+              class="staff-item"
+            >
+              {{ element.firstName }} {{ element.lastName }}
+            </div>
           </template>
         </Draggable>
       </div>
@@ -111,6 +156,21 @@ const dragOptions = {
   margin-bottom: 12px;
   font-size: 14px;
   font-weight: 600;
+}
+
+.list-search {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.list-search:focus {
+  outline: none;
+  border-color: #888;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
 }
 
 .scroll-wrapper {
