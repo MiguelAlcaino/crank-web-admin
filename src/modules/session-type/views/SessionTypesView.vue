@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import BadgeList from '@/modules/shared/components/BadgeList.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import SiteSelector from '@/modules/shared/components/SiteSelector.vue'
 import type { ApiService } from '@/services/apiService'
@@ -28,6 +29,10 @@ const sites = ref<Site[]>([])
 const isLoadingSites = ref(false)
 const selectedSite = ref<SiteEnum | null>(null)
 const loadedSite = ref<SiteEnum | null>(null)
+
+const getMindbodySessionTypeLabel = (sessionType: Record<string, unknown>) => {
+  return String(sessionType.name ?? '')
+}
 
 onMounted(async () => {
   sessionTypes.value = []
@@ -224,19 +229,10 @@ async function onOrderChanged() {
                 <span v-else>-</span>
               </td>
               <td class="text-center">
-                <div
-                  v-if="item.mindbodySessionTypes && item.mindbodySessionTypes.length > 0"
-                  class="session-type-badges"
-                >
-                  <span
-                    v-for="sessionType in item.mindbodySessionTypes"
-                    :key="sessionType.id"
-                    class="session-type-badge"
-                  >
-                    {{ sessionType.name }}
-                  </span>
-                </div>
-                <span v-else>-</span>
+                <BadgeList
+                  :items="item.mindbodySessionTypes"
+                  :get-label="getMindbodySessionTypeLabel"
+                />
               </td>
               <td>
                 <SessionTypeEdit
@@ -329,22 +325,4 @@ async function onOrderChanged() {
   gap: 6px;
 }
 
-.session-type-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  justify-content: center;
-}
-
-.session-type-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0.5rem;
-  border-radius: 999px;
-  border: 1px solid #dee2e6;
-  background-color: #f8f9fa;
-  font-size: 0.75rem;
-  line-height: 1.2;
-  white-space: nowrap;
-}
 </style>

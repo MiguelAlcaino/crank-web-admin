@@ -5,6 +5,7 @@ import { useInstructorProfiles } from '../composables/useInstructorProfiles'
 import InstructorProfileCreate from '../components/InstructorProfileCreate.vue'
 import InstructorProfileEdit from '../components/InstructorProfileEdit.vue'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
+import BadgeList from '@/modules/shared/components/BadgeList.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import SiteSelector from '@/modules/shared/components/SiteSelector.vue'
 import dayjs from 'dayjs'
@@ -24,6 +25,10 @@ const loadedSite = ref<SiteEnum | null>(null)
 
 const formatDate = (date: Date): string => {
   return dayjs(date).format('DD/MM/YYYY HH:mm:ss')
+}
+
+const getMindbodyStaffLabel = (staff: Record<string, unknown>) => {
+  return `${String(staff.firstName ?? '')} ${String(staff.lastName ?? '')}`.trim()
 }
 
 onMounted(async () => {
@@ -158,19 +163,7 @@ async function onSiteChange(site: SiteEnum | null) {
               </span>
             </td>
             <td class="text-center">
-              <div
-                v-if="item.mindbodyStaffs && item.mindbodyStaffs.length > 0"
-                class="staff-badges"
-              >
-                <span
-                  v-for="staff in item.mindbodyStaffs"
-                  :key="staff.id"
-                  class="staff-badge"
-                >
-                  {{ staff.firstName }} {{ staff.lastName }}
-                </span>
-              </div>
-              <span v-else>-</span>
+              <BadgeList :items="item.mindbodyStaffs" :get-label="getMindbodyStaffLabel" />
             </td>
             <td class="text-center">{{ formatDate(item.createdAt) }}</td>
             <td class="text-center">{{ formatDate(item.updatedAt) }}</td>
@@ -231,22 +224,4 @@ async function onSiteChange(site: SiteEnum | null) {
   color: rgba(138, 138, 138, 1);
 }
 
-.staff-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  justify-content: center;
-}
-
-.staff-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0.5rem;
-  border-radius: 999px;
-  border: 1px solid #dee2e6;
-  background-color: #f8f9fa;
-  font-size: 0.75rem;
-  line-height: 1.2;
-  white-space: nowrap;
-}
 </style>
