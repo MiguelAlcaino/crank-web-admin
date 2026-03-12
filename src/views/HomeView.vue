@@ -20,5 +20,11 @@
     <RouterLink key="/my-admin-settings" to="/my-admin-settings"> My Admin Settings</RouterLink>
     <br />
     <RouterLink key="/payment-links" to="/payment-links"> Payment Links</RouterLink>
+    <br />
+    <RouterLink key="/instructor-profiles" to="/instructor-profiles">
+      Instructor Profiles</RouterLink
+    >
+    <br />
+    <RouterLink key="/session-types" to="/session-types"> Session Types</RouterLink>
   </main>
 </template>

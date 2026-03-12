@@ -9,6 +9,8 @@ import { adminUsersRoute } from '@/modules/admin-user/router'
 import { Role } from '@/utils/userRoles'
 import { myAdminSettingsRoute } from '@/modules/my-admin-settings/router'
 import { paymentLinksRoute } from '@/modules/payment-links/router'
+import { instructorProfilesRoute } from '@/modules/instructor-profile/router'
+import { sessionTypesRoute } from '@/modules/session-type/router'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -93,7 +95,9 @@ const router = createRouter({
       path: '/my-admin-settings',
       meta: { requiresAuth: true }
     },
-    { ...paymentLinksRoute, path: '/payment-links', meta: { requiresAuth: true } }
+    { ...paymentLinksRoute, path: '/payment-links', meta: { requiresAuth: true } },
+    { ...instructorProfilesRoute, path: '/instructor-profiles', meta: { requiresAuth: true } },
+    { ...sessionTypesRoute, path: '/session-types', meta: { requiresAuth: true } }
   ]
 })
 

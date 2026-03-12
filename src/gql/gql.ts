@@ -13,6 +13,16 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
+  'mutation CreateInstructorProfile($input: CreateInstructorProfileInput!) {\n  createInstructorProfile(input: $input) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}':
+    types.CreateInstructorProfileDocument,
+  'mutation DeleteInstructorProfile($id: ID!) {\n  deleteInstructorProfile(id: $id)\n}':
+    types.DeleteInstructorProfileDocument,
+  'query InstructorProfiles($activeOnly: Boolean, $site: SiteEnum!) {\n  instructorProfiles(activeOnly: $activeOnly, site: $site) {\n    id\n    name\n    description\n    profilePictureUrl\n    active\n    createdAt\n    updatedAt\n    mindbodyStaffs {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}':
+    types.InstructorProfilesDocument,
+  'query MindbodyStaffs($site: SiteEnum!) {\n  mindbodyStaffs(site: $site) {\n    id\n    firstName\n    lastName\n    email\n  }\n}':
+    types.MindbodyStaffsDocument,
+  'mutation UpdateInstructorProfile($id: ID!, $input: UpdateInstructorProfileInput!) {\n  updateInstructorProfile(id: $id, input: $input) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n    ... on InstructorProfileNotFoundError {\n      code\n    }\n  }\n}':
+    types.UpdateInstructorProfileDocument,
   'mutation CreatePaymentLink($input: CreatePaymentLinkInput!) {\n  createPaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}':
     types.CreatePaymentLinkDocument,
   'mutation DeletePaymentLink($id: ID!) {\n  deletePaymentLink(id: $id)\n}':
@@ -23,6 +33,16 @@ const documents = {
     types.PaymentLinksDocument,
   'mutation UpdatePaymentLink($input: UpdatePaymentLinkInput!) {\n  updatePaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}':
     types.UpdatePaymentLinkDocument,
+  'mutation CreateSessionType($input: CreateSessionTypeInput!) {\n  createSessionType(input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      icon\n      color\n      position\n      mindbodySessionTypes {\n        id\n        name\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}':
+    types.CreateSessionTypeDocument,
+  'mutation DeleteSessionType($id: ID!) {\n  deleteSessionType(id: $id)\n}':
+    types.DeleteSessionTypeDocument,
+  'query MindbodySessionTypes($site: SiteEnum!) {\n  mindbodySessionTypes(site: $site) {\n    id\n    name\n  }\n}':
+    types.MindbodySessionTypesDocument,
+  'query SessionTypes($site: SiteEnum!, $activeOnly: Boolean) {\n  sessionTypes(site: $site, activeOnly: $activeOnly) {\n    id\n    name\n    active\n    bannerImagePath\n    icon\n    color\n    position\n    mindbodySessionTypes {\n      id\n      name\n    }\n  }\n}':
+    types.SessionTypesDocument,
+  'mutation UpdateSessionType($id: ID!, $input: UpdateSessionTypeInput!) {\n  updateSessionType(id: $id, input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      icon\n      color\n      position\n      mindbodySessionTypes {\n        id\n        name\n      }\n    }\n    ... on SessionTypeNotFoundError {\n      id\n      code\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}':
+    types.UpdateSessionTypeDocument,
   '\n      query siteSettings($site: SiteEnum!) {\n        siteSettings(site: $site) {\n          siteDateTimeNow\n        }\n      }\n    ':
     types.SiteSettingsDocument,
   '\n      query classInfoAdmin($site: SiteEnum!, $id: ID!) {\n        classInfo(site: $site, id: $id) {\n          class {\n            id\n            name\n            description\n            instructorName\n            start\n            startWithNoTimeZone\n            duration\n            waitListAvailable\n            showAsDisabled\n            maxCapacity\n            isSubstitute\n            hasClassStats\n            isSynchronizing\n          }\n          roomLayout {\n            id\n            name\n            matrix {\n              x\n              y\n              icon\n              ... on BookableSpot {\n                enabled\n                spotNumber\n              }\n            }\n          }\n          enrollments(status: active) {\n            id\n            enrollmentStatus\n            enrollmentDateTime\n            identifiableSiteUser {\n              id\n              identifiableUser {\n                id\n                user {\n                  firstName\n                  lastName\n                  email\n                  leaderboardUsername\n                }\n              }\n            }\n\n            ... on EnrollmentInfo {\n              isCheckedIn\n              spotNumber\n              isBookedForFree\n              hasStats\n              isFirstTimeInThisTypeOfClass\n              isFirstTimeWithThisInstructor\n              isTodayUserBirthday\n              isUserLeaderboardEnabled\n              bookedViaClassPass\n            }\n          }\n          onHoldSpots\n          orphanedClassStatsSpots\n        }\n      }\n    ':
@@ -161,6 +181,36 @@ export function graphql(source: string): unknown
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
+  source: 'mutation CreateInstructorProfile($input: CreateInstructorProfileInput!) {\n  createInstructorProfile(input: $input) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}'
+): (typeof documents)['mutation CreateInstructorProfile($input: CreateInstructorProfileInput!) {\n  createInstructorProfile(input: $input) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation DeleteInstructorProfile($id: ID!) {\n  deleteInstructorProfile(id: $id)\n}'
+): (typeof documents)['mutation DeleteInstructorProfile($id: ID!) {\n  deleteInstructorProfile(id: $id)\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'query InstructorProfiles($activeOnly: Boolean, $site: SiteEnum!) {\n  instructorProfiles(activeOnly: $activeOnly, site: $site) {\n    id\n    name\n    description\n    profilePictureUrl\n    active\n    createdAt\n    updatedAt\n    mindbodyStaffs {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}'
+): (typeof documents)['query InstructorProfiles($activeOnly: Boolean, $site: SiteEnum!) {\n  instructorProfiles(activeOnly: $activeOnly, site: $site) {\n    id\n    name\n    description\n    profilePictureUrl\n    active\n    createdAt\n    updatedAt\n    mindbodyStaffs {\n      id\n      firstName\n      lastName\n      email\n    }\n  }\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'query MindbodyStaffs($site: SiteEnum!) {\n  mindbodyStaffs(site: $site) {\n    id\n    firstName\n    lastName\n    email\n  }\n}'
+): (typeof documents)['query MindbodyStaffs($site: SiteEnum!) {\n  mindbodyStaffs(site: $site) {\n    id\n    firstName\n    lastName\n    email\n  }\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation UpdateInstructorProfile($id: ID!, $input: UpdateInstructorProfileInput!) {\n  updateInstructorProfile(id: $id, input: $input) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n    ... on InstructorProfileNotFoundError {\n      code\n    }\n  }\n}'
+): (typeof documents)['mutation UpdateInstructorProfile($id: ID!, $input: UpdateInstructorProfileInput!) {\n  updateInstructorProfile(id: $id, input: $input) {\n    ... on InstructorProfile {\n      id\n      name\n      description\n      profilePictureUrl\n      active\n      createdAt\n      updatedAt\n      mindbodyStaffs {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n    ... on InstructorProfileNotFoundError {\n      code\n    }\n  }\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
   source: 'mutation CreatePaymentLink($input: CreatePaymentLinkInput!) {\n  createPaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}'
 ): (typeof documents)['mutation CreatePaymentLink($input: CreatePaymentLinkInput!) {\n  createPaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}']
 /**
@@ -187,6 +237,36 @@ export function graphql(
 export function graphql(
   source: 'mutation UpdatePaymentLink($input: UpdatePaymentLinkInput!) {\n  updatePaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}'
 ): (typeof documents)['mutation UpdatePaymentLink($input: UpdatePaymentLinkInput!) {\n  updatePaymentLink(input: $input) {\n    id\n    title\n    amount\n    currency\n    url\n    notificationEmailAddress\n    site {\n      name\n      code\n    }\n  }\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation CreateSessionType($input: CreateSessionTypeInput!) {\n  createSessionType(input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      icon\n      color\n      position\n      mindbodySessionTypes {\n        id\n        name\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}'
+): (typeof documents)['mutation CreateSessionType($input: CreateSessionTypeInput!) {\n  createSessionType(input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      icon\n      color\n      position\n      mindbodySessionTypes {\n        id\n        name\n      }\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation DeleteSessionType($id: ID!) {\n  deleteSessionType(id: $id)\n}'
+): (typeof documents)['mutation DeleteSessionType($id: ID!) {\n  deleteSessionType(id: $id)\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'query MindbodySessionTypes($site: SiteEnum!) {\n  mindbodySessionTypes(site: $site) {\n    id\n    name\n  }\n}'
+): (typeof documents)['query MindbodySessionTypes($site: SiteEnum!) {\n  mindbodySessionTypes(site: $site) {\n    id\n    name\n  }\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'query SessionTypes($site: SiteEnum!, $activeOnly: Boolean) {\n  sessionTypes(site: $site, activeOnly: $activeOnly) {\n    id\n    name\n    active\n    bannerImagePath\n    icon\n    color\n    position\n    mindbodySessionTypes {\n      id\n      name\n    }\n  }\n}'
+): (typeof documents)['query SessionTypes($site: SiteEnum!, $activeOnly: Boolean) {\n  sessionTypes(site: $site, activeOnly: $activeOnly) {\n    id\n    name\n    active\n    bannerImagePath\n    icon\n    color\n    position\n    mindbodySessionTypes {\n      id\n      name\n    }\n  }\n}']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation UpdateSessionType($id: ID!, $input: UpdateSessionTypeInput!) {\n  updateSessionType(id: $id, input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      icon\n      color\n      position\n      mindbodySessionTypes {\n        id\n        name\n      }\n    }\n    ... on SessionTypeNotFoundError {\n      id\n      code\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}'
+): (typeof documents)['mutation UpdateSessionType($id: ID!, $input: UpdateSessionTypeInput!) {\n  updateSessionType(id: $id, input: $input) {\n    ... on SessionType {\n      id\n      name\n      active\n      bannerImagePath\n      icon\n      color\n      position\n      mindbodySessionTypes {\n        id\n        name\n      }\n    }\n    ... on SessionTypeNotFoundError {\n      id\n      code\n    }\n    ... on UploadedFileIsNotAnImage {\n      code\n    }\n  }\n}']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
