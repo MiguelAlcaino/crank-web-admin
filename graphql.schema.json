@@ -861,11 +861,11 @@
       {
         "kind": "OBJECT",
         "name": "BookingWindow",
-        "description": null,
+        "description": "Defines the time window during which a class can be booked or cancelled.\n\nUsers cannot book or cancel outside this window. The window typically opens several days\nbefore the class and closes a few hours before the class starts.",
         "fields": [
           {
             "name": "endDateTime",
-            "description": null,
+            "description": "The latest date and time when booking is allowed for this class",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -881,7 +881,7 @@
           },
           {
             "name": "startDateTime",
-            "description": null,
+            "description": "The earliest date and time when booking becomes available for this class",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -914,12 +914,12 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "CalendarClassesParams",
-        "description": null,
+        "description": "Filters for querying classes within a specific date range.\n\nIf no dates are provided, returns classes starting from the current date and time.",
         "fields": null,
         "inputFields": [
           {
             "name": "endDate",
-            "description": null,
+            "description": "End date for the class search range (format: YYYY-MM-DD). If omitted, it defaults to +1 week from now.",
             "type": {
               "kind": "SCALAR",
               "name": "Date",
@@ -931,7 +931,7 @@
           },
           {
             "name": "startDate",
-            "description": null,
+            "description": "Start date for the class search range (format: YYYY-MM-DD). If omitted, defaults to current date. If provided and end date should also be provided.",
             "type": {
               "kind": "SCALAR",
               "name": "Date",
@@ -1330,11 +1330,11 @@
       {
         "kind": "OBJECT",
         "name": "Class",
-        "description": null,
+        "description": "Represents a fitness class session with booking and scheduling information.\n\nContains all details needed to display and book a class, including instructor information,\ntiming, capacity, and booking rules.",
         "fields": [
           {
             "name": "bookingWindow",
-            "description": null,
+            "description": "Time window during which users can book or cancel this class",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1350,7 +1350,7 @@
           },
           {
             "name": "description",
-            "description": null,
+            "description": "Detailed description of the class",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1366,7 +1366,7 @@
           },
           {
             "name": "duration",
-            "description": null,
+            "description": "Duration of the class in minutes",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1382,7 +1382,7 @@
           },
           {
             "name": "hasClassStats",
-            "description": null,
+            "description": "Whether performance statistics are available for this class",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1398,7 +1398,7 @@
           },
           {
             "name": "id",
-            "description": null,
+            "description": "Unique identifier for the class",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1414,7 +1414,7 @@
           },
           {
             "name": "instructorName",
-            "description": null,
+            "description": "Full name of the instructor leading the class",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1430,7 +1430,7 @@
           },
           {
             "name": "isSubstitute",
-            "description": null,
+            "description": "Whether this class has a substitute instructor (different from the regularly scheduled instructor)",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1446,7 +1446,7 @@
           },
           {
             "name": "isSynchronizing",
-            "description": null,
+            "description": "Whether this class is currently being synchronized with external systems",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1462,7 +1462,7 @@
           },
           {
             "name": "maxCapacity",
-            "description": null,
+            "description": "Maximum number of participants that can book this class",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1478,7 +1478,7 @@
           },
           {
             "name": "name",
-            "description": null,
+            "description": "Name/type of the class (e.g., 'CRANK', 'RIDE', 'POWER')",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1494,7 +1494,7 @@
           },
           {
             "name": "showAsDisabled",
-            "description": null,
+            "description": "Whether this class should be displayed as disabled in the UI (typically for cancelled or past classes)",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1510,7 +1510,7 @@
           },
           {
             "name": "start",
-            "description": null,
+            "description": "Class start date and time with timezone (ISO 8601 format)",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1542,7 +1542,7 @@
           },
           {
             "name": "totalBooked",
-            "description": null,
+            "description": "Current number of participants booked in this class",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1558,7 +1558,7 @@
           },
           {
             "name": "totalUnderMaintenanceSpots",
-            "description": null,
+            "description": "Number of spots marked as under maintenance or disabled",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1574,7 +1574,7 @@
           },
           {
             "name": "waitListAvailable",
-            "description": null,
+            "description": "Whether the waitlist is available for this class when it's full",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3954,6 +3954,11 @@
           },
           {
             "kind": "OBJECT",
+            "name": "InvalidEmailError",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
             "name": "LateCancellationRequiredError",
             "ofType": null
           },
@@ -4050,6 +4055,16 @@
           {
             "kind": "OBJECT",
             "name": "WaitlistFullError",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "WebhookEventNotFoundError",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "WebhookEventNotRetryableError",
             "ofType": null
           }
         ]
@@ -4545,6 +4560,39 @@
         "fields": null,
         "inputFields": null,
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "InvalidEmailError",
+        "description": null,
+        "fields": [
+          {
+            "name": "code",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Error",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -6058,6 +6106,39 @@
               "kind": "UNION",
               "name": "ResetPasswordForCurrentUserUnion",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "retryWebhookEvent",
+            "description": "Retries sending a failed webhook event",
+            "args": [
+              {
+                "name": "input",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "RetryWebhookEventInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "UNION",
+                "name": "RetryWebhookEventResultUnion",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -7607,11 +7688,11 @@
           },
           {
             "name": "calendarClasses",
-            "description": "Get next classes",
+            "description": "Returns a list of upcoming fitness classes for a specific site within an optional date range.\n\nUse this query to retrieve the class schedule, including details like instructor name, start time,\nduration, capacity, and booking availability. Results are ordered chronologically by class start time.",
             "args": [
               {
                 "name": "params",
-                "description": null,
+                "description": "Optional filters to narrow down the class list by date range",
                 "type": {
                   "kind": "INPUT_OBJECT",
                   "name": "CalendarClassesParams",
@@ -7623,7 +7704,7 @@
               },
               {
                 "name": "site",
-                "description": null,
+                "description": "The site location for which to retrieve classes",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -8746,6 +8827,88 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "webhookEvent",
+            "description": "Returns a single webhook event by ID",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "WebhookEvent",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "webhookEvents",
+            "description": "Returns a paginated list of webhook events from the subscription service",
+            "args": [
+              {
+                "name": "cursor",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "limit",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "status",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "WebhookEventList",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -9456,6 +9619,107 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "RetryWebhookEventInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "email",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "UNION",
+        "name": "RetryWebhookEventResultUnion",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": [
+          {
+            "kind": "OBJECT",
+            "name": "InvalidEmailError",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "RetryWebhookEventSuccess",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "WebhookEventNotFoundError",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "WebhookEventNotRetryableError",
+            "ofType": null
+          }
+        ]
+      },
+      {
+        "kind": "OBJECT",
+        "name": "RetryWebhookEventSuccess",
+        "description": null,
+        "fields": [
+          {
+            "name": "webhookEvent",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "WebhookEvent",
                 "ofType": null
               }
             },
@@ -10269,26 +10533,26 @@
       {
         "kind": "ENUM",
         "name": "SiteEnum",
-        "description": null,
+        "description": "Available CRANK fitness studio locations.\n\nEach site has its own class schedule, instructors, and facility configuration.",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
           {
             "name": "abu_dhabi",
-            "description": null,
+            "description": "CRANK Abu Dhabi location",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "dubai",
-            "description": null,
+            "description": "CRANK Dubai location",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "town_square",
-            "description": null,
+            "description": "CRANK Town Square location",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -12098,6 +12362,358 @@
       {
         "kind": "OBJECT",
         "name": "WaitlistFullError",
+        "description": null,
+        "fields": [
+          {
+            "name": "code",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Error",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "WebhookEvent",
+        "description": null,
+        "fields": [
+          {
+            "name": "attempts",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "createdAt",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "eventType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lastAttemptAt",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lastError",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "nextRetryAt",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "parentEventId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "payload",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "resolvedByEventId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "status",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "subscriptionId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "triggeredBy",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updatedAt",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "WebhookEventList",
+        "description": null,
+        "fields": [
+          {
+            "name": "events",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "WebhookEvent",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "hasMore",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "limit",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "nextCursor",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "WebhookEventNotFoundError",
+        "description": null,
+        "fields": [
+          {
+            "name": "code",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Error",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "WebhookEventNotRetryableError",
         "description": null,
         "fields": [
           {

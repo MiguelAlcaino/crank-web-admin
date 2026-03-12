@@ -9,6 +9,7 @@ import { adminUsersRoute } from '@/modules/admin-user/router'
 import { Role } from '@/utils/userRoles'
 import { myAdminSettingsRoute } from '@/modules/my-admin-settings/router'
 import { paymentLinksRoute } from '@/modules/payment-links/router'
+import { webhookEventsRoute } from '@/modules/webhook-events/router'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -93,7 +94,12 @@ const router = createRouter({
       path: '/my-admin-settings',
       meta: { requiresAuth: true }
     },
-    { ...paymentLinksRoute, path: '/payment-links', meta: { requiresAuth: true } }
+    { ...paymentLinksRoute, path: '/payment-links', meta: { requiresAuth: true } },
+    {
+      ...webhookEventsRoute,
+      path: '/webhook-events',
+      meta: { requiresAuth: true, role: Role.ROLE_SUPER_ADMIN }
+    }
   ]
 })
 

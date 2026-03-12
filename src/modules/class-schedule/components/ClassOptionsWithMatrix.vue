@@ -66,7 +66,8 @@ import EnrollSelectedMemberComponent from '@/modules/class-schedule/components/E
 import SpotMatrixLegend from '@/modules/class-schedule/components/SpotMatrixLegend.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 
-import { PositionIconEnum, SiteEnum } from '@/modules/shared/interfaces'
+import type { SiteEnum } from '@/modules/shared/interfaces';
+import { PositionIconEnum } from '@/modules/shared/interfaces'
 
 import { type EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
 

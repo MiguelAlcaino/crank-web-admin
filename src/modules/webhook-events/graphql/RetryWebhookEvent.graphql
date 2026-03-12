@@ -1,0 +1,32 @@
+mutation RetryWebhookEvent($input: RetryWebhookEventInput!) {
+  retryWebhookEvent(input: $input) {
+    __typename
+    ... on RetryWebhookEventSuccess {
+      webhookEvent {
+        id
+        eventType
+        subscriptionId
+        status
+        attempts
+        lastAttemptAt
+        nextRetryAt
+        createdAt
+
+        parentEventId
+        triggeredBy
+        resolvedByEventId
+        lastError
+        payload
+      }
+    }
+    ... on WebhookEventNotFoundError {
+      code
+    }
+    ... on WebhookEventNotRetryableError {
+      code
+    }
+    ... on InvalidEmailError {
+      code
+    }
+  }
+}
