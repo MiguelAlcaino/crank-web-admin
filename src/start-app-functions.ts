@@ -29,6 +29,7 @@ import AdminUserListView from './modules/admin-user/views/AdminUserListView.vue'
 import ClassSchedulesView from './modules/class-schedule-config/views/ClassScheduleConfigView.vue'
 import GiftCardListView from './modules/gift-card/views/GiftCardListView.vue'
 import MyAdminSettingsView from './modules/my-admin-settings/views/MyAdminSettingsView.vue'
+import WebhookEventsView from '@/modules/webhook-events/views/WebhookEventsView.vue'
 
 export const startCustomerCreateApp = async function (
   urlAfterSubmit: string,
@@ -344,6 +345,27 @@ export const startSessionTypesApp = async function (gqlUrl: string, token: strin
       )
     },
     render: () => h(SessionTypesView)
+  })
+
+  app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
+  useAuthenticationStore().setSession(token)
+
+  app.mount(appDiv)
+}
+
+export const startWebhookEventsApp = async function (
+  gqlUrl: string,
+  token: string,
+  appDiv: string
+) {
+  const app = createApp({
+    setup() {
+      provide(
+        'gqlApiService',
+        new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
+      )
+    },
+    render: () => h(WebhookEventsView)
   })
 
   app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)

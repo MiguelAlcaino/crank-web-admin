@@ -19,6 +19,7 @@ export default ({ mode }) => {
       },
       rollupOptions: {}
     },
+    server: {},
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url))

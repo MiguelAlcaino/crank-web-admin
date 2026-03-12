@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:dist/MyAdminSettingsLayout.9e2ac368.js
 import { y as o, B as t, b as n, k as c, o as r } from "./index.8baf8e9d.js";
+========
+import { y as o, B as t, b as n, k as c, o as r } from "./index.05ecebeb.js";
+>>>>>>>> e9fccea (Add admin for webhook events):dist/MyAdminSettingsLayout.96570f2c.js
 const s = {};
 function a(_, i) {
   const e = t("RouterView");

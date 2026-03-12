@@ -1,0 +1,18 @@
+query WebhookEvent($id: ID!) {
+  webhookEvent(id: $id) {
+    id
+    eventType
+    subscriptionId
+    status
+    attempts
+    lastAttemptAt
+    nextRetryAt
+    createdAt
+
+    parentEventId
+    triggeredBy
+    resolvedByEventId
+    lastError
+    payload
+  }
+}

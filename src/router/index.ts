@@ -11,6 +11,7 @@ import { myAdminSettingsRoute } from '@/modules/my-admin-settings/router'
 import { paymentLinksRoute } from '@/modules/payment-links/router'
 import { instructorProfilesRoute } from '@/modules/instructor-profile/router'
 import { sessionTypesRoute } from '@/modules/session-type/router'
+import { webhookEventsRoute } from '@/modules/webhook-events/router'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -97,7 +98,12 @@ const router = createRouter({
     },
     { ...paymentLinksRoute, path: '/payment-links', meta: { requiresAuth: true } },
     { ...instructorProfilesRoute, path: '/instructor-profiles', meta: { requiresAuth: true } },
-    { ...sessionTypesRoute, path: '/session-types', meta: { requiresAuth: true } }
+    { ...sessionTypesRoute, path: '/session-types', meta: { requiresAuth: true } },
+    {
+      ...webhookEventsRoute,
+      path: '/webhook-events',
+      meta: { requiresAuth: true, role: Role.ROLE_SUPER_ADMIN }
+    }
   ]
 })
 

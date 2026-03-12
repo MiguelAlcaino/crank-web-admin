@@ -26,5 +26,7 @@
     >
     <br />
     <RouterLink key="/session-types" to="/session-types"> Session Types</RouterLink>
+    <br />
+    <RouterLink key="/webhook-events" to="/webhook-events"> Webhook Events</RouterLink>
   </main>
 </template>
