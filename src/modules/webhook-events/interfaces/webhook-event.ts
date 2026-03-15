@@ -11,5 +11,6 @@ export interface WebhookEvent {
   triggeredBy: string | null
   resolvedByEventId: string | null
   lastError: string | null
+  destinationUrl: string | null
   payload: string | null
 }
