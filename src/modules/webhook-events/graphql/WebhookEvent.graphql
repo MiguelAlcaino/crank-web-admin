@@ -13,6 +13,7 @@ query WebhookEvent($id: ID!) {
     triggeredBy
     resolvedByEventId
     lastError
+    destinationUrl
     payload
   }
 }

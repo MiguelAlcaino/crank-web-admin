@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, onMounted, onUnmounted, ref } from 'vue'
+import { inject, onMounted, ref } from 'vue'
 import { useWebhookEvents } from '../composables/useWebhookEvents'
 import WebhookEventList from '../components/WebhookEventList.vue'
 import WebhookEventDetail from '../components/WebhookEventDetail.vue'
@@ -21,18 +21,14 @@ const {
 } = useWebhookEvents(apiService)
 
 const activeFilter = ref<string>('')
-let pollInterval: ReturnType<typeof setInterval> | null = null
 
 onMounted(() => {
   getWebhookEvents()
-  pollInterval = setInterval(() => {
-    getWebhookEvents(activeFilter.value || undefined)
-  }, 2000)
 })
 
-onUnmounted(() => {
-  if (pollInterval) clearInterval(pollInterval)
-})
+function onRefresh() {
+  getWebhookEvents(activeFilter.value || undefined)
+}
 
 function onSelect(event: WebhookEvent) {
   selectEvent(event)
@@ -77,6 +73,7 @@ function onNavigateToEvent(eventId: string) {
         @select="onSelect"
         @filter="onFilter"
         @load-more="onLoadMore"
+        @refresh="onRefresh"
       />
     </div>
     <div class="col-7">

@@ -15,6 +15,7 @@ const emit = defineEmits<{
   (e: 'select', event: WebhookEvent): void
   (e: 'filter', status: string): void
   (e: 'loadMore'): void
+  (e: 'refresh'): void
 }>()
 
 function formatTimestamp(dateStr: string) {
@@ -25,6 +26,17 @@ function formatTimestamp(dateStr: string) {
 
 <template>
   <div>
+    <!-- Refresh button -->
+    <div class="d-flex justify-content-end mb-2">
+      <button
+        class="btn btn-outline-secondary btn-sm"
+        :disabled="isLoading"
+        @click="emit('refresh')"
+      >
+        <i class="bi bi-arrow-clockwise" :class="{ 'spin': isLoading }"></i> Refresh
+      </button>
+    </div>
+
     <!-- Status filter buttons -->
     <div class="btn-group mb-3 w-100" role="group">
       <button

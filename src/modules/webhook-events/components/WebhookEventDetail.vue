@@ -18,6 +18,15 @@ function formatTimestamp(dateStr: string | null) {
   const date = new Date(dateStr)
   return date.toLocaleString()
 }
+
+function formatPayload(payload: string | null): string {
+  if (!payload) return ''
+  try {
+    return JSON.stringify(JSON.parse(payload), null, 2)
+  } catch {
+    return payload
+  }
+}
 </script>
 
 <template>
@@ -92,6 +101,14 @@ function formatTimestamp(dateStr: string | null) {
               <td class="fw-bold">Next retry at</td>
               <td>{{ formatTimestamp(event.nextRetryAt) }}</td>
             </tr>
+            <tr v-if="event.destinationUrl">
+              <td class="fw-bold">Destination URL</td>
+              <td><code>{{ event.destinationUrl }}</code></td>
+            </tr>
+            <tr v-if="event.lastError">
+              <td class="fw-bold">Last error</td>
+              <td class="text-danger">{{ event.lastError }}</td>
+            </tr>
             <tr v-if="event.resolvedByEventId">
               <td class="fw-bold">Resolved by</td>
               <td>
@@ -102,6 +119,10 @@ function formatTimestamp(dateStr: string | null) {
             </tr>
           </tbody>
         </table>
+      </div>
+      <div v-if="event.payload" class="card-body border-top">
+        <h6 class="fw-bold mb-2">Payload</h6>
+        <pre class="bg-light rounded p-3 mb-0" style="max-height: 400px; overflow: auto"><code>{{ formatPayload(event.payload) }}</code></pre>
       </div>
       <div v-if="event.status === 'failed'" class="card-footer">
         <DefaultButtonComponent

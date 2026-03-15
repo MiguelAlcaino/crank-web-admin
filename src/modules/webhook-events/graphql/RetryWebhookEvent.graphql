@@ -16,6 +16,7 @@ mutation RetryWebhookEvent($input: RetryWebhookEventInput!) {
         triggeredBy
         resolvedByEventId
         lastError
+        destinationUrl
         payload
       }
     }
