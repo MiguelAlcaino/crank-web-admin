@@ -11,7 +11,8 @@ import {
   startMyAdminSettingsApp,
   startPaymentLinksApp,
   startInstructorProfilesApp,
-  startSessionTypesApp
+  startSessionTypesApp,
+  startWebhookEventsApp
 } from '@/start-app-functions'
 
 export {
@@ -27,5 +28,6 @@ export {
   startMyAdminSettingsApp,
   startPaymentLinksApp,
   startInstructorProfilesApp,
-  startSessionTypesApp
+  startSessionTypesApp,
+  startWebhookEventsApp
 }
