@@ -1,244 +1,261 @@
 /* eslint-disable */
-import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core'
-export type Maybe<T> = T | null
-export type InputMaybe<T> = Maybe<T>
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> }
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> }
+import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type Maybe<T> = T | null;
+export type InputMaybe<T> = T | null | undefined;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string
-  String: string
-  Boolean: boolean
-  Int: number
-  Float: number
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
   /** Format: Y-m-d */
-  Date: any
-  DateTime: any
-  DateTimeWithoutTimeZone: any
-}
+  Date: { input: any; output: any; }
+  DateTime: { input: any; output: any; }
+  DateTimeWithoutTimeZone: { input: any; output: any; }
+};
 
 export type AcceptLateCancelledSpotInClassInput = {
-  waitlistEntryId: Scalars['ID']
-}
+  waitlistEntryId: Scalars['ID']['input'];
+};
 
-export type AcceptLateCancelledSpotInClassResultUnion =
-  | AcceptLateCancelledSpotInClassSuccess
-  | ClassIsFullError
-  | ClientIsAlreadyBookedError
-  | ClientIsOutsideSchedulingWindowError
-  | PaymentRequiredError
-  | UnknownError
+export type AcceptLateCancelledSpotInClassResultUnion = AcceptLateCancelledSpotInClassSuccess | ClassIsFullError | ClientIsAlreadyBookedError | ClientIsOutsideSchedulingWindowError | PaymentRequiredError | UnknownError;
 
 export type AcceptLateCancelledSpotInClassSuccess = {
-  __typename: 'AcceptLateCancelledSpotInClassSuccess'
-  success: Scalars['Boolean']
-}
+  __typename: 'AcceptLateCancelledSpotInClassSuccess';
+  success: Scalars['Boolean']['output'];
+};
 
 export type AddedToWaitlistSuccess = {
-  __typename: 'AddedToWaitlistSuccess'
-  status: Scalars['Boolean']
-}
+  __typename: 'AddedToWaitlistSuccess';
+  status: Scalars['Boolean']['output'];
+};
 
 export type AdminUser = {
-  __typename: 'AdminUser'
-  email: Scalars['String']
-  favoriteSite: Site
-  id: Scalars['ID']
-  linkedInstructors?: Maybe<Array<Instructor>>
-  linkedSites?: Maybe<Array<Site>>
-  roles?: Maybe<Array<Scalars['String']>>
-  showCancelledClasses: Scalars['Boolean']
-  username: Scalars['String']
-}
+  __typename: 'AdminUser';
+  email: Scalars['String']['output'];
+  favoriteSite: Site;
+  id: Scalars['ID']['output'];
+  linkedInstructors?: Maybe<Array<Instructor>>;
+  linkedSites?: Maybe<Array<Site>>;
+  roles?: Maybe<Array<Scalars['String']['output']>>;
+  showCancelledClasses: Scalars['Boolean']['output'];
+  username: Scalars['String']['output'];
+};
 
 export type AdminUserDataInput = {
-  email: Scalars['String']
-  favoriteSite?: InputMaybe<SiteEnum>
-  linkedInstructorIds?: InputMaybe<Array<Scalars['ID']>>
-  linkedSiteCodes?: InputMaybe<Array<SiteEnum>>
-  role: Scalars['String']
-  username: Scalars['String']
-}
+  email: Scalars['String']['input'];
+  favoriteSite?: InputMaybe<SiteEnum>;
+  linkedInstructorIds?: InputMaybe<Array<Scalars['ID']['input']>>;
+  linkedSiteCodes?: InputMaybe<Array<SiteEnum>>;
+  role: Scalars['String']['input'];
+  username: Scalars['String']['input'];
+};
 
-export type AdminUserResultUnion = AdminUser | EmailAlreadyUsedError | UsernameAlreadyUsedError
+export type AdminUserResultUnion = AdminUser | EmailAlreadyUsedError | UsernameAlreadyUsedError;
 
 export type BookClassInput = {
-  classId: Scalars['ID']
-  isWaitlistBooking?: InputMaybe<Scalars['Boolean']>
-  spotNumber?: InputMaybe<Scalars['Int']>
-}
+  classId: Scalars['ID']['input'];
+  isWaitlistBooking?: InputMaybe<Scalars['Boolean']['input']>;
+  spotNumber?: InputMaybe<Scalars['Int']['input']>;
+};
 
-export type BookClassResultUnion =
-  | AddedToWaitlistSuccess
-  | BookClassSuccess
-  | BookedButInOtherSpotError
-  | BookingOverlapsAnotherOneError
-  | ClassIsFullError
-  | ClientIsAlreadyBookedError
-  | ClientIsAlreadyOnWaitlistError
-  | ClientIsOutsideSchedulingWindowError
-  | PaymentRequiredError
-  | SpotAlreadyReservedError
-  | SpotIsDisabledError
-  | UnknownError
-  | WaitlistFullError
+export type BookClassResultUnion = AddedToWaitlistSuccess | BookClassSuccess | BookedButInOtherSpotError | BookingOverlapsAnotherOneError | ClassIsFullError | ClientIsAlreadyBookedError | ClientIsAlreadyOnWaitlistError | ClientIsOutsideSchedulingWindowError | PaymentRequiredError | SpotAlreadyReservedError | SpotIsDisabledError | UnknownError | WaitlistFullError;
 
 export type BookClassSuccess = {
-  __typename: 'BookClassSuccess'
-  status: Scalars['Boolean']
-}
+  __typename: 'BookClassSuccess';
+  status: Scalars['Boolean']['output'];
+};
 
 export type BookUserIntoClassInput = {
-  classId: Scalars['ID']
-  isPaymentRequired?: InputMaybe<Scalars['Boolean']>
-  isWaitlistBooking?: InputMaybe<Scalars['Boolean']>
-  siteUserId: Scalars['ID']
-  spotNumber?: InputMaybe<Scalars['Int']>
-}
+  classId: Scalars['ID']['input'];
+  isPaymentRequired?: InputMaybe<Scalars['Boolean']['input']>;
+  isWaitlistBooking?: InputMaybe<Scalars['Boolean']['input']>;
+  siteUserId: Scalars['ID']['input'];
+  spotNumber?: InputMaybe<Scalars['Int']['input']>;
+};
 
 export type BookableSpot = ClassPositionInterface & {
-  __typename: 'BookableSpot'
-  enabled?: Maybe<Scalars['Boolean']>
-  icon: PositionIconEnum
+  __typename: 'BookableSpot';
+  enabled?: Maybe<Scalars['Boolean']['output']>;
+  icon: PositionIconEnum;
   /** @deprecated isBooked should be moved somewhere else and spotNumber has been moved to the root. */
-  spotInfo: SpotInfo
-  spotNumber: Scalars['Int']
-  x: Scalars['Int']
-  y: Scalars['Int']
-}
+  spotInfo: SpotInfo;
+  spotNumber: Scalars['Int']['output'];
+  x: Scalars['Int']['output'];
+  y: Scalars['Int']['output'];
+};
 
 export type BookedButInOtherSpotError = Error & {
-  __typename: 'BookedButInOtherSpotError'
-  code: Scalars['String']
-  givenSpot: Scalars['Int']
-  requiredSpot: Scalars['Int']
-}
+  __typename: 'BookedButInOtherSpotError';
+  code: Scalars['String']['output'];
+  givenSpot: Scalars['Int']['output'];
+  requiredSpot: Scalars['Int']['output'];
+};
 
 export type BookingOverlapsAnotherOneError = Error & {
-  __typename: 'BookingOverlapsAnotherOneError'
-  code: Scalars['String']
-}
+  __typename: 'BookingOverlapsAnotherOneError';
+  code: Scalars['String']['output'];
+};
 
+/**
+ * Defines the time window during which a class can be booked or cancelled.
+ *
+ * Users cannot book or cancel outside this window. The window typically opens several days
+ * before the class and closes a few hours before the class starts.
+ */
 export type BookingWindow = {
-  __typename: 'BookingWindow'
-  endDateTime: Scalars['DateTime']
-  startDateTime: Scalars['DateTime']
-}
+  __typename: 'BookingWindow';
+  /** The latest date and time when booking is allowed for this class */
+  endDateTime: Scalars['DateTime']['output'];
+  /** The earliest date and time when booking becomes available for this class */
+  startDateTime: Scalars['DateTime']['output'];
+};
 
+/**
+ * Filters for querying classes within a specific date range.
+ *
+ * If no dates are provided, returns classes starting from the current date and time.
+ */
 export type CalendarClassesParams = {
-  endDate?: InputMaybe<Scalars['Date']>
-  startDate?: InputMaybe<Scalars['Date']>
-}
+  /** End date for the class search range (format: YYYY-MM-DD). If omitted, it defaults to +1 week from now. */
+  endDate?: InputMaybe<Scalars['Date']['input']>;
+  /** Start date for the class search range (format: YYYY-MM-DD). If omitted, defaults to current date. If provided and end date should also be provided. */
+  startDate?: InputMaybe<Scalars['Date']['input']>;
+};
 
 export type CancelEnrollmentInput = {
-  enrollmentId: Scalars['ID']
-  lateCancel?: InputMaybe<Scalars['Boolean']>
-}
+  enrollmentId: Scalars['ID']['input'];
+  lateCancel?: InputMaybe<Scalars['Boolean']['input']>;
+};
 
-export type CancelEnrollmentResultUnion =
-  | CancelUserEnrollmentSuccess
-  | LateCancellationRequiredError
-  | UnknownError
+export type CancelEnrollmentResultUnion = CancelUserEnrollmentSuccess | LateCancellationRequiredError | UnknownError;
 
 export type CancelUserEnrollmentSuccess = {
-  __typename: 'CancelUserEnrollmentSuccess'
-  status?: Maybe<Scalars['Boolean']>
-}
+  __typename: 'CancelUserEnrollmentSuccess';
+  status?: Maybe<Scalars['Boolean']['output']>;
+};
 
 export type ChallengeDisplay = {
-  __typename: 'ChallengeDisplay'
-  firstLine?: Maybe<Scalars['String']>
-  secondLine?: Maybe<Scalars['String']>
-  thirdLine?: Maybe<Scalars['String']>
-}
+  __typename: 'ChallengeDisplay';
+  firstLine?: Maybe<Scalars['String']['output']>;
+  secondLine?: Maybe<Scalars['String']['output']>;
+  thirdLine?: Maybe<Scalars['String']['output']>;
+};
 
 export type ChallengeInterface = {
-  challengeDisplay: ChallengeDisplay
-  id: Scalars['ID']
-}
+  challengeDisplay: ChallengeDisplay;
+  id: Scalars['ID']['output'];
+};
 
 export type ChartPoint = {
-  __typename: 'ChartPoint'
-  power?: Maybe<Scalars['Int']>
-  rpm?: Maybe<Scalars['Int']>
-  time?: Maybe<Scalars['Int']>
-}
+  __typename: 'ChartPoint';
+  power?: Maybe<Scalars['Int']['output']>;
+  rpm?: Maybe<Scalars['Int']['output']>;
+  time?: Maybe<Scalars['Int']['output']>;
+};
 
-export type CheckinResultUnion = CheckinSuccess | EnrollmentNotFoundError
+export type CheckinResultUnion = CheckinSuccess | EnrollmentNotFoundError;
 
 export type CheckinSuccess = {
-  __typename: 'CheckinSuccess'
-  success: Scalars['Boolean']
-}
+  __typename: 'CheckinSuccess';
+  success: Scalars['Boolean']['output'];
+};
 
 export type CheckinUserInClass = {
-  enrollmentId: Scalars['ID']
-}
+  enrollmentId: Scalars['ID']['input'];
+};
 
-export type CheckoutResultUnion = CheckoutSuccess | EnrollmentNotFoundError
+export type CheckoutResultUnion = CheckoutSuccess | EnrollmentNotFoundError;
 
 export type CheckoutSuccess = {
-  __typename: 'CheckoutSuccess'
-  success: Scalars['Boolean']
-}
+  __typename: 'CheckoutSuccess';
+  success: Scalars['Boolean']['output'];
+};
 
 export type CheckoutUserInClass = {
-  enrollmentId: Scalars['ID']
-}
+  enrollmentId: Scalars['ID']['input'];
+};
 
+/**
+ * Represents a fitness class session with booking and scheduling information.
+ *
+ * Contains all details needed to display and book a class, including instructor information,
+ * timing, capacity, and booking rules.
+ */
 export type Class = {
-  __typename: 'Class'
-  bookingWindow: BookingWindow
-  description: Scalars['String']
-  duration: Scalars['Int']
-  hasClassStats: Scalars['Boolean']
-  id: Scalars['ID']
-  instructorName: Scalars['String']
-  isSubstitute: Scalars['Boolean']
-  isSynchronizing: Scalars['Boolean']
-  maxCapacity: Scalars['Int']
-  name: Scalars['String']
-  showAsDisabled: Scalars['Boolean']
-  start: Scalars['DateTime']
+  __typename: 'Class';
+  /** Time window during which users can book or cancel this class */
+  bookingWindow: BookingWindow;
+  /** Detailed description of the class */
+  description: Scalars['String']['output'];
+  /** Duration of the class in minutes */
+  duration: Scalars['Int']['output'];
+  /** Whether performance statistics are available for this class */
+  hasClassStats: Scalars['Boolean']['output'];
+  /** Unique identifier for the class */
+  id: Scalars['ID']['output'];
+  /** Full name of the instructor leading the class */
+  instructorName: Scalars['String']['output'];
+  /** Whether this class has a substitute instructor (different from the regularly scheduled instructor) */
+  isSubstitute: Scalars['Boolean']['output'];
+  /** Whether this class is currently being synchronized with external systems */
+  isSynchronizing: Scalars['Boolean']['output'];
+  /** Maximum number of participants that can book this class */
+  maxCapacity: Scalars['Int']['output'];
+  /** Name/type of the class (e.g., 'CRANK', 'RIDE', 'POWER') */
+  name: Scalars['String']['output'];
+  /** Whether this class should be displayed as disabled in the UI (typically for cancelled or past classes) */
+  showAsDisabled: Scalars['Boolean']['output'];
+  /** Class start date and time with timezone (ISO 8601 format) */
+  start: Scalars['DateTime']['output'];
   /** Same as start but without timezone. If start is 2023-11-04T10:15:00+04:00 then this value will be 2023-11-04T10:15:00 */
-  startWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']
-  totalBooked: Scalars['Int']
-  totalUnderMaintenanceSpots: Scalars['Int']
-  waitListAvailable: Scalars['Boolean']
-}
+  startWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']['output'];
+  /** Current number of participants booked in this class */
+  totalBooked: Scalars['Int']['output'];
+  /** Number of spots marked as under maintenance or disabled */
+  totalUnderMaintenanceSpots: Scalars['Int']['output'];
+  /** Whether the waitlist is available for this class when it's full */
+  waitListAvailable: Scalars['Boolean']['output'];
+};
 
 export type ClassInfo = {
-  __typename: 'ClassInfo'
-  class: Class
-  enrollments: Array<EnrollmentInfoInterface>
-  onHoldSpots: Scalars['Int']
-  orphanedClassStatsSpots: Array<Scalars['Int']>
-  roomLayout?: Maybe<RoomLayout>
-  usedSpots?: Maybe<Array<Scalars['Int']>>
-}
+  __typename: 'ClassInfo';
+  class: Class;
+  enrollments: Array<EnrollmentInfoInterface>;
+  onHoldSpots: Scalars['Int']['output'];
+  orphanedClassStatsSpots: Array<Scalars['Int']['output']>;
+  roomLayout?: Maybe<RoomLayout>;
+  usedSpots?: Maybe<Array<Scalars['Int']['output']>>;
+};
+
 
 export type ClassInfoEnrollmentsArgs = {
-  status?: InputMaybe<EnrollmentStatusEnum>
-}
+  status?: InputMaybe<EnrollmentStatusEnum>;
+};
 
 export type ClassIsFullError = Error & {
-  __typename: 'ClassIsFullError'
-  code: Scalars['String']
-}
+  __typename: 'ClassIsFullError';
+  code: Scalars['String']['output'];
+};
 
 export type ClassPackageProduct = SellableProductInterface & {
-  __typename: 'ClassPackageProduct'
-  alertBeforePurchasing?: Maybe<ProductAlertBeforePurchasing>
-  buttonText?: Maybe<Scalars['String']>
-  currency: Scalars['String']
-  id: Scalars['ID']
-  isVisible: Scalars['Boolean']
-  price: Scalars['Float']
-  subtitle: Scalars['String']
-  title: Scalars['String']
-  type?: Maybe<ClassPackageTypeEnum>
-}
+  __typename: 'ClassPackageProduct';
+  alertBeforePurchasing?: Maybe<ProductAlertBeforePurchasing>;
+  buttonText?: Maybe<Scalars['String']['output']>;
+  currency: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  isVisible: Scalars['Boolean']['output'];
+  price: Scalars['Float']['output'];
+  subtitle: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  type?: Maybe<ClassPackageTypeEnum>;
+};
 
 export enum ClassPackageTypeEnum {
   Membership = 'membership',
@@ -249,227 +266,222 @@ export enum ClassPackageTypeEnum {
 }
 
 export type ClassPositionInterface = {
-  icon: PositionIconEnum
-  x: Scalars['Int']
-  y: Scalars['Int']
-}
+  icon: PositionIconEnum;
+  x: Scalars['Int']['output'];
+  y: Scalars['Int']['output'];
+};
 
 export type ClassSchedule = {
-  __typename: 'ClassSchedule'
-  capacity: Scalars['Int']
-  dayOfWeek: Scalars['String']
-  end: Scalars['DateTime']
-  endWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']
-  id: Scalars['ID']
-  instructorName: Scalars['String']
-  roomLayout?: Maybe<RoomLayout>
-  start: Scalars['DateTime']
-  startWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']
-  type: Scalars['String']
-}
+  __typename: 'ClassSchedule';
+  capacity: Scalars['Int']['output'];
+  dayOfWeek: Scalars['String']['output'];
+  end: Scalars['DateTime']['output'];
+  endWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']['output'];
+  id: Scalars['ID']['output'];
+  instructorName: Scalars['String']['output'];
+  roomLayout?: Maybe<RoomLayout>;
+  start: Scalars['DateTime']['output'];
+  startWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']['output'];
+  type: Scalars['String']['output'];
+};
 
 export type ClassStat = {
-  __typename: 'ClassStat'
+  __typename: 'ClassStat';
   /** Amount of chart points adjusted to the amount of the requested ones. Values for each points are the average of each interval */
-  adjustedChartPoints: Array<ChartPoint>
-  averagePower?: Maybe<Scalars['Float']>
-  averageRpm?: Maybe<Scalars['Float']>
-  calories?: Maybe<Scalars['Float']>
-  chartPoints: Array<ChartPoint>
-  distance?: Maybe<Scalars['Float']>
-  distanceUnit?: Maybe<Scalars['String']>
-  enrollment: Enrollment
-  highPower?: Maybe<Scalars['Float']>
-  highRpm?: Maybe<Scalars['Float']>
-  totalEnergy?: Maybe<Scalars['Float']>
-}
+  adjustedChartPoints: Array<ChartPoint>;
+  averagePower?: Maybe<Scalars['Float']['output']>;
+  averageRpm?: Maybe<Scalars['Float']['output']>;
+  calories?: Maybe<Scalars['Float']['output']>;
+  chartPoints: Array<ChartPoint>;
+  distance?: Maybe<Scalars['Float']['output']>;
+  distanceUnit?: Maybe<Scalars['String']['output']>;
+  enrollment: Enrollment;
+  highPower?: Maybe<Scalars['Float']['output']>;
+  highRpm?: Maybe<Scalars['Float']['output']>;
+  totalEnergy?: Maybe<Scalars['Float']['output']>;
+};
+
 
 export type ClassStatAdjustedChartPointsArgs = {
-  amountOfPoints?: InputMaybe<Scalars['Int']>
-}
+  amountOfPoints?: InputMaybe<Scalars['Int']['input']>;
+};
 
 /** Error returned when a client is already booked in a class */
 export type ClientIsAlreadyBookedError = Error & {
-  __typename: 'ClientIsAlreadyBookedError'
-  code: Scalars['String']
-}
+  __typename: 'ClientIsAlreadyBookedError';
+  code: Scalars['String']['output'];
+};
 
 export type ClientIsAlreadyOnWaitlistError = Error & {
-  __typename: 'ClientIsAlreadyOnWaitlistError'
-  code: Scalars['String']
-}
+  __typename: 'ClientIsAlreadyOnWaitlistError';
+  code: Scalars['String']['output'];
+};
 
 /** Error returned when a client tries to book a class which is not permitted to book any longer. The booking window has passed. */
 export type ClientIsOutsideSchedulingWindowError = Error & {
-  __typename: 'ClientIsOutsideSchedulingWindowError'
-  code: Scalars['String']
-}
+  __typename: 'ClientIsOutsideSchedulingWindowError';
+  code: Scalars['String']['output'];
+};
 
 export type Country = {
-  __typename: 'Country'
-  code: Scalars['String']
-  name: Scalars['String']
-  states?: Maybe<Array<Maybe<State>>>
-}
+  __typename: 'Country';
+  code: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  states?: Maybe<Array<Maybe<State>>>;
+};
 
 export type CreateCurrentUserInSiteSuccess = {
-  __typename: 'CreateCurrentUserInSiteSuccess'
-  result: Scalars['Boolean']
-}
+  __typename: 'CreateCurrentUserInSiteSuccess';
+  result: Scalars['Boolean']['output'];
+};
 
-export type CreateCurrentUserInSiteUnion = CreateCurrentUserInSiteSuccess | UserAlreadyExistsError
+export type CreateCurrentUserInSiteUnion = CreateCurrentUserInSiteSuccess | UserAlreadyExistsError;
 
 export type CreatePaymentLinkInput = {
-  amount: Scalars['Int']
-  currency: Scalars['String']
+  amount: Scalars['Int']['input'];
+  currency: Scalars['String']['input'];
   /** After a successful purchase an email will be sent to this email address with details about the payment (meant to be used by admins) */
-  notificationEmailAddress: Scalars['String']
-  site: SiteEnum
-  title: Scalars['String']
-}
+  notificationEmailAddress: Scalars['String']['input'];
+  site: SiteEnum;
+  title: Scalars['String']['input'];
+};
 
 export type CurrentUserEnrollmentsParams = {
-  endDate?: InputMaybe<Scalars['Date']>
-  enrollmentType?: InputMaybe<EnrollmentTypeEnum>
-  startDate?: InputMaybe<Scalars['Date']>
-}
+  endDate?: InputMaybe<Scalars['Date']['input']>;
+  enrollmentType?: InputMaybe<EnrollmentTypeEnum>;
+  startDate?: InputMaybe<Scalars['Date']['input']>;
+};
 
 export type DeleteCurrentUserAccountSuccess = {
-  __typename: 'DeleteCurrentUserAccountSuccess'
-  success: Scalars['Boolean']
-}
+  __typename: 'DeleteCurrentUserAccountSuccess';
+  success: Scalars['Boolean']['output'];
+};
 
-export type DeleteCurrentUserAccountUnion =
-  | DeleteCurrentUserAccountSuccess
-  | UserPasswordDoesNotMatchError
+export type DeleteCurrentUserAccountUnion = DeleteCurrentUserAccountSuccess | UserPasswordDoesNotMatchError;
 
 export type DeviceTokenInput = {
-  deviceToken: Scalars['String']
-}
+  deviceToken: Scalars['String']['input'];
+};
 
 export type DisableEnableSpotInput = {
-  classId: Scalars['ID']
-  spotNumber?: InputMaybe<Scalars['Int']>
-}
+  classId: Scalars['ID']['input'];
+  spotNumber?: InputMaybe<Scalars['Int']['input']>;
+};
 
 export type DisableEnableSpotResult = {
-  __typename: 'DisableEnableSpotResult'
-  result?: Maybe<Scalars['Boolean']>
-}
+  __typename: 'DisableEnableSpotResult';
+  result?: Maybe<Scalars['Boolean']['output']>;
+};
 
-export type DisableEnableSpotResultUnion = DisableEnableSpotResult | SpotNotFoundError
+export type DisableEnableSpotResultUnion = DisableEnableSpotResult | SpotNotFoundError;
 
 export type DistanceChallenge = ChallengeInterface & {
-  __typename: 'DistanceChallenge'
-  challengeDisplay: ChallengeDisplay
-  goalInKM: Scalars['Int']
-  id: Scalars['ID']
-  ranking?: Maybe<DistanceRanking>
-}
+  __typename: 'DistanceChallenge';
+  challengeDisplay: ChallengeDisplay;
+  goalInKM: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  ranking?: Maybe<DistanceRanking>;
+};
 
 export type DistanceChallengeRankingPosition = {
-  __typename: 'DistanceChallengeRankingPosition'
-  totalKm: Scalars['Float']
-  userPositionInRanking: UserPositionInRanking
-}
+  __typename: 'DistanceChallengeRankingPosition';
+  totalKm: Scalars['Float']['output'];
+  userPositionInRanking: UserPositionInRanking;
+};
 
 export type DistanceRanking = {
-  __typename: 'DistanceRanking'
-  amountOfUsersInRanking: Scalars['Int']
-  rankingPositions: Array<DistanceChallengeRankingPosition>
-}
+  __typename: 'DistanceRanking';
+  amountOfUsersInRanking: Scalars['Int']['output'];
+  rankingPositions: Array<DistanceChallengeRankingPosition>;
+};
 
 export type EditClassInput = {
-  classId: Scalars['ID']
-  onHoldSpots?: InputMaybe<Scalars['Int']>
-  roomLayoutId?: InputMaybe<Scalars['ID']>
-}
+  classId: Scalars['ID']['input'];
+  onHoldSpots?: InputMaybe<Scalars['Int']['input']>;
+  roomLayoutId?: InputMaybe<Scalars['ID']['input']>;
+};
 
-export type EditClassResultUnion = EditClassSuccessResult
+export type EditClassResultUnion = EditClassSuccessResult;
 
 export type EditClassSuccessResult = {
-  __typename: 'EditClassSuccessResult'
+  __typename: 'EditClassSuccessResult';
   /** Whether the class was updated or not */
-  updated: Scalars['Boolean']
-}
+  updated: Scalars['Boolean']['output'];
+};
 
 export type EditEnrollmentInput = {
-  enrollmentId: Scalars['ID']
-  newSpotNumber: Scalars['Int']
-}
+  enrollmentId: Scalars['ID']['input'];
+  newSpotNumber: Scalars['Int']['input'];
+};
 
-export type EditEnrollmentResultUnion =
-  | ClientIsOutsideSchedulingWindowError
-  | Enrollment
-  | SpotAlreadyReservedError
-  | TryToSwitchToSameSpotError
+export type EditEnrollmentResultUnion = ClientIsOutsideSchedulingWindowError | Enrollment | SpotAlreadyReservedError | TryToSwitchToSameSpotError;
 
 export type EditRoomLayoutInput = {
-  roomLayoutId: Scalars['ID']
-  roomLayoutInput: RoomLayoutInput
-}
+  roomLayoutId: Scalars['ID']['input'];
+  roomLayoutInput: RoomLayoutInput;
+};
 
 export type EditUserInput = {
-  siteUserInput?: InputMaybe<Array<SiteUserInput>>
-  userDataInput?: InputMaybe<UserInput>
+  siteUserInput?: InputMaybe<Array<SiteUserInput>>;
+  userDataInput?: InputMaybe<UserInput>;
   /** This is not the same ID as the IdentifiableUser. This is the ID of the user not linked to any site */
-  userId: Scalars['ID']
-}
+  userId: Scalars['ID']['input'];
+};
 
-export type EditUserResultUnion = IdentifiableUser | OtherUserHasThisExternalIdError
+export type EditUserResultUnion = IdentifiableUser | OtherUserHasThisExternalIdError;
 
 export type EmailAlreadyUsedError = Error & {
-  __typename: 'EmailAlreadyUsedError'
-  code: Scalars['String']
-}
+  __typename: 'EmailAlreadyUsedError';
+  code: Scalars['String']['output'];
+};
 
 export type Enrollment = {
-  __typename: 'Enrollment'
-  class: Class
-  enrollmentInfo: EnrollmentInfoInterface
-}
+  __typename: 'Enrollment';
+  class: Class;
+  enrollmentInfo: EnrollmentInfoInterface;
+};
 
 export type EnrollmentInfo = EnrollmentInfoInterface & {
-  __typename: 'EnrollmentInfo'
+  __typename: 'EnrollmentInfo';
   /** Returns true if the user was booked via ClassPass */
-  bookedViaClassPass: Scalars['Boolean']
-  enrollmentDateTime: Scalars['DateTime']
-  enrollmentDateTimeWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']
-  enrollmentStatus: EnrollmentStatusEnum
+  bookedViaClassPass: Scalars['Boolean']['output'];
+  enrollmentDateTime: Scalars['DateTime']['output'];
+  enrollmentDateTimeWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']['output'];
+  enrollmentStatus: EnrollmentStatusEnum;
   /**
    * Whether this enrollment has stats or not. If null, it means that the class that the enrollment belongs to
    * has not received stats yet. If the result is false, it means that the class has received stats but the enrollment
    * has not.
    */
-  hasStats?: Maybe<Scalars['Boolean']>
-  id: Scalars['ID']
-  identifiableSiteUser?: Maybe<IdentifiableSiteUser>
-  isBookedForFree: Scalars['Boolean']
-  isCheckedIn: Scalars['Boolean']
-  isFirstTimeInThisTypeOfClass: Scalars['Boolean']
+  hasStats?: Maybe<Scalars['Boolean']['output']>;
+  id: Scalars['ID']['output'];
+  identifiableSiteUser?: Maybe<IdentifiableSiteUser>;
+  isBookedForFree: Scalars['Boolean']['output'];
+  isCheckedIn: Scalars['Boolean']['output'];
+  isFirstTimeInThisTypeOfClass: Scalars['Boolean']['output'];
   /** Whether this is the first time of this Enrollment's user with this class' instructor */
-  isFirstTimeWithThisInstructor: Scalars['Boolean']
+  isFirstTimeWithThisInstructor: Scalars['Boolean']['output'];
   /** Returns true if today is the user's birthday */
-  isTodayUserBirthday: Scalars['Boolean']
+  isTodayUserBirthday: Scalars['Boolean']['output'];
   /** Whether the user leaderboard is enabled */
-  isUserLeaderboardEnabled: Scalars['Boolean']
+  isUserLeaderboardEnabled: Scalars['Boolean']['output'];
   /** @deprecated Use spotNumber instead. */
-  spotInfo?: Maybe<SpotInfo>
-  spotNumber?: Maybe<Scalars['Int']>
-}
+  spotInfo?: Maybe<SpotInfo>;
+  spotNumber?: Maybe<Scalars['Int']['output']>;
+};
 
 export type EnrollmentInfoInterface = {
-  enrollmentDateTime: Scalars['DateTime']
-  enrollmentDateTimeWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']
-  enrollmentStatus: EnrollmentStatusEnum
-  id: Scalars['ID']
-  identifiableSiteUser?: Maybe<IdentifiableSiteUser>
-}
+  enrollmentDateTime: Scalars['DateTime']['output'];
+  enrollmentDateTimeWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']['output'];
+  enrollmentStatus: EnrollmentStatusEnum;
+  id: Scalars['ID']['output'];
+  identifiableSiteUser?: Maybe<IdentifiableSiteUser>;
+};
 
 export type EnrollmentNotFoundError = Error & {
-  __typename: 'EnrollmentNotFoundError'
-  code: Scalars['String']
-}
+  __typename: 'EnrollmentNotFoundError';
+  code: Scalars['String']['output'];
+};
 
 export enum EnrollmentStatusEnum {
   Active = 'active',
@@ -487,8 +499,8 @@ export enum EnrollmentTypeEnum {
 }
 
 export type Error = {
-  code: Scalars['String']
-}
+  code: Scalars['String']['output'];
+};
 
 export enum GenderEnum {
   /** Feminine */
@@ -500,484 +512,545 @@ export enum GenderEnum {
 }
 
 export type GenderRanking = {
-  __typename: 'GenderRanking'
-  gender?: Maybe<GenderEnum>
-  ranking?: Maybe<UserRanking>
-}
+  __typename: 'GenderRanking';
+  gender?: Maybe<GenderEnum>;
+  ranking?: Maybe<UserRanking>;
+};
 
 export type GiftCard = {
-  __typename: 'GiftCard'
-  description: Scalars['String']
-  grandTotal: Scalars['Float']
-  id: Scalars['ID']
-  purchaseUrl: Scalars['String']
-  salePrice: Scalars['Float']
-  site: Site
-  terms: Scalars['String']
-}
+  __typename: 'GiftCard';
+  description: Scalars['String']['output'];
+  grandTotal: Scalars['Float']['output'];
+  id: Scalars['ID']['output'];
+  purchaseUrl: Scalars['String']['output'];
+  salePrice: Scalars['Float']['output'];
+  site: Site;
+  terms: Scalars['String']['output'];
+};
 
 export type IconPosition = ClassPositionInterface & {
-  __typename: 'IconPosition'
-  icon: PositionIconEnum
-  x: Scalars['Int']
-  y: Scalars['Int']
-}
+  __typename: 'IconPosition';
+  icon: PositionIconEnum;
+  x: Scalars['Int']['output'];
+  y: Scalars['Int']['output'];
+};
 
 export type IconPositionInput = {
-  icon: PositionIconEnum
-  spotNumber?: InputMaybe<Scalars['Int']>
-  x: Scalars['Int']
-  y: Scalars['Int']
-}
+  icon: PositionIconEnum;
+  spotNumber?: InputMaybe<Scalars['Int']['input']>;
+  x: Scalars['Int']['input'];
+  y: Scalars['Int']['input'];
+};
 
 export type IdentifiableSiteUser = {
-  __typename: 'IdentifiableSiteUser'
-  id?: Maybe<Scalars['ID']>
-  identifiableUser?: Maybe<IdentifiableUser>
-  siteUserInfo?: Maybe<SimpleSiteUser>
-}
+  __typename: 'IdentifiableSiteUser';
+  id?: Maybe<Scalars['ID']['output']>;
+  identifiableUser?: Maybe<IdentifiableUser>;
+  siteUserInfo?: Maybe<SimpleSiteUser>;
+};
 
 export type IdentifiableUser = {
-  __typename: 'IdentifiableUser'
-  id?: Maybe<Scalars['ID']>
-  user?: Maybe<User>
-}
+  __typename: 'IdentifiableUser';
+  id?: Maybe<Scalars['ID']['output']>;
+  user?: Maybe<User>;
+};
 
 export type Instructor = {
-  __typename: 'Instructor'
-  id: Scalars['ID']
-  name: Scalars['String']
-  site: Site
-}
+  __typename: 'Instructor';
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  site: Site;
+};
 
-export type IsSmsValidationCodeValidUnion =
-  | MobilePhoneAlreadyVerifiedError
-  | RequestSmsValidationNeededError
-  | SmsCodeValidatedSuccessfully
-  | SmsValidationCodeError
+export type InvalidEmailError = Error & {
+  __typename: 'InvalidEmailError';
+  code: Scalars['String']['output'];
+};
+
+export type IsSmsValidationCodeValidUnion = MobilePhoneAlreadyVerifiedError | RequestSmsValidationNeededError | SmsCodeValidatedSuccessfully | SmsValidationCodeError;
 
 export type ItemToShoppingCartInput = {
-  quantity: Scalars['Int']
-  sellableProductId: Scalars['ID']
-}
+  quantity: Scalars['Int']['input'];
+  sellableProductId: Scalars['ID']['input'];
+};
 
 export type LateCancellationRequiredError = Error & {
-  __typename: 'LateCancellationRequiredError'
-  code: Scalars['String']
-}
+  __typename: 'LateCancellationRequiredError';
+  code: Scalars['String']['output'];
+};
 
 export type MobilePhoneAlreadyVerifiedError = Error & {
-  __typename: 'MobilePhoneAlreadyVerifiedError'
-  code: Scalars['String']
-}
+  __typename: 'MobilePhoneAlreadyVerifiedError';
+  code: Scalars['String']['output'];
+};
 
 export type MobilePhoneNotValidError = Error & {
-  __typename: 'MobilePhoneNotValidError'
-  code: Scalars['String']
-}
+  __typename: 'MobilePhoneNotValidError';
+  code: Scalars['String']['output'];
+};
 
 export type Mutation = {
-  __typename: 'Mutation'
+  __typename: 'Mutation';
   /** Accepts a late-cancelled spot in a class */
-  acceptLateCancelledSpotInClass?: Maybe<AcceptLateCancelledSpotInClassResultUnion>
+  acceptLateCancelledSpotInClass?: Maybe<AcceptLateCancelledSpotInClassResultUnion>;
   /** Creates a new admin user */
-  addAdminUser: AdminUserResultUnion
+  addAdminUser: AdminUserResultUnion;
   /** Adds a new device token to be used for device notifications */
-  addDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']>
+  addDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']['output']>;
   /** Allows to add a discount code code to a shopping cart for current user */
-  addDiscountCodeToShoppingCart: Scalars['Boolean']
+  addDiscountCodeToShoppingCart: Scalars['Boolean']['output'];
   /** Allows to add a giftcard code to a shopping cart for current user */
-  addGiftCardCodeToShoppingCart: Scalars['Boolean']
+  addGiftCardCodeToShoppingCart: Scalars['Boolean']['output'];
   /** Allows to add item to shopping cart */
-  addItemToShoppingCart: Scalars['Boolean']
+  addItemToShoppingCart: Scalars['Boolean']['output'];
   /** Books the current user in a class */
-  bookClass: BookClassResultUnion
+  bookClass: BookClassResultUnion;
   /** Adds a user into a given class */
-  bookUserIntoClass: BookClassResultUnion
+  bookUserIntoClass: BookClassResultUnion;
   /** Cancels an enrollment done by the current user */
-  cancelCurrentUserEnrollment?: Maybe<CancelEnrollmentResultUnion>
+  cancelCurrentUserEnrollment?: Maybe<CancelEnrollmentResultUnion>;
   /** Checks in a user in a class */
-  checkinUserInClass?: Maybe<CheckinResultUnion>
+  checkinUserInClass?: Maybe<CheckinResultUnion>;
   /** Checks out a user from a class */
-  checkoutUserInClass?: Maybe<CheckoutResultUnion>
+  checkoutUserInClass?: Maybe<CheckoutResultUnion>;
   /** Creates a copy of the current user in the given site */
-  createCurrentUserInSite?: Maybe<CreateCurrentUserInSiteUnion>
+  createCurrentUserInSite?: Maybe<CreateCurrentUserInSiteUnion>;
   /** Creates a new payment link */
-  createPaymentLink: PaymentLink
+  createPaymentLink: PaymentLink;
   /** Creates a new room layout */
-  createRoomLayout: RoomLayout
+  createRoomLayout: RoomLayout;
   /** It deletes the current user's account */
-  deleteCurrentUserAccount?: Maybe<DeleteCurrentUserAccountUnion>
+  deleteCurrentUserAccount?: Maybe<DeleteCurrentUserAccountUnion>;
   /** Removes a devices token */
-  deleteDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']>
+  deleteDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']['output']>;
   /** Soft deletes a payment link */
-  deletePaymentLink: Scalars['Boolean']
+  deletePaymentLink: Scalars['Boolean']['output'];
   /** Disables a spot in a class */
-  disableSpot?: Maybe<DisableEnableSpotResultUnion>
+  disableSpot?: Maybe<DisableEnableSpotResultUnion>;
   /** Edits a class */
-  editClass: EditClassResultUnion
+  editClass: EditClassResultUnion;
   /** Edits an enrollment made by the current user */
-  editCurrentUserEnrollment?: Maybe<EditEnrollmentResultUnion>
+  editCurrentUserEnrollment?: Maybe<EditEnrollmentResultUnion>;
   /** Edits an enrollment */
-  editEnrollment?: Maybe<EditEnrollmentResultUnion>
+  editEnrollment?: Maybe<EditEnrollmentResultUnion>;
   /** Edits a room layout */
-  editRoomLayout: RoomLayout
+  editRoomLayout: RoomLayout;
   /** Edits a user */
-  editUser?: Maybe<EditUserResultUnion>
+  editUser?: Maybe<EditUserResultUnion>;
   /** Enabled a spot in a class */
-  enableSpot?: Maybe<DisableEnableSpotResultUnion>
+  enableSpot?: Maybe<DisableEnableSpotResultUnion>;
   /** Registers a new user and returns an IdentifiableUser type */
-  registerIdentifiableUser?: Maybe<IdentifiableSiteUser>
+  registerIdentifiableUser?: Maybe<IdentifiableSiteUser>;
   /** Registers a new user */
-  registerUser?: Maybe<User>
+  registerUser?: Maybe<User>;
   /** Rejects a late-cancelled spot in a class */
-  rejectLateCancelledSpotInClass?: Maybe<RejectLateBookingResultUnion>
+  rejectLateCancelledSpotInClass?: Maybe<RejectLateBookingResultUnion>;
   /** Deletes an admin user */
-  removeAdminUser: Scalars['Boolean']
+  removeAdminUser: Scalars['Boolean']['output'];
   /** Removes the current user's waitlist entry from a class */
-  removeCurrentUserFromWaitlist?: Maybe<RemoveCurrentUserFromWaitlistUnion>
+  removeCurrentUserFromWaitlist?: Maybe<RemoveCurrentUserFromWaitlistUnion>;
   /** Remove Item from shopping cart */
-  removeItemFromShoppingCart: Scalars['Boolean']
+  removeItemFromShoppingCart: Scalars['Boolean']['output'];
   /** Removes a user from a class */
-  removeUserFromClass: CancelEnrollmentResultUnion
+  removeUserFromClass: CancelEnrollmentResultUnion;
   /** Removes a waitlist entry */
-  removeUserFromWaitlist: RemoveUserFromWaitlistUnion
+  removeUserFromWaitlist: RemoveUserFromWaitlistUnion;
   /** Request a reset password link */
-  requestPasswordLink?: Maybe<ResetPasswordLinkResultUnion>
+  requestPasswordLink?: Maybe<ResetPasswordLinkResultUnion>;
   /** Requests an SMS validation code */
-  requestSMSValidation?: Maybe<SmsValidationUnion>
+  requestSMSValidation?: Maybe<SmsValidationUnion>;
   /** Resets the password of an admin user and sends an email with the new password */
-  resetAdminUserPassword: Scalars['Boolean']
+  resetAdminUserPassword: Scalars['Boolean']['output'];
   /** Resets the current user's password */
-  resetPasswordForCurrentUser?: Maybe<ResetPasswordForCurrentUserUnion>
+  resetPasswordForCurrentUser?: Maybe<ResetPasswordForCurrentUserUnion>;
+  /** Retries sending a failed webhook event */
+  retryWebhookEvent: RetryWebhookEventResultUnion;
   /** Sends a single class stats to an email */
-  sendClassStatsToEmail?: Maybe<Scalars['Boolean']>
+  sendClassStatsToEmail?: Maybe<Scalars['Boolean']['output']>;
   /** Sends the class stats to the users booked in a class */
-  sendClassStatsToUsers?: Maybe<Scalars['Boolean']>
+  sendClassStatsToUsers?: Maybe<Scalars['Boolean']['output']>;
   /** Sets a room layout for a list of class schedules */
-  setRoomLayoutForClassSchedules: Array<ClassSchedule>
+  setRoomLayoutForClassSchedules: Array<ClassSchedule>;
   /** Swaps a spot in a class */
-  swapSpot?: Maybe<SwapSpotResultUnion>
+  swapSpot?: Maybe<SwapSpotResultUnion>;
   /** Sync all classes */
-  syncAllClasses: Scalars['Boolean']
+  syncAllClasses: Scalars['Boolean']['output'];
   /** Sync all gift cards from Mindbody with the local database */
-  syncAllGiftCards: Scalars['Boolean']
+  syncAllGiftCards: Scalars['Boolean']['output'];
   /** Sync one class */
-  syncClass: ClassInfo
+  syncClass: ClassInfo;
   /** Sync a class with PIQ */
-  syncClassWithPIQ: ClassInfo
+  syncClassWithPIQ: ClassInfo;
   /** Updates an admin user */
-  updateAdminUser: AdminUserResultUnion
+  updateAdminUser: AdminUserResultUnion;
   /** Allows to update the current AdminUser */
-  updateCurrentAdminUser: AdminUser
+  updateCurrentAdminUser: AdminUser;
   /** Allows to update the favorite site for a AdminUser */
-  updateCurrentAdminUserFavoriteSite: AdminUser
-  updateCurrentAdminUserPassword?: Maybe<Scalars['Boolean']>
+  updateCurrentAdminUserFavoriteSite: AdminUser;
+  updateCurrentAdminUserPassword?: Maybe<Scalars['Boolean']['output']>;
   /** Updates the current user */
-  updateCurrentUser?: Maybe<User>
+  updateCurrentUser?: Maybe<User>;
   /** Updates a user's password in all the sites */
-  updateCurrentUserPassword?: Maybe<Scalars['Boolean']>
+  updateCurrentUserPassword?: Maybe<Scalars['Boolean']['output']>;
   /** Updates a gift card */
-  updateGiftCard: GiftCard
+  updateGiftCard: GiftCard;
   /** Allows to update an Item from Shopping Cart */
-  updateItemInShoppingCart: ShoppingCart
+  updateItemInShoppingCart: ShoppingCart;
   /** Updates a payment link */
-  updatePaymentLink: PaymentLink
-  updateUserPassword?: Maybe<Scalars['Boolean']>
-}
+  updatePaymentLink: PaymentLink;
+  updateUserPassword?: Maybe<Scalars['Boolean']['output']>;
+};
+
 
 export type MutationAcceptLateCancelledSpotInClassArgs = {
-  input: AcceptLateCancelledSpotInClassInput
-  site?: InputMaybe<SiteEnum>
-}
+  input: AcceptLateCancelledSpotInClassInput;
+  site?: InputMaybe<SiteEnum>;
+};
+
 
 export type MutationAddAdminUserArgs = {
-  input: AdminUserDataInput
-}
+  input: AdminUserDataInput;
+};
+
 
 export type MutationAddDeviceTokenToCurrentUserArgs = {
-  input?: InputMaybe<DeviceTokenInput>
-  site?: InputMaybe<SiteEnum>
-}
+  input?: InputMaybe<DeviceTokenInput>;
+  site?: InputMaybe<SiteEnum>;
+};
+
 
 export type MutationAddDiscountCodeToShoppingCartArgs = {
-  discountCode: Scalars['String']
-}
+  discountCode: Scalars['String']['input'];
+};
+
 
 export type MutationAddGiftCardCodeToShoppingCartArgs = {
-  giftcard: Scalars['ID']
-}
+  giftcard: Scalars['ID']['input'];
+};
+
 
 export type MutationAddItemToShoppingCartArgs = {
-  input?: InputMaybe<ItemToShoppingCartInput>
-}
+  input?: InputMaybe<ItemToShoppingCartInput>;
+};
+
 
 export type MutationBookClassArgs = {
-  input: BookClassInput
-  site: SiteEnum
-}
+  input: BookClassInput;
+  site: SiteEnum;
+};
+
 
 export type MutationBookUserIntoClassArgs = {
-  input: BookUserIntoClassInput
-}
+  input: BookUserIntoClassInput;
+};
+
 
 export type MutationCancelCurrentUserEnrollmentArgs = {
-  input: CancelEnrollmentInput
-  site: SiteEnum
-}
+  input: CancelEnrollmentInput;
+  site: SiteEnum;
+};
+
 
 export type MutationCheckinUserInClassArgs = {
-  input: CheckinUserInClass
-  site: SiteEnum
-}
+  input: CheckinUserInClass;
+  site: SiteEnum;
+};
+
 
 export type MutationCheckoutUserInClassArgs = {
-  input: CheckoutUserInClass
-  site: SiteEnum
-}
+  input: CheckoutUserInClass;
+  site: SiteEnum;
+};
+
 
 export type MutationCreateCurrentUserInSiteArgs = {
-  fromSite: SiteEnum
-  toSite: SiteEnum
-}
+  fromSite: SiteEnum;
+  toSite: SiteEnum;
+};
+
 
 export type MutationCreatePaymentLinkArgs = {
-  input: CreatePaymentLinkInput
-}
+  input: CreatePaymentLinkInput;
+};
+
 
 export type MutationCreateRoomLayoutArgs = {
-  input: RoomLayoutInput
-  site: SiteEnum
-}
+  input: RoomLayoutInput;
+  site: SiteEnum;
+};
+
 
 export type MutationDeleteCurrentUserAccountArgs = {
-  site: SiteEnum
-  userPassword: Scalars['String']
-}
+  site: SiteEnum;
+  userPassword: Scalars['String']['input'];
+};
+
 
 export type MutationDeleteDeviceTokenToCurrentUserArgs = {
-  input?: InputMaybe<DeviceTokenInput>
-  site?: InputMaybe<SiteEnum>
-}
+  input?: InputMaybe<DeviceTokenInput>;
+  site?: InputMaybe<SiteEnum>;
+};
+
 
 export type MutationDeletePaymentLinkArgs = {
-  id: Scalars['ID']
-}
+  id: Scalars['ID']['input'];
+};
+
 
 export type MutationDisableSpotArgs = {
-  input?: InputMaybe<DisableEnableSpotInput>
-}
+  input?: InputMaybe<DisableEnableSpotInput>;
+};
+
 
 export type MutationEditClassArgs = {
-  input: EditClassInput
-}
+  input: EditClassInput;
+};
+
 
 export type MutationEditCurrentUserEnrollmentArgs = {
-  input: EditEnrollmentInput
-  site: SiteEnum
-}
+  input: EditEnrollmentInput;
+  site: SiteEnum;
+};
+
 
 export type MutationEditEnrollmentArgs = {
-  input: EditEnrollmentInput
-  site: SiteEnum
-}
+  input: EditEnrollmentInput;
+  site: SiteEnum;
+};
+
 
 export type MutationEditRoomLayoutArgs = {
-  input: EditRoomLayoutInput
-  site: SiteEnum
-}
+  input: EditRoomLayoutInput;
+  site: SiteEnum;
+};
+
 
 export type MutationEditUserArgs = {
-  input: EditUserInput
-}
+  input: EditUserInput;
+};
+
 
 export type MutationEnableSpotArgs = {
-  input?: InputMaybe<DisableEnableSpotInput>
-}
+  input?: InputMaybe<DisableEnableSpotInput>;
+};
+
 
 export type MutationRegisterIdentifiableUserArgs = {
-  input: RegisterUserInput
-  site: SiteEnum
-}
+  input: RegisterUserInput;
+  site: SiteEnum;
+};
+
 
 export type MutationRegisterUserArgs = {
-  input: RegisterUserInput
-  site: SiteEnum
-}
+  input: RegisterUserInput;
+  site: SiteEnum;
+};
+
 
 export type MutationRejectLateCancelledSpotInClassArgs = {
-  input: RejectLateCancelledSpotInClassInput
-  site?: InputMaybe<SiteEnum>
-}
+  input: RejectLateCancelledSpotInClassInput;
+  site?: InputMaybe<SiteEnum>;
+};
+
 
 export type MutationRemoveAdminUserArgs = {
-  id: Scalars['ID']
-}
+  id: Scalars['ID']['input'];
+};
+
 
 export type MutationRemoveCurrentUserFromWaitlistArgs = {
-  input: RemoveCurrentUserFromWaitlistInput
-  site: SiteEnum
-}
+  input: RemoveCurrentUserFromWaitlistInput;
+  site: SiteEnum;
+};
+
 
 export type MutationRemoveItemFromShoppingCartArgs = {
-  id: Scalars['ID']
-}
+  id: Scalars['ID']['input'];
+};
+
 
 export type MutationRemoveUserFromClassArgs = {
-  input: CancelEnrollmentInput
-}
+  input: CancelEnrollmentInput;
+};
+
 
 export type MutationRemoveUserFromWaitlistArgs = {
-  input: RemoveUserFromWaitlistInput
-}
+  input: RemoveUserFromWaitlistInput;
+};
+
 
 export type MutationRequestPasswordLinkArgs = {
-  input?: InputMaybe<RequestPasswordLinkInput>
-}
+  input?: InputMaybe<RequestPasswordLinkInput>;
+};
+
 
 export type MutationRequestSmsValidationArgs = {
-  input: RequestSmsValidationInput
-}
+  input: RequestSmsValidationInput;
+};
+
 
 export type MutationResetAdminUserPasswordArgs = {
-  id: Scalars['ID']
-}
+  id: Scalars['ID']['input'];
+};
+
 
 export type MutationResetPasswordForCurrentUserArgs = {
-  input?: InputMaybe<ResetPasswordForCurrentUserInput>
-}
+  input?: InputMaybe<ResetPasswordForCurrentUserInput>;
+};
+
+
+export type MutationRetryWebhookEventArgs = {
+  input: RetryWebhookEventInput;
+};
+
 
 export type MutationSendClassStatsToEmailArgs = {
-  input: SendClassStatsToEmailInput
-}
+  input: SendClassStatsToEmailInput;
+};
+
 
 export type MutationSendClassStatsToUsersArgs = {
-  classId: Scalars['ID']
-}
+  classId: Scalars['ID']['input'];
+};
+
 
 export type MutationSetRoomLayoutForClassSchedulesArgs = {
-  input: SetRoomLayoutForClassSchedulesInput
-}
+  input: SetRoomLayoutForClassSchedulesInput;
+};
+
 
 export type MutationSwapSpotArgs = {
-  input: EditEnrollmentInput
-  site: SiteEnum
-}
+  input: EditEnrollmentInput;
+  site: SiteEnum;
+};
+
 
 export type MutationSyncAllClassesArgs = {
-  site: SiteEnum
-}
+  site: SiteEnum;
+};
+
 
 export type MutationSyncClassArgs = {
-  classId: Scalars['ID']
-  site: SiteEnum
-}
+  classId: Scalars['ID']['input'];
+  site: SiteEnum;
+};
+
 
 export type MutationSyncClassWithPiqArgs = {
-  classId: Scalars['ID']
-  site: SiteEnum
-}
+  classId: Scalars['ID']['input'];
+  site: SiteEnum;
+};
+
 
 export type MutationUpdateAdminUserArgs = {
-  input: UpdateAdminUserInput
-}
+  input: UpdateAdminUserInput;
+};
+
 
 export type MutationUpdateCurrentAdminUserArgs = {
-  input: UpdateCurrentAdminUserInput
-}
+  input: UpdateCurrentAdminUserInput;
+};
+
 
 export type MutationUpdateCurrentAdminUserFavoriteSiteArgs = {
-  input?: InputMaybe<UpdateCurrentAdminUserFavoriteSiteInput>
-}
+  input?: InputMaybe<UpdateCurrentAdminUserFavoriteSiteInput>;
+};
+
 
 export type MutationUpdateCurrentAdminUserPasswordArgs = {
-  input: UpdateCurrentUserPasswordInput
-}
+  input: UpdateCurrentUserPasswordInput;
+};
+
 
 export type MutationUpdateCurrentUserArgs = {
-  input: UserInput
-}
+  input: UserInput;
+};
+
 
 export type MutationUpdateCurrentUserPasswordArgs = {
-  input: UpdateCurrentUserPasswordInput
-  site: SiteEnum
-}
+  input: UpdateCurrentUserPasswordInput;
+  site: SiteEnum;
+};
+
 
 export type MutationUpdateGiftCardArgs = {
-  input: UpdateGiftCardInput
-}
+  input: UpdateGiftCardInput;
+};
+
 
 export type MutationUpdateItemInShoppingCartArgs = {
-  input?: InputMaybe<ItemToShoppingCartInput>
-}
+  input?: InputMaybe<ItemToShoppingCartInput>;
+};
+
 
 export type MutationUpdatePaymentLinkArgs = {
-  input: UpdatePaymentLinkInput
-}
+  input: UpdatePaymentLinkInput;
+};
+
 
 export type MutationUpdateUserPasswordArgs = {
-  input: UpdateUserPasswordInput
-}
+  input: UpdateUserPasswordInput;
+};
 
 export type OtherUserHasThisExternalIdError = Error & {
-  __typename: 'OtherUserHasThisExternalIdError'
-  code: Scalars['String']
-  siteUser: IdentifiableSiteUser
-}
+  __typename: 'OtherUserHasThisExternalIdError';
+  code: Scalars['String']['output'];
+  siteUser: IdentifiableSiteUser;
+};
 
 export type PaginatedClassStats = PaginatedResult & {
-  __typename: 'PaginatedClassStats'
-  classStats: Array<ClassStat>
-  total: Scalars['Int']
-}
+  __typename: 'PaginatedClassStats';
+  classStats: Array<ClassStat>;
+  total: Scalars['Int']['output'];
+};
 
 export type PaginatedEnrollments = PaginatedResult & {
-  __typename: 'PaginatedEnrollments'
-  enrollments: Array<Enrollment>
-  total: Scalars['Int']
-}
+  __typename: 'PaginatedEnrollments';
+  enrollments: Array<Enrollment>;
+  total: Scalars['Int']['output'];
+};
 
 export type PaginatedPurchases = PaginatedResult & {
-  __typename: 'PaginatedPurchases'
-  purchases: Array<Purchase>
-  total: Scalars['Int']
-}
+  __typename: 'PaginatedPurchases';
+  purchases: Array<Purchase>;
+  total: Scalars['Int']['output'];
+};
 
 export type PaginatedResult = {
-  total: Scalars['Int']
-}
+  total: Scalars['Int']['output'];
+};
 
 export type PaginationInput = {
-  limit?: InputMaybe<Scalars['Int']>
-  page?: InputMaybe<Scalars['Int']>
-}
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
+};
 
 export type PasswordsDontMatchError = Error & {
-  __typename: 'PasswordsDontMatchError'
-  code: Scalars['String']
-}
+  __typename: 'PasswordsDontMatchError';
+  code: Scalars['String']['output'];
+};
 
 export type PaymentLink = {
-  __typename: 'PaymentLink'
-  amount: Scalars['Int']
-  currency: Scalars['String']
-  id: Scalars['ID']
-  notificationEmailAddress: Scalars['String']
-  site: Site
-  title: Scalars['String']
-  url: Scalars['String']
-}
+  __typename: 'PaymentLink';
+  amount: Scalars['Int']['output'];
+  currency: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  notificationEmailAddress: Scalars['String']['output'];
+  site: Site;
+  title: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
 
 /** Error returned when a client does not have enough credit or allowance to book a class */
 export type PaymentRequiredError = Error & {
-  __typename: 'PaymentRequiredError'
-  code: Scalars['String']
-}
+  __typename: 'PaymentRequiredError';
+  code: Scalars['String']['output'];
+};
 
 export type PositionAlreadyTakenError = Error & {
-  __typename: 'PositionAlreadyTakenError'
-  code: Scalars['String']
-}
+  __typename: 'PositionAlreadyTakenError';
+  code: Scalars['String']['output'];
+};
 
 export enum PositionIconEnum {
   BenchSpot = 'benchSpot',
@@ -992,879 +1065,861 @@ export enum PositionIconEnum {
 }
 
 export type ProductAlertBeforePurchasing = {
-  __typename: 'ProductAlertBeforePurchasing'
-  description: Scalars['String']
-  title: Scalars['String']
-}
+  __typename: 'ProductAlertBeforePurchasing';
+  description: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+};
 
 export enum ProductType {
   ClassPackage = 'classPackage'
 }
 
 export type ProductsInput = {
-  type?: InputMaybe<ProductType>
-}
+  type?: InputMaybe<ProductType>;
+};
 
 export type Purchase = {
-  __typename: 'Purchase'
-  activationDateTime: Scalars['DateTime']
-  allowanceObtained: Scalars['Int']
-  allowanceRemaining: Scalars['Int']
+  __typename: 'Purchase';
+  activationDateTime: Scalars['DateTime']['output'];
+  allowanceObtained: Scalars['Int']['output'];
+  allowanceRemaining: Scalars['Int']['output'];
   /** Whether a package can be used or not */
-  current: Scalars['Boolean']
-  expirationDateTime: Scalars['DateTime']
-  packageName: Scalars['String']
-  paymentDateTime: Scalars['DateTime']
-}
+  current: Scalars['Boolean']['output'];
+  expirationDateTime: Scalars['DateTime']['output'];
+  packageName: Scalars['String']['output'];
+  paymentDateTime: Scalars['DateTime']['output'];
+};
 
 export type Query = {
-  __typename: 'Query'
+  __typename: 'Query';
   /** Returns a single admin user */
-  adminUser?: Maybe<AdminUser>
+  adminUser?: Maybe<AdminUser>;
   /** Lists all the admin users */
-  adminUsers: Array<AdminUser>
+  adminUsers: Array<AdminUser>;
   /** Returns a list of all the available class types for a given site */
-  availableClassTypes: Array<Scalars['String']>
+  availableClassTypes: Array<Scalars['String']['output']>;
   /** Returns a list of all the available instructors */
-  availableInstructors: Array<Instructor>
+  availableInstructors: Array<Instructor>;
   /** Returns a list of all the available sites */
-  availableSites?: Maybe<Array<Site>>
-  /** Get next classes */
-  calendarClasses: Array<Class>
+  availableSites?: Maybe<Array<Site>>;
+  /**
+   * Returns a list of upcoming fitness classes for a specific site within an optional date range.
+   *
+   * Use this query to retrieve the class schedule, including details like instructor name, start time,
+   * duration, capacity, and booking availability. Results are ordered chronologically by class start time.
+   */
+  calendarClasses: Array<Class>;
   /** Get a single class information */
-  classInfo?: Maybe<ClassInfo>
+  classInfo?: Maybe<ClassInfo>;
   /** Returns a list of all the class schedules for a given site */
-  classSchedules: Array<ClassSchedule>
+  classSchedules: Array<ClassSchedule>;
   /** Returns the list of all available countries */
-  countries?: Maybe<Array<Maybe<Country>>>
+  countries?: Maybe<Array<Maybe<Country>>>;
   /** Returns a specific country by a given country code */
-  country?: Maybe<Country>
+  country?: Maybe<Country>;
   /** Returns the current AdminUser */
-  currentAdminUser: AdminUser
+  currentAdminUser: AdminUser;
   /** Returns information of the current CRANK challenge */
-  currentCRANKChallenge: ChallengeInterface
+  currentCRANKChallenge: ChallengeInterface;
   /** Returns the current user by the given Authentication header */
-  currentUser?: Maybe<User>
+  currentUser?: Maybe<User>;
   /**
    * List of classes where the user is already enrolled
    * @deprecated Use currentUserEnrollmentsPaginated instead
    */
-  currentUserEnrollments: Array<Enrollment>
-  currentUserEnrollmentsPaginated: PaginatedEnrollments
+  currentUserEnrollments: Array<Enrollment>;
+  currentUserEnrollmentsPaginated: PaginatedEnrollments;
   /** List of purchases made by the current */
-  currentUserPurchases?: Maybe<Array<Maybe<Purchase>>>
-  currentUserPurchasesPaginated: PaginatedPurchases
+  currentUserPurchases?: Maybe<Array<Maybe<Purchase>>>;
+  currentUserPurchasesPaginated: PaginatedPurchases;
   /** Get current user's ranking on a specific class */
-  currentUserRankingInClass: UserInClassRanking
+  currentUserRankingInClass: UserInClassRanking;
   /** Get current user's workout stats for a specific enrollment */
-  currentUserSingleWorkoutStat?: Maybe<ClassStat>
+  currentUserSingleWorkoutStat?: Maybe<ClassStat>;
   /**
    * Get current user's workout stats
    * @deprecated Use currentUserWorkoutStatsPaginated instead
    */
-  currentUserWorkoutStats: Array<Maybe<ClassStat>>
-  currentUserWorkoutStatsPaginated: PaginatedClassStats
+  currentUserWorkoutStats: Array<Maybe<ClassStat>>;
+  currentUserWorkoutStatsPaginated: PaginatedClassStats;
   /** Returns the list of all the available gift cards */
-  giftCards: Array<GiftCard>
+  giftCards: Array<GiftCard>;
   /** Verifies whether an sms validation code is valid */
-  isSMSValidationCodeValid?: Maybe<IsSmsValidationCodeValidUnion>
+  isSMSValidationCodeValid?: Maybe<IsSmsValidationCodeValidUnion>;
   /** Returns a single payment link by ID */
-  paymentLink?: Maybe<PaymentLink>
+  paymentLink?: Maybe<PaymentLink>;
   /** Returns a list of payment links */
-  paymentLinks: Array<PaymentLink>
+  paymentLinks: Array<PaymentLink>;
   /** Returns a list of available products for a specific site */
-  products: Array<SellableProductInterface>
+  products: Array<SellableProductInterface>;
   /** Returns a specific room layout */
-  roomLayout?: Maybe<RoomLayout>
+  roomLayout?: Maybe<RoomLayout>;
   /** Returns a list of available RoomLayouts for a site */
-  roomLayouts: Array<RoomLayout>
+  roomLayouts: Array<RoomLayout>;
   /** Returns the matched users given the query provided */
-  searchSiteUser?: Maybe<Array<Maybe<IdentifiableSiteUser>>>
+  searchSiteUser?: Maybe<Array<Maybe<IdentifiableSiteUser>>>;
   /** Returns a single workout stat */
-  singleWorkoutStat?: Maybe<ClassStat>
+  singleWorkoutStat?: Maybe<ClassStat>;
   /** Settings of a site */
-  siteSettings: SiteSetting
+  siteSettings: SiteSetting;
   /** Returns a user in a specific site */
-  siteUser?: Maybe<IdentifiableSiteUser>
+  siteUser?: Maybe<IdentifiableSiteUser>;
   /** Returns a user */
-  user?: Maybe<IdentifiableUser>
+  user?: Maybe<IdentifiableUser>;
   /** Returns the ranking of a user in a specific class */
-  userRankingInClass?: Maybe<UserInClassRanking>
+  userRankingInClass?: Maybe<UserInClassRanking>;
   /** Returns a list of workhout stats */
-  userWorkoutStats: Array<Maybe<ClassStat>>
-  userWorkoutStatsPaginated: PaginatedClassStats
-}
+  userWorkoutStats: Array<Maybe<ClassStat>>;
+  userWorkoutStatsPaginated: PaginatedClassStats;
+  /** Returns a single webhook event by ID */
+  webhookEvent?: Maybe<WebhookEvent>;
+  /** Returns a paginated list of webhook events from the subscription service */
+  webhookEvents: WebhookEventList;
+};
+
 
 export type QueryAdminUserArgs = {
-  id: Scalars['ID']
-}
+  id: Scalars['ID']['input'];
+};
+
 
 export type QueryAvailableClassTypesArgs = {
-  site?: InputMaybe<SiteEnum>
-}
+  site?: InputMaybe<SiteEnum>;
+};
+
 
 export type QueryCalendarClassesArgs = {
-  params?: InputMaybe<CalendarClassesParams>
-  site: SiteEnum
-}
+  params?: InputMaybe<CalendarClassesParams>;
+  site: SiteEnum;
+};
+
 
 export type QueryClassInfoArgs = {
-  id: Scalars['ID']
-  site: SiteEnum
-}
+  id: Scalars['ID']['input'];
+  site: SiteEnum;
+};
+
 
 export type QueryClassSchedulesArgs = {
-  site: SiteEnum
-}
+  site: SiteEnum;
+};
+
 
 export type QueryCountryArgs = {
-  countryCode: Scalars['String']
-}
+  countryCode: Scalars['String']['input'];
+};
+
 
 export type QueryCurrentUserEnrollmentsArgs = {
-  params?: InputMaybe<CurrentUserEnrollmentsParams>
-  site?: InputMaybe<SiteEnum>
-}
+  params?: InputMaybe<CurrentUserEnrollmentsParams>;
+  site?: InputMaybe<SiteEnum>;
+};
+
 
 export type QueryCurrentUserEnrollmentsPaginatedArgs = {
-  pagination?: InputMaybe<PaginationInput>
-  params?: InputMaybe<CurrentUserEnrollmentsParams>
-  site?: InputMaybe<SiteEnum>
-}
+  pagination?: InputMaybe<PaginationInput>;
+  params?: InputMaybe<CurrentUserEnrollmentsParams>;
+  site?: InputMaybe<SiteEnum>;
+};
+
 
 export type QueryCurrentUserPurchasesArgs = {
-  site?: InputMaybe<SiteEnum>
-}
+  site?: InputMaybe<SiteEnum>;
+};
+
 
 export type QueryCurrentUserPurchasesPaginatedArgs = {
-  pagination?: InputMaybe<PaginationInput>
-  site?: InputMaybe<SiteEnum>
-}
+  pagination?: InputMaybe<PaginationInput>;
+  site?: InputMaybe<SiteEnum>;
+};
+
 
 export type QueryCurrentUserRankingInClassArgs = {
-  params?: InputMaybe<UserInRankingParams>
-  site: SiteEnum
-}
+  params?: InputMaybe<UserInRankingParams>;
+  site: SiteEnum;
+};
+
 
 export type QueryCurrentUserSingleWorkoutStatArgs = {
-  enrollmentId: Scalars['ID']
-}
+  enrollmentId: Scalars['ID']['input'];
+};
+
 
 export type QueryCurrentUserWorkoutStatsArgs = {
-  site: SiteEnum
-}
+  site: SiteEnum;
+};
+
 
 export type QueryCurrentUserWorkoutStatsPaginatedArgs = {
-  pagination?: InputMaybe<PaginationInput>
-  site: SiteEnum
-}
+  pagination?: InputMaybe<PaginationInput>;
+  site: SiteEnum;
+};
+
 
 export type QueryIsSmsValidationCodeValidArgs = {
-  smsCode: Scalars['String']
-}
+  smsCode: Scalars['String']['input'];
+};
+
 
 export type QueryPaymentLinkArgs = {
-  id: Scalars['ID']
-}
+  id: Scalars['ID']['input'];
+};
+
 
 export type QueryPaymentLinksArgs = {
-  site?: InputMaybe<SiteEnum>
-}
+  site?: InputMaybe<SiteEnum>;
+};
+
 
 export type QueryProductsArgs = {
-  input?: InputMaybe<ProductsInput>
-  site: SiteEnum
-}
+  input?: InputMaybe<ProductsInput>;
+  site: SiteEnum;
+};
+
 
 export type QueryRoomLayoutArgs = {
-  id: Scalars['ID']
-  site: SiteEnum
-}
+  id: Scalars['ID']['input'];
+  site: SiteEnum;
+};
+
 
 export type QueryRoomLayoutsArgs = {
-  params?: InputMaybe<RoomLayoutsInput>
-  site: SiteEnum
-}
+  params?: InputMaybe<RoomLayoutsInput>;
+  site: SiteEnum;
+};
+
 
 export type QuerySearchSiteUserArgs = {
-  query?: InputMaybe<Scalars['String']>
-  site?: InputMaybe<SiteEnum>
-}
+  query?: InputMaybe<Scalars['String']['input']>;
+  site?: InputMaybe<SiteEnum>;
+};
+
 
 export type QuerySingleWorkoutStatArgs = {
-  enrollmentId: Scalars['ID']
-}
+  enrollmentId: Scalars['ID']['input'];
+};
+
 
 export type QuerySiteSettingsArgs = {
-  site?: InputMaybe<SiteEnum>
-}
+  site?: InputMaybe<SiteEnum>;
+};
+
 
 export type QuerySiteUserArgs = {
-  id: Scalars['ID']
-}
+  id: Scalars['ID']['input'];
+};
+
 
 export type QueryUserArgs = {
-  id: Scalars['ID']
-}
+  id: Scalars['ID']['input'];
+};
+
 
 export type QueryUserRankingInClassArgs = {
-  classId: Scalars['ID']
-  userId: Scalars['ID']
-}
+  classId: Scalars['ID']['input'];
+  userId: Scalars['ID']['input'];
+};
+
 
 export type QueryUserWorkoutStatsArgs = {
-  site: SiteEnum
-  userId: Scalars['ID']
-}
+  site: SiteEnum;
+  userId: Scalars['ID']['input'];
+};
+
 
 export type QueryUserWorkoutStatsPaginatedArgs = {
-  pagination?: InputMaybe<PaginationInput>
-  site: SiteEnum
-  userId: Scalars['ID']
-}
+  pagination?: InputMaybe<PaginationInput>;
+  site: SiteEnum;
+  userId: Scalars['ID']['input'];
+};
+
+
+export type QueryWebhookEventArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryWebhookEventsArgs = {
+  cursor?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+};
 
 export type RegisterUserInput = {
-  address1?: InputMaybe<Scalars['String']>
-  address2?: InputMaybe<Scalars['String']>
-  birthdate: Scalars['Date']
-  city?: InputMaybe<Scalars['String']>
-  country: Scalars['String']
-  email: Scalars['String']
-  emergencyContactName: Scalars['String']
-  emergencyContactPhone: Scalars['String']
-  emergencyContactRelationship?: InputMaybe<Scalars['String']>
-  firstName: Scalars['String']
-  gender: GenderEnum
-  lastName: Scalars['String']
-  leaderboardUsername: Scalars['String']
-  password: Scalars['String']
-  phone: Scalars['String']
-  state?: InputMaybe<Scalars['String']>
-  weight?: InputMaybe<Scalars['Float']>
-  zipCode: Scalars['String']
-}
+  address1?: InputMaybe<Scalars['String']['input']>;
+  address2?: InputMaybe<Scalars['String']['input']>;
+  birthdate: Scalars['Date']['input'];
+  city?: InputMaybe<Scalars['String']['input']>;
+  country: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+  emergencyContactName: Scalars['String']['input'];
+  emergencyContactPhone: Scalars['String']['input'];
+  emergencyContactRelationship?: InputMaybe<Scalars['String']['input']>;
+  firstName: Scalars['String']['input'];
+  gender: GenderEnum;
+  lastName: Scalars['String']['input'];
+  leaderboardUsername: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  phone: Scalars['String']['input'];
+  state?: InputMaybe<Scalars['String']['input']>;
+  weight?: InputMaybe<Scalars['Float']['input']>;
+  zipCode: Scalars['String']['input'];
+};
 
-export type RejectLateBookingResultUnion =
-  | PositionAlreadyTakenError
-  | RejectLateCancelledSpotInClassSuccess
+export type RejectLateBookingResultUnion = PositionAlreadyTakenError | RejectLateCancelledSpotInClassSuccess;
 
 export type RejectLateCancelledSpotInClassInput = {
-  waitlistEntryId: Scalars['ID']
-}
+  waitlistEntryId: Scalars['ID']['input'];
+};
 
 export type RejectLateCancelledSpotInClassSuccess = {
-  __typename: 'RejectLateCancelledSpotInClassSuccess'
-  success: Scalars['Boolean']
-}
+  __typename: 'RejectLateCancelledSpotInClassSuccess';
+  success: Scalars['Boolean']['output'];
+};
 
 export type RemoveCurrentUserFromWaitlistInput = {
-  waitlistEntryId: Scalars['ID']
-}
+  waitlistEntryId: Scalars['ID']['input'];
+};
 
-export type RemoveCurrentUserFromWaitlistUnion =
-  | RemoveFromWaitlistResult
-  | WaitlistEntryNotFoundError
+export type RemoveCurrentUserFromWaitlistUnion = RemoveFromWaitlistResult | WaitlistEntryNotFoundError;
 
 export type RemoveFromWaitlistResult = {
-  __typename: 'RemoveFromWaitlistResult'
-  success: Scalars['Boolean']
-}
+  __typename: 'RemoveFromWaitlistResult';
+  success: Scalars['Boolean']['output'];
+};
 
 export type RemoveUserFromWaitlistInput = {
-  waitlistEntryId: Scalars['ID']
-}
+  waitlistEntryId: Scalars['ID']['input'];
+};
 
-export type RemoveUserFromWaitlistUnion = RemoveFromWaitlistResult | WaitlistEntryNotFoundError
+export type RemoveUserFromWaitlistUnion = RemoveFromWaitlistResult | WaitlistEntryNotFoundError;
 
 export type RequestPasswordLinkInput = {
-  email: Scalars['String']
-}
+  email: Scalars['String']['input'];
+};
 
 export type RequestSmsValidationInput = {
-  countryCode: Scalars['String']
-  mobilePhone: Scalars['String']
-}
+  countryCode: Scalars['String']['input'];
+  mobilePhone: Scalars['String']['input'];
+};
 
 export type RequestSmsValidationNeededError = Error & {
-  __typename: 'RequestSMSValidationNeededError'
-  code: Scalars['String']
-}
+  __typename: 'RequestSMSValidationNeededError';
+  code: Scalars['String']['output'];
+};
 
 export type ResetPasswordForCurrentUserInput = {
-  password: Scalars['String']
-  repeatedPassword: Scalars['String']
-}
+  password: Scalars['String']['input'];
+  repeatedPassword: Scalars['String']['input'];
+};
 
-export type ResetPasswordForCurrentUserUnion = PasswordsDontMatchError | ResetPasswordSuccess
+export type ResetPasswordForCurrentUserUnion = PasswordsDontMatchError | ResetPasswordSuccess;
 
-export type ResetPasswordLinkResultUnion =
-  | ResetPasswordLinkSentSuccessfully
-  | TooManyResetPasswordLinkRequestsError
+export type ResetPasswordLinkResultUnion = ResetPasswordLinkSentSuccessfully | TooManyResetPasswordLinkRequestsError;
 
 export type ResetPasswordLinkSentSuccessfully = {
-  __typename: 'ResetPasswordLinkSentSuccessfully'
-  status: Scalars['Boolean']
-}
+  __typename: 'ResetPasswordLinkSentSuccessfully';
+  status: Scalars['Boolean']['output'];
+};
 
 export type ResetPasswordSuccess = {
-  __typename: 'ResetPasswordSuccess'
-  status: Scalars['Boolean']
-}
+  __typename: 'ResetPasswordSuccess';
+  status: Scalars['Boolean']['output'];
+};
+
+export type RetryWebhookEventInput = {
+  email: Scalars['String']['input'];
+  id: Scalars['ID']['input'];
+};
+
+export type RetryWebhookEventResultUnion = InvalidEmailError | RetryWebhookEventSuccess | WebhookEventNotFoundError | WebhookEventNotRetryableError;
+
+export type RetryWebhookEventSuccess = {
+  __typename: 'RetryWebhookEventSuccess';
+  webhookEvent: WebhookEvent;
+};
 
 export type RoomLayout = {
-  __typename: 'RoomLayout'
-  capacity: Scalars['Int']
-  columns: Scalars['Int']
-  id: Scalars['ID']
-  matrix?: Maybe<Array<ClassPositionInterface>>
-  name: Scalars['String']
-  rows: Scalars['Int']
-}
+  __typename: 'RoomLayout';
+  capacity: Scalars['Int']['output'];
+  columns: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  matrix?: Maybe<Array<ClassPositionInterface>>;
+  name: Scalars['String']['output'];
+  rows: Scalars['Int']['output'];
+};
 
 export type RoomLayoutInput = {
-  columns: Scalars['Int']
-  matrix: Array<IconPositionInput>
-  name: Scalars['String']
-  rows: Scalars['Int']
-}
+  columns: Scalars['Int']['input'];
+  matrix: Array<IconPositionInput>;
+  name: Scalars['String']['input'];
+  rows: Scalars['Int']['input'];
+};
 
 export type RoomLayoutsInput = {
   /** Amount of usable spots in the class */
-  usersCapacity?: InputMaybe<Scalars['Int']>
-}
+  usersCapacity?: InputMaybe<Scalars['Int']['input']>;
+};
 
 export type SmsCodeValidatedSuccessfully = {
-  __typename: 'SMSCodeValidatedSuccessfully'
-  success: Scalars['Boolean']
-}
+  __typename: 'SMSCodeValidatedSuccessfully';
+  success: Scalars['Boolean']['output'];
+};
 
 export type SmsValidationCodeError = Error & {
-  __typename: 'SMSValidationCodeError'
-  code: Scalars['String']
-}
+  __typename: 'SMSValidationCodeError';
+  code: Scalars['String']['output'];
+};
 
-export type SmsValidationUnion =
-  | MobilePhoneAlreadyVerifiedError
-  | MobilePhoneNotValidError
-  | SuccessfulRequestSmsValidation
+export type SmsValidationUnion = MobilePhoneAlreadyVerifiedError | MobilePhoneNotValidError | SuccessfulRequestSmsValidation;
 
 export type SellableProductInterface = {
-  alertBeforePurchasing?: Maybe<ProductAlertBeforePurchasing>
-  buttonText?: Maybe<Scalars['String']>
-  currency: Scalars['String']
-  id: Scalars['ID']
-  isVisible: Scalars['Boolean']
-  price: Scalars['Float']
-  subtitle: Scalars['String']
-  title: Scalars['String']
-}
+  alertBeforePurchasing?: Maybe<ProductAlertBeforePurchasing>;
+  buttonText?: Maybe<Scalars['String']['output']>;
+  currency: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  isVisible: Scalars['Boolean']['output'];
+  price: Scalars['Float']['output'];
+  subtitle: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+};
 
 export type SendClassStatsToEmailInput = {
-  email: Scalars['String']
-  enrollmentId: Scalars['ID']
-}
+  email: Scalars['String']['input'];
+  enrollmentId: Scalars['ID']['input'];
+};
 
 export type SetRoomLayoutForClassSchedulesInput = {
-  classSchedulesIds: Array<Scalars['ID']>
-  roomLayoutId?: InputMaybe<Scalars['ID']>
-}
+  classSchedulesIds: Array<Scalars['ID']['input']>;
+  roomLayoutId?: InputMaybe<Scalars['ID']['input']>;
+};
 
 export type ShoppingCart = {
-  __typename: 'ShoppingCart'
-  currency: Scalars['String']
-  discountCode?: Maybe<Scalars['String']>
-  giftCardCode?: Maybe<Scalars['String']>
-  items: Array<ShoppingCartItem>
-  subTotal: Scalars['Float']
-  total: Scalars['Float']
-}
+  __typename: 'ShoppingCart';
+  currency: Scalars['String']['output'];
+  discountCode?: Maybe<Scalars['String']['output']>;
+  giftCardCode?: Maybe<Scalars['String']['output']>;
+  items: Array<ShoppingCartItem>;
+  subTotal: Scalars['Float']['output'];
+  total: Scalars['Float']['output'];
+};
 
 export type ShoppingCartItem = {
-  __typename: 'ShoppingCartItem'
-  id: Scalars['ID']
-  product: SellableProductInterface
-  quantity: Scalars['Int']
-  subtotal: Scalars['Float']
-}
+  __typename: 'ShoppingCartItem';
+  id: Scalars['ID']['output'];
+  product: SellableProductInterface;
+  quantity: Scalars['Int']['output'];
+  subtotal: Scalars['Float']['output'];
+};
 
 export type SimpleSiteUser = {
-  __typename: 'SimpleSiteUser'
-  externalUserId: Scalars['ID']
-  site: SiteEnum
-}
+  __typename: 'SimpleSiteUser';
+  externalUserId: Scalars['ID']['output'];
+  site: SiteEnum;
+};
 
 export type Site = {
-  __typename: 'Site'
-  code: SiteEnum
-  name: Scalars['String']
-}
+  __typename: 'Site';
+  code: SiteEnum;
+  name: Scalars['String']['output'];
+};
 
+/**
+ * Available CRANK fitness studio locations.
+ *
+ * Each site has its own class schedule, instructors, and facility configuration.
+ */
 export enum SiteEnum {
+  /** CRANK Abu Dhabi location */
   AbuDhabi = 'abu_dhabi',
+  /** CRANK Dubai location */
   Dubai = 'dubai',
+  /** CRANK Town Square location */
   TownSquare = 'town_square'
 }
 
 export type SiteSetting = {
-  __typename: 'SiteSetting'
-  isSynchronizingClasses: Scalars['Boolean']
-  siteDateTimeNow?: Maybe<Scalars['DateTime']>
-  siteTimezone?: Maybe<Scalars['String']>
-}
+  __typename: 'SiteSetting';
+  isSynchronizingClasses: Scalars['Boolean']['output'];
+  siteDateTimeNow?: Maybe<Scalars['DateTime']['output']>;
+  siteTimezone?: Maybe<Scalars['String']['output']>;
+};
 
 export type SiteUserInput = {
-  externalUserId: Scalars['ID']
-  site: SiteEnum
-}
+  externalUserId: Scalars['ID']['input'];
+  site: SiteEnum;
+};
 
 /** Error returned when trying to book a class with a spot that is already booked */
 export type SpotAlreadyReservedError = Error & {
-  __typename: 'SpotAlreadyReservedError'
-  code: Scalars['String']
-}
+  __typename: 'SpotAlreadyReservedError';
+  code: Scalars['String']['output'];
+};
 
 export type SpotInfo = {
-  __typename: 'SpotInfo'
+  __typename: 'SpotInfo';
   /** @deprecated Array of booked spots should be returned by other query to reduce complexity of creating SpotInfo instances. */
-  isBooked: Scalars['Boolean']
-  spotNumber: Scalars['Int']
-}
+  isBooked: Scalars['Boolean']['output'];
+  spotNumber: Scalars['Int']['output'];
+};
 
 export type SpotIsDisabledError = Error & {
-  __typename: 'SpotIsDisabledError'
-  code: Scalars['String']
-}
+  __typename: 'SpotIsDisabledError';
+  code: Scalars['String']['output'];
+};
 
 export type SpotNotFoundError = Error & {
-  __typename: 'SpotNotFoundError'
-  code: Scalars['String']
-}
+  __typename: 'SpotNotFoundError';
+  code: Scalars['String']['output'];
+};
 
 export type State = {
-  __typename: 'State'
-  code: Scalars['String']
-  name: Scalars['String']
-}
+  __typename: 'State';
+  code: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
 
 export type SuccessfulRequestSmsValidation = {
-  __typename: 'SuccessfulRequestSMSValidation'
-  success: Scalars['Boolean']
-}
+  __typename: 'SuccessfulRequestSMSValidation';
+  success: Scalars['Boolean']['output'];
+};
 
-export type SwapSpotResultUnion = SwapSpotSuccess | TryToSwitchToSameSpotError
+export type SwapSpotResultUnion = SwapSpotSuccess | TryToSwitchToSameSpotError;
 
 export type SwapSpotSuccess = {
-  __typename: 'SwapSpotSuccess'
-  affectedEnrollment?: Maybe<EnrollmentInfoInterface>
-  selectedEnrollment: EnrollmentInfoInterface
-}
+  __typename: 'SwapSpotSuccess';
+  affectedEnrollment?: Maybe<EnrollmentInfoInterface>;
+  selectedEnrollment: EnrollmentInfoInterface;
+};
 
 export type TooManyResetPasswordLinkRequestsError = Error & {
-  __typename: 'TooManyResetPasswordLinkRequestsError'
-  availableAgainAt?: Maybe<Scalars['DateTime']>
-  code: Scalars['String']
-}
+  __typename: 'TooManyResetPasswordLinkRequestsError';
+  availableAgainAt?: Maybe<Scalars['DateTime']['output']>;
+  code: Scalars['String']['output'];
+};
 
 export type TryToSwitchToSameSpotError = Error & {
-  __typename: 'TryToSwitchToSameSpotError'
-  code: Scalars['String']
-}
+  __typename: 'TryToSwitchToSameSpotError';
+  code: Scalars['String']['output'];
+};
 
 export type UnknownError = Error & {
-  __typename: 'UnknownError'
-  code: Scalars['String']
-}
+  __typename: 'UnknownError';
+  code: Scalars['String']['output'];
+};
 
 export type UpdateAdminUserInput = {
-  adminUserId: Scalars['ID']
-  userDataInput: AdminUserDataInput
-}
+  adminUserId: Scalars['ID']['input'];
+  userDataInput: AdminUserDataInput;
+};
 
 export type UpdateCurrentAdminUserFavoriteSiteInput = {
-  favoriteSite?: InputMaybe<SiteEnum>
-}
+  favoriteSite?: InputMaybe<SiteEnum>;
+};
 
 export type UpdateCurrentAdminUserInput = {
-  showCancelledClasses: Scalars['Boolean']
-}
+  showCancelledClasses: Scalars['Boolean']['input'];
+};
 
 export type UpdateCurrentUserPasswordInput = {
-  currentPassword: Scalars['String']
-  newPassword: Scalars['String']
-}
+  currentPassword: Scalars['String']['input'];
+  newPassword: Scalars['String']['input'];
+};
 
 export type UpdateGiftCardInput = {
-  grandTotal?: InputMaybe<Scalars['Float']>
-  id: Scalars['ID']
-}
+  grandTotal?: InputMaybe<Scalars['Float']['input']>;
+  id: Scalars['ID']['input'];
+};
 
 export type UpdatePaymentLinkInput = {
-  amount?: InputMaybe<Scalars['Int']>
-  currency?: InputMaybe<Scalars['String']>
-  id: Scalars['ID']
+  amount?: InputMaybe<Scalars['Int']['input']>;
+  currency?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
   /** After a successful purchase an email will be sent to this email address with details about the payment (meant to be used by admins) */
-  notificationEmailAddress: Scalars['String']
-  site?: InputMaybe<SiteEnum>
-  title?: InputMaybe<Scalars['String']>
-}
+  notificationEmailAddress: Scalars['String']['input'];
+  site?: InputMaybe<SiteEnum>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
 
 export type UpdateUserPasswordInput = {
-  newPassword: Scalars['String']
-  userId: Scalars['ID']
-}
+  newPassword: Scalars['String']['input'];
+  userId: Scalars['ID']['input'];
+};
 
 export type User = {
-  __typename: 'User'
-  address1: Scalars['String']
-  address2?: Maybe<Scalars['String']>
-  birthdate?: Maybe<Scalars['Date']>
-  city: Scalars['String']
-  country?: Maybe<Country>
-  doesExistInSite: Scalars['Boolean']
-  email: Scalars['String']
-  emergencyContactName: Scalars['String']
-  emergencyContactPhone: Scalars['String']
-  emergencyContactRelationship?: Maybe<Scalars['String']>
-  enrollmentInClass?: Maybe<EnrollmentInfoInterface>
+  __typename: 'User';
+  address1: Scalars['String']['output'];
+  address2?: Maybe<Scalars['String']['output']>;
+  birthdate?: Maybe<Scalars['Date']['output']>;
+  city: Scalars['String']['output'];
+  country?: Maybe<Country>;
+  doesExistInSite: Scalars['Boolean']['output'];
+  email: Scalars['String']['output'];
+  emergencyContactName: Scalars['String']['output'];
+  emergencyContactPhone: Scalars['String']['output'];
+  emergencyContactRelationship?: Maybe<Scalars['String']['output']>;
+  enrollmentInClass?: Maybe<EnrollmentInfoInterface>;
   /** @deprecated Use siteUsers instead */
-  existsInSites: Array<SiteEnum>
-  firstName: Scalars['String']
-  gender?: Maybe<GenderEnum>
-  hideMetrics?: Maybe<Scalars['Boolean']>
-  lastName: Scalars['String']
-  leaderboardUsername?: Maybe<Scalars['String']>
-  phone: Scalars['String']
-  shoppingCart?: Maybe<ShoppingCart>
-  siteUsers: Array<SimpleSiteUser>
-  state?: Maybe<State>
-  weight?: Maybe<Scalars['Float']>
-  zipCode: Scalars['String']
-}
+  existsInSites: Array<SiteEnum>;
+  firstName: Scalars['String']['output'];
+  gender?: Maybe<GenderEnum>;
+  hideMetrics?: Maybe<Scalars['Boolean']['output']>;
+  lastName: Scalars['String']['output'];
+  leaderboardUsername?: Maybe<Scalars['String']['output']>;
+  phone: Scalars['String']['output'];
+  shoppingCart?: Maybe<ShoppingCart>;
+  siteUsers: Array<SimpleSiteUser>;
+  state?: Maybe<State>;
+  weight?: Maybe<Scalars['Float']['output']>;
+  zipCode: Scalars['String']['output'];
+};
+
 
 export type UserDoesExistInSiteArgs = {
-  site: SiteEnum
-}
+  site: SiteEnum;
+};
+
 
 export type UserEnrollmentInClassArgs = {
-  classId: Scalars['ID']
-}
+  classId: Scalars['ID']['input'];
+};
 
 export type UserAlreadyExistsError = Error & {
-  __typename: 'UserAlreadyExistsError'
-  code: Scalars['String']
-}
+  __typename: 'UserAlreadyExistsError';
+  code: Scalars['String']['output'];
+};
 
 export type UserInClassRanking = {
-  __typename: 'UserInClassRanking'
-  genderRanking?: Maybe<GenderRanking>
-  totalRanking?: Maybe<UserRanking>
-}
+  __typename: 'UserInClassRanking';
+  genderRanking?: Maybe<GenderRanking>;
+  totalRanking?: Maybe<UserRanking>;
+};
 
 export type UserInRankingParams = {
-  classId?: InputMaybe<Scalars['ID']>
-}
+  classId?: InputMaybe<Scalars['ID']['input']>;
+};
 
 export type UserInput = {
-  address1?: InputMaybe<Scalars['String']>
-  address2?: InputMaybe<Scalars['String']>
-  birthdate?: InputMaybe<Scalars['Date']>
-  city?: InputMaybe<Scalars['String']>
-  country?: InputMaybe<Scalars['String']>
-  emergencyContactName?: InputMaybe<Scalars['String']>
-  emergencyContactPhone?: InputMaybe<Scalars['String']>
-  emergencyContactRelationship?: InputMaybe<Scalars['String']>
-  firstName?: InputMaybe<Scalars['String']>
-  gender?: InputMaybe<GenderEnum>
-  hideMetrics?: InputMaybe<Scalars['Boolean']>
-  lastName?: InputMaybe<Scalars['String']>
-  leaderboardUsername?: InputMaybe<Scalars['String']>
-  phone?: InputMaybe<Scalars['String']>
-  state?: InputMaybe<Scalars['String']>
-  weight?: InputMaybe<Scalars['Float']>
-  zipCode?: InputMaybe<Scalars['String']>
-}
+  address1?: InputMaybe<Scalars['String']['input']>;
+  address2?: InputMaybe<Scalars['String']['input']>;
+  birthdate?: InputMaybe<Scalars['Date']['input']>;
+  city?: InputMaybe<Scalars['String']['input']>;
+  country?: InputMaybe<Scalars['String']['input']>;
+  emergencyContactName?: InputMaybe<Scalars['String']['input']>;
+  emergencyContactPhone?: InputMaybe<Scalars['String']['input']>;
+  emergencyContactRelationship?: InputMaybe<Scalars['String']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  gender?: InputMaybe<GenderEnum>;
+  hideMetrics?: InputMaybe<Scalars['Boolean']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  leaderboardUsername?: InputMaybe<Scalars['String']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
+  state?: InputMaybe<Scalars['String']['input']>;
+  weight?: InputMaybe<Scalars['Float']['input']>;
+  zipCode?: InputMaybe<Scalars['String']['input']>;
+};
 
 export type UserPasswordDoesNotMatchError = Error & {
-  __typename: 'UserPasswordDoesNotMatchError'
-  code: Scalars['String']
-}
+  __typename: 'UserPasswordDoesNotMatchError';
+  code: Scalars['String']['output'];
+};
 
 export type UserPositionInRanking = {
-  __typename: 'UserPositionInRanking'
-  positionInRanking: Scalars['Int']
-  user: User
-}
+  __typename: 'UserPositionInRanking';
+  positionInRanking: Scalars['Int']['output'];
+  user: User;
+};
 
 export type UserRanking = {
-  __typename: 'UserRanking'
-  positionInRanking?: Maybe<Scalars['Int']>
-  totalMembersInRanking?: Maybe<Scalars['Int']>
-}
+  __typename: 'UserRanking';
+  positionInRanking?: Maybe<Scalars['Int']['output']>;
+  totalMembersInRanking?: Maybe<Scalars['Int']['output']>;
+};
 
 export type UsernameAlreadyUsedError = Error & {
-  __typename: 'UsernameAlreadyUsedError'
-  code: Scalars['String']
-}
+  __typename: 'UsernameAlreadyUsedError';
+  code: Scalars['String']['output'];
+};
 
 export type ValidateResetPasswordTokenInput = {
-  token: Scalars['String']
-}
+  token: Scalars['String']['input'];
+};
 
 export type WaitlistEntry = EnrollmentInfoInterface & {
-  __typename: 'WaitlistEntry'
-  canBeTurnedIntoEnrollment: Scalars['Boolean']
-  enrollmentDateTime: Scalars['DateTime']
-  enrollmentDateTimeWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']
-  enrollmentStatus: EnrollmentStatusEnum
-  id: Scalars['ID']
-  identifiableSiteUser?: Maybe<IdentifiableSiteUser>
-}
+  __typename: 'WaitlistEntry';
+  canBeTurnedIntoEnrollment: Scalars['Boolean']['output'];
+  enrollmentDateTime: Scalars['DateTime']['output'];
+  enrollmentDateTimeWithNoTimeZone: Scalars['DateTimeWithoutTimeZone']['output'];
+  enrollmentStatus: EnrollmentStatusEnum;
+  id: Scalars['ID']['output'];
+  identifiableSiteUser?: Maybe<IdentifiableSiteUser>;
+};
 
 export type WaitlistEntryNotFoundError = Error & {
-  __typename: 'WaitlistEntryNotFoundError'
-  code: Scalars['String']
-}
+  __typename: 'WaitlistEntryNotFoundError';
+  code: Scalars['String']['output'];
+};
 
 export type WaitlistFullError = Error & {
-  __typename: 'WaitlistFullError'
-  code: Scalars['String']
-}
+  __typename: 'WaitlistFullError';
+  code: Scalars['String']['output'];
+};
+
+export type WebhookEvent = {
+  __typename: 'WebhookEvent';
+  attempts: Scalars['Int']['output'];
+  createdAt: Scalars['String']['output'];
+  destinationUrl?: Maybe<Scalars['String']['output']>;
+  eventType: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  lastAttemptAt?: Maybe<Scalars['String']['output']>;
+  lastError?: Maybe<Scalars['String']['output']>;
+  nextRetryAt?: Maybe<Scalars['String']['output']>;
+  parentEventId?: Maybe<Scalars['String']['output']>;
+  payload: Scalars['String']['output'];
+  resolvedByEventId?: Maybe<Scalars['String']['output']>;
+  status: Scalars['String']['output'];
+  subscriptionId?: Maybe<Scalars['String']['output']>;
+  triggeredBy?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+};
+
+export type WebhookEventList = {
+  __typename: 'WebhookEventList';
+  events: Array<WebhookEvent>;
+  hasMore: Scalars['Boolean']['output'];
+  limit: Scalars['Int']['output'];
+  nextCursor?: Maybe<Scalars['String']['output']>;
+};
+
+export type WebhookEventNotFoundError = Error & {
+  __typename: 'WebhookEventNotFoundError';
+  code: Scalars['String']['output'];
+};
+
+export type WebhookEventNotRetryableError = Error & {
+  __typename: 'WebhookEventNotRetryableError';
+  code: Scalars['String']['output'];
+};
 
 export type CreatePaymentLinkMutationVariables = Exact<{
-  input: CreatePaymentLinkInput
-}>
+  input: CreatePaymentLinkInput;
+}>;
 
-export type CreatePaymentLinkMutation = {
-  __typename: 'Mutation'
-  createPaymentLink: {
-    __typename: 'PaymentLink'
-    id: string
-    title: string
-    amount: number
-    currency: string
-    url: string
-    notificationEmailAddress: string
-    site: { __typename: 'Site'; name: string; code: SiteEnum }
-  }
-}
+
+export type CreatePaymentLinkMutation = { __typename: 'Mutation', createPaymentLink: { __typename: 'PaymentLink', id: string, title: string, amount: number, currency: string, url: string, notificationEmailAddress: string, site: { __typename: 'Site', name: string, code: SiteEnum } } };
 
 export type DeletePaymentLinkMutationVariables = Exact<{
-  id: Scalars['ID']
-}>
+  id: Scalars['ID']['input'];
+}>;
 
-export type DeletePaymentLinkMutation = { __typename: 'Mutation'; deletePaymentLink: boolean }
+
+export type DeletePaymentLinkMutation = { __typename: 'Mutation', deletePaymentLink: boolean };
 
 export type PaymentLinkQueryVariables = Exact<{
-  id: Scalars['ID']
-}>
+  id: Scalars['ID']['input'];
+}>;
 
-export type PaymentLinkQuery = {
-  __typename: 'Query'
-  paymentLink?: {
-    __typename: 'PaymentLink'
-    id: string
-    title: string
-    amount: number
-    currency: string
-    url: string
-    notificationEmailAddress: string
-    site: { __typename: 'Site'; name: string; code: SiteEnum }
-  } | null
-}
+
+export type PaymentLinkQuery = { __typename: 'Query', paymentLink?: { __typename: 'PaymentLink', id: string, title: string, amount: number, currency: string, url: string, notificationEmailAddress: string, site: { __typename: 'Site', name: string, code: SiteEnum } } | null };
 
 export type PaymentLinksQueryVariables = Exact<{
-  site?: InputMaybe<SiteEnum>
-}>
+  site?: InputMaybe<SiteEnum>;
+}>;
 
-export type PaymentLinksQuery = {
-  __typename: 'Query'
-  paymentLinks: Array<{
-    __typename: 'PaymentLink'
-    id: string
-    title: string
-    amount: number
-    currency: string
-    url: string
-    notificationEmailAddress: string
-    site: { __typename: 'Site'; name: string; code: SiteEnum }
-  }>
-}
+
+export type PaymentLinksQuery = { __typename: 'Query', paymentLinks: Array<{ __typename: 'PaymentLink', id: string, title: string, amount: number, currency: string, url: string, notificationEmailAddress: string, site: { __typename: 'Site', name: string, code: SiteEnum } }> };
 
 export type UpdatePaymentLinkMutationVariables = Exact<{
-  input: UpdatePaymentLinkInput
-}>
+  input: UpdatePaymentLinkInput;
+}>;
 
-export type UpdatePaymentLinkMutation = {
-  __typename: 'Mutation'
-  updatePaymentLink: {
-    __typename: 'PaymentLink'
-    id: string
-    title: string
-    amount: number
-    currency: string
-    url: string
-    notificationEmailAddress: string
-    site: { __typename: 'Site'; name: string; code: SiteEnum }
-  }
-}
+
+export type UpdatePaymentLinkMutation = { __typename: 'Mutation', updatePaymentLink: { __typename: 'PaymentLink', id: string, title: string, amount: number, currency: string, url: string, notificationEmailAddress: string, site: { __typename: 'Site', name: string, code: SiteEnum } } };
+
+export type RetryWebhookEventMutationVariables = Exact<{
+  input: RetryWebhookEventInput;
+}>;
+
+
+export type RetryWebhookEventMutation = { __typename: 'Mutation', retryWebhookEvent:
+    | { __typename: 'InvalidEmailError', code: string }
+    | { __typename: 'RetryWebhookEventSuccess', webhookEvent: { __typename: 'WebhookEvent', id: string, eventType: string, subscriptionId?: string | null, status: string, attempts: number, lastAttemptAt?: string | null, nextRetryAt?: string | null, createdAt: string, parentEventId?: string | null, triggeredBy?: string | null, resolvedByEventId?: string | null, lastError?: string | null, destinationUrl?: string | null, payload: string } }
+    | { __typename: 'WebhookEventNotFoundError', code: string }
+    | { __typename: 'WebhookEventNotRetryableError', code: string }
+   };
+
+export type WebhookEventQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type WebhookEventQuery = { __typename: 'Query', webhookEvent?: { __typename: 'WebhookEvent', id: string, eventType: string, subscriptionId?: string | null, status: string, attempts: number, lastAttemptAt?: string | null, nextRetryAt?: string | null, createdAt: string, parentEventId?: string | null, triggeredBy?: string | null, resolvedByEventId?: string | null, lastError?: string | null, destinationUrl?: string | null, payload: string } | null };
+
+export type WebhookEventsQueryVariables = Exact<{
+  status?: InputMaybe<Scalars['String']['input']>;
+  cursor?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type WebhookEventsQuery = { __typename: 'Query', webhookEvents: { __typename: 'WebhookEventList', hasMore: boolean, nextCursor?: string | null, limit: number, events: Array<{ __typename: 'WebhookEvent', id: string, eventType: string, subscriptionId?: string | null, status: string, attempts: number, lastAttemptAt?: string | null, nextRetryAt?: string | null, createdAt: string, parentEventId?: string | null, triggeredBy?: string | null, resolvedByEventId?: string | null, lastError?: string | null, destinationUrl?: string | null, payload: string }> } };
 
 export type SiteSettingsQueryVariables = Exact<{
-  site: SiteEnum
-}>
+  site: SiteEnum;
+}>;
 
-export type SiteSettingsQuery = {
-  __typename: 'Query'
-  siteSettings: { __typename: 'SiteSetting'; siteDateTimeNow?: any | null }
-}
+
+export type SiteSettingsQuery = { __typename: 'Query', siteSettings: { __typename: 'SiteSetting', siteDateTimeNow?: any | null } };
 
 export type ClassInfoAdminQueryVariables = Exact<{
-  site: SiteEnum
-  id: Scalars['ID']
-}>
+  site: SiteEnum;
+  id: Scalars['ID']['input'];
+}>;
 
-export type ClassInfoAdminQuery = {
-  __typename: 'Query'
-  classInfo?: {
-    __typename: 'ClassInfo'
-    onHoldSpots: number
-    orphanedClassStatsSpots: Array<number>
-    class: {
-      __typename: 'Class'
-      id: string
-      name: string
-      description: string
-      instructorName: string
-      start: any
-      startWithNoTimeZone: any
-      duration: number
-      waitListAvailable: boolean
-      showAsDisabled: boolean
-      maxCapacity: number
-      isSubstitute: boolean
-      hasClassStats: boolean
-      isSynchronizing: boolean
-    }
-    roomLayout?: {
-      __typename: 'RoomLayout'
-      id: string
-      name: string
-      matrix?: Array<
-        | {
-            __typename: 'BookableSpot'
-            enabled?: boolean | null
-            spotNumber: number
-            x: number
-            y: number
-            icon: PositionIconEnum
-          }
-        | { __typename: 'IconPosition'; x: number; y: number; icon: PositionIconEnum }
-      > | null
-    } | null
-    enrollments: Array<
-      | {
-          __typename: 'EnrollmentInfo'
-          isCheckedIn: boolean
-          spotNumber?: number | null
-          isBookedForFree: boolean
-          hasStats?: boolean | null
-          isFirstTimeInThisTypeOfClass: boolean
-          isFirstTimeWithThisInstructor: boolean
-          isTodayUserBirthday: boolean
-          isUserLeaderboardEnabled: boolean
-          bookedViaClassPass: boolean
-          id: string
-          enrollmentStatus: EnrollmentStatusEnum
-          enrollmentDateTime: any
-          identifiableSiteUser?: {
-            __typename: 'IdentifiableSiteUser'
-            id?: string | null
-            identifiableUser?: {
-              __typename: 'IdentifiableUser'
-              id?: string | null
-              user?: {
-                __typename: 'User'
-                firstName: string
-                lastName: string
-                email: string
-                leaderboardUsername?: string | null
-              } | null
-            } | null
-          } | null
-        }
-      | {
-          __typename: 'WaitlistEntry'
-          id: string
-          enrollmentStatus: EnrollmentStatusEnum
-          enrollmentDateTime: any
-          identifiableSiteUser?: {
-            __typename: 'IdentifiableSiteUser'
-            id?: string | null
-            identifiableUser?: {
-              __typename: 'IdentifiableUser'
-              id?: string | null
-              user?: {
-                __typename: 'User'
-                firstName: string
-                lastName: string
-                email: string
-                leaderboardUsername?: string | null
-              } | null
-            } | null
-          } | null
-        }
-    >
-  } | null
-}
+
+export type ClassInfoAdminQuery = { __typename: 'Query', classInfo?: { __typename: 'ClassInfo', onHoldSpots: number, orphanedClassStatsSpots: Array<number>, class: { __typename: 'Class', id: string, name: string, description: string, instructorName: string, start: any, startWithNoTimeZone: any, duration: number, waitListAvailable: boolean, showAsDisabled: boolean, maxCapacity: number, isSubstitute: boolean, hasClassStats: boolean, isSynchronizing: boolean }, roomLayout?: { __typename: 'RoomLayout', id: string, name: string, matrix?: Array<
+        | { __typename: 'BookableSpot', enabled?: boolean | null, spotNumber: number, x: number, y: number, icon: PositionIconEnum }
+        | { __typename: 'IconPosition', x: number, y: number, icon: PositionIconEnum }
+      > | null } | null, enrollments: Array<
+      | { __typename: 'EnrollmentInfo', isCheckedIn: boolean, spotNumber?: number | null, isBookedForFree: boolean, hasStats?: boolean | null, isFirstTimeInThisTypeOfClass: boolean, isFirstTimeWithThisInstructor: boolean, isTodayUserBirthday: boolean, isUserLeaderboardEnabled: boolean, bookedViaClassPass: boolean, id: string, enrollmentStatus: EnrollmentStatusEnum, enrollmentDateTime: any, identifiableSiteUser?: { __typename: 'IdentifiableSiteUser', id?: string | null, identifiableUser?: { __typename: 'IdentifiableUser', id?: string | null, user?: { __typename: 'User', firstName: string, lastName: string, email: string, leaderboardUsername?: string | null } | null } | null } | null }
+      | { __typename: 'WaitlistEntry', id: string, enrollmentStatus: EnrollmentStatusEnum, enrollmentDateTime: any, identifiableSiteUser?: { __typename: 'IdentifiableSiteUser', id?: string | null, identifiableUser?: { __typename: 'IdentifiableUser', id?: string | null, user?: { __typename: 'User', firstName: string, lastName: string, email: string, leaderboardUsername?: string | null } | null } | null } | null }
+    > } | null };
 
 export type DisableSpotMutationVariables = Exact<{
-  input?: InputMaybe<DisableEnableSpotInput>
-}>
+  input?: InputMaybe<DisableEnableSpotInput>;
+}>;
 
-export type DisableSpotMutation = {
-  __typename: 'Mutation'
-  disableSpot?:
-    | { __typename: 'DisableEnableSpotResult'; result?: boolean | null }
-    | { __typename: 'SpotNotFoundError'; code: string }
-    | null
-}
+
+export type DisableSpotMutation = { __typename: 'Mutation', disableSpot?:
+    | { __typename: 'DisableEnableSpotResult', result?: boolean | null }
+    | { __typename: 'SpotNotFoundError', code: string }
+   | null };
 
 export type EnableSpotMutationVariables = Exact<{
-  input?: InputMaybe<DisableEnableSpotInput>
-}>
+  input?: InputMaybe<DisableEnableSpotInput>;
+}>;
 
-export type EnableSpotMutation = {
-  __typename: 'Mutation'
-  enableSpot?:
-    | { __typename: 'DisableEnableSpotResult'; result?: boolean | null }
-    | { __typename: 'SpotNotFoundError'; code: string }
-    | null
-}
+
+export type EnableSpotMutation = { __typename: 'Mutation', enableSpot?:
+    | { __typename: 'DisableEnableSpotResult', result?: boolean | null }
+    | { __typename: 'SpotNotFoundError', code: string }
+   | null };
 
 export type SearchSiteUserQueryVariables = Exact<{
-  site: SiteEnum
-  query?: InputMaybe<Scalars['String']>
-}>
+  site: SiteEnum;
+  query?: InputMaybe<Scalars['String']['input']>;
+}>;
 
-export type SearchSiteUserQuery = {
-  __typename: 'Query'
-  searchSiteUser?: Array<{
-    __typename: 'IdentifiableSiteUser'
-    id?: string | null
-    identifiableUser?: {
-      __typename: 'IdentifiableUser'
-      id?: string | null
-      user?: { __typename: 'User'; firstName: string; lastName: string; email: string } | null
-    } | null
-  } | null> | null
-}
+
+export type SearchSiteUserQuery = { __typename: 'Query', searchSiteUser?: Array<{ __typename: 'IdentifiableSiteUser', id?: string | null, identifiableUser?: { __typename: 'IdentifiableUser', id?: string | null, user?: { __typename: 'User', firstName: string, lastName: string, email: string } | null } | null } | null> | null };
 
 export type BookUserIntoClassMutationVariables = Exact<{
-  input: BookUserIntoClassInput
-}>
+  input: BookUserIntoClassInput;
+}>;
 
-export type BookUserIntoClassMutation = {
-  __typename: 'Mutation'
-  bookUserIntoClass:
+
+export type BookUserIntoClassMutation = { __typename: 'Mutation', bookUserIntoClass:
     | { __typename: 'AddedToWaitlistSuccess' }
     | { __typename: 'BookClassSuccess' }
     | { __typename: 'BookedButInOtherSpotError' }
@@ -1878,4983 +1933,500 @@ export type BookUserIntoClassMutation = {
     | { __typename: 'SpotIsDisabledError' }
     | { __typename: 'UnknownError' }
     | { __typename: 'WaitlistFullError' }
-}
+   };
 
 export type RemoveUserFromClassMutationVariables = Exact<{
-  input: CancelEnrollmentInput
-}>
+  input: CancelEnrollmentInput;
+}>;
 
-export type RemoveUserFromClassMutation = {
-  __typename: 'Mutation'
-  removeUserFromClass:
+
+export type RemoveUserFromClassMutation = { __typename: 'Mutation', removeUserFromClass:
     | { __typename: 'CancelUserEnrollmentSuccess' }
     | { __typename: 'LateCancellationRequiredError' }
     | { __typename: 'UnknownError' }
-}
+   };
 
 export type EditClassMutationVariables = Exact<{
-  input: EditClassInput
-}>
+  input: EditClassInput;
+}>;
 
-export type EditClassMutation = {
-  __typename: 'Mutation'
-  editClass: { __typename: 'EditClassSuccessResult'; updated: boolean }
-}
+
+export type EditClassMutation = { __typename: 'Mutation', editClass: { __typename: 'EditClassSuccessResult', updated: boolean } };
 
 export type RoomLayoutsQueryVariables = Exact<{
-  site: SiteEnum
-  params?: InputMaybe<RoomLayoutsInput>
-}>
+  site: SiteEnum;
+  params?: InputMaybe<RoomLayoutsInput>;
+}>;
 
-export type RoomLayoutsQuery = {
-  __typename: 'Query'
-  roomLayouts: Array<{ __typename: 'RoomLayout'; id: string; name: string; capacity: number }>
-}
+
+export type RoomLayoutsQuery = { __typename: 'Query', roomLayouts: Array<{ __typename: 'RoomLayout', id: string, name: string, capacity: number }> };
 
 export type RoomLayoutQueryVariables = Exact<{
-  site: SiteEnum
-  id: Scalars['ID']
-}>
+  site: SiteEnum;
+  id: Scalars['ID']['input'];
+}>;
 
-export type RoomLayoutQuery = {
-  __typename: 'Query'
-  roomLayout?: {
-    __typename: 'RoomLayout'
-    id: string
-    name: string
-    columns: number
-    rows: number
-    matrix?: Array<
-      | {
-          __typename: 'BookableSpot'
-          spotNumber: number
-          x: number
-          y: number
-          icon: PositionIconEnum
-        }
-      | { __typename: 'IconPosition'; x: number; y: number; icon: PositionIconEnum }
-    > | null
-  } | null
-}
+
+export type RoomLayoutQuery = { __typename: 'Query', roomLayout?: { __typename: 'RoomLayout', id: string, name: string, columns: number, rows: number, matrix?: Array<
+      | { __typename: 'BookableSpot', spotNumber: number, x: number, y: number, icon: PositionIconEnum }
+      | { __typename: 'IconPosition', x: number, y: number, icon: PositionIconEnum }
+    > | null } | null };
 
 export type CreateRoomLayoutMutationVariables = Exact<{
-  site: SiteEnum
-  input: RoomLayoutInput
-}>
+  site: SiteEnum;
+  input: RoomLayoutInput;
+}>;
 
-export type CreateRoomLayoutMutation = {
-  __typename: 'Mutation'
-  createRoomLayout: { __typename: 'RoomLayout'; id: string }
-}
+
+export type CreateRoomLayoutMutation = { __typename: 'Mutation', createRoomLayout: { __typename: 'RoomLayout', id: string } };
 
 export type EditRoomLayoutMutationVariables = Exact<{
-  site: SiteEnum
-  input: EditRoomLayoutInput
-}>
+  site: SiteEnum;
+  input: EditRoomLayoutInput;
+}>;
 
-export type EditRoomLayoutMutation = {
-  __typename: 'Mutation'
-  editRoomLayout: { __typename: 'RoomLayout'; id: string }
-}
+
+export type EditRoomLayoutMutation = { __typename: 'Mutation', editRoomLayout: { __typename: 'RoomLayout', id: string } };
 
 export type ClassWaitlistEntriesQueryVariables = Exact<{
-  site: SiteEnum
-  id: Scalars['ID']
-}>
+  site: SiteEnum;
+  id: Scalars['ID']['input'];
+}>;
 
-export type ClassWaitlistEntriesQuery = {
-  __typename: 'Query'
-  classInfo?: {
-    __typename: 'ClassInfo'
-    enrollments: Array<
-      | {
-          __typename: 'EnrollmentInfo'
-          id: string
-          enrollmentStatus: EnrollmentStatusEnum
-          enrollmentDateTime: any
-          identifiableSiteUser?: {
-            __typename: 'IdentifiableSiteUser'
-            id?: string | null
-            identifiableUser?: {
-              __typename: 'IdentifiableUser'
-              id?: string | null
-              user?: { __typename: 'User'; firstName: string; lastName: string } | null
-            } | null
-          } | null
-        }
-      | {
-          __typename: 'WaitlistEntry'
-          id: string
-          enrollmentStatus: EnrollmentStatusEnum
-          enrollmentDateTime: any
-          identifiableSiteUser?: {
-            __typename: 'IdentifiableSiteUser'
-            id?: string | null
-            identifiableUser?: {
-              __typename: 'IdentifiableUser'
-              id?: string | null
-              user?: { __typename: 'User'; firstName: string; lastName: string } | null
-            } | null
-          } | null
-        }
-    >
-  } | null
-}
+
+export type ClassWaitlistEntriesQuery = { __typename: 'Query', classInfo?: { __typename: 'ClassInfo', enrollments: Array<
+      | { __typename: 'EnrollmentInfo', id: string, enrollmentStatus: EnrollmentStatusEnum, enrollmentDateTime: any, identifiableSiteUser?: { __typename: 'IdentifiableSiteUser', id?: string | null, identifiableUser?: { __typename: 'IdentifiableUser', id?: string | null, user?: { __typename: 'User', firstName: string, lastName: string } | null } | null } | null }
+      | { __typename: 'WaitlistEntry', id: string, enrollmentStatus: EnrollmentStatusEnum, enrollmentDateTime: any, identifiableSiteUser?: { __typename: 'IdentifiableSiteUser', id?: string | null, identifiableUser?: { __typename: 'IdentifiableUser', id?: string | null, user?: { __typename: 'User', firstName: string, lastName: string } | null } | null } | null }
+    > } | null };
 
 export type RemoveUserFromWaitlistMutationVariables = Exact<{
-  input: RemoveUserFromWaitlistInput
-}>
+  input: RemoveUserFromWaitlistInput;
+}>;
 
-export type RemoveUserFromWaitlistMutation = {
-  __typename: 'Mutation'
-  removeUserFromWaitlist:
-    | { __typename: 'RemoveFromWaitlistResult'; success: boolean }
-    | { __typename: 'WaitlistEntryNotFoundError'; code: string }
-}
+
+export type RemoveUserFromWaitlistMutation = { __typename: 'Mutation', removeUserFromWaitlist:
+    | { __typename: 'RemoveFromWaitlistResult', success: boolean }
+    | { __typename: 'WaitlistEntryNotFoundError', code: string }
+   };
 
 export type CheckinUserInClassMutationVariables = Exact<{
-  site: SiteEnum
-  input: CheckinUserInClass
-}>
+  site: SiteEnum;
+  input: CheckinUserInClass;
+}>;
 
-export type CheckinUserInClassMutation = {
-  __typename: 'Mutation'
-  checkinUserInClass?:
-    | { __typename: 'CheckinSuccess'; success: boolean }
-    | { __typename: 'EnrollmentNotFoundError'; code: string }
-    | null
-}
+
+export type CheckinUserInClassMutation = { __typename: 'Mutation', checkinUserInClass?:
+    | { __typename: 'CheckinSuccess', success: boolean }
+    | { __typename: 'EnrollmentNotFoundError', code: string }
+   | null };
 
 export type CheckoutUserInClassMutationVariables = Exact<{
-  site: SiteEnum
-  input: CheckoutUserInClass
-}>
+  site: SiteEnum;
+  input: CheckoutUserInClass;
+}>;
 
-export type CheckoutUserInClassMutation = {
-  __typename: 'Mutation'
-  checkoutUserInClass?:
-    | { __typename: 'CheckoutSuccess'; success: boolean }
-    | { __typename: 'EnrollmentNotFoundError'; code: string }
-    | null
-}
+
+export type CheckoutUserInClassMutation = { __typename: 'Mutation', checkoutUserInClass?:
+    | { __typename: 'CheckoutSuccess', success: boolean }
+    | { __typename: 'EnrollmentNotFoundError', code: string }
+   | null };
 
 export type EditEnrollmentMutationVariables = Exact<{
-  site: SiteEnum
-  input: EditEnrollmentInput
-}>
+  site: SiteEnum;
+  input: EditEnrollmentInput;
+}>;
 
-export type EditEnrollmentMutation = {
-  __typename: 'Mutation'
-  editEnrollment?:
-    | { __typename: 'ClientIsOutsideSchedulingWindowError'; code: string }
+
+export type EditEnrollmentMutation = { __typename: 'Mutation', editEnrollment?:
+    | { __typename: 'ClientIsOutsideSchedulingWindowError', code: string }
     | { __typename: 'Enrollment' }
-    | { __typename: 'SpotAlreadyReservedError'; code: string }
-    | { __typename: 'TryToSwitchToSameSpotError'; code: string }
-    | null
-}
+    | { __typename: 'SpotAlreadyReservedError', code: string }
+    | { __typename: 'TryToSwitchToSameSpotError', code: string }
+   | null };
 
 export type SwapSpotMutationVariables = Exact<{
-  site: SiteEnum
-  input: EditEnrollmentInput
-}>
+  site: SiteEnum;
+  input: EditEnrollmentInput;
+}>;
 
-export type SwapSpotMutation = {
-  __typename: 'Mutation'
-  swapSpot?:
+
+export type SwapSpotMutation = { __typename: 'Mutation', swapSpot?:
     | { __typename: 'SwapSpotSuccess' }
-    | { __typename: 'TryToSwitchToSameSpotError'; code: string }
-    | null
-}
+    | { __typename: 'TryToSwitchToSameSpotError', code: string }
+   | null };
 
 export type GetCalendarClassesForListQueryVariables = Exact<{
-  site: SiteEnum
-  params?: InputMaybe<CalendarClassesParams>
-}>
+  site: SiteEnum;
+  params?: InputMaybe<CalendarClassesParams>;
+}>;
 
-export type GetCalendarClassesForListQuery = {
-  __typename: 'Query'
-  calendarClasses: Array<{
-    __typename: 'Class'
-    id: string
-    name: string
-    startWithNoTimeZone: any
-    maxCapacity: number
-    totalBooked: number
-    totalUnderMaintenanceSpots: number
-    showAsDisabled: boolean
-    instructorName: string
-  }>
-}
+
+export type GetCalendarClassesForListQuery = { __typename: 'Query', calendarClasses: Array<{ __typename: 'Class', id: string, name: string, startWithNoTimeZone: any, maxCapacity: number, totalBooked: number, totalUnderMaintenanceSpots: number, showAsDisabled: boolean, instructorName: string }> };
 
 export type GetUserQueryVariables = Exact<{
-  id: Scalars['ID']
-}>
+  id: Scalars['ID']['input'];
+}>;
 
-export type GetUserQuery = {
-  __typename: 'Query'
-  user?: {
-    __typename: 'IdentifiableUser'
-    id?: string | null
-    user?: {
-      __typename: 'User'
-      firstName: string
-      lastName: string
-      email: string
-      leaderboardUsername?: string | null
-      weight?: number | null
-      gender?: GenderEnum | null
-      birthdate?: any | null
-      city: string
-      address1: string
-      address2?: string | null
-      zipCode: string
-      phone: string
-      emergencyContactName: string
-      emergencyContactPhone: string
-      emergencyContactRelationship?: string | null
-      hideMetrics?: boolean | null
-      existsInSites: Array<SiteEnum>
-      country?: { __typename: 'Country'; code: string; name: string } | null
-      state?: { __typename: 'State'; code: string; name: string } | null
-      siteUsers: Array<{ __typename: 'SimpleSiteUser'; externalUserId: string; site: SiteEnum }>
-    } | null
-  } | null
-}
+
+export type GetUserQuery = { __typename: 'Query', user?: { __typename: 'IdentifiableUser', id?: string | null, user?: { __typename: 'User', firstName: string, lastName: string, email: string, leaderboardUsername?: string | null, weight?: number | null, gender?: GenderEnum | null, birthdate?: any | null, city: string, address1: string, address2?: string | null, zipCode: string, phone: string, emergencyContactName: string, emergencyContactPhone: string, emergencyContactRelationship?: string | null, hideMetrics?: boolean | null, existsInSites: Array<SiteEnum>, country?: { __typename: 'Country', code: string, name: string } | null, state?: { __typename: 'State', code: string, name: string } | null, siteUsers: Array<{ __typename: 'SimpleSiteUser', externalUserId: string, site: SiteEnum }> } | null } | null };
 
 export type ClassWaitlistIsEnabledQueryVariables = Exact<{
-  site: SiteEnum
-  id: Scalars['ID']
-}>
+  site: SiteEnum;
+  id: Scalars['ID']['input'];
+}>;
 
-export type ClassWaitlistIsEnabledQuery = {
-  __typename: 'Query'
-  classInfo?: {
-    __typename: 'ClassInfo'
-    class: { __typename: 'Class'; waitListAvailable: boolean }
-  } | null
-}
+
+export type ClassWaitlistIsEnabledQuery = { __typename: 'Query', classInfo?: { __typename: 'ClassInfo', class: { __typename: 'Class', waitListAvailable: boolean } } | null };
 
 export type SyncClassMutationVariables = Exact<{
-  site: SiteEnum
-  classId: Scalars['ID']
-}>
+  site: SiteEnum;
+  classId: Scalars['ID']['input'];
+}>;
 
-export type SyncClassMutation = {
-  __typename: 'Mutation'
-  syncClass: { __typename: 'ClassInfo'; class: { __typename: 'Class'; isSynchronizing: boolean } }
-}
+
+export type SyncClassMutation = { __typename: 'Mutation', syncClass: { __typename: 'ClassInfo', class: { __typename: 'Class', isSynchronizing: boolean } } };
 
 export type SyncAllClassesMutationVariables = Exact<{
-  site: SiteEnum
-}>
+  site: SiteEnum;
+}>;
 
-export type SyncAllClassesMutation = { __typename: 'Mutation'; syncAllClasses: boolean }
 
-export type CountriesQueryVariables = Exact<{ [key: string]: never }>
+export type SyncAllClassesMutation = { __typename: 'Mutation', syncAllClasses: boolean };
 
-export type CountriesQuery = {
-  __typename: 'Query'
-  countries?: Array<{ __typename: 'Country'; name: string; code: string } | null> | null
-}
+export type CountriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CountriesQuery = { __typename: 'Query', countries?: Array<{ __typename: 'Country', name: string, code: string } | null> | null };
 
 export type CountryQueryVariables = Exact<{
-  countryCode: Scalars['String']
-}>
+  countryCode: Scalars['String']['input'];
+}>;
 
-export type CountryQuery = {
-  __typename: 'Query'
-  country?: {
-    __typename: 'Country'
-    name: string
-    code: string
-    states?: Array<{ __typename: 'State'; name: string; code: string } | null> | null
-  } | null
-}
+
+export type CountryQuery = { __typename: 'Query', country?: { __typename: 'Country', name: string, code: string, states?: Array<{ __typename: 'State', name: string, code: string } | null> | null } | null };
 
 export type RegisterUserMutationVariables = Exact<{
-  site: SiteEnum
-  input: RegisterUserInput
-}>
+  site: SiteEnum;
+  input: RegisterUserInput;
+}>;
 
-export type RegisterUserMutation = {
-  __typename: 'Mutation'
-  registerIdentifiableUser?: {
-    __typename: 'IdentifiableSiteUser'
-    identifiableUser?: { __typename: 'IdentifiableUser'; id?: string | null } | null
-  } | null
-}
+
+export type RegisterUserMutation = { __typename: 'Mutation', registerIdentifiableUser?: { __typename: 'IdentifiableSiteUser', identifiableUser?: { __typename: 'IdentifiableUser', id?: string | null } | null } | null };
 
 export type EditUserMutationVariables = Exact<{
-  input: EditUserInput
-}>
+  input: EditUserInput;
+}>;
 
-export type EditUserMutation = {
-  __typename: 'Mutation'
-  editUser?:
-    | {
-        __typename: 'IdentifiableUser'
-        id?: string | null
-        user?: { __typename: 'User'; email: string } | null
-      }
+
+export type EditUserMutation = { __typename: 'Mutation', editUser?:
+    | { __typename: 'IdentifiableUser', id?: string | null, user?: { __typename: 'User', email: string } | null }
     | { __typename: 'OtherUserHasThisExternalIdError' }
-    | null
-}
+   | null };
 
 export type RequestPasswordLinkMutationVariables = Exact<{
-  input?: InputMaybe<RequestPasswordLinkInput>
-}>
+  input?: InputMaybe<RequestPasswordLinkInput>;
+}>;
 
-export type RequestPasswordLinkMutation = {
-  __typename: 'Mutation'
-  requestPasswordLink?:
-    | { __typename: 'ResetPasswordLinkSentSuccessfully'; status: boolean }
-    | { __typename: 'TooManyResetPasswordLinkRequestsError'; availableAgainAt?: any | null }
-    | null
-}
+
+export type RequestPasswordLinkMutation = { __typename: 'Mutation', requestPasswordLink?:
+    | { __typename: 'ResetPasswordLinkSentSuccessfully', status: boolean }
+    | { __typename: 'TooManyResetPasswordLinkRequestsError', availableAgainAt?: any | null }
+   | null };
 
 export type GetUserSitesQueryVariables = Exact<{
-  id: Scalars['ID']
-}>
+  id: Scalars['ID']['input'];
+}>;
 
-export type GetUserSitesQuery = {
-  __typename: 'Query'
-  user?: {
-    __typename: 'IdentifiableUser'
-    id?: string | null
-    user?: {
-      __typename: 'User'
-      siteUsers: Array<{ __typename: 'SimpleSiteUser'; externalUserId: string; site: SiteEnum }>
-    } | null
-  } | null
-}
+
+export type GetUserSitesQuery = { __typename: 'Query', user?: { __typename: 'IdentifiableUser', id?: string | null, user?: { __typename: 'User', siteUsers: Array<{ __typename: 'SimpleSiteUser', externalUserId: string, site: SiteEnum }> } | null } | null };
 
 export type EditUserSitesMutationVariables = Exact<{
-  input: EditUserInput
-}>
+  input: EditUserInput;
+}>;
 
-export type EditUserSitesMutation = {
-  __typename: 'Mutation'
-  editUser?:
-    | {
-        __typename: 'IdentifiableUser'
-        id?: string | null
-        user?: { __typename: 'User'; email: string } | null
-      }
-    | {
-        __typename: 'OtherUserHasThisExternalIdError'
-        siteUser: {
-          __typename: 'IdentifiableSiteUser'
-          siteUserInfo?: {
-            __typename: 'SimpleSiteUser'
-            externalUserId: string
-            site: SiteEnum
-          } | null
-          identifiableUser?: {
-            __typename: 'IdentifiableUser'
-            user?: { __typename: 'User'; email: string } | null
-          } | null
-        }
-      }
-    | null
-}
+
+export type EditUserSitesMutation = { __typename: 'Mutation', editUser?:
+    | { __typename: 'IdentifiableUser', id?: string | null, user?: { __typename: 'User', email: string } | null }
+    | { __typename: 'OtherUserHasThisExternalIdError', siteUser: { __typename: 'IdentifiableSiteUser', siteUserInfo?: { __typename: 'SimpleSiteUser', externalUserId: string, site: SiteEnum } | null, identifiableUser?: { __typename: 'IdentifiableUser', user?: { __typename: 'User', email: string } | null } | null } }
+   | null };
 
 export type ClassSchedulesQueryVariables = Exact<{
-  site: SiteEnum
-}>
+  site: SiteEnum;
+}>;
 
-export type ClassSchedulesQuery = {
-  __typename: 'Query'
-  classSchedules: Array<{
-    __typename: 'ClassSchedule'
-    id: string
-    instructorName: string
-    dayOfWeek: string
-    startWithNoTimeZone: any
-    endWithNoTimeZone: any
-    type: string
-    capacity: number
-    roomLayout?: { __typename: 'RoomLayout'; id: string; name: string } | null
-  }>
-}
+
+export type ClassSchedulesQuery = { __typename: 'Query', classSchedules: Array<{ __typename: 'ClassSchedule', id: string, instructorName: string, dayOfWeek: string, startWithNoTimeZone: any, endWithNoTimeZone: any, type: string, capacity: number, roomLayout?: { __typename: 'RoomLayout', id: string, name: string } | null }> };
 
 export type AvailableClassTypesQueryVariables = Exact<{
-  site: SiteEnum
-}>
+  site: SiteEnum;
+}>;
 
-export type AvailableClassTypesQuery = { __typename: 'Query'; availableClassTypes: Array<string> }
+
+export type AvailableClassTypesQuery = { __typename: 'Query', availableClassTypes: Array<string> };
 
 export type SetRoomLayoutForClassSchedulesMutationVariables = Exact<{
-  input: SetRoomLayoutForClassSchedulesInput
-}>
+  input: SetRoomLayoutForClassSchedulesInput;
+}>;
 
-export type SetRoomLayoutForClassSchedulesMutation = {
-  __typename: 'Mutation'
-  setRoomLayoutForClassSchedules: Array<{
-    __typename: 'ClassSchedule'
-    id: string
-    instructorName: string
-    dayOfWeek: string
-    start: any
-    end: any
-    type: string
-    capacity: number
-    roomLayout?: { __typename: 'RoomLayout'; id: string; name: string; capacity: number } | null
-  }>
-}
+
+export type SetRoomLayoutForClassSchedulesMutation = { __typename: 'Mutation', setRoomLayoutForClassSchedules: Array<{ __typename: 'ClassSchedule', id: string, instructorName: string, dayOfWeek: string, start: any, end: any, type: string, capacity: number, roomLayout?: { __typename: 'RoomLayout', id: string, name: string, capacity: number } | null }> };
 
 export type UserWorkoutStatsQueryVariables = Exact<{
-  site: SiteEnum
-  userId: Scalars['ID']
-}>
+  site: SiteEnum;
+  userId: Scalars['ID']['input'];
+}>;
 
-export type UserWorkoutStatsQuery = {
-  __typename: 'Query'
-  userWorkoutStats: Array<{
-    __typename: 'ClassStat'
-    totalEnergy?: number | null
-    enrollment: {
-      __typename: 'Enrollment'
-      enrollmentInfo:
-        | { __typename: 'EnrollmentInfo'; spotNumber?: number | null; id: string }
-        | { __typename: 'WaitlistEntry'; id: string }
-      class: { __typename: 'Class'; id: string; name: string; start: any; duration: number }
-    }
-  } | null>
-}
+
+export type UserWorkoutStatsQuery = { __typename: 'Query', userWorkoutStats: Array<{ __typename: 'ClassStat', totalEnergy?: number | null, enrollment: { __typename: 'Enrollment', enrollmentInfo:
+        | { __typename: 'EnrollmentInfo', spotNumber?: number | null, id: string }
+        | { __typename: 'WaitlistEntry', id: string }
+      , class: { __typename: 'Class', id: string, name: string, start: any, duration: number } } } | null> };
 
 export type SingleWorkoutStatQueryVariables = Exact<{
-  enrollmentId: Scalars['ID']
-}>
+  enrollmentId: Scalars['ID']['input'];
+}>;
 
-export type SingleWorkoutStatQuery = {
-  __typename: 'Query'
-  singleWorkoutStat?: {
-    __typename: 'ClassStat'
-    averagePower?: number | null
-    highPower?: number | null
-    averageRpm?: number | null
-    highRpm?: number | null
-    totalEnergy?: number | null
-    calories?: number | null
-    distance?: number | null
-    enrollment: {
-      __typename: 'Enrollment'
-      enrollmentInfo:
-        | { __typename: 'EnrollmentInfo'; spotNumber?: number | null; id: string }
-        | { __typename: 'WaitlistEntry'; id: string }
-      class: {
-        __typename: 'Class'
-        id: string
-        name: string
-        start: any
-        duration: number
-        instructorName: string
-      }
-    }
-    adjustedChartPoints: Array<{
-      __typename: 'ChartPoint'
-      time?: number | null
-      rpm?: number | null
-      power?: number | null
-    }>
-  } | null
-}
+
+export type SingleWorkoutStatQuery = { __typename: 'Query', singleWorkoutStat?: { __typename: 'ClassStat', averagePower?: number | null, highPower?: number | null, averageRpm?: number | null, highRpm?: number | null, totalEnergy?: number | null, calories?: number | null, distance?: number | null, enrollment: { __typename: 'Enrollment', enrollmentInfo:
+        | { __typename: 'EnrollmentInfo', spotNumber?: number | null, id: string }
+        | { __typename: 'WaitlistEntry', id: string }
+      , class: { __typename: 'Class', id: string, name: string, start: any, duration: number, instructorName: string } }, adjustedChartPoints: Array<{ __typename: 'ChartPoint', time?: number | null, rpm?: number | null, power?: number | null }> } | null };
 
 export type UserRankingInClassQueryVariables = Exact<{
-  userId: Scalars['ID']
-  classId: Scalars['ID']
-}>
+  userId: Scalars['ID']['input'];
+  classId: Scalars['ID']['input'];
+}>;
 
-export type UserRankingInClassQuery = {
-  __typename: 'Query'
-  userRankingInClass?: {
-    __typename: 'UserInClassRanking'
-    totalRanking?: {
-      __typename: 'UserRanking'
-      positionInRanking?: number | null
-      totalMembersInRanking?: number | null
-    } | null
-    genderRanking?: {
-      __typename: 'GenderRanking'
-      gender?: GenderEnum | null
-      ranking?: {
-        __typename: 'UserRanking'
-        positionInRanking?: number | null
-        totalMembersInRanking?: number | null
-      } | null
-    } | null
-  } | null
-}
+
+export type UserRankingInClassQuery = { __typename: 'Query', userRankingInClass?: { __typename: 'UserInClassRanking', totalRanking?: { __typename: 'UserRanking', positionInRanking?: number | null, totalMembersInRanking?: number | null } | null, genderRanking?: { __typename: 'GenderRanking', gender?: GenderEnum | null, ranking?: { __typename: 'UserRanking', positionInRanking?: number | null, totalMembersInRanking?: number | null } | null } | null } | null };
 
 export type SendClassStatsToUsersMutationVariables = Exact<{
-  classId: Scalars['ID']
-}>
+  classId: Scalars['ID']['input'];
+}>;
 
-export type SendClassStatsToUsersMutation = {
-  __typename: 'Mutation'
-  sendClassStatsToUsers?: boolean | null
-}
+
+export type SendClassStatsToUsersMutation = { __typename: 'Mutation', sendClassStatsToUsers?: boolean | null };
 
 export type SendClassStatsToEmailMutationVariables = Exact<{
-  input: SendClassStatsToEmailInput
-}>
+  input: SendClassStatsToEmailInput;
+}>;
 
-export type SendClassStatsToEmailMutation = {
-  __typename: 'Mutation'
-  sendClassStatsToEmail?: boolean | null
-}
+
+export type SendClassStatsToEmailMutation = { __typename: 'Mutation', sendClassStatsToEmail?: boolean | null };
 
 export type UserWorkoutStatsPaginatedQueryVariables = Exact<{
-  site: SiteEnum
-  userId: Scalars['ID']
-  pagination?: InputMaybe<PaginationInput>
-}>
+  site: SiteEnum;
+  userId: Scalars['ID']['input'];
+  pagination?: InputMaybe<PaginationInput>;
+}>;
 
-export type UserWorkoutStatsPaginatedQuery = {
-  __typename: 'Query'
-  userWorkoutStatsPaginated: {
-    __typename: 'PaginatedClassStats'
-    total: number
-    classStats: Array<{
-      __typename: 'ClassStat'
-      totalEnergy?: number | null
-      enrollment: {
-        __typename: 'Enrollment'
-        enrollmentInfo:
-          | { __typename: 'EnrollmentInfo'; spotNumber?: number | null; id: string }
-          | { __typename: 'WaitlistEntry'; id: string }
-        class: {
-          __typename: 'Class'
-          id: string
-          name: string
-          start: any
-          duration: number
-          startWithNoTimeZone: any
-          instructorName: string
-        }
-      }
-    }>
-  }
-}
+
+export type UserWorkoutStatsPaginatedQuery = { __typename: 'Query', userWorkoutStatsPaginated: { __typename: 'PaginatedClassStats', total: number, classStats: Array<{ __typename: 'ClassStat', totalEnergy?: number | null, enrollment: { __typename: 'Enrollment', enrollmentInfo:
+          | { __typename: 'EnrollmentInfo', spotNumber?: number | null, id: string }
+          | { __typename: 'WaitlistEntry', id: string }
+        , class: { __typename: 'Class', id: string, name: string, start: any, duration: number, startWithNoTimeZone: any, instructorName: string } } }> } };
 
 export type SyncClassWithPiqMutationVariables = Exact<{
-  site: SiteEnum
-  classId: Scalars['ID']
-}>
+  site: SiteEnum;
+  classId: Scalars['ID']['input'];
+}>;
 
-export type SyncClassWithPiqMutation = {
-  __typename: 'Mutation'
-  syncClassWithPIQ: {
-    __typename: 'ClassInfo'
-    class: { __typename: 'Class'; isSynchronizing: boolean }
-  }
-}
+
+export type SyncClassWithPiqMutation = { __typename: 'Mutation', syncClassWithPIQ: { __typename: 'ClassInfo', class: { __typename: 'Class', isSynchronizing: boolean } } };
 
 export type CheckIfClassIsSynchronizedQueryVariables = Exact<{
-  site: SiteEnum
-  id: Scalars['ID']
-}>
+  site: SiteEnum;
+  id: Scalars['ID']['input'];
+}>;
 
-export type CheckIfClassIsSynchronizedQuery = {
-  __typename: 'Query'
-  classInfo?: {
-    __typename: 'ClassInfo'
-    class: { __typename: 'Class'; isSynchronizing: boolean }
-  } | null
-}
+
+export type CheckIfClassIsSynchronizedQuery = { __typename: 'Query', classInfo?: { __typename: 'ClassInfo', class: { __typename: 'Class', isSynchronizing: boolean } } | null };
 
 export type CheckIfAllClassAreSynchronizedQueryVariables = Exact<{
-  site: SiteEnum
-}>
+  site: SiteEnum;
+}>;
 
-export type CheckIfAllClassAreSynchronizedQuery = {
-  __typename: 'Query'
-  siteSettings: { __typename: 'SiteSetting'; isSynchronizingClasses: boolean }
-}
+
+export type CheckIfAllClassAreSynchronizedQuery = { __typename: 'Query', siteSettings: { __typename: 'SiteSetting', isSynchronizingClasses: boolean } };
 
 export type UpdateUserPasswordMutationVariables = Exact<{
-  input: UpdateUserPasswordInput
-}>
+  input: UpdateUserPasswordInput;
+}>;
 
-export type UpdateUserPasswordMutation = {
-  __typename: 'Mutation'
-  updateUserPassword?: boolean | null
-}
 
-export type GiftCardsQueryVariables = Exact<{ [key: string]: never }>
+export type UpdateUserPasswordMutation = { __typename: 'Mutation', updateUserPassword?: boolean | null };
 
-export type GiftCardsQuery = {
-  __typename: 'Query'
-  giftCards: Array<{
-    __typename: 'GiftCard'
-    id: string
-    description: string
-    salePrice: number
-    grandTotal: number
-    terms: string
-    purchaseUrl: string
-    site: { __typename: 'Site'; name: string; code: SiteEnum }
-  }>
-}
+export type GiftCardsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GiftCardsQuery = { __typename: 'Query', giftCards: Array<{ __typename: 'GiftCard', id: string, description: string, salePrice: number, grandTotal: number, terms: string, purchaseUrl: string, site: { __typename: 'Site', name: string, code: SiteEnum } }> };
 
 export type UpdateGiftCardMutationVariables = Exact<{
-  input: UpdateGiftCardInput
-}>
+  input: UpdateGiftCardInput;
+}>;
 
-export type UpdateGiftCardMutation = {
-  __typename: 'Mutation'
-  updateGiftCard: {
-    __typename: 'GiftCard'
-    id: string
-    description: string
-    salePrice: number
-    grandTotal: number
-    terms: string
-    purchaseUrl: string
-    site: { __typename: 'Site'; name: string; code: SiteEnum }
-  }
-}
 
-export type SyncAllGiftCardsMutationVariables = Exact<{ [key: string]: never }>
+export type UpdateGiftCardMutation = { __typename: 'Mutation', updateGiftCard: { __typename: 'GiftCard', id: string, description: string, salePrice: number, grandTotal: number, terms: string, purchaseUrl: string, site: { __typename: 'Site', name: string, code: SiteEnum } } };
 
-export type SyncAllGiftCardsMutation = { __typename: 'Mutation'; syncAllGiftCards: boolean }
+export type SyncAllGiftCardsMutationVariables = Exact<{ [key: string]: never; }>;
 
-export type AvailableSitesQueryVariables = Exact<{ [key: string]: never }>
 
-export type AvailableSitesQuery = {
-  __typename: 'Query'
-  availableSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
-}
+export type SyncAllGiftCardsMutation = { __typename: 'Mutation', syncAllGiftCards: boolean };
+
+export type AvailableSitesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AvailableSitesQuery = { __typename: 'Query', availableSites?: Array<{ __typename: 'Site', name: string, code: SiteEnum }> | null };
 
 export type AdminUserQueryVariables = Exact<{
-  id: Scalars['ID']
-}>
+  id: Scalars['ID']['input'];
+}>;
 
-export type AdminUserQuery = {
-  __typename: 'Query'
-  adminUser?: {
-    __typename: 'AdminUser'
-    id: string
-    username: string
-    email: string
-    roles?: Array<string> | null
-    linkedInstructors?: Array<{
-      __typename: 'Instructor'
-      id: string
-      name: string
-      site: { __typename: 'Site'; code: SiteEnum; name: string }
-    }> | null
-    linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
-  } | null
-}
 
-export type AdminUsersQueryVariables = Exact<{ [key: string]: never }>
+export type AdminUserQuery = { __typename: 'Query', adminUser?: { __typename: 'AdminUser', id: string, username: string, email: string, roles?: Array<string> | null, linkedInstructors?: Array<{ __typename: 'Instructor', id: string, name: string, site: { __typename: 'Site', code: SiteEnum, name: string } }> | null, linkedSites?: Array<{ __typename: 'Site', name: string, code: SiteEnum }> | null } | null };
 
-export type AdminUsersQuery = {
-  __typename: 'Query'
-  adminUsers: Array<{
-    __typename: 'AdminUser'
-    id: string
-    username: string
-    email: string
-    roles?: Array<string> | null
-    linkedInstructors?: Array<{
-      __typename: 'Instructor'
-      id: string
-      name: string
-      site: { __typename: 'Site'; name: string; code: SiteEnum }
-    }> | null
-    linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
-    favoriteSite: { __typename: 'Site'; name: string; code: SiteEnum }
-  }>
-}
+export type AdminUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type AvailableInstructorsQueryVariables = Exact<{ [key: string]: never }>
 
-export type AvailableInstructorsQuery = {
-  __typename: 'Query'
-  availableInstructors: Array<{
-    __typename: 'Instructor'
-    id: string
-    name: string
-    site: { __typename: 'Site'; name: string; code: SiteEnum }
-  }>
-}
+export type AdminUsersQuery = { __typename: 'Query', adminUsers: Array<{ __typename: 'AdminUser', id: string, username: string, email: string, roles?: Array<string> | null, linkedInstructors?: Array<{ __typename: 'Instructor', id: string, name: string, site: { __typename: 'Site', name: string, code: SiteEnum } }> | null, linkedSites?: Array<{ __typename: 'Site', name: string, code: SiteEnum }> | null, favoriteSite: { __typename: 'Site', name: string, code: SiteEnum } }> };
+
+export type AvailableInstructorsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AvailableInstructorsQuery = { __typename: 'Query', availableInstructors: Array<{ __typename: 'Instructor', id: string, name: string, site: { __typename: 'Site', name: string, code: SiteEnum } }> };
 
 export type ResetAdminUserPasswordMutationVariables = Exact<{
-  id: Scalars['ID']
-}>
+  id: Scalars['ID']['input'];
+}>;
 
-export type ResetAdminUserPasswordMutation = {
-  __typename: 'Mutation'
-  resetAdminUserPassword: boolean
-}
+
+export type ResetAdminUserPasswordMutation = { __typename: 'Mutation', resetAdminUserPassword: boolean };
 
 export type UpdateAdminUserMutationVariables = Exact<{
-  input: UpdateAdminUserInput
-}>
+  input: UpdateAdminUserInput;
+}>;
 
-export type UpdateAdminUserMutation = {
-  __typename: 'Mutation'
-  updateAdminUser:
-    | {
-        __typename: 'AdminUser'
-        id: string
-        username: string
-        email: string
-        roles?: Array<string> | null
-        linkedInstructors?: Array<{
-          __typename: 'Instructor'
-          id: string
-          name: string
-          site: { __typename: 'Site'; name: string; code: SiteEnum }
-        }> | null
-        linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
-      }
-    | { __typename: 'EmailAlreadyUsedError'; code: string }
-    | { __typename: 'UsernameAlreadyUsedError'; code: string }
-}
+
+export type UpdateAdminUserMutation = { __typename: 'Mutation', updateAdminUser:
+    | { __typename: 'AdminUser', id: string, username: string, email: string, roles?: Array<string> | null, linkedInstructors?: Array<{ __typename: 'Instructor', id: string, name: string, site: { __typename: 'Site', name: string, code: SiteEnum } }> | null, linkedSites?: Array<{ __typename: 'Site', name: string, code: SiteEnum }> | null }
+    | { __typename: 'EmailAlreadyUsedError', code: string }
+    | { __typename: 'UsernameAlreadyUsedError', code: string }
+   };
 
 export type AddAdminUserMutationVariables = Exact<{
-  input: AdminUserDataInput
-}>
+  input: AdminUserDataInput;
+}>;
 
-export type AddAdminUserMutation = {
-  __typename: 'Mutation'
-  addAdminUser:
-    | {
-        __typename: 'AdminUser'
-        id: string
-        username: string
-        email: string
-        roles?: Array<string> | null
-        linkedInstructors?: Array<{
-          __typename: 'Instructor'
-          id: string
-          name: string
-          site: { __typename: 'Site'; name: string; code: SiteEnum }
-        }> | null
-        linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
-      }
-    | { __typename: 'EmailAlreadyUsedError'; code: string }
-    | { __typename: 'UsernameAlreadyUsedError'; code: string }
-}
+
+export type AddAdminUserMutation = { __typename: 'Mutation', addAdminUser:
+    | { __typename: 'AdminUser', id: string, username: string, email: string, roles?: Array<string> | null, linkedInstructors?: Array<{ __typename: 'Instructor', id: string, name: string, site: { __typename: 'Site', name: string, code: SiteEnum } }> | null, linkedSites?: Array<{ __typename: 'Site', name: string, code: SiteEnum }> | null }
+    | { __typename: 'EmailAlreadyUsedError', code: string }
+    | { __typename: 'UsernameAlreadyUsedError', code: string }
+   };
 
 export type RemoveAdminUserMutationVariables = Exact<{
-  id: Scalars['ID']
-}>
+  id: Scalars['ID']['input'];
+}>;
 
-export type RemoveAdminUserMutation = { __typename: 'Mutation'; removeAdminUser: boolean }
 
-export type CurrentAdminUserSitesQueryVariables = Exact<{ [key: string]: never }>
+export type RemoveAdminUserMutation = { __typename: 'Mutation', removeAdminUser: boolean };
 
-export type CurrentAdminUserSitesQuery = {
-  __typename: 'Query'
-  currentAdminUser: {
-    __typename: 'AdminUser'
-    linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
-    favoriteSite: { __typename: 'Site'; name: string; code: SiteEnum }
-  }
-}
+export type CurrentAdminUserSitesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentAdminUserSitesQuery = { __typename: 'Query', currentAdminUser: { __typename: 'AdminUser', linkedSites?: Array<{ __typename: 'Site', name: string, code: SiteEnum }> | null, favoriteSite: { __typename: 'Site', name: string, code: SiteEnum } } };
 
 export type UpdateCurrentAdminUserPasswordMutationVariables = Exact<{
-  input: UpdateCurrentUserPasswordInput
-}>
+  input: UpdateCurrentUserPasswordInput;
+}>;
 
-export type UpdateCurrentAdminUserPasswordMutation = {
-  __typename: 'Mutation'
-  updateCurrentAdminUserPassword?: boolean | null
-}
+
+export type UpdateCurrentAdminUserPasswordMutation = { __typename: 'Mutation', updateCurrentAdminUserPassword?: boolean | null };
 
 export type UpdateCurrentAdminUserFavoriteSiteMutationVariables = Exact<{
-  input?: InputMaybe<UpdateCurrentAdminUserFavoriteSiteInput>
-}>
+  input?: InputMaybe<UpdateCurrentAdminUserFavoriteSiteInput>;
+}>;
 
-export type UpdateCurrentAdminUserFavoriteSiteMutation = {
-  __typename: 'Mutation'
-  updateCurrentAdminUserFavoriteSite: {
-    __typename: 'AdminUser'
-    linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
-    favoriteSite: { __typename: 'Site'; name: string; code: SiteEnum }
-  }
-}
+
+export type UpdateCurrentAdminUserFavoriteSiteMutation = { __typename: 'Mutation', updateCurrentAdminUserFavoriteSite: { __typename: 'AdminUser', linkedSites?: Array<{ __typename: 'Site', name: string, code: SiteEnum }> | null, favoriteSite: { __typename: 'Site', name: string, code: SiteEnum } } };
 
 export type UpdateCurrentAdminUserMutationVariables = Exact<{
-  input: UpdateCurrentAdminUserInput
-}>
+  input: UpdateCurrentAdminUserInput;
+}>;
 
-export type UpdateCurrentAdminUserMutation = {
-  __typename: 'Mutation'
-  updateCurrentAdminUser: {
-    __typename: 'AdminUser'
-    id: string
-    username: string
-    email: string
-    roles?: Array<string> | null
-    showCancelledClasses: boolean
-    linkedInstructors?: Array<{
-      __typename: 'Instructor'
-      id: string
-      name: string
-      site: { __typename: 'Site'; code: SiteEnum; name: string }
-    }> | null
-    linkedSites?: Array<{ __typename: 'Site'; name: string; code: SiteEnum }> | null
-    favoriteSite: { __typename: 'Site'; name: string; code: SiteEnum }
-  }
-}
 
-export type GetShowCancelledClassesQueryVariables = Exact<{ [key: string]: never }>
+export type UpdateCurrentAdminUserMutation = { __typename: 'Mutation', updateCurrentAdminUser: { __typename: 'AdminUser', id: string, username: string, email: string, roles?: Array<string> | null, showCancelledClasses: boolean, linkedInstructors?: Array<{ __typename: 'Instructor', id: string, name: string, site: { __typename: 'Site', code: SiteEnum, name: string } }> | null, linkedSites?: Array<{ __typename: 'Site', name: string, code: SiteEnum }> | null, favoriteSite: { __typename: 'Site', name: string, code: SiteEnum } } };
 
-export type GetShowCancelledClassesQuery = {
-  __typename: 'Query'
-  currentAdminUser: { __typename: 'AdminUser'; showCancelledClasses: boolean }
-}
+export type GetShowCancelledClassesQueryVariables = Exact<{ [key: string]: never; }>;
 
-export const CreatePaymentLinkDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'CreatePaymentLink' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'CreatePaymentLinkInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'createPaymentLink' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'currency' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'notificationEmailAddress' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'site' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<CreatePaymentLinkMutation, CreatePaymentLinkMutationVariables>
-export const DeletePaymentLinkDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'DeletePaymentLink' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'deletePaymentLink' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<DeletePaymentLinkMutation, DeletePaymentLinkMutationVariables>
-export const PaymentLinkDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'PaymentLink' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'paymentLink' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'currency' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'notificationEmailAddress' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'site' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<PaymentLinkQuery, PaymentLinkQueryVariables>
-export const PaymentLinksDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'PaymentLinks' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'paymentLinks' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'currency' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'notificationEmailAddress' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'site' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<PaymentLinksQuery, PaymentLinksQueryVariables>
-export const UpdatePaymentLinkDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'UpdatePaymentLink' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UpdatePaymentLinkInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'updatePaymentLink' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'currency' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'notificationEmailAddress' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'site' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<UpdatePaymentLinkMutation, UpdatePaymentLinkMutationVariables>
-export const SiteSettingsDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'siteSettings' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'siteSettings' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'siteDateTimeNow' } }]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<SiteSettingsQuery, SiteSettingsQueryVariables>
-export const ClassInfoAdminDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'classInfoAdmin' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'classInfo' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'class' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'instructorName' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'start' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'startWithNoTimeZone' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'duration' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'waitListAvailable' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'showAsDisabled' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'maxCapacity' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'isSubstitute' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'hasClassStats' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'isSynchronizing' } }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'roomLayout' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'matrix' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'x' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'y' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'icon' } },
-                            {
-                              kind: 'InlineFragment',
-                              typeCondition: {
-                                kind: 'NamedType',
-                                name: { kind: 'Name', value: 'BookableSpot' }
-                              },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  { kind: 'Field', name: { kind: 'Name', value: 'enabled' } },
-                                  { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'enrollments' },
-                  arguments: [
-                    {
-                      kind: 'Argument',
-                      name: { kind: 'Name', value: 'status' },
-                      value: { kind: 'EnumValue', value: 'active' }
-                    }
-                  ],
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'enrollmentStatus' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'enrollmentDateTime' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'identifiableSiteUser' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'identifiableUser' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'user' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'firstName' }
-                                        },
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'lastName' }
-                                        },
-                                        { kind: 'Field', name: { kind: 'Name', value: 'email' } },
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'leaderboardUsername' }
-                                        }
-                                      ]
-                                    }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'InlineFragment',
-                        typeCondition: {
-                          kind: 'NamedType',
-                          name: { kind: 'Name', value: 'EnrollmentInfo' }
-                        },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'isCheckedIn' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'isBookedForFree' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'hasStats' } },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'isFirstTimeInThisTypeOfClass' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'isFirstTimeWithThisInstructor' }
-                            },
-                            { kind: 'Field', name: { kind: 'Name', value: 'isTodayUserBirthday' } },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'isUserLeaderboardEnabled' }
-                            },
-                            { kind: 'Field', name: { kind: 'Name', value: 'bookedViaClassPass' } }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'onHoldSpots' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'orphanedClassStatsSpots' } }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<ClassInfoAdminQuery, ClassInfoAdminQueryVariables>
-export const DisableSpotDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'disableSpot' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'DisableEnableSpotInput' } }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'disableSpot' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'DisableEnableSpotResult' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'result' } }
-                    ]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'SpotNotFoundError' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<DisableSpotMutation, DisableSpotMutationVariables>
-export const EnableSpotDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'enableSpot' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'DisableEnableSpotInput' } }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'enableSpot' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'DisableEnableSpotResult' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'result' } }
-                    ]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'SpotNotFoundError' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<EnableSpotMutation, EnableSpotMutationVariables>
-export const SearchSiteUserDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'searchSiteUser' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'query' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'searchSiteUser' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'query' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'query' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'identifiableUser' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'user' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'firstName' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'lastName' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'email' } }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<SearchSiteUserQuery, SearchSiteUserQueryVariables>
-export const BookUserIntoClassDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'bookUserIntoClass' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'BookUserIntoClassInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'bookUserIntoClass' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: '__typename' } }]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<BookUserIntoClassMutation, BookUserIntoClassMutationVariables>
-export const RemoveUserFromClassDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'removeUserFromClass' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'CancelEnrollmentInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'removeUserFromClass' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: '__typename' } }]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<RemoveUserFromClassMutation, RemoveUserFromClassMutationVariables>
-export const EditClassDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'editClass' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'EditClassInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'editClass' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'EditClassSuccessResult' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'updated' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<EditClassMutation, EditClassMutationVariables>
-export const RoomLayoutsDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'roomLayouts' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'params' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'RoomLayoutsInput' } }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'roomLayouts' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'params' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'params' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'capacity' } }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<RoomLayoutsQuery, RoomLayoutsQueryVariables>
-export const RoomLayoutDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'roomLayout' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'roomLayout' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'columns' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'rows' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'matrix' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'x' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'y' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'icon' } },
-                      {
-                        kind: 'InlineFragment',
-                        typeCondition: {
-                          kind: 'NamedType',
-                          name: { kind: 'Name', value: 'BookableSpot' }
-                        },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<RoomLayoutQuery, RoomLayoutQueryVariables>
-export const CreateRoomLayoutDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'createRoomLayout' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'RoomLayoutInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'createRoomLayout' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<CreateRoomLayoutMutation, CreateRoomLayoutMutationVariables>
-export const EditRoomLayoutDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'editRoomLayout' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'EditRoomLayoutInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'editRoomLayout' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<EditRoomLayoutMutation, EditRoomLayoutMutationVariables>
-export const ClassWaitlistEntriesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'classWaitlistEntries' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'classInfo' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'enrollments' },
-                  arguments: [
-                    {
-                      kind: 'Argument',
-                      name: { kind: 'Name', value: 'status' },
-                      value: { kind: 'EnumValue', value: 'waitlisted' }
-                    }
-                  ],
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'enrollmentStatus' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'enrollmentDateTime' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'identifiableSiteUser' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'identifiableUser' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'user' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'firstName' }
-                                        },
-                                        { kind: 'Field', name: { kind: 'Name', value: 'lastName' } }
-                                      ]
-                                    }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<ClassWaitlistEntriesQuery, ClassWaitlistEntriesQueryVariables>
-export const RemoveUserFromWaitlistDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'removeUserFromWaitlist' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'RemoveUserFromWaitlistInput' }
-            }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'removeUserFromWaitlist' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'RemoveFromWaitlistResult' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'success' } }]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'WaitlistEntryNotFoundError' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<
-  RemoveUserFromWaitlistMutation,
-  RemoveUserFromWaitlistMutationVariables
->
-export const CheckinUserInClassDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'checkinUserInClass' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'CheckinUserInClass' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'checkinUserInClass' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'CheckinSuccess' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'success' } }]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'EnrollmentNotFoundError' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<CheckinUserInClassMutation, CheckinUserInClassMutationVariables>
-export const CheckoutUserInClassDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'checkoutUserInClass' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'CheckoutUserInClass' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'checkoutUserInClass' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'CheckoutSuccess' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'success' } }]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'EnrollmentNotFoundError' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<CheckoutUserInClassMutation, CheckoutUserInClassMutationVariables>
-export const EditEnrollmentDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'editEnrollment' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'EditEnrollmentInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'editEnrollment' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Enrollment' } },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: '__typename' } }]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'SpotAlreadyReservedError' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'TryToSwitchToSameSpotError' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'ClientIsOutsideSchedulingWindowError' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<EditEnrollmentMutation, EditEnrollmentMutationVariables>
-export const SwapSpotDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'swapSpot' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'EditEnrollmentInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'swapSpot' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'SwapSpotSuccess' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: '__typename' } }]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'TryToSwitchToSameSpotError' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<SwapSpotMutation, SwapSpotMutationVariables>
-export const GetCalendarClassesForListDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'getCalendarClassesForList' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'params' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'CalendarClassesParams' } }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'calendarClasses' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'params' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'params' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'startWithNoTimeZone' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'maxCapacity' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalBooked' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalUnderMaintenanceSpots' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'showAsDisabled' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'instructorName' } }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<
-  GetCalendarClassesForListQuery,
-  GetCalendarClassesForListQueryVariables
->
-export const GetUserDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'getUser' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'user' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'user' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'firstName' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'lastName' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'leaderboardUsername' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'weight' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'gender' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'birthdate' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'country' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'code' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'state' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'code' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
-                          ]
-                        }
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'city' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'address1' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'address2' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'zipCode' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'phone' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'emergencyContactName' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'emergencyContactPhone' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'emergencyContactRelationship' }
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'hideMetrics' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'existsInSites' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'siteUsers' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'externalUserId' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'site' } }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<GetUserQuery, GetUserQueryVariables>
-export const ClassWaitlistIsEnabledDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'classWaitlistIsEnabled' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'classInfo' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'class' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'waitListAvailable' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<ClassWaitlistIsEnabledQuery, ClassWaitlistIsEnabledQueryVariables>
-export const SyncClassDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'syncClass' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'classId' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'syncClass' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'classId' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'classId' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'class' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'isSynchronizing' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<SyncClassMutation, SyncClassMutationVariables>
-export const SyncAllClassesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'syncAllClasses' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'syncAllClasses' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<SyncAllClassesMutation, SyncAllClassesMutationVariables>
-export const CountriesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'Countries' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'countries' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<CountriesQuery, CountriesQueryVariables>
-export const CountryDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'country' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'countryCode' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'country' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'countryCode' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'countryCode' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'code' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'states' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<CountryQuery, CountryQueryVariables>
-export const RegisterUserDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'registerUser' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'RegisterUserInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'registerIdentifiableUser' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'identifiableUser' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<RegisterUserMutation, RegisterUserMutationVariables>
-export const EditUserDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'editUser' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'EditUserInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'editUser' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'IdentifiableUser' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'user' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'email' } }]
-                        }
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<EditUserMutation, EditUserMutationVariables>
-export const RequestPasswordLinkDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'requestPasswordLink' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'RequestPasswordLinkInput' } }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'requestPasswordLink' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'TooManyResetPasswordLinkRequestsError' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'availableAgainAt' } }
-                    ]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'ResetPasswordLinkSentSuccessfully' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'status' } }]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<RequestPasswordLinkMutation, RequestPasswordLinkMutationVariables>
-export const GetUserSitesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'getUserSites' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'user' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'user' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'siteUsers' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'externalUserId' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'site' } }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<GetUserSitesQuery, GetUserSitesQueryVariables>
-export const EditUserSitesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'editUserSites' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'EditUserInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'editUser' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'IdentifiableUser' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'user' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'email' } }]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'OtherUserHasThisExternalIdError' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'siteUser' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'siteUserInfo' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'externalUserId' }
-                                  },
-                                  { kind: 'Field', name: { kind: 'Name', value: 'site' } }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'identifiableUser' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'user' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        { kind: 'Field', name: { kind: 'Name', value: 'email' } }
-                                      ]
-                                    }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<EditUserSitesMutation, EditUserSitesMutationVariables>
-export const ClassSchedulesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'classSchedules' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'classSchedules' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'instructorName' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'dayOfWeek' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'startWithNoTimeZone' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'endWithNoTimeZone' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'type' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'capacity' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'roomLayout' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<ClassSchedulesQuery, ClassSchedulesQueryVariables>
-export const AvailableClassTypesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'availableClassTypes' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'availableClassTypes' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<AvailableClassTypesQuery, AvailableClassTypesQueryVariables>
-export const SetRoomLayoutForClassSchedulesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'setRoomLayoutForClassSchedules' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'SetRoomLayoutForClassSchedulesInput' }
-            }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'setRoomLayoutForClassSchedules' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'instructorName' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'dayOfWeek' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'start' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'end' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'type' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'roomLayout' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'capacity' } }
-                    ]
-                  }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'capacity' } }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<
-  SetRoomLayoutForClassSchedulesMutation,
-  SetRoomLayoutForClassSchedulesMutationVariables
->
-export const UserWorkoutStatsDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'userWorkoutStats' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'userWorkoutStats' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'userId' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'enrollment' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'enrollmentInfo' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                            {
-                              kind: 'InlineFragment',
-                              typeCondition: {
-                                kind: 'NamedType',
-                                name: { kind: 'Name', value: 'EnrollmentInfo' }
-                              },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'class' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'start' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'duration' } }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalEnergy' } }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<UserWorkoutStatsQuery, UserWorkoutStatsQueryVariables>
-export const SingleWorkoutStatDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'singleWorkoutStat' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'enrollmentId' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'singleWorkoutStat' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'enrollmentId' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'enrollmentId' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'enrollment' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'enrollmentInfo' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                            {
-                              kind: 'InlineFragment',
-                              typeCondition: {
-                                kind: 'NamedType',
-                                name: { kind: 'Name', value: 'EnrollmentInfo' }
-                              },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  { kind: 'Field', name: { kind: 'Name', value: 'spotNumber' } }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'class' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'start' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'duration' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'instructorName' } }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'averagePower' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'highPower' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'averageRpm' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'highRpm' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalEnergy' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'calories' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'distance' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'adjustedChartPoints' },
-                  arguments: [
-                    {
-                      kind: 'Argument',
-                      name: { kind: 'Name', value: 'amountOfPoints' },
-                      value: { kind: 'IntValue', value: '62' }
-                    }
-                  ],
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'time' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'rpm' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'power' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<SingleWorkoutStatQuery, SingleWorkoutStatQueryVariables>
-export const UserRankingInClassDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'userRankingInClass' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'classId' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'userRankingInClass' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'userId' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'classId' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'classId' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'totalRanking' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'positionInRanking' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'totalMembersInRanking' } }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'genderRanking' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'gender' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'ranking' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'positionInRanking' } },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'totalMembersInRanking' }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<UserRankingInClassQuery, UserRankingInClassQueryVariables>
-export const SendClassStatsToUsersDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'sendClassStatsToUsers' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'classId' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'sendClassStatsToUsers' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'classId' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'classId' } }
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<SendClassStatsToUsersMutation, SendClassStatsToUsersMutationVariables>
-export const SendClassStatsToEmailDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'sendClassStatsToEmail' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SendClassStatsToEmailInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'sendClassStatsToEmail' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<SendClassStatsToEmailMutation, SendClassStatsToEmailMutationVariables>
-export const UserWorkoutStatsPaginatedDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'userWorkoutStatsPaginated' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'pagination' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'PaginationInput' } }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'userWorkoutStatsPaginated' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'userId' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'pagination' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'pagination' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'classStats' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'enrollment' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'enrollmentInfo' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                                  {
-                                    kind: 'InlineFragment',
-                                    typeCondition: {
-                                      kind: 'NamedType',
-                                      name: { kind: 'Name', value: 'EnrollmentInfo' }
-                                    },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'spotNumber' }
-                                        }
-                                      ]
-                                    }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'class' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                                  { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                                  { kind: 'Field', name: { kind: 'Name', value: 'start' } },
-                                  { kind: 'Field', name: { kind: 'Name', value: 'duration' } },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'startWithNoTimeZone' }
-                                  },
-                                  { kind: 'Field', name: { kind: 'Name', value: 'instructorName' } }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'totalEnergy' } }
-                    ]
-                  }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'total' } }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<
-  UserWorkoutStatsPaginatedQuery,
-  UserWorkoutStatsPaginatedQueryVariables
->
-export const SyncClassWithPiqDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'syncClassWithPIQ' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'classId' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'syncClassWithPIQ' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'classId' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'classId' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'class' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'isSynchronizing' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<SyncClassWithPiqMutation, SyncClassWithPiqMutationVariables>
-export const CheckIfClassIsSynchronizedDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'checkIfClassIsSynchronized' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'classInfo' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'class' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'isSynchronizing' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<
-  CheckIfClassIsSynchronizedQuery,
-  CheckIfClassIsSynchronizedQueryVariables
->
-export const CheckIfAllClassAreSynchronizedDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'checkIfAllClassAreSynchronized' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'site' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'SiteEnum' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'siteSettings' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'site' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'site' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'isSynchronizingClasses' } }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<
-  CheckIfAllClassAreSynchronizedQuery,
-  CheckIfAllClassAreSynchronizedQueryVariables
->
-export const UpdateUserPasswordDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'updateUserPassword' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UpdateUserPasswordInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'updateUserPassword' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<UpdateUserPasswordMutation, UpdateUserPasswordMutationVariables>
-export const GiftCardsDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'GiftCards' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'giftCards' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'salePrice' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'grandTotal' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'terms' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'purchaseUrl' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'site' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<GiftCardsQuery, GiftCardsQueryVariables>
-export const UpdateGiftCardDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'UpdateGiftCard' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UpdateGiftCardInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'updateGiftCard' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'salePrice' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'grandTotal' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'terms' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'purchaseUrl' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'site' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<UpdateGiftCardMutation, UpdateGiftCardMutationVariables>
-export const SyncAllGiftCardsDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'SyncAllGiftCards' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [{ kind: 'Field', name: { kind: 'Name', value: 'syncAllGiftCards' } }]
-      }
-    }
-  ]
-} as unknown as DocumentNode<SyncAllGiftCardsMutation, SyncAllGiftCardsMutationVariables>
-export const AvailableSitesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'availableSites' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'availableSites' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<AvailableSitesQuery, AvailableSitesQueryVariables>
-export const AdminUserDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'adminUser' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'adminUser' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'roles' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'linkedInstructors' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'site' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'code' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'linkedSites' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<AdminUserQuery, AdminUserQueryVariables>
-export const AdminUsersDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'adminUsers' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'adminUsers' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'roles' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'linkedInstructors' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'site' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'linkedSites' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'favoriteSite' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<AdminUsersQuery, AdminUsersQueryVariables>
-export const AvailableInstructorsDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'availableInstructors' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'availableInstructors' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'site' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<AvailableInstructorsQuery, AvailableInstructorsQueryVariables>
-export const ResetAdminUserPasswordDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'resetAdminUserPassword' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'resetAdminUserPassword' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<
-  ResetAdminUserPasswordMutation,
-  ResetAdminUserPasswordMutationVariables
->
-export const UpdateAdminUserDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'updateAdminUser' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UpdateAdminUserInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'updateAdminUser' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'AdminUser' } },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'username' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'roles' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'linkedInstructors' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'site' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                                  { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'linkedSites' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'EmailAlreadyUsedError' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'UsernameAlreadyUsedError' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<UpdateAdminUserMutation, UpdateAdminUserMutationVariables>
-export const AddAdminUserDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'addAdminUser' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'AdminUserDataInput' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'addAdminUser' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'AdminUser' } },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'username' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'roles' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'linkedInstructors' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'site' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                                  { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'linkedSites' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'EmailAlreadyUsedError' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'UsernameAlreadyUsedError' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'code' } }]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<AddAdminUserMutation, AddAdminUserMutationVariables>
-export const RemoveAdminUserDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'removeAdminUser' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'removeAdminUser' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<RemoveAdminUserMutation, RemoveAdminUserMutationVariables>
-export const CurrentAdminUserSitesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'currentAdminUserSites' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'currentAdminUser' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'linkedSites' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'favoriteSite' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<CurrentAdminUserSitesQuery, CurrentAdminUserSitesQueryVariables>
-export const UpdateCurrentAdminUserPasswordDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'updateCurrentAdminUserPassword' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'UpdateCurrentUserPasswordInput' }
-            }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'updateCurrentAdminUserPassword' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<
-  UpdateCurrentAdminUserPasswordMutation,
-  UpdateCurrentAdminUserPasswordMutationVariables
->
-export const UpdateCurrentAdminUserFavoriteSiteDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'updateCurrentAdminUserFavoriteSite' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NamedType',
-            name: { kind: 'Name', value: 'UpdateCurrentAdminUserFavoriteSiteInput' }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'updateCurrentAdminUserFavoriteSite' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'linkedSites' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'favoriteSite' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<
-  UpdateCurrentAdminUserFavoriteSiteMutation,
-  UpdateCurrentAdminUserFavoriteSiteMutationVariables
->
-export const UpdateCurrentAdminUserDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'updateCurrentAdminUser' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'UpdateCurrentAdminUserInput' }
-            }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'updateCurrentAdminUser' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'input' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'roles' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'linkedInstructors' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'site' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'code' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'linkedSites' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'favoriteSite' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'code' } }
-                    ]
-                  }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'showCancelledClasses' } }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<
-  UpdateCurrentAdminUserMutation,
-  UpdateCurrentAdminUserMutationVariables
->
-export const GetShowCancelledClassesDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'GetShowCancelledClasses' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'currentAdminUser' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'showCancelledClasses' } }]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<GetShowCancelledClassesQuery, GetShowCancelledClassesQueryVariables>
+
+export type GetShowCancelledClassesQuery = { __typename: 'Query', currentAdminUser: { __typename: 'AdminUser', showCancelledClasses: boolean } };
+
+
+export const CreatePaymentLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePaymentLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreatePaymentLinkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPaymentLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"notificationEmailAddress"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<CreatePaymentLinkMutation, CreatePaymentLinkMutationVariables>;
+export const DeletePaymentLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeletePaymentLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deletePaymentLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<DeletePaymentLinkMutation, DeletePaymentLinkMutationVariables>;
+export const PaymentLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PaymentLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"paymentLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"notificationEmailAddress"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<PaymentLinkQuery, PaymentLinkQueryVariables>;
+export const PaymentLinksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PaymentLinks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"paymentLinks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"notificationEmailAddress"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<PaymentLinksQuery, PaymentLinksQueryVariables>;
+export const UpdatePaymentLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePaymentLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdatePaymentLinkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePaymentLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"notificationEmailAddress"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<UpdatePaymentLinkMutation, UpdatePaymentLinkMutationVariables>;
+export const RetryWebhookEventDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RetryWebhookEvent"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RetryWebhookEventInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"retryWebhookEvent"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"RetryWebhookEventSuccess"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"webhookEvent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"eventType"}},{"kind":"Field","name":{"kind":"Name","value":"subscriptionId"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"attempts"}},{"kind":"Field","name":{"kind":"Name","value":"lastAttemptAt"}},{"kind":"Field","name":{"kind":"Name","value":"nextRetryAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"parentEventId"}},{"kind":"Field","name":{"kind":"Name","value":"triggeredBy"}},{"kind":"Field","name":{"kind":"Name","value":"resolvedByEventId"}},{"kind":"Field","name":{"kind":"Name","value":"lastError"}},{"kind":"Field","name":{"kind":"Name","value":"destinationUrl"}},{"kind":"Field","name":{"kind":"Name","value":"payload"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"WebhookEventNotFoundError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"WebhookEventNotRetryableError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"InvalidEmailError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<RetryWebhookEventMutation, RetryWebhookEventMutationVariables>;
+export const WebhookEventDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WebhookEvent"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"webhookEvent"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"eventType"}},{"kind":"Field","name":{"kind":"Name","value":"subscriptionId"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"attempts"}},{"kind":"Field","name":{"kind":"Name","value":"lastAttemptAt"}},{"kind":"Field","name":{"kind":"Name","value":"nextRetryAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"parentEventId"}},{"kind":"Field","name":{"kind":"Name","value":"triggeredBy"}},{"kind":"Field","name":{"kind":"Name","value":"resolvedByEventId"}},{"kind":"Field","name":{"kind":"Name","value":"lastError"}},{"kind":"Field","name":{"kind":"Name","value":"destinationUrl"}},{"kind":"Field","name":{"kind":"Name","value":"payload"}}]}}]}}]} as unknown as DocumentNode<WebhookEventQuery, WebhookEventQueryVariables>;
+export const WebhookEventsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WebhookEvents"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"status"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"webhookEvents"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"status"},"value":{"kind":"Variable","name":{"kind":"Name","value":"status"}}},{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"events"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"eventType"}},{"kind":"Field","name":{"kind":"Name","value":"subscriptionId"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"attempts"}},{"kind":"Field","name":{"kind":"Name","value":"lastAttemptAt"}},{"kind":"Field","name":{"kind":"Name","value":"nextRetryAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"parentEventId"}},{"kind":"Field","name":{"kind":"Name","value":"triggeredBy"}},{"kind":"Field","name":{"kind":"Name","value":"resolvedByEventId"}},{"kind":"Field","name":{"kind":"Name","value":"lastError"}},{"kind":"Field","name":{"kind":"Name","value":"destinationUrl"}},{"kind":"Field","name":{"kind":"Name","value":"payload"}}]}},{"kind":"Field","name":{"kind":"Name","value":"hasMore"}},{"kind":"Field","name":{"kind":"Name","value":"nextCursor"}},{"kind":"Field","name":{"kind":"Name","value":"limit"}}]}}]}}]} as unknown as DocumentNode<WebhookEventsQuery, WebhookEventsQueryVariables>;
+export const SiteSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"siteSettings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"siteSettings"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"siteDateTimeNow"}}]}}]}}]} as unknown as DocumentNode<SiteSettingsQuery, SiteSettingsQueryVariables>;
+export const ClassInfoAdminDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"classInfoAdmin"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"classInfo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"class"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"instructorName"}},{"kind":"Field","name":{"kind":"Name","value":"start"}},{"kind":"Field","name":{"kind":"Name","value":"startWithNoTimeZone"}},{"kind":"Field","name":{"kind":"Name","value":"duration"}},{"kind":"Field","name":{"kind":"Name","value":"waitListAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"showAsDisabled"}},{"kind":"Field","name":{"kind":"Name","value":"maxCapacity"}},{"kind":"Field","name":{"kind":"Name","value":"isSubstitute"}},{"kind":"Field","name":{"kind":"Name","value":"hasClassStats"}},{"kind":"Field","name":{"kind":"Name","value":"isSynchronizing"}}]}},{"kind":"Field","name":{"kind":"Name","value":"roomLayout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"matrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"x"}},{"kind":"Field","name":{"kind":"Name","value":"y"}},{"kind":"Field","name":{"kind":"Name","value":"icon"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"BookableSpot"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"enabled"}},{"kind":"Field","name":{"kind":"Name","value":"spotNumber"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"enrollments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"status"},"value":{"kind":"EnumValue","value":"active"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"enrollmentStatus"}},{"kind":"Field","name":{"kind":"Name","value":"enrollmentDateTime"}},{"kind":"Field","name":{"kind":"Name","value":"identifiableSiteUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"identifiableUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"leaderboardUsername"}}]}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EnrollmentInfo"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isCheckedIn"}},{"kind":"Field","name":{"kind":"Name","value":"spotNumber"}},{"kind":"Field","name":{"kind":"Name","value":"isBookedForFree"}},{"kind":"Field","name":{"kind":"Name","value":"hasStats"}},{"kind":"Field","name":{"kind":"Name","value":"isFirstTimeInThisTypeOfClass"}},{"kind":"Field","name":{"kind":"Name","value":"isFirstTimeWithThisInstructor"}},{"kind":"Field","name":{"kind":"Name","value":"isTodayUserBirthday"}},{"kind":"Field","name":{"kind":"Name","value":"isUserLeaderboardEnabled"}},{"kind":"Field","name":{"kind":"Name","value":"bookedViaClassPass"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"onHoldSpots"}},{"kind":"Field","name":{"kind":"Name","value":"orphanedClassStatsSpots"}}]}}]}}]} as unknown as DocumentNode<ClassInfoAdminQuery, ClassInfoAdminQueryVariables>;
+export const DisableSpotDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"disableSpot"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"DisableEnableSpotInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"disableSpot"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"DisableEnableSpotResult"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"result"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SpotNotFoundError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<DisableSpotMutation, DisableSpotMutationVariables>;
+export const EnableSpotDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"enableSpot"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"DisableEnableSpotInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"enableSpot"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"DisableEnableSpotResult"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"result"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SpotNotFoundError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<EnableSpotMutation, EnableSpotMutationVariables>;
+export const SearchSiteUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"searchSiteUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"query"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchSiteUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"query"},"value":{"kind":"Variable","name":{"kind":"Name","value":"query"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"identifiableUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]}}]}}]} as unknown as DocumentNode<SearchSiteUserQuery, SearchSiteUserQueryVariables>;
+export const BookUserIntoClassDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"bookUserIntoClass"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BookUserIntoClassInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bookUserIntoClass"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}}]}}]} as unknown as DocumentNode<BookUserIntoClassMutation, BookUserIntoClassMutationVariables>;
+export const RemoveUserFromClassDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"removeUserFromClass"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CancelEnrollmentInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeUserFromClass"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}}]}}]} as unknown as DocumentNode<RemoveUserFromClassMutation, RemoveUserFromClassMutationVariables>;
+export const EditClassDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"editClass"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"EditClassInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"editClass"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EditClassSuccessResult"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"updated"}}]}}]}}]}}]} as unknown as DocumentNode<EditClassMutation, EditClassMutationVariables>;
+export const RoomLayoutsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"roomLayouts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"params"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RoomLayoutsInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"roomLayouts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"params"},"value":{"kind":"Variable","name":{"kind":"Name","value":"params"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}}]}}]}}]} as unknown as DocumentNode<RoomLayoutsQuery, RoomLayoutsQueryVariables>;
+export const RoomLayoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"roomLayout"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"roomLayout"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"columns"}},{"kind":"Field","name":{"kind":"Name","value":"rows"}},{"kind":"Field","name":{"kind":"Name","value":"matrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"x"}},{"kind":"Field","name":{"kind":"Name","value":"y"}},{"kind":"Field","name":{"kind":"Name","value":"icon"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"BookableSpot"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"spotNumber"}}]}}]}}]}}]}}]} as unknown as DocumentNode<RoomLayoutQuery, RoomLayoutQueryVariables>;
+export const CreateRoomLayoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createRoomLayout"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RoomLayoutInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createRoomLayout"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateRoomLayoutMutation, CreateRoomLayoutMutationVariables>;
+export const EditRoomLayoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"editRoomLayout"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"EditRoomLayoutInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"editRoomLayout"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<EditRoomLayoutMutation, EditRoomLayoutMutationVariables>;
+export const ClassWaitlistEntriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"classWaitlistEntries"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"classInfo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"enrollments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"status"},"value":{"kind":"EnumValue","value":"waitlisted"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"enrollmentStatus"}},{"kind":"Field","name":{"kind":"Name","value":"enrollmentDateTime"}},{"kind":"Field","name":{"kind":"Name","value":"identifiableSiteUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"identifiableUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<ClassWaitlistEntriesQuery, ClassWaitlistEntriesQueryVariables>;
+export const RemoveUserFromWaitlistDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"removeUserFromWaitlist"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RemoveUserFromWaitlistInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeUserFromWaitlist"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"RemoveFromWaitlistResult"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"WaitlistEntryNotFoundError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<RemoveUserFromWaitlistMutation, RemoveUserFromWaitlistMutationVariables>;
+export const CheckinUserInClassDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"checkinUserInClass"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CheckinUserInClass"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"checkinUserInClass"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CheckinSuccess"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EnrollmentNotFoundError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<CheckinUserInClassMutation, CheckinUserInClassMutationVariables>;
+export const CheckoutUserInClassDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"checkoutUserInClass"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CheckoutUserInClass"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"checkoutUserInClass"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CheckoutSuccess"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EnrollmentNotFoundError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<CheckoutUserInClassMutation, CheckoutUserInClassMutationVariables>;
+export const EditEnrollmentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"editEnrollment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"EditEnrollmentInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"editEnrollment"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Enrollment"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SpotAlreadyReservedError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TryToSwitchToSameSpotError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ClientIsOutsideSchedulingWindowError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<EditEnrollmentMutation, EditEnrollmentMutationVariables>;
+export const SwapSpotDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"swapSpot"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"EditEnrollmentInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"swapSpot"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SwapSpotSuccess"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TryToSwitchToSameSpotError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<SwapSpotMutation, SwapSpotMutationVariables>;
+export const GetCalendarClassesForListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCalendarClassesForList"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"params"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CalendarClassesParams"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"calendarClasses"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"params"},"value":{"kind":"Variable","name":{"kind":"Name","value":"params"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"startWithNoTimeZone"}},{"kind":"Field","name":{"kind":"Name","value":"maxCapacity"}},{"kind":"Field","name":{"kind":"Name","value":"totalBooked"}},{"kind":"Field","name":{"kind":"Name","value":"totalUnderMaintenanceSpots"}},{"kind":"Field","name":{"kind":"Name","value":"showAsDisabled"}},{"kind":"Field","name":{"kind":"Name","value":"instructorName"}}]}}]}}]} as unknown as DocumentNode<GetCalendarClassesForListQuery, GetCalendarClassesForListQueryVariables>;
+export const GetUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"leaderboardUsername"}},{"kind":"Field","name":{"kind":"Name","value":"weight"}},{"kind":"Field","name":{"kind":"Name","value":"gender"}},{"kind":"Field","name":{"kind":"Name","value":"birthdate"}},{"kind":"Field","name":{"kind":"Name","value":"country"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"state"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"address1"}},{"kind":"Field","name":{"kind":"Name","value":"address2"}},{"kind":"Field","name":{"kind":"Name","value":"zipCode"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"emergencyContactName"}},{"kind":"Field","name":{"kind":"Name","value":"emergencyContactPhone"}},{"kind":"Field","name":{"kind":"Name","value":"emergencyContactRelationship"}},{"kind":"Field","name":{"kind":"Name","value":"hideMetrics"}},{"kind":"Field","name":{"kind":"Name","value":"existsInSites"}},{"kind":"Field","name":{"kind":"Name","value":"siteUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"externalUserId"}},{"kind":"Field","name":{"kind":"Name","value":"site"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetUserQuery, GetUserQueryVariables>;
+export const ClassWaitlistIsEnabledDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"classWaitlistIsEnabled"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"classInfo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"class"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"waitListAvailable"}}]}}]}}]}}]} as unknown as DocumentNode<ClassWaitlistIsEnabledQuery, ClassWaitlistIsEnabledQueryVariables>;
+export const SyncClassDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"syncClass"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"classId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"syncClass"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"classId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"classId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"class"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isSynchronizing"}}]}}]}}]}}]} as unknown as DocumentNode<SyncClassMutation, SyncClassMutationVariables>;
+export const SyncAllClassesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"syncAllClasses"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"syncAllClasses"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}]}]}}]} as unknown as DocumentNode<SyncAllClassesMutation, SyncAllClassesMutationVariables>;
+export const CountriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Countries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"countries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]} as unknown as DocumentNode<CountriesQuery, CountriesQueryVariables>;
+export const CountryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"country"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"countryCode"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"country"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"countryCode"},"value":{"kind":"Variable","name":{"kind":"Name","value":"countryCode"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"states"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<CountryQuery, CountryQueryVariables>;
+export const RegisterUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"registerUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RegisterUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"registerIdentifiableUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"identifiableUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<RegisterUserMutation, RegisterUserMutationVariables>;
+export const EditUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"editUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"EditUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"editUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"IdentifiableUser"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]}}]}}]} as unknown as DocumentNode<EditUserMutation, EditUserMutationVariables>;
+export const RequestPasswordLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"requestPasswordLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RequestPasswordLinkInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requestPasswordLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TooManyResetPasswordLinkRequestsError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"availableAgainAt"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ResetPasswordLinkSentSuccessfully"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<RequestPasswordLinkMutation, RequestPasswordLinkMutationVariables>;
+export const GetUserSitesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getUserSites"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"siteUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"externalUserId"}},{"kind":"Field","name":{"kind":"Name","value":"site"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetUserSitesQuery, GetUserSitesQueryVariables>;
+export const EditUserSitesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"editUserSites"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"EditUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"editUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"IdentifiableUser"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"OtherUserHasThisExternalIdError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"siteUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"siteUserInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"externalUserId"}},{"kind":"Field","name":{"kind":"Name","value":"site"}}]}},{"kind":"Field","name":{"kind":"Name","value":"identifiableUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<EditUserSitesMutation, EditUserSitesMutationVariables>;
+export const ClassSchedulesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"classSchedules"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"classSchedules"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"instructorName"}},{"kind":"Field","name":{"kind":"Name","value":"dayOfWeek"}},{"kind":"Field","name":{"kind":"Name","value":"startWithNoTimeZone"}},{"kind":"Field","name":{"kind":"Name","value":"endWithNoTimeZone"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}},{"kind":"Field","name":{"kind":"Name","value":"roomLayout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<ClassSchedulesQuery, ClassSchedulesQueryVariables>;
+export const AvailableClassTypesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"availableClassTypes"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"availableClassTypes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}]}]}}]} as unknown as DocumentNode<AvailableClassTypesQuery, AvailableClassTypesQueryVariables>;
+export const SetRoomLayoutForClassSchedulesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"setRoomLayoutForClassSchedules"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SetRoomLayoutForClassSchedulesInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"setRoomLayoutForClassSchedules"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"instructorName"}},{"kind":"Field","name":{"kind":"Name","value":"dayOfWeek"}},{"kind":"Field","name":{"kind":"Name","value":"start"}},{"kind":"Field","name":{"kind":"Name","value":"end"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"roomLayout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}}]}},{"kind":"Field","name":{"kind":"Name","value":"capacity"}}]}}]}}]} as unknown as DocumentNode<SetRoomLayoutForClassSchedulesMutation, SetRoomLayoutForClassSchedulesMutationVariables>;
+export const UserWorkoutStatsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"userWorkoutStats"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userWorkoutStats"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"enrollment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"enrollmentInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EnrollmentInfo"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"spotNumber"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"class"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"start"}},{"kind":"Field","name":{"kind":"Name","value":"duration"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"totalEnergy"}}]}}]}}]} as unknown as DocumentNode<UserWorkoutStatsQuery, UserWorkoutStatsQueryVariables>;
+export const SingleWorkoutStatDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"singleWorkoutStat"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"enrollmentId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"singleWorkoutStat"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"enrollmentId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"enrollmentId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"enrollment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"enrollmentInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EnrollmentInfo"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"spotNumber"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"class"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"start"}},{"kind":"Field","name":{"kind":"Name","value":"duration"}},{"kind":"Field","name":{"kind":"Name","value":"instructorName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"averagePower"}},{"kind":"Field","name":{"kind":"Name","value":"highPower"}},{"kind":"Field","name":{"kind":"Name","value":"averageRpm"}},{"kind":"Field","name":{"kind":"Name","value":"highRpm"}},{"kind":"Field","name":{"kind":"Name","value":"totalEnergy"}},{"kind":"Field","name":{"kind":"Name","value":"calories"}},{"kind":"Field","name":{"kind":"Name","value":"distance"}},{"kind":"Field","name":{"kind":"Name","value":"adjustedChartPoints"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"amountOfPoints"},"value":{"kind":"IntValue","value":"62"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"time"}},{"kind":"Field","name":{"kind":"Name","value":"rpm"}},{"kind":"Field","name":{"kind":"Name","value":"power"}}]}}]}}]}}]} as unknown as DocumentNode<SingleWorkoutStatQuery, SingleWorkoutStatQueryVariables>;
+export const UserRankingInClassDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"userRankingInClass"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"classId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userRankingInClass"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}},{"kind":"Argument","name":{"kind":"Name","value":"classId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"classId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"totalRanking"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"positionInRanking"}},{"kind":"Field","name":{"kind":"Name","value":"totalMembersInRanking"}}]}},{"kind":"Field","name":{"kind":"Name","value":"genderRanking"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gender"}},{"kind":"Field","name":{"kind":"Name","value":"ranking"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"positionInRanking"}},{"kind":"Field","name":{"kind":"Name","value":"totalMembersInRanking"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UserRankingInClassQuery, UserRankingInClassQueryVariables>;
+export const SendClassStatsToUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"sendClassStatsToUsers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"classId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendClassStatsToUsers"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"classId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"classId"}}}]}]}}]} as unknown as DocumentNode<SendClassStatsToUsersMutation, SendClassStatsToUsersMutationVariables>;
+export const SendClassStatsToEmailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"sendClassStatsToEmail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SendClassStatsToEmailInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendClassStatsToEmail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<SendClassStatsToEmailMutation, SendClassStatsToEmailMutationVariables>;
+export const UserWorkoutStatsPaginatedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"userWorkoutStatsPaginated"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PaginationInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userWorkoutStatsPaginated"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}},{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"classStats"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"enrollment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"enrollmentInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EnrollmentInfo"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"spotNumber"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"class"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"start"}},{"kind":"Field","name":{"kind":"Name","value":"duration"}},{"kind":"Field","name":{"kind":"Name","value":"startWithNoTimeZone"}},{"kind":"Field","name":{"kind":"Name","value":"instructorName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"totalEnergy"}}]}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}}]}}]} as unknown as DocumentNode<UserWorkoutStatsPaginatedQuery, UserWorkoutStatsPaginatedQueryVariables>;
+export const SyncClassWithPiqDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"syncClassWithPIQ"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"classId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"syncClassWithPIQ"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"classId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"classId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"class"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isSynchronizing"}}]}}]}}]}}]} as unknown as DocumentNode<SyncClassWithPiqMutation, SyncClassWithPiqMutationVariables>;
+export const CheckIfClassIsSynchronizedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"checkIfClassIsSynchronized"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"classInfo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"class"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isSynchronizing"}}]}}]}}]}}]} as unknown as DocumentNode<CheckIfClassIsSynchronizedQuery, CheckIfClassIsSynchronizedQueryVariables>;
+export const CheckIfAllClassAreSynchronizedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"checkIfAllClassAreSynchronized"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"siteSettings"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isSynchronizingClasses"}}]}}]}}]} as unknown as DocumentNode<CheckIfAllClassAreSynchronizedQuery, CheckIfAllClassAreSynchronizedQueryVariables>;
+export const UpdateUserPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateUserPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateUserPasswordInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUserPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<UpdateUserPasswordMutation, UpdateUserPasswordMutationVariables>;
+export const GiftCardsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GiftCards"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"giftCards"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"salePrice"}},{"kind":"Field","name":{"kind":"Name","value":"grandTotal"}},{"kind":"Field","name":{"kind":"Name","value":"terms"}},{"kind":"Field","name":{"kind":"Name","value":"purchaseUrl"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<GiftCardsQuery, GiftCardsQueryVariables>;
+export const UpdateGiftCardDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGiftCard"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateGiftCardInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateGiftCard"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"salePrice"}},{"kind":"Field","name":{"kind":"Name","value":"grandTotal"}},{"kind":"Field","name":{"kind":"Name","value":"terms"}},{"kind":"Field","name":{"kind":"Name","value":"purchaseUrl"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateGiftCardMutation, UpdateGiftCardMutationVariables>;
+export const SyncAllGiftCardsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SyncAllGiftCards"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"syncAllGiftCards"}}]}}]} as unknown as DocumentNode<SyncAllGiftCardsMutation, SyncAllGiftCardsMutationVariables>;
+export const AvailableSitesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"availableSites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"availableSites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]} as unknown as DocumentNode<AvailableSitesQuery, AvailableSitesQueryVariables>;
+export const AdminUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"adminUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"adminUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"roles"}},{"kind":"Field","name":{"kind":"Name","value":"linkedInstructors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"linkedSites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<AdminUserQuery, AdminUserQueryVariables>;
+export const AdminUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"adminUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"adminUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"roles"}},{"kind":"Field","name":{"kind":"Name","value":"linkedInstructors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"linkedSites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"Field","name":{"kind":"Name","value":"favoriteSite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<AdminUsersQuery, AdminUsersQueryVariables>;
+export const AvailableInstructorsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"availableInstructors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"availableInstructors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<AvailableInstructorsQuery, AvailableInstructorsQueryVariables>;
+export const ResetAdminUserPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"resetAdminUserPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"resetAdminUserPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<ResetAdminUserPasswordMutation, ResetAdminUserPasswordMutationVariables>;
+export const UpdateAdminUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateAdminUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateAdminUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateAdminUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"AdminUser"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"roles"}},{"kind":"Field","name":{"kind":"Name","value":"linkedInstructors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"linkedSites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EmailAlreadyUsedError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UsernameAlreadyUsedError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateAdminUserMutation, UpdateAdminUserMutationVariables>;
+export const AddAdminUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addAdminUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AdminUserDataInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addAdminUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"AdminUser"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"roles"}},{"kind":"Field","name":{"kind":"Name","value":"linkedInstructors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"linkedSites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EmailAlreadyUsedError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UsernameAlreadyUsedError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<AddAdminUserMutation, AddAdminUserMutationVariables>;
+export const RemoveAdminUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"removeAdminUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeAdminUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<RemoveAdminUserMutation, RemoveAdminUserMutationVariables>;
+export const CurrentAdminUserSitesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"currentAdminUserSites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentAdminUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"linkedSites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"Field","name":{"kind":"Name","value":"favoriteSite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<CurrentAdminUserSitesQuery, CurrentAdminUserSitesQueryVariables>;
+export const UpdateCurrentAdminUserPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateCurrentAdminUserPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateCurrentUserPasswordInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCurrentAdminUserPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<UpdateCurrentAdminUserPasswordMutation, UpdateCurrentAdminUserPasswordMutationVariables>;
+export const UpdateCurrentAdminUserFavoriteSiteDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateCurrentAdminUserFavoriteSite"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateCurrentAdminUserFavoriteSiteInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCurrentAdminUserFavoriteSite"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"linkedSites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"Field","name":{"kind":"Name","value":"favoriteSite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateCurrentAdminUserFavoriteSiteMutation, UpdateCurrentAdminUserFavoriteSiteMutationVariables>;
+export const UpdateCurrentAdminUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateCurrentAdminUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateCurrentAdminUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCurrentAdminUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"roles"}},{"kind":"Field","name":{"kind":"Name","value":"linkedInstructors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"linkedSites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"Field","name":{"kind":"Name","value":"favoriteSite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"Field","name":{"kind":"Name","value":"showCancelledClasses"}}]}}]}}]} as unknown as DocumentNode<UpdateCurrentAdminUserMutation, UpdateCurrentAdminUserMutationVariables>;
+export const GetShowCancelledClassesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetShowCancelledClasses"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentAdminUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"showCancelledClasses"}}]}}]}}]} as unknown as DocumentNode<GetShowCancelledClassesQuery, GetShowCancelledClassesQueryVariables>;
