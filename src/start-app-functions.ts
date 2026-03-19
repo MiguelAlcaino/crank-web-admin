@@ -1,3 +1,5 @@
+declare const __APP_VERSION__: string
+console.log(`[crank-web-admin] v${__APP_VERSION__}`)
 import { ApiService } from '@/services/apiService'
 import { newAnonymousClient, newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { appStore } from '@/stores/appStorage'

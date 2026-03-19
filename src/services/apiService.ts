@@ -30,6 +30,8 @@ import {
   UpdateInstructorProfileDocument,
   UpdatePaymentLinkDocument,
   UpdateSessionTypeDocument,
+  WebhookEventDocument,
+  WebhookEventsDocument,
   type AdminUser,
   type AdminUserDataInput,
   type AdminUserResultUnion,
@@ -91,6 +93,7 @@ import {
   type UserInput,
   type WaitlistEntry
 } from '@/gql/graphql'
+import type { WebhookEvent } from '@/modules/webhook-events/interfaces'
 import { DomainError } from '@/utils/errors/domainError'
 import { ValidationError } from '@/utils/errors/saveUserErrors'
 import { ApolloError, gql } from '@apollo/client'
@@ -2348,5 +2351,95 @@ export class ApiService {
     })
 
     return result.data?.syncAllPackagesBySite ?? []
+  }
+
+  // ── Webhook Events ──────────────────────────────────────────────────
+
+  async getWebhookEvents(
+    status?: string,
+    cursor?: string,
+    limit?: number
+  ): Promise<{
+    events: WebhookEvent[]
+    hasMore: boolean
+    nextCursor: string | null
+    limit: number
+  }> {
+    try {
+      const { data, errors } = await this.authApiClient.query({
+        query: WebhookEventsDocument,
+        variables: { status, cursor, limit },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.webhookEvents) {
+        throw new Error('No data returned from webhookEvents query')
+      }
+
+      return data.webhookEvents as {
+        events: WebhookEvent[]
+        hasMore: boolean
+        nextCursor: string | null
+        limit: number
+      }
+    } catch (error) {
+      console.error('Error fetching webhook events:', error)
+      throw error
+    }
+  }
+
+  async getWebhookEvent(id: string): Promise<WebhookEvent | null> {
+    try {
+      const { data, errors } = await this.authApiClient.query({
+        query: WebhookEventDocument,
+        variables: { id },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.webhookEvent) {
+        return null
+      }
+
+      return data.webhookEvent as WebhookEvent
+    } catch (error) {
+      console.error('Error fetching webhook event:', error)
+      throw error
+    }
+  }
+
+  async retryWebhookEvent(id: string, email: string): Promise<WebhookEvent | null> {
+    try {
+      const { data, errors } = await this.authApiClient.mutate({
+        mutation: RetryWebhookEventDocument,
+        variables: { input: { id, email } },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.retryWebhookEvent) {
+        throw new Error('No data returned from retryWebhookEvent mutation')
+      }
+
+      const result = data.retryWebhookEvent
+      if (result.__typename === 'RetryWebhookEventSuccess') {
+        return result.webhookEvent as WebhookEvent
+      }
+
+      throw new Error(`Retry failed: ${(result as { code: string }).code}`)
+    } catch (error) {
+      console.error('Error retrying webhook event:', error)
+      throw error
+    }
   }
 }

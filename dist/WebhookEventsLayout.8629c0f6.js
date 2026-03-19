@@ -1,9 +1,9 @@
-import { y as o, B as t, b as n, k as r, o as c } from "./index.b0d3ec8a.js";
+import { y as o, B as t, b as n, k as c, o as r } from "./index.12ab0258.js";
 const s = {};
 function a(_, l) {
   const e = t("RouterView");
-  return c(), n("div", null, [
-    r(e)
+  return r(), n("div", null, [
+    c(e)
   ]);
 }
 const f = /* @__PURE__ */ o(s, [["render", a]]);

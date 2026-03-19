@@ -9002,7 +9002,7 @@ function nO(A, e) {
 const rO = /* @__PURE__ */ Nt(JP, [["render", nO], ["__scopeId", "data-v-da24aff5"]]), Wf = "gift-cards", aO = {
   path: `/${Wf}`,
   redirect: `/${Wf}/list`,
-  component: () => import("./GiftCardLayout.03e718e4.js"),
+  component: () => import("./GiftCardLayout.564c02c5.js"),
   children: [
     {
       path: `/${Wf}/list`,
@@ -9013,7 +9013,7 @@ const rO = /* @__PURE__ */ Nt(JP, [["render", nO], ["__scopeId", "data-v-da24aff
 }, Gf = "admin-user", iO = {
   path: `/${Gf}`,
   redirect: `/${Gf}/list`,
-  component: () => import("./UserLayout.addce9b2.js"),
+  component: () => import("./UserLayout.d3e6d240.js"),
   children: [
     {
       path: `/${Gf}/list`,
@@ -9026,38 +9026,38 @@ var vn = /* @__PURE__ */ ((A) => (A.ROLE_SUPER_ADMIN = "ROLE_SUPER_ADMIN", A.ROL
 const Xf = "my-admin-settings", sO = {
   path: `/${Xf}`,
   redirect: `/${Xf}`,
-  component: () => import("./MyAdminSettingsLayout.2937a177.js"),
+  component: () => import("./MyAdminSettingsLayout.c9cb02b7.js"),
   children: [
     {
       path: `/${Xf}`,
       name: "my-admin-settings",
-      component: () => import("./MyAdminSettingsView.0bd598c2.js")
+      component: () => import("./MyAdminSettingsView.daf8e161.js")
     }
   ]
 }, zy = "payment-links", oO = {
   path: `/${zy}`,
-  component: () => import("./PaymentLinksLayout.7cc8da62.js"),
+  component: () => import("./PaymentLinksLayout.57f8e4f6.js"),
   children: [
     {
       path: `/${zy}`,
       name: "payment-links",
-      component: () => import("./PaymentLinkListView.5b3aabf9.js")
+      component: () => import("./PaymentLinkListView.70d56a95.js")
     }
   ]
 }, Wy = "webhook-events", lO = {
   path: `/${Wy}`,
-  component: () => import("./WebhookEventsLayout.b04f240f.js"),
+  component: () => import("./WebhookEventsLayout.8629c0f6.js"),
   children: [
     {
       path: `/${Wy}`,
       name: "webhook-events",
-      component: () => import("./WebhookEventsView.d465aa49.js")
+      component: () => import("./WebhookEventsView.955b5f08.js")
     }
   ]
 }, qf = "class-packages", uO = {
   path: `/${qf}`,
   redirect: `/${qf}/list`,
-  component: () => import("./ClassPackagesLayout.0c5d84f6.js"),
+  component: () => import("./ClassPackagesLayout.838e90d8.js"),
   children: [
     {
       path: `/${qf}/list`,
@@ -9078,7 +9078,7 @@ const Xf = "my-admin-settings", sO = {
       path: "/login",
       name: "login",
       meta: { requiresAuth: !1 },
-      component: import("./LoginView.0977fb38.js")
+      component: import("./LoginView.ee613ffe.js")
     },
     {
       path: "/user/create",
@@ -9096,7 +9096,7 @@ const Xf = "my-admin-settings", sO = {
       path: "/admin/calendar-class",
       name: "admin_calendar_class",
       meta: { requiresAuth: !0 },
-      component: () => import("./ClassScheduleView.3405d673.js")
+      component: () => import("./ClassScheduleView.65d19a8d.js")
     },
     {
       path: "/admin/room-layout/list",
@@ -9126,7 +9126,7 @@ const Xf = "my-admin-settings", sO = {
       path: "/customer-profile/:id",
       name: "customer_profile",
       meta: { requiresAuth: !0 },
-      component: () => import("./CustomerProfileView.80665317.js")
+      component: () => import("./CustomerProfileView.8595adb7.js")
     },
     {
       ...aO,
@@ -58015,7 +58015,9 @@ const Cl = /* @__PURE__ */ Nt(tiA, [["__scopeId", "data-v-8a1713da"]]), niA = /*
 const U2 = /* @__PURE__ */ Nt(piA, [["__scopeId", "data-v-08e9f5f5"]]), miA = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: U2
-}, Symbol.toStringTag, { value: "Module" })), biA = async function(A, e, t, n) {
+}, Symbol.toStringTag, { value: "Module" }));
+console.log("[crank-web-admin] v2.1.0");
+const biA = async function(A, e, t, n) {
   const r = wr({
     setup() {
       Mt("url-after-submit", A), Mt(
