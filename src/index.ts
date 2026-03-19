@@ -1,5 +1,6 @@
 import {
   startCalendarApp,
+  startClassPackagesApp,
   startCustomerCreateApp,
   startCustomerEditApp,
   startRoomLayoutCreateApp,
@@ -20,6 +21,7 @@ export {
   startRoomLayoutCreateApp,
   startRoomLayoutEditApp,
   startCalendarApp,
+  startClassPackagesApp,
   startCustomerEditApp,
   startClassScheduleApp,
   startCustomerProfileApp,

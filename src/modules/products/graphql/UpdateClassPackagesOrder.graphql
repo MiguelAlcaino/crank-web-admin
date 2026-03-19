@@ -1,0 +1,3 @@
+mutation UpdateClassPackagesOrder($input: UpdateClassPackagesOrderInput!) {
+  updateClassPackagesOrder(input: $input)
+}

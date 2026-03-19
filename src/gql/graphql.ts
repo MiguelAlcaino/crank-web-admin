@@ -18,6 +18,7 @@ export type Scalars = {
   Date: { input: any; output: any; }
   DateTime: { input: any; output: any; }
   DateTimeWithoutTimeZone: { input: any; output: any; }
+  File: { input: any; output: any; }
 };
 
 export type AcceptLateCancelledSpotInClassInput = {
@@ -125,6 +126,10 @@ export type BookingWindow = {
 export type CalendarClassesParams = {
   /** End date for the class search range (format: YYYY-MM-DD). If omitted, it defaults to +1 week from now. */
   endDate?: InputMaybe<Scalars['Date']['input']>;
+  /** Filter classes by instructor profile (the instructor 'face' in the app). When provided, shows only classes taught by any MindbodyStaff linked to this profile. */
+  instructorProfileId?: InputMaybe<Scalars['ID']['input']>;
+  /** Filter classes by session type. When provided, shows only classes that match the given SessionType. */
+  sessionTypeId?: InputMaybe<Scalars['ID']['input']>;
   /** Start date for the class search range (format: YYYY-MM-DD). If omitted, defaults to current date. If provided and end date should also be provided. */
   startDate?: InputMaybe<Scalars['Date']['input']>;
 };
@@ -135,6 +140,17 @@ export type CancelEnrollmentInput = {
 };
 
 export type CancelEnrollmentResultUnion = CancelUserEnrollmentSuccess | LateCancellationRequiredError | UnknownError;
+
+export type CancelSubscriptionInput = {
+  subscriptionId: Scalars['ID']['input'];
+};
+
+export type CancelSubscriptionResultUnion = CancelSubscriptionSuccess | SubscriptionAlreadyCancelledError | SubscriptionDoesNotBelongToUserError | SubscriptionNotFoundError | UnknownError;
+
+export type CancelSubscriptionSuccess = {
+  __typename: 'CancelSubscriptionSuccess';
+  success: Scalars['Boolean']['output'];
+};
 
 export type CancelUserEnrollmentSuccess = {
   __typename: 'CancelUserEnrollmentSuccess';
@@ -198,6 +214,8 @@ export type Class = {
   duration: Scalars['Int']['output'];
   /** Whether performance statistics are available for this class */
   hasClassStats: Scalars['Boolean']['output'];
+  /** Whether or not it has a Room Layout assigned */
+  hasRoomLayout: Scalars['Boolean']['output'];
   /** Unique identifier for the class */
   id: Scalars['ID']['output'];
   /** Full name of the instructor leading the class */
@@ -210,6 +228,8 @@ export type Class = {
   maxCapacity: Scalars['Int']['output'];
   /** Name/type of the class (e.g., 'CRANK', 'RIDE', 'POWER') */
   name: Scalars['String']['output'];
+  /** The session type associated with this class */
+  sessionTypes: Array<SessionType>;
   /** Whether this class should be displayed as disabled in the UI (typically for cancelled or past classes) */
   showAsDisabled: Scalars['Boolean']['output'];
   /** Class start date and time with timezone (ISO 8601 format) */
@@ -244,17 +264,30 @@ export type ClassIsFullError = Error & {
   code: Scalars['String']['output'];
 };
 
+export type ClassPackageOrder = {
+  classPackageId: Scalars['ID']['input'];
+  position: Scalars['Int']['input'];
+  type: ClassPackageTypeEnum;
+};
+
 export type ClassPackageProduct = SellableProductInterface & {
   __typename: 'ClassPackageProduct';
   alertBeforePurchasing?: Maybe<ProductAlertBeforePurchasing>;
   buttonText?: Maybe<Scalars['String']['output']>;
   currency: Scalars['String']['output'];
+  doesItRequireSmsAuth?: Maybe<Scalars['Boolean']['output']>;
+  doestItActivateVodForClients?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['ID']['output'];
+  isCLassPassPackage?: Maybe<Scalars['Boolean']['output']>;
+  isMembership?: Maybe<Scalars['Boolean']['output']>;
+  isTrialPackage?: Maybe<Scalars['Boolean']['output']>;
   isVisible: Scalars['Boolean']['output'];
-  price: Scalars['Float']['output'];
-  subtitle: Scalars['String']['output'];
+  position?: Maybe<Scalars['Int']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   type?: Maybe<ClassPackageTypeEnum>;
+  variants: Array<Variant>;
+  vodAmountOfDays?: Maybe<Scalars['Int']['output']>;
 };
 
 export enum ClassPackageTypeEnum {
@@ -264,6 +297,8 @@ export enum ClassPackageTypeEnum {
   Trial = 'trial',
   Vod = 'vod'
 }
+
+export type ClassPackageUpdateResultUnion = ClassPackageProduct | ProductNotFound | UnknownError;
 
 export type ClassPositionInterface = {
   icon: PositionIconEnum;
@@ -323,6 +358,11 @@ export type ClientIsOutsideSchedulingWindowError = Error & {
   code: Scalars['String']['output'];
 };
 
+export type ClientNotFoundInMindbody = Error & {
+  __typename: 'ClientNotFoundInMindbody';
+  code: Scalars['String']['output'];
+};
+
 export type Country = {
   __typename: 'Country';
   code: Scalars['String']['output'];
@@ -330,12 +370,33 @@ export type Country = {
   states?: Maybe<Array<Maybe<State>>>;
 };
 
+export type CrankInstructor = {
+  __typename: 'CrankInstructor';
+  firstName?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  lastName?: Maybe<Scalars['String']['output']>;
+  profilePictureFile?: Maybe<Scalars['String']['output']>;
+};
+
+export type CrankInstructorResultUnion = CrankInstructor | InstructorNotFound | UploadedFileIsNotAnImage;
+
 export type CreateCurrentUserInSiteSuccess = {
   __typename: 'CreateCurrentUserInSiteSuccess';
   result: Scalars['Boolean']['output'];
 };
 
 export type CreateCurrentUserInSiteUnion = CreateCurrentUserInSiteSuccess | UserAlreadyExistsError;
+
+export type CreateInstructorProfileInput = {
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  linkedMindbodyStaffs?: InputMaybe<Array<Scalars['ID']['input']>>;
+  name: Scalars['String']['input'];
+  profilePictureFile?: InputMaybe<Scalars['File']['input']>;
+  site: SiteEnum;
+};
+
+export type CreateInstructorProfileResultUnion = InstructorProfile | UploadedFileIsNotAnImage;
 
 export type CreatePaymentLinkInput = {
   amount: Scalars['Int']['input'];
@@ -346,9 +407,46 @@ export type CreatePaymentLinkInput = {
   title: Scalars['String']['input'];
 };
 
+export type CreateSessionTypeInput = {
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  bannerImageFile?: InputMaybe<Scalars['File']['input']>;
+  color?: InputMaybe<Scalars['String']['input']>;
+  iconFile?: InputMaybe<Scalars['File']['input']>;
+  mindbodySessionTypeIds?: InputMaybe<Array<Scalars['ID']['input']>>;
+  name: Scalars['String']['input'];
+  position?: InputMaybe<Scalars['Int']['input']>;
+  site: SiteEnum;
+};
+
+export type CreateSessionTypeResultUnion = SessionType | UploadedFileIsNotAnImage;
+
 export type CurrentUserEnrollmentsParams = {
   endDate?: InputMaybe<Scalars['Date']['input']>;
   enrollmentType?: InputMaybe<EnrollmentTypeEnum>;
+  startDate?: InputMaybe<Scalars['Date']['input']>;
+};
+
+export type CurrentUserPurchasesPaginatedParams = {
+  filter?: InputMaybe<ServiceStatusEnum>;
+};
+
+export type CurrentUserWorkoutStatsPaginatedParams = {
+  dateRange?: InputMaybe<DateRange>;
+};
+
+export type CustomerSubscription = {
+  __typename: 'CustomerSubscription';
+  amountCents: Scalars['Int']['output'];
+  billingInterval: Scalars['String']['output'];
+  cancelledAt?: Maybe<Scalars['DateTime']['output']>;
+  createdAt: Scalars['DateTime']['output'];
+  creditCardLastFourDigits?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  status: Scalars['String']['output'];
+};
+
+export type DateRange = {
+  endDate?: InputMaybe<Scalars['Date']['input']>;
   startDate?: InputMaybe<Scalars['Date']['input']>;
 };
 
@@ -375,6 +473,16 @@ export type DisableEnableSpotResult = {
 
 export type DisableEnableSpotResultUnion = DisableEnableSpotResult | SpotNotFoundError;
 
+export type DiscountCodeIsEmpty = Error & {
+  __typename: 'DiscountCodeIsEmpty';
+  code: Scalars['String']['output'];
+};
+
+export type DiscountCodeIsInvalid = Error & {
+  __typename: 'DiscountCodeIsInvalid';
+  code: Scalars['String']['output'];
+};
+
 export type DistanceChallenge = ChallengeInterface & {
   __typename: 'DistanceChallenge';
   challengeDisplay: ChallengeDisplay;
@@ -393,6 +501,11 @@ export type DistanceRanking = {
   __typename: 'DistanceRanking';
   amountOfUsersInRanking: Scalars['Int']['output'];
   rankingPositions: Array<DistanceChallengeRankingPosition>;
+};
+
+export type DontNeedMoreGiftCards = Error & {
+  __typename: 'DontNeedMoreGiftCards';
+  code: Scalars['String']['output'];
 };
 
 export type EditClassInput = {
@@ -517,15 +630,53 @@ export type GenderRanking = {
   ranking?: Maybe<UserRanking>;
 };
 
-export type GiftCard = {
+export type GiftCard = SellableProductInterface & {
   __typename: 'GiftCard';
+  alertBeforePurchasing?: Maybe<ProductAlertBeforePurchasing>;
+  buttonText?: Maybe<Scalars['String']['output']>;
+  currency: Scalars['String']['output'];
+  /** @deprecated Use title instead */
   description: Scalars['String']['output'];
+  /** @deprecated Use price instead */
   grandTotal: Scalars['Float']['output'];
   id: Scalars['ID']['output'];
+  isVisible: Scalars['Boolean']['output'];
+  position?: Maybe<Scalars['Int']['output']>;
   purchaseUrl: Scalars['String']['output'];
+  /** @deprecated Use price instead */
   salePrice: Scalars['Float']['output'];
   site: Site;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  /** @deprecated Use alertBeforePurchasing instead */
   terms: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  variants: Array<Variant>;
+};
+
+export type GiftCardAlreadyRegisteredForCurrentShoppingCart = Error & {
+  __typename: 'GiftCardAlreadyRegisteredForCurrentShoppingCart';
+  code: Scalars['String']['output'];
+};
+
+export type GiftCardIsNotUsable = Error & {
+  __typename: 'GiftCardIsNotUsable';
+  code: Scalars['String']['output'];
+};
+
+export type GiftCardNotRegisteredOnCurrentShoppingCart = Error & {
+  __typename: 'GiftCardNotRegisteredOnCurrentShoppingCart';
+  code: Scalars['String']['output'];
+};
+
+export type GiftcardInput = {
+  alertBeforePurchasing?: InputMaybe<ProductAlertBeforePurchasingInput>;
+  buttonText?: InputMaybe<Scalars['String']['input']>;
+  currency?: InputMaybe<Scalars['String']['input']>;
+  isVisible?: InputMaybe<Scalars['Boolean']['input']>;
+  position?: InputMaybe<Scalars['Int']['input']>;
+  purchaseUrl?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type IconPosition = ClassPositionInterface & {
@@ -562,6 +713,28 @@ export type Instructor = {
   site: Site;
 };
 
+export type InstructorNotFound = Error & {
+  __typename: 'InstructorNotFound';
+  code: Scalars['String']['output'];
+};
+
+export type InstructorProfile = {
+  __typename: 'InstructorProfile';
+  active: Scalars['Boolean']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  mindbodyStaffs: Array<MindbodyStaffInfo>;
+  name: Scalars['String']['output'];
+  profilePictureUrl?: Maybe<Scalars['String']['output']>;
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+export type InstructorProfileNotFoundError = Error & {
+  __typename: 'InstructorProfileNotFoundError';
+  code: Scalars['String']['output'];
+};
+
 export type InvalidEmailError = Error & {
   __typename: 'InvalidEmailError';
   code: Scalars['String']['output'];
@@ -577,6 +750,26 @@ export type ItemToShoppingCartInput = {
 export type LateCancellationRequiredError = Error & {
   __typename: 'LateCancellationRequiredError';
   code: Scalars['String']['output'];
+};
+
+export type LockShoppingCartResponse = {
+  __typename: 'LockShoppingCartResponse';
+  isLocked: Scalars['Boolean']['output'];
+  merchantReference: Scalars['ID']['output'];
+};
+
+export type MindbodySessionTypeInfo = {
+  __typename: 'MindbodySessionTypeInfo';
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type MindbodyStaffInfo = {
+  __typename: 'MindbodyStaffInfo';
+  email?: Maybe<Scalars['String']['output']>;
+  firstName: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  lastName: Scalars['String']['output'];
 };
 
 export type MobilePhoneAlreadyVerifiedError = Error & {
@@ -598,33 +791,43 @@ export type Mutation = {
   /** Adds a new device token to be used for device notifications */
   addDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']['output']>;
   /** Allows to add a discount code code to a shopping cart for current user */
-  addDiscountCodeToShoppingCart: Scalars['Boolean']['output'];
+  addDiscountCodeToShoppingCart: ShoppingCartResultUnion;
   /** Allows to add a giftcard code to a shopping cart for current user */
-  addGiftCardCodeToShoppingCart: Scalars['Boolean']['output'];
+  addGiftCardCodeToShoppingCart: ShoppingCartResultUnion;
   /** Allows to add item to shopping cart */
-  addItemToShoppingCart: Scalars['Boolean']['output'];
+  addItemToShoppingCart: ShoppingCartResultUnion;
   /** Books the current user in a class */
   bookClass: BookClassResultUnion;
   /** Adds a user into a given class */
   bookUserIntoClass: BookClassResultUnion;
   /** Cancels an enrollment done by the current user */
   cancelCurrentUserEnrollment?: Maybe<CancelEnrollmentResultUnion>;
+  /** Cancels a subscription for the current user */
+  cancelSubscription: CancelSubscriptionResultUnion;
   /** Checks in a user in a class */
   checkinUserInClass?: Maybe<CheckinResultUnion>;
   /** Checks out a user from a class */
   checkoutUserInClass?: Maybe<CheckoutResultUnion>;
   /** Creates a copy of the current user in the given site */
   createCurrentUserInSite?: Maybe<CreateCurrentUserInSiteUnion>;
+  /** Creates a new instructor profile */
+  createInstructorProfile: CreateInstructorProfileResultUnion;
   /** Creates a new payment link */
   createPaymentLink: PaymentLink;
   /** Creates a new room layout */
   createRoomLayout: RoomLayout;
+  /** Creates a new session type */
+  createSessionType: CreateSessionTypeResultUnion;
   /** It deletes the current user's account */
   deleteCurrentUserAccount?: Maybe<DeleteCurrentUserAccountUnion>;
   /** Removes a devices token */
   deleteDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']['output']>;
+  /** Deletes an instructor profile */
+  deleteInstructorProfile: Scalars['Boolean']['output'];
   /** Soft deletes a payment link */
   deletePaymentLink: Scalars['Boolean']['output'];
+  /** Deletes a session type */
+  deleteSessionType: Scalars['Boolean']['output'];
   /** Disables a spot in a class */
   disableSpot?: Maybe<DisableEnableSpotResultUnion>;
   /** Edits a class */
@@ -637,8 +840,26 @@ export type Mutation = {
   editRoomLayout: RoomLayout;
   /** Edits a user */
   editUser?: Maybe<EditUserResultUnion>;
+  /** Allows to remove all items from the shoppingcart */
+  emptyShoppingCart: ShoppingCartResultUnion;
   /** Enabled a spot in a class */
   enableSpot?: Maybe<DisableEnableSpotResultUnion>;
+  /**
+   * Generate a unique Merchant Reference
+   * @deprecated Use newLockShoppingCart instead
+   */
+  generateMerchantReference: Scalars['ID']['output'];
+  /**
+   * To lock the shoppingcart when the user is in the payment process
+   * @deprecated Use newLockShoppingCart instead
+   */
+  lockShoppingCart: Scalars['Boolean']['output'];
+  /** Allows to lock shoppingcart and generate merchant reference */
+  newLockShoppingCart?: Maybe<LockShoppingCartResponse>;
+  /** Returns the html of a payment form to be used to pay */
+  payfortForm: PayfortFormResult;
+  /** Reactivates a cancelled subscription for the current user */
+  reactivateSubscription: ReactivateSubscriptionResultUnion;
   /** Registers a new user and returns an IdentifiableUser type */
   registerIdentifiableUser?: Maybe<IdentifiableSiteUser>;
   /** Registers a new user */
@@ -649,8 +870,12 @@ export type Mutation = {
   removeAdminUser: Scalars['Boolean']['output'];
   /** Removes the current user's waitlist entry from a class */
   removeCurrentUserFromWaitlist?: Maybe<RemoveCurrentUserFromWaitlistUnion>;
+  /** Remove discount code from current shopping cart */
+  removeDiscountCodeForCurrentShoppingCart: ShoppingCartResultUnion;
+  /** Allows to remove a GiftCard by code */
+  removeGiftCardFromCurrentShoppingCart: ShoppingCartResultUnion;
   /** Remove Item from shopping cart */
-  removeItemFromShoppingCart: Scalars['Boolean']['output'];
+  removeItemFromShoppingCart: ShoppingCartResultUnion;
   /** Removes a user from a class */
   removeUserFromClass: CancelEnrollmentResultUnion;
   /** Removes a waitlist entry */
@@ -677,27 +902,41 @@ export type Mutation = {
   syncAllClasses: Scalars['Boolean']['output'];
   /** Sync all gift cards from Mindbody with the local database */
   syncAllGiftCards: Scalars['Boolean']['output'];
+  /** Allows to syncronize all packages by site */
+  syncAllPackagesBySite: Array<ClassPackageProduct>;
   /** Sync one class */
   syncClass: ClassInfo;
   /** Sync a class with PIQ */
   syncClassWithPIQ: ClassInfo;
   /** Updates an admin user */
   updateAdminUser: AdminUserResultUnion;
+  /** Allows to update product */
+  updateClassPackage?: Maybe<ClassPackageUpdateResultUnion>;
+  /** Updates the display order of class packages */
+  updateClassPackagesOrder: Scalars['Boolean']['output'];
   /** Allows to update the current AdminUser */
   updateCurrentAdminUser: AdminUser;
   /** Allows to update the favorite site for a AdminUser */
   updateCurrentAdminUserFavoriteSite: AdminUser;
   updateCurrentAdminUserPassword?: Maybe<Scalars['Boolean']['output']>;
   /** Updates the current user */
-  updateCurrentUser?: Maybe<User>;
+  updateCurrentUser?: Maybe<UpdateCurrentUserResultUnion>;
   /** Updates a user's password in all the sites */
   updateCurrentUserPassword?: Maybe<Scalars['Boolean']['output']>;
   /** Updates a gift card */
   updateGiftCard: GiftCard;
+  /** Allows to update variant */
+  updateGiftCardNew?: Maybe<UpdateGiftcardResiltUnion>;
+  /** Allows to update an Instructor */
+  updateInstructor?: Maybe<CrankInstructorResultUnion>;
+  /** Updates an instructor profile */
+  updateInstructorProfile: UpdateInstructorProfileResultUnion;
   /** Allows to update an Item from Shopping Cart */
-  updateItemInShoppingCart: ShoppingCart;
+  updateItemInShoppingCart: ShoppingCartResultUnion;
   /** Updates a payment link */
   updatePaymentLink: PaymentLink;
+  /** Updates a session type */
+  updateSessionType: UpdateSessionTypeResultUnion;
   updateUserPassword?: Maybe<Scalars['Boolean']['output']>;
 };
 
@@ -721,16 +960,19 @@ export type MutationAddDeviceTokenToCurrentUserArgs = {
 
 export type MutationAddDiscountCodeToShoppingCartArgs = {
   discountCode: Scalars['String']['input'];
+  site: SiteEnum;
 };
 
 
 export type MutationAddGiftCardCodeToShoppingCartArgs = {
   giftcard: Scalars['ID']['input'];
+  site: SiteEnum;
 };
 
 
 export type MutationAddItemToShoppingCartArgs = {
   input?: InputMaybe<ItemToShoppingCartInput>;
+  site: SiteEnum;
 };
 
 
@@ -748,6 +990,11 @@ export type MutationBookUserIntoClassArgs = {
 export type MutationCancelCurrentUserEnrollmentArgs = {
   input: CancelEnrollmentInput;
   site: SiteEnum;
+};
+
+
+export type MutationCancelSubscriptionArgs = {
+  input: CancelSubscriptionInput;
 };
 
 
@@ -769,6 +1016,11 @@ export type MutationCreateCurrentUserInSiteArgs = {
 };
 
 
+export type MutationCreateInstructorProfileArgs = {
+  input: CreateInstructorProfileInput;
+};
+
+
 export type MutationCreatePaymentLinkArgs = {
   input: CreatePaymentLinkInput;
 };
@@ -777,6 +1029,11 @@ export type MutationCreatePaymentLinkArgs = {
 export type MutationCreateRoomLayoutArgs = {
   input: RoomLayoutInput;
   site: SiteEnum;
+};
+
+
+export type MutationCreateSessionTypeArgs = {
+  input: CreateSessionTypeInput;
 };
 
 
@@ -792,7 +1049,17 @@ export type MutationDeleteDeviceTokenToCurrentUserArgs = {
 };
 
 
+export type MutationDeleteInstructorProfileArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationDeletePaymentLinkArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteSessionTypeArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -830,8 +1097,39 @@ export type MutationEditUserArgs = {
 };
 
 
+export type MutationEmptyShoppingCartArgs = {
+  site: SiteEnum;
+};
+
+
 export type MutationEnableSpotArgs = {
   input?: InputMaybe<DisableEnableSpotInput>;
+};
+
+
+export type MutationGenerateMerchantReferenceArgs = {
+  site: SiteEnum;
+};
+
+
+export type MutationLockShoppingCartArgs = {
+  site: SiteEnum;
+};
+
+
+export type MutationNewLockShoppingCartArgs = {
+  site: SiteEnum;
+};
+
+
+export type MutationPayfortFormArgs = {
+  input: PayfortFormInput;
+  site: SiteEnum;
+};
+
+
+export type MutationReactivateSubscriptionArgs = {
+  input: ReactivateSubscriptionInput;
 };
 
 
@@ -864,8 +1162,20 @@ export type MutationRemoveCurrentUserFromWaitlistArgs = {
 };
 
 
+export type MutationRemoveDiscountCodeForCurrentShoppingCartArgs = {
+  site: SiteEnum;
+};
+
+
+export type MutationRemoveGiftCardFromCurrentShoppingCartArgs = {
+  giftCardCode: Scalars['String']['input'];
+  site: SiteEnum;
+};
+
+
 export type MutationRemoveItemFromShoppingCartArgs = {
-  id: Scalars['ID']['input'];
+  shoppingCartItemId: Scalars['ID']['input'];
+  site: SiteEnum;
 };
 
 
@@ -930,6 +1240,11 @@ export type MutationSyncAllClassesArgs = {
 };
 
 
+export type MutationSyncAllPackagesBySiteArgs = {
+  site?: InputMaybe<SiteEnum>;
+};
+
+
 export type MutationSyncClassArgs = {
   classId: Scalars['ID']['input'];
   site: SiteEnum;
@@ -944,6 +1259,17 @@ export type MutationSyncClassWithPiqArgs = {
 
 export type MutationUpdateAdminUserArgs = {
   input: UpdateAdminUserInput;
+};
+
+
+export type MutationUpdateClassPackageArgs = {
+  id: Scalars['ID']['input'];
+  input: ProductInput;
+};
+
+
+export type MutationUpdateClassPackagesOrderArgs = {
+  input: UpdateClassPackagesOrderInput;
 };
 
 
@@ -978,13 +1304,39 @@ export type MutationUpdateGiftCardArgs = {
 };
 
 
+export type MutationUpdateGiftCardNewArgs = {
+  id: Scalars['ID']['input'];
+  input: GiftcardInput;
+};
+
+
+export type MutationUpdateInstructorArgs = {
+  id: Scalars['ID']['input'];
+  input: UpdateInstructorInput;
+};
+
+
+export type MutationUpdateInstructorProfileArgs = {
+  id: Scalars['ID']['input'];
+  input: UpdateInstructorProfileInput;
+};
+
+
 export type MutationUpdateItemInShoppingCartArgs = {
-  input?: InputMaybe<ItemToShoppingCartInput>;
+  quantity?: InputMaybe<Scalars['Int']['input']>;
+  shoppingCartItemId: Scalars['ID']['input'];
+  site: SiteEnum;
 };
 
 
 export type MutationUpdatePaymentLinkArgs = {
   input: UpdatePaymentLinkInput;
+};
+
+
+export type MutationUpdateSessionTypeArgs = {
+  id: Scalars['ID']['input'];
+  input: UpdateSessionTypeInput;
 };
 
 
@@ -1030,6 +1382,17 @@ export type PasswordsDontMatchError = Error & {
   code: Scalars['String']['output'];
 };
 
+export type PayfortFormInput = {
+  deviceFingerprint: Scalars['String']['input'];
+  merchantReference: Scalars['ID']['input'];
+  savePaymentCard: Scalars['Boolean']['input'];
+};
+
+export type PayfortFormResult = {
+  __typename: 'PayfortFormResult';
+  htmlForm: Scalars['String']['output'];
+};
+
 export type PaymentLink = {
   __typename: 'PaymentLink';
   amount: Scalars['Int']['output'];
@@ -1046,6 +1409,24 @@ export type PaymentRequiredError = Error & {
   __typename: 'PaymentRequiredError';
   code: Scalars['String']['output'];
 };
+
+export type PaymentTransactionStatus = {
+  __typename: 'PaymentTransactionStatus';
+  status: PaymentTransactionStatusEnum;
+};
+
+export enum PaymentTransactionStatusEnum {
+  Refunded = 'refunded',
+  Rejected = 'rejected',
+  Successful = 'successful',
+  WaitingConfirmation = 'waitingConfirmation'
+}
+
+export type PaymentTransactionStatusInput = {
+  merchantReference: Scalars['ID']['input'];
+};
+
+export type PaymentTransactionUnion = PaymentTransactionStatus | TemporalTransactionNotFound;
 
 export type PositionAlreadyTakenError = Error & {
   __typename: 'PositionAlreadyTakenError';
@@ -1070,8 +1451,35 @@ export type ProductAlertBeforePurchasing = {
   title: Scalars['String']['output'];
 };
 
+export type ProductAlertBeforePurchasingInput = {
+  description: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+};
+
+export type ProductInput = {
+  alertBeforePurchasing?: InputMaybe<ProductAlertBeforePurchasingInput>;
+  buttonText?: InputMaybe<Scalars['String']['input']>;
+  currency?: InputMaybe<Scalars['String']['input']>;
+  doesItRequiredSmsAuth?: InputMaybe<Scalars['Boolean']['input']>;
+  doestItActivateVodForClients?: InputMaybe<Scalars['Boolean']['input']>;
+  isCLassPassPackage?: InputMaybe<Scalars['Boolean']['input']>;
+  isMembership?: InputMaybe<Scalars['Boolean']['input']>;
+  isTrialPackage?: InputMaybe<Scalars['Boolean']['input']>;
+  isVisible?: InputMaybe<Scalars['Boolean']['input']>;
+  position?: InputMaybe<Scalars['Int']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  vodAmountOfDays?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type ProductNotFound = Error & {
+  __typename: 'ProductNotFound';
+  code: Scalars['String']['output'];
+};
+
 export enum ProductType {
-  ClassPackage = 'classPackage'
+  ClassPackage = 'classPackage',
+  GiftCard = 'giftCard'
 }
 
 export type ProductsInput = {
@@ -1102,6 +1510,8 @@ export type Query = {
   availableInstructors: Array<Instructor>;
   /** Returns a list of all the available sites */
   availableSites?: Maybe<Array<Site>>;
+  /** Return the total for the current shoppingCart for the current user */
+  calculateTotalForShoppingCart: ShoppingCartResultUnion;
   /**
    * Returns a list of upcoming fitness classes for a specific site within an optional date range.
    *
@@ -1144,12 +1554,22 @@ export type Query = {
   currentUserWorkoutStatsPaginated: PaginatedClassStats;
   /** Returns the list of all the available gift cards */
   giftCards: Array<GiftCard>;
+  /** Returns a single instructor profile by ID */
+  instructorProfile?: Maybe<InstructorProfile>;
+  /** Returns a list of all instructor profiles */
+  instructorProfiles: Array<InstructorProfile>;
   /** Verifies whether an sms validation code is valid */
   isSMSValidationCodeValid?: Maybe<IsSmsValidationCodeValidUnion>;
+  /** Returns a list of all MindbodySessionType records for a site */
+  mindbodySessionTypes: Array<MindbodySessionTypeInfo>;
+  /** Returns a list of all MindbodyStaff records */
+  mindbodyStaffs: Array<MindbodyStaffInfo>;
   /** Returns a single payment link by ID */
   paymentLink?: Maybe<PaymentLink>;
   /** Returns a list of payment links */
   paymentLinks: Array<PaymentLink>;
+  /** Allows to get the status of a transaction  */
+  paymentTransactionStatus: PaymentTransactionUnion;
   /** Returns a list of available products for a specific site */
   products: Array<SellableProductInterface>;
   /** Returns a specific room layout */
@@ -1158,6 +1578,8 @@ export type Query = {
   roomLayouts: Array<RoomLayout>;
   /** Returns the matched users given the query provided */
   searchSiteUser?: Maybe<Array<Maybe<IdentifiableSiteUser>>>;
+  /** Returns a list of all session types for a site */
+  sessionTypes: Array<SessionType>;
   /** Returns a single workout stat */
   singleWorkoutStat?: Maybe<ClassStat>;
   /** Settings of a site */
@@ -1185,6 +1607,11 @@ export type QueryAdminUserArgs = {
 
 export type QueryAvailableClassTypesArgs = {
   site?: InputMaybe<SiteEnum>;
+};
+
+
+export type QueryCalculateTotalForShoppingCartArgs = {
+  site: SiteEnum;
 };
 
 
@@ -1230,6 +1657,7 @@ export type QueryCurrentUserPurchasesArgs = {
 
 export type QueryCurrentUserPurchasesPaginatedArgs = {
   pagination?: InputMaybe<PaginationInput>;
+  params: CurrentUserPurchasesPaginatedParams;
   site?: InputMaybe<SiteEnum>;
 };
 
@@ -1252,12 +1680,34 @@ export type QueryCurrentUserWorkoutStatsArgs = {
 
 export type QueryCurrentUserWorkoutStatsPaginatedArgs = {
   pagination?: InputMaybe<PaginationInput>;
+  params?: InputMaybe<CurrentUserWorkoutStatsPaginatedParams>;
+  site: SiteEnum;
+};
+
+
+export type QueryInstructorProfileArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryInstructorProfilesArgs = {
+  activeOnly?: InputMaybe<Scalars['Boolean']['input']>;
   site: SiteEnum;
 };
 
 
 export type QueryIsSmsValidationCodeValidArgs = {
   smsCode: Scalars['String']['input'];
+};
+
+
+export type QueryMindbodySessionTypesArgs = {
+  site: SiteEnum;
+};
+
+
+export type QueryMindbodyStaffsArgs = {
+  site: SiteEnum;
 };
 
 
@@ -1268,6 +1718,11 @@ export type QueryPaymentLinkArgs = {
 
 export type QueryPaymentLinksArgs = {
   site?: InputMaybe<SiteEnum>;
+};
+
+
+export type QueryPaymentTransactionStatusArgs = {
+  input?: InputMaybe<PaymentTransactionStatusInput>;
 };
 
 
@@ -1292,6 +1747,12 @@ export type QueryRoomLayoutsArgs = {
 export type QuerySearchSiteUserArgs = {
   query?: InputMaybe<Scalars['String']['input']>;
   site?: InputMaybe<SiteEnum>;
+};
+
+
+export type QuerySessionTypesArgs = {
+  activeOnly?: InputMaybe<Scalars['Boolean']['input']>;
+  site: SiteEnum;
 };
 
 
@@ -1345,6 +1806,23 @@ export type QueryWebhookEventsArgs = {
   status?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type ReactivateSubscriptionInput = {
+  subscriptionId: Scalars['ID']['input'];
+};
+
+/** Reactivation is not yet supported by the subscription service */
+export type ReactivateSubscriptionNotSupportedError = Error & {
+  __typename: 'ReactivateSubscriptionNotSupportedError';
+  code: Scalars['String']['output'];
+};
+
+export type ReactivateSubscriptionResultUnion = ReactivateSubscriptionNotSupportedError | ReactivateSubscriptionSuccess | SubscriptionNotFoundError | UnknownError;
+
+export type ReactivateSubscriptionSuccess = {
+  __typename: 'ReactivateSubscriptionSuccess';
+  success: Scalars['Boolean']['output'];
+};
+
 export type RegisterUserInput = {
   address1?: InputMaybe<Scalars['String']['input']>;
   address2?: InputMaybe<Scalars['String']['input']>;
@@ -1375,6 +1853,13 @@ export type RejectLateCancelledSpotInClassInput = {
 export type RejectLateCancelledSpotInClassSuccess = {
   __typename: 'RejectLateCancelledSpotInClassSuccess';
   success: Scalars['Boolean']['output'];
+};
+
+export type RemainingCreditsResultUnion = ClientNotFoundInMindbody | RemainingCreditsSuccess;
+
+export type RemainingCreditsSuccess = {
+  __typename: 'RemainingCreditsSuccess';
+  credits: Scalars['Int']['output'];
 };
 
 export type RemoveCurrentUserFromWaitlistInput = {
@@ -1479,14 +1964,39 @@ export type SellableProductInterface = {
   currency: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   isVisible: Scalars['Boolean']['output'];
-  price: Scalars['Float']['output'];
-  subtitle: Scalars['String']['output'];
+  position?: Maybe<Scalars['Int']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
+  variants: Array<Variant>;
 };
 
 export type SendClassStatsToEmailInput = {
   email: Scalars['String']['input'];
   enrollmentId: Scalars['ID']['input'];
+};
+
+export enum ServiceStatusEnum {
+  ActiveOnly = 'activeOnly',
+  All = 'all',
+  ExpiredOnly = 'expiredOnly'
+}
+
+export type SessionType = {
+  __typename: 'SessionType';
+  active: Scalars['Boolean']['output'];
+  bannerImagePath?: Maybe<Scalars['String']['output']>;
+  color?: Maybe<Scalars['String']['output']>;
+  icon?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  mindbodySessionTypes: Array<MindbodySessionTypeInfo>;
+  name: Scalars['String']['output'];
+  position?: Maybe<Scalars['Int']['output']>;
+};
+
+export type SessionTypeNotFoundError = Error & {
+  __typename: 'SessionTypeNotFoundError';
+  code: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
 };
 
 export type SetRoomLayoutForClassSchedulesInput = {
@@ -1498,19 +2008,46 @@ export type ShoppingCart = {
   __typename: 'ShoppingCart';
   currency: Scalars['String']['output'];
   discountCode?: Maybe<Scalars['String']['output']>;
-  giftCardCode?: Maybe<Scalars['String']['output']>;
+  giftCardsCodes?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  id: Scalars['ID']['output'];
   items: Array<ShoppingCartItem>;
-  subTotal: Scalars['Float']['output'];
-  total: Scalars['Float']['output'];
+  total?: Maybe<ShoppingCartTotalResultUnion>;
+};
+
+export type ShoppingCartIsEmpty = Error & {
+  __typename: 'ShoppingCartIsEmpty';
+  code: Scalars['String']['output'];
 };
 
 export type ShoppingCartItem = {
   __typename: 'ShoppingCartItem';
   id: Scalars['ID']['output'];
-  product: SellableProductInterface;
   quantity: Scalars['Int']['output'];
-  subtotal: Scalars['Float']['output'];
+  subtotal?: Maybe<Scalars['Float']['output']>;
+  variant: Variant;
 };
+
+export type ShoppingCartItemNotFound = Error & {
+  __typename: 'ShoppingCartItemNotFound';
+  code: Scalars['String']['output'];
+};
+
+export type ShoppingCartNotFound = Error & {
+  __typename: 'ShoppingCartNotFound';
+  code: Scalars['String']['output'];
+};
+
+export type ShoppingCartResultUnion = DiscountCodeIsEmpty | DiscountCodeIsInvalid | DontNeedMoreGiftCards | GiftCardAlreadyRegisteredForCurrentShoppingCart | GiftCardIsNotUsable | GiftCardNotRegisteredOnCurrentShoppingCart | ProductNotFound | ShoppingCart | ShoppingCartIsEmpty | ShoppingCartItemNotFound | ShoppingCartNotFound;
+
+export type ShoppingCartTotal = {
+  __typename: 'ShoppingCartTotal';
+  amountToPay?: Maybe<Scalars['Float']['output']>;
+  giftCardAmount?: Maybe<Scalars['Float']['output']>;
+  subTotal?: Maybe<Scalars['Float']['output']>;
+  total?: Maybe<Scalars['Float']['output']>;
+};
+
+export type ShoppingCartTotalResultUnion = GiftCardIsNotUsable | ShoppingCartTotal | UserAlreadyHaveFirstTimerPackage | UserCanNotBuyFirstTimerPackage;
 
 export type SimpleSiteUser = {
   __typename: 'SimpleSiteUser';
@@ -1579,6 +2116,21 @@ export type State = {
   name: Scalars['String']['output'];
 };
 
+export type SubscriptionAlreadyCancelledError = Error & {
+  __typename: 'SubscriptionAlreadyCancelledError';
+  code: Scalars['String']['output'];
+};
+
+export type SubscriptionDoesNotBelongToUserError = Error & {
+  __typename: 'SubscriptionDoesNotBelongToUserError';
+  code: Scalars['String']['output'];
+};
+
+export type SubscriptionNotFoundError = Error & {
+  __typename: 'SubscriptionNotFoundError';
+  code: Scalars['String']['output'];
+};
+
 export type SuccessfulRequestSmsValidation = {
   __typename: 'SuccessfulRequestSMSValidation';
   success: Scalars['Boolean']['output'];
@@ -1590,6 +2142,11 @@ export type SwapSpotSuccess = {
   __typename: 'SwapSpotSuccess';
   affectedEnrollment?: Maybe<EnrollmentInfoInterface>;
   selectedEnrollment: EnrollmentInfoInterface;
+};
+
+export type TemporalTransactionNotFound = Error & {
+  __typename: 'TemporalTransactionNotFound';
+  code: Scalars['String']['output'];
 };
 
 export type TooManyResetPasswordLinkRequestsError = Error & {
@@ -1613,6 +2170,10 @@ export type UpdateAdminUserInput = {
   userDataInput: AdminUserDataInput;
 };
 
+export type UpdateClassPackagesOrderInput = {
+  orders: Array<ClassPackageOrder>;
+};
+
 export type UpdateCurrentAdminUserFavoriteSiteInput = {
   favoriteSite?: InputMaybe<SiteEnum>;
 };
@@ -1626,10 +2187,30 @@ export type UpdateCurrentUserPasswordInput = {
   newPassword: Scalars['String']['input'];
 };
 
+export type UpdateCurrentUserResultUnion = UploadedFileIsNotAnImage | User;
+
 export type UpdateGiftCardInput = {
   grandTotal?: InputMaybe<Scalars['Float']['input']>;
   id: Scalars['ID']['input'];
 };
+
+export type UpdateGiftcardResiltUnion = GiftCard | ProductNotFound | UnknownError;
+
+export type UpdateInstructorInput = {
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  profilePictureFile?: InputMaybe<Scalars['File']['input']>;
+};
+
+export type UpdateInstructorProfileInput = {
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  linkedMindbodyStaffs?: InputMaybe<Array<Scalars['ID']['input']>>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  profilePictureFile?: InputMaybe<Scalars['File']['input']>;
+};
+
+export type UpdateInstructorProfileResultUnion = InstructorProfile | InstructorProfileNotFoundError | UploadedFileIsNotAnImage;
 
 export type UpdatePaymentLinkInput = {
   amount?: InputMaybe<Scalars['Int']['input']>;
@@ -1641,9 +2222,26 @@ export type UpdatePaymentLinkInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type UpdateSessionTypeInput = {
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  bannerImageFile?: InputMaybe<Scalars['File']['input']>;
+  color?: InputMaybe<Scalars['String']['input']>;
+  iconFile?: InputMaybe<Scalars['File']['input']>;
+  mindbodySessionTypeIds?: InputMaybe<Array<Scalars['ID']['input']>>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  position?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type UpdateSessionTypeResultUnion = SessionType | SessionTypeNotFoundError | UploadedFileIsNotAnImage;
+
 export type UpdateUserPasswordInput = {
   newPassword: Scalars['String']['input'];
   userId: Scalars['ID']['input'];
+};
+
+export type UploadedFileIsNotAnImage = Error & {
+  __typename: 'UploadedFileIsNotAnImage';
+  code: Scalars['String']['output'];
 };
 
 export type User = {
@@ -1664,12 +2262,18 @@ export type User = {
   firstName: Scalars['String']['output'];
   gender?: Maybe<GenderEnum>;
   hideMetrics?: Maybe<Scalars['Boolean']['output']>;
+  isMobilePhoneVerified: Scalars['Boolean']['output'];
   lastName: Scalars['String']['output'];
   leaderboardUsername?: Maybe<Scalars['String']['output']>;
   phone: Scalars['String']['output'];
-  shoppingCart?: Maybe<ShoppingCart>;
+  profilePictureUrl?: Maybe<Scalars['String']['output']>;
+  /** Allows to get remaining credits for current user for all sites */
+  remainingCredits: RemainingCreditsResultUnion;
+  remainingCreditsBySite?: Maybe<RemainingCreditsResultUnion>;
+  shoppingCart: ShoppingCart;
   siteUsers: Array<SimpleSiteUser>;
   state?: Maybe<State>;
+  subscriptions: Array<CustomerSubscription>;
   weight?: Maybe<Scalars['Float']['output']>;
   zipCode: Scalars['String']['output'];
 };
@@ -1684,8 +2288,28 @@ export type UserEnrollmentInClassArgs = {
   classId: Scalars['ID']['input'];
 };
 
+
+export type UserRemainingCreditsBySiteArgs = {
+  site: SiteEnum;
+};
+
+
+export type UserShoppingCartArgs = {
+  site: SiteEnum;
+};
+
 export type UserAlreadyExistsError = Error & {
   __typename: 'UserAlreadyExistsError';
+  code: Scalars['String']['output'];
+};
+
+export type UserAlreadyHaveFirstTimerPackage = Error & {
+  __typename: 'UserAlreadyHaveFirstTimerPackage';
+  code: Scalars['String']['output'];
+};
+
+export type UserCanNotBuyFirstTimerPackage = Error & {
+  __typename: 'UserCanNotBuyFirstTimerPackage';
   code: Scalars['String']['output'];
 };
 
@@ -1714,6 +2338,7 @@ export type UserInput = {
   lastName?: InputMaybe<Scalars['String']['input']>;
   leaderboardUsername?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
+  profilePicture?: InputMaybe<Scalars['File']['input']>;
   state?: InputMaybe<Scalars['String']['input']>;
   weight?: InputMaybe<Scalars['Float']['input']>;
   zipCode?: InputMaybe<Scalars['String']['input']>;
@@ -1743,6 +2368,15 @@ export type UsernameAlreadyUsedError = Error & {
 
 export type ValidateResetPasswordTokenInput = {
   token: Scalars['String']['input'];
+};
+
+export type Variant = {
+  __typename: 'Variant';
+  id: Scalars['String']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  position: Scalars['Int']['output'];
+  price: Scalars['Float']['output'];
+  product: SellableProductInterface;
 };
 
 export type WaitlistEntry = EnrollmentInfoInterface & {
@@ -1836,6 +2470,42 @@ export type UpdatePaymentLinkMutationVariables = Exact<{
 
 
 export type UpdatePaymentLinkMutation = { __typename: 'Mutation', updatePaymentLink: { __typename: 'PaymentLink', id: string, title: string, amount: number, currency: string, url: string, notificationEmailAddress: string, site: { __typename: 'Site', name: string, code: SiteEnum } } };
+
+export type ClassPackagesQueryVariables = Exact<{
+  site: SiteEnum;
+}>;
+
+
+export type ClassPackagesQuery = { __typename: 'Query', products: Array<
+    | { __typename: 'ClassPackageProduct', id: string, title: string, subtitle?: string | null, buttonText?: string | null, currency: string, type?: ClassPackageTypeEnum | null, isVisible: boolean, position?: number | null, isMembership?: boolean | null, isTrialPackage?: boolean | null, isCLassPassPackage?: boolean | null, doesItRequireSmsAuth?: boolean | null, doestItActivateVodForClients?: boolean | null, vodAmountOfDays?: number | null, alertBeforePurchasing?: { __typename: 'ProductAlertBeforePurchasing', title: string, description: string } | null }
+    | { __typename: 'GiftCard' }
+  > };
+
+export type SyncAllPackagesBySiteMutationVariables = Exact<{
+  site?: InputMaybe<SiteEnum>;
+}>;
+
+
+export type SyncAllPackagesBySiteMutation = { __typename: 'Mutation', syncAllPackagesBySite: Array<{ __typename: 'ClassPackageProduct', id: string, title: string, isVisible: boolean, type?: ClassPackageTypeEnum | null, position?: number | null }> };
+
+export type UpdateClassPackageMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  input: ProductInput;
+}>;
+
+
+export type UpdateClassPackageMutation = { __typename: 'Mutation', updateClassPackage?:
+    | { __typename: 'ClassPackageProduct', id: string, title: string, subtitle?: string | null, buttonText?: string | null, currency: string, type?: ClassPackageTypeEnum | null, isVisible: boolean, position?: number | null, isMembership?: boolean | null, isTrialPackage?: boolean | null, isCLassPassPackage?: boolean | null, doesItRequireSmsAuth?: boolean | null, doestItActivateVodForClients?: boolean | null, vodAmountOfDays?: number | null, alertBeforePurchasing?: { __typename: 'ProductAlertBeforePurchasing', title: string, description: string } | null }
+    | { __typename: 'ProductNotFound', code: string }
+    | { __typename: 'UnknownError', code: string }
+   | null };
+
+export type UpdateClassPackagesOrderMutationVariables = Exact<{
+  input: UpdateClassPackagesOrderInput;
+}>;
+
+
+export type UpdateClassPackagesOrderMutation = { __typename: 'Mutation', updateClassPackagesOrder: boolean };
 
 export type RetryWebhookEventMutationVariables = Exact<{
   input: RetryWebhookEventInput;
@@ -2368,6 +3038,10 @@ export const DeletePaymentLinkDocument = {"kind":"Document","definitions":[{"kin
 export const PaymentLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PaymentLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"paymentLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"notificationEmailAddress"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<PaymentLinkQuery, PaymentLinkQueryVariables>;
 export const PaymentLinksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PaymentLinks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"paymentLinks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"notificationEmailAddress"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<PaymentLinksQuery, PaymentLinksQueryVariables>;
 export const UpdatePaymentLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePaymentLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdatePaymentLinkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePaymentLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"notificationEmailAddress"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<UpdatePaymentLinkMutation, UpdatePaymentLinkMutationVariables>;
+export const ClassPackagesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ClassPackages"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"products"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"type"},"value":{"kind":"EnumValue","value":"classPackage"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ClassPackageProduct"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"buttonText"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"alertBeforePurchasing"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isVisible"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"isMembership"}},{"kind":"Field","name":{"kind":"Name","value":"isTrialPackage"}},{"kind":"Field","name":{"kind":"Name","value":"isCLassPassPackage"}},{"kind":"Field","name":{"kind":"Name","value":"doesItRequireSmsAuth"}},{"kind":"Field","name":{"kind":"Name","value":"doestItActivateVodForClients"}},{"kind":"Field","name":{"kind":"Name","value":"vodAmountOfDays"}}]}}]}}]}}]} as unknown as DocumentNode<ClassPackagesQuery, ClassPackagesQueryVariables>;
+export const SyncAllPackagesBySiteDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SyncAllPackagesBySite"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"syncAllPackagesBySite"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"isVisible"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"position"}}]}}]}}]} as unknown as DocumentNode<SyncAllPackagesBySiteMutation, SyncAllPackagesBySiteMutationVariables>;
+export const UpdateClassPackageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateClassPackage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ProductInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateClassPackage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ClassPackageProduct"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"buttonText"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"alertBeforePurchasing"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isVisible"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"isMembership"}},{"kind":"Field","name":{"kind":"Name","value":"isTrialPackage"}},{"kind":"Field","name":{"kind":"Name","value":"isCLassPassPackage"}},{"kind":"Field","name":{"kind":"Name","value":"doesItRequireSmsAuth"}},{"kind":"Field","name":{"kind":"Name","value":"doestItActivateVodForClients"}},{"kind":"Field","name":{"kind":"Name","value":"vodAmountOfDays"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UnknownError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ProductNotFound"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateClassPackageMutation, UpdateClassPackageMutationVariables>;
+export const UpdateClassPackagesOrderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateClassPackagesOrder"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateClassPackagesOrderInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateClassPackagesOrder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<UpdateClassPackagesOrderMutation, UpdateClassPackagesOrderMutationVariables>;
 export const RetryWebhookEventDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RetryWebhookEvent"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RetryWebhookEventInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"retryWebhookEvent"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"RetryWebhookEventSuccess"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"webhookEvent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"eventType"}},{"kind":"Field","name":{"kind":"Name","value":"subscriptionId"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"attempts"}},{"kind":"Field","name":{"kind":"Name","value":"lastAttemptAt"}},{"kind":"Field","name":{"kind":"Name","value":"nextRetryAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"parentEventId"}},{"kind":"Field","name":{"kind":"Name","value":"triggeredBy"}},{"kind":"Field","name":{"kind":"Name","value":"resolvedByEventId"}},{"kind":"Field","name":{"kind":"Name","value":"lastError"}},{"kind":"Field","name":{"kind":"Name","value":"destinationUrl"}},{"kind":"Field","name":{"kind":"Name","value":"payload"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"WebhookEventNotFoundError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"WebhookEventNotRetryableError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"InvalidEmailError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<RetryWebhookEventMutation, RetryWebhookEventMutationVariables>;
 export const WebhookEventDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WebhookEvent"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"webhookEvent"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"eventType"}},{"kind":"Field","name":{"kind":"Name","value":"subscriptionId"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"attempts"}},{"kind":"Field","name":{"kind":"Name","value":"lastAttemptAt"}},{"kind":"Field","name":{"kind":"Name","value":"nextRetryAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"parentEventId"}},{"kind":"Field","name":{"kind":"Name","value":"triggeredBy"}},{"kind":"Field","name":{"kind":"Name","value":"resolvedByEventId"}},{"kind":"Field","name":{"kind":"Name","value":"lastError"}},{"kind":"Field","name":{"kind":"Name","value":"destinationUrl"}},{"kind":"Field","name":{"kind":"Name","value":"payload"}}]}}]}}]} as unknown as DocumentNode<WebhookEventQuery, WebhookEventQueryVariables>;
 export const WebhookEventsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WebhookEvents"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"status"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"webhookEvents"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"status"},"value":{"kind":"Variable","name":{"kind":"Name","value":"status"}}},{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"events"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"eventType"}},{"kind":"Field","name":{"kind":"Name","value":"subscriptionId"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"attempts"}},{"kind":"Field","name":{"kind":"Name","value":"lastAttemptAt"}},{"kind":"Field","name":{"kind":"Name","value":"nextRetryAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"parentEventId"}},{"kind":"Field","name":{"kind":"Name","value":"triggeredBy"}},{"kind":"Field","name":{"kind":"Name","value":"resolvedByEventId"}},{"kind":"Field","name":{"kind":"Name","value":"lastError"}},{"kind":"Field","name":{"kind":"Name","value":"destinationUrl"}},{"kind":"Field","name":{"kind":"Name","value":"payload"}}]}},{"kind":"Field","name":{"kind":"Name","value":"hasMore"}},{"kind":"Field","name":{"kind":"Name","value":"nextCursor"}},{"kind":"Field","name":{"kind":"Name","value":"limit"}}]}}]}}]} as unknown as DocumentNode<WebhookEventsQuery, WebhookEventsQueryVariables>;

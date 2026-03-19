@@ -12,6 +12,7 @@ import { paymentLinksRoute } from '@/modules/payment-links/router'
 import { instructorProfilesRoute } from '@/modules/instructor-profile/router'
 import { sessionTypesRoute } from '@/modules/session-type/router'
 import { webhookEventsRoute } from '@/modules/webhook-events/router'
+import { classPackagesRoute } from '@/modules/products/router'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -103,6 +104,11 @@ const router = createRouter({
       ...webhookEventsRoute,
       path: '/webhook-events',
       meta: { requiresAuth: true, role: Role.ROLE_SUPER_ADMIN }
+    },
+    {
+      ...classPackagesRoute,
+      path: '/class-packages',
+      meta: { requiresAuth: true }
     }
   ]
 })

@@ -1,0 +1,30 @@
+mutation UpdateClassPackage($id: ID!, $input: ProductInput!) {
+  updateClassPackage(id: $id, input: $input) {
+    ... on ClassPackageProduct {
+      id
+      title
+      subtitle
+      buttonText
+      currency
+      type
+      alertBeforePurchasing {
+        title
+        description
+      }
+      isVisible
+      position
+      isMembership
+      isTrialPackage
+      isCLassPassPackage
+      doesItRequireSmsAuth
+      doestItActivateVodForClients
+      vodAmountOfDays
+    }
+    ... on UnknownError {
+      code
+    }
+    ... on ProductNotFound {
+      code
+    }
+  }
+}

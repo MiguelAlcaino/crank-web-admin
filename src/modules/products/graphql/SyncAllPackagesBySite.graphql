@@ -1,0 +1,9 @@
+mutation SyncAllPackagesBySite($site: SiteEnum) {
+  syncAllPackagesBySite(site: $site) {
+    id
+    title
+    isVisible
+    type
+    position
+  }
+}

@@ -10,6 +10,7 @@ import type {
   UpdateSessionTypeInput
 } from '@/gql/graphql'
 import {
+  ClassPackagesDocument,
   CreateInstructorProfileDocument,
   CreatePaymentLinkDocument,
   CreateSessionTypeDocument,
@@ -21,7 +22,11 @@ import {
   MindbodyStaffsDocument,
   PaymentLinkDocument,
   PaymentLinksDocument,
+  RetryWebhookEventDocument,
   SessionTypesDocument,
+  SyncAllPackagesBySiteDocument,
+  UpdateClassPackageDocument,
+  UpdateClassPackagesOrderDocument,
   UpdateInstructorProfileDocument,
   UpdatePaymentLinkDocument,
   UpdateSessionTypeDocument,
@@ -30,6 +35,7 @@ import {
   type AdminUserResultUnion,
   type BookUserIntoClassInput,
   type CalendarClassesParams,
+  type ClassPackageOrder,
   type CancelEnrollmentInput,
   type CheckinResultUnion,
   type CheckinUserInClass,
@@ -58,6 +64,7 @@ import {
   type PaginatedClassStats,
   type PaginationInput,
   type PaymentLink,
+  type ProductInput,
   type RegisterUserInput,
   type RemoveUserFromWaitlistInput,
   type RemoveUserFromWaitlistUnion,
@@ -2290,5 +2297,56 @@ export class ApiService {
       console.error('Error fetching instructor profiles:', error)
       throw error
     }
+  }
+
+  async getClassPackages(site: SiteEnum) {
+    const queryResult = await this.authApiClient.query({
+      query: ClassPackagesDocument,
+      variables: { site },
+      fetchPolicy: 'network-only'
+    })
+
+    return queryResult.data.products.filter((p) => p.__typename === 'ClassPackageProduct') as Array<
+      Extract<(typeof queryResult.data.products)[number], { __typename: 'ClassPackageProduct' }>
+    >
+  }
+
+  async updateClassPackage(id: string, input: ProductInput) {
+    const result = await this.authApiClient.mutate({
+      mutation: UpdateClassPackageDocument,
+      variables: { id, input },
+      fetchPolicy: 'network-only'
+    })
+
+    const data = result.data?.updateClassPackage
+    if (!data) {
+      throw new Error('No data returned from updateClassPackage')
+    }
+
+    if (data.__typename === 'ClassPackageProduct') {
+      return data
+    }
+
+    throw new Error(`Update failed: ${data.code}`)
+  }
+
+  async updateClassPackagesOrder(orders: ClassPackageOrder[]): Promise<boolean> {
+    const result = await this.authApiClient.mutate({
+      mutation: UpdateClassPackagesOrderDocument,
+      variables: { input: { orders } },
+      fetchPolicy: 'network-only'
+    })
+
+    return result.data?.updateClassPackagesOrder ?? false
+  }
+
+  async syncAllPackagesBySite(site: SiteEnum) {
+    const result = await this.authApiClient.mutate({
+      mutation: SyncAllPackagesBySiteDocument,
+      variables: { site },
+      fetchPolicy: 'network-only'
+    })
+
+    return result.data?.syncAllPackagesBySite ?? []
   }
 }

@@ -30,6 +30,7 @@ import ClassSchedulesView from './modules/class-schedule-config/views/ClassSched
 import GiftCardListView from './modules/gift-card/views/GiftCardListView.vue'
 import MyAdminSettingsView from './modules/my-admin-settings/views/MyAdminSettingsView.vue'
 import WebhookEventsView from '@/modules/webhook-events/views/WebhookEventsView.vue'
+import ClassPackageListView from './modules/products/views/ClassPackageListView.vue'
 
 export const startCustomerCreateApp = async function (
   urlAfterSubmit: string,
@@ -370,6 +371,43 @@ export const startWebhookEventsApp = async function (
 
   app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
   useAuthenticationStore().setSession(token)
+
+  app.mount(appDiv)
+}
+
+export const startClassPackagesApp = async function (
+  gqlUrl: string,
+  token: string,
+  site: string,
+  appDiv: string
+) {
+  const app = createApp({
+    setup() {
+      provide('site', site)
+      provide(
+        'gqlApiService',
+        new ApiService(newAuthenticatedApolloClient(gqlUrl), newAnonymousClient(gqlUrl))
+      )
+    },
+    render: () => h(ClassPackageListView)
+  })
+
+  app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
+  useAuthenticationStore().setSession(token)
+
+  if (site) {
+    if (site === SiteEnum.Dubai) {
+      appStore().setSite(SiteEnum.Dubai)
+    } else if (site === SiteEnum.AbuDhabi) {
+      appStore().setSite(SiteEnum.AbuDhabi)
+    } else if (site === SiteEnum.TownSquare) {
+      appStore().setSite(SiteEnum.TownSquare)
+    } else {
+      throw Error
+    }
+  } else {
+    throw Error
+  }
 
   app.mount(appDiv)
 }
