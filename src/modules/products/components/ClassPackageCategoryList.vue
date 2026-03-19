@@ -37,7 +37,9 @@ function onDraggableUpdate(value: ClassPackage[]) {
             <i class="bi bi-grip-vertical me-2 drag-handle"></i>
             <div>
               <span class="fw-bold">{{ element.title }}</span>
-              <span class="ms-2 text-muted">{{ element.currency }}</span>
+              <span v-if="element.price != null" class="ms-2 text-muted"
+                >{{ element.price }} {{ element.currency }}</span
+              >
               <span v-if="!element.isVisible" class="badge bg-secondary ms-2">Hidden</span>
             </div>
           </div>

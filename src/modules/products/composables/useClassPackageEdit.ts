@@ -116,7 +116,8 @@ export const useClassPackageEdit = (apiService: ApiService, emits: Function) => 
         isCLassPassPackage: updated.isCLassPassPackage ?? null,
         doesItRequireSmsAuth: updated.doesItRequireSmsAuth ?? null,
         doestItActivateVodForClients: updated.doestItActivateVodForClients ?? null,
-        vodAmountOfDays: updated.vodAmountOfDays ?? null
+        vodAmountOfDays: updated.vodAmountOfDays ?? null,
+        price: classPackage!.price
       }
       emits('afterUpdateClassPackage', updatedPkg)
       isSuccessful.value = true

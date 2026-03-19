@@ -21,4 +21,5 @@ export interface ClassPackage {
   doesItRequireSmsAuth: boolean | null
   doestItActivateVodForClients: boolean | null
   vodAmountOfDays: number | null
+  price: number | null
 }
