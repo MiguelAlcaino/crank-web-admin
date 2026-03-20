@@ -1,10 +1,12 @@
 {
   "__schema": {
     "queryType": {
-      "name": "Query"
+      "name": "Query",
+      "kind": "OBJECT"
     },
     "mutationType": {
-      "name": "Mutation"
+      "name": "Mutation",
+      "kind": "OBJECT"
     },
     "subscriptionType": null,
     "types": [
@@ -12,6 +14,7 @@
         "kind": "INPUT_OBJECT",
         "name": "AcceptLateCancelledSpotInClassInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -39,6 +42,7 @@
         "kind": "UNION",
         "name": "AcceptLateCancelledSpotInClassResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -80,6 +84,7 @@
         "kind": "OBJECT",
         "name": "AcceptLateCancelledSpotInClassSuccess",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "success",
@@ -107,6 +112,7 @@
         "kind": "OBJECT",
         "name": "AddedToWaitlistSuccess",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "status",
@@ -134,6 +140,7 @@
         "kind": "OBJECT",
         "name": "AdminUser",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "email",
@@ -285,6 +292,7 @@
         "kind": "INPUT_OBJECT",
         "name": "AdminUserDataInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -396,6 +404,7 @@
         "kind": "UNION",
         "name": "AdminUserResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -422,6 +431,7 @@
         "kind": "INPUT_OBJECT",
         "name": "BookClassInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -473,6 +483,7 @@
         "kind": "UNION",
         "name": "BookClassResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -549,6 +560,7 @@
         "kind": "OBJECT",
         "name": "BookClassSuccess",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "status",
@@ -576,6 +588,7 @@
         "kind": "INPUT_OBJECT",
         "name": "BookUserIntoClassInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -655,6 +668,7 @@
         "kind": "OBJECT",
         "name": "BookableSpot",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "enabled",
@@ -764,6 +778,7 @@
         "kind": "OBJECT",
         "name": "BookedButInOtherSpotError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -829,6 +844,7 @@
         "kind": "OBJECT",
         "name": "BookingOverlapsAnotherOneError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -862,6 +878,7 @@
         "kind": "OBJECT",
         "name": "BookingWindow",
         "description": "Defines the time window during which a class can be booked or cancelled.\n\nUsers cannot book or cancel outside this window. The window typically opens several days\nbefore the class and closes a few hours before the class starts.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "endDateTime",
@@ -905,6 +922,7 @@
         "kind": "SCALAR",
         "name": "Boolean",
         "description": "The `Boolean` scalar type represents `true` or `false`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -915,6 +933,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CalendarClassesParams",
         "description": "Filters for querying classes within a specific date range.\n\nIf no dates are provided, returns classes starting from the current date and time.",
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -974,6 +993,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CancelEnrollmentInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -1013,6 +1033,7 @@
         "kind": "UNION",
         "name": "CancelEnrollmentResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1039,6 +1060,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CancelSubscriptionInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -1066,6 +1088,7 @@
         "kind": "UNION",
         "name": "CancelSubscriptionResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1102,6 +1125,7 @@
         "kind": "OBJECT",
         "name": "CancelSubscriptionSuccess",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "success",
@@ -1129,6 +1153,7 @@
         "kind": "OBJECT",
         "name": "CancelUserEnrollmentSuccess",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "status",
@@ -1152,6 +1177,7 @@
         "kind": "OBJECT",
         "name": "ChallengeDisplay",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "firstLine",
@@ -1199,6 +1225,7 @@
         "kind": "INTERFACE",
         "name": "ChallengeInterface",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "challengeDisplay",
@@ -1248,6 +1275,7 @@
         "kind": "OBJECT",
         "name": "ChartPoint",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "power",
@@ -1295,6 +1323,7 @@
         "kind": "UNION",
         "name": "CheckinResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1316,6 +1345,7 @@
         "kind": "OBJECT",
         "name": "CheckinSuccess",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "success",
@@ -1343,6 +1373,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CheckinUserInClass",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -1370,6 +1401,7 @@
         "kind": "UNION",
         "name": "CheckoutResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1391,6 +1423,7 @@
         "kind": "OBJECT",
         "name": "CheckoutSuccess",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "success",
@@ -1418,6 +1451,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CheckoutUserInClass",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -1445,6 +1479,7 @@
         "kind": "OBJECT",
         "name": "Class",
         "description": "Represents a fitness class session with booking and scheduling information.\n\nContains all details needed to display and book a class, including instructor information,\ntiming, capacity, and booking rules.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "bookingWindow",
@@ -1752,6 +1787,7 @@
         "kind": "OBJECT",
         "name": "ClassInfo",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "class",
@@ -1888,6 +1924,7 @@
         "kind": "OBJECT",
         "name": "ClassIsFullError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -1921,6 +1958,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ClassPackageOrder",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -1980,6 +2018,7 @@
         "kind": "OBJECT",
         "name": "ClassPackageProduct",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alertBeforePurchasing",
@@ -2217,6 +2256,7 @@
         "kind": "ENUM",
         "name": "ClassPackageTypeEnum",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2258,6 +2298,7 @@
         "kind": "UNION",
         "name": "ClassPackageUpdateResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2284,6 +2325,7 @@
         "kind": "INTERFACE",
         "name": "ClassPositionInterface",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "icon",
@@ -2354,6 +2396,7 @@
         "kind": "OBJECT",
         "name": "ClassSchedule",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "capacity",
@@ -2521,6 +2564,7 @@
         "kind": "OBJECT",
         "name": "ClassStat",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "adjustedChartPoints",
@@ -2705,6 +2749,7 @@
         "kind": "OBJECT",
         "name": "ClientIsAlreadyBookedError",
         "description": "Error returned when a client is already booked in a class",
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -2738,6 +2783,7 @@
         "kind": "OBJECT",
         "name": "ClientIsAlreadyOnWaitlistError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -2771,6 +2817,7 @@
         "kind": "OBJECT",
         "name": "ClientIsOutsideSchedulingWindowError",
         "description": "Error returned when a client tries to book a class which is not permitted to book any longer. The booking window has passed.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -2804,6 +2851,7 @@
         "kind": "OBJECT",
         "name": "ClientNotFoundInMindbody",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -2837,6 +2885,7 @@
         "kind": "OBJECT",
         "name": "Country",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -2896,6 +2945,7 @@
         "kind": "OBJECT",
         "name": "CrankInstructor",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "firstName",
@@ -2959,6 +3009,7 @@
         "kind": "UNION",
         "name": "CrankInstructorResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2985,6 +3036,7 @@
         "kind": "OBJECT",
         "name": "CreateCurrentUserInSiteSuccess",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "result",
@@ -3012,6 +3064,7 @@
         "kind": "UNION",
         "name": "CreateCurrentUserInSiteUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3033,6 +3086,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CreateInstructorProfileInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3132,6 +3186,7 @@
         "kind": "UNION",
         "name": "CreateInstructorProfileResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3153,6 +3208,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CreatePaymentLinkInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3244,6 +3300,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CreateSessionTypeInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3367,6 +3424,7 @@
         "kind": "UNION",
         "name": "CreateSessionTypeResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3388,6 +3446,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CurrentUserEnrollmentsParams",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3435,6 +3494,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CurrentUserPurchasesPaginatedParams",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3458,6 +3518,7 @@
         "kind": "INPUT_OBJECT",
         "name": "CurrentUserWorkoutStatsPaginatedParams",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3481,6 +3542,7 @@
         "kind": "OBJECT",
         "name": "CustomerSubscription",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "amountCents",
@@ -3596,6 +3658,7 @@
         "kind": "SCALAR",
         "name": "Date",
         "description": "Format: Y-m-d",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3606,6 +3669,7 @@
         "kind": "INPUT_OBJECT",
         "name": "DateRange",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3641,6 +3705,7 @@
         "kind": "SCALAR",
         "name": "DateTime",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3651,6 +3716,7 @@
         "kind": "SCALAR",
         "name": "DateTimeWithoutTimeZone",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3661,6 +3727,7 @@
         "kind": "OBJECT",
         "name": "DeleteCurrentUserAccountSuccess",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "success",
@@ -3688,6 +3755,7 @@
         "kind": "UNION",
         "name": "DeleteCurrentUserAccountUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3709,6 +3777,7 @@
         "kind": "INPUT_OBJECT",
         "name": "DeviceTokenInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3736,6 +3805,7 @@
         "kind": "INPUT_OBJECT",
         "name": "DisableEnableSpotInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3775,6 +3845,7 @@
         "kind": "OBJECT",
         "name": "DisableEnableSpotResult",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "result",
@@ -3798,6 +3869,7 @@
         "kind": "UNION",
         "name": "DisableEnableSpotResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3819,6 +3891,7 @@
         "kind": "OBJECT",
         "name": "DiscountCodeIsEmpty",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -3852,6 +3925,7 @@
         "kind": "OBJECT",
         "name": "DiscountCodeIsInvalid",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -3885,6 +3959,7 @@
         "kind": "OBJECT",
         "name": "DistanceChallenge",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "challengeDisplay",
@@ -3962,6 +4037,7 @@
         "kind": "OBJECT",
         "name": "DistanceChallengeRankingPosition",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "totalKm",
@@ -4005,6 +4081,7 @@
         "kind": "OBJECT",
         "name": "DistanceRanking",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "amountOfUsersInRanking",
@@ -4056,6 +4133,7 @@
         "kind": "OBJECT",
         "name": "DontNeedMoreGiftCards",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -4089,6 +4167,7 @@
         "kind": "INPUT_OBJECT",
         "name": "EditClassInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4140,6 +4219,7 @@
         "kind": "UNION",
         "name": "EditClassResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4156,6 +4236,7 @@
         "kind": "OBJECT",
         "name": "EditClassSuccessResult",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "updated",
@@ -4183,6 +4264,7 @@
         "kind": "INPUT_OBJECT",
         "name": "EditEnrollmentInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4226,6 +4308,7 @@
         "kind": "UNION",
         "name": "EditEnrollmentResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4257,6 +4340,7 @@
         "kind": "INPUT_OBJECT",
         "name": "EditRoomLayoutInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4300,6 +4384,7 @@
         "kind": "INPUT_OBJECT",
         "name": "EditUserInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -4359,6 +4444,7 @@
         "kind": "UNION",
         "name": "EditUserResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4380,6 +4466,7 @@
         "kind": "OBJECT",
         "name": "EmailAlreadyUsedError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -4413,6 +4500,7 @@
         "kind": "OBJECT",
         "name": "Enrollment",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "class",
@@ -4456,6 +4544,7 @@
         "kind": "OBJECT",
         "name": "EnrollmentInfo",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "bookedViaClassPass",
@@ -4697,6 +4786,7 @@
         "kind": "INTERFACE",
         "name": "EnrollmentInfoInterface",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "enrollmentDateTime",
@@ -4795,6 +4885,7 @@
         "kind": "OBJECT",
         "name": "EnrollmentNotFoundError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -4828,6 +4919,7 @@
         "kind": "ENUM",
         "name": "EnrollmentStatusEnum",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4869,6 +4961,7 @@
         "kind": "ENUM",
         "name": "EnrollmentTypeEnum",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4898,6 +4991,7 @@
         "kind": "INTERFACE",
         "name": "Error",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -5191,6 +5285,7 @@
         "kind": "SCALAR",
         "name": "File",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -5201,6 +5296,7 @@
         "kind": "SCALAR",
         "name": "Float",
         "description": "The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -5211,6 +5307,7 @@
         "kind": "ENUM",
         "name": "GenderEnum",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -5240,6 +5337,7 @@
         "kind": "OBJECT",
         "name": "GenderRanking",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "gender",
@@ -5275,6 +5373,7 @@
         "kind": "OBJECT",
         "name": "GiftCard",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alertBeforePurchasing",
@@ -5524,6 +5623,7 @@
         "kind": "OBJECT",
         "name": "GiftCardAlreadyRegisteredForCurrentShoppingCart",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -5557,6 +5657,7 @@
         "kind": "OBJECT",
         "name": "GiftCardIsNotUsable",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -5590,6 +5691,7 @@
         "kind": "OBJECT",
         "name": "GiftCardNotRegisteredOnCurrentShoppingCart",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -5623,6 +5725,7 @@
         "kind": "INPUT_OBJECT",
         "name": "GiftcardInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -5730,6 +5833,7 @@
         "kind": "SCALAR",
         "name": "ID",
         "description": "The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `\"4\"`) or integer (such as `4`) input value will be accepted as an ID.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -5740,6 +5844,7 @@
         "kind": "OBJECT",
         "name": "IconPosition",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "icon",
@@ -5805,6 +5910,7 @@
         "kind": "INPUT_OBJECT",
         "name": "IconPositionInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -5876,6 +5982,7 @@
         "kind": "OBJECT",
         "name": "IdentifiableSiteUser",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "id",
@@ -5923,6 +6030,7 @@
         "kind": "OBJECT",
         "name": "IdentifiableUser",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "id",
@@ -5958,6 +6066,7 @@
         "kind": "OBJECT",
         "name": "Instructor",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "id",
@@ -6017,6 +6126,7 @@
         "kind": "OBJECT",
         "name": "InstructorNotFound",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -6050,6 +6160,7 @@
         "kind": "OBJECT",
         "name": "InstructorProfile",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "active",
@@ -6189,6 +6300,7 @@
         "kind": "OBJECT",
         "name": "InstructorProfileNotFoundError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -6222,6 +6334,7 @@
         "kind": "SCALAR",
         "name": "Int",
         "description": "The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -6232,6 +6345,7 @@
         "kind": "OBJECT",
         "name": "InvalidEmailError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -6265,6 +6379,7 @@
         "kind": "UNION",
         "name": "IsSmsValidationCodeValidUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -6296,6 +6411,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ItemToShoppingCartInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -6339,6 +6455,7 @@
         "kind": "OBJECT",
         "name": "LateCancellationRequiredError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -6372,6 +6489,7 @@
         "kind": "OBJECT",
         "name": "LockShoppingCartResponse",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "isLocked",
@@ -6415,6 +6533,7 @@
         "kind": "OBJECT",
         "name": "MindbodySessionTypeInfo",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "id",
@@ -6458,6 +6577,7 @@
         "kind": "OBJECT",
         "name": "MindbodyStaffInfo",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "email",
@@ -6529,6 +6649,7 @@
         "kind": "OBJECT",
         "name": "MobilePhoneAlreadyVerifiedError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -6562,6 +6683,7 @@
         "kind": "OBJECT",
         "name": "MobilePhoneNotValidError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -6595,6 +6717,7 @@
         "kind": "OBJECT",
         "name": "Mutation",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "acceptLateCancelledSpotInClass",
@@ -9444,6 +9567,7 @@
         "kind": "OBJECT",
         "name": "OtherUserHasThisExternalIdError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -9493,6 +9617,7 @@
         "kind": "OBJECT",
         "name": "PaginatedClassStats",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "classStats",
@@ -9550,6 +9675,7 @@
         "kind": "OBJECT",
         "name": "PaginatedEnrollments",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "enrollments",
@@ -9607,6 +9733,7 @@
         "kind": "OBJECT",
         "name": "PaginatedPurchases",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "purchases",
@@ -9664,6 +9791,7 @@
         "kind": "INTERFACE",
         "name": "PaginatedResult",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "total",
@@ -9707,6 +9835,7 @@
         "kind": "INPUT_OBJECT",
         "name": "PaginationInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -9742,6 +9871,7 @@
         "kind": "OBJECT",
         "name": "PasswordsDontMatchError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -9775,6 +9905,7 @@
         "kind": "INPUT_OBJECT",
         "name": "PayfortFormInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -9834,6 +9965,7 @@
         "kind": "OBJECT",
         "name": "PayfortFormResult",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "htmlForm",
@@ -9861,6 +9993,7 @@
         "kind": "OBJECT",
         "name": "PaymentLink",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "amount",
@@ -9984,6 +10117,7 @@
         "kind": "OBJECT",
         "name": "PaymentRequiredError",
         "description": "Error returned when a client does not have enough credit or allowance to book a class",
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -10017,6 +10151,7 @@
         "kind": "OBJECT",
         "name": "PaymentTransactionStatus",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "status",
@@ -10044,6 +10179,7 @@
         "kind": "ENUM",
         "name": "PaymentTransactionStatusEnum",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -10079,6 +10215,7 @@
         "kind": "INPUT_OBJECT",
         "name": "PaymentTransactionStatusInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -10106,6 +10243,7 @@
         "kind": "UNION",
         "name": "PaymentTransactionUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -10127,6 +10265,7 @@
         "kind": "OBJECT",
         "name": "PositionAlreadyTakenError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -10160,6 +10299,7 @@
         "kind": "ENUM",
         "name": "PositionIconEnum",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -10219,6 +10359,7 @@
         "kind": "OBJECT",
         "name": "ProductAlertBeforePurchasing",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "description",
@@ -10262,6 +10403,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProductAlertBeforePurchasingInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -10305,6 +10447,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProductInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -10472,6 +10615,7 @@
         "kind": "OBJECT",
         "name": "ProductNotFound",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -10505,6 +10649,7 @@
         "kind": "ENUM",
         "name": "ProductType",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -10528,6 +10673,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ProductsInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -10551,6 +10697,7 @@
         "kind": "OBJECT",
         "name": "Purchase",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "activationDateTime",
@@ -10674,6 +10821,7 @@
         "kind": "OBJECT",
         "name": "Query",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "adminUser",
@@ -12350,6 +12498,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ReactivateSubscriptionInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -12377,6 +12526,7 @@
         "kind": "OBJECT",
         "name": "ReactivateSubscriptionNotSupportedError",
         "description": "Reactivation is not yet supported by the subscription service",
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -12410,6 +12560,7 @@
         "kind": "UNION",
         "name": "ReactivateSubscriptionResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -12441,6 +12592,7 @@
         "kind": "OBJECT",
         "name": "ReactivateSubscriptionSuccess",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "success",
@@ -12468,6 +12620,7 @@
         "kind": "INPUT_OBJECT",
         "name": "RegisterUserInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -12743,6 +12896,7 @@
         "kind": "UNION",
         "name": "RejectLateBookingResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -12764,6 +12918,7 @@
         "kind": "INPUT_OBJECT",
         "name": "RejectLateCancelledSpotInClassInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -12791,6 +12946,7 @@
         "kind": "OBJECT",
         "name": "RejectLateCancelledSpotInClassSuccess",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "success",
@@ -12818,6 +12974,7 @@
         "kind": "UNION",
         "name": "RemainingCreditsResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -12839,6 +12996,7 @@
         "kind": "OBJECT",
         "name": "RemainingCreditsSuccess",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "credits",
@@ -12866,6 +13024,7 @@
         "kind": "INPUT_OBJECT",
         "name": "RemoveCurrentUserFromWaitlistInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -12893,6 +13052,7 @@
         "kind": "UNION",
         "name": "RemoveCurrentUserFromWaitlistUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -12914,6 +13074,7 @@
         "kind": "OBJECT",
         "name": "RemoveFromWaitlistResult",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "success",
@@ -12941,6 +13102,7 @@
         "kind": "INPUT_OBJECT",
         "name": "RemoveUserFromWaitlistInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -12968,6 +13130,7 @@
         "kind": "UNION",
         "name": "RemoveUserFromWaitlistUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -12989,6 +13152,7 @@
         "kind": "INPUT_OBJECT",
         "name": "RequestPasswordLinkInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -13016,6 +13180,7 @@
         "kind": "INPUT_OBJECT",
         "name": "RequestSMSValidationInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -13059,6 +13224,7 @@
         "kind": "OBJECT",
         "name": "RequestSMSValidationNeededError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -13092,6 +13258,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ResetPasswordForCurrentUserInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -13135,6 +13302,7 @@
         "kind": "UNION",
         "name": "ResetPasswordForCurrentUserUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -13156,6 +13324,7 @@
         "kind": "UNION",
         "name": "ResetPasswordLinkResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -13177,6 +13346,7 @@
         "kind": "OBJECT",
         "name": "ResetPasswordLinkSentSuccessfully",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "status",
@@ -13204,6 +13374,7 @@
         "kind": "OBJECT",
         "name": "ResetPasswordSuccess",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "status",
@@ -13231,6 +13402,7 @@
         "kind": "INPUT_OBJECT",
         "name": "RetryWebhookEventInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -13274,6 +13446,7 @@
         "kind": "UNION",
         "name": "RetryWebhookEventResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -13305,6 +13478,7 @@
         "kind": "OBJECT",
         "name": "RetryWebhookEventSuccess",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "webhookEvent",
@@ -13332,6 +13506,7 @@
         "kind": "OBJECT",
         "name": "RoomLayout",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "capacity",
@@ -13443,6 +13618,7 @@
         "kind": "INPUT_OBJECT",
         "name": "RoomLayoutInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -13526,6 +13702,7 @@
         "kind": "INPUT_OBJECT",
         "name": "RoomLayoutsInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -13549,6 +13726,7 @@
         "kind": "OBJECT",
         "name": "SMSCodeValidatedSuccessfully",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "success",
@@ -13576,6 +13754,7 @@
         "kind": "OBJECT",
         "name": "SMSValidationCodeError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -13609,6 +13788,7 @@
         "kind": "UNION",
         "name": "SMSValidationUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -13635,6 +13815,7 @@
         "kind": "INTERFACE",
         "name": "SellableProductInterface",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "alertBeforePurchasing",
@@ -13793,6 +13974,7 @@
         "kind": "INPUT_OBJECT",
         "name": "SendClassStatsToEmailInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -13836,6 +14018,7 @@
         "kind": "ENUM",
         "name": "ServiceStatusEnum",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -13865,6 +14048,7 @@
         "kind": "OBJECT",
         "name": "SessionType",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "active",
@@ -13996,6 +14180,7 @@
         "kind": "OBJECT",
         "name": "SessionTypeNotFoundError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -14045,6 +14230,7 @@
         "kind": "INPUT_OBJECT",
         "name": "SetRoomLayoutForClassSchedulesInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -14092,6 +14278,7 @@
         "kind": "OBJECT",
         "name": "ShoppingCart",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "currency",
@@ -14199,6 +14386,7 @@
         "kind": "OBJECT",
         "name": "ShoppingCartIsEmpty",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -14232,6 +14420,7 @@
         "kind": "OBJECT",
         "name": "ShoppingCartItem",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "id",
@@ -14303,6 +14492,7 @@
         "kind": "OBJECT",
         "name": "ShoppingCartItemNotFound",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -14336,6 +14526,7 @@
         "kind": "OBJECT",
         "name": "ShoppingCartNotFound",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -14369,6 +14560,7 @@
         "kind": "UNION",
         "name": "ShoppingCartResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -14435,6 +14627,7 @@
         "kind": "OBJECT",
         "name": "ShoppingCartTotal",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "amountToPay",
@@ -14494,6 +14687,7 @@
         "kind": "UNION",
         "name": "ShoppingCartTotalResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -14525,6 +14719,7 @@
         "kind": "OBJECT",
         "name": "SimpleSiteUser",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "externalUserId",
@@ -14568,6 +14763,7 @@
         "kind": "OBJECT",
         "name": "Site",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -14611,6 +14807,7 @@
         "kind": "ENUM",
         "name": "SiteEnum",
         "description": "Available CRANK fitness studio locations.\n\nEach site has its own class schedule, instructors, and facility configuration.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -14640,6 +14837,7 @@
         "kind": "OBJECT",
         "name": "SiteSetting",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "isSynchronizingClasses",
@@ -14691,6 +14889,7 @@
         "kind": "INPUT_OBJECT",
         "name": "SiteUserInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -14734,6 +14933,7 @@
         "kind": "OBJECT",
         "name": "SpotAlreadyReservedError",
         "description": "Error returned when trying to book a class with a spot that is already booked",
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -14767,6 +14967,7 @@
         "kind": "OBJECT",
         "name": "SpotInfo",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "isBooked",
@@ -14810,6 +15011,7 @@
         "kind": "OBJECT",
         "name": "SpotIsDisabledError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -14843,6 +15045,7 @@
         "kind": "OBJECT",
         "name": "SpotNotFoundError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -14876,6 +15079,7 @@
         "kind": "OBJECT",
         "name": "State",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -14919,6 +15123,7 @@
         "kind": "SCALAR",
         "name": "String",
         "description": "The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -14929,6 +15134,7 @@
         "kind": "OBJECT",
         "name": "SubscriptionAlreadyCancelledError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -14962,6 +15168,7 @@
         "kind": "OBJECT",
         "name": "SubscriptionDoesNotBelongToUserError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -14995,6 +15202,7 @@
         "kind": "OBJECT",
         "name": "SubscriptionNotFoundError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -15028,6 +15236,7 @@
         "kind": "OBJECT",
         "name": "SuccessfulRequestSMSValidation",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "success",
@@ -15055,6 +15264,7 @@
         "kind": "UNION",
         "name": "SwapSpotResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -15076,6 +15286,7 @@
         "kind": "OBJECT",
         "name": "SwapSpotSuccess",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "affectedEnrollment",
@@ -15115,6 +15326,7 @@
         "kind": "OBJECT",
         "name": "TemporalTransactionNotFound",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -15148,6 +15360,7 @@
         "kind": "OBJECT",
         "name": "TooManyResetPasswordLinkRequestsError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "availableAgainAt",
@@ -15193,6 +15406,7 @@
         "kind": "OBJECT",
         "name": "TryToSwitchToSameSpotError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -15226,6 +15440,7 @@
         "kind": "OBJECT",
         "name": "UnknownError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -15259,6 +15474,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpdateAdminUserInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -15302,6 +15518,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpdateClassPackagesOrderInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -15337,6 +15554,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpdateCurrentAdminUserFavoriteSiteInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -15360,6 +15578,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpdateCurrentAdminUserInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -15387,6 +15606,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpdateCurrentUserPasswordInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -15430,6 +15650,7 @@
         "kind": "UNION",
         "name": "UpdateCurrentUserResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -15451,6 +15672,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpdateGiftCardInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -15490,6 +15712,7 @@
         "kind": "UNION",
         "name": "UpdateGiftcardResiltUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -15516,6 +15739,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpdateInstructorInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -15563,6 +15787,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpdateInstructorProfileInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -15642,6 +15867,7 @@
         "kind": "UNION",
         "name": "UpdateInstructorProfileResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -15668,6 +15894,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpdatePaymentLinkInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -15759,6 +15986,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpdateSessionTypeInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -15862,6 +16090,7 @@
         "kind": "UNION",
         "name": "UpdateSessionTypeResultUnion",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -15888,6 +16117,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UpdateUserPasswordInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -15931,6 +16161,7 @@
         "kind": "OBJECT",
         "name": "UploadedFileIsNotAnImage",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -15964,6 +16195,7 @@
         "kind": "OBJECT",
         "name": "User",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "address1",
@@ -16467,6 +16699,7 @@
         "kind": "OBJECT",
         "name": "UserAlreadyExistsError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -16500,6 +16733,7 @@
         "kind": "OBJECT",
         "name": "UserAlreadyHaveFirstTimerPackage",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -16533,6 +16767,7 @@
         "kind": "OBJECT",
         "name": "UserCanNotBuyFirstTimerPackage",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -16566,6 +16801,7 @@
         "kind": "OBJECT",
         "name": "UserInClassRanking",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "genderRanking",
@@ -16601,6 +16837,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UserInRankingParams",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -16624,6 +16861,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UserInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -16851,6 +17089,7 @@
         "kind": "OBJECT",
         "name": "UserPasswordDoesNotMatchError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -16884,6 +17123,7 @@
         "kind": "OBJECT",
         "name": "UserPositionInRanking",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "positionInRanking",
@@ -16927,6 +17167,7 @@
         "kind": "OBJECT",
         "name": "UserRanking",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "positionInRanking",
@@ -16962,6 +17203,7 @@
         "kind": "OBJECT",
         "name": "UsernameAlreadyUsedError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -16995,6 +17237,7 @@
         "kind": "INPUT_OBJECT",
         "name": "ValidateResetPasswordTokenInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -17022,6 +17265,7 @@
         "kind": "OBJECT",
         "name": "Variant",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "id",
@@ -17109,6 +17353,7 @@
         "kind": "OBJECT",
         "name": "WaitlistEntry",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "canBeTurnedIntoEnrollment",
@@ -17218,6 +17463,7 @@
         "kind": "OBJECT",
         "name": "WaitlistEntryNotFoundError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -17251,6 +17497,7 @@
         "kind": "OBJECT",
         "name": "WaitlistFullError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -17284,6 +17531,7 @@
         "kind": "OBJECT",
         "name": "WebhookEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "attempts",
@@ -17499,6 +17747,7 @@
         "kind": "OBJECT",
         "name": "WebhookEventList",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "events",
@@ -17578,6 +17827,7 @@
         "kind": "OBJECT",
         "name": "WebhookEventNotFoundError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -17611,6 +17861,7 @@
         "kind": "OBJECT",
         "name": "WebhookEventNotRetryableError",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "code",
@@ -17644,6 +17895,7 @@
         "kind": "OBJECT",
         "name": "__Directive",
         "description": "A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.\n\nIn some cases, you need to provide options to alter GraphQL's execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -17760,6 +18012,7 @@
         "kind": "ENUM",
         "name": "__DirectiveLocation",
         "description": "A Directive can be adjacent to many parts of the GraphQL language, a __DirectiveLocation describes one such possible adjacencies.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -17885,6 +18138,7 @@
         "kind": "OBJECT",
         "name": "__EnumValue",
         "description": "One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -17952,6 +18206,7 @@
         "kind": "OBJECT",
         "name": "__Field",
         "description": "Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -18072,6 +18327,7 @@
         "kind": "OBJECT",
         "name": "__InputValue",
         "description": "Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -18167,6 +18423,7 @@
         "kind": "OBJECT",
         "name": "__Schema",
         "description": "A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "description",
@@ -18278,6 +18535,7 @@
         "kind": "OBJECT",
         "name": "__Type",
         "description": "The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.\n\nDepending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "kind",
@@ -18481,6 +18739,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "isOneOf",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -18492,6 +18762,7 @@
         "kind": "ENUM",
         "name": "__TypeKind",
         "description": "An enum describing what kind of type a given `__Type` is.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
