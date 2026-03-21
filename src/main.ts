@@ -44,6 +44,7 @@ async function startApp() {
   const site = selection?.dataset.site as string
   const app = createApp({
     setup() {
+      provide('site', site || 'dubai')
       provide(
         'gqlApiService',
         new ApiService(

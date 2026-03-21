@@ -110,8 +110,12 @@ When starting a new feature, follow these steps in order:
 - Run `npm run lint` to auto-fix lint issues.
 - Run `npm run format` if needed.
 
-### 5. Commit
+### 5. Version & Commit
 
+- **Bump the version** in `package.json` before committing:
+  - **Bug fix** (layout fix, typo, broken behavior) → bump **patch** (e.g., `2.2.1` → `2.2.2`)
+  - **New feature** (new field, new page, new module) → bump **minor** (e.g., `2.2.1` → `2.3.0`)
+- Run `npm run build` to generate the dist files.
 - Stage and commit changes on the feature branch with a clear commit message.
 
 ### 6. PR
