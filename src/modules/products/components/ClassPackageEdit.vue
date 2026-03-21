@@ -125,23 +125,6 @@ const billingIntervalOptions = Object.values(BillingIntervalEnum)
                   </div>
                 </div>
 
-                <!-- Billing Interval -->
-                <div class="form-row">
-                  <div class="col-md-6 mb-3">
-                    <label for="billingInterval" class="input-label">Billing Interval</label>
-                    <select
-                      id="billingInterval"
-                      class="form-control"
-                      v-model="formData.billingInterval"
-                    >
-                      <option value="">None</option>
-                      <option v-for="opt in billingIntervalOptions" :key="opt" :value="opt">
-                        {{ opt }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
                 <!-- Checkboxes -->
                 <div class="form-row">
                   <div class="col-md-4 mb-3">
@@ -166,6 +149,20 @@ const billingIntervalOptions = Object.values(BillingIntervalEnum)
                       />
                       <label class="form-check-label" for="isMembership">Is Membership</label>
                     </div>
+                  </div>
+
+                  <div class="col-md-4 mb-3" v-if="formData.isMembership">
+                    <label for="billingInterval" class="input-label">Billing Interval</label>
+                    <select
+                      id="billingInterval"
+                      class="form-control"
+                      v-model="formData.billingInterval"
+                    >
+                      <option value="">None</option>
+                      <option v-for="opt in billingIntervalOptions" :key="opt" :value="opt">
+                        {{ opt }}
+                      </option>
+                    </select>
                   </div>
 
                   <div class="col-md-4 mb-3">
