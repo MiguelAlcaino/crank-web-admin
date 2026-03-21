@@ -19,6 +19,7 @@ query ClassPackages($site: SiteEnum!) {
       doesItRequireSmsAuth
       doestItActivateVodForClients
       vodAmountOfDays
+      billingInterval
       variants {
         price
       }

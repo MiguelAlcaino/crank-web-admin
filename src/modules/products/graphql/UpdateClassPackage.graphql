@@ -19,6 +19,7 @@ mutation UpdateClassPackage($id: ID!, $input: ProductInput!) {
       doesItRequireSmsAuth
       doestItActivateVodForClients
       vodAmountOfDays
+      billingInterval
     }
     ... on UnknownError {
       code

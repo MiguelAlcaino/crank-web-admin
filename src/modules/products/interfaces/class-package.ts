@@ -1,4 +1,4 @@
-import type { ClassPackageTypeEnum } from '@/gql/graphql'
+import type { BillingIntervalEnum, ClassPackageTypeEnum } from '@/gql/graphql'
 
 export interface ProductAlertBeforePurchasing {
   title: string
@@ -21,5 +21,6 @@ export interface ClassPackage {
   doesItRequireSmsAuth: boolean | null
   doestItActivateVodForClients: boolean | null
   vodAmountOfDays: number | null
+  billingInterval: BillingIntervalEnum | null
   price: number | null
 }

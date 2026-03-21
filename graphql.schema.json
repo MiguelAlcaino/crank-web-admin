@@ -428,6 +428,42 @@
         ]
       },
       {
+        "kind": "ENUM",
+        "name": "BillingIntervalEnum",
+        "description": null,
+        "isOneOf": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "daily",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "monthly",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "weekly",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "yearly",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
         "kind": "INPUT_OBJECT",
         "name": "BookClassInput",
         "description": null,
@@ -2027,6 +2063,18 @@
             "type": {
               "kind": "OBJECT",
               "name": "ProductAlertBeforePurchasing",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "billingInterval",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "BillingIntervalEnum",
               "ofType": null
             },
             "isDeprecated": false,
@@ -10456,6 +10504,18 @@
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "ProductAlertBeforePurchasingInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "billingInterval",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "BillingIntervalEnum",
               "ofType": null
             },
             "defaultValue": null,

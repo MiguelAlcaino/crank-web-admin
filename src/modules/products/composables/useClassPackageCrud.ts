@@ -52,6 +52,7 @@ export const useClassPackageCrud = (apiService: ApiService, site: string) => {
         doesItRequireSmsAuth: p.doesItRequireSmsAuth ?? null,
         doestItActivateVodForClients: p.doestItActivateVodForClients ?? null,
         vodAmountOfDays: p.vodAmountOfDays ?? null,
+        billingInterval: p.billingInterval ?? null,
         price: p.variants?.[0]?.price ?? null
       }))
     } catch (error) {

@@ -1,5 +1,5 @@
 import type { ApiService } from '@/services/apiService'
-import type { ProductInput } from '@/gql/graphql'
+import type { BillingIntervalEnum, ProductInput } from '@/gql/graphql'
 import { computed, reactive, ref } from 'vue'
 import type { ClassPackage } from '../interfaces'
 import { helpers, required } from '@vuelidate/validators'
@@ -25,7 +25,8 @@ export const useClassPackageEdit = (apiService: ApiService, emits: Function) => 
     doestItActivateVodForClients: false,
     vodAmountOfDays: 0,
     alertTitle: '',
-    alertDescription: ''
+    alertDescription: '',
+    billingInterval: '' as BillingIntervalEnum | ''
   })
 
   const rules = computed(() => {
@@ -63,6 +64,7 @@ export const useClassPackageEdit = (apiService: ApiService, emits: Function) => 
     formData.vodAmountOfDays = data.vodAmountOfDays ?? 0
     formData.alertTitle = data.alertBeforePurchasing?.title ?? ''
     formData.alertDescription = data.alertBeforePurchasing?.description ?? ''
+    formData.billingInterval = data.billingInterval ?? ''
 
     modalIsVisible.value = true
   }
@@ -92,7 +94,8 @@ export const useClassPackageEdit = (apiService: ApiService, emits: Function) => 
         alertBeforePurchasing:
           formData.alertTitle || formData.alertDescription
             ? { title: formData.alertTitle, description: formData.alertDescription }
-            : undefined
+            : undefined,
+        billingInterval: formData.billingInterval || undefined
       }
 
       const updated = await apiService.updateClassPackage(classPackage!.id, input)
@@ -117,6 +120,7 @@ export const useClassPackageEdit = (apiService: ApiService, emits: Function) => 
         doesItRequireSmsAuth: updated.doesItRequireSmsAuth ?? null,
         doestItActivateVodForClients: updated.doestItActivateVodForClients ?? null,
         vodAmountOfDays: updated.vodAmountOfDays ?? null,
+        billingInterval: updated.billingInterval ?? null,
         price: classPackage!.price
       }
       emits('afterUpdateClassPackage', updatedPkg)

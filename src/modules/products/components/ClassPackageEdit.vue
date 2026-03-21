@@ -8,6 +8,7 @@ import type { ClassPackage } from '../interfaces'
 import { useClassPackageEdit } from '../composables/useClassPackageEdit'
 import { inject } from 'vue'
 import type { ApiService } from '@/services/apiService'
+import { BillingIntervalEnum } from '@/gql/graphql'
 
 interface Props {
   classPackage: ClassPackage
@@ -31,6 +32,8 @@ const {
   submitForm,
   onOkSuccess
 } = useClassPackageEdit(inject<ApiService>('gqlApiService')!, emits)
+
+const billingIntervalOptions = Object.values(BillingIntervalEnum)
 </script>
 
 <template>
@@ -119,6 +122,23 @@ const {
                         placeholder="Currency"
                       />
                     </div>
+                  </div>
+                </div>
+
+                <!-- Billing Interval -->
+                <div class="form-row">
+                  <div class="col-md-6 mb-3">
+                    <label for="billingInterval" class="input-label">Billing Interval</label>
+                    <select
+                      id="billingInterval"
+                      class="form-control"
+                      v-model="formData.billingInterval"
+                    >
+                      <option value="">None</option>
+                      <option v-for="opt in billingIntervalOptions" :key="opt" :value="opt">
+                        {{ opt }}
+                      </option>
+                    </select>
                   </div>
                 </div>
 
