@@ -1,4 +1,4 @@
-import { y as o, B as t, b as n, k as r, o as c } from "./index.43a0528e.js";
+import { y as o, B as t, b as n, k as r, o as c } from "./index.3b35af84.js";
 const s = {};
 function a(_, l) {
   const e = t("RouterView");
