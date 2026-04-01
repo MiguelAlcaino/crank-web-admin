@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import useVuelidate from '@vuelidate/core'
 import { helpers, maxLength, minLength, required } from '@vuelidate/validators'
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, reactive, ref, watch } from 'vue'
 import ToggleSwitchComponent from '@/modules/shared/components/ToggleSwitchComponent.vue'
 
 export interface SessionTypeFormState {
@@ -47,14 +47,14 @@ const bannerFileError = ref('')
 const iconFileError = ref('')
 const BANNER_MAX_FILE_SIZE_BYTES = 300 * 1024
 const ICON_MAX_FILE_SIZE_BYTES = 100 * 1024
-const ICON_MIN_SIZE_PX = 48
-const ICON_MAX_SIZE_PX = 1024
+const iconPreviewUrl = ref<string | null>(null)
 const fileInputLabel = computed(() =>
   formData.bannerImageFile ? formData.bannerImageFile.name : 'Choose file'
 )
 const iconFileInputLabel = computed(() =>
   formData.iconFile ? formData.iconFile.name : 'Choose file'
 )
+const displayedIconPreview = computed(() => iconPreviewUrl.value ?? props.initialData?.icon ?? null)
 const colorPalette = [
   '#000000',
   '#FFFFFF',
@@ -100,6 +100,26 @@ watch(
   },
   { immediate: true }
 )
+
+watch(
+  () => formData.iconFile,
+  (iconFile) => {
+    if (iconPreviewUrl.value) {
+      URL.revokeObjectURL(iconPreviewUrl.value)
+      iconPreviewUrl.value = null
+    }
+
+    if (iconFile) {
+      iconPreviewUrl.value = URL.createObjectURL(iconFile)
+    }
+  }
+)
+
+onBeforeUnmount(() => {
+  if (iconPreviewUrl.value) {
+    URL.revokeObjectURL(iconPreviewUrl.value)
+  }
+})
 
 async function onBannerImageChange(event: Event) {
   const target = event.target as HTMLInputElement
@@ -177,12 +197,12 @@ async function onIconChange(event: Event) {
     return
   }
 
-  const isPngMimeType = selectedFile.type === 'image/png'
-  const hasPngExtension = selectedFile.name.toLowerCase().endsWith('.png')
+  const isSvgMimeType = selectedFile.type === 'image/svg+xml'
+  const hasSvgExtension = selectedFile.name.toLowerCase().endsWith('.svg')
 
-  if (!isPngMimeType && !hasPngExtension) {
+  if (!isSvgMimeType && !hasSvgExtension) {
     formData.iconFile = null
-    iconFileError.value = 'Icon must be a PNG (.png).'
+    iconFileError.value = 'Icon must be an SVG (.svg).'
     target.value = ''
     return
   }
@@ -190,29 +210,6 @@ async function onIconChange(event: Event) {
   if (selectedFile.size > ICON_MAX_FILE_SIZE_BYTES) {
     formData.iconFile = null
     iconFileError.value = 'Icon file size must be 100 KB or less.'
-    target.value = ''
-    return
-  }
-
-  try {
-    const { width, height } = await getImageDimensions(selectedFile)
-
-    if (width < ICON_MIN_SIZE_PX || height < ICON_MIN_SIZE_PX) {
-      formData.iconFile = null
-      iconFileError.value = 'Icon must be at least 48x48 px.'
-      target.value = ''
-      return
-    }
-
-    if (width > ICON_MAX_SIZE_PX || height > ICON_MAX_SIZE_PX) {
-      formData.iconFile = null
-      iconFileError.value = 'Icon must be 1024x1024 px or smaller.'
-      target.value = ''
-      return
-    }
-  } catch {
-    formData.iconFile = null
-    iconFileError.value = 'Invalid icon image.'
     target.value = ''
     return
   }
@@ -342,11 +339,9 @@ defineExpose({
     <div class="form-row mb-3">
       <div class="col">
         <label for="iconFile" class="input-label">Icon</label>
-        <small class="d-block text-muted mb-2"
-          >PNG, 48-1024 px, max 100 KB. Square recommended.</small
-        >
-        <div v-if="props.initialData?.icon && !formData.iconFile" class="mb-2">
-          <img :src="props.initialData.icon" alt="Current icon" class="icon-image-preview" />
+        <small class="d-block text-muted mb-2">SVG only. Max 100 KB.</small>
+        <div v-if="displayedIconPreview" class="mb-2">
+          <img :src="displayedIconPreview" alt="Current icon" class="icon-image-preview" />
         </div>
         <div class="custom-file">
           <input
@@ -354,7 +349,7 @@ defineExpose({
             :id="iconInputId"
             class="custom-file-input"
             type="file"
-            accept="image/png"
+            accept="image/svg+xml,.svg"
             @change="onIconChange"
           />
           <label class="custom-file-label" :for="iconInputId" data-browse="Browse">
