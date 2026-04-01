@@ -33,7 +33,7 @@ function formatTimestamp(dateStr: string) {
         :disabled="isLoading"
         @click="emit('refresh')"
       >
-        <i class="bi bi-arrow-clockwise" :class="{ 'spin': isLoading }"></i> Refresh
+        <i class="bi bi-arrow-clockwise" :class="{ spin: isLoading }"></i> Refresh
       </button>
     </div>
 
