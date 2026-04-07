@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { gql } from 'graphql-tag'
 import { authService } from '@/services/authService'
+import { newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { Role } from '@/utils/userRoles'
 import type { AdminSite } from '@/modules/shared/interfaces/auth-user'
 import AdminToast from '@/modules/shared/components/AdminToast.vue'
@@ -9,7 +11,36 @@ import AdminToast from '@/modules/shared/components/AdminToast.vue'
 const route = useRoute()
 
 const user = computed(() => authService.getUser())
-const sites = computed<AdminSite[]>(() => authService.getAvailableSites())
+
+const sites = ref<AdminSite[]>([])
+
+const AVAILABLE_SITES_QUERY = gql`
+  query AvailableSites {
+    availableSites {
+      name
+      code
+    }
+  }
+`
+
+onMounted(async () => {
+  try {
+    const gqlUrl = import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL
+    const apolloClient = newAuthenticatedApolloClient(gqlUrl)
+    const { data } = await apolloClient.query({
+      query: AVAILABLE_SITES_QUERY,
+      fetchPolicy: 'network-only'
+    })
+    if (data?.availableSites) {
+      sites.value = data.availableSites.map((s: { name: string; code: string }) => ({
+        serviceKey: s.code,
+        name: s.name
+      }))
+    }
+  } catch (e) {
+    console.error('Failed to fetch available sites', e)
+  }
+})
 
 function hasRole(role: Role): boolean {
   return authService.userHasRole(role)
@@ -33,6 +64,12 @@ function isActive(routeName: string): boolean {
 
 function isActiveWithParam(routeName: string, paramKey: string, paramValue: string): boolean {
   return route.name === routeName && route.params[paramKey] === paramValue
+}
+
+const openDropdown = ref<string | null>(null)
+
+function toggleDropdown(name: string) {
+  openDropdown.value = openDropdown.value === name ? null : name
 }
 
 async function logout() {
@@ -60,15 +97,12 @@ async function logout() {
           </li>
 
           <!-- Packages dropdown (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item dropdown">
+          <li v-if="isSuperAdmin()" class="nav-item">
             <a
               class="nav-link dropdown-toggle"
               :class="{ active: route.name === 'admin_class_packages' }"
-              data-toggle="dropdown"
               href="#"
-              role="button"
-              aria-haspopup="true"
-              aria-expanded="false"
+              @click.prevent="toggleDropdown('packages')"
             >
               Packages
               <template v-for="site in sites" :key="site.serviceKey">
@@ -77,7 +111,7 @@ async function logout() {
                 </span>
               </template>
             </a>
-            <div class="dropdown-menu">
+            <div v-show="openDropdown === 'packages'" class="dropdown-menu show">
               <RouterLink
                 v-for="site in sites"
                 :key="site.serviceKey"
@@ -144,27 +178,13 @@ async function logout() {
             </RouterLink>
           </li>
 
-          <!-- Report - MB Clients (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
-            <RouterLink
-              class="nav-link"
-              :class="{ active: isActive('admin_mindbody_clients') }"
-              :to="{ name: 'admin_mindbody_clients' }"
-            >
-              Report- MB clients
-            </RouterLink>
-          </li>
-
           <!-- Class Schedule Config dropdown (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item dropdown">
+          <li v-if="isSuperAdmin()" class="nav-item">
             <a
               class="nav-link dropdown-toggle"
               :class="{ active: route.name === 'admin_class_schedule_config' }"
-              data-toggle="dropdown"
               href="#"
-              role="button"
-              aria-haspopup="true"
-              aria-expanded="false"
+              @click.prevent="toggleDropdown('classScheduleConfig')"
             >
               Class Schedule Config
               <template v-for="site in sites" :key="site.serviceKey">
@@ -173,7 +193,7 @@ async function logout() {
                 </span>
               </template>
             </a>
-            <div class="dropdown-menu">
+            <div v-show="openDropdown === 'classScheduleConfig'" class="dropdown-menu show">
               <RouterLink
                 v-for="site in sites"
                 :key="site.serviceKey"
@@ -219,15 +239,12 @@ async function logout() {
           </li>
 
           <!-- Room Layout Config dropdown (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item dropdown">
+          <li v-if="isSuperAdmin()" class="nav-item">
             <a
               class="nav-link dropdown-toggle"
               :class="{ active: route.name === 'admin_room_layout_list' }"
-              data-toggle="dropdown"
               href="#"
-              role="button"
-              aria-haspopup="true"
-              aria-expanded="false"
+              @click.prevent="toggleDropdown('roomLayout')"
             >
               Room Layout Config
               <template v-for="site in sites" :key="site.serviceKey">
@@ -236,7 +253,7 @@ async function logout() {
                 </span>
               </template>
             </a>
-            <div class="dropdown-menu">
+            <div v-show="openDropdown === 'roomLayout'" class="dropdown-menu show">
               <RouterLink
                 v-for="site in sites"
                 :key="site.serviceKey"
