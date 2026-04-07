@@ -142,8 +142,16 @@ const router = createRouter({
         {
           path: 'transactions',
           name: 'admin_transactions',
-          meta: { role: Role.ROLE_SUPER_ADMIN, title: 'Transactions' },
-          component: () => import('@/views/PlaceholderView.vue')
+          meta: { role: Role.ROLE_SUPER_ADMIN },
+          component: () =>
+            import('@/modules/transaction-records/views/TransactionListView.vue')
+        },
+        {
+          path: 'transactions/:id',
+          name: 'admin_transaction_detail',
+          meta: { role: Role.ROLE_SUPER_ADMIN },
+          component: () =>
+            import('@/modules/transaction-records/views/TransactionDetailView.vue')
         },
         {
           path: 'customers',
