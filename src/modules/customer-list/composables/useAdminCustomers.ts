@@ -28,24 +28,8 @@ export interface PaginatedAdminCustomers {
 }
 
 const ADMIN_CUSTOMERS_QUERY = gql`
-  query AdminCustomers(
-    $search: String
-    $registrationStartDate: Date
-    $registrationEndDate: Date
-    $vodStartDate: Date
-    $vodEndDate: Date
-    $page: Int
-    $limit: Int
-  ) {
-    adminCustomers(
-      search: $search
-      registrationStartDate: $registrationStartDate
-      registrationEndDate: $registrationEndDate
-      vodStartDate: $vodStartDate
-      vodEndDate: $vodEndDate
-      page: $page
-      limit: $limit
-    ) {
+  query AdminCustomers($params: AdminCustomersParams, $pagination: PaginationInput) {
+    adminCustomers(params: $params, pagination: $pagination) {
       items {
         id
         firstName
@@ -73,7 +57,7 @@ export const useAdminCustomers = (apolloClient: ApolloClient<NormalizedCacheObje
   const isLoading = ref(false)
   const hasError = ref(false)
 
-  async function fetchCustomers(params: {
+  async function fetchCustomers(input: {
     search?: string
     registrationStartDate?: string
     registrationEndDate?: string
@@ -85,9 +69,13 @@ export const useAdminCustomers = (apolloClient: ApolloClient<NormalizedCacheObje
     isLoading.value = true
     hasError.value = false
     try {
+      const { page, limit, ...filterParams } = input
       const { data } = await apolloClient.query({
         query: ADMIN_CUSTOMERS_QUERY,
-        variables: params,
+        variables: {
+          params: Object.keys(filterParams).length > 0 ? filterParams : undefined,
+          pagination: page || limit ? { page, limit } : undefined
+        },
         fetchPolicy: 'network-only'
       })
       result.value = data.adminCustomers
