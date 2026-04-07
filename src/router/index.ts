@@ -148,8 +148,13 @@ const router = createRouter({
         {
           path: 'customers',
           name: 'admin_customers',
-          meta: { title: 'Clients' },
-          component: () => import('@/views/PlaceholderView.vue')
+          component: () => import('@/modules/customer-list/views/CustomerListView.vue')
+        },
+        {
+          path: 'bulk-vod-activator',
+          name: 'admin_bulk_vod_activator',
+          component: () =>
+            import('@/modules/bulk-vod-activator/views/BulkVodActivatorView.vue')
         },
         {
           path: 'customer-gift-cards',
