@@ -173,14 +173,16 @@ const router = createRouter({
         {
           path: 'mindbody-clients',
           name: 'admin_mindbody_clients',
-          meta: { role: Role.ROLE_SUPER_ADMIN, title: 'Report - MB Clients' },
-          component: () => import('@/views/PlaceholderView.vue')
+          meta: { role: Role.ROLE_SUPER_ADMIN },
+          component: () =>
+            import('@/modules/mindbody-clients/views/MindbodyClientListView.vue')
         },
         {
           path: 'mindbody-staff',
           name: 'admin_mindbody_staff',
-          meta: { role: Role.ROLE_SUPER_ADMIN, title: 'Staff' },
-          component: () => import('@/views/PlaceholderView.vue')
+          meta: { role: Role.ROLE_SUPER_ADMIN },
+          component: () =>
+            import('@/modules/mindbody-staff/views/MindbodyStaffView.vue')
         },
         {
           path: 'settings',
