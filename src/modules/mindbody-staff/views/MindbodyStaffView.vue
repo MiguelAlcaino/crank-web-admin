@@ -1,22 +1,26 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { useMindbodyStaff } from '../composables/useMindbodyStaff'
+import { useAvailableSites } from '@/modules/shared/composables/useAvailableSites'
 import { useToast } from '@/modules/shared/composables/useToast'
 import { appStore } from '@/stores/appStorage'
 
 const gqlUrl = import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL
 const apolloClient = newAuthenticatedApolloClient(gqlUrl)
 const staff = useMindbodyStaff(apolloClient)
+const { sites, fetchSites } = useAvailableSites(apolloClient)
 const toast = useToast()
 
-const currentSite = ref(appStore().site || 'dubai')
+const currentSite = ref(appStore().site || '')
 
 async function loadStaff() {
+  if (!currentSite.value) return
   await staff.fetchStaff(currentSite.value)
 }
 
 async function handleSync() {
+  if (!currentSite.value) return
   const success = await staff.syncStaff(currentSite.value)
   if (success) {
     toast.success('Staff synchronized successfully from Mindbody')
@@ -26,12 +30,15 @@ async function handleSync() {
   }
 }
 
-async function changeSite(site: string) {
-  currentSite.value = site
-  await loadStaff()
-}
+watch(currentSite, loadStaff)
 
-onMounted(loadStaff)
+onMounted(async () => {
+  await fetchSites()
+  if (!currentSite.value && sites.value.length > 0) {
+    currentSite.value = sites.value[0].code
+  }
+  await loadStaff()
+})
 </script>
 
 <template>
@@ -39,10 +46,10 @@ onMounted(loadStaff)
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h4>Mindbody Staff</h4>
       <div>
-        <select v-model="currentSite" class="form-control form-control-sm d-inline-block mr-2" style="width: auto" @change="changeSite(currentSite)">
-          <option value="dubai">Dubai</option>
-          <option value="abu_dhabi">Abu Dhabi</option>
-          <option value="town_square">Town Square</option>
+        <select v-model="currentSite" class="form-control form-control-sm d-inline-block mr-2" style="width: auto">
+          <option v-for="site in sites" :key="site.code" :value="site.code">
+            {{ site.name }}
+          </option>
         </select>
         <button class="btn btn-dark btn-sm" @click="handleSync" :disabled="staff.isSyncing.value">
           <span v-if="staff.isSyncing.value">

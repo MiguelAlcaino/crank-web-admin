@@ -3,10 +3,12 @@ import { onMounted, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { useTransactionRecords } from '../composables/useTransactionRecords'
+import { useAvailableSites } from '@/modules/shared/composables/useAvailableSites'
 
 const gqlUrl = import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL
 const apolloClient = newAuthenticatedApolloClient(gqlUrl)
 const txn = useTransactionRecords(apolloClient)
+const { sites: availableSites, fetchSites } = useAvailableSites(apolloClient)
 const router = useRouter()
 
 const search = ref('')
@@ -65,7 +67,10 @@ function formatDate(dateStr: string | null): string {
   return new Date(dateStr).toLocaleDateString()
 }
 
-onMounted(loadTransactions)
+onMounted(async () => {
+  await fetchSites()
+  await loadTransactions()
+})
 </script>
 
 <template>
@@ -89,9 +94,9 @@ onMounted(loadTransactions)
       <div class="col-md-2">
         <select v-model="site" class="form-control form-control-sm">
           <option value="">All Sites</option>
-          <option value="dubai">Dubai</option>
-          <option value="abu_dhabi">Abu Dhabi</option>
-          <option value="town_square">Town Square</option>
+          <option v-for="s in availableSites" :key="s.code" :value="s.code">
+            {{ s.name }}
+          </option>
         </select>
       </div>
       <div class="col-md-2">

@@ -1,46 +1,23 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { gql } from 'graphql-tag'
 import { authService } from '@/services/authService'
 import { newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { Role } from '@/utils/userRoles'
-import type { AdminSite } from '@/modules/shared/interfaces/auth-user'
+import { useAvailableSites } from '@/modules/shared/composables/useAvailableSites'
 import AdminToast from '@/modules/shared/components/AdminToast.vue'
 
 const route = useRoute()
+const gqlUrl = import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL
+const apolloClient = newAuthenticatedApolloClient(gqlUrl)
+const { sites: availableSites, fetchSites } = useAvailableSites(apolloClient)
 
 const user = computed(() => authService.getUser())
+const sites = computed(() =>
+  availableSites.value.map((s) => ({ serviceKey: s.code, name: s.name }))
+)
 
-const sites = ref<AdminSite[]>([])
-
-const AVAILABLE_SITES_QUERY = gql`
-  query AvailableSites {
-    availableSites {
-      name
-      code
-    }
-  }
-`
-
-onMounted(async () => {
-  try {
-    const gqlUrl = import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL
-    const apolloClient = newAuthenticatedApolloClient(gqlUrl)
-    const { data } = await apolloClient.query({
-      query: AVAILABLE_SITES_QUERY,
-      fetchPolicy: 'network-only'
-    })
-    if (data?.availableSites) {
-      sites.value = data.availableSites.map((s: { name: string; code: string }) => ({
-        serviceKey: s.code,
-        name: s.name
-      }))
-    }
-  } catch (e) {
-    console.error('Failed to fetch available sites', e)
-  }
-})
+onMounted(fetchSites)
 
 function hasRole(role: Role): boolean {
   return authService.userHasRole(role)
@@ -232,7 +209,7 @@ async function logout() {
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_classes_calendar') }"
-              :to="{ name: 'admin_classes_calendar', params: { site: 'dubai' } }"
+              :to="{ name: 'admin_classes_calendar', params: { site: sites[0]?.serviceKey || 'dubai' } }"
             >
               Class Schedule
             </RouterLink>
