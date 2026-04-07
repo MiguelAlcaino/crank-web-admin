@@ -1,22 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import { authService } from '@/services/authService'
-import RoomLayoutListView from '@/modules/room-layout/views/RoomLayoutListView.vue'
 import HomeView from '@/views/HomeView.vue'
 import UnauthorizedView from '@/modules/auth/views/UnauthorizedView.vue'
-import { giftCardRoute } from '@/modules/gift-card/router'
-import { adminUsersRoute } from '@/modules/admin-user/router'
 import { Role } from '@/utils/userRoles'
-import { myAdminSettingsRoute } from '@/modules/my-admin-settings/router'
-import { paymentLinksRoute } from '@/modules/payment-links/router'
-import { instructorProfilesRoute } from '@/modules/instructor-profile/router'
-import { sessionTypesRoute } from '@/modules/session-type/router'
-import { webhookEventsRoute } from '@/modules/webhook-events/router'
-import { classPackagesRoute } from '@/modules/products/router'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    // --- Public routes (no layout) ---
     {
       path: '/',
       name: 'home',
@@ -27,8 +19,173 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       meta: { requiresAuth: false },
-      component: import('@/modules/auth/views/LoginView.vue')
+      component: () => import('@/modules/auth/views/LoginView.vue')
     },
+    {
+      path: '/admin/login',
+      name: 'admin_login',
+      meta: { requiresAuth: false },
+      component: () => import('@/modules/auth/views/AdminLoginView.vue')
+    },
+    {
+      path: '/unauthorized',
+      name: 'unauthorized',
+      component: UnauthorizedView
+    },
+
+    // --- Admin routes (with AdminLayout sidebar) ---
+    {
+      path: '/admin',
+      component: () => import('@/layouts/AdminLayout.vue'),
+      meta: { requiresAuth: true },
+      children: [
+        {
+          path: '',
+          name: 'admin_dashboard',
+          component: () => import('@/views/AdminDashboardView.vue')
+        },
+
+        // --- Already migrated pages ---
+        {
+          path: 'gift-cards',
+          name: 'admin_gift_cards',
+          meta: { role: Role.ROLE_SUPER_ADMIN },
+          component: () => import('@/modules/gift-card/views/GiftCardListView.vue')
+        },
+        {
+          path: 'payment-links',
+          name: 'admin_payment_links',
+          meta: { role: Role.ROLE_SUPER_ADMIN },
+          component: () => import('@/modules/payment-links/views/PaymentLinkListView.vue')
+        },
+        {
+          path: 'users',
+          name: 'admin_users',
+          meta: { role: Role.ROLE_SUPER_ADMIN },
+          component: () => import('@/modules/admin-user/views/AdminUserListView.vue')
+        },
+        {
+          path: 'my-settings',
+          name: 'admin_my_settings',
+          component: () => import('@/modules/my-admin-settings/views/MyAdminSettingsView.vue')
+        },
+        {
+          path: 'webhook-events',
+          name: 'admin_webhook_events',
+          meta: { role: Role.ROLE_SUPER_ADMIN },
+          component: () => import('@/modules/webhook-events/views/WebhookEventsView.vue')
+        },
+        {
+          path: 'instructor-profiles',
+          name: 'admin_instructor_profiles',
+          component: () => import('@/modules/instructor-profile/views/InstructorProfilesView.vue')
+        },
+        {
+          path: 'session-types',
+          name: 'admin_session_types',
+          meta: { role: Role.ROLE_SUPER_ADMIN },
+          component: () => import('@/modules/session-type/views/SessionTypesView.vue')
+        },
+        {
+          path: 'class-packages/:site',
+          name: 'admin_class_packages',
+          meta: { role: Role.ROLE_SUPER_ADMIN },
+          component: () => import('@/modules/products/views/ClassPackageListView.vue')
+        },
+        {
+          path: 'class-schedule-config/:site',
+          name: 'admin_class_schedule_config',
+          meta: { role: Role.ROLE_SUPER_ADMIN },
+          component: () =>
+            import('@/modules/class-schedule-config/views/ClassScheduleConfigView.vue')
+        },
+        {
+          path: 'classes-calendar/:site',
+          name: 'admin_classes_calendar',
+          component: () => import('@/modules/class-schedule/views/ClassScheduleView.vue')
+        },
+        {
+          path: 'room-layout/:site',
+          name: 'admin_room_layout_list',
+          meta: { role: Role.ROLE_SUPER_ADMIN },
+          component: () => import('@/modules/room-layout/views/RoomLayoutListView.vue')
+        },
+        {
+          path: 'room-layout/create',
+          name: 'admin_room_layout_create',
+          meta: { role: Role.ROLE_SUPER_ADMIN },
+          component: () => import('@/modules/room-layout/views/RoomLayoutView.vue')
+        },
+        {
+          path: 'room-layout/edit/:id',
+          name: 'admin_room_layout_edit',
+          meta: { role: Role.ROLE_SUPER_ADMIN },
+          component: () => import('@/modules/room-layout/views/RoomLayoutView.vue')
+        },
+        {
+          path: 'customer/create',
+          name: 'admin_customer_create',
+          component: () => import('@/modules/customer/views/CustomerCreateView.vue')
+        },
+        {
+          path: 'customer/edit/:id',
+          name: 'admin_customer_edit',
+          component: () => import('@/modules/customer/views/CustomerEditView.vue')
+        },
+        {
+          path: 'customer/:id',
+          name: 'admin_customer_profile',
+          component: () => import('@/modules/customer/views/CustomerProfileView.vue')
+        },
+
+        // --- Placeholder routes for pages to be migrated ---
+        {
+          path: 'transactions',
+          name: 'admin_transactions',
+          meta: { role: Role.ROLE_SUPER_ADMIN, title: 'Transactions' },
+          component: () => import('@/views/PlaceholderView.vue')
+        },
+        {
+          path: 'customers',
+          name: 'admin_customers',
+          meta: { title: 'Clients' },
+          component: () => import('@/views/PlaceholderView.vue')
+        },
+        {
+          path: 'customer-gift-cards',
+          name: 'admin_customer_gift_cards',
+          meta: { role: Role.ROLE_SUPER_ADMIN, title: 'Pending Gift Cards' },
+          component: () => import('@/views/PlaceholderView.vue')
+        },
+        {
+          path: 'mindbody-clients',
+          name: 'admin_mindbody_clients',
+          meta: { role: Role.ROLE_SUPER_ADMIN, title: 'Report - MB Clients' },
+          component: () => import('@/views/PlaceholderView.vue')
+        },
+        {
+          path: 'mindbody-staff',
+          name: 'admin_mindbody_staff',
+          meta: { role: Role.ROLE_SUPER_ADMIN, title: 'Staff' },
+          component: () => import('@/views/PlaceholderView.vue')
+        },
+        {
+          path: 'settings',
+          name: 'admin_settings',
+          meta: { role: Role.ROLE_SUPER_ADMIN },
+          component: () =>
+            import('@/modules/system-settings/views/SystemSettingsView.vue')
+        },
+        {
+          path: 'blacklisted-phones',
+          name: 'admin_blacklisted_phones',
+          component: () =>
+            import('@/modules/mobile-number-blacklist/views/BlacklistView.vue')
+        }
+      ]
+    },
+
+    // --- Legacy standalone routes (for backward compatibility with start-app-functions) ---
     {
       path: '/user/create',
       name: 'user_create',
@@ -49,19 +206,19 @@ const router = createRouter({
     },
     {
       path: '/admin/room-layout/list',
-      name: 'admin_room_layout_list',
+      name: 'legacy_admin_room_layout_list',
       meta: { requiresAuth: true },
-      component: RoomLayoutListView
+      component: () => import('@/modules/room-layout/views/RoomLayoutListView.vue')
     },
     {
       path: '/admin/room-layout/create',
-      name: 'admin_room_layout_create',
+      name: 'legacy_admin_room_layout_create',
       meta: { requiresAuth: true },
       component: () => import('@/modules/room-layout/views/RoomLayoutView.vue')
     },
     {
       path: '/admin/room-layout/edit/:id',
-      name: 'admin_room_layout_edit',
+      name: 'legacy_admin_room_layout_edit',
       meta: { requiresAuth: true },
       component: () => import('@/modules/room-layout/views/RoomLayoutView.vue')
     },
@@ -69,7 +226,8 @@ const router = createRouter({
       path: '/class-schedules',
       name: 'class_schedules',
       meta: { requiresAuth: true },
-      component: () => import('@/modules/class-schedule-config/views/ClassScheduleConfigView.vue')
+      component: () =>
+        import('@/modules/class-schedule-config/views/ClassScheduleConfigView.vue')
     },
     {
       path: '/customer-profile/:id',
@@ -78,37 +236,52 @@ const router = createRouter({
       component: () => import('@/modules/customer/views/CustomerProfileView.vue')
     },
     {
-      ...giftCardRoute,
+      path: '/gift-cards',
+      name: 'gift_cards',
       meta: { requiresAuth: true },
-      path: '/gift-cards'
+      component: () => import('@/modules/gift-card/views/GiftCardListView.vue')
     },
     {
-      ...adminUsersRoute,
       path: '/admin-users',
-      meta: { requiresAuth: true, role: Role.ROLE_SUPER_ADMIN }
+      name: 'admin_users_legacy',
+      meta: { requiresAuth: true, role: Role.ROLE_SUPER_ADMIN },
+      component: () => import('@/modules/admin-user/views/AdminUserListView.vue')
     },
     {
-      path: '/unauthorized',
-      name: 'unauthorized',
-      component: UnauthorizedView
-    },
-    {
-      ...myAdminSettingsRoute,
       path: '/my-admin-settings',
-      meta: { requiresAuth: true }
+      name: 'my_admin_settings',
+      meta: { requiresAuth: true },
+      component: () => import('@/modules/my-admin-settings/views/MyAdminSettingsView.vue')
     },
-    { ...paymentLinksRoute, path: '/payment-links', meta: { requiresAuth: true } },
-    { ...instructorProfilesRoute, path: '/instructor-profiles', meta: { requiresAuth: true } },
-    { ...sessionTypesRoute, path: '/session-types', meta: { requiresAuth: true } },
     {
-      ...webhookEventsRoute,
+      path: '/payment-links',
+      name: 'payment_links',
+      meta: { requiresAuth: true },
+      component: () => import('@/modules/payment-links/views/PaymentLinkListView.vue')
+    },
+    {
+      path: '/instructor-profiles',
+      name: 'instructor_profiles',
+      meta: { requiresAuth: true },
+      component: () => import('@/modules/instructor-profile/views/InstructorProfilesView.vue')
+    },
+    {
+      path: '/session-types',
+      name: 'session_types',
+      meta: { requiresAuth: true },
+      component: () => import('@/modules/session-type/views/SessionTypesView.vue')
+    },
+    {
       path: '/webhook-events',
-      meta: { requiresAuth: true, role: Role.ROLE_SUPER_ADMIN }
+      name: 'webhook_events',
+      meta: { requiresAuth: true, role: Role.ROLE_SUPER_ADMIN },
+      component: () => import('@/modules/webhook-events/views/WebhookEventsView.vue')
     },
     {
-      ...classPackagesRoute,
       path: '/class-packages',
-      meta: { requiresAuth: true }
+      name: 'class_packages',
+      meta: { requiresAuth: true },
+      component: () => import('@/modules/products/views/ClassPackageListView.vue')
     }
   ]
 })
@@ -118,7 +291,9 @@ router.beforeEach(async (to, from, next) => {
   const user = authService.getUser()
 
   if (authRequired && !user) {
-    next({ name: 'login', query: { redirect: to.path } })
+    // Redirect to admin login for admin routes, legacy login for others
+    const loginRoute = to.path.startsWith('/admin') ? 'admin_login' : 'login'
+    next({ name: loginRoute, query: { redirect: to.fullPath } })
   } else if (authRequired && user) {
     const requiredRole = (to.meta.role || null) as Role | null
 

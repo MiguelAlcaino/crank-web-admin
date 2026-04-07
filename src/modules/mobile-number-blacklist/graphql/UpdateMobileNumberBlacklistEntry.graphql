@@ -1,0 +1,10 @@
+mutation UpdateMobileNumberBlacklistEntry($id: ID!, $input: UpdateMobileNumberBlacklistInput!) {
+  updateMobileNumberBlacklistEntry(id: $id, input: $input) {
+    id
+    mobilePhoneNumber
+    fullPhoneNumber
+    countryId
+    countryName
+    countryPhoneCode
+  }
+}
