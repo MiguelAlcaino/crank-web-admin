@@ -1,9 +1,11 @@
 import type { ApiService } from '@/services/apiService'
 import { ClassPackageTypeEnum } from '@/gql/graphql'
-import { computed, onMounted, ref } from 'vue'
+import { computed, isRef, onMounted, ref, watch } from 'vue'
+import type { Ref } from 'vue'
 import type { ClassPackage } from '../interfaces'
 
-export const useClassPackageCrud = (apiService: ApiService, site: string) => {
+export const useClassPackageCrud = (apiService: ApiService, siteOrRef: string | Ref<string>) => {
+  const siteRef = isRef(siteOrRef) ? siteOrRef : ref(siteOrRef)
   const isLoading = ref<boolean>(false)
   const hasError = ref<boolean>(false)
   const isSaving = ref<boolean>(false)
@@ -30,7 +32,7 @@ export const useClassPackageCrud = (apiService: ApiService, site: string) => {
     isLoading.value = true
 
     try {
-      const result = await apiService.getClassPackages(site as any)
+      const result = await apiService.getClassPackages(siteRef.value as any)
       classPackages.value = result.map((p) => ({
         id: p.id,
         title: p.title,
@@ -121,6 +123,10 @@ export const useClassPackageCrud = (apiService: ApiService, site: string) => {
       type
     }))
   }
+
+  watch(siteRef, () => {
+    getClassPackages()
+  })
 
   onMounted(() => {
     getClassPackages()

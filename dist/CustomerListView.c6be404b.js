@@ -1,7 +1,7 @@
-import { M as I, r as i, N as D, d as R, G as $, z as T, c as B, H as O, I as j, b as n, e as t, k as H, J as Y, f, i as g, t as l, w as z, j as y, g as r, F as U, h as E, L as G, X as J, o, A as Q } from "./index.13471187.js";
+import { M as I, r as i, N as D, d as R, G as $, z as T, c as B, H as O, I as j, b as l, e as t, k as H, J as Y, f, i as g, t as n, w as z, j as y, g as r, F as U, h as E, L as G, X as J, o, A as Q } from "./index.cc2eb486.js";
 const X = I`
   query AdminCustomers($params: AdminCustomersParams, $pagination: PaginationInput) {
-    adminCustomers(params: $params, pagination: $pagination) {
+    customers(params: $params, pagination: $pagination) {
       items {
         id
         user {
@@ -34,7 +34,7 @@ const X = I`
         },
         fetchPolicy: "network-only"
       });
-      V.value = v.adminCustomers;
+      V.value = v.customers;
     } catch {
       s.value = !0;
     } finally {
@@ -53,7 +53,7 @@ const X = I`
 }, "Search", -1), ot = {
   key: 0,
   class: "card mb-3"
-}, nt = { class: "card-body" }, lt = { class: "row" }, it = { class: "col-md-3" }, rt = /* @__PURE__ */ t("label", { class: "small" }, "Registration From", -1), ut = { class: "col-md-3" }, dt = /* @__PURE__ */ t("label", { class: "small" }, "Registration To", -1), ct = { class: "col-md-3" }, mt = /* @__PURE__ */ t("label", { class: "small" }, "VOD From", -1), vt = { class: "col-md-3" }, pt = /* @__PURE__ */ t("label", { class: "small" }, "VOD To", -1), _t = {
+}, lt = { class: "card-body" }, nt = { class: "row" }, it = { class: "col-md-3" }, rt = /* @__PURE__ */ t("label", { class: "small" }, "Registration From", -1), ut = { class: "col-md-3" }, dt = /* @__PURE__ */ t("label", { class: "small" }, "Registration To", -1), ct = { class: "col-md-3" }, mt = /* @__PURE__ */ t("label", { class: "small" }, "VOD From", -1), vt = { class: "col-md-3" }, pt = /* @__PURE__ */ t("label", { class: "small" }, "VOD To", -1), _t = {
   key: 1,
   class: "text-center py-4"
 }, ht = /* @__PURE__ */ t("div", {
@@ -114,7 +114,7 @@ const X = I`
     }
     return O(w), (p, a) => {
       const q = j("RouterLink");
-      return o(), n("div", null, [
+      return o(), l("div", null, [
         t("div", W, [
           Z,
           H(q, {
@@ -146,13 +146,13 @@ const X = I`
                 type: "button",
                 class: "btn btn-outline-secondary",
                 onClick: a[1] || (a[1] = (e) => u.value = !u.value)
-              }, l(u.value ? "Hide Filters" : "Filters"), 1)
+              }, n(u.value ? "Hide Filters" : "Filters"), 1)
             ])
           ])
         ], 40, tt),
-        u.value ? (o(), n("div", ot, [
-          t("div", nt, [
-            t("div", lt, [
+        u.value ? (o(), l("div", ot, [
+          t("div", lt, [
+            t("div", nt, [
               t("div", it, [
                 rt,
                 f(t("input", {
@@ -206,29 +206,29 @@ const X = I`
             ])
           ])
         ])) : y("", !0),
-        r(s).isLoading.value ? (o(), n("div", _t, bt)) : y("", !0),
-        r(s).hasError.value ? (o(), n("div", ft, " Failed to load customers. ")) : y("", !0),
-        r(s).result.value && !r(s).isLoading.value ? (o(), n("div", gt, [
-          t("p", yt, l(r(s).result.value.totalCount) + " customers found (page " + l(r(s).result.value.page) + " of " + l(x.value) + ") ", 1),
+        r(s).isLoading.value ? (o(), l("div", _t, bt)) : y("", !0),
+        r(s).hasError.value ? (o(), l("div", ft, " Failed to load customers. ")) : y("", !0),
+        r(s).result.value && !r(s).isLoading.value ? (o(), l("div", gt, [
+          t("p", yt, n(r(s).result.value.totalCount) + " customers found (page " + n(r(s).result.value.page) + " of " + n(x.value) + ") ", 1),
           t("table", Ct, [
             kt,
             t("tbody", null, [
-              (o(!0), n(U, null, E(r(s).result.value.items, (e) => (o(), n("tr", {
+              (o(!0), l(U, null, E(r(s).result.value.items, (e) => (o(), l("tr", {
                 key: e.id
               }, [
-                t("td", null, l(e.id), 1),
-                t("td", null, l(e.user.firstName) + " " + l(e.user.lastName), 1),
-                t("td", null, l(e.user.email), 1),
-                t("td", null, l(e.user.phone || "-"), 1),
+                t("td", null, n(e.id), 1),
+                t("td", null, n(e.user.firstName) + " " + n(e.user.lastName), 1),
+                t("td", null, n(e.user.email), 1),
+                t("td", null, n(e.user.phone || "-"), 1),
                 t("td", null, [
-                  e.user.isMobilePhoneVerified ? (o(), n("span", wt, "Yes")) : (o(), n("span", Vt, "No"))
+                  e.user.isMobilePhoneVerified ? (o(), l("span", wt, "Yes")) : (o(), l("span", Vt, "No"))
                 ]),
                 t("td", null, [
-                  (o(!0), n(U, null, E(e.user.siteUsers, (b) => (o(), n("span", {
+                  (o(!0), l(U, null, E(e.user.siteUsers, (b) => (o(), l("span", {
                     key: b.site,
                     class: "badge badge-info mr-1",
                     title: "MB ID: " + (b.externalUserId || "N/A")
-                  }, l(b.site), 9, Dt))), 128))
+                  }, n(b.site), 9, Dt))), 128))
                 ]),
                 t("td", null, [
                   t("button", {

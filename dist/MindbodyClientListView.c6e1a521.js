@@ -1,7 +1,7 @@
-import { M as P, r as h, N as _, d as R, G as L, c as q, H as x, b as s, e, f as I, i as $, w as f, g as r, j as y, t as i, F as M, h as N, D as C, o } from "./index.13471187.js";
+import { M as P, r as h, N as _, d as R, G as L, c as q, H as x, b as s, e, f as I, i as $, w as f, g as r, j as y, t as i, F as N, h as w, D as C, o } from "./index.cc2eb486.js";
 const D = P`
   query AdminMindbodyClients($params: AdminMindbodyClientsParams, $pagination: PaginationInput) {
-    adminMindbodyClients(params: $params, pagination: $pagination) {
+    mindbodyClients(params: $params, pagination: $pagination) {
       items {
         id
         clientId
@@ -17,7 +17,7 @@ const D = P`
   }
 `, E = P`
   query AdminMindbodyClient($id: ID!) {
-    adminMindbodyClient(id: $id) {
+    mindbodyClient(id: $id) {
       id
       clientId
       firstName
@@ -39,7 +39,7 @@ const D = P`
         },
         fetchPolicy: "network-only"
       });
-      b.value = m.adminMindbodyClients;
+      b.value = m.mindbodyClients;
     } catch {
       a.value = !0;
     } finally {
@@ -54,7 +54,7 @@ const D = P`
         variables: { id: u },
         fetchPolicy: "network-only"
       });
-      p.value = c.adminMindbodyClient;
+      p.value = c.mindbodyClient;
     } catch {
       a.value = !0;
     } finally {
@@ -99,14 +99,14 @@ const D = P`
   class: "text-center text-muted py-3"
 }, "No clients found", -1), K = [
   J
-], W = { key: 0 }, X = { class: "pagination pagination-sm" }, Z = ["onClick"], w = 50, le = /* @__PURE__ */ R({
+], W = { key: 0 }, X = { class: "pagination pagination-sm" }, Z = ["onClick"], M = 50, le = /* @__PURE__ */ R({
   __name: "MindbodyClientListView",
   setup(g) {
-    const p = L("https://payments.crank-fit.com/api/graphql/"), t = S(p), a = h(""), n = h(1), d = q(() => t.listResult.value ? Math.ceil(t.listResult.value.totalCount / w) : 1);
+    const p = L("https://payments.crank-fit.com/api/graphql/"), t = S(p), a = h(""), n = h(1), d = q(() => t.listResult.value ? Math.ceil(t.listResult.value.totalCount / M) : 1);
     async function u() {
       await t.fetchList(
         a.value ? { search: a.value } : void 0,
-        { page: n.value, limit: w }
+        { page: n.value, limit: M }
       );
     }
     async function c() {
@@ -141,7 +141,7 @@ const D = P`
           H,
           e("tbody", null, [
             r(t).listResult.value.items.length === 0 ? (o(), s("tr", O, K)) : y("", !0),
-            (o(!0), s(M, null, N(r(t).listResult.value.items, (l) => (o(), s("tr", {
+            (o(!0), s(N, null, w(r(t).listResult.value.items, (l) => (o(), s("tr", {
               key: l.id
             }, [
               e("td", null, i(l.id), 1),
@@ -164,7 +164,7 @@ const D = P`
                 onClick: v[1] || (v[1] = f((l) => m(n.value - 1), ["prevent"]))
               }, "Previous")
             ], 2),
-            (o(!0), s(M, null, N(Math.min(d.value, 10), (l) => (o(), s("li", {
+            (o(!0), s(N, null, w(Math.min(d.value, 10), (l) => (o(), s("li", {
               key: l,
               class: C(["page-item", { active: l === n.value }])
             }, [

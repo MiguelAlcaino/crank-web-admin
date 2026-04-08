@@ -1,10 +1,10 @@
-import { M as c, r as n, N as i } from "./index.13471187.js";
+import { M as c, r as n, N as r } from "./index.cc2eb486.js";
 const R = c`
-  query AdminTransactionRecords(
-    $filter: AdminTransactionRecordFilterInput
+  query TransactionRecords(
+    $filter: TransactionRecordFilterInput
     $pagination: PaginationInput
   ) {
-    adminTransactionRecords(filter: $filter, pagination: $pagination) {
+    transactionRecords(filter: $filter, pagination: $pagination) {
       items {
         id
         amount
@@ -29,8 +29,8 @@ const R = c`
     }
   }
 `, g = c`
-  query AdminTransactionRecord($id: ID!) {
-    adminTransactionRecord(id: $id) {
+  query TransactionRecord($id: ID!) {
+    transactionRecord(id: $id) {
       id
       creditCardChargeId
       creditCardHolderName
@@ -56,67 +56,67 @@ const R = c`
       }
     }
   }
-`, T = c`
+`, h = c`
   mutation RefundTransaction($id: ID!) {
     refundTransaction(id: $id)
   }
 `, q = (o) => {
-  const d = n(null), u = n(null), r = n(!1), l = n(!1), e = n(!1), s = n("");
-  async function f(t, a) {
-    r.value = !0, e.value = !1;
+  const d = n(null), u = n(null), i = n(!1), l = n(!1), t = n(!1), s = n("");
+  async function m(e, a) {
+    i.value = !0, t.value = !1;
     try {
-      const { data: m } = await o.query({
+      const { data: f } = await o.query({
         query: R,
         variables: {
-          filter: t && Object.keys(t).length > 0 ? t : void 0,
+          filter: e && Object.keys(e).length > 0 ? e : void 0,
           pagination: a
         },
         fetchPolicy: "network-only"
       });
-      d.value = m.adminTransactionRecords;
+      d.value = f.transactionRecords;
     } catch {
-      e.value = !0, s.value = "Failed to load transactions";
+      t.value = !0, s.value = "Failed to load transactions";
     } finally {
-      r.value = !1;
+      i.value = !1;
     }
   }
-  async function y(t) {
-    r.value = !0, e.value = !1, u.value = null;
+  async function y(e) {
+    i.value = !0, t.value = !1, u.value = null;
     try {
       const { data: a } = await o.query({
         query: g,
-        variables: { id: t },
+        variables: { id: e },
         fetchPolicy: "network-only"
       });
-      u.value = a.adminTransactionRecord;
+      u.value = a.transactionRecord;
     } catch {
-      e.value = !0, s.value = "Failed to load transaction";
+      t.value = !0, s.value = "Failed to load transaction";
     } finally {
-      r.value = !1;
+      i.value = !1;
     }
   }
-  async function v(t) {
-    l.value = !0, e.value = !1;
+  async function v(e) {
+    l.value = !0, t.value = !1;
     try {
       const { data: a } = await o.mutate({
-        mutation: T,
-        variables: { id: t }
+        mutation: h,
+        variables: { id: e }
       });
       return !!(a != null && a.refundTransaction);
     } catch {
-      return e.value = !0, s.value = "Failed to process refund", !1;
+      return t.value = !0, s.value = "Failed to process refund", !1;
     } finally {
       l.value = !1;
     }
   }
   return {
-    listResult: i(d),
-    detail: i(u),
-    isLoading: i(r),
-    isRefunding: i(l),
-    hasError: i(e),
-    errorMessage: i(s),
-    fetchList: f,
+    listResult: r(d),
+    detail: r(u),
+    isLoading: r(i),
+    isRefunding: r(l),
+    hasError: r(t),
+    errorMessage: r(s),
+    fetchList: m,
     fetchDetail: y,
     refund: v
   };

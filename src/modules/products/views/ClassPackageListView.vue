@@ -8,10 +8,14 @@ import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 
 import { useClassPackageCrud } from '../composables/useClassPackageCrud'
 import type { ApiService } from '@/services/apiService'
-import { inject, ref, watch } from 'vue'
+import { computed, inject, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import type { ClassPackage } from '../interfaces'
 
-const site = inject<string>('site')!
+const route = useRoute()
+const injectedSite = inject<string>('site')
+const site = computed(() => (route.params.site as string) || injectedSite || 'dubai')
+
 const {
   isLoading,
   hasError,
