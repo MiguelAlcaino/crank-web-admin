@@ -220,19 +220,14 @@ defineExpose({
             Remove current image
           </button>
         </div>
-        <div class="custom-file">
-          <input
-            ref="profilePictureInputRef"
-            :id="profilePictureInputId"
-            class="custom-file-input"
-            type="file"
-            accept="image/*"
-            @change="onFileChange"
-          />
-          <label class="custom-file-label" :for="profilePictureInputId" data-browse="Browse">
-            {{ fileInputLabel }}
-          </label>
-        </div>
+        <input
+          ref="profilePictureInputRef"
+          :id="profilePictureInputId"
+          class="form-control"
+          type="file"
+          accept="image/*"
+          @change="onFileChange"
+        />
         <div
           v-if="formData.profilePictureFile && selectedPicturePreviewUrl"
           class="selected-picture-row"

@@ -1,4 +1,4 @@
-import { N as I, r as i, O as D, d as R, H as $, z as B, c as T, I as O, J as j, b as l, e as t, k as H, K as Y, f, i as g, t as n, w as z, j as y, g as r, F as S, h as U, M as J, Z as K, o, B as Q } from "./index.953ee91d.js";
+import { N as I, r as i, O as D, d as R, H as $, z as B, c as T, I as O, J as j, b as o, e as t, k as H, K as Y, f, i as g, t as n, w as z, j as y, g as r, F as S, h as U, M as J, Z as K, o as l, B as Q } from "./index.2b55ccef.js";
 const Z = I`
   query AdminCustomers($params: AdminCustomersParams, $pagination: PaginationInput) {
     customers(params: $params, pagination: $pagination) {
@@ -53,14 +53,14 @@ const Z = I`
 }, "Search", -1), at = {
   key: 0,
   class: "card mb-3"
-}, ot = { class: "card-body" }, lt = { class: "row" }, nt = { class: "col-md-3" }, it = /* @__PURE__ */ t("label", { class: "small" }, "Registration From", -1), rt = { class: "col-md-3" }, ut = /* @__PURE__ */ t("label", { class: "small" }, "Registration To", -1), dt = { class: "col-md-3" }, ct = /* @__PURE__ */ t("label", { class: "small" }, "VOD From", -1), mt = { class: "col-md-3" }, vt = /* @__PURE__ */ t("label", { class: "small" }, "VOD To", -1), pt = {
+}, lt = { class: "card-body" }, ot = { class: "row" }, nt = { class: "col-md-3" }, it = /* @__PURE__ */ t("label", { class: "small" }, "Registration From", -1), rt = { class: "col-md-3" }, ut = /* @__PURE__ */ t("label", { class: "small" }, "Registration To", -1), dt = { class: "col-md-3" }, ct = /* @__PURE__ */ t("label", { class: "small" }, "VOD From", -1), mt = { class: "col-md-3" }, vt = /* @__PURE__ */ t("label", { class: "small" }, "VOD To", -1), pt = {
   key: 1,
   class: "text-center py-4"
 }, _t = /* @__PURE__ */ t("div", {
   class: "spinner-border",
   role: "status"
 }, [
-  /* @__PURE__ */ t("span", { class: "sr-only" }, "Loading...")
+  /* @__PURE__ */ t("span", { class: "visually-hidden" }, "Loading...")
 ], -1), ht = [
   _t
 ], bt = {
@@ -114,7 +114,7 @@ const Z = I`
     }
     return O(w), (p, a) => {
       const q = j("RouterLink");
-      return o(), l("div", null, [
+      return l(), o("div", null, [
         t("div", W, [
           X,
           H(q, {
@@ -148,9 +148,9 @@ const Z = I`
             }, n(u.value ? "Hide Filters" : "Filters"), 1)
           ])
         ], 40, tt),
-        u.value ? (o(), l("div", at, [
-          t("div", ot, [
-            t("div", lt, [
+        u.value ? (l(), o("div", at, [
+          t("div", lt, [
+            t("div", ot, [
               t("div", nt, [
                 it,
                 f(t("input", {
@@ -204,14 +204,14 @@ const Z = I`
             ])
           ])
         ])) : y("", !0),
-        r(s).isLoading.value ? (o(), l("div", pt, ht)) : y("", !0),
-        r(s).hasError.value ? (o(), l("div", bt, " Failed to load customers. ")) : y("", !0),
-        r(s).result.value && !r(s).isLoading.value ? (o(), l("div", ft, [
+        r(s).isLoading.value ? (l(), o("div", pt, ht)) : y("", !0),
+        r(s).hasError.value ? (l(), o("div", bt, " Failed to load customers. ")) : y("", !0),
+        r(s).result.value && !r(s).isLoading.value ? (l(), o("div", ft, [
           t("p", gt, n(r(s).result.value.totalCount) + " customers found (page " + n(r(s).result.value.page) + " of " + n(E.value) + ") ", 1),
           t("table", yt, [
             Ct,
             t("tbody", null, [
-              (o(!0), l(S, null, U(r(s).result.value.items, (e) => (o(), l("tr", {
+              (l(!0), o(S, null, U(r(s).result.value.items, (e) => (l(), o("tr", {
                 key: e.id
               }, [
                 t("td", null, n(e.id), 1),
@@ -219,10 +219,10 @@ const Z = I`
                 t("td", null, n(e.user.email), 1),
                 t("td", null, n(e.user.phone || "-"), 1),
                 t("td", null, [
-                  e.user.isMobilePhoneVerified ? (o(), l("span", kt, "Yes")) : (o(), l("span", wt, "No"))
+                  e.user.isMobilePhoneVerified ? (l(), o("span", kt, "Yes")) : (l(), o("span", wt, "No"))
                 ]),
                 t("td", null, [
-                  (o(!0), l(S, null, U(e.user.siteUsers, (b) => (o(), l("span", {
+                  (l(!0), o(S, null, U(e.user.siteUsers, (b) => (l(), o("span", {
                     key: b.site,
                     class: "badge text-bg-info me-1",
                     title: "MB ID: " + (b.externalUserId || "N/A")
@@ -241,7 +241,7 @@ const Z = I`
               ]))), 128))
             ])
           ]),
-          r(s).result.value ? (o(), J(K, {
+          r(s).result.value ? (l(), J(K, {
             key: 0,
             page: h.value,
             limit: x,

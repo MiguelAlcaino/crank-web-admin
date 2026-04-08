@@ -64,7 +64,7 @@ async function handleClearCache() {
     <!-- Loading -->
     <div v-if="crud.isLoading.value" class="text-center py-4">
       <div class="spinner-border" role="status">
-        <span class="sr-only">Loading...</span>
+        <span class="visually-hidden">Loading...</span>
       </div>
     </div>
 

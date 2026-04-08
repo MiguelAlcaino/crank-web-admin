@@ -141,9 +141,9 @@ const visibleAssignedCount = computed(
   flex: 1;
   min-width: 250px;
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--bs-border-color);
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: var(--bs-tertiary-bg);
 }
 
 .list h5 {
@@ -156,14 +156,16 @@ const visibleAssignedCount = computed(
   width: 100%;
   margin-bottom: 10px;
   padding: 8px 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--bs-border-color);
   border-radius: 6px;
   font-size: 13px;
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
 }
 
 .list-search:focus {
   outline: none;
-  border-color: #888;
+  border-color: var(--bs-secondary-color);
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
 }
 
@@ -179,7 +181,7 @@ const visibleAssignedCount = computed(
 }
 
 .scroll-wrapper::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--bs-secondary-bg);
   border-radius: 4px;
 }
 
@@ -204,16 +206,17 @@ const visibleAssignedCount = computed(
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px dashed #ddd;
+  border: 2px dashed var(--bs-border-color);
   border-radius: 4px;
-  background-color: #fafafa;
+  background-color: var(--bs-body-bg);
 }
 
 .staff-item {
   padding: 10px;
   margin-bottom: 6px;
-  background: #fff;
-  border: 1px solid #ccc;
+  background: var(--bs-body-bg);
+  border: 1px solid var(--bs-border-color);
+  color: var(--bs-body-color);
   border-radius: 6px;
   cursor: grab;
   transition: all 0.2s ease;
@@ -221,7 +224,7 @@ const visibleAssignedCount = computed(
 }
 
 .staff-item:hover {
-  border-color: #999;
+  border-color: var(--bs-secondary-color);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 

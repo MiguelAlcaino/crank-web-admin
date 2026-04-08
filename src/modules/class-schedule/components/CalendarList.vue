@@ -204,7 +204,7 @@ function scrollToTodayClass() {
           class="spinner-border text-primary position-absolute form-select-spinner"
           role="status"
         >
-          <span class="sr-only">Loading...</span>
+          <span class="visually-hidden">Loading...</span>
         </div>
       </div>
     </div>

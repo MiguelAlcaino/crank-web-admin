@@ -6,7 +6,7 @@ defineProps<{
 
 <template>
   <div class="spinner-border crankSpinner" role="status">
-    <span class="sr-only">Loading...</span>
+    <span class="visually-hidden">Loading...</span>
   </div>
   <p v-if="text">
     <strong>{{ text }}</strong>
