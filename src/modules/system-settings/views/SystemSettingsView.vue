@@ -49,7 +49,7 @@ async function handleClearCache() {
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h4>System Settings</h4>
       <button
-        class="btn btn-outline-secondary btn-sm"
+        class="btn btn-primary"
         @click="handleClearCache"
         :disabled="isClearingCache || crud.isSaving.value"
       >
