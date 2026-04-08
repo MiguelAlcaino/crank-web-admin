@@ -155,21 +155,21 @@ onMounted(loadCustomers)
         <tbody>
           <tr v-for="customer in crud.result.value.items" :key="customer.id">
             <td>{{ customer.id }}</td>
-            <td>{{ customer.firstName }} {{ customer.lastName }}</td>
-            <td>{{ customer.email }}</td>
-            <td>{{ customer.mobilePhone || '-' }}</td>
+            <td>{{ customer.user.firstName }} {{ customer.user.lastName }}</td>
+            <td>{{ customer.user.email }}</td>
+            <td>{{ customer.user.phone || '-' }}</td>
             <td>
-              <span v-if="customer.isMobilePhoneVerified" class="badge badge-success">Yes</span>
+              <span v-if="customer.user.isMobilePhoneVerified" class="badge badge-success">Yes</span>
               <span v-else class="badge badge-secondary">No</span>
             </td>
             <td>
               <span
-                v-for="sc in customer.siteCustomers"
-                :key="sc.siteCustomerId"
+                v-for="su in customer.user.siteUsers"
+                :key="su.site"
                 class="badge badge-info mr-1"
-                :title="'MB ID: ' + (sc.mindbodyId || 'N/A')"
+                :title="'MB ID: ' + (su.externalUserId || 'N/A')"
               >
-                {{ sc.siteName }}
+                {{ su.site }}
               </span>
             </td>
             <td>

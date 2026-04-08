@@ -2,26 +2,27 @@ import { readonly, ref } from 'vue'
 import { gql } from 'graphql-tag'
 import type { ApolloClient, NormalizedCacheObject } from '@apollo/client/core'
 
-export interface AdminSiteCustomerInfo {
-  siteCustomerId: string
+export interface SimpleSiteUser {
   site: string
-  siteName: string
-  mindbodyId: string | null
+  externalUserId: string
 }
 
-export interface AdminCustomerListItem {
-  id: string
-  firstName: string | null
-  lastName: string | null
+export interface User {
+  firstName: string
+  lastName: string
   email: string
-  mobilePhone: string | null
-  createdAt: string | null
+  phone: string
   isMobilePhoneVerified: boolean
-  siteCustomers: AdminSiteCustomerInfo[]
+  siteUsers: SimpleSiteUser[]
+}
+
+export interface IdentifiableUser {
+  id: string
+  user: User
 }
 
 export interface PaginatedAdminCustomers {
-  items: AdminCustomerListItem[]
+  items: IdentifiableUser[]
   totalCount: number
   page: number
   limit: number
@@ -32,17 +33,16 @@ const ADMIN_CUSTOMERS_QUERY = gql`
     adminCustomers(params: $params, pagination: $pagination) {
       items {
         id
-        firstName
-        lastName
-        email
-        mobilePhone
-        createdAt
-        isMobilePhoneVerified
-        siteCustomers {
-          siteCustomerId
-          site
-          siteName
-          mindbodyId
+        user {
+          firstName
+          lastName
+          email
+          phone
+          isMobilePhoneVerified
+          siteUsers {
+            site
+            externalUserId
+          }
         }
       }
       totalCount
