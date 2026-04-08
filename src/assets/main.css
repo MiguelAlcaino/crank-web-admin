@@ -5,7 +5,7 @@
 }
 
 .btn-link {
-  color: #000000;
+  color: var(--bs-body-color);
 }
 
 .btn.btn-primary {
