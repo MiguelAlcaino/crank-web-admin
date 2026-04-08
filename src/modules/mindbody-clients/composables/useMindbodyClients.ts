@@ -20,7 +20,7 @@ export interface PaginatedMindbodyClients {
 
 const LIST_QUERY = gql`
   query AdminMindbodyClients($params: AdminMindbodyClientsParams, $pagination: PaginationInput) {
-    adminMindbodyClients(params: $params, pagination: $pagination) {
+    mindbodyClients(params: $params, pagination: $pagination) {
       items {
         id
         clientId
@@ -38,7 +38,7 @@ const LIST_QUERY = gql`
 
 const DETAIL_QUERY = gql`
   query AdminMindbodyClient($id: ID!) {
-    adminMindbodyClient(id: $id) {
+    mindbodyClient(id: $id) {
       id
       clientId
       firstName
@@ -67,7 +67,7 @@ export const useMindbodyClients = (apolloClient: ApolloClient<NormalizedCacheObj
         },
         fetchPolicy: 'network-only'
       })
-      listResult.value = data.adminMindbodyClients
+      listResult.value = data.mindbodyClients
     } catch (e) {
       hasError.value = true
     } finally {
@@ -85,7 +85,7 @@ export const useMindbodyClients = (apolloClient: ApolloClient<NormalizedCacheObj
         variables: { id },
         fetchPolicy: 'network-only'
       })
-      detail.value = data.adminMindbodyClient
+      detail.value = data.mindbodyClient
     } catch (e) {
       hasError.value = true
     } finally {

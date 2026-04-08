@@ -9,7 +9,7 @@ export interface TransactionItem {
   amount: string | null
 }
 
-export interface AdminTransactionRecord {
+export interface TransactionRecord {
   id: string
   creditCardChargeId: string | null
   creditCardHolderName: string | null
@@ -31,18 +31,18 @@ export interface AdminTransactionRecord {
 }
 
 export interface PaginatedTransactionRecords {
-  items: AdminTransactionRecord[]
+  items: TransactionRecord[]
   totalCount: number
   page: number
   limit: number
 }
 
 const LIST_QUERY = gql`
-  query AdminTransactionRecords(
-    $filter: AdminTransactionRecordFilterInput
+  query TransactionRecords(
+    $filter: TransactionRecordFilterInput
     $pagination: PaginationInput
   ) {
-    adminTransactionRecords(filter: $filter, pagination: $pagination) {
+    transactionRecords(filter: $filter, pagination: $pagination) {
       items {
         id
         amount
@@ -69,8 +69,8 @@ const LIST_QUERY = gql`
 `
 
 const DETAIL_QUERY = gql`
-  query AdminTransactionRecord($id: ID!) {
-    adminTransactionRecord(id: $id) {
+  query TransactionRecord($id: ID!) {
+    transactionRecord(id: $id) {
       id
       creditCardChargeId
       creditCardHolderName
@@ -106,7 +106,7 @@ const REFUND_MUTATION = gql`
 
 export const useTransactionRecords = (apolloClient: ApolloClient<NormalizedCacheObject>) => {
   const listResult = ref<PaginatedTransactionRecords | null>(null)
-  const detail = ref<AdminTransactionRecord | null>(null)
+  const detail = ref<TransactionRecord | null>(null)
   const isLoading = ref(false)
   const isRefunding = ref(false)
   const hasError = ref(false)
@@ -130,7 +130,7 @@ export const useTransactionRecords = (apolloClient: ApolloClient<NormalizedCache
         },
         fetchPolicy: 'network-only'
       })
-      listResult.value = data.adminTransactionRecords
+      listResult.value = data.transactionRecords
     } catch (e) {
       hasError.value = true
       errorMessage.value = 'Failed to load transactions'
@@ -149,7 +149,7 @@ export const useTransactionRecords = (apolloClient: ApolloClient<NormalizedCache
         variables: { id },
         fetchPolicy: 'network-only'
       })
-      detail.value = data.adminTransactionRecord
+      detail.value = data.transactionRecord
     } catch (e) {
       hasError.value = true
       errorMessage.value = 'Failed to load transaction'

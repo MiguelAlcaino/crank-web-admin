@@ -30,7 +30,7 @@ export interface PaginatedAdminCustomers {
 
 const ADMIN_CUSTOMERS_QUERY = gql`
   query AdminCustomers($params: AdminCustomersParams, $pagination: PaginationInput) {
-    adminCustomers(params: $params, pagination: $pagination) {
+    customers(params: $params, pagination: $pagination) {
       items {
         id
         user {
@@ -78,7 +78,7 @@ export const useAdminCustomers = (apolloClient: ApolloClient<NormalizedCacheObje
         },
         fetchPolicy: 'network-only'
       })
-      result.value = data.adminCustomers
+      result.value = data.customers
     } catch (e) {
       hasError.value = true
     } finally {
