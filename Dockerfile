@@ -1,7 +1,7 @@
 # Multi-stage build for Vue.js admin application
 
 # Stage 1: Build the application
-FROM node:20-alpine AS builder
+FROM node:22-alpine AS builder
 
 ARG VITE_CRANK_REST_SERVER_URL
 ARG VITE_CRANK_GRAPHQL_SERVER_URL
