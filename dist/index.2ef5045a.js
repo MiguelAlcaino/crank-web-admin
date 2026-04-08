@@ -18979,13 +18979,13 @@ const Bn = _8({
       path: "/login",
       name: "login",
       meta: { requiresAuth: !1 },
-      component: () => import("./LoginView.ae1c4c6b.js")
+      component: () => import("./LoginView.085bfcc0.js")
     },
     {
       path: "/admin/login",
       name: "admin_login",
       meta: { requiresAuth: !1 },
-      component: () => import("./AdminLoginView.7dff96da.js")
+      component: () => import("./AdminLoginView.0f4d9afd.js")
     },
     {
       path: "/unauthorized",
@@ -18994,13 +18994,13 @@ const Bn = _8({
     },
     {
       path: "/admin",
-      component: () => import("./AdminLayout.a43f1cb1.js"),
+      component: () => import("./AdminLayout.78ee69fb.js"),
       meta: { requiresAuth: !0 },
       children: [
         {
           path: "",
           name: "admin_dashboard",
-          component: () => import("./AdminDashboardView.ec36865f.js")
+          component: () => import("./AdminDashboardView.033a92f7.js")
         },
         {
           path: "gift-cards",
@@ -19012,7 +19012,7 @@ const Bn = _8({
           path: "payment-links",
           name: "admin_payment_links",
           meta: { role: yt.ROLE_SUPER_ADMIN },
-          component: () => import("./PaymentLinkListView.bd61be7b.js")
+          component: () => import("./PaymentLinkListView.8a87f859.js")
         },
         {
           path: "users",
@@ -19023,13 +19023,13 @@ const Bn = _8({
         {
           path: "my-settings",
           name: "admin_my_settings",
-          component: () => import("./MyAdminSettingsView.30f92612.js")
+          component: () => import("./MyAdminSettingsView.09195a7b.js")
         },
         {
           path: "webhook-events",
           name: "admin_webhook_events",
           meta: { role: yt.ROLE_SUPER_ADMIN },
-          component: () => import("./WebhookEventsView.0bd799a7.js")
+          component: () => import("./WebhookEventsView.65510376.js")
         },
         {
           path: "instructor-profiles",
@@ -19057,13 +19057,13 @@ const Bn = _8({
         {
           path: "classes-calendar/:site",
           name: "admin_classes_calendar",
-          component: () => import("./ClassScheduleView.dedf6e09.js")
+          component: () => import("./ClassScheduleView.41b67ff0.js")
         },
         {
           path: "room-layout/:site",
           name: "admin_room_layout_list",
           meta: { role: yt.ROLE_SUPER_ADMIN },
-          component: () => import("./RoomLayoutListView.90c77d65.js")
+          component: () => import("./RoomLayoutListView.d3cdae19.js")
         },
         {
           path: "room-layout/create",
@@ -19090,58 +19090,58 @@ const Bn = _8({
         {
           path: "customer/:id",
           name: "admin_customer_profile",
-          component: () => import("./CustomerProfileView.f767ac96.js")
+          component: () => import("./CustomerProfileView.c82cdc77.js")
         },
         {
           path: "transactions",
           name: "admin_transactions",
           meta: { role: yt.ROLE_SUPER_ADMIN },
-          component: () => import("./TransactionListView.45c5d7dc.js")
+          component: () => import("./TransactionListView.da2c061e.js")
         },
         {
           path: "transactions/:id",
           name: "admin_transaction_detail",
           meta: { role: yt.ROLE_SUPER_ADMIN },
-          component: () => import("./TransactionDetailView.1810ca4d.js")
+          component: () => import("./TransactionDetailView.3bc3c5e4.js")
         },
         {
           path: "customers",
           name: "admin_customers",
-          component: () => import("./CustomerListView.902aa6aa.js")
+          component: () => import("./CustomerListView.dc9282ec.js")
         },
         {
           path: "bulk-vod-activator",
           name: "admin_bulk_vod_activator",
-          component: () => import("./BulkVodActivatorView.c5aa7e8d.js")
+          component: () => import("./BulkVodActivatorView.a3b6ba03.js")
         },
         {
           path: "customer-gift-cards",
           name: "admin_customer_gift_cards",
           meta: { role: yt.ROLE_SUPER_ADMIN, title: "Pending Gift Cards" },
-          component: () => import("./PlaceholderView.7218589f.js")
+          component: () => import("./PlaceholderView.c2adb6ee.js")
         },
         {
           path: "mindbody-clients",
           name: "admin_mindbody_clients",
           meta: { role: yt.ROLE_SUPER_ADMIN },
-          component: () => import("./MindbodyClientListView.4f96872d.js")
+          component: () => import("./MindbodyClientListView.829663f0.js")
         },
         {
           path: "mindbody-staff",
           name: "admin_mindbody_staff",
           meta: { role: yt.ROLE_SUPER_ADMIN },
-          component: () => import("./MindbodyStaffView.b790d78b.js")
+          component: () => import("./MindbodyStaffView.4b7b5b4f.js")
         },
         {
           path: "settings",
           name: "admin_settings",
           meta: { role: yt.ROLE_SUPER_ADMIN },
-          component: () => import("./SystemSettingsView.6171143d.js")
+          component: () => import("./SystemSettingsView.021d74d6.js")
         },
         {
           path: "blacklisted-phones",
           name: "admin_blacklisted_phones",
-          component: () => import("./BlacklistView.5d78f539.js")
+          component: () => import("./BlacklistView.648f3289.js")
         }
       ]
     },
@@ -19161,13 +19161,13 @@ const Bn = _8({
       path: "/admin/calendar-class",
       name: "admin_calendar_class",
       meta: { requiresAuth: !0 },
-      component: () => import("./ClassScheduleView.dedf6e09.js")
+      component: () => import("./ClassScheduleView.41b67ff0.js")
     },
     {
       path: "/admin/room-layout/list",
       name: "legacy_admin_room_layout_list",
       meta: { requiresAuth: !0 },
-      component: () => import("./RoomLayoutListView.90c77d65.js")
+      component: () => import("./RoomLayoutListView.d3cdae19.js")
     },
     {
       path: "/admin/room-layout/create",
@@ -19191,7 +19191,7 @@ const Bn = _8({
       path: "/customer-profile/:id",
       name: "customer_profile",
       meta: { requiresAuth: !0 },
-      component: () => import("./CustomerProfileView.f767ac96.js")
+      component: () => import("./CustomerProfileView.c82cdc77.js")
     },
     {
       path: "/gift-cards",
@@ -19209,13 +19209,13 @@ const Bn = _8({
       path: "/my-admin-settings",
       name: "my_admin_settings",
       meta: { requiresAuth: !0 },
-      component: () => import("./MyAdminSettingsView.30f92612.js")
+      component: () => import("./MyAdminSettingsView.09195a7b.js")
     },
     {
       path: "/payment-links",
       name: "payment_links",
       meta: { requiresAuth: !0 },
-      component: () => import("./PaymentLinkListView.bd61be7b.js")
+      component: () => import("./PaymentLinkListView.8a87f859.js")
     },
     {
       path: "/instructor-profiles",
@@ -19233,7 +19233,7 @@ const Bn = _8({
       path: "/webhook-events",
       name: "webhook_events",
       meta: { requiresAuth: !0, role: yt.ROLE_SUPER_ADMIN },
-      component: () => import("./WebhookEventsView.0bd799a7.js")
+      component: () => import("./WebhookEventsView.65510376.js")
     },
     {
       path: "/class-packages",

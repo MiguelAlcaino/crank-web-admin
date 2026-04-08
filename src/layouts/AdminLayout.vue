@@ -64,88 +64,6 @@ async function logout() {
         class="col-sm-3 col-md-2 d-none d-sm-block sidebar"
       >
         <ul class="nav nav-pills flex-column">
-          <!-- Transactions (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
-            <RouterLink
-              class="nav-link"
-              :class="{ active: isActive('admin_transactions') }"
-              :to="{ name: 'admin_transactions' }"
-            >
-              Transactions
-            </RouterLink>
-          </li>
-
-          <!-- Packages dropdown (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
-            <a
-              class="nav-link dropdown-toggle"
-              :class="{ active: route.name === 'admin_class_packages' }"
-              href="#"
-              @click.prevent="toggleDropdown('packages')"
-            >
-              Packages
-              <template v-for="site in sites" :key="site.serviceKey">
-                <span v-if="isActiveWithParam('admin_class_packages', 'site', site.serviceKey)">
-                  {{ site.name }}
-                </span>
-              </template>
-            </a>
-            <div v-show="openDropdown === 'packages'" class="dropdown-menu show">
-              <RouterLink
-                v-for="site in sites"
-                :key="site.serviceKey"
-                class="dropdown-item"
-                :to="{ name: 'admin_class_packages', params: { site: site.serviceKey } }"
-              >
-                Packages {{ site.name }}
-              </RouterLink>
-            </div>
-          </li>
-
-          <!-- Pending Gift Cards (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
-            <RouterLink
-              class="nav-link"
-              :class="{ active: isActive('admin_customer_gift_cards') }"
-              :to="{ name: 'admin_customer_gift_cards' }"
-            >
-              Pending Gift Cards
-            </RouterLink>
-          </li>
-
-          <!-- Gift Card (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
-            <RouterLink
-              class="nav-link"
-              :class="{ active: isActive('admin_gift_cards') }"
-              :to="{ name: 'admin_gift_cards' }"
-            >
-              Gift Card
-            </RouterLink>
-          </li>
-
-          <!-- Payment Link (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
-            <RouterLink
-              class="nav-link"
-              :class="{ active: isActive('admin_payment_links') }"
-              :to="{ name: 'admin_payment_links' }"
-            >
-              Payment link
-            </RouterLink>
-          </li>
-
-          <!-- Webhook Events (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
-            <RouterLink
-              class="nav-link"
-              :class="{ active: isActive('admin_webhook_events') }"
-              :to="{ name: 'admin_webhook_events' }"
-            >
-              Webhook Events
-            </RouterLink>
-          </li>
-
           <!-- Clients (STAFF or above) -->
           <li v-if="isStaffOrAbove()" class="nav-item">
             <RouterLink
@@ -184,6 +102,17 @@ async function logout() {
             </div>
           </li>
 
+          <!-- Transactions (SUPER_ADMIN) -->
+          <li v-if="isSuperAdmin()" class="nav-item">
+            <RouterLink
+              class="nav-link"
+              :class="{ active: isActive('admin_transactions') }"
+              :to="{ name: 'admin_transactions' }"
+            >
+              Transactions
+            </RouterLink>
+          </li>
+
           <!-- Class Schedule Config dropdown (SUPER_ADMIN) -->
           <li v-if="isSuperAdmin()" class="nav-item">
             <a
@@ -209,28 +138,6 @@ async function logout() {
                 Class Schedule Config {{ site.name }}
               </RouterLink>
             </div>
-          </li>
-
-          <!-- Session Types (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
-            <RouterLink
-              class="nav-link"
-              :class="{ active: isActive('admin_session_types') }"
-              :to="{ name: 'admin_session_types' }"
-            >
-              Session Types
-            </RouterLink>
-          </li>
-
-          <!-- Instructor Profiles (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
-            <RouterLink
-              class="nav-link"
-              :class="{ active: isActive('admin_instructor_profiles') }"
-              :to="{ name: 'admin_instructor_profiles' }"
-            >
-              Instructor Profiles
-            </RouterLink>
           </li>
 
           <!-- Room Layout Config dropdown (SUPER_ADMIN) -->
@@ -260,6 +167,88 @@ async function logout() {
             </div>
           </li>
 
+          <!-- Packages dropdown (SUPER_ADMIN) -->
+          <li v-if="isSuperAdmin()" class="nav-item">
+            <a
+              class="nav-link dropdown-toggle"
+              :class="{ active: route.name === 'admin_class_packages' }"
+              href="#"
+              @click.prevent="toggleDropdown('packages')"
+            >
+              Packages
+              <template v-for="site in sites" :key="site.serviceKey">
+                <span v-if="isActiveWithParam('admin_class_packages', 'site', site.serviceKey)">
+                  {{ site.name }}
+                </span>
+              </template>
+            </a>
+            <div v-show="openDropdown === 'packages'" class="dropdown-menu show">
+              <RouterLink
+                v-for="site in sites"
+                :key="site.serviceKey"
+                class="dropdown-item"
+                :to="{ name: 'admin_class_packages', params: { site: site.serviceKey } }"
+              >
+                Packages {{ site.name }}
+              </RouterLink>
+            </div>
+          </li>
+
+          <!-- Gift Card (SUPER_ADMIN) -->
+          <li v-if="isSuperAdmin()" class="nav-item">
+            <RouterLink
+              class="nav-link"
+              :class="{ active: isActive('admin_gift_cards') }"
+              :to="{ name: 'admin_gift_cards' }"
+            >
+              Gift Card
+            </RouterLink>
+          </li>
+
+          <!-- Pending Gift Cards (SUPER_ADMIN) -->
+          <li v-if="isSuperAdmin()" class="nav-item">
+            <RouterLink
+              class="nav-link"
+              :class="{ active: isActive('admin_customer_gift_cards') }"
+              :to="{ name: 'admin_customer_gift_cards' }"
+            >
+              Pending Gift Cards
+            </RouterLink>
+          </li>
+
+          <!-- Payment Link (SUPER_ADMIN) -->
+          <li v-if="isSuperAdmin()" class="nav-item">
+            <RouterLink
+              class="nav-link"
+              :class="{ active: isActive('admin_payment_links') }"
+              :to="{ name: 'admin_payment_links' }"
+            >
+              Payment link
+            </RouterLink>
+          </li>
+
+          <!-- Session Types (SUPER_ADMIN) -->
+          <li v-if="isSuperAdmin()" class="nav-item">
+            <RouterLink
+              class="nav-link"
+              :class="{ active: isActive('admin_session_types') }"
+              :to="{ name: 'admin_session_types' }"
+            >
+              Session Types
+            </RouterLink>
+          </li>
+
+          <!-- Instructor Profiles (SUPER_ADMIN) -->
+          <li v-if="isSuperAdmin()" class="nav-item">
+            <RouterLink
+              class="nav-link"
+              :class="{ active: isActive('admin_instructor_profiles') }"
+              :to="{ name: 'admin_instructor_profiles' }"
+            >
+              Instructor Profiles
+            </RouterLink>
+          </li>
+
           <!-- Mindbody Staff (SUPER_ADMIN) -->
           <li v-if="isSuperAdmin()" class="nav-item">
             <RouterLink
@@ -271,25 +260,14 @@ async function logout() {
             </RouterLink>
           </li>
 
-          <!-- Settings (SUPER_ADMIN) -->
+          <!-- Webhook Events (SUPER_ADMIN) -->
           <li v-if="isSuperAdmin()" class="nav-item">
             <RouterLink
               class="nav-link"
-              :class="{ active: isActive('admin_settings') }"
-              :to="{ name: 'admin_settings' }"
+              :class="{ active: isActive('admin_webhook_events') }"
+              :to="{ name: 'admin_webhook_events' }"
             >
-              Settings
-            </RouterLink>
-          </li>
-
-          <!-- Blacklisted phones (STAFF or above) -->
-          <li v-if="isStaffOrAbove()" class="nav-item">
-            <RouterLink
-              class="nav-link"
-              :class="{ active: isActive('admin_blacklisted_phones') }"
-              :to="{ name: 'admin_blacklisted_phones' }"
-            >
-              Blacklisted phones
+              Webhook Events
             </RouterLink>
           </li>
 
@@ -304,6 +282,17 @@ async function logout() {
             </RouterLink>
           </li>
 
+          <!-- Settings (SUPER_ADMIN) -->
+          <li v-if="isSuperAdmin()" class="nav-item">
+            <RouterLink
+              class="nav-link"
+              :class="{ active: isActive('admin_settings') }"
+              :to="{ name: 'admin_settings' }"
+            >
+              Settings
+            </RouterLink>
+          </li>
+
           <!-- My Settings (any admin) -->
           <li class="nav-item">
             <RouterLink
@@ -312,6 +301,28 @@ async function logout() {
               :to="{ name: 'admin_my_settings' }"
             >
               My Settings
+            </RouterLink>
+          </li>
+
+          <!-- Blacklisted phones (STAFF or above) -->
+          <li v-if="isStaffOrAbove()" class="nav-item">
+            <RouterLink
+              class="nav-link"
+              :class="{ active: isActive('admin_blacklisted_phones') }"
+              :to="{ name: 'admin_blacklisted_phones' }"
+            >
+              Blacklisted phones
+            </RouterLink>
+          </li>
+
+          <!-- Report - MB Clients (SUPER_ADMIN) -->
+          <li v-if="isSuperAdmin()" class="nav-item">
+            <RouterLink
+              class="nav-link"
+              :class="{ active: isActive('admin_mindbody_clients') }"
+              :to="{ name: 'admin_mindbody_clients' }"
+            >
+              Report - MB Clients
             </RouterLink>
           </li>
 
