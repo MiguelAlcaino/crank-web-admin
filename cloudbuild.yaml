@@ -4,7 +4,7 @@ steps:
     args:
       - 'build'
       - '--build-arg'
-      - 'VITE_CRANK_REST_SERVER_URL=https://crank-payments-930523966479.me-central1.run.app'
+      - 'VITE_CRANK_REST_SERVER_URL=https://crank-payments-930523966479.me-central1.run.app/api/'
       - '--build-arg'
       - 'VITE_CRANK_GRAPHQL_SERVER_URL=https://crank-payments-930523966479.me-central1.run.app/api/graphql/'
       - '-t'
