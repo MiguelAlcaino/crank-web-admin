@@ -240,7 +240,7 @@ function scrollToTodayClass() {
 
         <div id="prev" v-if="!weekSelectorIsVisible">
           <a href="#" @click.prevent="goToPrevWeek()">
-            <i class="bi bi-caret-left-fill" style="color: black"></i>
+            <i class="bi bi-caret-left-fill"></i>
           </a>
         </div>
         <div
@@ -253,7 +253,7 @@ function scrollToTodayClass() {
           {{ dayjs(dateRange[1]).format('DD/MM/YYYY') }}
         </div>
         <div id="next" v-if="!weekSelectorIsVisible">
-          <a href="#" @click.prevent="goToNextWeek()" style="color: black">
+          <a href="#" @click.prevent="goToNextWeek()">
             <i class="bi bi-caret-right-fill"></i>
           </a>
         </div>
@@ -322,22 +322,49 @@ function scrollToTodayClass() {
   </ModalComponent>
 </template>
 
+<style>
+/* Light mode defaults */
+:root[data-bs-theme="light"] {
+  --cal-container-bg: #f8f8f8;
+  --cal-row-bg: #ffffff;
+  --cal-day-header-bg: #888888;
+  --cal-day-header-color: #ffffff;
+  --cal-row-color: #000000;
+  --cal-border: #bdbdbd;
+  --cal-shadow: rgba(0, 0, 0, 0.15);
+  --cal-disabled-bg: #bdbdbd;
+}
+
+/* Dark mode — navy/near-black palette */
+:root[data-bs-theme="dark"] {
+  --cal-container-bg: #13141f;
+  --cal-row-bg: #1a1b2a;
+  --cal-day-header-bg: #0e0f19;
+  --cal-day-header-color: rgba(255, 255, 255, 0.45);
+  --cal-row-color: rgba(255, 255, 255, 0.85);
+  --cal-border: rgba(255, 255, 255, 0.06);
+  --cal-disabled-bg: #22233a;
+  --cal-shadow: rgba(0, 0, 0, 0.4);
+}
+</style>
+
 <style scoped>
 .ReservationClassList {
   padding: 10px;
-  background-color: #f8f8f8;
-  box-shadow: 0 0 2px 0 #888;
+  background-color: var(--cal-container-bg);
+  box-shadow: 0 0 4px 0 var(--cal-shadow);
   margin-bottom: 35px;
 }
 
 .day {
-  font-weight: 700;
   display: block;
-  background: gray;
-  color: #fff;
+  background: var(--cal-day-header-bg);
+  color: var(--cal-day-header-color);
   padding-left: 5px;
   font-size: 12px;
   font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 
 .time {
@@ -346,7 +373,7 @@ function scrollToTodayClass() {
 }
 
 #ClassesSection div.ClassDate > div > div {
-  color: #000000;
+  color: var(--cal-row-color);
   font-weight: bold;
 }
 
@@ -368,8 +395,8 @@ function scrollToTodayClass() {
 
 #ClassesSection div.ClassDate > div {
   padding: 6px;
-  background-color: #fff;
-  border: 1px solid #bdbdbd;
+  background-color: var(--cal-row-bg);
+  border: 1px solid var(--cal-border);
 }
 
 #DateRangeSection {
@@ -384,7 +411,7 @@ function scrollToTodayClass() {
 }
 
 .disabledClass {
-  background-color: #bdbdbd !important;
+  background-color: var(--cal-disabled-bg, #bdbdbd) !important;
 }
 
 .crankSpiner {

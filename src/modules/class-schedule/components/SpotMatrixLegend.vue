@@ -44,11 +44,12 @@
 <style scoped>
 .matrixSpotsLegend {
   padding-top: 50px;
-  background-color: #f8f8f8;
+  background-color: var(--cal-container-bg, var(--bs-body-bg));
   min-height: 20px;
-  box-shadow: 0 0 2px 0 #888;
+  box-shadow: 0 0 4px 0 var(--cal-shadow, var(--bs-border-color));
   padding: 30px;
   font-family: 'Avenir', sans-serif;
+  color: var(--bs-body-color);
 }
 
 hr {
