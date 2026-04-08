@@ -14,7 +14,7 @@ spec:
       containerConcurrency: 80
       timeoutSeconds: 300
       containers:
-        - image: me-central1-docker.pkg.dev/crank-fit/crank/crank-web-admin
+        - image: me-central1-docker.pkg.dev/crank-fit/crank-web-admin/crank-web-admin
           ports:
             - containerPort: 80
           startupProbe:

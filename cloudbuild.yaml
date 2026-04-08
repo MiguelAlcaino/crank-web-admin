@@ -8,21 +8,21 @@ steps:
       - '--build-arg'
       - 'VITE_CRANK_GRAPHQL_SERVER_URL=https://crank-payments-930523966479.me-central1.run.app/api/graphql/'
       - '-t'
-      - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank/crank-web-admin:$COMMIT_SHA'
+      - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank-web-admin/crank-web-admin:$COMMIT_SHA'
       - '-t'
-      - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank/crank-web-admin:latest'
+      - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank-web-admin/crank-web-admin:latest'
       - '.'
 
   # Push Docker image
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank/crank-web-admin:$COMMIT_SHA'
+      - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank-web-admin/crank-web-admin:$COMMIT_SHA'
 
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank/crank-web-admin:latest'
+      - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank-web-admin/crank-web-admin:latest'
 
   # Deploy to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -32,15 +32,15 @@ steps:
       - 'deploy'
       - 'crank-web-admin'
       - '--image'
-      - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank/crank-web-admin:$COMMIT_SHA'
+      - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank-web-admin/crank-web-admin:$COMMIT_SHA'
       - '--region'
       - 'me-central1'
       - '--platform'
       - 'managed'
 
 images:
-  - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank/crank-web-admin:$COMMIT_SHA'
-  - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank/crank-web-admin:latest'
+  - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank-web-admin/crank-web-admin:$COMMIT_SHA'
+  - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank-web-admin/crank-web-admin:latest'
 
 options:
   logging: CLOUD_LOGGING_ONLY
