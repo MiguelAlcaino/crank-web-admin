@@ -152,7 +152,7 @@ onMounted(async () => {
               </span>
             </td>
             <td>
-              <span v-for="item in t.items" :key="item.id" class="d-block small">
+              <span v-for="item in t.items" :key="item.id ?? ''" class="d-block small">
                 {{ item.name }} (x{{ item.quantity }})
               </span>
             </td>

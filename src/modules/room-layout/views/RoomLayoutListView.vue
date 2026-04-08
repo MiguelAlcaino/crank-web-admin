@@ -14,6 +14,7 @@ import { useRoute } from 'vue-router'
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import type { ApiService } from '@/services/apiService'
 import { appStore } from '@/stores/appStorage'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 import router from '@/router'
 
 const apiService = inject<ApiService>('gqlApiService')!
@@ -34,7 +35,7 @@ const roomLayouts = ref<RoomLayout[]>([])
 async function getRoomLayouts() {
   isLoading.value = true
 
-  roomLayouts.value = (await apiService.roomLayouts(site.value, null)) as RoomLayout[]
+  roomLayouts.value = (await apiService.roomLayouts(site.value as SiteEnum, null)) as RoomLayout[]
 
   isLoading.value = false
 }

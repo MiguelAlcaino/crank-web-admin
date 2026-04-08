@@ -10,10 +10,11 @@ import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import type { ClassSchedule, RoomLayout } from '../interfaces'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 
 const apiService = inject<ApiService>('gqlApiService')!
 const route = useRoute()
-const site = computed(() => (route.params.site as string) || site.value || 'dubai')
+const site = computed(() => (route.params.site as string) || appStore().site || 'dubai')
 
 const isLoading = ref(false)
 const checked = ref(false)
@@ -63,7 +64,7 @@ watch(site, () => {
 async function getAvailableClassTypes() {
   isLoadingClassTypes.value = true
 
-  types.value = (await apiService.availableClassTypes(site.value)) as string[]
+  types.value = (await apiService.availableClassTypes(site.value as SiteEnum)) as string[]
 
   isLoadingClassTypes.value = false
 }
@@ -72,7 +73,7 @@ async function getClassSchedules() {
   isLoading.value = true
 
   allClassSchedules = (await apiService.classSchedules(
-    site.value
+    site.value as SiteEnum
   )) as unknown as ClassSchedule[]
 
   filteredClassSchedules.value = allClassSchedules
@@ -84,7 +85,7 @@ async function getClassSchedules() {
 async function getRoomLayouts() {
   isLoadingRoomLayouts.value = true
 
-  roomLayouts.value = (await apiService.roomLayouts(site.value, null)) as RoomLayout[]
+  roomLayouts.value = (await apiService.roomLayouts(site.value as SiteEnum, null)) as RoomLayout[]
 
   filteredRoomLayouts.value = roomLayouts.value
 

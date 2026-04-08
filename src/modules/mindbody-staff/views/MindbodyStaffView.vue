@@ -12,7 +12,7 @@ const staff = useMindbodyStaff(apolloClient)
 const { sites, fetchSites } = useAvailableSites(apolloClient)
 const toast = useToast()
 
-const currentSite = ref(appStore().site || '')
+const currentSite = ref<string>(appStore().site || '')
 
 async function loadStaff() {
   if (!currentSite.value) return
