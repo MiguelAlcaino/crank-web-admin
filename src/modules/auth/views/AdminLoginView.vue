@@ -26,8 +26,9 @@ async function login() {
   loginError.value = ''
 
   try {
+    const restUrl = import.meta.env.VITE_CRANK_REST_SERVER_URL
     const response = await axios.post(
-      '/api/admin_login_check',
+      `${restUrl}admin_login_check`,
       {
         email: formData.email,
         password: formData.password

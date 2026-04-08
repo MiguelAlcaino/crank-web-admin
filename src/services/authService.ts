@@ -40,7 +40,8 @@ export const authService = {
     )
   },
   async refreshToken(): Promise<void> {
-    const response = await axios.post('/api/token/refresh', {}, { withCredentials: true })
+    const restUrl = import.meta.env.VITE_CRANK_REST_SERVER_URL
+    const response = await axios.post(`${restUrl}token/refresh`, {}, { withCredentials: true })
     useAuthenticationStore().setSession(response.data.token)
   },
   async logout(): Promise<void> {
