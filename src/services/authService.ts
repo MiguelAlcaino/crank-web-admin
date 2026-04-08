@@ -26,7 +26,7 @@ export const authService = {
 
     const expires = new Date(decoded.exp * 1000)
     const now = Date.now()
-    const timeout = expires.getTime() - now - 60 * 1000 // 1 minute before it expires
+    const timeout = Math.max(expires.getTime() - now - 60 * 1000, 10 * 1000) // 1 minute before expiry, minimum 10s
     const self = this
     useAuthenticationStore().setRefreshTokenTimeout(
       window.setTimeout(async function () {
@@ -40,12 +40,15 @@ export const authService = {
     )
   },
   async refreshToken(): Promise<void> {
-    const response = await axios.post(this.getRestServerUrl() + 'token/refresh')
+    const response = await axios.post('/api/token/refresh', {}, { withCredentials: true })
     useAuthenticationStore().setSession(response.data.token)
   },
   async logout(): Promise<void> {
     useAuthenticationStore().deleteSession()
-    await router.push({ name: 'login' })
+    const loginRoute = router.currentRoute.value.path.startsWith('/admin')
+      ? 'admin_login'
+      : 'login'
+    await router.push({ name: loginRoute })
   },
   userHasRole(role: Role): boolean {
     const token = useAuthenticationStore().token

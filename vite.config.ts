@@ -23,7 +23,16 @@ export default ({ mode }) => {
       },
       rollupOptions: {}
     },
-    server: {},
+    server: {
+      proxy: {
+        '/api': {
+          target: 'https://crank-payments.crank.local',
+          changeOrigin: true,
+          secure: false,
+          cookieDomainRewrite: ''
+        }
+      }
+    },
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url))

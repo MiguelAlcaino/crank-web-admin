@@ -27,11 +27,12 @@ async function login() {
 
   try {
     const response = await axios.post(
-      authService.getRestServerUrl() + 'admin_login_check',
+      '/api/admin_login_check',
       {
         email: formData.email,
         password: formData.password
-      }
+      },
+      { withCredentials: true }
     )
 
     useAuthenticationStore().setSession(response.data.token)
