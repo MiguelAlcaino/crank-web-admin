@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { appStore } from '@/stores/appStorage'
-import { inject, onMounted, ref } from 'vue'
+import { computed, inject, onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import dayjs from 'dayjs'
 
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
@@ -11,6 +12,8 @@ import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import type { ClassSchedule, RoomLayout } from '../interfaces'
 
 const apiService = inject<ApiService>('gqlApiService')!
+const route = useRoute()
+const site = computed(() => (route.params.site as string) || site.value || 'dubai')
 
 const isLoading = ref(false)
 const checked = ref(false)
@@ -51,10 +54,16 @@ onMounted(() => {
   getClassSchedules()
 })
 
+watch(site, () => {
+  getAvailableClassTypes()
+  getRoomLayouts()
+  getClassSchedules()
+})
+
 async function getAvailableClassTypes() {
   isLoadingClassTypes.value = true
 
-  types.value = (await apiService.availableClassTypes(appStore().site)) as string[]
+  types.value = (await apiService.availableClassTypes(site.value)) as string[]
 
   isLoadingClassTypes.value = false
 }
@@ -63,7 +72,7 @@ async function getClassSchedules() {
   isLoading.value = true
 
   allClassSchedules = (await apiService.classSchedules(
-    appStore().site
+    site.value
   )) as unknown as ClassSchedule[]
 
   filteredClassSchedules.value = allClassSchedules
@@ -75,7 +84,7 @@ async function getClassSchedules() {
 async function getRoomLayouts() {
   isLoadingRoomLayouts.value = true
 
-  roomLayouts.value = (await apiService.roomLayouts(appStore().site, null)) as RoomLayout[]
+  roomLayouts.value = (await apiService.roomLayouts(site.value, null)) as RoomLayout[]
 
   filteredRoomLayouts.value = roomLayouts.value
 

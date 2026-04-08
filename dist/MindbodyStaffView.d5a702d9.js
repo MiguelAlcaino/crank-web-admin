@@ -1,6 +1,6 @@
-import { N as g, r as d, O as y, d as N, H as M, s as L, a0 as E, I as q, b as n, e as t, f as x, v as A, F as b, h as p, g as i, B as F, j as m, o as l, t as u } from "./index.e45f3cea.js";
-import { u as C } from "./useAvailableSites.f108131e.js";
-import { u as T } from "./useToast.2325cd44.js";
+import { N as g, r as d, O as y, d as N, H as M, s as L, W as E, I as q, b as n, e as t, f as x, v as A, F as b, h as p, g as i, B as F, j as m, o as l, t as u } from "./index.8423d6a8.js";
+import { u as C } from "./useAvailableSites.f93f3824.js";
+import { u as T } from "./useToast.d0fecc30.js";
 const U = g`
   query MindbodyStaffs($site: SiteEnum!) {
     mindbodyStaffs(site: $site) {
@@ -66,21 +66,21 @@ const U = g`
 ], R = {
   key: 1,
   class: "alert alert-danger"
-}, G = {
+}, W = {
   key: 2,
   class: "table table-striped table-sm"
-}, J = /* @__PURE__ */ t("thead", null, [
+}, G = /* @__PURE__ */ t("thead", null, [
   /* @__PURE__ */ t("tr", null, [
     /* @__PURE__ */ t("th", null, "ID"),
     /* @__PURE__ */ t("th", null, "First Name"),
     /* @__PURE__ */ t("th", null, "Last Name"),
     /* @__PURE__ */ t("th", null, "Email")
   ])
-], -1), K = { key: 0 }, W = /* @__PURE__ */ t("td", {
+], -1), J = { key: 0 }, K = /* @__PURE__ */ t("td", {
   colspan: "4",
   class: "text-center text-muted py-3"
 }, "No staff found", -1), X = [
-  W
+  K
 ], st = /* @__PURE__ */ N({
   __name: "MindbodyStaffView",
   setup(h) {
@@ -125,10 +125,10 @@ const U = g`
       ]),
       i(e).isLoading.value ? (l(), n("div", H, Q)) : m("", !0),
       i(e).hasError.value ? (l(), n("div", R, "Failed to load staff.")) : m("", !0),
-      i(e).isLoading.value ? m("", !0) : (l(), n("table", G, [
-        J,
+      i(e).isLoading.value ? m("", !0) : (l(), n("table", W, [
+        G,
         t("tbody", null, [
-          i(e).staffList.value.length === 0 ? (l(), n("tr", K, X)) : m("", !0),
+          i(e).staffList.value.length === 0 ? (l(), n("tr", J, X)) : m("", !0),
           (l(!0), n(b, null, p(i(e).staffList.value, (a) => (l(), n("tr", {
             key: a.id
           }, [

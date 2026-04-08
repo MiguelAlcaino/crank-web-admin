@@ -1,5 +1,5 @@
-import { N as I, r as i, O as D, d as R, H as $, z as B, c as T, I as O, J as j, b as l, e as t, k as Y, K as H, f, i as g, t as n, w as z, j as y, g as r, F as S, h as U, M as J, Y as K, o, B as Q } from "./index.e45f3cea.js";
-const G = I`
+import { N as I, r as i, O as D, d as R, H as $, z as B, c as T, I as O, J as j, b as l, e as t, k as H, K as Y, f, i as g, t as n, w as z, j as y, g as r, F as S, h as U, M as J, Z as K, o, B as Q } from "./index.8423d6a8.js";
+const Z = I`
   query AdminCustomers($params: AdminCustomersParams, $pagination: PaginationInput) {
     customers(params: $params, pagination: $pagination) {
       items {
@@ -21,13 +21,13 @@ const G = I`
       limit
     }
   }
-`, W = (N) => {
+`, G = (N) => {
   const V = i(null), _ = i(!1), s = i(!1);
   async function C(m) {
     _.value = !0, s.value = !1;
     try {
       const { page: u, limit: d, ...c } = m, { data: v } = await N.query({
-        query: G,
+        query: Z,
         variables: {
           params: Object.keys(c).length > 0 ? c : void 0,
           pagination: u || d ? { page: u, limit: d } : void 0
@@ -47,7 +47,7 @@ const G = I`
     hasError: D(s),
     fetchCustomers: C
   };
-}, X = { class: "d-flex justify-content-between align-items-center mb-3" }, Z = /* @__PURE__ */ t("h4", null, "Clients", -1), tt = ["onSubmit"], et = { class: "input-group" }, st = /* @__PURE__ */ t("button", {
+}, W = { class: "d-flex justify-content-between align-items-center mb-3" }, X = /* @__PURE__ */ t("h4", null, "Clients", -1), tt = ["onSubmit"], et = { class: "input-group" }, st = /* @__PURE__ */ t("button", {
   type: "submit",
   class: "btn btn-primary"
 }, "Search", -1), at = {
@@ -85,7 +85,7 @@ const G = I`
 }, Vt = ["title"], Dt = ["onClick"], xt = ["onClick"], x = 50, Pt = /* @__PURE__ */ R({
   __name: "CustomerListView",
   setup(N) {
-    const _ = $("https://payments.crank-fit.com/api/graphql/"), s = W(_), C = B(), m = i(""), u = i(!1), d = i(""), c = i(""), v = i(""), k = i(""), h = i(1), E = T(() => s.result.value ? Math.ceil(s.result.value.totalCount / x) : 1);
+    const _ = $("https://payments.crank-fit.com/api/graphql/"), s = G(_), C = B(), m = i(""), u = i(!1), d = i(""), c = i(""), v = i(""), k = i(""), h = i(1), E = T(() => s.result.value ? Math.ceil(s.result.value.totalCount / x) : 1);
     async function w() {
       await s.fetchCustomers({
         search: m.value || void 0,
@@ -115,13 +115,13 @@ const G = I`
     return O(w), (p, a) => {
       const q = j("RouterLink");
       return o(), l("div", null, [
-        t("div", X, [
-          Z,
-          Y(q, {
+        t("div", W, [
+          X,
+          H(q, {
             to: { name: "admin_customer_create" },
             class: "btn btn-dark btn-sm"
           }, {
-            default: H(() => [
+            default: Y(() => [
               Q(" + New Customer ")
             ]),
             _: 1
