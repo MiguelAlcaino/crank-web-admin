@@ -1,5 +1,5 @@
-import { d as S, r as u, a as g, S as c, c as x, u as V, b as t, e, w as q, f as _, v as $, g as i, F as m, h as p, i as D, j as L, k as T, o as a, t as v, _ as I, p as M, l as A, m as f, n as h, q as B, s as E, x as N, y as j } from "./index.cc2eb486.js";
-const C = (n) => (M("data-v-10912c19"), n = n(), A(), n), F = { class: "d-flex justify-content-center h-100" }, U = { class: "card" }, z = { class: "card-body mt-5" }, G = ["onSubmit"], H = { class: "form-row" }, J = { class: "col-md-12 mb-3" }, K = ["value"], O = ["value"], P = ["value"], Q = { class: "form-row" }, R = { class: "col-md-12 mb-3" }, W = /* @__PURE__ */ C(() => /* @__PURE__ */ e("label", {
+import { d as S, r as u, a as g, S as r, c as x, u as V, b as t, e, w as q, f as _, v as $, g as i, F as m, h as p, i as D, j as L, k as T, o as a, t as f, _ as I, p as M, l as A, m as v, n as h, q as B, s as E, x as N, y as j } from "./index.e45f3cea.js";
+const C = (n) => (M("data-v-8f4056b4"), n = n(), A(), n), F = { class: "d-flex justify-content-center h-100" }, U = { class: "card" }, z = { class: "card-body mt-5" }, G = ["onSubmit"], H = { class: "form-row" }, J = { class: "col-md-12 mb-3" }, K = ["value"], O = ["value"], P = ["value"], Q = { class: "form-row" }, R = { class: "col-md-12 mb-3" }, W = /* @__PURE__ */ C(() => /* @__PURE__ */ e("label", {
   for: "token",
   class: "input-label"
 }, "Token *", -1)), X = {
@@ -10,18 +10,18 @@ const C = (n) => (M("data-v-10912c19"), n = n(), A(), n), F = { class: "d-flex j
   __name: "LoginView",
   setup(n) {
     const d = u(!1), b = u("dubai"), o = g({
-      location: c.Dubai,
+      location: r.Dubai,
       token: ""
     }), k = x(() => ({
       location: {
-        required: f.withMessage("Location is required", h)
+        required: v.withMessage("Location is required", h)
       },
       token: {
-        required: f.withMessage("Token is required", h)
+        required: v.withMessage("Token is required", h)
       }
-    })), r = V(k, o);
+    })), c = V(k, o);
     async function w() {
-      await r.value.$validate() && (d.value = !1, B().setSession(o.token), E().setSite(b.value), await N.push({ name: "home" }));
+      await c.value.$validate() && (d.value = !1, B().setSession(o.token), E().setSite(b.value), await N.push({ name: "home" }));
     }
     return (y, l) => (a(), t("div", F, [
       e("div", U, [
@@ -33,27 +33,27 @@ const C = (n) => (M("data-v-10912c19"), n = n(), A(), n), F = { class: "d-flex j
             e("div", H, [
               e("div", J, [
                 _(e("select", {
-                  class: "custom-select",
+                  class: "form-select",
                   "onUpdate:modelValue": l[0] || (l[0] = (s) => o.location = s),
                   required: ""
                 }, [
                   e("option", {
-                    value: i(c).Dubai
+                    value: i(r).Dubai
                   }, "Dubai", 8, K),
                   e("option", {
-                    value: i(c).AbuDhabi
+                    value: i(r).AbuDhabi
                   }, "Abu Dhabi", 8, O),
                   e("option", {
-                    value: i(c).TownSquare
+                    value: i(r).TownSquare
                   }, "Town Square", 8, P)
                 ], 512), [
                   [$, o.location]
                 ]),
-                (a(!0), t(m, null, p(i(r).location.$errors, (s) => (a(), t("small", {
+                (a(!0), t(m, null, p(i(c).location.$errors, (s) => (a(), t("small", {
                   key: s.$uid,
                   class: "form-text",
                   style: { color: "red" }
-                }, v(s.$message), 1))), 128))
+                }, f(s.$message), 1))), 128))
               ])
             ]),
             e("div", Q, [
@@ -70,18 +70,18 @@ const C = (n) => (M("data-v-10912c19"), n = n(), A(), n), F = { class: "d-flex j
                 }, null, 512), [
                   [D, o.token]
                 ]),
-                (a(!0), t(m, null, p(i(r).token.$errors, (s) => (a(), t("small", {
+                (a(!0), t(m, null, p(i(c).token.$errors, (s) => (a(), t("small", {
                   key: s.$uid,
                   class: "form-text",
                   style: { color: "red" }
-                }, v(s.$message), 1))), 128))
+                }, f(s.$message), 1))), 128))
               ])
             ]),
             d.value ? (a(), t("small", X, " Incorrect Login ")) : L("", !0),
             e("div", Y, [
               e("div", Z, [
                 T(I, {
-                  class: "btn-block",
+                  class: "",
                   type: "submit",
                   text: "Login"
                 })
@@ -93,7 +93,7 @@ const C = (n) => (M("data-v-10912c19"), n = n(), A(), n), F = { class: "d-flex j
     ]));
   }
 });
-const oe = /* @__PURE__ */ j(ee, [["__scopeId", "data-v-10912c19"]]);
+const oe = /* @__PURE__ */ j(ee, [["__scopeId", "data-v-8f4056b4"]]);
 export {
   oe as default
 };

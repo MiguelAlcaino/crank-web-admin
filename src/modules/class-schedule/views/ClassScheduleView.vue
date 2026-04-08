@@ -28,7 +28,7 @@ async function goBack() {
 </script>
 
 <template>
-  <div class="row ml-1">
+  <div class="row ms-1">
     <div class="col-lg-12 mb-3">
       <DefaultButtonComponent
         text="Go Back"

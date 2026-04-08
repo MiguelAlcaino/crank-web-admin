@@ -26,12 +26,11 @@ function alertClass(type: string): string {
       {{ msg.message }}
       <button
         type="button"
-        class="close"
+        class="btn-close"
         aria-label="Close"
         @click="toast.remove(msg.id)"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
+       >
+        </button>
     </div>
   </div>
 </template>

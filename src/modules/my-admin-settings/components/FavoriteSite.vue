@@ -109,7 +109,7 @@ function updateCurrentAdminUserFavoriteSite() {
       <div class="input-group">
         <select
           id="favoriteSite"
-          class="custom-select"
+          class="form-select"
           v-model="formData.favoriteSite"
           required
           :disabled="isLoadingSites || isSaving || !isEditing"
@@ -120,13 +120,12 @@ function updateCurrentAdminUserFavoriteSite() {
         </select>
         <div
           v-if="isLoadingSites"
-          class="spinner-border text-primary position-absolute custom-select-spinner"
+          class="spinner-border text-primary position-absolute form-select-spinner"
           role="status"
         >
           <span class="sr-only">Loading...</span>
         </div>
-        <div class="input-group-append">
-          <DefaultButtonComponent
+        <DefaultButtonComponent
             text="Edit"
             type="button"
             @on-click="onEdit"
@@ -148,7 +147,6 @@ function updateCurrentAdminUserFavoriteSite() {
             variant="secondary"
             v-if="isEditing"
           />
-        </div>
       </div>
       <small
         v-for="error in v$.favoriteSite.$errors"
@@ -173,7 +171,7 @@ function updateCurrentAdminUserFavoriteSite() {
 </template>
 
 <style scoped>
-.custom-select-spinner {
+.form-select-spinner {
   color: #ff7f61 !important;
   top: 30%;
   right: 28px;

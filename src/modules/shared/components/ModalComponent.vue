@@ -31,7 +31,6 @@ const emits = defineEmits<{
 <template>
   <transition name="modal">
     <div class="modal-mask">
-      <div class="modal-wrapper">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header border-0">
@@ -39,12 +38,10 @@ const emits = defineEmits<{
               <button
                 v-if="closable"
                 type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true" @click="emits('onCancel')">&times;</span>
-              </button>
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close">
+                </button>
             </div>
             <div class="modal-body">
               <div class="message-font" v-html="message"></div>
@@ -83,7 +80,6 @@ const emits = defineEmits<{
             </div>
           </div>
         </div>
-      </div>
     </div>
   </transition>
 </template>
@@ -105,12 +101,9 @@ p {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  display: table;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: opacity 0.3s ease;
-}
-
-.modal-wrapper {
-  display: table-cell;
-  vertical-align: middle;
 }
 </style>

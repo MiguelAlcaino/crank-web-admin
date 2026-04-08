@@ -127,7 +127,7 @@ function onChangeSite() {
   <div class="row mt-3">
     <div class="col-xl-2 col-lg-3 col-md-6 col-sm-8 col-12">
       <select
-        class="custom-select"
+        class="form-select"
         v-model="selectedSite"
         @change="onChangeSite()"
         id="countryRegistration"

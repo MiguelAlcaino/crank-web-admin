@@ -107,7 +107,7 @@ onMounted(async () => {
         <input type="date" v-model="endDate" class="form-control form-control-sm" />
       </div>
       <div class="col-md-1">
-        <button class="btn btn-primary btn-sm btn-block" @click="handleFilter">Filter</button>
+        <button class="btn btn-primary btn-sm" @click="handleFilter">Filter</button>
       </div>
     </div>
     <div class="mb-3">
@@ -147,7 +147,7 @@ onMounted(async () => {
             <td>{{ t.customerEmail || '-' }}</td>
             <td>{{ formatDate(t.created) }}</td>
             <td>
-              <span class="badge" :class="t.status === 'refunded' ? 'badge-warning' : 'badge-success'">
+              <span class="badge" :class="t.status === 'refunded' ? 'text-bg-warning' : 'text-bg-success'">
                 {{ t.status }}
               </span>
             </td>

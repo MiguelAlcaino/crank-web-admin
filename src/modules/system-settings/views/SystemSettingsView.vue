@@ -75,7 +75,7 @@ async function handleClearCache() {
 
     <!-- Settings Form -->
     <form v-if="!crud.isLoading.value && crud.settings.value" @submit.prevent="saveSettings">
-      <div class="form-group mb-3">
+      <div class="mb-3">
         <div class="form-check">
           <input
             type="checkbox"
@@ -90,7 +90,7 @@ async function handleClearCache() {
         </div>
       </div>
 
-      <div class="form-group mb-3">
+      <div class="mb-3">
         <label>Text bottom index page</label>
         <QuillEditor
           v-model:content="editorContent"

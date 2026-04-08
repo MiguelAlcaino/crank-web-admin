@@ -43,9 +43,7 @@ onMounted(loadClients)
     <form @submit.prevent="handleSearch" class="mb-3">
       <div class="input-group">
         <input type="text" v-model="search" class="form-control" placeholder="Search by name, email, or phone..." />
-        <div class="input-group-append">
-          <button type="submit" class="btn btn-primary">Search</button>
-        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
       </div>
     </form>
 

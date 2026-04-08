@@ -1,5 +1,5 @@
-import { M as P, r as h, N as _, d as R, G as L, c as q, H as x, b as s, e, f as I, i as $, w as f, g as r, j as y, t as i, F as N, h as w, D as C, o } from "./index.cc2eb486.js";
-const D = P`
+import { N as R, r as h, O as _, d as L, H as M, c as q, I, b as s, e, f as x, i as $, w as f, g as r, j as y, t as i, F as N, h as w, A as C, o } from "./index.e45f3cea.js";
+const E = R`
   query AdminMindbodyClients($params: AdminMindbodyClientsParams, $pagination: PaginationInput) {
     mindbodyClients(params: $params, pagination: $pagination) {
       items {
@@ -15,7 +15,7 @@ const D = P`
       limit
     }
   }
-`, E = P`
+`, A = R`
   query AdminMindbodyClient($id: ID!) {
     mindbodyClient(id: $id) {
       id
@@ -26,13 +26,13 @@ const D = P`
       mobilePhone
     }
   }
-`, S = (g) => {
+`, D = (g) => {
   const b = h(null), p = h(null), t = h(!1), a = h(!1);
   async function n(u, c) {
     t.value = !0, a.value = !1;
     try {
       const { data: m } = await g.query({
-        query: D,
+        query: E,
         variables: {
           params: u && Object.keys(u).length > 0 ? u : void 0,
           pagination: c
@@ -50,7 +50,7 @@ const D = P`
     t.value = !0, a.value = !1, p.value = null;
     try {
       const { data: c } = await g.query({
-        query: E,
+        query: A,
         variables: { id: u },
         fetchPolicy: "network-only"
       });
@@ -69,12 +69,10 @@ const D = P`
     fetchList: n,
     fetchDetail: d
   };
-}, A = /* @__PURE__ */ e("h4", null, "Report - MB Clients", -1), U = ["onSubmit"], B = { class: "input-group" }, F = /* @__PURE__ */ e("div", { class: "input-group-append" }, [
-  /* @__PURE__ */ e("button", {
-    type: "submit",
-    class: "btn btn-primary"
-  }, "Search")
-], -1), T = {
+}, S = /* @__PURE__ */ e("h4", null, "Report - MB Clients", -1), U = ["onSubmit"], B = { class: "input-group" }, F = /* @__PURE__ */ e("button", {
+  type: "submit",
+  class: "btn btn-primary"
+}, "Search", -1), T = {
   key: 0,
   class: "text-center py-4"
 }, V = /* @__PURE__ */ e("div", {
@@ -82,10 +80,10 @@ const D = P`
   role: "status"
 }, null, -1), j = [
   V
-], Q = {
+], O = {
   key: 1,
   class: "alert alert-danger"
-}, Y = { key: 2 }, z = { class: "text-muted small" }, G = { class: "table table-striped table-sm" }, H = /* @__PURE__ */ e("thead", null, [
+}, Q = { key: 2 }, Y = { class: "text-muted small" }, z = { class: "table table-striped table-sm" }, H = /* @__PURE__ */ e("thead", null, [
   /* @__PURE__ */ e("tr", null, [
     /* @__PURE__ */ e("th", null, "ID"),
     /* @__PURE__ */ e("th", null, "Client ID"),
@@ -94,19 +92,19 @@ const D = P`
     /* @__PURE__ */ e("th", null, "Email"),
     /* @__PURE__ */ e("th", null, "Phone")
   ])
-], -1), O = { key: 0 }, J = /* @__PURE__ */ e("td", {
+], -1), G = { key: 0 }, J = /* @__PURE__ */ e("td", {
   colspan: "6",
   class: "text-center text-muted py-3"
 }, "No clients found", -1), K = [
   J
-], W = { key: 0 }, X = { class: "pagination pagination-sm" }, Z = ["onClick"], M = 50, le = /* @__PURE__ */ R({
+], W = { key: 0 }, X = { class: "pagination pagination-sm" }, Z = ["onClick"], P = 50, le = /* @__PURE__ */ L({
   __name: "MindbodyClientListView",
   setup(g) {
-    const p = L("https://payments.crank-fit.com/api/graphql/"), t = S(p), a = h(""), n = h(1), d = q(() => t.listResult.value ? Math.ceil(t.listResult.value.totalCount / M) : 1);
+    const p = M("https://payments.crank-fit.com/api/graphql/"), t = D(p), a = h(""), n = h(1), d = q(() => t.listResult.value ? Math.ceil(t.listResult.value.totalCount / P) : 1);
     async function u() {
       await t.fetchList(
         a.value ? { search: a.value } : void 0,
-        { page: n.value, limit: M }
+        { page: n.value, limit: P }
       );
     }
     async function c() {
@@ -115,14 +113,14 @@ const D = P`
     async function m(k) {
       n.value = k, await u();
     }
-    return x(u), (k, v) => (o(), s("div", null, [
-      A,
+    return I(u), (k, v) => (o(), s("div", null, [
+      S,
       e("form", {
         onSubmit: f(c, ["prevent"]),
         class: "mb-3"
       }, [
         e("div", B, [
-          I(e("input", {
+          x(e("input", {
             type: "text",
             "onUpdate:modelValue": v[0] || (v[0] = (l) => a.value = l),
             class: "form-control",
@@ -134,13 +132,13 @@ const D = P`
         ])
       ], 40, U),
       r(t).isLoading.value ? (o(), s("div", T, j)) : y("", !0),
-      r(t).hasError.value ? (o(), s("div", Q, "Failed to load clients.")) : y("", !0),
-      r(t).listResult.value && !r(t).isLoading.value ? (o(), s("div", Y, [
-        e("p", z, i(r(t).listResult.value.totalCount) + " clients found (page " + i(r(t).listResult.value.page) + " of " + i(d.value) + ") ", 1),
-        e("table", G, [
+      r(t).hasError.value ? (o(), s("div", O, "Failed to load clients.")) : y("", !0),
+      r(t).listResult.value && !r(t).isLoading.value ? (o(), s("div", Q, [
+        e("p", Y, i(r(t).listResult.value.totalCount) + " clients found (page " + i(r(t).listResult.value.page) + " of " + i(d.value) + ") ", 1),
+        e("table", z, [
           H,
           e("tbody", null, [
-            r(t).listResult.value.items.length === 0 ? (o(), s("tr", O, K)) : y("", !0),
+            r(t).listResult.value.items.length === 0 ? (o(), s("tr", G, K)) : y("", !0),
             (o(!0), s(N, null, w(r(t).listResult.value.items, (l) => (o(), s("tr", {
               key: l.id
             }, [

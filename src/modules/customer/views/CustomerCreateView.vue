@@ -260,7 +260,7 @@ async function goToUrlAfterSubmit() {
     <!-- location -->
     <div class="form-row">
       <div class="col-md-6 mb-3">
-        <select class="custom-select" v-model="formData.location" required>
+        <select class="form-select" v-model="formData.location" required>
           <option v-for="(item, index) in sites" :key="index" :value="item.serviceKey">
             {{ item.name }}
           </option>
@@ -315,16 +315,9 @@ async function goToUrlAfterSubmit() {
             maxlength="50"
             required
           />
-          <div
-            class="input-group-prepend"
-            @click="passwordIsVisible = !passwordIsVisible"
-            style="cursor: pointer"
-          >
-            <span class="input-group-text" id="passwordEye" style="background-color: transparent">
+          <span class="input-group-text" id="passwordEye" @click="passwordIsVisible = !passwordIsVisible" style="cursor: pointer; background-color: transparent">
               <i v-if="passwordIsVisible" class="bi bi-eye-slash-fill"></i>
-              <i v-else class="bi bi-eye-fill"></i>
-            </span>
-          </div>
+              <i v-else class="bi bi-eye-fill"></i></span>
         </div>
         <small
           v-for="error in v$.password.$errors"
@@ -348,16 +341,9 @@ async function goToUrlAfterSubmit() {
             maxlength="50"
             required
           />
-          <div
-            class="input-group-prepend"
-            @click="confirmPasswordIsVisible = !confirmPasswordIsVisible"
-            style="cursor: pointer"
-          >
-            <span class="input-group-text" id="passwordEye" style="background-color: transparent">
+          <span class="input-group-text" id="passwordEye" @click="confirmPasswordIsVisible = !confirmPasswordIsVisible" style="cursor: pointer; background-color: transparent">
               <i v-if="confirmPasswordIsVisible" class="bi bi-eye-slash-fill"></i>
-              <i v-else class="bi bi-eye-fill"></i>
-            </span>
-          </div>
+              <i v-else class="bi bi-eye-fill"></i></span>
         </div>
         <small
           v-for="error in v$.confirmPassword.$errors"
@@ -422,7 +408,7 @@ async function goToUrlAfterSubmit() {
       <div class="col-md-6 mb-3">
         <label for="genderRegistration" class="input-label">Gender *</label>
         <select
-          class="custom-select"
+          class="form-select"
           v-model="formData.gender"
           id="genderRegistration"
           placeholder="Gender"
@@ -499,7 +485,7 @@ async function goToUrlAfterSubmit() {
       <div class="col-md-6 mb-3">
         <label for="countryRegistration" class="input-label">Country *</label>
         <select
-          class="custom-select"
+          class="form-select"
           v-model="formData.country"
           @change="onChangeCountry()"
           id="countryRegistration"
@@ -522,7 +508,7 @@ async function goToUrlAfterSubmit() {
       <div class="col-md-6 mb-3">
         <label for="cityStateRegistration" class="input-label">City/State *</label>
         <select
-          class="custom-select"
+          class="form-select"
           v-model="formData.cityState"
           id="cityStateRegistration"
           required
@@ -685,7 +671,7 @@ async function goToUrlAfterSubmit() {
           >Emergency Contact Relationship *</label
         >
         <select
-          class="custom-select"
+          class="form-select"
           v-model="formData.emergencyContactRelationship"
           id="emergencyContactRelationshipRegistration"
           required
@@ -711,14 +697,14 @@ async function goToUrlAfterSubmit() {
     <div class="form-row">
       <div class="col-md-12 mb-3">
         <div class="form-check">
-          <div class="custom-control custom-checkbox">
+          <div class="form-check">
             <input
               type="checkbox"
-              class="custom-control-input"
+              class="form-check-input"
               id="acceptTermsAndConditionsCheck"
               v-model="formData.acceptTermsAndConditions"
             />
-            <label class="custom-control-label" for="acceptTermsAndConditionsCheck">
+            <label class="form-check-label" for="acceptTermsAndConditionsCheck">
               I understand and accept the
               <a href="https://www.crank-fit.com/terms-conditions" target="_blank">
                 Terms & Conditions
@@ -740,7 +726,7 @@ async function goToUrlAfterSubmit() {
     <!--submit button-->
     <div class="form-row justify-content-md-center">
       <div class="col-md-2 mb-3">
-        <button class="btn btn-primary btn-block" type="submit" :disabled="isSaving">
+        <button class="btn btn-primary" type="submit" :disabled="isSaving">
           Register<span class="spinner-border spinner-border-sm" v-if="isSaving"></span>
         </button>
       </div>
@@ -786,22 +772,22 @@ a:hover {
   font-weight: bold;
 }
 
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+. .form-check-input:checked ~ .form-check-label::before {
   background-color: #ff7f61 !important;
   border-color: #ff7f61 !important;
 }
 
-.custom-checkbox .custom-control-input:checked:focus ~ .custom-control-label::before {
+. .form-check-input:checked:focus ~ .form-check-label::before {
   box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem #ff7f61;
   border-color: #ff7f61 !important;
 }
 
-.custom-checkbox .custom-control-input:focus ~ .custom-control-label::before {
+. .form-check-input:focus ~ .form-check-label::before {
   box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
   border-color: #ff7f61 !important;
 }
 
-.custom-checkbox .custom-control-input:active ~ .custom-control-label::before {
+. .form-check-input:active ~ .form-check-label::before {
   background-color: #ffc6b9;
   border-color: #ff7f61 !important;
 }

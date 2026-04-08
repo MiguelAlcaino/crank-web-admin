@@ -98,7 +98,7 @@ async function checkOutUserInClass() {
     text="Check-In"
     type="button"
     @on-click="checkinUserInClass()"
-    class="mr-1"
+    class="me-1"
     :is-loading="isLoading"
     :disabled="disabled"
   ></DefaultButtonComponent>
@@ -107,7 +107,7 @@ async function checkOutUserInClass() {
     text="Check-Out"
     type="button"
     @on-click="checkOutUserInClass()"
-    class="mr-1"
+    class="me-1"
     :is-loading="isLoading"
     :disabled="disabled"
   ></DefaultButtonComponent>

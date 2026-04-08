@@ -1,12 +1,12 @@
-import { M as A, r as u, N as _, d as I, G as M, b, g as n, t as V, j as k, e as s, f as h, Z as g, i as D, A as O, w as P, o as f } from "./index.cc2eb486.js";
-import { u as T } from "./useToast.6a51987c.js";
+import { N as A, r as u, O as _, d as I, H as O, b, g as n, t as V, j as k, e as s, f as h, $ as g, i as D, B, w as P, o as f } from "./index.e45f3cea.js";
+import { u as T } from "./useToast.2325cd44.js";
 const w = A`
   mutation BulkActivateVod($input: BulkActivateVodInput!) {
     bulkActivateVod(input: $input) {
       processedCount
     }
   }
-`, B = A`
+`, M = A`
   mutation BulkDeactivateVod($mindbodyIds: [Int!]!) {
     bulkDeactivateVod(mindbodyIds: $mindbodyIds) {
       processedCount
@@ -34,7 +34,7 @@ const w = A`
     c.value = !0, d.value = !1, l.value = null;
     try {
       const { data: i } = await y.mutate({
-        mutation: B,
+        mutation: M,
         variables: { mindbodyIds: o }
       });
       return l.value = (p = i == null ? void 0 : i.bulkDeactivateVod) != null ? p : null, !0;
@@ -55,22 +55,22 @@ const w = A`
 }, x = /* @__PURE__ */ s("h4", null, "Bulk VOD Activator", -1), N = {
   key: 0,
   class: "alert alert-danger"
-}, C = ["onSubmit"], E = { class: "form-group mb-3" }, q = /* @__PURE__ */ s("label", null, "Operation", -1), $ = { class: "form-check form-check-inline" }, R = ["disabled"], S = /* @__PURE__ */ s("label", {
+}, C = ["onSubmit"], E = { class: "mb-3" }, q = /* @__PURE__ */ s("label", null, "Operation", -1), $ = { class: "form-check form-check-inline" }, R = ["disabled"], S = /* @__PURE__ */ s("label", {
   for: "op-add",
   class: "form-check-label"
 }, "Add VOD Periods", -1), F = { class: "form-check form-check-inline" }, K = ["disabled"], L = /* @__PURE__ */ s("label", {
   for: "op-remove",
   class: "form-check-label"
-}, "Remove VOD Periods", -1), j = { class: "form-group mb-3" }, G = /* @__PURE__ */ s("label", { for: "mindbodyIds" }, "Mindbody IDs (comma-separated)", -1), Z = ["disabled"], z = {
+}, "Remove VOD Periods", -1), j = { class: "mb-3" }, H = /* @__PURE__ */ s("label", { for: "mindbodyIds" }, "Mindbody IDs (comma-separated)", -1), z = ["disabled"], G = {
   key: 0,
-  class: "form-group mb-3"
-}, H = /* @__PURE__ */ s("label", { for: "vodDays" }, "VOD Days", -1), J = ["disabled"], Q = ["disabled"], W = { key: 0 }, X = /* @__PURE__ */ s("span", {
+  class: "mb-3"
+}, J = /* @__PURE__ */ s("label", { for: "vodDays" }, "VOD Days", -1), Q = ["disabled"], W = ["disabled"], X = { key: 0 }, Y = /* @__PURE__ */ s("span", {
   class: "spinner-border spinner-border-sm",
   role: "status"
-}, null, -1), Y = { key: 1 }, te = /* @__PURE__ */ I({
+}, null, -1), Z = { key: 1 }, te = /* @__PURE__ */ I({
   __name: "BulkVodActivatorView",
   setup(y) {
-    const d = M("https://payments.crank-fit.com/api/graphql/"), t = U(d), l = T(), v = u(""), m = u(30), o = u("add");
+    const d = O("https://payments.crank-fit.com/api/graphql/"), t = U(d), l = T(), v = u(""), m = u(30), o = u("add");
     function p() {
       return v.value.split(",").map((e) => e.trim()).filter((e) => e.length > 0).map((e) => parseInt(e, 10)).filter((e) => !isNaN(e));
     }
@@ -129,7 +129,7 @@ const w = A`
           ])
         ]),
         s("div", j, [
-          G,
+          H,
           h(s("textarea", {
             id: "mindbodyIds",
             "onUpdate:modelValue": a[2] || (a[2] = (r) => v.value = r),
@@ -138,12 +138,12 @@ const w = A`
             placeholder: "e.g. 100001234, 100005678, 100009012",
             required: "",
             disabled: n(t).isProcessing.value
-          }, null, 8, Z), [
+          }, null, 8, z), [
             [D, v.value]
           ])
         ]),
-        o.value === "add" ? (f(), b("div", z, [
-          H,
+        o.value === "add" ? (f(), b("div", G, [
+          J,
           h(s("input", {
             id: "vodDays",
             type: "number",
@@ -153,7 +153,7 @@ const w = A`
             required: "",
             disabled: n(t).isProcessing.value,
             style: { "max-width": "200px" }
-          }, null, 8, J), [
+          }, null, 8, Q), [
             [
               D,
               m.value,
@@ -167,11 +167,11 @@ const w = A`
           class: "btn btn-dark",
           disabled: n(t).isProcessing.value
         }, [
-          n(t).isProcessing.value ? (f(), b("span", W, [
-            X,
-            O(" Processing... ")
-          ])) : (f(), b("span", Y, V(o.value === "add" ? "Activate VOD" : "Deactivate VOD"), 1))
-        ], 8, Q)
+          n(t).isProcessing.value ? (f(), b("span", X, [
+            Y,
+            B(" Processing... ")
+          ])) : (f(), b("span", Z, V(o.value === "add" ? "Activate VOD" : "Deactivate VOD"), 1))
+        ], 8, W)
       ], 40, C)
     ]));
   }

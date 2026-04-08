@@ -6,8 +6,10 @@ import { newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { Role } from '@/utils/userRoles'
 import { useAvailableSites } from '@/modules/shared/composables/useAvailableSites'
 import AdminToast from '@/modules/shared/components/AdminToast.vue'
+import { useThemeStore } from '@/stores/themeStore'
 
 const route = useRoute()
+const themeStore = useThemeStore()
 const gqlUrl = import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL
 const apolloClient = newAuthenticatedApolloClient(gqlUrl)
 const { sites: availableSites, fetchSites } = useAvailableSites(apolloClient)
@@ -59,7 +61,7 @@ async function logout() {
     <div class="row">
       <nav
         style="font-size: 14px"
-        class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar"
+        class="col-sm-3 col-md-2 d-none d-sm-block sidebar"
       >
         <ul class="nav nav-pills flex-column">
           <!-- Transactions (SUPER_ADMIN) -->
@@ -297,6 +299,14 @@ async function logout() {
             </RouterLink>
           </li>
 
+          <!-- Dark mode toggle -->
+          <li class="nav-item">
+            <a class="nav-link" href="#" @click.prevent="themeStore.toggleTheme()">
+              <i :class="themeStore.isDark ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill'"></i>
+              {{ themeStore.isDark ? 'Light Mode' : 'Dark Mode' }}
+            </a>
+          </li>
+
           <!-- Logout -->
           <li class="nav-item">
             <a class="nav-link" href="#" @click.prevent="logout">Logout</a>
@@ -304,7 +314,7 @@ async function logout() {
         </ul>
       </nav>
 
-      <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+      <main role="main" class="col-sm-9 ms-sm-auto col-md-10 pt-3">
         <AdminToast />
         <RouterView />
       </main>
@@ -316,19 +326,21 @@ async function logout() {
 .sidebar {
   padding-top: 10px;
   min-height: calc(100vh - 20px);
+  background-color: var(--bs-tertiary-bg);
+  border-right: 1px solid var(--bs-border-color);
 }
 
 .sidebar .nav-link {
-  color: #333;
+  color: var(--bs-body-color);
 }
 
 .sidebar .nav-link.active {
-  background-color: #007bff;
-  color: #fff;
+  background-color: var(--bs-emphasis-color);
+  color: var(--bs-body-bg);
 }
 
 .sidebar .nav-link:hover:not(.active) {
-  background-color: #e9ecef;
+  background-color: var(--bs-secondary-bg);
 }
 
 .dropdown-menu {
@@ -337,9 +349,16 @@ async function logout() {
   border: none;
   box-shadow: none;
   padding-left: 1rem;
+  background-color: transparent;
 }
 
 .dropdown-item {
   font-size: 13px;
+  color: var(--bs-body-color);
+}
+
+.dropdown-item:hover {
+  background-color: var(--bs-tertiary-bg);
+  color: var(--bs-body-color);
 }
 </style>

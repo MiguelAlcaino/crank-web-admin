@@ -56,7 +56,7 @@ async function handleSubmit() {
     </div>
 
     <form @submit.prevent="handleSubmit">
-      <div class="form-group mb-3">
+      <div class="mb-3">
         <label>Operation</label>
         <div>
           <div class="form-check form-check-inline">
@@ -84,7 +84,7 @@ async function handleSubmit() {
         </div>
       </div>
 
-      <div class="form-group mb-3">
+      <div class="mb-3">
         <label for="mindbodyIds">Mindbody IDs (comma-separated)</label>
         <textarea
           id="mindbodyIds"
@@ -97,7 +97,7 @@ async function handleSubmit() {
         ></textarea>
       </div>
 
-      <div v-if="operation === 'add'" class="form-group mb-3">
+      <div v-if="operation === 'add'" class="mb-3">
         <label for="vodDays">VOD Days</label>
         <input
           id="vodDays"

@@ -30,6 +30,7 @@ import { authService } from '@/services/authService'
 import { ApiService } from '@/services/apiService'
 import { newAnonymousClient, newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { useAuthenticationStore } from '@/stores/authToken'
+import { useThemeStore } from '@/stores/themeStore'
 
 import SimpleTypeahead from 'vue3-simple-typeahead'
 import { appStore } from './stores/appStorage'
@@ -63,6 +64,8 @@ async function startApp() {
     .use(ContextMenu)
     .use(VueApexCharts)
     .component('Popper', Popper)
+
+  useThemeStore().initTheme()
 
   try {
     await authService.startRefreshTokenTimer()

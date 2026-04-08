@@ -234,9 +234,8 @@ async function getAvailableSites(): Promise<void> {
           <div class="modal-content">
             <div class="modal-header border-0">
               <h5 class="modal-title">Edit user {{ adminUser?.username }}</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true" @click="closeModal">&times;</span>
-              </button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
             </div>
             <div class="modal-body">
               <form @submit.prevent="submitForm" autocomplete="off">
@@ -296,7 +295,7 @@ async function getAvailableSites(): Promise<void> {
                     <label for="email" class="input-label">Rol *</label>
                     <div class="input-group">
                       <select
-                        class="custom-select"
+                        class="form-select"
                         required
                         v-model="formData.role"
                         placeholder="Rol"
@@ -398,7 +397,7 @@ async function getAvailableSites(): Promise<void> {
                     <label for="favoriteSite" class="input-label">Favorite Site *</label>
                     <div class="input-group">
                       <select
-                        class="custom-select"
+                        class="form-select"
                         required
                         v-model="formData.favoriteSite"
                         placeholder="Favorite Site"
@@ -448,7 +447,7 @@ async function getAvailableSites(): Promise<void> {
                   :is-loading="isSaving"
                   :disabled="loadingSites || loadingInstructors"
                   @on-click="submitForm"
-                  class="ml-2"
+                  class="ms-2"
                 >
                 </DefaultButtonComponent>
               </div>

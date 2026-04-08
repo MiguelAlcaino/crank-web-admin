@@ -185,11 +185,11 @@ function scrollToTodayClass() {
   <div v-if="!isLoadingSites && sites.length === 0">
     <p>The calendar cannot be displayed because your user does not have a site assigned.</p>
   </div>
-  <div class="row ml-1">
+  <div class="row ms-1">
     <div class="col-lg-6 col-md-6 col-sm-6 col-6">
       <div class="position-relative">
         <select
-          class="custom-select"
+          class="form-select"
           v-model="selectedSite"
           required
           :disabled="isLoadingSites || isLoading"
@@ -201,7 +201,7 @@ function scrollToTodayClass() {
         </select>
         <div
           v-if="isLoadingSites"
-          class="spinner-border text-primary position-absolute custom-select-spinner"
+          class="spinner-border text-primary position-absolute form-select-spinner"
           role="status"
         >
           <span class="sr-only">Loading...</span>
@@ -399,7 +399,7 @@ function scrollToTodayClass() {
   overflow-y: auto;
 }
 
-.custom-select-spinner {
+.form-select-spinner {
   color: #ff7f61 !important;
   top: 30%;
   right: 28px;

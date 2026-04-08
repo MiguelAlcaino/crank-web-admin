@@ -46,7 +46,7 @@ onMounted(async () => {
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h4>Mindbody Staff</h4>
       <div>
-        <select v-model="currentSite" class="form-control form-control-sm d-inline-block mr-2" style="width: auto">
+        <select v-model="currentSite" class="form-control form-control-sm d-inline-block me-2" style="width: auto">
           <option v-for="site in sites" :key="site.code" :value="site.code">
             {{ site.name }}
           </option>

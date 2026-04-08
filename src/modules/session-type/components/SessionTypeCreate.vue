@@ -104,7 +104,7 @@ function onSuccessOk() {
           <div class="modal-content">
             <div class="modal-header border-0">
               <h5 class="modal-title">Create session type</h5>
-              <button type="button" class="close" @click="closeModal"><span>&times;</span></button>
+              <button type="button" class="btn-close" @click="closeModal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">

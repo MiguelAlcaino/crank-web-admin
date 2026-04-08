@@ -28,7 +28,7 @@ function onSubmit() {
 
 <template>
   <form @submit.prevent="onSubmit">
-    <div class="form-group mb-3">
+    <div class="mb-3">
       <label for="country">Country</label>
       <select
         id="country"
@@ -48,7 +48,7 @@ function onSubmit() {
       </select>
     </div>
 
-    <div class="form-group mb-3">
+    <div class="mb-3">
       <label for="mobilePhoneNumber">Mobile Phone Number</label>
       <input
         id="mobilePhoneNumber"
@@ -64,7 +64,7 @@ function onSubmit() {
     <div class="d-flex justify-content-end">
       <button
         type="button"
-        class="btn btn-secondary mr-2"
+        class="btn btn-secondary me-2"
         @click="emit('cancel')"
         :disabled="isSaving"
       >

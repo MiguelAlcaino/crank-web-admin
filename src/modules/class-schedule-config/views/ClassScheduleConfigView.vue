@@ -236,7 +236,7 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
   <div class="row">
     <div class="col-6 col-sm-6 col-md-6 col-lg-5 col-xl-3">
       <select
-        class="custom-select"
+        class="form-select"
         v-model="typeFilterSelected"
         id="typeFilter"
         required
@@ -250,7 +250,7 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
     </div>
     <div class="col-6 col-sm-6 col-md-6 col-lg-5 col-xl-3">
       <select
-        class="custom-select"
+        class="form-select"
         v-model="capacityFilterSelected"
         id="capacityFilter"
         required
@@ -267,7 +267,7 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
   <div class="row" v-if="setOfCheckedId.size > 0">
     <div class="col-6 col-sm-6 col-md-6 col-lg-5 col-xl-3">
       <select
-        class="custom-select"
+        class="form-select"
         v-model="selectedRoomLayoutId"
         id="countryRegistration"
         required
@@ -298,16 +298,16 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
           <thead>
             <tr>
               <th class="text-center">
-                <div class="custom-control custom-checkbox">
+                <div class="form-check">
                   <input
                     type="checkbox"
-                    class="custom-control-input"
+                    class="form-check-input"
                     id="checkboxSelectAll"
                     v-model="checked"
                     :indeterminate="indeterminate"
                     @change="onAllChecked($event)"
                   />
-                  <label class="custom-control-label" for="checkboxSelectAll"></label>
+                  <label class="form-check-label" for="checkboxSelectAll"></label>
                 </div>
               </th>
               <th class="text-center">ID</th>
@@ -327,15 +327,15 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
               v-bind:index="index"
             >
               <td class="text-center">
-                <div class="custom-control custom-checkbox">
+                <div class="form-check">
                   <input
                     type="checkbox"
-                    class="custom-control-input"
+                    class="form-check-input"
                     :id="'checkboxSelect' + item.id"
                     v-bind:checked="setOfCheckedId.has(item.id)"
                     @change="onItemChecked(item.id, $event)"
                   />
-                  <label class="custom-control-label" :for="'checkboxSelect' + item.id"></label>
+                  <label class="form-check-label" :for="'checkboxSelect' + item.id"></label>
                 </div>
               </td>
               <td class="text-center">{{ item.id }}</td>
@@ -409,27 +409,27 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
 </template>
 
 <style scoped>
-.custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::before {
+. .form-check-input:indeterminate ~ .form-check-label::before {
   background-color: #ff7f61 !important;
   border-color: #ff7f61 !important;
 }
 
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+. .form-check-input:checked ~ .form-check-label::before {
   background-color: #ff7f61 !important;
   border-color: #ff7f61 !important;
 }
 
-.custom-checkbox .custom-control-input:checked:focus ~ .custom-control-label::before {
+. .form-check-input:checked:focus ~ .form-check-label::before {
   box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem #ff7f61;
   border-color: #ff7f61 !important;
 }
 
-.custom-checkbox .custom-control-input:focus ~ .custom-control-label::before {
+. .form-check-input:focus ~ .form-check-label::before {
   box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
   border-color: #ff7f61 !important;
 }
 
-.custom-checkbox .custom-control-input:active ~ .custom-control-label::before {
+. .form-check-input:active ~ .form-check-label::before {
   background-color: #ffc6b9;
   border-color: #ff7f61 !important;
 }

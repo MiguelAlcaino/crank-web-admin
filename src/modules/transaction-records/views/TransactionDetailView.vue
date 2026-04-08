@@ -56,7 +56,7 @@ function formatDate(dateStr: string | null): string {
           <tr><th>Email</th><td>{{ txn.detail.value.customerEmail || '-' }}</td></tr>
           <tr><th>Site</th><td>{{ txn.detail.value.siteName || '-' }}</td></tr>
           <tr><th>Status</th><td>
-            <span class="badge" :class="txn.detail.value.status === 'refunded' ? 'badge-warning' : 'badge-success'">
+            <span class="badge" :class="txn.detail.value.status === 'refunded' ? 'text-bg-warning' : 'text-bg-success'">
               {{ txn.detail.value.status }}
             </span>
           </td></tr>
@@ -95,7 +95,7 @@ function formatDate(dateStr: string | null): string {
         <div v-else class="alert alert-warning">
           <p>Are you sure you want to refund this transaction?</p>
           <button
-            class="btn btn-danger btn-sm mr-2"
+            class="btn btn-danger btn-sm me-2"
             @click="handleRefund"
             :disabled="txn.isRefunding.value"
           >

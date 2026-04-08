@@ -5,6 +5,9 @@ import axios from 'axios'
 
 import { useAuthenticationStore } from '@/stores/authToken'
 import { authService } from '@/services/authService'
+import { useThemeStore } from '@/stores/themeStore'
+
+const themeStore = useThemeStore()
 
 const router = useRouter()
 
@@ -54,13 +57,20 @@ async function login() {
 </script>
 
 <template>
-  <div class="login-container d-flex align-items-center justify-content-center min-vh-100">
+  <div class="login-container d-flex align-items-center justify-content-center min-vh-100 position-relative">
+    <button
+      class="btn btn-link theme-toggle"
+      @click="themeStore.toggleTheme()"
+      :title="themeStore.isDark ? 'Light Mode' : 'Dark Mode'"
+    >
+      <i :class="themeStore.isDark ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill'"></i>
+    </button>
     <div class="card shadow-sm" style="width: 100%; max-width: 400px">
       <div class="card-body p-4">
         <h4 class="card-title text-center mb-4">CRANK Admin</h4>
 
         <form @submit.prevent="login" autocomplete="on">
-          <div class="form-group mb-3">
+          <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input
               type="email"
@@ -74,7 +84,7 @@ async function login() {
             />
           </div>
 
-          <div class="form-group mb-3">
+          <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <input
               type="password"
@@ -94,7 +104,7 @@ async function login() {
 
           <button
             type="submit"
-            class="btn btn-dark btn-block w-100"
+            class="btn btn-dark w-100"
             :disabled="isLoading"
           >
             <span v-if="isLoading">
@@ -111,6 +121,14 @@ async function login() {
 
 <style scoped>
 .login-container {
-  background-color: #f8f9fa;
+  background-color: var(--bs-body-bg);
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.25rem;
+  color: var(--bs-body-color);
 }
 </style>

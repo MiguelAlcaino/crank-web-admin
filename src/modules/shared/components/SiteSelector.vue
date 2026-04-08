@@ -35,7 +35,7 @@ function onChange(event: Event): void {
   <div class="position-relative">
     <select
       :id="id"
-      class="custom-select"
+      class="form-select"
       :value="modelValue"
       :disabled="disabled"
       :required="required"
@@ -47,7 +47,7 @@ function onChange(event: Event): void {
     </select>
     <div
       v-if="isLoading"
-      class="spinner-border text-primary position-absolute custom-select-spinner"
+      class="spinner-border text-primary position-absolute form-select-spinner"
       role="status"
     >
       <span class="sr-only">Loading...</span>
@@ -56,7 +56,7 @@ function onChange(event: Event): void {
 </template>
 
 <style scoped>
-.custom-select-spinner {
+.form-select-spinner {
   color: #ff7f61 !important;
   top: 30%;
   right: 28px;

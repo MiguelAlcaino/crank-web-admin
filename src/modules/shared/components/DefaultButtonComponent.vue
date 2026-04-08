@@ -27,7 +27,7 @@ const emits = defineEmits<{
     @click="emits('onClick')"
     :disabled="disabled || isLoading"
     :class="{
-      'btn-block': block,
+      'w-100': block,
       'btn-primary': variant === 'primary',
       'btn-secondary': variant === 'secondary',
       'btn-danger': variant === 'danger',

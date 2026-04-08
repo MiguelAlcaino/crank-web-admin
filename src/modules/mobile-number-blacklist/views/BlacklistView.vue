@@ -117,7 +117,7 @@ async function handleDelete(id: string) {
           <td>{{ entry.fullPhoneNumber }}</td>
           <td>
             <button
-              class="btn btn-outline-secondary btn-sm mr-1"
+              class="btn btn-outline-secondary btn-sm me-1"
               @click="openEditForm(entry)"
               :disabled="crud.isSaving.value"
             >
@@ -133,7 +133,7 @@ async function handleDelete(id: string) {
             </button>
             <span v-else>
               <button
-                class="btn btn-danger btn-sm mr-1"
+                class="btn btn-danger btn-sm me-1"
                 @click="handleDelete(entry.id)"
                 :disabled="crud.isSaving.value"
               >

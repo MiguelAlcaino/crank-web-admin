@@ -85,12 +85,10 @@ onMounted(loadCustomers)
           class="form-control"
           placeholder="Search by name, email, or phone..."
         />
-        <div class="input-group-append">
-          <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-primary">Search</button>
           <button type="button" class="btn btn-outline-secondary" @click="showFilters = !showFilters">
             {{ showFilters ? 'Hide Filters' : 'Filters' }}
           </button>
-        </div>
       </div>
     </form>
 
@@ -116,7 +114,7 @@ onMounted(loadCustomers)
           </div>
         </div>
         <div class="mt-2">
-          <button class="btn btn-primary btn-sm mr-2" @click="handleSearch">Apply</button>
+          <button class="btn btn-primary btn-sm me-2" @click="handleSearch">Apply</button>
           <button class="btn btn-outline-secondary btn-sm" @click="clearFilters">Clear</button>
         </div>
       </div>
@@ -160,21 +158,21 @@ onMounted(loadCustomers)
             <td>{{ customer.user.email }}</td>
             <td>{{ customer.user.phone || '-' }}</td>
             <td>
-              <span v-if="customer.user.isMobilePhoneVerified" class="badge badge-success">Yes</span>
-              <span v-else class="badge badge-secondary">No</span>
+              <span v-if="customer.user.isMobilePhoneVerified" class="badge text-bg-success">Yes</span>
+              <span v-else class="badge text-bg-secondary">No</span>
             </td>
             <td>
               <span
                 v-for="su in customer.user.siteUsers"
                 :key="su.site"
-                class="badge badge-info mr-1"
+                class="badge text-bg-info me-1"
                 :title="'MB ID: ' + (su.externalUserId || 'N/A')"
               >
                 {{ su.site }}
               </span>
             </td>
             <td>
-              <button class="btn btn-outline-secondary btn-sm mr-1" @click="viewCustomer(customer.id)">
+              <button class="btn btn-outline-secondary btn-sm me-1" @click="viewCustomer(customer.id)">
                 View
               </button>
               <button class="btn btn-outline-secondary btn-sm" @click="editCustomer(customer.id)">
