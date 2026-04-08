@@ -5,6 +5,7 @@ import { useMindbodyStaff } from '../composables/useMindbodyStaff'
 import { useAvailableSites } from '@/modules/shared/composables/useAvailableSites'
 import { useToast } from '@/modules/shared/composables/useToast'
 import { appStore } from '@/stores/appStorage'
+import SiteSelector from '@/modules/shared/components/SiteSelector.vue'
 
 const gqlUrl = import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL
 const apolloClient = newAuthenticatedApolloClient(gqlUrl)
@@ -12,11 +13,11 @@ const staff = useMindbodyStaff(apolloClient)
 const { sites, fetchSites } = useAvailableSites(apolloClient)
 const toast = useToast()
 
-const currentSite = ref<string>(appStore().site || '')
+const currentSite = ref<string | null>(appStore().site || null)
 
 async function loadStaff() {
   if (!currentSite.value) return
-  await staff.fetchStaff(currentSite.value)
+  await staff.fetchStaff(currentSite.value as string)
 }
 
 async function handleSync() {
@@ -43,20 +44,23 @@ onMounted(async () => {
 
 <template>
   <div>
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-2">
       <h4>Mindbody Staff</h4>
-      <div>
-        <select v-model="currentSite" class="form-control form-control-sm d-inline-block me-2" style="width: auto">
-          <option v-for="site in sites" :key="site.code" :value="site.code">
-            {{ site.name }}
-          </option>
-        </select>
-        <button class="btn btn-dark btn-sm" @click="handleSync" :disabled="staff.isSyncing.value">
-          <span v-if="staff.isSyncing.value">
-            <span class="spinner-border spinner-border-sm" role="status"></span> Syncing...
-          </span>
-          <span v-else>Sync from Mindbody</span>
-        </button>
+      <button class="btn btn-primary" @click="handleSync" :disabled="staff.isSyncing.value">
+        <span v-if="staff.isSyncing.value">
+          <span class="spinner-border spinner-border-sm" role="status"></span> Syncing...
+        </span>
+        <span v-else>Sync from Mindbody</span>
+      </button>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-4 col-sm-6 col-12">
+        <SiteSelector
+          :model-value="(currentSite as any)"
+          @update:model-value="(v: any) => currentSite = v"
+          :sites="(sites as any)"
+          :is-loading="false"
+        />
       </div>
     </div>
 

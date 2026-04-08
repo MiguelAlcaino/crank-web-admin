@@ -29,7 +29,7 @@ function formatTimestamp(dateStr: string) {
     <!-- Refresh button -->
     <div class="d-flex justify-content-end mb-2">
       <button
-        class="btn btn-outline-secondary btn-sm"
+        class="btn btn-primary"
         :disabled="isLoading"
         @click="emit('refresh')"
       >

@@ -1,4 +1,4 @@
-import { d as n, G as c, c as r, b as i, e as s, t as m, o as _ } from "./index.2b55ccef.js";
+import { d as n, G as c, c as r, b as i, e as s, t as m, o as _ } from "./index.6fb1cfad.js";
 const d = { class: "text-center py-5" }, p = { class: "text-muted" }, l = /* @__PURE__ */ s("p", { class: "text-muted" }, "This page is being migrated. Coming soon.", -1), h = /* @__PURE__ */ n({
   __name: "PlaceholderView",
   setup(u) {

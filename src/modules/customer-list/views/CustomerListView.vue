@@ -71,7 +71,7 @@ onMounted(loadCustomers)
   <div>
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h4>Clients</h4>
-      <RouterLink :to="{ name: 'admin_customer_create' }" class="btn btn-dark btn-sm">
+      <RouterLink :to="{ name: 'admin_customer_create' }" class="btn btn-primary">
         + New Customer
       </RouterLink>
     </div>

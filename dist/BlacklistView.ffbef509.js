@@ -1,5 +1,5 @@
-import { N as C, r as _, O as g, d as M, a as w, c as T, b as u, e, f as B, v as U, F as S, h as I, i as F, B as q, t as h, w as A, o as r, H as D, I as L, j as $, k as V, g as v } from "./index.2b55ccef.js";
-import { u as x } from "./useToast.d2351ccb.js";
+import { N as C, r as _, O as g, d as M, a as w, c as T, b as u, e, f as B, v as U, F as S, h as I, i as F, B as q, t as h, w as A, o as r, H as D, I as L, j as $, k as V, g as v } from "./index.6fb1cfad.js";
+import { u as x } from "./useToast.e80b0372.js";
 const O = C`
   query MobileNumberBlacklist {
     mobileNumberBlacklist {
@@ -273,7 +273,7 @@ const O = C`
         ce,
         l.value ? $("", !0) : (r(), u("button", {
           key: 0,
-          class: "btn btn-dark btn-sm",
+          class: "btn btn-primary",
           onClick: k
         }, " + Add Number "))
       ]),

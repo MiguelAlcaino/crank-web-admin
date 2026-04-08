@@ -1,4 +1,4 @@
-import { N as I, r as i, O as D, d as R, H as $, z as B, c as T, I as O, J as j, b as o, e as t, k as H, K as Y, f, i as g, t as n, w as z, j as y, g as r, F as S, h as U, M as J, Z as K, o as l, B as Q } from "./index.2b55ccef.js";
+import { N as I, r as i, O as D, d as R, H as $, z as B, c as T, I as O, J as j, b as o, e as t, k as H, K as Y, f, i as g, t as n, w as z, j as y, g as r, F as S, h as U, M as J, Z as K, o as l, B as Q } from "./index.6fb1cfad.js";
 const Z = I`
   query AdminCustomers($params: AdminCustomersParams, $pagination: PaginationInput) {
     customers(params: $params, pagination: $pagination) {
@@ -119,7 +119,7 @@ const Z = I`
           X,
           H(q, {
             to: { name: "admin_customer_create" },
-            class: "btn btn-dark btn-sm"
+            class: "btn btn-primary"
           }, {
             default: Y(() => [
               Q(" + New Customer ")

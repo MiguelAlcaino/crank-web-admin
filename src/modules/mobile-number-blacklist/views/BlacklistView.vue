@@ -62,7 +62,7 @@ async function handleDelete(id: string) {
       <h4>Blacklisted Phone Numbers</h4>
       <button
         v-if="!showForm"
-        class="btn btn-dark btn-sm"
+        class="btn btn-primary"
         @click="openCreateForm"
       >
         + Add Number
