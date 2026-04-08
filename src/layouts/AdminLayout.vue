@@ -157,6 +157,33 @@ async function logout() {
             </RouterLink>
           </li>
 
+          <!-- Class Schedule dropdown (STAFF or above) -->
+          <li v-if="isStaffOrAbove()" class="nav-item">
+            <a
+              class="nav-link dropdown-toggle"
+              :class="{ active: route.name === 'admin_classes_calendar' }"
+              href="#"
+              @click.prevent="toggleDropdown('classSchedule')"
+            >
+              Class Schedule
+              <template v-for="site in sites" :key="site.serviceKey">
+                <span v-if="isActiveWithParam('admin_classes_calendar', 'site', site.serviceKey)">
+                  {{ site.name }}
+                </span>
+              </template>
+            </a>
+            <div v-show="openDropdown === 'classSchedule'" class="dropdown-menu show">
+              <RouterLink
+                v-for="site in sites"
+                :key="site.serviceKey"
+                class="dropdown-item"
+                :to="{ name: 'admin_classes_calendar', params: { site: site.serviceKey } }"
+              >
+                Class Schedule {{ site.name }}
+              </RouterLink>
+            </div>
+          </li>
+
           <!-- Class Schedule Config dropdown (SUPER_ADMIN) -->
           <li v-if="isSuperAdmin()" class="nav-item">
             <a
@@ -203,17 +230,6 @@ async function logout() {
               :to="{ name: 'admin_instructor_profiles' }"
             >
               Instructor Profiles
-            </RouterLink>
-          </li>
-
-          <!-- Class Schedule (INSTRUCTOR with site access) -->
-          <li v-if="isInstructor()" class="nav-item">
-            <RouterLink
-              class="nav-link"
-              :class="{ active: isActive('admin_classes_calendar') }"
-              :to="{ name: 'admin_classes_calendar', params: { site: sites[0]?.serviceKey || 'dubai' } }"
-            >
-              Class Schedule
             </RouterLink>
           </li>
 
