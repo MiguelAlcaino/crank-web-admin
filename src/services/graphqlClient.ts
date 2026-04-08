@@ -39,6 +39,12 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
             ;(async () => {
               try {
                 await authService.refreshToken()
+                operation.setContext({
+                  headers: {
+                    ...operation.getContext().headers,
+                    authorization: `Bearer ${useAuthenticationStore().token}`
+                  }
+                })
                 // Retry the failed request
                 const subscriber = {
                   next: observer.next.bind(observer),
@@ -48,6 +54,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
 
                 forward(operation).subscribe(subscriber)
               } catch (err) {
+                await authService.logout()
                 observer.error(err)
               }
             })()

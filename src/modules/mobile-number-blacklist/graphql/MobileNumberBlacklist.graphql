@@ -1,0 +1,19 @@
+query MobileNumberBlacklist {
+  mobileNumberBlacklist {
+    id
+    mobilePhoneNumber
+    fullPhoneNumber
+    countryId
+    countryName
+    countryPhoneCode
+  }
+}
+
+query CountriesWithPhoneCodes {
+  countriesWithPhoneCodes {
+    id
+    name
+    phoneCode
+    formattedPhoneCode
+  }
+}
