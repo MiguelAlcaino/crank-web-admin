@@ -69,11 +69,13 @@ function generatePagePositions() {
     }
 
     if (start > 1) pagesArray.push({ pageNumber: 1, pageLabel: '1' })
+    if (start > 2) pagesArray.push({ pageNumber: 0, pageLabel: '...' })
 
     for (let i = start; i <= end; i++) {
       pagesArray.push({ pageNumber: i, pageLabel: i.toString() })
     }
 
+    if (end < totalPages.value - 1) pagesArray.push({ pageNumber: 0, pageLabel: '...' })
     if (end < totalPages.value)
       pagesArray.push({ pageNumber: totalPages.value, pageLabel: totalPages.value.toString() })
   }
@@ -102,9 +104,9 @@ function generatePagePositions() {
           v-for="(page, key) in pages"
           class="page-item"
           :key="key"
-          :class="{ active: page.pageNumber === currentPage }"
+          :class="{ active: page.pageNumber === currentPage, disabled: page.pageNumber === 0 }"
         >
-          <a class="page-link" href="#" @click.prevent="changePage(page.pageNumber)">{{
+          <a class="page-link" href="#" @click.prevent="page.pageNumber !== 0 && changePage(page.pageNumber)">{{
             page.pageLabel
           }}</a>
         </li>

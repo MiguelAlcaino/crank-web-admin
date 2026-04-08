@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { useTransactionRecords } from '../composables/useTransactionRecords'
 import { useAvailableSites } from '@/modules/shared/composables/useAvailableSites'
+import PaginationComponent from '@/modules/shared/components/PaginationComponent.vue'
 
 const gqlUrl = import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL
 const apolloClient = newAuthenticatedApolloClient(gqlUrl)
@@ -168,24 +169,13 @@ onMounted(async () => {
       </table>
 
       <!-- Pagination -->
-      <nav v-if="totalPages > 1">
-        <ul class="pagination pagination-sm">
-          <li class="page-item" :class="{ disabled: currentPage === 1 }">
-            <a class="page-link" href="#" @click.prevent="goToPage(currentPage - 1)">Previous</a>
-          </li>
-          <li
-            v-for="p in Math.min(totalPages, 10)"
-            :key="p"
-            class="page-item"
-            :class="{ active: p === currentPage }"
-          >
-            <a class="page-link" href="#" @click.prevent="goToPage(p)">{{ p }}</a>
-          </li>
-          <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-            <a class="page-link" href="#" @click.prevent="goToPage(currentPage + 1)">Next</a>
-          </li>
-        </ul>
-      </nav>
+      <PaginationComponent
+        v-if="txn.listResult.value"
+        :page="currentPage"
+        :limit="limit"
+        :total="txn.listResult.value.totalCount"
+        @pageChanged="goToPage"
+      />
     </div>
   </div>
 </template>
