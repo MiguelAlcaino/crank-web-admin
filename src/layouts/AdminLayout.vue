@@ -442,5 +442,6 @@ async function logout() {
 .main-content {
   flex: 1;
   min-width: 0;
+  padding-left: 1.5rem;
 }
 </style>
