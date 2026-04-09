@@ -34,8 +34,13 @@ const selectedClassId = ref<string | null>(null)
 
 const isSynchronizingClasses = ref(false)
 
+const props = defineProps<{
+  initialClassId?: string | null
+  initialDate?: string | null
+}>()
+
 const emits = defineEmits<{
-  (e: 'selectClass', classId: string | null): void
+  (e: 'selectClass', classId: string | null, classDate: string | null): void
 }>()
 
 onMounted(async () => {
@@ -43,7 +48,19 @@ onMounted(async () => {
 
   if (selectedSite.value) {
     checkIfAllClassAreSynchronized()
-    await getCalendarClasses()
+
+    if (props.initialDate) {
+      const d = dayjs(props.initialDate)
+      dateRange.value = [d.startOf('week').toDate(), d.endOf('week').toDate()]
+    }
+
+    await getCalendarClasses(!!props.initialClassId)
+
+    if (props.initialClassId) {
+      selectedClassId.value = props.initialClassId
+      emits('selectClass', props.initialClassId, props.initialDate ?? null)
+    }
+
     scrollToTodayClass()
   }
 })
@@ -58,8 +75,12 @@ async function checkIfAllClassAreSynchronized() {
   }
 }
 
-async function getCalendarClasses(): Promise<void> {
-  selectClass(null)
+async function getCalendarClasses(preserveSelection = false): Promise<void> {
+  if (!preserveSelection) {
+    selectClass(null)
+  } else {
+    selectedClassId.value = null
+  }
 
   dateRange.value = [dateRange.value[0], dateRange.value[1]]
 
@@ -123,9 +144,9 @@ function goToNextWeek(): void {
   getCalendarClasses()
 }
 
-function selectClass(classId: string | null): void {
+function selectClass(classId: string | null, classDate?: Date | null): void {
   selectedClassId.value = classId
-  emits('selectClass', classId)
+  emits('selectClass', classId, classDate ? dayjs(classDate).format('YYYY-MM-DD') : null)
 }
 
 function onAfterChangingSite(): void {
@@ -273,7 +294,7 @@ function scrollToTodayClass() {
           v-for="c in wd.classes"
           :key="c.id"
           style="cursor: pointer"
-          @click="selectClass(c.id)"
+          @click="selectClass(c.id, c.startWithNoTimeZone)"
           :class="{
             selectedClass: c.id === selectedClassId,
             disabledClass: c.showAsDisabled
