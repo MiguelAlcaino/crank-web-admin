@@ -1,5 +1,5 @@
-import { N as A, r as u, O as _, d as I, H as O, b, g as n, t as V, j as k, e as s, f as h, a0 as g, i as D, B, w as P, o as f } from "./index.2e320136.js";
-import { u as T } from "./useToast.efb48ebc.js";
+import { O as A, r as u, P as _, d as I, H as O, b, g as n, t as V, j as k, e as s, f as h, a0 as g, i as D, B as P, w as B, o as f } from "./index.111ad429.js";
+import { u as T } from "./useToast.ee5df66f.js";
 const w = A`
   mutation BulkActivateVod($input: BulkActivateVodInput!) {
     bulkActivateVod(input: $input) {
@@ -52,10 +52,10 @@ const w = A`
     activateVod: v,
     deactivateVod: m
   };
-}, x = /* @__PURE__ */ s("h4", null, "Bulk VOD Activator", -1), N = {
+}, x = /* @__PURE__ */ s("h4", null, "Bulk VOD Activator", -1), C = {
   key: 0,
   class: "alert alert-danger"
-}, C = ["onSubmit"], E = { class: "mb-3" }, q = /* @__PURE__ */ s("label", null, "Operation", -1), $ = { class: "form-check form-check-inline" }, R = ["disabled"], S = /* @__PURE__ */ s("label", {
+}, E = ["onSubmit"], N = { class: "mb-3" }, q = /* @__PURE__ */ s("label", null, "Operation", -1), $ = { class: "form-check form-check-inline" }, R = ["disabled"], S = /* @__PURE__ */ s("label", {
   for: "op-add",
   class: "form-check-label"
 }, "Add VOD Periods", -1), F = { class: "form-check form-check-inline" }, K = ["disabled"], L = /* @__PURE__ */ s("label", {
@@ -93,11 +93,11 @@ const w = A`
     }
     return (e, a) => (f(), b("div", null, [
       x,
-      n(t).hasError.value ? (f(), b("div", N, V(n(t).errorMessage.value), 1)) : k("", !0),
+      n(t).hasError.value ? (f(), b("div", C, V(n(t).errorMessage.value), 1)) : k("", !0),
       s("form", {
-        onSubmit: P(i, ["prevent"])
+        onSubmit: B(i, ["prevent"])
       }, [
-        s("div", E, [
+        s("div", N, [
           q,
           s("div", null, [
             s("div", $, [
@@ -169,10 +169,10 @@ const w = A`
         }, [
           n(t).isProcessing.value ? (f(), b("span", X, [
             Y,
-            B(" Processing... ")
+            P(" Processing... ")
           ])) : (f(), b("span", Z, V(o.value === "add" ? "Activate VOD" : "Deactivate VOD"), 1))
         ], 8, W)
-      ], 40, C)
+      ], 40, E)
     ]));
   }
 });

@@ -100,7 +100,7 @@ const router = createRouter({
             import('@/modules/class-schedule-config/views/ClassScheduleConfigView.vue')
         },
         {
-          path: 'classes-calendar/:site',
+          path: 'classes-calendar',
           name: 'admin_classes_calendar',
           component: () => import('@/modules/class-schedule/views/ClassScheduleView.vue')
         },

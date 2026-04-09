@@ -1,4 +1,4 @@
-import { d as m, c as d, J as _, b as u, e as t, t as h, M as n, K as s, j as r, k as p, o as a, D as l, R as x } from "./index.2e320136.js";
+import { d as m, c as d, K as _, b as u, e as t, t as h, N as n, L as s, j as r, k as p, o as a, D as l, R as x } from "./index.111ad429.js";
 const v = /* @__PURE__ */ t("h4", null, "Admin Dashboard", -1), k = { class: "text-muted" }, f = { class: "row mt-4" }, b = { class: "col-md-4 mb-3" }, g = /* @__PURE__ */ t("div", { class: "card-body" }, [
   /* @__PURE__ */ t("h6", { class: "card-title text-dark" }, "Transactions"),
   /* @__PURE__ */ t("p", { class: "card-text text-muted small" }, "View and manage payment transactions")
@@ -8,11 +8,11 @@ const v = /* @__PURE__ */ t("h4", null, "Admin Dashboard", -1), k = { class: "te
 ], -1), C = { class: "col-md-4 mb-3" }, D = /* @__PURE__ */ t("div", { class: "card-body" }, [
   /* @__PURE__ */ t("h6", { class: "card-title text-dark" }, "Gift Cards"),
   /* @__PURE__ */ t("p", { class: "card-text text-muted small" }, "Manage gift card products")
-], -1), M = /* @__PURE__ */ m({
+], -1), B = /* @__PURE__ */ m({
   __name: "AdminDashboardView",
-  setup(V) {
+  setup(N) {
     const i = d(() => l.getUser()), o = d(() => l.userHasRole(x.ROLE_SUPER_ADMIN));
-    return (w, A) => {
+    return (V, w) => {
       var c;
       const e = _("RouterLink");
       return a(), u("div", null, [
@@ -60,5 +60,5 @@ const v = /* @__PURE__ */ t("h4", null, "Admin Dashboard", -1), k = { class: "te
   }
 });
 export {
-  M as default
+  B as default
 };

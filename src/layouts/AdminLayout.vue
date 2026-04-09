@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { authService } from '@/services/authService'
 import { newAuthenticatedApolloClient } from '@/services/graphqlClient'
@@ -51,6 +51,24 @@ function toggleDropdown(name: string) {
   openDropdown.value = openDropdown.value === name ? null : name
 }
 
+const sidebarCollapsed = ref(false)
+
+watch(
+  () => route.name,
+  (name) => {
+    if (name === 'admin_classes_calendar') {
+      sidebarCollapsed.value = true
+    } else {
+      sidebarCollapsed.value = false
+    }
+  },
+  { immediate: true }
+)
+
+function toggleSidebar() {
+  sidebarCollapsed.value = !sidebarCollapsed.value
+}
+
 async function logout() {
   await authService.logout()
 }
@@ -58,14 +76,22 @@ async function logout() {
 
 <template>
   <div class="container-fluid">
-    <div class="row">
+    <div class="layout-row">
       <nav
         style="font-size: 14px"
-        class="col-sm-3 col-md-2 d-none d-sm-block sidebar"
+        class="sidebar d-none d-sm-block"
+        :class="{ collapsed: sidebarCollapsed }"
       >
         <ul class="nav nav-pills flex-column">
+          <!-- Toggle button -->
+          <li class="nav-item">
+            <button class="sidebar-toggle nav-link" @click="toggleSidebar">
+              <i :class="sidebarCollapsed ? 'bi bi-chevron-right' : 'bi bi-chevron-left'"></i>
+            </button>
+          </li>
+
           <!-- Clients (STAFF or above) -->
-          <li v-if="isStaffOrAbove()" class="nav-item">
+          <li v-if="isStaffOrAbove() && !sidebarCollapsed" class="nav-item">
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_customers') }"
@@ -75,35 +101,19 @@ async function logout() {
             </RouterLink>
           </li>
 
-          <!-- Class Schedule dropdown (STAFF or above) -->
-          <li v-if="isStaffOrAbove()" class="nav-item">
-            <a
-              class="nav-link dropdown-toggle"
-              :class="{ active: route.name === 'admin_classes_calendar' }"
-              href="#"
-              @click.prevent="toggleDropdown('classSchedule')"
+          <!-- Class Schedule (STAFF or above) -->
+          <li v-if="isStaffOrAbove() && !sidebarCollapsed" class="nav-item">
+            <RouterLink
+              class="nav-link"
+              :class="{ active: isActive('admin_classes_calendar') }"
+              :to="{ name: 'admin_classes_calendar' }"
             >
               Class Schedule
-              <template v-for="site in sites" :key="site.serviceKey">
-                <span v-if="isActiveWithParam('admin_classes_calendar', 'site', site.serviceKey)">
-                  {{ site.name }}
-                </span>
-              </template>
-            </a>
-            <div v-show="openDropdown === 'classSchedule'" class="dropdown-menu show">
-              <RouterLink
-                v-for="site in sites"
-                :key="site.serviceKey"
-                class="dropdown-item"
-                :to="{ name: 'admin_classes_calendar', params: { site: site.serviceKey } }"
-              >
-                Class Schedule {{ site.name }}
-              </RouterLink>
-            </div>
+            </RouterLink>
           </li>
 
           <!-- Transactions (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
+          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_transactions') }"
@@ -114,7 +124,7 @@ async function logout() {
           </li>
 
           <!-- Class Schedule Config dropdown (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
+          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
             <a
               class="nav-link dropdown-toggle"
               :class="{ active: route.name === 'admin_class_schedule_config' }"
@@ -141,7 +151,7 @@ async function logout() {
           </li>
 
           <!-- Room Layout Config dropdown (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
+          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
             <a
               class="nav-link dropdown-toggle"
               :class="{ active: route.name === 'admin_room_layout_list' }"
@@ -168,7 +178,7 @@ async function logout() {
           </li>
 
           <!-- Packages dropdown (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
+          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
             <a
               class="nav-link dropdown-toggle"
               :class="{ active: route.name === 'admin_class_packages' }"
@@ -195,7 +205,7 @@ async function logout() {
           </li>
 
           <!-- Gift Card (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
+          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_gift_cards') }"
@@ -206,7 +216,7 @@ async function logout() {
           </li>
 
           <!-- Pending Gift Cards (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
+          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_customer_gift_cards') }"
@@ -217,7 +227,7 @@ async function logout() {
           </li>
 
           <!-- Payment Link (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
+          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_payment_links') }"
@@ -228,7 +238,7 @@ async function logout() {
           </li>
 
           <!-- Session Types (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
+          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_session_types') }"
@@ -239,7 +249,7 @@ async function logout() {
           </li>
 
           <!-- Instructor Profiles (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
+          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_instructor_profiles') }"
@@ -250,7 +260,7 @@ async function logout() {
           </li>
 
           <!-- Mindbody Staff (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
+          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_mindbody_staff') }"
@@ -261,7 +271,7 @@ async function logout() {
           </li>
 
           <!-- Webhook Events (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
+          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_webhook_events') }"
@@ -272,7 +282,7 @@ async function logout() {
           </li>
 
           <!-- Admins (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
+          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_users') }"
@@ -283,7 +293,7 @@ async function logout() {
           </li>
 
           <!-- Settings (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
+          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_settings') }"
@@ -294,7 +304,7 @@ async function logout() {
           </li>
 
           <!-- Send Notification (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
+          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_send_notification') }"
@@ -305,7 +315,7 @@ async function logout() {
           </li>
 
           <!-- My Settings (any admin) -->
-          <li class="nav-item">
+          <li v-if="!sidebarCollapsed" class="nav-item">
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_my_settings') }"
@@ -316,7 +326,7 @@ async function logout() {
           </li>
 
           <!-- Blacklisted phones (STAFF or above) -->
-          <li v-if="isStaffOrAbove()" class="nav-item">
+          <li v-if="isStaffOrAbove() && !sidebarCollapsed" class="nav-item">
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_blacklisted_phones') }"
@@ -327,7 +337,7 @@ async function logout() {
           </li>
 
           <!-- Report - MB Clients (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin()" class="nav-item">
+          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_mindbody_clients') }"
@@ -338,7 +348,7 @@ async function logout() {
           </li>
 
           <!-- Dark mode toggle -->
-          <li class="nav-item">
+          <li v-if="!sidebarCollapsed" class="nav-item">
             <a class="nav-link" href="#" @click.prevent="themeStore.toggleTheme()">
               <i :class="themeStore.isDark ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill'"></i>
               {{ themeStore.isDark ? 'Light Mode' : 'Dark Mode' }}
@@ -346,13 +356,13 @@ async function logout() {
           </li>
 
           <!-- Logout -->
-          <li class="nav-item">
+          <li v-if="!sidebarCollapsed" class="nav-item">
             <a class="nav-link" href="#" @click.prevent="logout">Logout</a>
           </li>
         </ul>
       </nav>
 
-      <main role="main" class="col-sm-9 ms-sm-auto col-md-10 pt-3">
+      <main role="main" class="main-content pt-3">
         <AdminToast />
         <RouterView />
       </main>
@@ -361,15 +371,29 @@ async function logout() {
 </template>
 
 <style scoped>
+.layout-row {
+  display: flex;
+  min-height: 100vh;
+}
+
 .sidebar {
+  font-size: 14px;
   padding-top: 10px;
-  min-height: calc(100vh - 20px);
   background-color: var(--bs-tertiary-bg);
   border-right: 1px solid var(--bs-border-color);
+  flex-shrink: 0;
+  width: 260px;
+  transition: width 0.2s ease;
+  overflow: hidden;
+}
+
+.sidebar.collapsed {
+  width: 48px;
 }
 
 .sidebar .nav-link {
   color: var(--bs-body-color);
+  white-space: nowrap;
 }
 
 .sidebar .nav-link.active {
@@ -379,6 +403,21 @@ async function logout() {
 
 .sidebar .nav-link:hover:not(.active) {
   background-color: var(--bs-secondary-bg);
+}
+
+.sidebar-toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.sidebar.collapsed .sidebar-toggle {
+  justify-content: center;
+  padding: 8px;
 }
 
 .dropdown-menu {
@@ -398,5 +437,10 @@ async function logout() {
 .dropdown-item:hover {
   background-color: var(--bs-tertiary-bg);
   color: var(--bs-body-color);
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
 }
 </style>

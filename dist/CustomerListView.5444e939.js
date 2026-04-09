@@ -1,5 +1,5 @@
-import { N as I, r as i, O as D, d as R, H as $, z as B, c as T, I as O, J as j, b as o, e as t, k as H, K as Y, f, i as g, t as n, w as z, j as y, g as r, F as S, h as U, M as J, Z as K, o as l, B as Q } from "./index.2e320136.js";
-const Z = I`
+import { O as I, r as i, P as D, d as R, H as $, z as B, c as T, I as O, K as j, b as o, e as t, k as H, L as Y, f, i as g, t as n, w as z, j as y, g as r, F as S, h as U, N as K, Z as Q, o as l, B as Z } from "./index.111ad429.js";
+const G = I`
   query AdminCustomers($params: AdminCustomersParams, $pagination: PaginationInput) {
     customers(params: $params, pagination: $pagination) {
       items {
@@ -21,13 +21,13 @@ const Z = I`
       limit
     }
   }
-`, G = (N) => {
+`, J = (N) => {
   const V = i(null), _ = i(!1), s = i(!1);
   async function C(m) {
     _.value = !0, s.value = !1;
     try {
       const { page: u, limit: d, ...c } = m, { data: v } = await N.query({
-        query: Z,
+        query: G,
         variables: {
           params: Object.keys(c).length > 0 ? c : void 0,
           pagination: u || d ? { page: u, limit: d } : void 0
@@ -85,7 +85,7 @@ const Z = I`
 }, Vt = ["title"], Dt = ["onClick"], xt = ["onClick"], x = 50, Pt = /* @__PURE__ */ R({
   __name: "CustomerListView",
   setup(N) {
-    const _ = $("https://payments.crank-fit.com/api/graphql/"), s = G(_), C = B(), m = i(""), u = i(!1), d = i(""), c = i(""), v = i(""), k = i(""), h = i(1), E = T(() => s.result.value ? Math.ceil(s.result.value.totalCount / x) : 1);
+    const _ = $("https://payments.crank-fit.com/api/graphql/"), s = J(_), C = B(), m = i(""), u = i(!1), d = i(""), c = i(""), v = i(""), k = i(""), h = i(1), E = T(() => s.result.value ? Math.ceil(s.result.value.totalCount / x) : 1);
     async function w() {
       await s.fetchCustomers({
         search: m.value || void 0,
@@ -100,7 +100,7 @@ const Z = I`
     async function P() {
       h.value = 1, await w();
     }
-    async function M() {
+    async function L() {
       m.value = "", d.value = "", c.value = "", v.value = "", k.value = "", h.value = 1, await w();
     }
     async function A(p) {
@@ -109,7 +109,7 @@ const Z = I`
     function F(p) {
       C.push({ name: "admin_customer_profile", params: { id: p } });
     }
-    function L(p) {
+    function M(p) {
       C.push({ name: "admin_customer_edit", params: { id: p } });
     }
     return O(w), (p, a) => {
@@ -122,7 +122,7 @@ const Z = I`
             class: "btn btn-primary"
           }, {
             default: Y(() => [
-              Q(" + New Customer ")
+              Z(" + New Customer ")
             ]),
             _: 1
           })
@@ -199,7 +199,7 @@ const Z = I`
               }, "Apply"),
               t("button", {
                 class: "btn btn-outline-secondary btn-sm",
-                onClick: M
+                onClick: L
               }, "Clear")
             ])
           ])
@@ -235,13 +235,13 @@ const Z = I`
                   }, " View ", 8, Dt),
                   t("button", {
                     class: "btn btn-outline-secondary btn-sm",
-                    onClick: (b) => L(e.id)
+                    onClick: (b) => M(e.id)
                   }, " Edit ", 8, xt)
                 ])
               ]))), 128))
             ])
           ]),
-          r(s).result.value ? (l(), J(K, {
+          r(s).result.value ? (l(), K(Q, {
             key: 0,
             page: h.value,
             limit: x,

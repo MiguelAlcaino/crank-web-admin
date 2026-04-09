@@ -1,4 +1,4 @@
-import { N as R, r as h, O as _, d as L, H as M, c as q, I, b as s, e, f as x, i as $, w as f, g as r, j as y, t as i, F as N, h as w, A as C, o } from "./index.2e320136.js";
+import { O as R, r as h, P as _, d as L, H as M, c as q, I, b as s, e, f as x, i as $, w as f, g as r, j as y, t as i, F as P, h as w, A as C, o } from "./index.111ad429.js";
 const E = R`
   query AdminMindbodyClients($params: AdminMindbodyClientsParams, $pagination: PaginationInput) {
     mindbodyClients(params: $params, pagination: $pagination) {
@@ -97,14 +97,14 @@ const E = R`
   class: "text-center text-muted py-3"
 }, "No clients found", -1), K = [
   J
-], W = { key: 0 }, X = { class: "pagination pagination-sm" }, Z = ["onClick"], P = 50, le = /* @__PURE__ */ L({
+], W = { key: 0 }, X = { class: "pagination pagination-sm" }, Z = ["onClick"], N = 50, le = /* @__PURE__ */ L({
   __name: "MindbodyClientListView",
   setup(g) {
-    const p = M("https://payments.crank-fit.com/api/graphql/"), t = D(p), a = h(""), n = h(1), d = q(() => t.listResult.value ? Math.ceil(t.listResult.value.totalCount / P) : 1);
+    const p = M("https://payments.crank-fit.com/api/graphql/"), t = D(p), a = h(""), n = h(1), d = q(() => t.listResult.value ? Math.ceil(t.listResult.value.totalCount / N) : 1);
     async function u() {
       await t.fetchList(
         a.value ? { search: a.value } : void 0,
-        { page: n.value, limit: P }
+        { page: n.value, limit: N }
       );
     }
     async function c() {
@@ -139,7 +139,7 @@ const E = R`
           H,
           e("tbody", null, [
             r(t).listResult.value.items.length === 0 ? (o(), s("tr", G, K)) : y("", !0),
-            (o(!0), s(N, null, w(r(t).listResult.value.items, (l) => (o(), s("tr", {
+            (o(!0), s(P, null, w(r(t).listResult.value.items, (l) => (o(), s("tr", {
               key: l.id
             }, [
               e("td", null, i(l.id), 1),
@@ -162,7 +162,7 @@ const E = R`
                 onClick: v[1] || (v[1] = f((l) => m(n.value - 1), ["prevent"]))
               }, "Previous")
             ], 2),
-            (o(!0), s(N, null, w(Math.min(d.value, 10), (l) => (o(), s("li", {
+            (o(!0), s(P, null, w(Math.min(d.value, 10), (l) => (o(), s("li", {
               key: l,
               class: C(["page-item", { active: l === n.value }])
             }, [

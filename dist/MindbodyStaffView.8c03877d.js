@@ -1,6 +1,6 @@
-import { N as b, r as u, O as f, d as N, H as k, s as w, W as L, I as M, b as n, e as t, g as o, B as E, k as q, a1 as x, j as y, F as A, h as F, o as l, t as m } from "./index.2e320136.js";
-import { u as V } from "./useAvailableSites.fd1b8dc0.js";
-import { u as C } from "./useToast.efb48ebc.js";
+import { O as b, r as u, P as f, d as k, H as w, s as N, J as L, I as M, b as n, e as t, g as o, B as E, k as q, a1 as x, j as y, F as A, h as F, o as l, t as m } from "./index.111ad429.js";
+import { u as V } from "./useAvailableSites.053fe1d8.js";
+import { u as C } from "./useToast.ee5df66f.js";
 const T = b`
   query MindbodyStaffs($site: SiteEnum!) {
     mindbodyStaffs(site: $site) {
@@ -55,36 +55,36 @@ const T = b`
 }, $ = { class: "d-flex justify-content-between align-items-center mb-2" }, I = /* @__PURE__ */ t("h4", null, "Mindbody Staff", -1), j = ["disabled"], D = { key: 0 }, O = /* @__PURE__ */ t("span", {
   class: "spinner-border spinner-border-sm",
   role: "status"
-}, null, -1), Y = { key: 1 }, z = { class: "row mb-3" }, H = { class: "col-md-4 col-sm-6 col-12" }, P = {
+}, null, -1), P = { key: 1 }, Y = { class: "row mb-3" }, z = { class: "col-md-4 col-sm-6 col-12" }, H = {
   key: 0,
   class: "text-center py-4"
-}, Q = /* @__PURE__ */ t("div", {
+}, J = /* @__PURE__ */ t("div", {
   class: "spinner-border",
   role: "status"
-}, null, -1), R = [
-  Q
-], W = {
+}, null, -1), Q = [
+  J
+], R = {
   key: 1,
   class: "alert alert-danger"
 }, G = {
   key: 2,
   class: "table table-striped table-sm"
-}, J = /* @__PURE__ */ t("thead", null, [
+}, K = /* @__PURE__ */ t("thead", null, [
   /* @__PURE__ */ t("tr", null, [
     /* @__PURE__ */ t("th", null, "ID"),
     /* @__PURE__ */ t("th", null, "First Name"),
     /* @__PURE__ */ t("th", null, "Last Name"),
     /* @__PURE__ */ t("th", null, "Email")
   ])
-], -1), K = { key: 0 }, X = /* @__PURE__ */ t("td", {
+], -1), W = { key: 0 }, X = /* @__PURE__ */ t("td", {
   colspan: "4",
   class: "text-center text-muted py-3"
 }, "No staff found", -1), Z = [
   X
-], at = /* @__PURE__ */ N({
+], at = /* @__PURE__ */ k({
   __name: "MindbodyStaffView",
   setup(_) {
-    const r = k("https://payments.crank-fit.com/api/graphql/"), e = B(r), { sites: a, fetchSites: v } = V(r), d = C(), s = u(w().site || null);
+    const r = w("https://payments.crank-fit.com/api/graphql/"), e = B(r), { sites: a, fetchSites: v } = V(r), d = C(), s = u(N().site || null);
     async function i() {
       !s.value || await e.fetchStaff(s.value);
     }
@@ -106,11 +106,11 @@ const T = b`
           o(e).isSyncing.value ? (l(), n("span", D, [
             O,
             E(" Syncing... ")
-          ])) : (l(), n("span", Y, "Sync from Mindbody"))
+          ])) : (l(), n("span", P, "Sync from Mindbody"))
         ], 8, j)
       ]),
-      t("div", z, [
-        t("div", H, [
+      t("div", Y, [
+        t("div", z, [
           q(x, {
             "model-value": s.value,
             "onUpdate:modelValue": S[0] || (S[0] = (c) => s.value = c),
@@ -119,12 +119,12 @@ const T = b`
           }, null, 8, ["model-value", "sites"])
         ])
       ]),
-      o(e).isLoading.value ? (l(), n("div", P, R)) : y("", !0),
-      o(e).hasError.value ? (l(), n("div", W, "Failed to load staff.")) : y("", !0),
+      o(e).isLoading.value ? (l(), n("div", H, Q)) : y("", !0),
+      o(e).hasError.value ? (l(), n("div", R, "Failed to load staff.")) : y("", !0),
       o(e).isLoading.value ? y("", !0) : (l(), n("table", G, [
-        J,
+        K,
         t("tbody", null, [
-          o(e).staffList.value.length === 0 ? (l(), n("tr", K, Z)) : y("", !0),
+          o(e).staffList.value.length === 0 ? (l(), n("tr", W, Z)) : y("", !0),
           (l(!0), n(A, null, F(o(e).staffList.value, (c) => (l(), n("tr", {
             key: c.id
           }, [
