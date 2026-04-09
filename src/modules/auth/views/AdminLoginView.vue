@@ -71,7 +71,7 @@ async function login() {
 
         <form @submit.prevent="login" autocomplete="on">
           <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
+            <label for="email" class="form-label">Email / Username</label>
             <input
               type="email"
               v-model="formData.email"

@@ -1,12 +1,12 @@
-import { d as g, z as y, r as _, a as k, b as n, e, A as x, g as u, w as S, f as b, i as h, t as A, j as V, B as C, o as l, p as D, l as I, C as v, q as T, D as q, y as E } from "./index.0993f8b2.js";
-import { u as L } from "./themeStore.ae824e6a.js";
-const d = (r) => (D("data-v-d848d1bb"), r = r(), I(), r), B = { class: "login-container d-flex align-items-center justify-content-center min-vh-100 position-relative" }, M = ["title"], N = {
+import { d as g, z as y, r as _, a as k, b as n, e, A as x, g as u, w as S, f as h, i as b, t as A, j as V, B as C, o as l, p as D, l as I, C as v, q as T, D as q, y as E } from "./index.b306f002.js";
+import { u as L } from "./themeStore.fa4567ae.js";
+const d = (r) => (D("data-v-54462c16"), r = r(), I(), r), B = { class: "login-container d-flex align-items-center justify-content-center min-vh-100 position-relative" }, M = ["title"], N = {
   class: "card shadow-sm",
   style: { width: "100%", "max-width": "400px" }
-}, R = { class: "card-body p-4" }, P = /* @__PURE__ */ d(() => /* @__PURE__ */ e("h4", { class: "card-title text-center mb-4" }, "CRANK Admin", -1)), U = ["onSubmit"], j = { class: "mb-3" }, z = /* @__PURE__ */ d(() => /* @__PURE__ */ e("label", {
+}, R = { class: "card-body p-4" }, U = /* @__PURE__ */ d(() => /* @__PURE__ */ e("h4", { class: "card-title text-center mb-4" }, "CRANK Admin", -1)), P = ["onSubmit"], j = { class: "mb-3" }, z = /* @__PURE__ */ d(() => /* @__PURE__ */ e("label", {
   for: "email",
   class: "form-label"
-}, "Email", -1)), $ = ["disabled"], K = { class: "mb-3" }, F = /* @__PURE__ */ d(() => /* @__PURE__ */ e("label", {
+}, "Email / Username", -1)), $ = ["disabled"], K = { class: "mb-3" }, F = /* @__PURE__ */ d(() => /* @__PURE__ */ e("label", {
   for: "password",
   class: "form-label"
 }, "Password", -1)), G = ["disabled"], H = {
@@ -61,14 +61,14 @@ const d = (r) => (D("data-v-d848d1bb"), r = r(), I(), r), B = { class: "login-co
       ], 8, M),
       e("div", N, [
         e("div", R, [
-          P,
+          U,
           e("form", {
             onSubmit: S(f, ["prevent"]),
             autocomplete: "on"
           }, [
             e("div", j, [
               z,
-              b(e("input", {
+              h(e("input", {
                 type: "email",
                 "onUpdate:modelValue": s[1] || (s[1] = (i) => t.email = i),
                 class: "form-control",
@@ -78,12 +78,12 @@ const d = (r) => (D("data-v-d848d1bb"), r = r(), I(), r), B = { class: "login-co
                 required: "",
                 disabled: a.value
               }, null, 8, $), [
-                [h, t.email]
+                [b, t.email]
               ])
             ]),
             e("div", K, [
               F,
-              b(e("input", {
+              h(e("input", {
                 type: "password",
                 "onUpdate:modelValue": s[2] || (s[2] = (i) => t.password = i),
                 class: "form-control",
@@ -93,7 +93,7 @@ const d = (r) => (D("data-v-d848d1bb"), r = r(), I(), r), B = { class: "login-co
                 required: "",
                 disabled: a.value
               }, null, 8, G), [
-                [h, t.password]
+                [b, t.password]
               ])
             ]),
             o.value ? (l(), n("div", H, A(o.value), 1)) : V("", !0),
@@ -107,13 +107,13 @@ const d = (r) => (D("data-v-d848d1bb"), r = r(), I(), r), B = { class: "login-co
                 C(" Signing in... ")
               ])) : (l(), n("span", W, "Sign In"))
             ], 8, J)
-          ], 40, U)
+          ], 40, P)
         ])
       ])
     ]));
   }
 });
-const ee = /* @__PURE__ */ E(X, [["__scopeId", "data-v-d848d1bb"]]);
+const ee = /* @__PURE__ */ E(X, [["__scopeId", "data-v-54462c16"]]);
 export {
   ee as default
 };
