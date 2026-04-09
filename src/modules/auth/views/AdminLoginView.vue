@@ -73,7 +73,7 @@ async function login() {
           <div class="mb-3">
             <label for="email" class="form-label">Email / Username</label>
             <input
-              type="email"
+              type="text"
               v-model="formData.email"
               class="form-control"
               id="email"
