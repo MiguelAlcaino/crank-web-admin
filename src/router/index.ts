@@ -196,6 +196,13 @@ const router = createRouter({
           name: 'admin_blacklisted_phones',
           component: () =>
             import('@/modules/mobile-number-blacklist/views/BlacklistView.vue')
+        },
+        {
+          path: 'send-notification',
+          name: 'admin_send_notification',
+          meta: { role: Role.ROLE_SUPER_ADMIN },
+          component: () =>
+            import('@/modules/push-notifications/views/SendPushNotificationView.vue')
         }
       ]
     },

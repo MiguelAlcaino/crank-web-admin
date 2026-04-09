@@ -1,4 +1,4 @@
-import { E as e } from "./index.2ef5045a.js";
+import { E as e } from "./index.2e320136.js";
 const a = e("theme", {
   state: () => ({
     isDark: localStorage.getItem("theme") === "dark" || !localStorage.getItem("theme") && window.matchMedia("(prefers-color-scheme: dark)").matches

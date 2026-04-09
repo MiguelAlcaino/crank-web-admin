@@ -204,3 +204,16 @@ th {
 small {
   font-family: 'Avenir', sans-serif;
 }
+
+/* vue3-simple-typeahead dark mode */
+:root[data-bs-theme="dark"] .simple-typeahead-list-item,
+:root[data-bs-theme="dark"] .simple-typeahead-list-header,
+:root[data-bs-theme="dark"] .simple-typeahead-list-footer {
+  background-color: #1a1b2a !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+:root[data-bs-theme="dark"] .simple-typeahead-list-item.simple-typeahead-list-item-active {
+  background-color: #2c2d42 !important;
+}

@@ -2442,4 +2442,88 @@ export class ApiService {
       throw error
     }
   }
+
+  async searchUser(query: string): Promise<{ id: string; user: { firstName: string; lastName: string; email: string } }[]> {
+    if (query.length < 3) return []
+    const SEARCH_USER_QUERY = gql`
+      query searchUser($query: String) {
+        searchUser(query: $query) {
+          id
+          user {
+            firstName
+            lastName
+            email
+          }
+        }
+      }
+    `
+    try {
+      const result = await this.authApiClient.query({
+        query: SEARCH_USER_QUERY,
+        variables: { query },
+        fetchPolicy: 'network-only'
+      })
+      return result.data.searchUser
+    } catch {
+      return []
+    }
+  }
+
+  async adminSendWaitlistBookingNotification(input: {
+    customerId: string
+    classStartsAt: string
+    className: string
+    site?: string
+  }): Promise<{ __typename: string }> {
+    const mutation = gql`
+      mutation adminSendWaitlistBookingNotification($input: AdminSendWaitlistBookingNotificationInput!) {
+        adminSendWaitlistBookingNotification(input: $input) {
+          __typename
+          ... on AdminSendPushNotificationSuccess {
+            customerId
+          }
+          ... on CustomerNotFoundError {
+            code
+          }
+        }
+      }
+    `
+    const result = await this.authApiClient.mutate({
+      mutation,
+      variables: { input },
+      fetchPolicy: 'network-only'
+    })
+    return result.data.adminSendWaitlistBookingNotification
+  }
+
+  async adminSendLateCancellationNotification(input: {
+    customerId: string
+    expiresAt: string
+    classId: string
+    waitlistId: string
+    className: string
+    classStartsAt: string
+    instructorName: string
+    site?: string
+  }): Promise<{ __typename: string }> {
+    const mutation = gql`
+      mutation adminSendLateCancellationNotification($input: AdminSendLateCancellationNotificationInput!) {
+        adminSendLateCancellationNotification(input: $input) {
+          __typename
+          ... on AdminSendPushNotificationSuccess {
+            customerId
+          }
+          ... on CustomerNotFoundError {
+            code
+          }
+        }
+      }
+    `
+    const result = await this.authApiClient.mutate({
+      mutation,
+      variables: { input },
+      fetchPolicy: 'network-only'
+    })
+    return result.data.adminSendLateCancellationNotification
+  }
 }

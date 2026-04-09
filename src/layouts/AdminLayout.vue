@@ -293,6 +293,17 @@ async function logout() {
             </RouterLink>
           </li>
 
+          <!-- Send Notification (SUPER_ADMIN) -->
+          <li v-if="isSuperAdmin()" class="nav-item">
+            <RouterLink
+              class="nav-link"
+              :class="{ active: isActive('admin_send_notification') }"
+              :to="{ name: 'admin_send_notification' }"
+            >
+              Send Notification
+            </RouterLink>
+          </li>
+
           <!-- My Settings (any admin) -->
           <li class="nav-item">
             <RouterLink
