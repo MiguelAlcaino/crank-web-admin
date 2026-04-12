@@ -570,6 +570,7 @@ export class ApiService {
                 user {
                   firstName
                   lastName
+                  email
                 }
               }
             }

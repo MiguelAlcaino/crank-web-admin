@@ -1,4 +1,4 @@
-import { ab as t, ac as p, ae as r, a8 as e, ad as o, af as A, ag as i, ak as m, ai as n, aj as C, a9 as d, aa as l, al as u, ah as f, am as y } from "./index.6be42f1b.js";
+import { ac as t, ad as p, af as r, a9 as e, ae as o, ag as A, ah as i, al as m, aj as n, ak as C, aa as d, ab as l, am as u, ai as f, an as y } from "./index.36e40b88.js";
 export {
   t as startCalendarApp,
   p as startClassPackagesApp,

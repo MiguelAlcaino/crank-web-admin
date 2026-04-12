@@ -1,4 +1,4 @@
-import { O as o, r as l, P as s } from "./index.6be42f1b.js";
+import { O as o, r as l, P as s } from "./index.36e40b88.js";
 const n = o`
   query AvailableSites {
     availableSites {
