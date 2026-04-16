@@ -60,9 +60,9 @@ function formatDate(dateStr: string | null): string {
               {{ txn.detail.value.status }}
             </span>
           </td></tr>
-          <tr><th>Amount</th><td>{{ txn.detail.value.amount }}</td></tr>
+          <tr><th>Amount</th><td>{{ txn.detail.value.shoppingCart?.currency }} {{ txn.detail.value.amount }}</td></tr>
           <tr><th>Tax</th><td>{{ txn.detail.value.taxAmount }}</td></tr>
-          <tr><th>Sub Total</th><td>{{ txn.detail.value.subTotal }}</td></tr>
+          <tr><th>Sub Total</th><td>{{ txn.detail.value.shoppingCart?.currency }} {{ txn.detail.value.subTotal }}</td></tr>
           <tr><th>Card Holder</th><td>{{ txn.detail.value.creditCardHolderName || '-' }}</td></tr>
           <tr><th>Last 4 Digits</th><td>{{ txn.detail.value.creditCardLastFourDigits || '-' }}</td></tr>
           <tr><th>Authorization Code</th><td>{{ txn.detail.value.authorizationCode || '-' }}</td></tr>
@@ -83,7 +83,7 @@ function formatDate(dateStr: string | null): string {
             <tr v-for="item in txn.detail.value.shoppingCart.items" :key="item.id">
               <td>{{ item.variant.name ?? '-' }}</td>
               <td>{{ item.quantity }}</td>
-              <td>{{ item.subtotal ?? item.variant.price }}</td>
+              <td>{{ txn.detail.value.shoppingCart?.currency }} {{ item.subtotal ?? item.variant.price }}</td>
             </tr>
           </template>
           <template v-else>
