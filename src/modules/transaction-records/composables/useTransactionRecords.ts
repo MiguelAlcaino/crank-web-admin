@@ -9,6 +9,23 @@ export interface TransactionItem {
   amount: string | null
 }
 
+export interface ShoppingCartItem {
+  id: string
+  quantity: number
+  subtotal: number | null
+  variant: {
+    id: string
+    name: string | null
+    price: number
+  }
+}
+
+export interface ShoppingCart {
+  id: string
+  items: ShoppingCartItem[]
+  currency: string
+}
+
 export interface TransactionRecord {
   id: string
   creditCardChargeId: string | null
@@ -28,6 +45,7 @@ export interface TransactionRecord {
   siteName: string | null
   isRefundable: boolean
   items: TransactionItem[]
+  shoppingCart: ShoppingCart | null
 }
 
 export interface PaginatedTransactionRecords {
@@ -93,6 +111,20 @@ const DETAIL_QUERY = gql`
         name
         quantity
         amount
+      }
+      shoppingCart {
+        id
+        currency
+        items {
+          id
+          quantity
+          subtotal
+          variant {
+            id
+            name
+            price
+          }
+        }
       }
     }
   }

@@ -1,4 +1,4 @@
-import { O as c, r as n, P as r } from "./index.36e40b88.js";
+import { O as c, r as n, P as i } from "./index.91bc4b84.js";
 const R = c`
   query TransactionRecords(
     $filter: TransactionRecordFilterInput
@@ -54,16 +54,30 @@ const R = c`
         quantity
         amount
       }
+      shoppingCart {
+        id
+        currency
+        items {
+          id
+          quantity
+          subtotal
+          variant {
+            id
+            name
+            price
+          }
+        }
+      }
     }
   }
 `, h = c`
   mutation RefundTransaction($id: ID!) {
     refundTransaction(id: $id)
   }
-`, q = (o) => {
-  const d = n(null), u = n(null), i = n(!1), l = n(!1), t = n(!1), s = n("");
+`, p = (o) => {
+  const d = n(null), u = n(null), r = n(!1), l = n(!1), t = n(!1), s = n("");
   async function m(e, a) {
-    i.value = !0, t.value = !1;
+    r.value = !0, t.value = !1;
     try {
       const { data: f } = await o.query({
         query: R,
@@ -77,11 +91,11 @@ const R = c`
     } catch {
       t.value = !0, s.value = "Failed to load transactions";
     } finally {
-      i.value = !1;
+      r.value = !1;
     }
   }
   async function y(e) {
-    i.value = !0, t.value = !1, u.value = null;
+    r.value = !0, t.value = !1, u.value = null;
     try {
       const { data: a } = await o.query({
         query: g,
@@ -92,7 +106,7 @@ const R = c`
     } catch {
       t.value = !0, s.value = "Failed to load transaction";
     } finally {
-      i.value = !1;
+      r.value = !1;
     }
   }
   async function v(e) {
@@ -110,17 +124,17 @@ const R = c`
     }
   }
   return {
-    listResult: r(d),
-    detail: r(u),
-    isLoading: r(i),
-    isRefunding: r(l),
-    hasError: r(t),
-    errorMessage: r(s),
+    listResult: i(d),
+    detail: i(u),
+    isLoading: i(r),
+    isRefunding: i(l),
+    hasError: i(t),
+    errorMessage: i(s),
     fetchList: m,
     fetchDetail: y,
     refund: v
   };
 };
 export {
-  q as u
+  p as u
 };

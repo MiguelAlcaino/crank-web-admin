@@ -79,11 +79,20 @@ function formatDate(dateStr: string | null): string {
           <tr><th>Name</th><th>Quantity</th><th>Price</th></tr>
         </thead>
         <tbody>
-          <tr v-for="item in txn.detail.value.items" :key="item.id ?? ''">
-            <td>{{ item.name }}</td>
-            <td>{{ item.quantity }}</td>
-            <td>{{ item.amount }}</td>
-          </tr>
+          <template v-if="txn.detail.value.shoppingCart">
+            <tr v-for="item in txn.detail.value.shoppingCart.items" :key="item.id">
+              <td>{{ item.variant.name ?? '-' }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.subtotal ?? item.variant.price }}</td>
+            </tr>
+          </template>
+          <template v-else>
+            <tr v-for="item in txn.detail.value.items" :key="item.id ?? ''">
+              <td>{{ item.name }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.amount }}</td>
+            </tr>
+          </template>
         </tbody>
       </table>
 
