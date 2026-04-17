@@ -40,6 +40,7 @@ export interface TransactionRecord {
   authorizationCode: string | null
   installments: number | null
   merchantPurchaseId: number | null
+  siteCustomer: { identifiableUser: { id: string } | null } | null
   customerName: string | null
   customerEmail: string | null
   siteName: string | null
@@ -105,6 +106,11 @@ const DETAIL_QUERY = gql`
       authorizationCode
       installments
       merchantPurchaseId
+      siteCustomer {
+        identifiableUser {
+          id
+        }
+      }
       customerName
       customerEmail
       siteName

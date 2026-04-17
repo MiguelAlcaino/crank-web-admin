@@ -52,7 +52,13 @@ function formatDate(dateStr: string | null): string {
       <table class="table table-bordered">
         <tbody>
           <tr><th width="200">ID</th><td>{{ txn.detail.value.id }}</td></tr>
-          <tr><th>Customer</th><td>{{ txn.detail.value.customerName || '-' }}</td></tr>
+          <tr><th>Customer</th><td>
+            <router-link
+              v-if="txn.detail.value.siteCustomer?.identifiableUser?.id"
+              :to="{ name: 'admin_customer_profile', params: { id: txn.detail.value.siteCustomer.identifiableUser.id } }"
+            >{{ txn.detail.value.customerName || '-' }}</router-link>
+            <span v-else>{{ txn.detail.value.customerName || '-' }}</span>
+          </td></tr>
           <tr><th>Email</th><td>{{ txn.detail.value.customerEmail || '-' }}</td></tr>
           <tr><th>Site</th><td>{{ txn.detail.value.siteName || '-' }}</td></tr>
           <tr><th>Status</th><td>
