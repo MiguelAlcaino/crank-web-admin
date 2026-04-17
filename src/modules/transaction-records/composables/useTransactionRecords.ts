@@ -78,6 +78,9 @@ const LIST_QUERY = gql`
           quantity
           amount
         }
+        shoppingCart {
+          currency
+        }
       }
       totalCount
       page

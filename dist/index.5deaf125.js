@@ -19056,13 +19056,13 @@ const Bn = $8({
       path: "/login",
       name: "login",
       meta: { requiresAuth: !1 },
-      component: () => import("./LoginView.d9ffd05b.js")
+      component: () => import("./LoginView.dd96fcaf.js")
     },
     {
       path: "/admin/login",
       name: "admin_login",
       meta: { requiresAuth: !1 },
-      component: () => import("./AdminLoginView.7e1a2e88.js")
+      component: () => import("./AdminLoginView.80808172.js")
     },
     {
       path: "/unauthorized",
@@ -19071,13 +19071,13 @@ const Bn = $8({
     },
     {
       path: "/admin",
-      component: () => import("./AdminLayout.6c708f65.js"),
+      component: () => import("./AdminLayout.34fb04e0.js"),
       meta: { requiresAuth: !0 },
       children: [
         {
           path: "",
           name: "admin_dashboard",
-          component: () => import("./AdminDashboardView.0eff25cc.js")
+          component: () => import("./AdminDashboardView.40656750.js")
         },
         {
           path: "gift-cards",
@@ -19089,7 +19089,7 @@ const Bn = $8({
           path: "payment-links",
           name: "admin_payment_links",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./PaymentLinkListView.4b6686a1.js")
+          component: () => import("./PaymentLinkListView.9b2d2584.js")
         },
         {
           path: "users",
@@ -19100,13 +19100,13 @@ const Bn = $8({
         {
           path: "my-settings",
           name: "admin_my_settings",
-          component: () => import("./MyAdminSettingsView.93a03fdd.js")
+          component: () => import("./MyAdminSettingsView.8e7e20cc.js")
         },
         {
           path: "webhook-events",
           name: "admin_webhook_events",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./WebhookEventsView.f662afdf.js")
+          component: () => import("./WebhookEventsView.cd08af30.js")
         },
         {
           path: "instructor-profiles",
@@ -19134,13 +19134,13 @@ const Bn = $8({
         {
           path: "classes-calendar",
           name: "admin_classes_calendar",
-          component: () => import("./ClassScheduleView.c187d855.js")
+          component: () => import("./ClassScheduleView.52a2a660.js")
         },
         {
           path: "room-layout/:site",
           name: "admin_room_layout_list",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./RoomLayoutListView.64643d86.js")
+          component: () => import("./RoomLayoutListView.d8d2ca8b.js")
         },
         {
           path: "room-layout/create",
@@ -19167,69 +19167,69 @@ const Bn = $8({
         {
           path: "customer/:id",
           name: "admin_customer_profile",
-          component: () => import("./CustomerProfileView.cbd02bc3.js")
+          component: () => import("./CustomerProfileView.616474ea.js")
         },
         {
           path: "transactions",
           name: "admin_transactions",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./TransactionListView.f78184fd.js")
+          component: () => import("./TransactionListView.bbc51cd4.js")
         },
         {
           path: "transactions/:id",
           name: "admin_transaction_detail",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./TransactionDetailView.5a1553de.js")
+          component: () => import("./TransactionDetailView.ec6040fe.js")
         },
         {
           path: "subscriptions/:id",
           name: "admin_subscription_detail",
-          component: () => import("./SubscriptionDetailView.9f2128e9.js")
+          component: () => import("./SubscriptionDetailView.c45ca854.js")
         },
         {
           path: "customers",
           name: "admin_customers",
-          component: () => import("./CustomerListView.78b9a017.js")
+          component: () => import("./CustomerListView.2a429503.js")
         },
         {
           path: "bulk-vod-activator",
           name: "admin_bulk_vod_activator",
-          component: () => import("./BulkVodActivatorView.010a74ec.js")
+          component: () => import("./BulkVodActivatorView.5b7e3a53.js")
         },
         {
           path: "customer-gift-cards",
           name: "admin_customer_gift_cards",
           meta: { role: vt.ROLE_SUPER_ADMIN, title: "Pending Gift Cards" },
-          component: () => import("./PlaceholderView.1c9bd9e8.js")
+          component: () => import("./PlaceholderView.b2ecad96.js")
         },
         {
           path: "mindbody-clients",
           name: "admin_mindbody_clients",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./MindbodyClientListView.1f3bdd50.js")
+          component: () => import("./MindbodyClientListView.1e918f3c.js")
         },
         {
           path: "mindbody-staff",
           name: "admin_mindbody_staff",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./MindbodyStaffView.086b2f2d.js")
+          component: () => import("./MindbodyStaffView.934a37c4.js")
         },
         {
           path: "settings",
           name: "admin_settings",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./SystemSettingsView.45bc987b.js")
+          component: () => import("./SystemSettingsView.d2024d32.js")
         },
         {
           path: "blacklisted-phones",
           name: "admin_blacklisted_phones",
-          component: () => import("./BlacklistView.3b7683da.js")
+          component: () => import("./BlacklistView.b701f80f.js")
         },
         {
           path: "send-notification",
           name: "admin_send_notification",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./SendPushNotificationView.0a8cfed3.js")
+          component: () => import("./SendPushNotificationView.b089c397.js")
         }
       ]
     },
@@ -19249,13 +19249,13 @@ const Bn = $8({
       path: "/admin/calendar-class",
       name: "admin_calendar_class",
       meta: { requiresAuth: !0 },
-      component: () => import("./ClassScheduleView.c187d855.js")
+      component: () => import("./ClassScheduleView.52a2a660.js")
     },
     {
       path: "/admin/room-layout/list",
       name: "legacy_admin_room_layout_list",
       meta: { requiresAuth: !0 },
-      component: () => import("./RoomLayoutListView.64643d86.js")
+      component: () => import("./RoomLayoutListView.d8d2ca8b.js")
     },
     {
       path: "/admin/room-layout/create",
@@ -19279,7 +19279,7 @@ const Bn = $8({
       path: "/customer-profile/:id",
       name: "customer_profile",
       meta: { requiresAuth: !0 },
-      component: () => import("./CustomerProfileView.cbd02bc3.js")
+      component: () => import("./CustomerProfileView.616474ea.js")
     },
     {
       path: "/gift-cards",
@@ -19297,13 +19297,13 @@ const Bn = $8({
       path: "/my-admin-settings",
       name: "my_admin_settings",
       meta: { requiresAuth: !0 },
-      component: () => import("./MyAdminSettingsView.93a03fdd.js")
+      component: () => import("./MyAdminSettingsView.8e7e20cc.js")
     },
     {
       path: "/payment-links",
       name: "payment_links",
       meta: { requiresAuth: !0 },
-      component: () => import("./PaymentLinkListView.4b6686a1.js")
+      component: () => import("./PaymentLinkListView.9b2d2584.js")
     },
     {
       path: "/instructor-profiles",
@@ -19321,7 +19321,7 @@ const Bn = $8({
       path: "/webhook-events",
       name: "webhook_events",
       meta: { requiresAuth: !0, role: vt.ROLE_SUPER_ADMIN },
-      component: () => import("./WebhookEventsView.f662afdf.js")
+      component: () => import("./WebhookEventsView.cd08af30.js")
     },
     {
       path: "/class-packages",
@@ -61215,7 +61215,7 @@ const Ak = /* @__PURE__ */ yt(UuA, [["__scopeId", "data-v-7961fb51"]]), y1 = /* 
   __proto__: null,
   default: Ak
 }, Symbol.toStringTag, { value: "Module" }));
-console.log("[crank-web-admin] v2.8.2");
+console.log("[crank-web-admin] v2.8.3");
 const juA = async function(A, e, t, n) {
   const r = cr({
     setup() {

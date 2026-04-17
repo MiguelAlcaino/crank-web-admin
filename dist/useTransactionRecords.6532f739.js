@@ -1,5 +1,5 @@
-import { O as c, r as n, P as i } from "./index.16ec4b64.js";
-const R = c`
+import { O as l, r as n, P as r } from "./index.5deaf125.js";
+const g = l`
   query TransactionRecords(
     $filter: TransactionRecordFilterInput
     $pagination: PaginationInput
@@ -22,13 +22,16 @@ const R = c`
           quantity
           amount
         }
+        shoppingCart {
+          currency
+        }
       }
       totalCount
       page
       limit
     }
   }
-`, g = c`
+`, R = l`
   query TransactionRecord($id: ID!) {
     transactionRecord(id: $id) {
       id
@@ -70,17 +73,17 @@ const R = c`
       }
     }
   }
-`, h = c`
+`, h = l`
   mutation RefundTransaction($id: ID!) {
     refundTransaction(id: $id)
   }
-`, p = (o) => {
-  const d = n(null), u = n(null), r = n(!1), l = n(!1), t = n(!1), s = n("");
+`, T = (o) => {
+  const d = n(null), u = n(null), i = n(!1), c = n(!1), t = n(!1), s = n("");
   async function m(e, a) {
-    r.value = !0, t.value = !1;
+    i.value = !0, t.value = !1;
     try {
       const { data: f } = await o.query({
-        query: R,
+        query: g,
         variables: {
           filter: e && Object.keys(e).length > 0 ? e : void 0,
           pagination: a
@@ -91,14 +94,14 @@ const R = c`
     } catch {
       t.value = !0, s.value = "Failed to load transactions";
     } finally {
-      r.value = !1;
+      i.value = !1;
     }
   }
   async function y(e) {
-    r.value = !0, t.value = !1, u.value = null;
+    i.value = !0, t.value = !1, u.value = null;
     try {
       const { data: a } = await o.query({
-        query: g,
+        query: R,
         variables: { id: e },
         fetchPolicy: "network-only"
       });
@@ -106,11 +109,11 @@ const R = c`
     } catch {
       t.value = !0, s.value = "Failed to load transaction";
     } finally {
-      r.value = !1;
+      i.value = !1;
     }
   }
   async function v(e) {
-    l.value = !0, t.value = !1;
+    c.value = !0, t.value = !1;
     try {
       const { data: a } = await o.mutate({
         mutation: h,
@@ -120,21 +123,21 @@ const R = c`
     } catch {
       return t.value = !0, s.value = "Failed to process refund", !1;
     } finally {
-      l.value = !1;
+      c.value = !1;
     }
   }
   return {
-    listResult: i(d),
-    detail: i(u),
-    isLoading: i(r),
-    isRefunding: i(l),
-    hasError: i(t),
-    errorMessage: i(s),
+    listResult: r(d),
+    detail: r(u),
+    isLoading: r(i),
+    isRefunding: r(c),
+    hasError: r(t),
+    errorMessage: r(s),
     fetchList: m,
     fetchDetail: y,
     refund: v
   };
 };
 export {
-  p as u
+  T as u
 };

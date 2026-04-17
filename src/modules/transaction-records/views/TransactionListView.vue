@@ -65,7 +65,7 @@ function viewTransaction(id: string) {
 
 function formatDate(dateStr: string | null): string {
   if (!dateStr) return '-'
-  return new Date(dateStr).toLocaleDateString()
+  return new Date(dateStr).toLocaleString()
 }
 
 onMounted(async () => {
@@ -131,7 +131,6 @@ onMounted(async () => {
             <th>Email</th>
             <th>Date</th>
             <th>Payment Status</th>
-            <th>Items</th>
             <th>Amount</th>
             <th>Auth code</th>
             <th>Site</th>
@@ -140,7 +139,7 @@ onMounted(async () => {
         </thead>
         <tbody>
           <tr v-if="txn.listResult.value.items.length === 0">
-            <td colspan="9" class="text-center text-muted py-3">No transactions found</td>
+            <td colspan="8" class="text-center text-muted py-3">No transactions found</td>
           </tr>
           <tr v-for="t in txn.listResult.value.items" :key="t.id">
             <td>{{ t.customerName || '-' }}</td>
@@ -151,12 +150,7 @@ onMounted(async () => {
                 {{ t.status }}
               </span>
             </td>
-            <td>
-              <span v-for="item in t.items" :key="item.id ?? ''" class="d-block small">
-                {{ item.name }} (x{{ item.quantity }})
-              </span>
-            </td>
-            <td>{{ t.amount || '0' }}</td>
+            <td>{{ t.shoppingCart?.currency }} {{ t.amount || '0' }}</td>
             <td>{{ t.authorizationCode || '-' }}</td>
             <td>{{ t.siteName || '-' }}</td>
             <td>
