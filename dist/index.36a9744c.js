@@ -12300,7 +12300,7 @@ function Tr(A, e) {
   }
   return A;
 }
-function Ee(A, e, t = {}, n, r) {
+function ke(A, e, t = {}, n, r) {
   if (Wn.isCE || Wn.parent && Rs(Wn.parent) && Wn.parent.isCE)
     return e !== "default" && (t.name = e), wA("slot", t, n && n());
   let i = A[e];
@@ -15702,7 +15702,7 @@ const BD = () => {
   queuePostFlushCb: Ed,
   registerRuntimeCompiler: qP,
   renderList: Ae,
-  renderSlot: Ee,
+  renderSlot: ke,
   resolveComponent: jc,
   resolveDirective: lI,
   resolveDynamicComponent: Df,
@@ -19056,13 +19056,13 @@ const Bn = $8({
       path: "/login",
       name: "login",
       meta: { requiresAuth: !1 },
-      component: () => import("./LoginView.dd96fcaf.js")
+      component: () => import("./LoginView.89e4c400.js")
     },
     {
       path: "/admin/login",
       name: "admin_login",
       meta: { requiresAuth: !1 },
-      component: () => import("./AdminLoginView.80808172.js")
+      component: () => import("./AdminLoginView.f7fb14e5.js")
     },
     {
       path: "/unauthorized",
@@ -19071,13 +19071,13 @@ const Bn = $8({
     },
     {
       path: "/admin",
-      component: () => import("./AdminLayout.34fb04e0.js"),
+      component: () => import("./AdminLayout.27773c1c.js"),
       meta: { requiresAuth: !0 },
       children: [
         {
           path: "",
           name: "admin_dashboard",
-          component: () => import("./AdminDashboardView.40656750.js")
+          component: () => import("./AdminDashboardView.f77428da.js")
         },
         {
           path: "gift-cards",
@@ -19089,7 +19089,7 @@ const Bn = $8({
           path: "payment-links",
           name: "admin_payment_links",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./PaymentLinkListView.9b2d2584.js")
+          component: () => import("./PaymentLinkListView.c3513604.js")
         },
         {
           path: "users",
@@ -19100,13 +19100,13 @@ const Bn = $8({
         {
           path: "my-settings",
           name: "admin_my_settings",
-          component: () => import("./MyAdminSettingsView.8e7e20cc.js")
+          component: () => import("./MyAdminSettingsView.296c761a.js")
         },
         {
           path: "webhook-events",
           name: "admin_webhook_events",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./WebhookEventsView.cd08af30.js")
+          component: () => import("./WebhookEventsView.4089ee9a.js")
         },
         {
           path: "instructor-profiles",
@@ -19134,13 +19134,13 @@ const Bn = $8({
         {
           path: "classes-calendar",
           name: "admin_classes_calendar",
-          component: () => import("./ClassScheduleView.52a2a660.js")
+          component: () => import("./ClassScheduleView.2b3ae24e.js")
         },
         {
           path: "room-layout/:site",
           name: "admin_room_layout_list",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./RoomLayoutListView.d8d2ca8b.js")
+          component: () => import("./RoomLayoutListView.7d9b9f1f.js")
         },
         {
           path: "room-layout/create",
@@ -19167,69 +19167,69 @@ const Bn = $8({
         {
           path: "customer/:id",
           name: "admin_customer_profile",
-          component: () => import("./CustomerProfileView.616474ea.js")
+          component: () => import("./CustomerProfileView.5cfb8738.js")
         },
         {
           path: "transactions",
           name: "admin_transactions",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./TransactionListView.bbc51cd4.js")
+          component: () => import("./TransactionListView.40231c00.js")
         },
         {
           path: "transactions/:id",
           name: "admin_transaction_detail",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./TransactionDetailView.ec6040fe.js")
+          component: () => import("./TransactionDetailView.bc6d940d.js")
         },
         {
           path: "subscriptions/:id",
           name: "admin_subscription_detail",
-          component: () => import("./SubscriptionDetailView.c45ca854.js")
+          component: () => import("./SubscriptionDetailView.bdc8c47f.js")
         },
         {
           path: "customers",
           name: "admin_customers",
-          component: () => import("./CustomerListView.2a429503.js")
+          component: () => import("./CustomerListView.26291123.js")
         },
         {
           path: "bulk-vod-activator",
           name: "admin_bulk_vod_activator",
-          component: () => import("./BulkVodActivatorView.5b7e3a53.js")
+          component: () => import("./BulkVodActivatorView.872eca02.js")
         },
         {
           path: "customer-gift-cards",
           name: "admin_customer_gift_cards",
           meta: { role: vt.ROLE_SUPER_ADMIN, title: "Pending Gift Cards" },
-          component: () => import("./PlaceholderView.b2ecad96.js")
+          component: () => import("./PlaceholderView.ca95e542.js")
         },
         {
           path: "mindbody-clients",
           name: "admin_mindbody_clients",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./MindbodyClientListView.1e918f3c.js")
+          component: () => import("./MindbodyClientListView.b9a150f3.js")
         },
         {
           path: "mindbody-staff",
           name: "admin_mindbody_staff",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./MindbodyStaffView.934a37c4.js")
+          component: () => import("./MindbodyStaffView.ce5f1c64.js")
         },
         {
           path: "settings",
           name: "admin_settings",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./SystemSettingsView.d2024d32.js")
+          component: () => import("./SystemSettingsView.77dc1171.js")
         },
         {
           path: "blacklisted-phones",
           name: "admin_blacklisted_phones",
-          component: () => import("./BlacklistView.b701f80f.js")
+          component: () => import("./BlacklistView.253e6e90.js")
         },
         {
           path: "send-notification",
           name: "admin_send_notification",
           meta: { role: vt.ROLE_SUPER_ADMIN },
-          component: () => import("./SendPushNotificationView.b089c397.js")
+          component: () => import("./SendPushNotificationView.14bf56fc.js")
         }
       ]
     },
@@ -19249,13 +19249,13 @@ const Bn = $8({
       path: "/admin/calendar-class",
       name: "admin_calendar_class",
       meta: { requiresAuth: !0 },
-      component: () => import("./ClassScheduleView.52a2a660.js")
+      component: () => import("./ClassScheduleView.2b3ae24e.js")
     },
     {
       path: "/admin/room-layout/list",
       name: "legacy_admin_room_layout_list",
       meta: { requiresAuth: !0 },
-      component: () => import("./RoomLayoutListView.d8d2ca8b.js")
+      component: () => import("./RoomLayoutListView.7d9b9f1f.js")
     },
     {
       path: "/admin/room-layout/create",
@@ -19279,7 +19279,7 @@ const Bn = $8({
       path: "/customer-profile/:id",
       name: "customer_profile",
       meta: { requiresAuth: !0 },
-      component: () => import("./CustomerProfileView.616474ea.js")
+      component: () => import("./CustomerProfileView.5cfb8738.js")
     },
     {
       path: "/gift-cards",
@@ -19297,13 +19297,13 @@ const Bn = $8({
       path: "/my-admin-settings",
       name: "my_admin_settings",
       meta: { requiresAuth: !0 },
-      component: () => import("./MyAdminSettingsView.8e7e20cc.js")
+      component: () => import("./MyAdminSettingsView.296c761a.js")
     },
     {
       path: "/payment-links",
       name: "payment_links",
       meta: { requiresAuth: !0 },
-      component: () => import("./PaymentLinkListView.9b2d2584.js")
+      component: () => import("./PaymentLinkListView.c3513604.js")
     },
     {
       path: "/instructor-profiles",
@@ -19321,7 +19321,7 @@ const Bn = $8({
       path: "/webhook-events",
       name: "webhook_events",
       meta: { requiresAuth: !0, role: vt.ROLE_SUPER_ADMIN },
-      component: () => import("./WebhookEventsView.cd08af30.js")
+      component: () => import("./WebhookEventsView.4089ee9a.js")
     },
     {
       path: "/class-packages",
@@ -30361,7 +30361,7 @@ function $4(A, e, t, n, r, i) {
     onBlur: e[3] || (e[3] = (...o) => A.onBlur && A.onBlur(...o)),
     onKeydown: [e[4] || (e[4] = He(Le((...o) => A.onArrowDown && A.onArrowDown(...o), ["prevent"]), ["down"])), e[5] || (e[5] = He(Le((...o) => A.onArrowUp && A.onArrowUp(...o), ["prevent"]), ["up"])), e[6] || (e[6] = He(Le((...o) => A.selectCurrentSelection && A.selectCurrentSelection(...o), ["prevent"]), ["enter"])), e[7] || (e[7] = He(Le((...o) => A.selectCurrentSelectionTab && A.selectCurrentSelectionTab(...o), ["prevent"]), ["tab"]))],
     autocomplete: "off"
-  }, A.$attrs), null, 16, x4), [[dt, A.input]]), A.isListVisible ? (M(), Q("div", I4, [A.$slots["list-header"] ? (M(), Q("div", w4, [Ee(A.$slots, "list-header")])) : dA("", !0), (M(!0), Q(TA, null, Ae(A.filteredItems, (o, c) => (M(), Q("div", {
+  }, A.$attrs), null, 16, x4), [[dt, A.input]]), A.isListVisible ? (M(), Q("div", I4, [A.$slots["list-header"] ? (M(), Q("div", w4, [ke(A.$slots, "list-header")])) : dA("", !0), (M(!0), Q(TA, null, Ae(A.filteredItems, (o, c) => (M(), Q("div", {
     class: Pe(["simple-typeahead-list-item", {
       "simple-typeahead-list-item-active": A.currentSelectionIndex == c
     }]),
@@ -30374,7 +30374,7 @@ function $4(A, e, t, n, r, i) {
     key: 0,
     class: "simple-typeahead-list-item-text",
     "data-text": A.itemProjection(o)
-  }, [Ee(A.$slots, "list-item-text", {
+  }, [ke(A.$slots, "list-item-text", {
     item: o,
     itemProjection: A.itemProjection,
     boldMatchText: A.boldMatchText
@@ -30383,7 +30383,7 @@ function $4(A, e, t, n, r, i) {
     class: "simple-typeahead-list-item-text",
     "data-text": A.itemProjection(o),
     innerHTML: A.boldMatchText(A.itemProjection(o))
-  }, null, 8, E4))], 42, S4))), 128)), A.$slots["list-footer"] ? (M(), Q("div", _4, [Ee(A.$slots, "list-footer")])) : dA("", !0)])) : dA("", !0)], 8, C4);
+  }, null, 8, E4))], 42, S4))), 128)), A.$slots["list-footer"] ? (M(), Q("div", _4, [ke(A.$slots, "list-footer")])) : dA("", !0)])) : dA("", !0)], 8, C4);
 }
 uv.render = $4;
 uv.__scopeId = "data-v-f81ca714";
@@ -30654,7 +30654,7 @@ const he = /* @__PURE__ */ yt(j4, [["__scopeId", "data-v-10a21efe"]]), Ne = "UPS
 }), cN = ["type", "disabled"], uN = {
   key: 0,
   class: "spinner-border spinner-border-sm"
-}, ke = /* @__PURE__ */ ue({
+}, Ee = /* @__PURE__ */ ue({
   __name: "DefaultButtonComponent",
   props: {
     text: {},
@@ -30731,7 +30731,7 @@ const he = /* @__PURE__ */ yt(j4, [["__scopeId", "data-v-10a21efe"]]), Ne = "UPS
       o.value = !1, f.value = !1, c.value = !1, E.__typename === "EditClassSuccessResult" ? (i("afterChangingRoomLayout"), x.value = !0) : b.value = !0;
     }
     return (E, T) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "CHANGE LAYOUT",
         type: "button",
         onOnClick: T[0] || (T[0] = (N) => w()),
@@ -30769,7 +30769,7 @@ const he = /* @__PURE__ */ yt(j4, [["__scopeId", "data-v-10a21efe"]]), Ne = "UPS
                     ])
                   ]),
                   y("div", CN, [
-                    v.value !== E.roomLayoutId && !u.value ? (M(), DA(ke, {
+                    v.value !== E.roomLayoutId && !u.value ? (M(), DA(Ee, {
                       key: 0,
                       text: "CHANGE",
                       type: "button",
@@ -30777,7 +30777,7 @@ const he = /* @__PURE__ */ yt(j4, [["__scopeId", "data-v-10a21efe"]]), Ne = "UPS
                       disabled: v.value === E.roomLayoutId && !u.value,
                       onOnClick: T[2] || (T[2] = (N) => f.value = !0)
                     }, null, 8, ["is-loading", "disabled"])) : dA("", !0),
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Cancel",
                       type: "button",
                       disabled: o.value,
@@ -30891,7 +30891,7 @@ const he = /* @__PURE__ */ yt(j4, [["__scopeId", "data-v-10a21efe"]]), Ne = "UPS
       v.value = P.id, o.value = !0;
     }
     return (P, E) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "View Waitlist",
         type: "button",
         onOnClick: E[0] || (E[0] = (T) => x()),
@@ -30919,7 +30919,7 @@ const he = /* @__PURE__ */ yt(j4, [["__scopeId", "data-v-10a21efe"]]), Ne = "UPS
                               y("td", TN, yA((j = (L = T.identifiableSiteUser) == null ? void 0 : L.identifiableUser.user) == null ? void 0 : j.firstName.toUpperCase()), 1),
                               y("td", NN, yA((nA = (J = T.identifiableSiteUser) == null ? void 0 : J.identifiableUser.user) == null ? void 0 : nA.lastName.toUpperCase()), 1),
                               y("td", RN, [
-                                wA(ke, {
+                                wA(Ee, {
                                   text: "REMOVE",
                                   type: "button",
                                   onOnClick: (V) => _(T)
@@ -31790,7 +31790,7 @@ const ka = /* @__PURE__ */ yt(IR, [["__scopeId", "data-v-24a876a5"]]), wR = /* @
       }
     }
     return (u, p) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "SYNC WITH MB",
         type: "button",
         size: "sm",
@@ -31826,7 +31826,7 @@ const ka = /* @__PURE__ */ yt(IR, [["__scopeId", "data-v-24a876a5"]]), wR = /* @
       }
     }
     return (f, u) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "Resend stats emails",
         type: "button",
         onOnClick: u[0] || (u[0] = (p) => r.value = !0)
@@ -31929,7 +31929,7 @@ const ka = /* @__PURE__ */ yt(IR, [["__scopeId", "data-v-24a876a5"]]), wR = /* @
       }
     }
     return (b, x) => (M(), Q(TA, null, [
-      b.isCheckedIn ? dA("", !0) : (M(), DA(ke, {
+      b.isCheckedIn ? dA("", !0) : (M(), DA(Ee, {
         key: 0,
         text: "Check-In",
         type: "button",
@@ -31938,7 +31938,7 @@ const ka = /* @__PURE__ */ yt(IR, [["__scopeId", "data-v-24a876a5"]]), wR = /* @
         "is-loading": c.value,
         disabled: b.disabled
       }, null, 8, ["is-loading", "disabled"])),
-      b.isCheckedIn ? (M(), DA(ke, {
+      b.isCheckedIn ? (M(), DA(Ee, {
         key: 1,
         text: "Check-Out",
         type: "button",
@@ -32377,7 +32377,7 @@ const UM = /* @__PURE__ */ yt(FM, [["__scopeId", "data-v-eb86c7d8"]]), BM = { cl
       c.email = t.userEmail, o.value = !0;
     }
     return (b, x) => (M(), Q("div", null, [
-      wA(ke, {
+      wA(Ee, {
         text: "Resend email",
         type: "button",
         onOnClick: x[0] || (x[0] = (C) => v())
@@ -32425,14 +32425,14 @@ const UM = /* @__PURE__ */ yt(FM, [["__scopeId", "data-v-eb86c7d8"]]), BM = { cl
                     ])
                   ]),
                   y("div", ZM, [
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Cancel",
                       type: "button",
                       variant: "secondary",
                       disabled: n.value,
                       onOnClick: x[2] || (x[2] = (C) => o.value = !1)
                     }, null, 8, ["disabled"]),
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Send email",
                       type: "button",
                       "is-loading": n.value,
@@ -32502,7 +32502,7 @@ const UM = /* @__PURE__ */ yt(FM, [["__scopeId", "data-v-eb86c7d8"]]), BM = { cl
       }
     }
     return (v, b) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "View Profile",
         type: "button",
         onOnClick: u
@@ -32655,7 +32655,7 @@ const UM = /* @__PURE__ */ yt(FM, [["__scopeId", "data-v-eb86c7d8"]]), BM = { cl
                         href: c.value,
                         class: "btn btn-primary"
                       }, " Edit Profile ", 8, F5)) : dA("", !0),
-                      wA(ke, {
+                      wA(Ee, {
                         text: "Close",
                         type: "button",
                         variant: "primary",
@@ -34015,7 +34015,7 @@ var k2 = {
       onClick: uA,
       onFocus: W,
       onKeyup: He(rA, ["esc"])
-    }, [Ee(H.$slots, "default")], 40, g6), wA($t, {
+    }, [ke(H.$slots, "default")], 40, g6), wA($t, {
       name: "fade"
     }, {
       default: ge(() => [de(y("div", {
@@ -34024,7 +34024,7 @@ var k2 = {
         ref: (iA, CA) => {
           CA.popperNode = iA, i.value = iA;
         }
-      }, [Ee(H.$slots, "content", {
+      }, [ke(H.$slots, "content", {
         close: Z(j),
         isOpen: c.value
       }, () => [fe(yA(Z(p)), 1)]), A.arrow ? (M(), DA(p6, {
@@ -34775,7 +34775,7 @@ const Y9 = /* @__PURE__ */ yt(L9, [["render", V9], ["__scopeId", "data-v-bba987a
           }, null, 8, ["matrix", "selectedSpotNumber", "enrollments", "spot-action", "spot-selection-is-disabled", "orphaned-class-stats-spots", "edit-customer-profile-url", "user-can-check-in-check-out"]),
           K.userCanModifyClass && ((AA = f.value) == null ? void 0 : AA.isBooked) === !1 && f.value.enabled === !0 ? (M(), Q("div", j9, [
             H9,
-            wA(ke, {
+            wA(Ee, {
               text: "ASSIGN CLIENT",
               type: "button",
               onOnClick: Y[0] || (Y[0] = (SA) => x.value = Z(rn).asignUserToSpot),
@@ -34786,7 +34786,7 @@ const Y9 = /* @__PURE__ */ yt(L9, [["render", V9], ["__scopeId", "data-v-bba987a
           ])) : dA("", !0),
           K.userCanModifyClass && f.value.enabled === !1 ? (M(), Q("div", z9, [
             W9,
-            wA(ke, {
+            wA(Ee, {
               text: "Recover from maintenance",
               type: "button",
               onOnClick: T,
@@ -34796,7 +34796,7 @@ const Y9 = /* @__PURE__ */ yt(L9, [["render", V9], ["__scopeId", "data-v-bba987a
             }, null, 8, ["is-loading", "disabled"])
           ])) : dA("", !0),
           K.userCanModifyClass && ((z = f.value) == null ? void 0 : z.isBooked) === !0 ? (M(), Q("h2", G9, " Spot is reserved for - " + yA(((uA = (rA = (W = f.value.identifiableUser) == null ? void 0 : W.user) == null ? void 0 : rA.firstName) != null ? uA : "") + " " + ((iA = (fA = (H = f.value.identifiableUser) == null ? void 0 : H.user) == null ? void 0 : fA.lastName) != null ? iA : "")), 1)) : dA("", !0),
-          K.userCanModifyClass && ((CA = f.value) == null ? void 0 : CA.isBooked) === !0 && x.value !== Z(rn).changeMemberSpot && x.value !== Z(rn).swapSpot ? (M(), DA(ke, {
+          K.userCanModifyClass && ((CA = f.value) == null ? void 0 : CA.isBooked) === !0 && x.value !== Z(rn).changeMemberSpot && x.value !== Z(rn).swapSpot ? (M(), DA(Ee, {
             key: 3,
             text: "CANCEL BOOKING",
             type: "button",
@@ -34804,7 +34804,7 @@ const Y9 = /* @__PURE__ */ yt(L9, [["render", V9], ["__scopeId", "data-v-bba987a
             class: "me-1",
             disabled: K.showClassAsDisabled === !0
           }, null, 8, ["disabled"])) : dA("", !0),
-          K.userCanModifyClass && ((vA = f.value) == null ? void 0 : vA.isBooked) === !0 && x.value !== Z(rn).swapSpot ? (M(), DA(ke, {
+          K.userCanModifyClass && ((vA = f.value) == null ? void 0 : vA.isBooked) === !0 && x.value !== Z(rn).swapSpot ? (M(), DA(Ee, {
             key: 4,
             text: "CHANGE SPOT",
             "is-loading": C.value,
@@ -34813,7 +34813,7 @@ const Y9 = /* @__PURE__ */ yt(L9, [["render", V9], ["__scopeId", "data-v-bba987a
             onOnClick: Y[1] || (Y[1] = (SA) => x.value = Z(rn).changeMemberSpot),
             class: "me-1"
           }, null, 8, ["is-loading", "disabled"])) : dA("", !0),
-          K.userCanModifyClass && ((pA = f.value) == null ? void 0 : pA.isBooked) === !0 && x.value !== Z(rn).changeMemberSpot ? (M(), DA(ke, {
+          K.userCanModifyClass && ((pA = f.value) == null ? void 0 : pA.isBooked) === !0 && x.value !== Z(rn).changeMemberSpot ? (M(), DA(Ee, {
             key: 5,
             type: "button",
             text: "Swap Spot",
@@ -34822,7 +34822,7 @@ const Y9 = /* @__PURE__ */ yt(L9, [["render", V9], ["__scopeId", "data-v-bba987a
             onOnClick: Y[2] || (Y[2] = (SA) => x.value = Z(rn).swapSpot),
             class: "me-1"
           }, null, 8, ["is-loading", "disabled"])) : dA("", !0),
-          K.userCanModifyClass && ((PA = f.value) == null ? void 0 : PA.isBooked) === !0 && (x.value === Z(rn).changeMemberSpot || x.value === Z(rn).swapSpot) ? (M(), DA(ke, {
+          K.userCanModifyClass && ((PA = f.value) == null ? void 0 : PA.isBooked) === !0 && (x.value === Z(rn).changeMemberSpot || x.value === Z(rn).swapSpot) ? (M(), DA(Ee, {
             key: 6,
             disabled: C.value,
             text: "Cancel",
@@ -40286,9 +40286,9 @@ const oV = ({
     }), (B, AA) => {
       var z;
       return M(), Q("div", { onClick: nA }, [
-        B.$slots.trigger && !B.$slots["dp-input"] && !Z(o).enabled ? Ee(B.$slots, "trigger", { key: 0 }) : dA("", !0),
+        B.$slots.trigger && !B.$slots["dp-input"] && !Z(o).enabled ? ke(B.$slots, "trigger", { key: 0 }) : dA("", !0),
         !B.$slots.trigger && (!Z(o).enabled || Z(o).input) ? (M(), Q("div", fV, [
-          B.$slots["dp-input"] && !B.$slots.trigger && !Z(o).enabled ? Ee(B.$slots, "dp-input", {
+          B.$slots["dp-input"] && !B.$slots.trigger && !Z(o).enabled ? ke(B.$slots, "dp-input", {
             key: 0,
             value: A.inputValue,
             isMenuOpen: A.isMenuOpen,
@@ -40336,7 +40336,7 @@ const oV = ({
               class: "dp__input_icon",
               onClick: AA[0] || (AA[0] = (W) => t("toggle"))
             }, [
-              Ee(B.$slots, "input-icon")
+              ke(B.$slots, "input-icon")
             ])) : dA("", !0),
             !B.$slots["input-icon"] && !B.hideInputIcon && !B.$slots["dp-input"] ? (M(), DA(Z(tu), {
               key: 1,
@@ -40345,7 +40345,7 @@ const oV = ({
             })) : dA("", !0)
           ]),
           B.$slots["clear-icon"] && A.inputValue && B.clearable && !B.disabled && !B.readonly ? (M(), Q("span", pV, [
-            Ee(B.$slots, "clear-icon", { clear: K })
+            ke(B.$slots, "clear-icon", { clear: K })
           ])) : dA("", !0),
           B.clearable && !B.$slots["clear-icon"] && A.inputValue && !B.disabled && !B.readonly ? (M(), DA(Z(Q2), {
             key: 3,
@@ -40419,7 +40419,7 @@ const oV = ({
       class: "dp__action_row",
       style: Hn(A.calendarWidth ? { width: `${A.calendarWidth}px` } : {})
     }, [
-      V.$slots["action-row"] ? Ee(V.$slots, "action-row", zn(fn({ key: 0 }, {
+      V.$slots["action-row"] ? ke(V.$slots, "action-row", zn(fn({ key: 0 }, {
         internalModelValue: V.internalModelValue,
         disabled: C.value,
         selectDate: () => V.$emit("select-date"),
@@ -40430,7 +40430,7 @@ const oV = ({
           class: "dp__selection_preview",
           title: j.value
         }, [
-          V.$slots["action-preview"] ? Ee(V.$slots, "action-preview", {
+          V.$slots["action-preview"] ? ke(V.$slots, "action-preview", {
             key: 0,
             value: V.internalModelValue
           }) : dA("", !0),
@@ -40439,7 +40439,7 @@ const oV = ({
           ], 64))
         ], 8, mV)) : dA("", !0),
         y("div", vV, [
-          V.$slots["action-buttons"] ? Ee(V.$slots, "action-buttons", {
+          V.$slots["action-buttons"] ? ke(V.$slots, "action-buttons", {
             key: 0,
             value: V.internalModelValue
           }) : dA("", !0),
@@ -40591,9 +40591,9 @@ const oV = ({
           style: Hn({ height: `${P.value}px` })
         }, [
           y("div", xV, [
-            Ee(H.$slots, "header")
+            ke(H.$slots, "header")
           ]),
-          H.$slots.overlay ? Ee(H.$slots, "overlay", { key: 0 }) : (M(!0), Q(TA, { key: 1 }, Ae(H.items, (CA, vA) => (M(), Q("div", {
+          H.$slots.overlay ? ke(H.$slots, "overlay", { key: 0 }) : (M(!0), Q(TA, { key: 1 }, Ae(H.items, (CA, vA) => (M(), Q("div", {
             class: Pe(["dp__overlay_row", { dp__flex_row: H.items.length >= 3 }]),
             key: vA,
             role: "row"
@@ -40617,7 +40617,7 @@ const oV = ({
               y("div", {
                 class: Pe(pA.className)
               }, [
-                H.$slots.item ? Ee(H.$slots, "item", {
+                H.$slots.item ? ke(H.$slots, "item", {
                   key: 0,
                   item: pA
                 }) : dA("", !0),
@@ -40642,7 +40642,7 @@ const oV = ({
             He(B, ["tab"])
           ]
         }, [
-          Ee(H.$slots, "button-icon")
+          ke(H.$slots, "button-icon")
         ], 42, wV)), [
           [rr, !Z(p)(H.hideNavigation, H.type)]
         ]) : dA("", !0)
@@ -40672,7 +40672,7 @@ const oV = ({
         key: o,
         class: Pe(n.value)
       }, [
-        Ee(r.$slots, "default", {
+        ke(r.$slots, "default", {
           instance: o,
           index: c
         })
@@ -40708,7 +40708,7 @@ const oV = ({
       y("span", {
         class: Pe(["dp__inner_nav", { dp__inner_nav_disabled: n.disabled }])
       }, [
-        Ee(n.$slots, "default")
+        ke(n.$slots, "default")
       ], 2)
     ], 40, SV));
   }
@@ -40852,7 +40852,7 @@ const oV = ({
       stretch: ""
     }, {
       default: ge(({ instance: nA }) => [
-        j.$slots["month-year"] ? Ee(j.$slots, "month-year", zn(fn({ key: 0 }, {
+        j.$slots["month-year"] ? ke(j.$slots, "month-year", zn(fn({ key: 0 }, {
           year: Z(i),
           months: Z(n)(nA),
           years: Z(r)(nA),
@@ -40884,7 +40884,7 @@ const oV = ({
                   onActivate: (B) => N(nA, !1)
                 }, {
                   default: ge(() => [
-                    j.$slots["arrow-left"] ? Ee(j.$slots, "arrow-left", { key: 0 }) : dA("", !0),
+                    j.$slots["arrow-left"] ? ke(j.$slots, "arrow-left", { key: 0 }) : dA("", !0),
                     j.$slots["arrow-left"] ? dA("", !0) : (M(), DA(Z(Nv), { key: 1 }))
                   ]),
                   _: 2
@@ -40898,7 +40898,7 @@ const oV = ({
                   onClick: () => L(nA, !1),
                   onKeydown: He(() => L(nA, !1), ["enter"])
                 }, [
-                  j.$slots.year ? Ee(j.$slots, "year", {
+                  j.$slots.year ? ke(j.$slots, "year", {
                     key: 0,
                     year: Z(i)(nA)
                   }) : dA("", !0),
@@ -40914,7 +40914,7 @@ const oV = ({
                   onActivate: (B) => N(nA, !0)
                 }, {
                   default: ge(() => [
-                    j.$slots["arrow-right"] ? Ee(j.$slots, "arrow-right", { key: 0 }) : dA("", !0),
+                    j.$slots["arrow-right"] ? ke(j.$slots, "arrow-right", { key: 0 }) : dA("", !0),
                     j.$slots["arrow-right"] ? dA("", !0) : (M(), DA(Z(Rv), { key: 1 }))
                   ]),
                   _: 2
@@ -40936,7 +40936,7 @@ const oV = ({
                       type: "year"
                     }, Tr({
                       "button-icon": ge(() => [
-                        j.$slots["calendar-icon"] ? Ee(j.$slots, "calendar-icon", { key: 0 }) : dA("", !0),
+                        j.$slots["calendar-icon"] ? ke(j.$slots, "calendar-icon", { key: 0 }) : dA("", !0),
                         j.$slots["calendar-icon"] ? dA("", !0) : (M(), DA(Z(tu), { key: 1 }))
                       ]),
                       _: 2
@@ -40944,7 +40944,7 @@ const oV = ({
                       j.$slots["year-overlay-value"] ? {
                         name: "item",
                         fn: ge(({ item: B }) => [
-                          Ee(j.$slots, "year-overlay-value", {
+                          ke(j.$slots, "year-overlay-value", {
                             text: B.text,
                             value: B.value
                           })
@@ -40996,7 +40996,7 @@ const oV = ({
   setup(A, { emit: e }) {
     const t = A, { groupedYears: n, selectYear: r, setHoverValue: i } = PV(t, e), { defaultedConfig: o } = Gn(t);
     return (c, f) => (M(), Q("div", null, [
-      c.$slots["month-year"] ? Ee(c.$slots, "month-year", zn(fn({ key: 0 }, {
+      c.$slots["month-year"] ? ke(c.$slots, "month-year", zn(fn({ key: 0 }, {
         years: Z(n),
         selectYear: Z(r)
       }))) : (M(), DA(Nc, {
@@ -41013,7 +41013,7 @@ const oV = ({
         c.$slots["year-overlay-value"] ? {
           name: "item",
           fn: ge(({ item: u }) => [
-            Ee(c.$slots, "year-overlay-value", {
+            ke(c.$slots, "year-overlay-value", {
               text: u.text,
               value: u.value
             })
@@ -41155,7 +41155,7 @@ const oV = ({
                   NV,
                   RV
                 ], 64)) : (M(), Q(TA, { key: 0 }, [
-                  pA.$slots["arrow-up"] ? Ee(pA.$slots, "arrow-up", { key: 0 }) : dA("", !0),
+                  pA.$slots["arrow-up"] ? ke(pA.$slots, "arrow-up", { key: 0 }) : dA("", !0),
                   pA.$slots["arrow-up"] ? dA("", !0) : (M(), DA(Z(Lv), { key: 1 }))
                 ], 64))
               ], 42, TV),
@@ -41179,7 +41179,7 @@ const oV = ({
                 ref_for: !0,
                 ref: (FA) => CA(FA, SA, 1)
               }, [
-                pA.$slots[$A.type] ? Ee(pA.$slots, $A.type, {
+                pA.$slots[$A.type] ? ke(pA.$slots, $A.type, {
                   key: 0,
                   text: K.value($A.type).text,
                   value: K.value($A.type).value
@@ -41211,7 +41211,7 @@ const oV = ({
                   FV,
                   UV
                 ], 64)) : (M(), Q(TA, { key: 0 }, [
-                  pA.$slots["arrow-down"] ? Ee(pA.$slots, "arrow-down", { key: 0 }) : dA("", !0),
+                  pA.$slots["arrow-down"] ? ke(pA.$slots, "arrow-down", { key: 0 }) : dA("", !0),
                   pA.$slots["arrow-down"] ? dA("", !0) : (M(), DA(Z(Fv), { key: 1 }))
                 ], 64))
               ], 42, LV)
@@ -41219,7 +41219,7 @@ const oV = ({
           ], 2);
         }), 128)),
         pA.is24 ? dA("", !0) : (M(), Q("div", BV, [
-          pA.$slots["am-pm-button"] ? Ee(pA.$slots, "am-pm-button", {
+          pA.$slots["am-pm-button"] ? ke(pA.$slots, "am-pm-button", {
             key: 0,
             toggle: fA,
             value: x.value
@@ -41260,7 +41260,7 @@ const oV = ({
               onResetFlow: PA[0] || (PA[0] = (LA) => pA.$emit("reset-flow"))
             }, Tr({
               "button-icon": ge(() => [
-                pA.$slots["clock-icon"] ? Ee(pA.$slots, "clock-icon", { key: 0 }) : dA("", !0),
+                pA.$slots["clock-icon"] ? ke(pA.$slots, "clock-icon", { key: 0 }) : dA("", !0),
                 pA.$slots["clock-icon"] ? dA("", !0) : (M(), DA(Z(Mv), { key: 1 }))
               ]),
               _: 2
@@ -41268,7 +41268,7 @@ const oV = ({
               pA.$slots[`${$A.type}-overlay-value`] ? {
                 name: "item",
                 fn: ge(({ item: LA }) => [
-                  Ee(pA.$slots, `${$A.type}-overlay-value`, {
+                  ke(pA.$slots, `${$A.type}-overlay-value`, {
                     text: LA.text,
                     value: LA.value
                   })
@@ -41358,7 +41358,7 @@ const oV = ({
           ],
           onClick: W[2] || (W[2] = (uA) => j(!0))
         }, [
-          z.$slots["clock-icon"] ? Ee(z.$slots, "clock-icon", { key: 0 }) : dA("", !0),
+          z.$slots["clock-icon"] ? ke(z.$slots, "clock-icon", { key: 0 }) : dA("", !0),
           z.$slots["clock-icon"] ? dA("", !0) : (M(), DA(Z(Mv), { key: 1 }))
         ], 42, jV)), [
           [rr, !Z(x)(z.hideNavigation, "time")]
@@ -41390,7 +41390,7 @@ const oV = ({
                   ),
                   style: { display: "flex" }
                 }, [
-                  z.$slots["time-picker-overlay"] ? Ee(z.$slots, "time-picker-overlay", {
+                  z.$slots["time-picker-overlay"] ? ke(z.$slots, "time-picker-overlay", {
                     key: 0,
                     hours: A.hours,
                     minutes: A.minutes,
@@ -41426,7 +41426,7 @@ const oV = ({
                       Ae(Z(nA), (iA, CA) => ({
                         name: iA,
                         fn: ge((vA) => [
-                          Ee(z.$slots, iA, zn(Pr(vA)))
+                          ke(z.$slots, iA, zn(Pr(vA)))
                         ])
                       }))
                     ]), 1040, ["onUpdate:hours", "onUpdate:minutes", "onUpdate:seconds"])), [
@@ -41447,7 +41447,7 @@ const oV = ({
                     ],
                     onClick: W[6] || (W[6] = (H) => j(!1))
                   }, [
-                    z.$slots["calendar-icon"] ? Ee(z.$slots, "calendar-icon", { key: 0 }) : dA("", !0),
+                    z.$slots["calendar-icon"] ? ke(z.$slots, "calendar-icon", { key: 0 }) : dA("", !0),
                     z.$slots["calendar-icon"] ? dA("", !0) : (M(), DA(Z(tu), { key: 1 }))
                   ], 42, zV)), [
                     [rr, !Z(x)(z.hideNavigation, "time")]
@@ -41601,7 +41601,7 @@ const oV = ({
           Ae(Z(r), (p, v) => ({
             name: p,
             fn: ge((b) => [
-              Ee(f.$slots, p, zn(Pr(b)))
+              ke(f.$slots, p, zn(Pr(b)))
             ])
           }))
         ]), 1040, ["hours", "minutes", "seconds", "internal-model-value", "disabled-times-config"])
@@ -41697,7 +41697,7 @@ const oV = ({
     }), (H, fA) => {
       var iA, CA, vA;
       return M(), Q("div", XV, [
-        H.$slots["month-year"] ? Ee(H.$slots, "month-year", zn(fn({ key: 0 }, { month: A.month, year: A.year, months: A.months, years: A.years, updateMonthYear: Z(C), handleMonthYearChange: Z(b), instance: A.instance }))) : (M(), Q(TA, { key: 1 }, [
+        H.$slots["month-year"] ? ke(H.$slots, "month-year", zn(fn({ key: 0 }, { month: A.month, year: A.year, months: A.months, years: A.years, updateMonthYear: Z(C), handleMonthYearChange: Z(b), instance: A.instance }))) : (M(), Q(TA, { key: 1 }, [
           Z(w)(Z(o), A.instance) && !H.vertical ? (M(), DA(nc, {
             key: 0,
             "aria-label": (iA = Z(i)) == null ? void 0 : iA.prevMonth,
@@ -41706,7 +41706,7 @@ const oV = ({
             onSetRef: fA[1] || (fA[1] = (pA) => W(pA, 0))
           }, {
             default: ge(() => [
-              H.$slots["arrow-left"] ? Ee(H.$slots, "arrow-left", { key: 0 }) : dA("", !0),
+              H.$slots["arrow-left"] ? ke(H.$slots, "arrow-left", { key: 0 }) : dA("", !0),
               H.$slots["arrow-left"] ? dA("", !0) : (M(), DA(Z(Nv), { key: 1 }))
             ]),
             _: 3
@@ -41732,7 +41732,7 @@ const oV = ({
                   He(Le(pA.toggle, ["prevent"]), ["space"])
                 ]
               }, [
-                H.$slots[pA.type] ? Ee(H.$slots, pA.type, {
+                H.$slots[pA.type] ? ke(H.$slots, pA.type, {
                   key: 0,
                   text: pA.text,
                   value: n[pA.type]
@@ -41762,7 +41762,7 @@ const oV = ({
                     onToggle: pA.toggle
                   }, Tr({
                     "button-icon": ge(() => [
-                      H.$slots["calendar-icon"] ? Ee(H.$slots, "calendar-icon", { key: 0 }) : dA("", !0),
+                      H.$slots["calendar-icon"] ? ke(H.$slots, "calendar-icon", { key: 0 }) : dA("", !0),
                       H.$slots["calendar-icon"] ? dA("", !0) : (M(), DA(Z(tu), { key: 1 }))
                     ]),
                     _: 2
@@ -41770,7 +41770,7 @@ const oV = ({
                     H.$slots[`${pA.type}-overlay-val`] ? {
                       name: "item",
                       fn: ge(({ item: MA }) => [
-                        Ee(H.$slots, `${pA.type}-overlay-val`, {
+                        ke(H.$slots, `${pA.type}-overlay-val`, {
                           text: MA.text,
                           value: MA.value
                         })
@@ -41780,14 +41780,14 @@ const oV = ({
                     H.$slots[`${pA.type}-overlay`] ? {
                       name: "overlay",
                       fn: ge(() => [
-                        Ee(H.$slots, `${pA.type}-overlay`, zn(Pr(J.value(pA.type))))
+                        ke(H.$slots, `${pA.type}-overlay`, zn(Pr(J.value(pA.type))))
                       ]),
                       key: "1"
                     } : void 0,
                     H.$slots[`${pA.type}-overlay-header`] ? {
                       name: "header",
                       fn: ge(() => [
-                        Ee(H.$slots, `${pA.type}-overlay-header`, {
+                        ke(H.$slots, `${pA.type}-overlay-header`, {
                           toggle: pA.toggle
                         })
                       ]),
@@ -41806,7 +41806,7 @@ const oV = ({
             onActivate: fA[2] || (fA[2] = (pA) => Z(b)(!1, !0))
           }, {
             default: ge(() => [
-              H.$slots["arrow-up"] ? Ee(H.$slots, "arrow-up", { key: 0 }) : dA("", !0),
+              H.$slots["arrow-up"] ? ke(H.$slots, "arrow-up", { key: 0 }) : dA("", !0),
               H.$slots["arrow-up"] ? dA("", !0) : (M(), DA(Z(Lv), { key: 1 }))
             ]),
             _: 3
@@ -41820,7 +41820,7 @@ const oV = ({
             onSetRef: fA[4] || (fA[4] = (pA) => W(pA, H.disableYearSelect ? 2 : 3))
           }, {
             default: ge(() => [
-              H.$slots[H.vertical ? "arrow-down" : "arrow-right"] ? Ee(H.$slots, H.vertical ? "arrow-down" : "arrow-right", { key: 0 }) : dA("", !0),
+              H.$slots[H.vertical ? "arrow-down" : "arrow-right"] ? ke(H.$slots, H.vertical ? "arrow-down" : "arrow-right", { key: 0 }) : dA("", !0),
               H.$slots[H.vertical ? "arrow-down" : "arrow-right"] ? dA("", !0) : (M(), DA(Df(H.vertical ? Z(Fv) : Z(Rv)), { key: 1 }))
             ]),
             _: 3
@@ -41953,7 +41953,7 @@ const oV = ({
                 role: "gridcell",
                 key: $A
               }, [
-                vA.$slots["calendar-header"] ? Ee(vA.$slots, "calendar-header", {
+                vA.$slots["calendar-header"] ? ke(vA.$slots, "calendar-header", {
                   key: 0,
                   day: MA,
                   index: $A
@@ -42008,7 +42008,7 @@ const oV = ({
                           y("div", {
                             class: Pe(["dp__cell_inner", LA.classData])
                           }, [
-                            vA.$slots.day && K.value(LA) ? Ee(vA.$slots, "day", {
+                            vA.$slots.day && K.value(LA) ? ke(vA.$slots, "day", {
                               key: 0,
                               day: +LA.text,
                               date: LA.value
@@ -42017,7 +42017,7 @@ const oV = ({
                               fe(yA(LA.text), 1)
                             ], 64)),
                             LA.marker && K.value(LA) ? (M(), Q(TA, { key: 2 }, [
-                              vA.$slots.marker ? Ee(vA.$slots, "marker", {
+                              vA.$slots.marker ? ke(vA.$slots, "marker", {
                                 key: 0,
                                 marker: LA.marker,
                                 day: +LA.text,
@@ -42045,7 +42045,7 @@ const oV = ({
                                   key: xA,
                                   class: "dp__tooltip_text"
                                 }, [
-                                  vA.$slots["marker-tooltip"] ? Ee(vA.$slots, "marker-tooltip", {
+                                  vA.$slots["marker-tooltip"] ? ke(vA.$slots, "marker-tooltip", {
                                     key: 0,
                                     tooltip: bA,
                                     day: LA.value
@@ -42427,7 +42427,7 @@ const oV = ({
             Ae(Z(AA), (PA, MA) => ({
               name: PA,
               fn: ge(($A) => [
-                Ee(iA.$slots, PA, zn(Pr($A)))
+                ke(iA.$slots, PA, zn(Pr($A)))
               ])
             }))
           ]), 1040, ["months", "years", "month", "year", "instance", "onUpdateMonthYear"])),
@@ -42452,7 +42452,7 @@ const oV = ({
             Ae(Z(B), (PA, MA) => ({
               name: PA,
               fn: ge(($A) => [
-                Ee(iA.$slots, PA, zn(Pr({ ...$A })))
+                ke(iA.$slots, PA, zn(Pr({ ...$A })))
               ])
             }))
           ]), 1040, ["mapped-dates", "month", "year", "onSelectDate", "onHandleSpace", "onHandleScroll", "onHandleSwipe"])
@@ -42460,7 +42460,7 @@ const oV = ({
         _: 3
       }, 8, ["multi-calendars"]),
       iA.enableTimePicker ? (M(), Q("div", sY, [
-        iA.$slots["time-picker"] ? Ee(iA.$slots, "time-picker", zn(fn({ key: 0 }, { time: Z(f), updateTime: Z(T) }))) : (M(), DA(uS, fn({
+        iA.$slots["time-picker"] ? ke(iA.$slots, "time-picker", zn(fn({ key: 0 }, { time: Z(f), updateTime: Z(T) }))) : (M(), DA(uS, fn({
           key: 1,
           ref_key: "timePickerRef",
           ref: Y
@@ -42482,7 +42482,7 @@ const oV = ({
           Ae(Z(z), (vA, pA) => ({
             name: vA,
             fn: ge((PA) => [
-              Ee(iA.$slots, vA, zn(Pr(PA)))
+              ke(iA.$slots, vA, zn(Pr(PA)))
             ])
           }))
         ]), 1040, ["hours", "minutes", "seconds", "internal-model-value", "disabled-times-config"]))
@@ -42653,7 +42653,7 @@ const oV = ({
           style: Hn({ "--dp-menu-width": `${x.value}px` })
         }, [
           FA.$slots["left-sidebar"] ? (M(), Q("div", cY, [
-            Ee(FA.$slots, "left-sidebar", zn(Pr(AA.value)))
+            ke(FA.$slots, "left-sidebar", zn(Pr(AA.value)))
           ])) : dA("", !0),
           FA.presetDates.length ? (M(), Q("div", uY, [
             (M(!0), Q(TA, null, Ae(FA.presetDates, (xA, WA) => (M(), Q("div", {
@@ -42661,7 +42661,7 @@ const oV = ({
               style: Hn(xA.style || {}),
               class: "dp--preset-range"
             }, [
-              xA.slot ? Ee(FA.$slots, xA.slot, {
+              xA.slot ? ke(FA.$slots, xA.slot, {
                 key: 0,
                 presetDate: UA,
                 label: xA.label,
@@ -42711,16 +42711,16 @@ const oV = ({
               Ae(rA.value, (xA, WA) => ({
                 name: xA,
                 fn: ge((XA) => [
-                  Ee(FA.$slots, xA, zn(Pr({ ...XA })))
+                  ke(FA.$slots, xA, zn(Pr({ ...XA })))
                 ])
               }))
             ]), 1040, ["flow-step", "onMount", "onUpdateFlowStep", "onResetFlow"]))
           ], 512),
           FA.$slots["right-sidebar"] ? (M(), Q("div", fY, [
-            Ee(FA.$slots, "right-sidebar", zn(Pr(AA.value)))
+            ke(FA.$slots, "right-sidebar", zn(Pr(AA.value)))
           ])) : dA("", !0),
           FA.$slots["action-extra"] ? (M(), Q("div", hY, [
-            FA.$slots["action-extra"] ? Ee(FA.$slots, "action-extra", {
+            FA.$slots["action-extra"] ? ke(FA.$slots, "action-extra", {
               key: 0,
               selectCurrentDate: LA
             }) : dA("", !0)
@@ -42739,7 +42739,7 @@ const oV = ({
           Ae(Z(W), (xA, WA) => ({
             name: xA,
             fn: ge((XA) => [
-              Ee(FA.$slots, xA, zn(Pr({ ...XA })))
+              ke(FA.$slots, xA, zn(Pr({ ...XA })))
             ])
           }))
         ]), 1040, ["menu-mount", "calendar-width"])) : dA("", !0)
@@ -42934,7 +42934,7 @@ const oV = ({
         Ae(Z(Y), (q, IA) => ({
           name: q,
           fn: ge((VA) => [
-            Ee(BA.$slots, q, zn(Pr(VA)))
+            ke(BA.$slots, q, zn(Pr(VA)))
           ])
         }))
       ]), 1040, ["is-menu-open", "input-value", "onSetEmptyDate"]),
@@ -42982,7 +42982,7 @@ const oV = ({
                 Ae(Z(K), (q, IA) => ({
                   name: q,
                   fn: ge((VA) => [
-                    Ee(BA.$slots, q, zn(Pr({ ...VA })))
+                    ke(BA.$slots, q, zn(Pr({ ...VA })))
                   ])
                 }))
               ]), 1040, ["class", "style", "open-on-top", "arr-map-values", "internal-model-value", "onRecalculatePosition"])
@@ -43030,7 +43030,7 @@ const CY = /* @__PURE__ */ ue({
       }
     }
     return (u, p) => (M(), Q(TA, null, [
-      c.value ? (M(), DA(ke, {
+      c.value ? (M(), DA(Ee, {
         key: 0,
         text: "SYNC ALL CLASSES",
         type: "button",
@@ -43382,7 +43382,7 @@ const lj = /* @__PURE__ */ yt(oj, [["__scopeId", "data-v-56bba68a"]]), cj = { cl
     return (x, C) => (M(), Q(TA, null, [
       y("div", cj, [
         y("div", uj, [
-          n.value ? (M(), DA(ke, {
+          n.value ? (M(), DA(Ee, {
             key: 0,
             text: "Go Back",
             onOnClick: C[0] || (C[0] = (w) => p()),
@@ -46862,7 +46862,7 @@ function Ez(A, e, t, n, r, i) {
           class: Pe(["vti__flag", r.activeCountryCode.toLowerCase()])
         }, null, 2)) : dA("", !0),
         t.dropdownOptions.showDialCodeInSelection ? (M(), Q("span", Cz, " +" + yA(i.activeCountry && i.activeCountry.dialCode), 1)) : dA("", !0),
-        Ee(A.$slots, "arrow-icon", { open: r.open }, () => [
+        ke(A.$slots, "arrow-icon", { open: r.open }, () => [
           y("span", xz, yA(r.open ? "\u25B2" : "\u25BC"), 1)
         ])
       ]),
@@ -46931,7 +46931,7 @@ function Ez(A, e, t, n, r, i) {
     }, null, 42, kz), [
       [Ha, r.phone]
     ]),
-    Ee(A.$slots, "icon-right")
+    ke(A.$slots, "icon-right")
   ], 2);
 }
 const Qd = /* @__PURE__ */ mz(vz, [["render", Ez]]);
@@ -47699,7 +47699,7 @@ const CS = /* @__PURE__ */ yt(eG, [["__scopeId", "data-v-63444175"]]), QC = /* @
       f.value = !1, r.value = !1, i.value = !1;
     }
     return (_, P) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "Set Password",
         type: "button",
         onOnClick: x
@@ -47784,7 +47784,7 @@ const CS = /* @__PURE__ */ yt(eG, [["__scopeId", "data-v-63444175"]]), QC = /* @
                       IG,
                       y("div", wG, [
                         y("div", SG, [
-                          wA(ke, {
+                          wA(Ee, {
                             text: "Cancel",
                             type: "button",
                             variant: "secondary",
@@ -47844,7 +47844,7 @@ const CS = /* @__PURE__ */ yt(eG, [["__scopeId", "data-v-63444175"]]), QC = /* @
       n.value = !1, r.value = !1, p ? p.__typename === "ResetPasswordLinkSentSuccessfully" ? i.value = !0 : p.__typename === "TooManyResetPasswordLinkRequestsError" ? (c.value = "A RESET LINK HAS ALREADY BEEN SENT TO YOU. PLEASE TRY AGAIN AFTER " + wt(p.availableAgainAt).format("DD/MM/YYYY h:mm a"), o.value = !0) : (c.value = Ne, o.value = !0) : (c.value = Ne, o.value = !0);
     }
     return (p, v) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "Reset Password",
         type: "button",
         onOnClick: f
@@ -47957,7 +47957,7 @@ const CS = /* @__PURE__ */ yt(eG, [["__scopeId", "data-v-63444175"]]), QC = /* @
       i.value = !1, f.value = !1;
     }
     return (_, P) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "Update mindbody Ids",
         type: "button",
         onOnClick: v
@@ -48008,13 +48008,13 @@ const CS = /* @__PURE__ */ yt(eG, [["__scopeId", "data-v-63444175"]]), QC = /* @
                       ])
                     ]),
                     y("div", QG, [
-                      wA(ke, {
+                      wA(Ee, {
                         text: "Cancel",
                         type: "button",
                         variant: "secondary",
                         onOnClick: P[0] || (P[0] = (T) => f.value = !1)
                       }),
-                      wA(ke, {
+                      wA(Ee, {
                         text: "SAVE",
                         type: "button",
                         "is-loading": u.value,
@@ -49103,7 +49103,7 @@ const iK = /* @__PURE__ */ ue({
             y("h5", null, "Email: " + yA((_ = (w = c.value) == null ? void 0 : w.user) == null ? void 0 : _.email), 1)
           ]),
           y("div", bQ, [
-            f.value ? (M(), DA(ke, {
+            f.value ? (M(), DA(Ee, {
               key: 0,
               type: "button",
               text: "Legacy View",
@@ -53604,7 +53604,7 @@ const DZ = { class: "modal-mask" }, OZ = { class: "modal-wrapper" }, TZ = { clas
       v.value = !1;
     }
     return (T, N) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "Create instructor profile",
         type: "button",
         disabled: !T.site,
@@ -53644,14 +53644,14 @@ const DZ = { class: "modal-mask" }, OZ = { class: "modal-wrapper" }, TZ = { clas
                     ])
                   ]),
                   y("div", UZ, [
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Cancel",
                       type: "button",
                       disabled: f.value,
                       variant: "secondary",
                       onOnClick: _
                     }, null, 8, ["disabled"]),
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Create instructor profile",
                       type: "button",
                       "is-loading": f.value,
@@ -53717,7 +53717,7 @@ const DZ = { class: "modal-mask" }, OZ = { class: "modal-wrapper" }, TZ = { clas
       o.value = !1;
     }
     return (x, C) => (M(), Q(TA, null, [
-      u.value ? (M(), DA(ke, {
+      u.value ? (M(), DA(Ee, {
         key: 0,
         text: "Delete",
         type: "button",
@@ -53737,14 +53737,14 @@ const DZ = { class: "modal-mask" }, OZ = { class: "modal-wrapper" }, TZ = { clas
                   zZ,
                   WZ,
                   y("div", GZ, [
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Cancel",
                       type: "button",
                       disabled: r.value,
                       variant: "secondary",
                       onOnClick: p
                     }, null, 8, ["disabled"]),
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Delete",
                       type: "button",
                       variant: "danger",
@@ -53864,14 +53864,14 @@ const DZ = { class: "modal-mask" }, OZ = { class: "modal-wrapper" }, TZ = { clas
                         wA(XZ, { instructorProfile: T.instructorProfile }, null, 8, ["instructorProfile"])
                       ]),
                       y("div", null, [
-                        wA(ke, {
+                        wA(Ee, {
                           text: "Cancel",
                           type: "button",
                           disabled: f.value,
                           variant: "secondary",
                           onOnClick: _
                         }, null, 8, ["disabled"]),
-                        wA(ke, {
+                        wA(Ee, {
                           text: "Update",
                           type: "button",
                           "is-loading": f.value,
@@ -54232,7 +54232,7 @@ const YS = /* @__PURE__ */ yt(zJ, [["__scopeId", "data-v-c2cdb45b"]]), l1 = /* @
       o.value = !1;
     }
     return (x, C) => (M(), Q(TA, null, [
-      u.value ? (M(), DA(ke, {
+      u.value ? (M(), DA(Ee, {
         key: 0,
         text: "Delete",
         type: "button",
@@ -54252,14 +54252,14 @@ const YS = /* @__PURE__ */ yt(zJ, [["__scopeId", "data-v-c2cdb45b"]]), l1 = /* @
                   QJ,
                   KJ,
                   y("div", ZJ, [
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Cancel",
                       type: "button",
                       disabled: r.value,
                       variant: "secondary",
                       onOnClick: p
                     }, null, 8, ["disabled"]),
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Delete",
                       type: "button",
                       variant: "danger",
@@ -54822,22 +54822,22 @@ function pAA(A, e, t, n, r, i) {
     role: "combobox",
     "aria-owns": "listbox-" + A.id
   }, [
-    Ee(A.$slots, "caret", { toggle: A.toggle }, () => [
+    ke(A.$slots, "caret", { toggle: A.toggle }, () => [
       wA("div", {
         onMousedown: e[1] || (e[1] = Le((o) => A.toggle(), ["prevent", "stop"])),
         class: "multiselect__select"
       }, null, 32)
     ]),
-    Ee(A.$slots, "clear", { search: A.search }),
+    ke(A.$slots, "clear", { search: A.search }),
     wA("div", iAA, [
-      Ee(A.$slots, "selection", {
+      ke(A.$slots, "selection", {
         search: A.search,
         remove: A.removeElement,
         values: i.visibleValues,
         isOpen: A.isOpen
       }, () => [
         de(wA("div", sAA, [
-          (M(!0), DA(TA, null, Ae(i.visibleValues, (o, c) => Ee(A.$slots, "tag", {
+          (M(!0), DA(TA, null, Ae(i.visibleValues, (o, c) => ke(A.$slots, "tag", {
             option: o,
             search: A.search,
             remove: A.removeElement
@@ -54860,7 +54860,7 @@ function pAA(A, e, t, n, r, i) {
         ], 512), [
           [rr, i.visibleValues.length > 0]
         ]),
-        A.internalValue && A.internalValue.length > t.limit ? Ee(A.$slots, "limit", { key: 0 }, () => [
+        A.internalValue && A.internalValue.length > t.limit ? ke(A.$slots, "limit", { key: 0 }, () => [
           wA("strong", {
             class: "multiselect__strong",
             textContent: yA(t.limitText(A.internalValue.length - t.limit))
@@ -54869,7 +54869,7 @@ function pAA(A, e, t, n, r, i) {
       ]),
       wA($t, { name: "multiselect__loading" }, {
         default: ge(() => [
-          Ee(A.$slots, "loading", {}, () => [
+          ke(A.$slots, "loading", {}, () => [
             de(wA("div", oAA, null, 512), [
               [rr, t.loading]
             ])
@@ -54909,7 +54909,7 @@ function pAA(A, e, t, n, r, i) {
         class: "multiselect__single",
         onMousedown: e[10] || (e[10] = Le((...o) => A.toggle && A.toggle(...o), ["prevent"]))
       }, [
-        Ee(A.$slots, "singleLabel", { option: i.singleValue }, () => [
+        ke(A.$slots, "singleLabel", { option: i.singleValue }, () => [
           fe(yA(A.currentOptionLabel), 1)
         ])
       ], 32)) : dA("v-if", !0),
@@ -54918,7 +54918,7 @@ function pAA(A, e, t, n, r, i) {
         class: "multiselect__placeholder",
         onMousedown: e[11] || (e[11] = Le((...o) => A.toggle && A.toggle(...o), ["prevent"]))
       }, [
-        Ee(A.$slots, "placeholder", {}, () => [
+        ke(A.$slots, "placeholder", {}, () => [
           fe(yA(A.placeholder), 1)
         ])
       ], 32)) : dA("v-if", !0)
@@ -54941,10 +54941,10 @@ function pAA(A, e, t, n, r, i) {
             id: "listbox-" + A.id,
             "aria-multiselectable": A.multiple
           }, [
-            Ee(A.$slots, "beforeList"),
+            ke(A.$slots, "beforeList"),
             A.multiple && A.max === A.internalValue.length ? (M(), DA("li", lAA, [
               wA("span", cAA, [
-                Ee(A.$slots, "maxElements", {}, () => [
+                ke(A.$slots, "maxElements", {}, () => [
                   fe("Maximum of " + yA(A.max) + " options selected. First remove a selected option to select another.", 1)
                 ])
               ])
@@ -54965,7 +54965,7 @@ function pAA(A, e, t, n, r, i) {
                 "data-selected": i.selectedLabelText,
                 "data-deselect": i.deselectLabelText
               }, [
-                Ee(A.$slots, "option", {
+                ke(A.$slots, "option", {
                   option: o,
                   search: A.search,
                   index: c
@@ -54981,7 +54981,7 @@ function pAA(A, e, t, n, r, i) {
                 onMouseenter: Le((f) => A.groupSelect && A.pointerSet(c), ["self"]),
                 onMousedown: Le((f) => A.selectGroup(o), ["prevent"])
               }, [
-                Ee(A.$slots, "option", {
+                ke(A.$slots, "option", {
                   option: o,
                   search: A.search,
                   index: c
@@ -54992,7 +54992,7 @@ function pAA(A, e, t, n, r, i) {
             ], 8, ["aria-selected", "id", "role"]))), 128)) : dA("v-if", !0),
             de(wA("li", null, [
               wA("span", uAA, [
-                Ee(A.$slots, "noResult", { search: A.search }, () => [
+                ke(A.$slots, "noResult", { search: A.search }, () => [
                   dAA
                 ])
               ])
@@ -55001,14 +55001,14 @@ function pAA(A, e, t, n, r, i) {
             ]),
             de(wA("li", null, [
               wA("span", fAA, [
-                Ee(A.$slots, "noOptions", {}, () => [
+                ke(A.$slots, "noOptions", {}, () => [
                   hAA
                 ])
               ])
             ], 512), [
               [rr, t.showNoOptions && (A.options.length === 0 || i.hasOptionGroup === !0 && A.filteredOptions.length === 0) && !A.search && !t.loading]
             ]),
-            Ee(A.$slots, "afterList")
+            ke(A.$slots, "afterList")
           ], 12, ["id", "aria-multiselectable"])
         ], 36), [
           [rr, A.isOpen]
@@ -55277,14 +55277,14 @@ const NAA = /* @__PURE__ */ y("i", { class: "bi bi-pencil-fill" }, null, -1), RA
                         wA(JJ, { "payment-link": _.paymentLink }, null, 8, ["payment-link"])
                       ]),
                       y("div", null, [
-                        wA(ke, {
+                        wA(Ee, {
                           text: "Cancel",
                           type: "button",
                           disabled: o.value,
                           variant: "secondary",
                           onOnClick: x
                         }, null, 8, ["disabled"]),
-                        wA(ke, {
+                        wA(Ee, {
                           text: "Update",
                           type: "button",
                           "is-loading": o.value,
@@ -55350,7 +55350,7 @@ const NAA = /* @__PURE__ */ y("i", { class: "bi bi-pencil-fill" }, null, -1), RA
       i.value = !1;
     }
     return (x, C) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "Create payment link",
         type: "button",
         onOnClick: C[0] || (C[0] = (w) => u())
@@ -55380,14 +55380,14 @@ const NAA = /* @__PURE__ */ y("i", { class: "bi bi-pencil-fill" }, null, -1), RA
                     }, null, 512)
                   ]),
                   y("div", ZAA, [
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Cancel",
                       type: "button",
                       disabled: r.value,
                       variant: "secondary",
                       onOnClick: p
                     }, null, 8, ["disabled"]),
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Create payment link",
                       type: "button",
                       "is-loading": r.value,
@@ -56721,7 +56721,7 @@ const Ln = (A) => (Bt("data-v-5623911a"), A = A(), Vt(), A), weA = { autocomplet
         y("p", null, "Total Configured Spots - " + yA(b.value), 1),
         y("div", FeA, [
           y("div", UeA, [
-            wA(ke, {
+            wA(Ee, {
               text: "Save Layout",
               onOnClick: H[3] || (H[3] = (iA) => Y()),
               type: "button",
@@ -56730,7 +56730,7 @@ const Ln = (A) => (Bt("data-v-5623911a"), A = A(), Vt(), A), weA = { autocomplet
             }, null, 8, ["is-loading"])
           ]),
           y("div", BeA, [
-            wA(ke, {
+            wA(Ee, {
               text: "Cancel",
               onOnClick: H[4] || (H[4] = (iA) => rA()),
               type: "button",
@@ -57530,7 +57530,7 @@ const XS = /* @__PURE__ */ yt(fnA, [["__scopeId", "data-v-b00f5283"]]), hnA = { 
       u.value = !1;
     }
     return (T, N) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "Create session type",
         type: "button",
         disabled: !T.site || !!T.disabled,
@@ -57570,14 +57570,14 @@ const XS = /* @__PURE__ */ yt(fnA, [["__scopeId", "data-v-b00f5283"]]), hnA = { 
                     ])
                   ]),
                   y("div", xnA, [
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Cancel",
                       type: "button",
                       disabled: f.value,
                       variant: "secondary",
                       onOnClick: _
                     }, null, 8, ["disabled"]),
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Create session type",
                       type: "button",
                       "is-loading": f.value,
@@ -57643,7 +57643,7 @@ const XS = /* @__PURE__ */ yt(fnA, [["__scopeId", "data-v-b00f5283"]]), hnA = { 
       o.value = !1;
     }
     return (b, x) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "Delete",
         type: "button",
         variant: "danger",
@@ -57662,14 +57662,14 @@ const XS = /* @__PURE__ */ yt(fnA, [["__scopeId", "data-v-b00f5283"]]), hnA = { 
                   _nA,
                   $nA,
                   y("div", PnA, [
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Cancel",
                       type: "button",
                       disabled: r.value,
                       variant: "secondary",
                       onOnClick: u
                     }, null, 8, ["disabled"]),
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Delete",
                       type: "button",
                       variant: "danger",
@@ -57798,14 +57798,14 @@ const XS = /* @__PURE__ */ yt(fnA, [["__scopeId", "data-v-b00f5283"]]), hnA = { 
                         wA(DnA, { "session-type": T.sessionType }, null, 8, ["session-type"])
                       ]),
                       y("div", null, [
-                        wA(ke, {
+                        wA(Ee, {
                           text: "Cancel",
                           type: "button",
                           disabled: f.value,
                           variant: "secondary",
                           onOnClick: _
                         }, null, 8, ["disabled"]),
-                        wA(ke, {
+                        wA(Ee, {
                           text: "Update",
                           type: "button",
                           "is-loading": f.value,
@@ -58194,7 +58194,7 @@ const qS = /* @__PURE__ */ yt(PrA, [["__scopeId", "data-v-2b9e93d4"]]), p1 = /* 
       p.value = !1, x("afterCreate");
     }
     return (Y, B) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "Create a new user",
         type: "button",
         onOnClick: N
@@ -58369,14 +58369,14 @@ const qS = /* @__PURE__ */ yt(PrA, [["__scopeId", "data-v-2b9e93d4"]]), p1 = /* 
                     ], 40, LrA)
                   ]),
                   y("div", oaA, [
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Cancel",
                       type: "button",
                       disabled: r.value,
                       variant: "secondary",
                       onOnClick: L
                     }, null, 8, ["disabled"]),
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Create and send password to user's email",
                       type: "button",
                       "is-loading": r.value,
@@ -58444,7 +58444,7 @@ const caA = { class: "modal-mask" }, uaA = { class: "modal-wrapper" }, daA = {
       o.value = !1;
     }
     return (x, C) => (M(), Q(TA, null, [
-      p.value ? (M(), DA(ke, {
+      p.value ? (M(), DA(Ee, {
         key: 0,
         text: "Delete",
         type: "button",
@@ -58469,14 +58469,14 @@ const caA = { class: "modal-mask" }, uaA = { class: "modal-wrapper" }, daA = {
                     ]),
                     maA,
                     y("div", vaA, [
-                      wA(ke, {
+                      wA(Ee, {
                         text: "Cancel",
                         type: "button",
                         disabled: i.value,
                         variant: "secondary",
                         onOnClick: b
                       }, null, 8, ["disabled"]),
-                      wA(ke, {
+                      wA(Ee, {
                         text: "Delete",
                         type: "button",
                         variant: "danger",
@@ -58641,7 +58641,7 @@ const caA = { class: "modal-mask" }, uaA = { class: "modal-wrapper" }, daA = {
       }
     }
     return (Y, B) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "Edit",
         type: "button",
         onOnClick: L
@@ -58828,14 +58828,14 @@ const caA = { class: "modal-mask" }, uaA = { class: "modal-wrapper" }, daA = {
                         }, null, 8, ["admin-user"])
                       ]),
                       y("div", null, [
-                        wA(ke, {
+                        wA(Ee, {
                           text: "Cancel",
                           type: "button",
                           disabled: o.value,
                           variant: "secondary",
                           onOnClick: j
                         }, null, 8, ["disabled"]),
-                        wA(ke, {
+                        wA(Ee, {
                           text: "Update",
                           type: "button",
                           "is-loading": o.value,
@@ -58890,7 +58890,7 @@ const eiA = /* @__PURE__ */ ue({
       }
     }
     return (f, u) => (M(), Q("div", null, [
-      wA(ke, {
+      wA(Ee, {
         text: "Reset password",
         type: "button",
         onOnClick: u[0] || (u[0] = (p) => r.value = !0),
@@ -59215,7 +59215,7 @@ const QS = /* @__PURE__ */ yt(xiA, [["__scopeId", "data-v-92f74095"]]), g1 = /* 
             ])
           ]),
           y("div", UiA, [
-            wA(ke, {
+            wA(Ee, {
               text: "Update Selected",
               type: "button",
               onOnClick: pA[3] || (pA[3] = (MA) => E.value = !0),
@@ -59410,7 +59410,7 @@ const KS = /* @__PURE__ */ yt(CsA, [["__scopeId", "data-v-51b75c39"]]), m1 = /* 
       onOkSuccess: b
     } = xsA($e("gqlApiService"), t);
     return (x, C) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "Edit",
         size: "sm",
         type: "button",
@@ -59460,14 +59460,14 @@ const KS = /* @__PURE__ */ yt(CsA, [["__scopeId", "data-v-51b75c39"]]), m1 = /* 
                     ], 32)
                   ]),
                   y("div", TsA, [
-                    wA(ke, {
+                    wA(Ee, {
                       text: "Cancel",
                       type: "button",
                       disabled: Z(r),
                       variant: "secondary",
                       onOnClick: Z(p)
                     }, null, 8, ["disabled", "onOnClick"]),
-                    wA(ke, {
+                    wA(Ee, {
                       text: "UPDATE",
                       type: "button",
                       "is-loading": Z(r),
@@ -59515,7 +59515,7 @@ const KS = /* @__PURE__ */ yt(CsA, [["__scopeId", "data-v-51b75c39"]]), m1 = /* 
       }
     }
     return (f, u) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "Sync All",
         type: "button",
         onOnClick: c,
@@ -59744,7 +59744,7 @@ const ZS = /* @__PURE__ */ yt(eoA, [["__scopeId", "data-v-e46424f6"]]), v1 = /* 
       u.value = !1, n.value = !1, r.value = !1;
     }
     return (P, E) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "Change Password",
         type: "button",
         onOnClick: C
@@ -59860,7 +59860,7 @@ const ZS = /* @__PURE__ */ yt(eoA, [["__scopeId", "data-v-e46424f6"]]), v1 = /* 
                       PoA,
                       y("div", DoA, [
                         y("div", OoA, [
-                          wA(ke, {
+                          wA(Ee, {
                             text: "Cancel",
                             type: "button",
                             variant: "secondary",
@@ -59978,21 +59978,21 @@ const ZS = /* @__PURE__ */ yt(eoA, [["__scopeId", "data-v-e46424f6"]]), v1 = /* 
               [Cn, c.favoriteSite]
             ]),
             n.value ? (M(), Q("div", YoA, HoA)) : dA("", !0),
-            i.value ? dA("", !0) : (M(), DA(ke, {
+            i.value ? dA("", !0) : (M(), DA(Ee, {
               key: 1,
               text: "Edit",
               type: "button",
               onOnClick: x,
               disabled: n.value
             }, null, 8, ["disabled"])),
-            i.value ? (M(), DA(ke, {
+            i.value ? (M(), DA(Ee, {
               key: 2,
               text: "Save",
               type: "button",
               onOnClick: v,
               isLoading: r.value
             }, null, 8, ["isLoading"])) : dA("", !0),
-            i.value ? (M(), DA(ke, {
+            i.value ? (M(), DA(Ee, {
               key: 3,
               text: "Cancel",
               type: "button",
@@ -60359,7 +60359,7 @@ const WoA = /* @__PURE__ */ yt(zoA, [["__scopeId", "data-v-f3d39f95"]]), GoA = /
           ])
         ])) : dA("", !0),
         i.event.status === "failed" ? (M(), Q("div", ecA, [
-          wA(ke, {
+          wA(Ee, {
             text: "Retry",
             type: "button",
             variant: "danger",
@@ -60528,63 +60528,55 @@ const WoA = /* @__PURE__ */ yt(zoA, [["__scopeId", "data-v-f3d39f95"]]), GoA = /
 }, lcA = { class: "modal-mask" }, ccA = { class: "modal-wrapper" }, ucA = {
   class: "modal-dialog modal-lg",
   role: "document"
-}, dcA = { class: "modal-content" }, fcA = /* @__PURE__ */ y("div", { class: "modal-header border-0" }, [
-  /* @__PURE__ */ y("h5", { class: "modal-title" }, "EDIT PACKAGE"),
-  /* @__PURE__ */ y("button", {
-    type: "button",
-    class: "btn-close",
-    "data-bs-dismiss": "modal",
-    "aria-label": "Close"
-  })
-], -1), hcA = { class: "modal-body" }, pcA = { class: "form-row" }, gcA = { class: "col-md-6 mb-3" }, mcA = /* @__PURE__ */ y("label", {
+}, dcA = { class: "modal-content" }, fcA = { class: "modal-header border-0" }, hcA = /* @__PURE__ */ y("h5", { class: "modal-title" }, "EDIT PACKAGE", -1), pcA = { class: "modal-body" }, gcA = { class: "form-row" }, mcA = { class: "col-md-6 mb-3" }, vcA = /* @__PURE__ */ y("label", {
   for: "title",
   class: "input-label"
-}, "Title *", -1), vcA = { class: "input-group" }, ycA = { class: "col-md-6 mb-3" }, bcA = /* @__PURE__ */ y("label", {
+}, "Title *", -1), ycA = { class: "input-group" }, bcA = { class: "col-md-6 mb-3" }, CcA = /* @__PURE__ */ y("label", {
   for: "subtitle",
   class: "input-label"
-}, "Subtitle", -1), CcA = { class: "input-group" }, xcA = { class: "form-row" }, IcA = { class: "col-md-6 mb-3" }, wcA = /* @__PURE__ */ y("label", {
+}, "Subtitle", -1), xcA = { class: "input-group" }, IcA = { class: "form-row" }, wcA = { class: "col-md-6 mb-3" }, ScA = /* @__PURE__ */ y("label", {
   for: "buttonText",
   class: "input-label"
-}, "Button Text", -1), ScA = { class: "input-group" }, kcA = { class: "col-md-6 mb-3" }, EcA = /* @__PURE__ */ y("label", {
+}, "Button Text", -1), kcA = { class: "input-group" }, EcA = { class: "col-md-6 mb-3" }, _cA = /* @__PURE__ */ y("label", {
   for: "currency",
   class: "input-label"
-}, "Currency", -1), _cA = { class: "input-group" }, $cA = { class: "form-row" }, PcA = { class: "col-md-4 mb-3" }, DcA = { class: "form-check" }, OcA = /* @__PURE__ */ y("label", {
+}, "Currency", -1), $cA = { class: "input-group" }, PcA = { class: "form-row" }, DcA = { class: "col-md-4 mb-3" }, OcA = { class: "form-check" }, TcA = /* @__PURE__ */ y("label", {
   class: "form-check-label",
   for: "isVisible"
-}, "Is Visible", -1), TcA = { class: "col-md-4 mb-3" }, NcA = { class: "form-check" }, RcA = /* @__PURE__ */ y("label", {
+}, "Is Visible", -1), NcA = { class: "col-md-4 mb-3" }, RcA = { class: "form-check" }, McA = /* @__PURE__ */ y("label", {
   class: "form-check-label",
   for: "isMembership"
-}, "Is Membership", -1), McA = { class: "col-md-4 mb-3" }, LcA = { class: "form-check" }, FcA = /* @__PURE__ */ y("label", {
+}, "Is Membership", -1), LcA = { class: "col-md-4 mb-3" }, FcA = { class: "form-check" }, UcA = /* @__PURE__ */ y("label", {
   class: "form-check-label",
   for: "isTrialPackage"
-}, "Is Trial Package", -1), UcA = { class: "form-row" }, BcA = { class: "col-md-4 mb-3" }, VcA = { class: "form-check" }, YcA = /* @__PURE__ */ y("label", {
+}, "Is Trial Package", -1), BcA = { class: "form-row" }, VcA = { class: "col-md-4 mb-3" }, YcA = { class: "form-check" }, jcA = /* @__PURE__ */ y("label", {
   class: "form-check-label",
   for: "isCLassPassPackage"
-}, "Is ClassPass Package", -1), jcA = { class: "col-md-4 mb-3" }, HcA = { class: "form-check" }, zcA = /* @__PURE__ */ y("label", {
+}, "Is ClassPass Package", -1), HcA = { class: "col-md-4 mb-3" }, zcA = { class: "form-check" }, WcA = /* @__PURE__ */ y("label", {
   class: "form-check-label",
   for: "doesItRequiredSmsAuth"
-}, "Requires SMS Auth", -1), WcA = { class: "col-md-4 mb-3" }, GcA = { class: "form-check" }, XcA = /* @__PURE__ */ y("label", {
+}, "Requires SMS Auth", -1), GcA = { class: "col-md-4 mb-3" }, XcA = { class: "form-check" }, qcA = /* @__PURE__ */ y("label", {
   class: "form-check-label",
   for: "doestItActivateVodForClients"
-}, "Activates VOD", -1), qcA = {
+}, "Activates VOD", -1), QcA = {
   key: 0,
   class: "form-row"
-}, QcA = { class: "col-md-6 mb-3" }, KcA = /* @__PURE__ */ y("label", {
+}, KcA = { class: "col-md-6 mb-3" }, ZcA = /* @__PURE__ */ y("label", {
   for: "vodAmountOfDays",
   class: "input-label"
-}, "VOD Amount of Days", -1), ZcA = { class: "input-group" }, JcA = {
+}, "VOD Amount of Days", -1), JcA = { class: "input-group" }, AuA = {
   key: 1,
   class: "form-row"
-}, AuA = { class: "col-md-6 mb-3" }, euA = /* @__PURE__ */ y("label", {
+}, euA = { class: "col-md-6 mb-3" }, tuA = /* @__PURE__ */ y("label", {
   for: "billingInterval",
   class: "input-label"
-}, "Billing Interval", -1), tuA = /* @__PURE__ */ y("option", { value: "" }, "None", -1), nuA = ["value"], ruA = /* @__PURE__ */ y("hr", null, null, -1), auA = /* @__PURE__ */ y("h6", null, "Alert Before Purchasing", -1), iuA = { class: "form-row" }, suA = { class: "col-md-6 mb-3" }, ouA = /* @__PURE__ */ y("label", {
+}, "Billing Interval", -1), nuA = /* @__PURE__ */ y("option", { value: "" }, "None", -1), ruA = ["value"], auA = /* @__PURE__ */ y("hr", null, null, -1), iuA = /* @__PURE__ */ y("h6", null, "Alert Before Purchasing", -1), suA = { class: "form-row" }, ouA = { class: "col-md-6 mb-3" }, luA = /* @__PURE__ */ y("label", {
   for: "alertTitle",
   class: "input-label"
-}, "Alert Title", -1), luA = { class: "input-group" }, cuA = { class: "col-md-6 mb-3" }, uuA = /* @__PURE__ */ y("label", {
+}, "Alert Title", -1), cuA = { class: "input-group" }, uuA = { class: "col-md-6 mb-3" }, duA = /* @__PURE__ */ y("label", {
   for: "alertDescription",
   class: "input-label"
-}, "Alert Description", -1), duA = { class: "input-group" }, fuA = { class: "modal-footer border-0" }, huA = /* @__PURE__ */ ue({
+}, "Alert Description", -1), fuA = { class: "input-group" }, huA = { class: "modal-footer border-0" }, puA = ["disabled"], guA = /* @__PURE__ */ ue({
   __name: "ClassPackageEdit",
   props: {
     classPackage: {}
@@ -60604,7 +60596,7 @@ const WoA = /* @__PURE__ */ yt(zoA, [["__scopeId", "data-v-f3d39f95"]]), GoA = /
       onOkSuccess: b
     } = ocA($e("gqlApiService"), t), x = Object.values(b1);
     return (C, w) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "Edit",
         size: "sm",
         type: "button",
@@ -60619,23 +60611,31 @@ const WoA = /* @__PURE__ */ yt(zoA, [["__scopeId", "data-v-f3d39f95"]]), GoA = /
             y("div", ccA, [
               y("div", ucA, [
                 y("div", dcA, [
-                  fcA,
-                  y("div", hcA, [
+                  y("div", fcA, [
+                    hcA,
+                    y("button", {
+                      type: "button",
+                      class: "btn-close",
+                      "aria-label": "Close",
+                      onClick: w[1] || (w[1] = (..._) => Z(p) && Z(p)(..._))
+                    })
+                  ]),
+                  y("div", pcA, [
                     y("form", {
-                      onSubmit: w[15] || (w[15] = Le(
+                      onSubmit: w[16] || (w[16] = Le(
                         (..._) => Z(v) && Z(v)(..._),
                         ["prevent"]
                       )),
                       autocomplete: "off"
                     }, [
-                      y("div", pcA, [
-                        y("div", gcA, [
-                          mcA,
-                          y("div", vcA, [
+                      y("div", gcA, [
+                        y("div", mcA, [
+                          vcA,
+                          y("div", ycA, [
                             de(y("input", {
                               id: "title",
                               class: "form-control",
-                              "onUpdate:modelValue": w[1] || (w[1] = (_) => Z(i).title = _),
+                              "onUpdate:modelValue": w[2] || (w[2] = (_) => Z(i).title = _),
                               type: "text",
                               placeholder: "Title",
                               required: ""
@@ -60649,13 +60649,13 @@ const WoA = /* @__PURE__ */ yt(zoA, [["__scopeId", "data-v-f3d39f95"]]), GoA = /
                             style: { color: "red" }
                           }, yA(_.$message), 1))), 128))
                         ]),
-                        y("div", ycA, [
-                          bcA,
-                          y("div", CcA, [
+                        y("div", bcA, [
+                          CcA,
+                          y("div", xcA, [
                             de(y("input", {
                               id: "subtitle",
                               class: "form-control",
-                              "onUpdate:modelValue": w[2] || (w[2] = (_) => Z(i).subtitle = _),
+                              "onUpdate:modelValue": w[3] || (w[3] = (_) => Z(i).subtitle = _),
                               type: "text",
                               placeholder: "Subtitle"
                             }, null, 512), [
@@ -60664,14 +60664,14 @@ const WoA = /* @__PURE__ */ yt(zoA, [["__scopeId", "data-v-f3d39f95"]]), GoA = /
                           ])
                         ])
                       ]),
-                      y("div", xcA, [
-                        y("div", IcA, [
-                          wcA,
-                          y("div", ScA, [
+                      y("div", IcA, [
+                        y("div", wcA, [
+                          ScA,
+                          y("div", kcA, [
                             de(y("input", {
                               id: "buttonText",
                               class: "form-control",
-                              "onUpdate:modelValue": w[3] || (w[3] = (_) => Z(i).buttonText = _),
+                              "onUpdate:modelValue": w[4] || (w[4] = (_) => Z(i).buttonText = _),
                               type: "text",
                               placeholder: "Button Text"
                             }, null, 512), [
@@ -60679,13 +60679,13 @@ const WoA = /* @__PURE__ */ yt(zoA, [["__scopeId", "data-v-f3d39f95"]]), GoA = /
                             ])
                           ])
                         ]),
-                        y("div", kcA, [
-                          EcA,
-                          y("div", _cA, [
+                        y("div", EcA, [
+                          _cA,
+                          y("div", $cA, [
                             de(y("input", {
                               id: "currency",
                               class: "form-control",
-                              "onUpdate:modelValue": w[4] || (w[4] = (_) => Z(i).currency = _),
+                              "onUpdate:modelValue": w[5] || (w[5] = (_) => Z(i).currency = _),
                               type: "text",
                               placeholder: "Currency"
                             }, null, 512), [
@@ -60694,96 +60694,96 @@ const WoA = /* @__PURE__ */ yt(zoA, [["__scopeId", "data-v-f3d39f95"]]), GoA = /
                           ])
                         ])
                       ]),
-                      y("div", $cA, [
-                        y("div", PcA, [
-                          y("div", DcA, [
+                      y("div", PcA, [
+                        y("div", DcA, [
+                          y("div", OcA, [
                             de(y("input", {
                               id: "isVisible",
                               class: "form-check-input",
-                              "onUpdate:modelValue": w[5] || (w[5] = (_) => Z(i).isVisible = _),
+                              "onUpdate:modelValue": w[6] || (w[6] = (_) => Z(i).isVisible = _),
                               type: "checkbox"
                             }, null, 512), [
                               [Hr, Z(i).isVisible]
                             ]),
-                            OcA
+                            TcA
                           ])
                         ]),
-                        y("div", TcA, [
-                          y("div", NcA, [
+                        y("div", NcA, [
+                          y("div", RcA, [
                             de(y("input", {
                               id: "isMembership",
                               class: "form-check-input",
-                              "onUpdate:modelValue": w[6] || (w[6] = (_) => Z(i).isMembership = _),
+                              "onUpdate:modelValue": w[7] || (w[7] = (_) => Z(i).isMembership = _),
                               type: "checkbox"
                             }, null, 512), [
                               [Hr, Z(i).isMembership]
                             ]),
-                            RcA
+                            McA
                           ])
                         ]),
-                        y("div", McA, [
-                          y("div", LcA, [
+                        y("div", LcA, [
+                          y("div", FcA, [
                             de(y("input", {
                               id: "isTrialPackage",
                               class: "form-check-input",
-                              "onUpdate:modelValue": w[7] || (w[7] = (_) => Z(i).isTrialPackage = _),
+                              "onUpdate:modelValue": w[8] || (w[8] = (_) => Z(i).isTrialPackage = _),
                               type: "checkbox"
                             }, null, 512), [
                               [Hr, Z(i).isTrialPackage]
                             ]),
-                            FcA
+                            UcA
                           ])
                         ])
                       ]),
-                      y("div", UcA, [
-                        y("div", BcA, [
-                          y("div", VcA, [
+                      y("div", BcA, [
+                        y("div", VcA, [
+                          y("div", YcA, [
                             de(y("input", {
                               id: "isCLassPassPackage",
                               class: "form-check-input",
-                              "onUpdate:modelValue": w[8] || (w[8] = (_) => Z(i).isCLassPassPackage = _),
+                              "onUpdate:modelValue": w[9] || (w[9] = (_) => Z(i).isCLassPassPackage = _),
                               type: "checkbox"
                             }, null, 512), [
                               [Hr, Z(i).isCLassPassPackage]
                             ]),
-                            YcA
+                            jcA
                           ])
                         ]),
-                        y("div", jcA, [
-                          y("div", HcA, [
+                        y("div", HcA, [
+                          y("div", zcA, [
                             de(y("input", {
                               id: "doesItRequiredSmsAuth",
                               class: "form-check-input",
-                              "onUpdate:modelValue": w[9] || (w[9] = (_) => Z(i).doesItRequiredSmsAuth = _),
+                              "onUpdate:modelValue": w[10] || (w[10] = (_) => Z(i).doesItRequiredSmsAuth = _),
                               type: "checkbox"
                             }, null, 512), [
                               [Hr, Z(i).doesItRequiredSmsAuth]
                             ]),
-                            zcA
+                            WcA
                           ])
                         ]),
-                        y("div", WcA, [
-                          y("div", GcA, [
+                        y("div", GcA, [
+                          y("div", XcA, [
                             de(y("input", {
                               id: "doestItActivateVodForClients",
                               class: "form-check-input",
-                              "onUpdate:modelValue": w[10] || (w[10] = (_) => Z(i).doestItActivateVodForClients = _),
+                              "onUpdate:modelValue": w[11] || (w[11] = (_) => Z(i).doestItActivateVodForClients = _),
                               type: "checkbox"
                             }, null, 512), [
                               [Hr, Z(i).doestItActivateVodForClients]
                             ]),
-                            XcA
+                            qcA
                           ])
                         ])
                       ]),
-                      Z(i).doestItActivateVodForClients ? (M(), Q("div", qcA, [
-                        y("div", QcA, [
-                          KcA,
-                          y("div", ZcA, [
+                      Z(i).doestItActivateVodForClients ? (M(), Q("div", QcA, [
+                        y("div", KcA, [
+                          ZcA,
+                          y("div", JcA, [
                             de(y("input", {
                               id: "vodAmountOfDays",
                               class: "form-control",
-                              "onUpdate:modelValue": w[11] || (w[11] = (_) => Z(i).vodAmountOfDays = _),
+                              "onUpdate:modelValue": w[12] || (w[12] = (_) => Z(i).vodAmountOfDays = _),
                               type: "number",
                               placeholder: "VOD Amount of Days",
                               min: "0"
@@ -60798,34 +60798,34 @@ const WoA = /* @__PURE__ */ yt(zoA, [["__scopeId", "data-v-f3d39f95"]]), GoA = /
                           ])
                         ])
                       ])) : dA("", !0),
-                      Z(i).isMembership ? (M(), Q("div", JcA, [
-                        y("div", AuA, [
-                          euA,
+                      Z(i).isMembership ? (M(), Q("div", AuA, [
+                        y("div", euA, [
+                          tuA,
                           de(y("select", {
                             id: "billingInterval",
                             class: "form-control",
-                            "onUpdate:modelValue": w[12] || (w[12] = (_) => Z(i).billingInterval = _)
+                            "onUpdate:modelValue": w[13] || (w[13] = (_) => Z(i).billingInterval = _)
                           }, [
-                            tuA,
+                            nuA,
                             (M(!0), Q(TA, null, Ae(Z(x), (_) => (M(), Q("option", {
                               key: _,
                               value: _
-                            }, yA(_), 9, nuA))), 128))
+                            }, yA(_), 9, ruA))), 128))
                           ], 512), [
                             [Cn, Z(i).billingInterval]
                           ])
                         ])
                       ])) : dA("", !0),
-                      ruA,
                       auA,
-                      y("div", iuA, [
-                        y("div", suA, [
-                          ouA,
-                          y("div", luA, [
+                      iuA,
+                      y("div", suA, [
+                        y("div", ouA, [
+                          luA,
+                          y("div", cuA, [
                             de(y("input", {
                               id: "alertTitle",
                               class: "form-control",
-                              "onUpdate:modelValue": w[13] || (w[13] = (_) => Z(i).alertTitle = _),
+                              "onUpdate:modelValue": w[14] || (w[14] = (_) => Z(i).alertTitle = _),
                               type: "text",
                               placeholder: "Alert Title"
                             }, null, 512), [
@@ -60833,13 +60833,13 @@ const WoA = /* @__PURE__ */ yt(zoA, [["__scopeId", "data-v-f3d39f95"]]), GoA = /
                             ])
                           ])
                         ]),
-                        y("div", cuA, [
-                          uuA,
-                          y("div", duA, [
+                        y("div", uuA, [
+                          duA,
+                          y("div", fuA, [
                             de(y("input", {
                               id: "alertDescription",
                               class: "form-control",
-                              "onUpdate:modelValue": w[14] || (w[14] = (_) => Z(i).alertDescription = _),
+                              "onUpdate:modelValue": w[15] || (w[15] = (_) => Z(i).alertDescription = _),
                               type: "text",
                               placeholder: "Alert Description"
                             }, null, 512), [
@@ -60850,15 +60850,14 @@ const WoA = /* @__PURE__ */ yt(zoA, [["__scopeId", "data-v-f3d39f95"]]), GoA = /
                       ])
                     ], 32)
                   ]),
-                  y("div", fuA, [
-                    wA(ke, {
-                      text: "Cancel",
+                  y("div", huA, [
+                    y("button", {
                       type: "button",
+                      class: "btn btn-default",
                       disabled: Z(r),
-                      variant: "secondary",
-                      onOnClick: Z(p)
-                    }, null, 8, ["disabled", "onOnClick"]),
-                    wA(ke, {
+                      onClick: w[17] || (w[17] = (..._) => Z(p) && Z(p)(..._))
+                    }, " Cancel ", 8, puA),
+                    wA(Ee, {
                       text: "UPDATE",
                       type: "button",
                       "is-loading": Z(r),
@@ -60885,20 +60884,20 @@ const WoA = /* @__PURE__ */ yt(zoA, [["__scopeId", "data-v-f3d39f95"]]), GoA = /
         title: "Error",
         message: Z(Ne),
         "cancel-text": null,
-        onOnOk: w[16] || (w[16] = (_) => c.value = !1)
+        onOnOk: w[18] || (w[18] = (_) => c.value = !1)
       }, null, 8, ["message"])) : dA("", !0)
     ], 64));
   }
-}), puA = (A) => (Bt("data-v-8a1713da"), A = A(), Vt(), A), guA = { class: "category-section mb-4" }, muA = { class: "category-title" }, vuA = { class: "list-group-item d-flex justify-content-between align-items-center" }, yuA = { class: "d-flex align-items-center" }, buA = /* @__PURE__ */ puA(() => /* @__PURE__ */ y("i", { class: "bi bi-grip-vertical me-2 drag-handle" }, null, -1)), CuA = { class: "fw-bold" }, xuA = {
+}), muA = (A) => (Bt("data-v-8a1713da"), A = A(), Vt(), A), vuA = { class: "category-section mb-4" }, yuA = { class: "category-title" }, buA = { class: "list-group-item d-flex justify-content-between align-items-center" }, CuA = { class: "d-flex align-items-center" }, xuA = /* @__PURE__ */ muA(() => /* @__PURE__ */ y("i", { class: "bi bi-grip-vertical me-2 drag-handle" }, null, -1)), IuA = { class: "fw-bold" }, wuA = {
   key: 0,
   class: "ms-2 text-muted"
-}, IuA = {
+}, SuA = {
   key: 1,
   class: "badge bg-secondary ms-2"
-}, wuA = {
+}, kuA = {
   key: 0,
   class: "text-muted text-center py-3 empty-placeholder"
-}, SuA = /* @__PURE__ */ ue({
+}, EuA = /* @__PURE__ */ ue({
   __name: "ClassPackageCategoryList",
   props: {
     title: {},
@@ -60911,8 +60910,8 @@ const WoA = /* @__PURE__ */ yt(zoA, [["__scopeId", "data-v-f3d39f95"]]), GoA = /
     function n(r) {
       t("update:packages", r);
     }
-    return (r, i) => (M(), Q("div", guA, [
-      y("h5", muA, yA(r.title), 1),
+    return (r, i) => (M(), Q("div", vuA, [
+      y("h5", yuA, yA(r.title), 1),
       wA(Z(Xi), {
         "model-value": r.packages,
         "onUpdate:modelValue": n,
@@ -60921,16 +60920,16 @@ const WoA = /* @__PURE__ */ yt(zoA, [["__scopeId", "data-v-f3d39f95"]]), GoA = /
         class: "list-group package-list"
       }, {
         item: ge(({ element: o }) => [
-          y("div", vuA, [
-            y("div", yuA, [
-              buA,
+          y("div", buA, [
+            y("div", CuA, [
+              xuA,
               y("div", null, [
-                y("span", CuA, yA(o.title), 1),
-                o.price != null ? (M(), Q("span", xuA, yA(o.price) + " " + yA(o.currency), 1)) : dA("", !0),
-                o.isVisible ? dA("", !0) : (M(), Q("span", IuA, "Hidden"))
+                y("span", IuA, yA(o.title), 1),
+                o.price != null ? (M(), Q("span", wuA, yA(o.price) + " " + yA(o.currency), 1)) : dA("", !0),
+                o.isVisible ? dA("", !0) : (M(), Q("span", SuA, "Hidden"))
               ])
             ]),
-            wA(huA, {
+            wA(guA, {
               "class-package": o,
               onAfterUpdateClassPackage: i[0] || (i[0] = (c) => t("afterUpdateClassPackage", c))
             }, null, 8, ["class-package"])
@@ -60938,11 +60937,11 @@ const WoA = /* @__PURE__ */ yt(zoA, [["__scopeId", "data-v-f3d39f95"]]), GoA = /
         ]),
         _: 1
       }, 8, ["model-value", "group"]),
-      r.packages.length === 0 ? (M(), Q("div", wuA, " No packages in this category. Drag packages here. ")) : dA("", !0)
+      r.packages.length === 0 ? (M(), Q("div", kuA, " No packages in this category. Drag packages here. ")) : dA("", !0)
     ]));
   }
 });
-const Ol = /* @__PURE__ */ yt(SuA, [["__scopeId", "data-v-8a1713da"]]), kuA = /* @__PURE__ */ ue({
+const Ol = /* @__PURE__ */ yt(EuA, [["__scopeId", "data-v-8a1713da"]]), _uA = /* @__PURE__ */ ue({
   __name: "SyncAllPackages",
   emits: ["afterSync"],
   setup(A, { emit: e }) {
@@ -60958,7 +60957,7 @@ const Ol = /* @__PURE__ */ yt(SuA, [["__scopeId", "data-v-8a1713da"]]), kuA = /*
       }
     }
     return (u, p) => (M(), Q(TA, null, [
-      wA(ke, {
+      wA(Ee, {
         text: "Sync All",
         type: "button",
         onOnClick: f,
@@ -60981,7 +60980,7 @@ const Ol = /* @__PURE__ */ yt(SuA, [["__scopeId", "data-v-8a1713da"]]), kuA = /*
       }, null, 8, ["message"])) : dA("", !0)
     ], 64));
   }
-}), EuA = (A, e) => {
+}), $uA = (A, e) => {
   const t = Ut(e) ? e : sA(e), n = sA(!1), r = sA(!1), i = sA(!1), o = sA([]), c = YA(() => {
     const b = (x) => o.value.filter((C) => C.type === x).sort((C, w) => {
       var _, P;
@@ -61078,29 +61077,29 @@ const Ol = /* @__PURE__ */ yt(SuA, [["__scopeId", "data-v-8a1713da"]]), kuA = /*
     afterUpdateClassPackage: u,
     saveOrder: p
   };
-}, ly = (A) => (Bt("data-v-7961fb51"), A = A(), Vt(), A), _uA = { class: "row" }, $uA = /* @__PURE__ */ ly(() => /* @__PURE__ */ y("div", { class: "col-4" }, [
+}, ly = (A) => (Bt("data-v-7961fb51"), A = A(), Vt(), A), PuA = { class: "row" }, DuA = /* @__PURE__ */ ly(() => /* @__PURE__ */ y("div", { class: "col-4" }, [
   /* @__PURE__ */ y("h4", null, "Class Packages")
-], -1)), PuA = { class: "col-8 pull-right" }, DuA = /* @__PURE__ */ ly(() => /* @__PURE__ */ y("div", { class: "row" }, [
+], -1)), OuA = { class: "col-8 pull-right" }, TuA = /* @__PURE__ */ ly(() => /* @__PURE__ */ y("div", { class: "row" }, [
   /* @__PURE__ */ y("div", { class: "col-12" }, [
     /* @__PURE__ */ y("hr")
   ])
-], -1)), OuA = {
+], -1)), NuA = {
   key: 0,
   class: "row"
-}, TuA = /* @__PURE__ */ ly(() => /* @__PURE__ */ y("div", { class: "col-12" }, [
+}, RuA = /* @__PURE__ */ ly(() => /* @__PURE__ */ y("div", { class: "col-12" }, [
   /* @__PURE__ */ y("div", {
     class: "alert alert-info",
     role: "alert"
   }, ' Drag & drop packages between sections to change category and order. Click "Save Order" to persist changes. ')
-], -1)), NuA = [
-  TuA
-], RuA = {
+], -1)), MuA = [
+  RuA
+], LuA = {
   key: 1,
   class: "row"
-}, MuA = { class: "col-12 text-center" }, LuA = {
+}, FuA = { class: "col-12 text-center" }, UuA = {
   key: 2,
   class: "row"
-}, FuA = { class: "col-12" }, UuA = /* @__PURE__ */ ue({
+}, BuA = { class: "col-12" }, VuA = /* @__PURE__ */ ue({
   __name: "ClassPackageListView",
   setup(A) {
     const e = sl(), t = $e("site"), n = YA(() => e.params.site || t || "dubai"), {
@@ -61111,7 +61110,7 @@ const Ol = /* @__PURE__ */ yt(SuA, [["__scopeId", "data-v-8a1713da"]]), kuA = /*
       afterUpdateClassPackage: f,
       getClassPackages: u,
       saveOrder: p
-    } = EuA($e("gqlApiService"), n), v = sA(!1), b = sA([]), x = sA([]), C = sA([]), w = sA([]), _ = sA([]);
+    } = $uA($e("gqlApiService"), n), v = sA(!1), b = sA([]), x = sA([]), C = sA([]), w = sA([]), _ = sA([]);
     Ze(
       c,
       (T) => {
@@ -61132,14 +61131,14 @@ const Ol = /* @__PURE__ */ yt(SuA, [["__scopeId", "data-v-8a1713da"]]), kuA = /*
       await u();
     }
     return (T, N) => (M(), Q(TA, null, [
-      y("div", _uA, [
-        $uA,
-        y("div", PuA, [
-          wA(kuA, {
+      y("div", PuA, [
+        DuA,
+        y("div", OuA, [
+          wA(_uA, {
             onAfterSync: E,
             class: "me-2"
           }),
-          wA(ke, {
+          wA(Ee, {
             text: "Save Order",
             type: "button",
             "is-loading": Z(o),
@@ -61147,15 +61146,15 @@ const Ol = /* @__PURE__ */ yt(SuA, [["__scopeId", "data-v-8a1713da"]]), kuA = /*
           }, null, 8, ["is-loading"])
         ])
       ]),
-      DuA,
-      Z(r) ? dA("", !0) : (M(), Q("div", OuA, NuA)),
-      Z(r) ? (M(), Q("div", RuA, [
-        y("div", MuA, [
+      TuA,
+      Z(r) ? dA("", !0) : (M(), Q("div", NuA, MuA)),
+      Z(r) ? (M(), Q("div", LuA, [
+        y("div", FuA, [
           wA(ka, { text: "LOADING..." })
         ])
       ])) : dA("", !0),
-      Z(r) ? dA("", !0) : (M(), Q("div", LuA, [
-        y("div", FuA, [
+      Z(r) ? dA("", !0) : (M(), Q("div", UuA, [
+        y("div", BuA, [
           wA(Ol, {
             title: "Regular",
             packages: b.value,
@@ -61211,12 +61210,12 @@ const Ol = /* @__PURE__ */ yt(SuA, [["__scopeId", "data-v-8a1713da"]]), kuA = /*
     ], 64));
   }
 });
-const Ak = /* @__PURE__ */ yt(UuA, [["__scopeId", "data-v-7961fb51"]]), y1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const Ak = /* @__PURE__ */ yt(VuA, [["__scopeId", "data-v-7961fb51"]]), y1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Ak
 }, Symbol.toStringTag, { value: "Module" }));
-console.log("[crank-web-admin] v2.8.3");
-const juA = async function(A, e, t, n) {
+console.log("[crank-web-admin] v2.8.4");
+const zuA = async function(A, e, t, n) {
   const r = cr({
     setup() {
       Nt("url-after-submit", A), Nt(
@@ -61227,7 +61226,7 @@ const juA = async function(A, e, t, n) {
     render: () => On(CS)
   });
   r.use(Cr()).use(Bn).use(Sr).use(Mr), ln().setSession(t), r.mount(n);
-}, HuA = async function(A, e, t, n) {
+}, WuA = async function(A, e, t, n) {
   const r = cr({
     setup() {
       Nt("userId", t), Nt(
@@ -61238,7 +61237,7 @@ const juA = async function(A, e, t, n) {
     render: () => On(xS)
   });
   r.use(Cr()).use(Bn).use(Sr).use(Mr), ln().setSession(e), r.mount(n);
-}, zuA = async function(A, e, t, n, r) {
+}, GuA = async function(A, e, t, n, r) {
   const i = cr({
     setup() {
       Nt("roomLayoutListUrl", n), Nt(
@@ -61260,7 +61259,7 @@ const juA = async function(A, e, t, n) {
   else
     throw Error;
   i.mount(r);
-}, WuA = async function(A, e, t, n, r, i) {
+}, XuA = async function(A, e, t, n, r, i) {
   const o = cr({
     setup() {
       Nt("roomLayoutId", n), Nt("roomLayoutListUrl", r), Nt(
@@ -61282,7 +61281,7 @@ const juA = async function(A, e, t, n) {
   else
     throw Error;
   o.mount(i);
-}, GuA = async function(A, e, t, n, r) {
+}, quA = async function(A, e, t, n, r) {
   const i = cr({
     setup() {
       Nt(
@@ -61293,7 +61292,7 @@ const juA = async function(A, e, t, n) {
     render: () => On(pj)
   });
   i.use(Cr()).use(Bn).use(Ec).use(Sr), ln().setSession(e), i.mount(t);
-}, XuA = async function(A, e, t, n, r) {
+}, QuA = async function(A, e, t, n, r) {
   const i = cr({
     setup() {
       Nt("url-sync-all", A), Nt(
@@ -61315,7 +61314,7 @@ const juA = async function(A, e, t, n) {
   else
     throw Error;
   i.mount(r);
-}, quA = async function(A, e, t, n, r) {
+}, KuA = async function(A, e, t, n, r) {
   const i = cr({
     setup() {
       Nt("userId", t), Nt("legacyViewUrl", r), Nt(
@@ -61326,7 +61325,7 @@ const juA = async function(A, e, t, n) {
     render: () => On(iK)
   });
   i.use(Cr()).use(Bn).use(Sr).use(Ec).use(Mr), ln().setSession(e), i.mount(n);
-}, QuA = async function(A, e, t) {
+}, ZuA = async function(A, e, t) {
   const n = cr({
     setup() {
       Nt(
@@ -61337,7 +61336,7 @@ const juA = async function(A, e, t, n) {
     render: () => On(ZS)
   });
   n.use(Cr()).use(Bn).use(Sr).use(Mr), ln().setSession(e), n.mount(t);
-}, KuA = async function(A, e, t) {
+}, JuA = async function(A, e, t) {
   const n = cr({
     setup() {
       Nt(
@@ -61348,7 +61347,7 @@ const juA = async function(A, e, t, n) {
     render: () => On(QS)
   });
   n.use(Cr()).use(Bn).use(Sr).use(Mr), ln().setSession(e), n.mount(t);
-}, ZuA = async function(A, e, t) {
+}, AdA = async function(A, e, t) {
   const n = cr({
     setup() {
       Nt(
@@ -61359,7 +61358,7 @@ const juA = async function(A, e, t, n) {
     render: () => On(ZoA)
   });
   n.use(Cr()).use(Bn).use(Sr).use(Mr), ln().setSession(e), n.mount(t);
-}, JuA = async function(A, e, t) {
+}, edA = async function(A, e, t) {
   const n = cr({
     setup() {
       Nt(
@@ -61370,7 +61369,7 @@ const juA = async function(A, e, t, n) {
     render: () => On(CeA)
   });
   n.use(Cr()).use(Bn).use(Sr).use(Mr), ln().setSession(e), n.mount(t);
-}, AdA = async function(A, e, t) {
+}, tdA = async function(A, e, t) {
   const n = cr({
     setup() {
       Nt(
@@ -61381,7 +61380,7 @@ const juA = async function(A, e, t, n) {
     render: () => On(YS)
   });
   n.use(Cr()).use(Bn).use(Sr).use(Mr), ln().setSession(e), n.mount(t);
-}, edA = async function(A, e, t) {
+}, ndA = async function(A, e, t) {
   const n = cr({
     setup() {
       Nt(
@@ -61392,7 +61391,7 @@ const juA = async function(A, e, t, n) {
     render: () => On(qS)
   });
   n.use(Cr()).use(Bn).use(Sr).use(Mr), ln().setSession(e), n.mount(t);
-}, tdA = async function(A, e, t) {
+}, rdA = async function(A, e, t) {
   const n = cr({
     setup() {
       Nt(
@@ -61403,7 +61402,7 @@ const juA = async function(A, e, t, n) {
     render: () => On(scA)
   });
   n.use(Cr()).use(Bn).use(Sr).use(Mr), ln().setSession(e), n.mount(t);
-}, ndA = async function(A, e, t, n) {
+}, adA = async function(A, e, t, n) {
   const r = cr({
     setup() {
       Nt("site", t), Nt(
@@ -61454,7 +61453,7 @@ export {
   iK as X,
   aK as Y,
   Qq as Z,
-  ke as _,
+  Ee as _,
   Gt as a,
   Av as a0,
   VS as a1,
@@ -61465,21 +61464,21 @@ export {
   Jn as a6,
   Hr as a7,
   wt as a8,
-  juA as a9,
-  zuA as aa,
-  WuA as ab,
-  GuA as ac,
-  ndA as ad,
-  HuA as ae,
-  XuA as af,
-  quA as ag,
-  QuA as ah,
-  KuA as ai,
-  ZuA as aj,
-  JuA as ak,
-  AdA as al,
-  edA as am,
-  tdA as an,
+  zuA as a9,
+  GuA as aa,
+  XuA as ab,
+  quA as ac,
+  adA as ad,
+  WuA as ae,
+  QuA as af,
+  KuA as ag,
+  ZuA as ah,
+  JuA as ai,
+  AdA as aj,
+  edA as ak,
+  tdA as al,
+  ndA as am,
+  rdA as an,
   Q as b,
   YA as c,
   ue as d,

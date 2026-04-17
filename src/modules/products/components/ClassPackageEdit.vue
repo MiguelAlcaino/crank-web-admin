@@ -51,8 +51,7 @@ const billingIntervalOptions = Object.values(BillingIntervalEnum)
           <div class="modal-content">
             <div class="modal-header border-0">
               <h5 class="modal-title">EDIT PACKAGE</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                </button>
+              <button type="button" class="btn-close" aria-label="Close" @click="closeModal"></button>
             </div>
             <div class="modal-body">
               <form @submit.prevent="submitForm" autocomplete="off">
@@ -274,13 +273,9 @@ const billingIntervalOptions = Object.values(BillingIntervalEnum)
               </form>
             </div>
             <div class="modal-footer border-0">
-              <DefaultButtonComponent
-                text="Cancel"
-                type="button"
-                :disabled="isSaving"
-                variant="secondary"
-                @on-click="closeModal"
-              ></DefaultButtonComponent>
+              <button type="button" class="btn btn-default" :disabled="isSaving" @click="closeModal">
+                Cancel
+              </button>
 
               <DefaultButtonComponent
                 text="UPDATE"
