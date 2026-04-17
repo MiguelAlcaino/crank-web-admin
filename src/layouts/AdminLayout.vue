@@ -123,6 +123,17 @@ async function logout() {
             </RouterLink>
           </li>
 
+          <!-- Incomplete Feedbacks (SUPER_ADMIN) -->
+          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
+            <RouterLink
+              class="nav-link"
+              :class="{ active: isActive('admin_incomplete_feedbacks') }"
+              :to="{ name: 'admin_incomplete_feedbacks' }"
+            >
+              Incomplete Feedbacks
+            </RouterLink>
+          </li>
+
           <!-- Class Schedule Config dropdown (SUPER_ADMIN) -->
           <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
             <a

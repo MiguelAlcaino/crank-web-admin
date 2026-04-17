@@ -154,6 +154,15 @@ const router = createRouter({
             import('@/modules/transaction-records/views/TransactionDetailView.vue')
         },
         {
+          path: 'incomplete-feedbacks',
+          name: 'admin_incomplete_feedbacks',
+          meta: { role: Role.ROLE_SUPER_ADMIN },
+          component: () =>
+            import(
+              '@/modules/incomplete-transaction-feedbacks/views/IncompleteTransactionFeedbackListView.vue'
+            )
+        },
+        {
           path: 'subscriptions/:id',
           name: 'admin_subscription_detail',
           component: () =>
