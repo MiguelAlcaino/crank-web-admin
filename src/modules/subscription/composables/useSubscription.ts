@@ -19,6 +19,7 @@ export interface SubscriptionDetail {
   creditCardLastFourDigits: string | null
   createdAt: string
   cancelledAt: string | null
+  nextBillingAt: string | null
   transactions: SubscriptionTransaction[]
 }
 
@@ -54,6 +55,7 @@ const DETAIL_QUERY = gql`
       creditCardLastFourDigits
       createdAt
       cancelledAt
+      nextBillingAt
       transactions {
         id
         amount

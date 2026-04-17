@@ -105,6 +105,10 @@ const sortedTransactions = computed(() => {
             <th>Cancelled</th>
             <td>{{ formatDate(sub.detail.value.cancelledAt) }}</td>
           </tr>
+          <tr v-if="sub.detail.value.nextBillingAt">
+            <th>Next Billing</th>
+            <td>{{ formatDate(sub.detail.value.nextBillingAt) }}</td>
+          </tr>
         </tbody>
       </table>
 

@@ -12,6 +12,7 @@ interface CustomerSubscription {
   creditCardLastFourDigits: string | null
   createdAt: string
   cancelledAt: string | null
+  nextBillingAt: string | null
 }
 
 interface User {
@@ -273,6 +274,7 @@ function formatAmount(amountCents: number): string {
             <th>Plan</th>
             <th>Card</th>
             <th>Started</th>
+            <th>Next Billing</th>
             <th></th>
           </tr>
         </thead>
@@ -289,6 +291,7 @@ function formatAmount(amountCents: number): string {
             <td>{{ sub.billingInterval }} — {{ formatAmount(sub.amountCents) }}</td>
             <td>{{ sub.creditCardLastFourDigits ? `****${sub.creditCardLastFourDigits}` : '—' }}</td>
             <td>{{ dayjs(sub.createdAt).format('DD/MM/YYYY') }}</td>
+            <td>{{ sub.nextBillingAt ? dayjs(sub.nextBillingAt).format('DD/MM/YYYY') : '—' }}</td>
             <td>
               <button
                 class="btn btn-sm btn-outline-primary"

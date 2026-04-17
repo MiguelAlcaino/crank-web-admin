@@ -821,6 +821,7 @@ export class ApiService {
               creditCardLastFourDigits
               createdAt
               cancelledAt
+              nextBillingAt
             }
           }
         }
