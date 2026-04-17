@@ -154,6 +154,12 @@ const router = createRouter({
             import('@/modules/transaction-records/views/TransactionDetailView.vue')
         },
         {
+          path: 'subscriptions/:id',
+          name: 'admin_subscription_detail',
+          component: () =>
+            import('@/modules/subscription/views/SubscriptionDetailView.vue')
+        },
+        {
           path: 'customers',
           name: 'admin_customers',
           component: () => import('@/modules/customer-list/views/CustomerListView.vue')

@@ -813,6 +813,15 @@ export class ApiService {
               externalUserId
               site
             }
+            subscriptions {
+              id
+              status
+              amountCents
+              billingInterval
+              creditCardLastFourDigits
+              createdAt
+              cancelledAt
+            }
           }
         }
       }

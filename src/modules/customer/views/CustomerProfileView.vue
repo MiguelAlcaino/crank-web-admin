@@ -4,6 +4,16 @@ interface IdentifiableUser {
   user?: User
 }
 
+interface CustomerSubscription {
+  id: string
+  status: string
+  amountCents: number
+  billingInterval: string
+  creditCardLastFourDigits: string | null
+  createdAt: string
+  cancelledAt: string | null
+}
+
 interface User {
   address1: string
   address2?: string
@@ -25,6 +35,7 @@ interface User {
   weight?: number
   zipCode: string
   siteUsers: SimpleSiteUser[]
+  subscriptions: CustomerSubscription[]
 }
 
 interface Country {
@@ -55,7 +66,7 @@ export enum GenderEnum {
 <script setup lang="ts">
 import { inject, onMounted, ref } from 'vue'
 import dayjs from 'dayjs'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import CustomerWorkoutStats from '@/modules/customer/components/CustomerWorkoutStats.vue'
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
@@ -66,6 +77,7 @@ import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import type { SiteEnum } from '@/modules/shared/interfaces'
 
 const route = useRoute()
+const router = useRouter()
 const apiService = inject<ApiService>('gqlApiService')!
 
 const userId = ref<string>('')
@@ -108,6 +120,10 @@ async function goToLegacyView() {
   if (legacyViewUrl.value) {
     window.location.href = legacyViewUrl.value
   }
+}
+
+function formatAmount(amountCents: number): string {
+  return (amountCents / 100).toFixed(2)
 }
 </script>
 
@@ -240,6 +256,50 @@ async function goToLegacyView() {
         :user-sites="identifiableUser?.user?.siteUsers"
       >
       </CustomerWorkoutStats>
+    </div>
+  </div>
+
+  <hr />
+  <div class="row">
+    <div class="col-12">
+      <h6>Subscriptions</h6>
+      <div v-if="!identifiableUser?.user?.subscriptions?.length" class="text-muted">
+        No subscriptions found.
+      </div>
+      <table v-else class="table table-sm table-striped">
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Plan</th>
+            <th>Card</th>
+            <th>Started</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="sub in identifiableUser.user.subscriptions" :key="sub.id">
+            <td>
+              <span
+                class="badge"
+                :class="sub.status === 'active' ? 'text-bg-success' : 'text-bg-warning'"
+              >
+                {{ sub.status }}
+              </span>
+            </td>
+            <td>{{ sub.billingInterval }} — {{ formatAmount(sub.amountCents) }}</td>
+            <td>{{ sub.creditCardLastFourDigits ? `****${sub.creditCardLastFourDigits}` : '—' }}</td>
+            <td>{{ dayjs(sub.createdAt).format('DD/MM/YYYY') }}</td>
+            <td>
+              <button
+                class="btn btn-sm btn-outline-primary"
+                @click="router.push({ name: 'admin_subscription_detail', params: { id: sub.id } })"
+              >
+                Details
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
