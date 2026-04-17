@@ -508,15 +508,26 @@ async function goToUrlAfterSubmit() {
       <div class="col-md-6 mb-3">
         <label for="cityStateRegistration" class="input-label">City/State *</label>
         <select
+          v-if="countryStates.length > 0"
           class="form-select"
           v-model="formData.cityState"
           id="cityStateRegistration"
           required
         >
+          <option value="">Select city/state</option>
           <option v-for="(item, index) in countryStates" :key="index" :value="item.code">
             {{ item.name }}
           </option>
         </select>
+        <input
+          v-else
+          id="cityStateRegistration"
+          class="form-control"
+          v-model="formData.cityState"
+          type="text"
+          placeholder="City/State"
+          maxlength="255"
+        />
         <small
           v-for="error in v$.cityState.$errors"
           :key="error.$uid"
