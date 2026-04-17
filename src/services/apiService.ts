@@ -177,6 +177,7 @@ export class ApiService {
                   lastName
                   email
                   leaderboardUsername
+                  gender
                 }
               }
             }
