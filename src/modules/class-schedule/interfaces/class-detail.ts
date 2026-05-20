@@ -52,6 +52,7 @@ export interface EnrollmentInfo {
   isTodayUserBirthday: boolean
   isUserLeaderboardEnabled: boolean
   bookedViaClassPass: boolean
+  serviceName?: string | null
 }
 
 interface IdentifiableSiteUser {

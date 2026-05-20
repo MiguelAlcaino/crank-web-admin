@@ -3720,6 +3720,18 @@
             "deprecationReason": null
           },
           {
+            "name": "serviceName",
+            "description": "Mindbody service name used to book this visit (e.g. the package/membership label). Null when not recorded.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "spotInfo",
             "description": null,
             "args": [],
@@ -8575,6 +8587,47 @@
                 "kind": "OBJECT",
                 "name": "IdentifiableSiteUser",
                 "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "searchUsers",
+            "description": "Searches users matching the query against email, first name, or last name. Requires at least 3 characters.",
+            "args": [
+              {
+                "name": "query",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "IdentifiableUser",
+                    "ofType": null
+                  }
+                }
               }
             },
             "isDeprecated": false,
