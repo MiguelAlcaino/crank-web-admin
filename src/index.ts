@@ -9,7 +9,8 @@ import {
   startGiftCardApp,
   startUserAdminApp,
   startMyAdminSettingsApp,
-  startPaymentLinksApp
+  startPaymentLinksApp,
+  startFailedMessagesApp
 } from '@/start-app-functions'
 
 export {
@@ -23,5 +24,6 @@ export {
   startGiftCardApp,
   startUserAdminApp,
   startMyAdminSettingsApp,
-  startPaymentLinksApp
+  startPaymentLinksApp,
+  startFailedMessagesApp
 }

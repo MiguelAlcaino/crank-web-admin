@@ -9,6 +9,7 @@ import { adminUsersRoute } from '@/modules/admin-user/router'
 import { Role } from '@/utils/userRoles'
 import { myAdminSettingsRoute } from '@/modules/my-admin-settings/router'
 import { paymentLinksRoute } from '@/modules/payment-links/router'
+import { failedMessagesRoute } from '@/modules/failed-messages/router'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -93,7 +94,11 @@ const router = createRouter({
       path: '/my-admin-settings',
       meta: { requiresAuth: true }
     },
-    { ...paymentLinksRoute, path: '/payment-links', meta: { requiresAuth: true } }
+    { ...paymentLinksRoute, path: '/payment-links', meta: { requiresAuth: true } },
+    {
+      ...failedMessagesRoute,
+      meta: { requiresAuth: true, role: Role.ROLE_SUPER_ADMIN }
+    }
   ]
 })
 

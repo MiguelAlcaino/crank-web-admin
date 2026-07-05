@@ -11,6 +11,16 @@ export default ({ mode }) => {
       'process.env': env
     },
     plugins: [vue()],
+    server: {
+      proxy: {
+        '/api': {
+          target: 'https://crank-payments.crank.local',
+          changeOrigin: true,
+          secure: false,
+          cookieDomainRewrite: ''
+        }
+      }
+    },
     build: {
       lib: {
         entry: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
