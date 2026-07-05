@@ -27,6 +27,7 @@ import GiftCardListView from './modules/gift-card/views/GiftCardListView.vue'
 import MyAdminSettingsView from './modules/my-admin-settings/views/MyAdminSettingsView.vue'
 import RoomLayoutView from '@/modules/room-layout/views/RoomLayoutView.vue'
 import PaymentLinkListView from '@/modules/payment-links/views/PaymentLinkListView.vue'
+import FailedMessagesView from '@/modules/failed-messages/views/FailedMessagesView.vue'
 
 export const startCustomerCreateApp = async function (
   urlAfterSubmit: string,
@@ -304,6 +305,24 @@ export const startPaymentLinksApp = async function (gqlUrl: string, token: strin
       )
     },
     render: () => h(PaymentLinkListView)
+  })
+
+  app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)
+  useAuthenticationStore().setSession(token)
+
+  app.mount(appDiv)
+}
+
+export const startFailedMessagesApp = async function (
+  gqlUrl: string,
+  token: string,
+  appDiv: string
+) {
+  const app = createApp({
+    setup() {
+      provide('failedMessagesApolloClient', newAuthenticatedApolloClient(gqlUrl))
+    },
+    render: () => h(FailedMessagesView)
   })
 
   app.use(createPinia()).use(router).use(SimpleTypeahead).use(ContextMenu)

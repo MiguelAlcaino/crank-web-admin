@@ -1,0 +1,11 @@
+mutation DiscardFailedMessage($input: FailedMessageActionInput!) {
+  discardFailedMessage(input: $input) {
+    __typename
+    ... on FailedMessageActionSuccess {
+      success
+    }
+    ... on FailedMessageNotFoundError {
+      code
+    }
+  }
+}

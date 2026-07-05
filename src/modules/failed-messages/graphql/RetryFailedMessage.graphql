@@ -1,0 +1,11 @@
+mutation RetryFailedMessage($input: FailedMessageActionInput!) {
+  retryFailedMessage(input: $input) {
+    __typename
+    ... on FailedMessageActionSuccess {
+      success
+    }
+    ... on FailedMessageNotFoundError {
+      code
+    }
+  }
+}
