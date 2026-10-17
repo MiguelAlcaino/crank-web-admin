@@ -2,6 +2,7 @@
 import { authService } from '@/services/authService'
 import { Role } from '@/utils/userRoles'
 import { computed } from 'vue'
+import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
 
 const user = computed(() => authService.getUser())
 const isSuperAdmin = computed(() => authService.userHasRole(Role.ROLE_SUPER_ADMIN))
@@ -15,7 +16,7 @@ const isSuperAdmin = computed(() => authService.userHasRole(Role.ROLE_SUPER_ADMI
     <div class="row mt-4">
       <div class="col-md-4 mb-3">
         <RouterLink
-          v-if="isSuperAdmin"
+          v-if="isSuperAdmin && isFeatureAvailable(AdminFeature.Transactions)"
           :to="{ name: 'admin_transactions' }"
           class="card text-decoration-none"
         >
@@ -26,7 +27,11 @@ const isSuperAdmin = computed(() => authService.userHasRole(Role.ROLE_SUPER_ADMI
         </RouterLink>
       </div>
       <div class="col-md-4 mb-3">
-        <RouterLink :to="{ name: 'admin_customers' }" class="card text-decoration-none">
+        <RouterLink
+          v-if="isFeatureAvailable(AdminFeature.CustomersList)"
+          :to="{ name: 'admin_customers' }"
+          class="card text-decoration-none"
+        >
           <div class="card-body">
             <h6 class="card-title text-dark">Clients</h6>
             <p class="card-text text-muted small">Manage customer accounts</p>
@@ -35,7 +40,7 @@ const isSuperAdmin = computed(() => authService.userHasRole(Role.ROLE_SUPER_ADMI
       </div>
       <div class="col-md-4 mb-3">
         <RouterLink
-          v-if="isSuperAdmin"
+          v-if="isSuperAdmin && isFeatureAvailable(AdminFeature.GiftCards)"
           :to="{ name: 'admin_gift_cards' }"
           class="card text-decoration-none"
         >

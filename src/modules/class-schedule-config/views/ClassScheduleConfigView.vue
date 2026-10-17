@@ -11,6 +11,7 @@ import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import type { ClassSchedule, RoomLayout } from '../interfaces'
 import type { SiteEnum } from '@/modules/shared/interfaces'
+import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
 
 const apiService = inject<ApiService>('gqlApiService')!
 const route = useRoute()
@@ -38,6 +39,9 @@ const errorModalIsVisible = ref<boolean>(false)
 const successModalIsVisible = ref<boolean>(false)
 
 const urlSyncAll = ref<string>('#')
+// TODO: on main, replace the injected URL with the syncAllClassSchedules mutation once
+// crank-payments#969 adds it, and enable AdminFeature.SyncAllClassSchedules there.
+const canSyncAll = isFeatureAvailable(AdminFeature.SyncAllClassSchedules)
 
 const isSaving = ref(false)
 
@@ -240,7 +244,7 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
 <template>
   <div class="row">
     <div class="col-12" style="text-align: right">
-      <a :href="urlSyncAll" class="btn btn-primary">Sync All</a>
+      <a v-if="canSyncAll" :href="urlSyncAll" class="btn btn-primary">Sync All</a>
     </div>
   </div>
   <div class="row">

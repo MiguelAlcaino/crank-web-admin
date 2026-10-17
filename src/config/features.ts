@@ -1,0 +1,99 @@
+/**
+ * Backend profiles and admin features. Kept free of `import.meta` so build tooling
+ * (codegen.main.ts) can import it; the current profile lives in ./backendProfile.ts.
+ *
+ * Backend profile: which crank-payments GraphQL API this build talks to.
+ *
+ * - `kan231`: the KAN-231 branch (Sylius shopping cart, subscription service). Default, so
+ *   existing builds and the library build keep their behaviour.
+ * - `main`: production crank-payments (`main`), which does not have every admin operation yet.
+ *
+ * Set at build time with `VITE_BACKEND_PROFILE`. Every admin module or optional feature is listed
+ * in `FEATURE_PROFILES` with the profiles whose backend supports it; the router and the sidebar
+ * hide whatever the current profile does not support. Enabling a feature on `main` once its
+ * backend operations land is a one-line change in `FEATURE_PROFILES` (`KAN231_ONLY` -> `ALL`).
+ */
+
+export const BACKEND_PROFILES = ['main', 'kan231'] as const
+
+export type BackendProfile = (typeof BACKEND_PROFILES)[number]
+
+export const DEFAULT_BACKEND_PROFILE: BackendProfile = 'kan231'
+
+export function isBackendProfile(value: unknown): value is BackendProfile {
+  return typeof value === 'string' && (BACKEND_PROFILES as readonly string[]).includes(value)
+}
+
+export enum AdminFeature {
+  // Admin modules (one sidebar entry / route group each)
+  ClassesCalendar = 'classesCalendar',
+  ClassScheduleConfig = 'classScheduleConfig',
+  RoomLayouts = 'roomLayouts',
+  GiftCards = 'giftCards',
+  PaymentLinks = 'paymentLinks',
+  AdminUsers = 'adminUsers',
+  MySettings = 'mySettings',
+  Customer = 'customer',
+  CustomersList = 'customersList',
+  Transactions = 'transactions',
+  IncompleteFeedbacks = 'incompleteFeedbacks',
+  Subscriptions = 'subscriptions',
+  ClassPackages = 'classPackages',
+  CustomerGiftCards = 'customerGiftCards',
+  SessionTypes = 'sessionTypes',
+  InstructorProfiles = 'instructorProfiles',
+  MindbodyStaff = 'mindbodyStaff',
+  MindbodyClients = 'mindbodyClients',
+  WebhookEvents = 'webhookEvents',
+  SystemSettings = 'systemSettings',
+  Blacklist = 'blacklist',
+  PushNotifications = 'pushNotifications',
+  BulkVod = 'bulkVod',
+
+  // Features inside a module
+  /** Subscriptions section of the customer profile (`User.subscriptions`). */
+  CustomerProfileSubscriptions = 'customerProfileSubscriptions',
+  /** "Sync All" button of the class schedule config page. */
+  SyncAllClassSchedules = 'syncAllClassSchedules'
+}
+
+const ALL: readonly BackendProfile[] = BACKEND_PROFILES
+const KAN231_ONLY: readonly BackendProfile[] = ['kan231']
+
+/**
+ * Profiles whose backend supports each feature. Issue numbers refer to
+ * MiguelAlcaino/crank-payments, where the missing operations are being added to `main`.
+ */
+export const FEATURE_PROFILES: Record<AdminFeature, readonly BackendProfile[]> = {
+  [AdminFeature.ClassesCalendar]: ALL,
+  [AdminFeature.ClassScheduleConfig]: ALL,
+  [AdminFeature.RoomLayouts]: ALL,
+  [AdminFeature.GiftCards]: ALL,
+  [AdminFeature.PaymentLinks]: ALL,
+  [AdminFeature.AdminUsers]: ALL,
+  [AdminFeature.MySettings]: ALL,
+  [AdminFeature.Customer]: ALL,
+  [AdminFeature.CustomersList]: KAN231_ONLY, // TODO: main, crank-payments#967
+  [AdminFeature.Transactions]: KAN231_ONLY, // TODO: main, crank-payments#966
+  [AdminFeature.IncompleteFeedbacks]: KAN231_ONLY, // TODO: main, crank-payments#967
+  [AdminFeature.Subscriptions]: KAN231_ONLY, // TODO: main, crank-payments#968
+  // Sylius page; main gets its own page for the local Product entity, crank-payments#970
+  [AdminFeature.ClassPackages]: KAN231_ONLY,
+  [AdminFeature.CustomerGiftCards]: KAN231_ONLY, // TODO: main, crank-payments#971
+  [AdminFeature.SessionTypes]: KAN231_ONLY,
+  [AdminFeature.InstructorProfiles]: KAN231_ONLY,
+  [AdminFeature.MindbodyStaff]: KAN231_ONLY, // TODO: main, crank-payments#969
+  [AdminFeature.MindbodyClients]: KAN231_ONLY, // TODO: main, crank-payments#969
+  [AdminFeature.WebhookEvents]: KAN231_ONLY,
+  [AdminFeature.SystemSettings]: KAN231_ONLY, // TODO: main, crank-payments#969
+  [AdminFeature.Blacklist]: KAN231_ONLY, // TODO: main, crank-payments#969
+  [AdminFeature.PushNotifications]: KAN231_ONLY,
+  [AdminFeature.BulkVod]: KAN231_ONLY, // TODO: main, crank-payments#967
+  [AdminFeature.CustomerProfileSubscriptions]: KAN231_ONLY, // TODO: main, crank-payments#968
+  // TODO: main, syncAllClassSchedules mutation, crank-payments#969
+  [AdminFeature.SyncAllClassSchedules]: KAN231_ONLY
+}
+
+export function isFeatureAvailableIn(feature: AdminFeature, profile: BackendProfile): boolean {
+  return FEATURE_PROFILES[feature].includes(profile)
+}

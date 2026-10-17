@@ -43,6 +43,17 @@ Key modules: `class-schedule`, `customer`, `payment-links`, `gift-card`, `admin-
 - Newer modules (e.g., `payment-links`) use separate `.graphql` files with **GraphQL Code Generator** (`codegen.ts` → `src/gql/`)
 - Schema introspection file: `graphql.schema.json`
 
+### Backend profiles (standalone app)
+
+The standalone app is built for one crank-payments backend, chosen with `VITE_BACKEND_PROFILE` (build arg in the Dockerfile, `_BACKEND_PROFILE` substitution in cloudbuild.yaml):
+
+- `kan231` (default): the KAN-231 branch.
+- `main`: production crank-payments `main`, which does not have every admin operation yet.
+
+`src/config/features.ts` lists every admin module/feature with the profiles that support it. Routes declare `meta.feature`; the router redirects away from unavailable ones and the sidebar hides them. Use `isFeatureAvailable()` from `src/config/backendProfile.ts` for anything finer-grained. Enabling a feature on `main` is a one-line change in `FEATURE_PROFILES`.
+
+Operations that only exist on KAN-231 but are used by modules visible on both profiles go in `src/services/documents/kan231.ts`. `npm run schema:main` refreshes `graphql.schema.main.graphql` from a crank-payments clone; `npm run codegen:main` generates `src/gql-main/` and fails if any document used on `main` does not match main's schema.
+
 ### State Management
 
 - **Pinia** stores in `src/stores/`:

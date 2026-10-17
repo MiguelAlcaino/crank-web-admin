@@ -7,6 +7,7 @@ import { Role } from '@/utils/userRoles'
 import { useAvailableSites } from '@/modules/shared/composables/useAvailableSites'
 import AdminToast from '@/modules/shared/components/AdminToast.vue'
 import { useThemeStore } from '@/stores/themeStore'
+import { AdminFeature, isFeatureAvailable as can } from '@/config/backendProfile'
 
 const route = useRoute()
 const themeStore = useThemeStore()
@@ -91,7 +92,10 @@ async function logout() {
           </li>
 
           <!-- Clients (STAFF or above) -->
-          <li v-if="isStaffOrAbove() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.CustomersList) && isStaffOrAbove() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_customers') }"
@@ -102,7 +106,10 @@ async function logout() {
           </li>
 
           <!-- Class Schedule (STAFF or above) -->
-          <li v-if="isStaffOrAbove() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.ClassesCalendar) && isStaffOrAbove() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_classes_calendar') }"
@@ -113,7 +120,10 @@ async function logout() {
           </li>
 
           <!-- Transactions (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.Transactions) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_transactions') }"
@@ -124,7 +134,10 @@ async function logout() {
           </li>
 
           <!-- Incomplete Feedbacks (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.IncompleteFeedbacks) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_incomplete_feedbacks') }"
@@ -135,7 +148,10 @@ async function logout() {
           </li>
 
           <!-- Class Schedule Config dropdown (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.ClassScheduleConfig) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <a
               class="nav-link dropdown-toggle"
               :class="{ active: route.name === 'admin_class_schedule_config' }"
@@ -162,7 +178,10 @@ async function logout() {
           </li>
 
           <!-- Room Layout Config dropdown (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.RoomLayouts) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <a
               class="nav-link dropdown-toggle"
               :class="{ active: route.name === 'admin_room_layout_list' }"
@@ -189,7 +208,10 @@ async function logout() {
           </li>
 
           <!-- Packages dropdown (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.ClassPackages) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <a
               class="nav-link dropdown-toggle"
               :class="{ active: route.name === 'admin_class_packages' }"
@@ -216,7 +238,10 @@ async function logout() {
           </li>
 
           <!-- Gift Card (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.GiftCards) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_gift_cards') }"
@@ -227,7 +252,10 @@ async function logout() {
           </li>
 
           <!-- Pending Gift Cards (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.CustomerGiftCards) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_customer_gift_cards') }"
@@ -238,7 +266,10 @@ async function logout() {
           </li>
 
           <!-- Payment Link (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.PaymentLinks) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_payment_links') }"
@@ -249,7 +280,10 @@ async function logout() {
           </li>
 
           <!-- Session Types (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.SessionTypes) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_session_types') }"
@@ -260,7 +294,10 @@ async function logout() {
           </li>
 
           <!-- Instructor Profiles (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.InstructorProfiles) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_instructor_profiles') }"
@@ -271,7 +308,10 @@ async function logout() {
           </li>
 
           <!-- Mindbody Staff (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.MindbodyStaff) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_mindbody_staff') }"
@@ -282,7 +322,10 @@ async function logout() {
           </li>
 
           <!-- Webhook Events (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.WebhookEvents) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_webhook_events') }"
@@ -293,7 +336,10 @@ async function logout() {
           </li>
 
           <!-- Admins (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.AdminUsers) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_users') }"
@@ -304,7 +350,10 @@ async function logout() {
           </li>
 
           <!-- Settings (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.SystemSettings) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_settings') }"
@@ -315,7 +364,10 @@ async function logout() {
           </li>
 
           <!-- Send Notification (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.PushNotifications) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_send_notification') }"
@@ -326,7 +378,7 @@ async function logout() {
           </li>
 
           <!-- My Settings (any admin) -->
-          <li v-if="!sidebarCollapsed" class="nav-item">
+          <li v-if="can(AdminFeature.MySettings) && !sidebarCollapsed" class="nav-item">
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_my_settings') }"
@@ -337,7 +389,10 @@ async function logout() {
           </li>
 
           <!-- Blacklisted phones (STAFF or above) -->
-          <li v-if="isStaffOrAbove() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.Blacklist) && isStaffOrAbove() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_blacklisted_phones') }"
@@ -348,7 +403,10 @@ async function logout() {
           </li>
 
           <!-- Report - MB Clients (SUPER_ADMIN) -->
-          <li v-if="isSuperAdmin() && !sidebarCollapsed" class="nav-item">
+          <li
+            v-if="can(AdminFeature.MindbodyClients) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
             <RouterLink
               class="nav-link"
               :class="{ active: isActive('admin_mindbody_clients') }"
