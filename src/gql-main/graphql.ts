@@ -705,7 +705,7 @@ export type ExpiredResetPasswordTokenError = Error & {
   code: Scalars['String']['output'];
 };
 
-/** A messenger message that exhausted its retries and landed in a failure queue */
+/** A Messenger message that exhausted its retries and landed in a failure queue */
 export type FailedMessage = {
   __typename: 'FailedMessage';
   errorMessage?: Maybe<Scalars['String']['output']>;
@@ -743,6 +743,7 @@ export type FailedMessageNotFoundError = Error & {
   code: Scalars['String']['output'];
 };
 
+/** The Messenger failure queue a failed message sits in */
 export enum FailedMessageQueueEnum {
   Default = 'default',
   PartnerPurchase = 'partnerPurchase',
@@ -1304,7 +1305,7 @@ export type Mutation = {
   deleteRoomLayout: DeleteRoomLayoutResultUnion;
   /** Disables a spot in a class */
   disableSpot?: Maybe<DisableEnableSpotResultUnion>;
-  /** Permanently discards a failed message from the failure queue */
+  /** Permanently discards a failed message from the failure queue. Super admin only. Errors: failed_message.not_found. */
   discardFailedMessage: FailedMessageActionResultUnion;
   /** Edits a class */
   editClass: EditClassResultUnion;
@@ -1449,7 +1450,7 @@ export type Mutation = {
    * @deprecated Accepts a bare JWT and never asks for the current password, so any holder of a customer's token can change it. Use resetPassword, which also requires the token from the reset email. Removed once the remaining caller has migrated.
    */
   resetPasswordForCurrentUser?: Maybe<ResetPasswordForCurrentUserUnion>;
-  /** Re-dispatches a failed message to its original transport and removes it from the failure queue */
+  /** Re-dispatches a failed message to its original transport with a fresh retry budget and removes it from the failure queue. Super admin only. Errors: failed_message.not_found. */
   retryFailedMessage: FailedMessageActionResultUnion;
   /** Re-dispatches the Payfort feedback message for an incomplete TemporalTransaction. Admin only. Errors: temporal_transaction.not_found, temporal_transaction.already_completed, temporal_transaction.feedback_in_progress, temporal_transaction.already_sold. */
   retryTransactionFeedback: Scalars['Boolean']['output'];
@@ -2374,9 +2375,9 @@ export type Query = {
   customerVodPeriods: Array<AdminCustomerVodPeriod>;
   /** Returns a paginated list of customers, newest first, with the filters of the admin customer list. Admin only. */
   customers: PaginatedAdminCustomers;
-  /** Returns a single failed messenger message by its id */
+  /** Returns a single failed Messenger message by its id, or null when the queue holds none. Super admin only. */
   failedMessage?: Maybe<FailedMessage>;
-  /** Returns a paginated list of failed messenger messages in the given failure queue */
+  /** Returns a paginated list of the failed Messenger messages in the given failure queue, oldest first. Super admin only. */
   failedMessages: PaginatedFailedMessages;
   /** Returns the list of all the available gift cards */
   giftCards: Array<GiftCard>;

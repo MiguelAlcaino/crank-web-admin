@@ -35,12 +35,7 @@ const excludedDocuments = Object.entries(FEATURE_DOCUMENTS)
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: [
-    'graphql.schema.main.graphql',
-    // TEMPORARY: the failed-messages API until its crank-payments PR (#910) reaches develop.
-    // Remove this line and the file once it does, then `npm run schema:main && npm run codegen:main`.
-    'graphql.schema.main.pending.graphql'
-  ],
+  schema: 'graphql.schema.main.graphql',
   documents: [
     'src/**/*.ts',
     'src/**/*.graphql',
