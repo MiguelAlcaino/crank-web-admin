@@ -2,11 +2,15 @@
   <div class="unauthorized">
     <h1>Access Denied</h1>
     <p>You do not have permission to access this page.</p>
-    <a @click="$router.go(-1)" class="stretched-link" style="cursor: pointer">Go back</a>
+    <a @click="router.go(-1)" class="stretched-link" style="cursor: pointer">Go back</a>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+</script>
 
 <style scoped>
 .unauthorized {

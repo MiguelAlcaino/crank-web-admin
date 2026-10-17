@@ -187,7 +187,7 @@ const handleDate = () => {
   getCalendarClasses()
 }
 
-const format = (modelData: [Date, Date]) => {
+const format = (modelData: Date[]) => {
   return `${dayjs(modelData[0]).format('DD/MM/YYYY')} to ${dayjs(modelData[1]).format(
     'DD/MM/YYYY'
   )}`
@@ -286,7 +286,7 @@ function scrollToTodayClass() {
       </div>
     </div>
     <div id="ClassesSection" class="scrollable-div">
-      <div class="ClassDate" v-for="wd in weekDays" :key="wd.date.toISOString">
+      <div class="ClassDate" v-for="wd in weekDays" :key="wd.date.toISOString()">
         <span class="day" :id="`${dayjs(wd.date).format('YYYY-MM-DD')}`">{{
           dayjs(wd.date).format('ddd MMM D, YYYY')
         }}</span>
