@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import { authService } from '@/services/authService'
-import HomeView from '@/views/HomeView.vue'
 import UnauthorizedView from '@/modules/auth/views/UnauthorizedView.vue'
 import { Role } from '@/utils/userRoles'
 import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
@@ -20,11 +19,11 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     // --- Public routes (no layout) ---
+    // The admin is the whole app: a signed-out visitor ends on the admin login through the guard.
     {
       path: '/',
       name: 'home',
-      meta: { requiresAuth: false },
-      component: HomeView
+      redirect: { name: 'admin_dashboard' }
     },
     {
       path: '/login',
