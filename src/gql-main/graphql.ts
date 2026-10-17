@@ -18,6 +18,8 @@ export type Scalars = {
   Date: { input: any; output: any; }
   DateTime: { input: any; output: any; }
   DateTimeWithoutTimeZone: { input: any; output: any; }
+  /** A file uploaded as a part of a GraphQL multipart request (https://github.com/jaydenseric/graphql-multipart-request-spec). Input only. */
+  File: { input: any; output: any; }
 };
 
 export type AcceptLateCancelledSpotInClassInput = {
@@ -34,6 +36,92 @@ export type AcceptLateCancelledSpotInClassSuccess = {
 export type AddedToWaitlistSuccess = {
   __typename: 'AddedToWaitlistSuccess';
   status: Scalars['Boolean']['output'];
+};
+
+export type AdminCustomerVodPeriod = {
+  __typename: 'AdminCustomerVodPeriod';
+  /** How the period was granted: admin, a purchase, or unknown for periods older than the record. */
+  addedBy: Scalars['String']['output'];
+  /** The admin who granted it, when an admin did. */
+  addedByAdmin?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  deletedAt?: Maybe<Scalars['DateTime']['output']>;
+  end: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  isDeleted: Scalars['Boolean']['output'];
+  start: Scalars['DateTime']['output'];
+};
+
+export type AdminCustomersParams = {
+  /** Registered until the end of this day. */
+  registrationEndDate?: InputMaybe<Scalars['Date']['input']>;
+  /** Registered from this day. Without registrationEndDate, until now. */
+  registrationStartDate?: InputMaybe<Scalars['Date']['input']>;
+  /** Matches the customer's full name, phone number or email. */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** With a VOD period overlapping until the end of this day. Only read together with vodStartDate. */
+  vodEndDate?: InputMaybe<Scalars['Date']['input']>;
+  /** With a VOD period overlapping this day onwards. Without vodEndDate, until now. */
+  vodStartDate?: InputMaybe<Scalars['Date']['input']>;
+};
+
+/** A generated admin file, downloadable through a short-lived link. */
+export type AdminExport = {
+  __typename: 'AdminExport';
+  expiresAt: Scalars['DateTime']['output'];
+  fileName: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
+
+export type AdminMindbodyClient = {
+  __typename: 'AdminMindbodyClient';
+  clientId?: Maybe<Scalars['String']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
+  firstName?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  lastName?: Maybe<Scalars['String']['output']>;
+  mobilePhone?: Maybe<Scalars['String']['output']>;
+};
+
+export type AdminMindbodyClientsParams = {
+  endDate?: InputMaybe<Scalars['Date']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  startDate?: InputMaybe<Scalars['Date']['input']>;
+};
+
+/** A package as the admin edits it: the raw fields of the local product, unlike ClassPackageProduct, which is the storefront's view of it. */
+export type AdminProduct = {
+  __typename: 'AdminProduct';
+  category: ProductDisplayCategory;
+  customTitle?: Maybe<Scalars['String']['output']>;
+  /** Position within the category, lowest first. updateProductsOrder numbers from 1; a package never ordered has 0. */
+  displayOrder: Scalars['Int']['output'];
+  doesItRequireSmsVerification: Scalars['Boolean']['output'];
+  errorMessageWhenTryingToPurchase?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  isClassPassPackage: Scalars['Boolean']['output'];
+  isMembership: Scalars['Boolean']['output'];
+  isTrialPackage: Scalars['Boolean']['output'];
+  isVisible: Scalars['Boolean']['output'];
+  /** Mindbody service id, stored as product.merchant_id. */
+  mindbodyId: Scalars['String']['output'];
+  /** Whether buying the package grants VOD access. */
+  muviEnabled: Scalars['Boolean']['output'];
+  /** Days of VOD access the package grants. Null when muviEnabled is false. */
+  muviNumberOfDays?: Maybe<Scalars['Int']['output']>;
+  /** Name as Mindbody has it. customTitle replaces it on the storefront when set. */
+  name: Scalars['String']['output'];
+  popupDescriptionAfterClickOnBuy?: Maybe<Scalars['String']['output']>;
+  popupTitleAfterClickOnBuy?: Maybe<Scalars['String']['output']>;
+  /** Price as Mindbody has it. */
+  price: Scalars['Float']['output'];
+  subtitle?: Maybe<Scalars['String']['output']>;
+  textPayButton?: Maybe<Scalars['String']['output']>;
+};
+
+export type AdminProductList = {
+  __typename: 'AdminProductList';
+  products: Array<AdminProduct>;
 };
 
 export type AdminUser = {
@@ -117,6 +205,18 @@ export type BookingWindow = {
   startDateTime: Scalars['DateTime']['output'];
 };
 
+export type BulkActivateVodInput = {
+  mindbodyIds: Array<Scalars['Int']['input']>;
+  /** At least 1. */
+  vodDays: Scalars['Int']['input'];
+};
+
+export type BulkVodResult = {
+  __typename: 'BulkVodResult';
+  /** How many customers the Mindbody ids matched, and so how many the operation reached. */
+  processedCount: Scalars['Int']['output'];
+};
+
 /**
  * Filters for querying classes within a specific date range.
  *
@@ -151,6 +251,15 @@ export type ChallengeDisplay = {
 export type ChallengeInterface = {
   challengeDisplay: ChallengeDisplay;
   id: Scalars['ID']['output'];
+};
+
+export type ChargeableProduct = {
+  __typename: 'ChargeableProduct';
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  /** Before VAT. The charge-client form shows it with 5% VAT added. */
+  price: Scalars['Float']['output'];
+  site: Site;
 };
 
 export type ChartPoint = {
@@ -330,12 +439,40 @@ export type Country = {
   states?: Maybe<Array<Maybe<State>>>;
 };
 
+export type CountryWithPhoneCode = {
+  __typename: 'CountryWithPhoneCode';
+  formattedPhoneCode: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  phoneCode: Scalars['String']['output'];
+};
+
 export type CreateCurrentUserInSiteSuccess = {
   __typename: 'CreateCurrentUserInSiteSuccess';
   result: Scalars['Boolean']['output'];
 };
 
 export type CreateCurrentUserInSiteUnion = CreateCurrentUserInSiteSuccess | UserAlreadyExistsError;
+
+export type CreateCustomTransactionRequestInput = {
+  customerId: Scalars['ID']['input'];
+  emailBody: Scalars['String']['input'];
+  /** A ChargeableProduct id. */
+  productId: Scalars['ID']['input'];
+};
+
+export type CreateCustomTransactionRequestResultUnion = CustomTransactionRequestSent | CustomerNotFoundError | ProductNotFoundError;
+
+export type CreateCustomerVodPeriodInput = {
+  /** Has to be after start. */
+  end: Scalars['DateTime']['input'];
+  start: Scalars['DateTime']['input'];
+};
+
+export type CreateMobileNumberBlacklistInput = {
+  countryId: Scalars['ID']['input'];
+  mobilePhoneNumber: Scalars['String']['input'];
+};
 
 export type CreatePaymentLinkInput = {
   amount: Scalars['Int']['input'];
@@ -352,12 +489,71 @@ export type CurrentUserEnrollmentsParams = {
   startDate?: InputMaybe<Scalars['Date']['input']>;
 };
 
+export type CustomTransactionRequestSent = {
+  __typename: 'CustomTransactionRequestSent';
+  /** The purchase link the email carries. */
+  paymentUrl: Scalars['String']['output'];
+  recipientEmail: Scalars['String']['output'];
+};
+
+/** A gift card a customer bought. The admin issues its code by hand once it is paid. */
+export type CustomerGiftCard = {
+  __typename: 'CustomerGiftCard';
+  createdAt: Scalars['DateTime']['output'];
+  /** The customer who bought it. The code and the PDF are emailed to them. */
+  customer: IdentifiableUser;
+  giftCard: GiftCard;
+  /** Null until an admin issues it. */
+  giftCardCode?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  message?: Maybe<Scalars['String']['output']>;
+  recipientEmail?: Maybe<Scalars['String']['output']>;
+  recipientName?: Maybe<Scalars['String']['output']>;
+  senderName?: Maybe<Scalars['String']['output']>;
+  status: CustomerGiftCardStatusEnum;
+  /** Every status the order went through, oldest first. */
+  statusHistory: Array<CustomerGiftCardStatusChange>;
+};
+
+export type CustomerGiftCardNotFoundError = Error & {
+  __typename: 'CustomerGiftCardNotFoundError';
+  code: Scalars['String']['output'];
+};
+
+export type CustomerGiftCardStatusChange = {
+  __typename: 'CustomerGiftCardStatusChange';
+  createdAt: Scalars['DateTime']['output'];
+  status: CustomerGiftCardStatusEnum;
+};
+
+export enum CustomerGiftCardStatusEnum {
+  Completed = 'completed',
+  EmailSentToRecipient = 'emailSentToRecipient',
+  EmailSentToSender = 'emailSentToSender',
+  GiftCardCodeGranted = 'giftCardCodeGranted',
+  Paid = 'paid',
+  Submitted = 'submitted',
+  Uncompleted = 'uncompleted'
+}
+
+export type CustomerNotFoundError = Error & {
+  __typename: 'CustomerNotFoundError';
+  code: Scalars['String']['output'];
+};
+
 export type DeleteCurrentUserAccountSuccess = {
   __typename: 'DeleteCurrentUserAccountSuccess';
   success: Scalars['Boolean']['output'];
 };
 
 export type DeleteCurrentUserAccountUnion = DeleteCurrentUserAccountSuccess | UserPasswordDoesNotMatchError;
+
+export type DeleteRoomLayoutResultUnion = DeleteRoomLayoutSuccess | RoomLayoutInUseError;
+
+export type DeleteRoomLayoutSuccess = {
+  __typename: 'DeleteRoomLayoutSuccess';
+  success: Scalars['Boolean']['output'];
+};
 
 export type DeviceTokenInput = {
   deviceToken: Scalars['String']['input'];
@@ -538,6 +734,11 @@ export type GiftCard = {
   terms?: Maybe<Scalars['String']['output']>;
 };
 
+export type GiftCardCodeRequiredError = Error & {
+  __typename: 'GiftCardCodeRequiredError';
+  code: Scalars['String']['output'];
+};
+
 export type IconPosition = ClassPositionInterface & {
   __typename: 'IconPosition';
   icon: PositionIconEnum;
@@ -574,11 +775,43 @@ export type IdentifiableUser = {
   user?: Maybe<User>;
 };
 
+/** A TemporalTransaction whose Payfort feedback was received but not fully processed (status != COMPLETED). Admin only. */
+export type IncompleteTransactionFeedback = {
+  __typename: 'IncompleteTransactionFeedback';
+  created: Scalars['DateTime']['output'];
+  feedbackStatusUpdatedAt?: Maybe<Scalars['DateTime']['output']>;
+  feedbackTryNumber: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  merchantReference?: Maybe<Scalars['Int']['output']>;
+  /** Null for a purchase nobody was logged in for, such as a payment link. */
+  siteCustomer?: Maybe<IdentifiableSiteUser>;
+  status: Scalars['String']['output'];
+};
+
+export type IncompleteTransactionFeedbackFilterInput = {
+  createdAfter?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Matches part of the customer's email. */
+  email?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Instructor = {
   __typename: 'Instructor';
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   site: Site;
+};
+
+/** The uploaded file is not a PDF, or is bigger than 2048 KB. Nothing was changed. */
+export type InvalidGiftCardPdfError = Error & {
+  __typename: 'InvalidGiftCardPdfError';
+  code: Scalars['String']['output'];
+  /** Why the file was refused, fit to show to the admin. */
+  message: Scalars['String']['output'];
+};
+
+export type InvalidProductVodDaysError = Error & {
+  __typename: 'InvalidProductVodDaysError';
+  code: Scalars['String']['output'];
 };
 
 export type IsSmsValidationCodeValidUnion = MobilePhoneAlreadyVerifiedError | RequestSmsValidationNeededError | SmsCodeValidatedSuccessfully | SmsValidationCodeError;
@@ -943,6 +1176,24 @@ export type LegacyThreeDSecureRequired = {
   redirectUrl: Scalars['String']['output'];
 };
 
+export type MindbodyStaffInfo = {
+  __typename: 'MindbodyStaffInfo';
+  email?: Maybe<Scalars['String']['output']>;
+  firstName: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  lastName: Scalars['String']['output'];
+};
+
+export type MobileNumberBlackListEntry = {
+  __typename: 'MobileNumberBlackListEntry';
+  countryId: Scalars['ID']['output'];
+  countryName: Scalars['String']['output'];
+  countryPhoneCode: Scalars['String']['output'];
+  fullPhoneNumber: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  mobilePhoneNumber: Scalars['String']['output'];
+};
+
 export type MobilePhoneAlreadyVerifiedError = Error & {
   __typename: 'MobilePhoneAlreadyVerifiedError';
   code: Scalars['String']['output'];
@@ -971,24 +1222,42 @@ export type Mutation = {
   bookClass: BookClassResultUnion;
   /** Adds a user into a given class */
   bookUserIntoClass: BookClassResultUnion;
+  /** Bulk activate VOD periods for multiple customers by Mindbody IDs. Admin only. Errors: customer_vod_period.invalid. */
+  bulkActivateVod: BulkVodResult;
+  /** Bulk deactivate the active VOD periods of multiple customers by Mindbody IDs. Admin only. */
+  bulkDeactivateVod: BulkVodResult;
   /** Cancels an enrollment done by the current user */
   cancelCurrentUserEnrollment?: Maybe<CancelEnrollmentResultUnion>;
   /** Checks in a user in a class */
   checkinUserInClass?: Maybe<CheckinResultUnion>;
   /** Checks out a user from a class */
   checkoutUserInClass?: Maybe<CheckoutResultUnion>;
+  /** Clears the application cache. ROLE_SUPER_ADMIN only. */
+  clearSystemCache: Scalars['Boolean']['output'];
   /** Creates a copy of the current user in the given site */
   createCurrentUserInSite?: Maybe<CreateCurrentUserInSiteUnion>;
+  /** Admin only. The charge-client email: sends the customer a link to buy the product. In emailBody, [#firstName], [#lastName] and [#link] are replaced with the customer's names and the purchase link. Nothing is stored. */
+  createCustomTransactionRequest: CreateCustomTransactionRequestResultUnion;
+  /** Creates a new VOD period for a customer, recorded as added by the calling admin. Admin only. Errors: customer.not_found, customer_vod_period.invalid. */
+  createCustomerVodPeriod: AdminCustomerVodPeriod;
+  /** Creates a new blacklisted mobile number entry. ROLE_STAFF only. */
+  createMobileNumberBlacklistEntry: MobileNumberBlackListEntry;
   /** Creates a new payment link */
   createPaymentLink: PaymentLink;
   /** Creates a new room layout */
   createRoomLayout: RoomLayout;
   /** It deletes the current user's account */
   deleteCurrentUserAccount?: Maybe<DeleteCurrentUserAccountUnion>;
+  /** Deletes a VOD period (soft delete). Admin only. Errors: customer_vod_period.not_found. */
+  deleteCustomerVodPeriod: Scalars['Boolean']['output'];
   /** Removes a devices token */
   deleteDeviceTokenToCurrentUser?: Maybe<Scalars['Boolean']['output']>;
+  /** Deletes a blacklisted mobile number entry. False when the id does not exist. ROLE_STAFF only. */
+  deleteMobileNumberBlacklistEntry: Scalars['Boolean']['output'];
   /** Soft deletes a payment link */
   deletePaymentLink: Scalars['Boolean']['output'];
+  /** Deletes a room layout (soft delete). Fails if the layout is in use by a class or schedule. ROLE_SUPER_ADMIN only. */
+  deleteRoomLayout: DeleteRoomLayoutResultUnion;
   /** Disables a spot in a class */
   disableSpot?: Maybe<DisableEnableSpotResultUnion>;
   /** Edits a class */
@@ -1003,6 +1272,10 @@ export type Mutation = {
   editUser?: Maybe<EditUserResultUnion>;
   /** Enabled a spot in a class */
   enableSpot?: Maybe<DisableEnableSpotResultUnion>;
+  /** Builds the customer VOD spreadsheet for the same params as customers and returns a link to download it, valid for 15 minutes. Admin only. */
+  exportCustomerVod: AdminExport;
+  /** Builds the transactions spreadsheet for the same filter as transactionRecords and returns a link to download it, valid for 15 minutes. Staff only (ROLE_STAFF). */
+  exportTransactionRecords: AdminExport;
   /**
    * TEMPORARY. Answers Safari's onvalidatemerchant for an Apple Pay session. Pass event.validationURL; hand the returned merchantSession to ApplePaySession.completeMerchantValidation() after JSON.parse. A mutation because the session is single-use — a cached one breaks the payment.
    * @deprecated TEMPORARY stop-gap. Delete when KAN-231-shopping-cart-integration merges.
@@ -1097,6 +1370,8 @@ export type Mutation = {
   partnerIssueAccessToken: PartnerIssueAccessTokenResultUnion;
   /** Partner only (X-API-Key with canIssueUserTokens, granted this site). Registers a user of the calling partner without a password and returns the crankUserId the partner keys everything on afterwards. Idempotent per email for the key that created the customer; an email in use by anyone else answers UserAlreadyRegisteredError and creates nothing. Sends no email. */
   partnerRegisterUser: PartnerRegisterUserResultUnion;
+  /** Refunds a transaction. A paid one goes through Payfort; a zero-amount one is only marked refunded. Staff only (ROLE_STAFF). Errors: transaction_record.not_found, transaction_record.already_refunded, transaction_record.refund_window_expired, transaction_record.payfort_refund_failed. */
+  refundTransaction: Scalars['Boolean']['output'];
   /** Registers a new user and returns an IdentifiableUser type */
   registerIdentifiableUser?: Maybe<IdentifiableSiteUser>;
   /** Registers a new user */
@@ -1107,6 +1382,8 @@ export type Mutation = {
   removeAdminUser: Scalars['Boolean']['output'];
   /** Removes the current user's waitlist entry from a class */
   removeCurrentUserFromWaitlist?: Maybe<RemoveCurrentUserFromWaitlistUnion>;
+  /** Removes phone number verification for a customer. Admin only. Errors: customer.not_found, customer.phone_verification_not_found. */
+  removeCustomerPhoneVerification: Scalars['Boolean']['output'];
   /** Remove Item from shopping cart */
   removeItemFromShoppingCart: Scalars['Boolean']['output'];
   /** Removes a user from a class */
@@ -1126,6 +1403,8 @@ export type Mutation = {
    * @deprecated Accepts a bare JWT and never asks for the current password, so any holder of a customer's token can change it. Use resetPassword, which also requires the token from the reset email. Removed once the remaining caller has migrated.
    */
   resetPasswordForCurrentUser?: Maybe<ResetPasswordForCurrentUserUnion>;
+  /** Re-dispatches the Payfort feedback message for an incomplete TemporalTransaction. Admin only. Errors: temporal_transaction.not_found, temporal_transaction.already_completed, temporal_transaction.feedback_in_progress, temporal_transaction.already_sold. */
+  retryTransactionFeedback: Scalars['Boolean']['output'];
   /** Sends a single class stats to an email */
   sendClassStatsToEmail?: Maybe<Scalars['Boolean']['output']>;
   /** Sends the class stats to the users booked in a class */
@@ -1134,14 +1413,22 @@ export type Mutation = {
   setRoomLayoutForClassSchedules: Array<ClassSchedule>;
   /** Swaps a spot in a class */
   swapSpot?: Maybe<SwapSpotResultUnion>;
+  /** Re-reads every class schedule of a site from Mindbody, from nine years back to four years ahead. Runs inside the request. ROLE_SUPER_ADMIN only. */
+  syncAllClassSchedules: Scalars['Boolean']['output'];
   /** Sync all classes */
   syncAllClasses: Scalars['Boolean']['output'];
   /** Sync all gift cards from Mindbody with the local database */
   syncAllGiftCards: Scalars['Boolean']['output'];
+  /** Syncs all Mindbody staff members for a site. Admin only. */
+  syncAllMindbodyStaff: Scalars['Boolean']['output'];
   /** Sync one class */
   syncClass: ClassInfo;
   /** Sync a class with PIQ */
   syncClassWithPIQ: ClassInfo;
+  /** Syncs a customer's data from their Mindbody client in the site. Admin only. Errors: customer.not_found, site_customer.not_found, customer.mindbody_client_not_found. */
+  syncCustomerWithMindbody: Scalars['Boolean']['output'];
+  /** Super admin only. Pulls the site's services from Mindbody: creates the new ones as packages, refreshes name and price, and marks as deleted the packages Mindbody no longer lists. Admin-edited fields are kept. Answers the site's list afterwards, as adminProducts. */
+  syncProducts: Array<AdminProduct>;
   /** Updates an admin user */
   updateAdminUser: AdminUserResultUnion;
   /** Allows to update the current AdminUser */
@@ -1153,15 +1440,29 @@ export type Mutation = {
   updateCurrentUser?: Maybe<User>;
   /** Updates a user's password in all the sites */
   updateCurrentUserPassword?: Maybe<Scalars['Boolean']['output']>;
+  /** Admin only, ROLE_SUPER_ADMIN. Issues the code of a customer gift card after it was sold in Mindbody: stores the code and the PDF, adds the giftCardCodeGranted status and emails the PDF to the customer who bought it. Send it as a GraphQL multipart request, with pdfGiftCard mapped to the file part. */
+  updateCustomerGiftCard: UpdateCustomerGiftCardResultUnion;
   /** Updates a gift card */
   updateGiftCard: GiftCard;
   /** Allows to update an Item from Shopping Cart */
   updateItemInShoppingCart: ShoppingCart;
+  /** Updates an existing blacklisted mobile number entry. ROLE_STAFF only. */
+  updateMobileNumberBlacklistEntry: MobileNumberBlackListEntry;
   /** Updates a payment link */
   updatePaymentLink: PaymentLink;
+  /** Super admin only. Replaces every editable field of a package at once, like the Twig edit form: an omitted or blank string clears that field. A package with muviEnabled needs muviNumberOfDays of at least 1; without it muviNumberOfDays is cleared. A deleted package answers ProductNotFound. */
+  updateProduct: UpdateProductResultUnion;
+  /** Super admin only. Moves each listed package into its category and gives it its 1-based position there, in the order given. Every id must be a package of the site that Mindbody still lists; otherwise ProductNotFound is answered and nothing changes. Answers the site's whole list afterwards. */
+  updateProductsOrder: UpdateProductsOrderResultUnion;
+  /** Updates the Mindbody ID for a site customer. Admin only. Errors: site_customer.not_found, site_customer.invalid_mindbody_id. */
+  updateSiteCustomerMindbodyId: Scalars['Boolean']['output'];
+  /** Updates system settings. ROLE_SUPER_ADMIN only. */
+  updateSystemSettings: SystemSettings;
   updateUserPassword?: Maybe<Scalars['Boolean']['output']>;
   /** Redeems the token from a password reset email. No authentication - the token is the only credential the caller has. Does not consume it: resetPassword does that, once the new password has actually been set. */
   validateResetPasswordToken: ValidateResetPasswordTokenResultUnion;
+  /** Manually verifies a customer's phone number. Admin only. Errors: customer.not_found, customer.phone_verification_not_found. */
+  verifyCustomerPhoneNumber: Scalars['Boolean']['output'];
 };
 
 
@@ -1208,6 +1509,16 @@ export type MutationBookUserIntoClassArgs = {
 };
 
 
+export type MutationBulkActivateVodArgs = {
+  input: BulkActivateVodInput;
+};
+
+
+export type MutationBulkDeactivateVodArgs = {
+  mindbodyIds: Array<Scalars['Int']['input']>;
+};
+
+
 export type MutationCancelCurrentUserEnrollmentArgs = {
   input: CancelEnrollmentInput;
   site: SiteEnum;
@@ -1232,6 +1543,22 @@ export type MutationCreateCurrentUserInSiteArgs = {
 };
 
 
+export type MutationCreateCustomTransactionRequestArgs = {
+  input: CreateCustomTransactionRequestInput;
+};
+
+
+export type MutationCreateCustomerVodPeriodArgs = {
+  customerId: Scalars['ID']['input'];
+  input: CreateCustomerVodPeriodInput;
+};
+
+
+export type MutationCreateMobileNumberBlacklistEntryArgs = {
+  input: CreateMobileNumberBlacklistInput;
+};
+
+
 export type MutationCreatePaymentLinkArgs = {
   input: CreatePaymentLinkInput;
 };
@@ -1249,13 +1576,28 @@ export type MutationDeleteCurrentUserAccountArgs = {
 };
 
 
+export type MutationDeleteCustomerVodPeriodArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationDeleteDeviceTokenToCurrentUserArgs = {
   input?: InputMaybe<DeviceTokenInput>;
   site?: InputMaybe<SiteEnum>;
 };
 
 
+export type MutationDeleteMobileNumberBlacklistEntryArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationDeletePaymentLinkArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteRoomLayoutArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -1295,6 +1637,16 @@ export type MutationEditUserArgs = {
 
 export type MutationEnableSpotArgs = {
   input?: InputMaybe<DisableEnableSpotInput>;
+};
+
+
+export type MutationExportCustomerVodArgs = {
+  params?: InputMaybe<AdminCustomersParams>;
+};
+
+
+export type MutationExportTransactionRecordsArgs = {
+  filter?: InputMaybe<TransactionRecordFilterInput>;
 };
 
 
@@ -1415,6 +1767,11 @@ export type MutationPartnerRegisterUserArgs = {
 };
 
 
+export type MutationRefundTransactionArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationRegisterIdentifiableUserArgs = {
   input: RegisterUserInput;
   site: SiteEnum;
@@ -1441,6 +1798,11 @@ export type MutationRemoveAdminUserArgs = {
 export type MutationRemoveCurrentUserFromWaitlistArgs = {
   input: RemoveCurrentUserFromWaitlistInput;
   site: SiteEnum;
+};
+
+
+export type MutationRemoveCustomerPhoneVerificationArgs = {
+  customerId: Scalars['ID']['input'];
 };
 
 
@@ -1484,6 +1846,11 @@ export type MutationResetPasswordForCurrentUserArgs = {
 };
 
 
+export type MutationRetryTransactionFeedbackArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationSendClassStatsToEmailArgs = {
   input: SendClassStatsToEmailInput;
 };
@@ -1505,7 +1872,17 @@ export type MutationSwapSpotArgs = {
 };
 
 
+export type MutationSyncAllClassSchedulesArgs = {
+  site: SiteEnum;
+};
+
+
 export type MutationSyncAllClassesArgs = {
+  site: SiteEnum;
+};
+
+
+export type MutationSyncAllMindbodyStaffArgs = {
   site: SiteEnum;
 };
 
@@ -1518,6 +1895,17 @@ export type MutationSyncClassArgs = {
 
 export type MutationSyncClassWithPiqArgs = {
   classId: Scalars['ID']['input'];
+  site: SiteEnum;
+};
+
+
+export type MutationSyncCustomerWithMindbodyArgs = {
+  customerId: Scalars['ID']['input'];
+  site: SiteEnum;
+};
+
+
+export type MutationSyncProductsArgs = {
   site: SiteEnum;
 };
 
@@ -1553,6 +1941,12 @@ export type MutationUpdateCurrentUserPasswordArgs = {
 };
 
 
+export type MutationUpdateCustomerGiftCardArgs = {
+  id: Scalars['ID']['input'];
+  input: UpdateCustomerGiftCardInput;
+};
+
+
 export type MutationUpdateGiftCardArgs = {
   input: UpdateGiftCardInput;
 };
@@ -1563,8 +1957,37 @@ export type MutationUpdateItemInShoppingCartArgs = {
 };
 
 
+export type MutationUpdateMobileNumberBlacklistEntryArgs = {
+  id: Scalars['ID']['input'];
+  input: UpdateMobileNumberBlacklistInput;
+};
+
+
 export type MutationUpdatePaymentLinkArgs = {
   input: UpdatePaymentLinkInput;
+};
+
+
+export type MutationUpdateProductArgs = {
+  id: Scalars['ID']['input'];
+  input: UpdateProductInput;
+};
+
+
+export type MutationUpdateProductsOrderArgs = {
+  input: Array<ProductCategoryOrderInput>;
+  site: SiteEnum;
+};
+
+
+export type MutationUpdateSiteCustomerMindbodyIdArgs = {
+  newMindbodyId: Scalars['String']['input'];
+  siteCustomerId: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdateSystemSettingsArgs = {
+  input: UpdateSystemSettingsInput;
 };
 
 
@@ -1577,6 +2000,11 @@ export type MutationValidateResetPasswordTokenArgs = {
   input: ValidateResetPasswordTokenInput;
 };
 
+
+export type MutationVerifyCustomerPhoneNumberArgs = {
+  customerId: Scalars['ID']['input'];
+};
+
 export type NotValidResetPasswordTokenError = Error & {
   __typename: 'NotValidResetPasswordTokenError';
   code: Scalars['String']['output'];
@@ -1586,6 +2014,22 @@ export type OtherUserHasThisExternalIdError = Error & {
   __typename: 'OtherUserHasThisExternalIdError';
   code: Scalars['String']['output'];
   siteUser: IdentifiableSiteUser;
+};
+
+export type PaginatedAdminCustomers = {
+  __typename: 'PaginatedAdminCustomers';
+  items: Array<IdentifiableUser>;
+  limit: Scalars['Int']['output'];
+  page: Scalars['Int']['output'];
+  totalCount: Scalars['Int']['output'];
+};
+
+export type PaginatedAdminMindbodyClients = {
+  __typename: 'PaginatedAdminMindbodyClients';
+  items: Array<AdminMindbodyClient>;
+  limit: Scalars['Int']['output'];
+  page: Scalars['Int']['output'];
+  totalCount: Scalars['Int']['output'];
 };
 
 export type PaginatedClassStats = PaginatedResult & {
@@ -1600,6 +2044,14 @@ export type PaginatedEnrollments = PaginatedResult & {
   total: Scalars['Int']['output'];
 };
 
+export type PaginatedIncompleteTransactionFeedbacks = {
+  __typename: 'PaginatedIncompleteTransactionFeedbacks';
+  items: Array<IncompleteTransactionFeedback>;
+  limit: Scalars['Int']['output'];
+  page: Scalars['Int']['output'];
+  totalCount: Scalars['Int']['output'];
+};
+
 export type PaginatedPurchases = PaginatedResult & {
   __typename: 'PaginatedPurchases';
   purchases: Array<Purchase>;
@@ -1608,6 +2060,14 @@ export type PaginatedPurchases = PaginatedResult & {
 
 export type PaginatedResult = {
   total: Scalars['Int']['output'];
+};
+
+export type PaginatedTransactionRecords = {
+  __typename: 'PaginatedTransactionRecords';
+  items: Array<TransactionRecord>;
+  limit: Scalars['Int']['output'];
+  page: Scalars['Int']['output'];
+  totalCount: Scalars['Int']['output'];
 };
 
 export type PaginationInput = {
@@ -1735,6 +2195,30 @@ export type ProductAlertBeforePurchasing = {
   title: Scalars['String']['output'];
 };
 
+export type ProductCategoryOrderInput = {
+  category: ProductDisplayCategory;
+  /** Package ids in display order. */
+  productIds: Array<Scalars['ID']['input']>;
+};
+
+export enum ProductDisplayCategory {
+  Membership = 'membership',
+  Regular = 'regular',
+  Special = 'special',
+  Trial = 'trial',
+  Vod = 'vod'
+}
+
+export type ProductNotFound = Error & {
+  __typename: 'ProductNotFound';
+  code: Scalars['String']['output'];
+};
+
+export type ProductNotFoundError = Error & {
+  __typename: 'ProductNotFoundError';
+  code: Scalars['String']['output'];
+};
+
 export enum ProductType {
   ClassPackage = 'classPackage'
 }
@@ -1757,6 +2241,8 @@ export type Purchase = {
 
 export type Query = {
   __typename: 'Query';
+  /** Super admin only. Every package of the site Mindbody still lists, hidden ones included, with every field an admin edits. Ordered by category, then by displayOrder. Not the storefront list: use products for that. */
+  adminProducts: Array<AdminProduct>;
   /** Returns a single admin user */
   adminUser?: Maybe<AdminUser>;
   /** Lists all the admin users */
@@ -1774,12 +2260,16 @@ export type Query = {
    * duration, capacity, and booking availability. Results are ordered chronologically by class start time.
    */
   calendarClasses: Array<Class>;
+  /** Admin only. What the charge-client form offers a customer: products on sale (not deleted, not a membership or a trial, priced above zero) in a site the customer exists in, by site name then price. Empty for an unknown customer. */
+  chargeableProducts: Array<ChargeableProduct>;
   /** Get a single class information */
   classInfo?: Maybe<ClassInfo>;
   /** Returns a list of all the class schedules for a given site */
   classSchedules: Array<ClassSchedule>;
   /** Returns the list of all available countries */
   countries?: Maybe<Array<Maybe<Country>>>;
+  /** Returns all countries with phone codes for the blacklist form. ROLE_STAFF only. */
+  countriesWithPhoneCodes: Array<CountryWithPhoneCode>;
   /** Returns a specific country by a given country code */
   country?: Maybe<Country>;
   /** Returns the current AdminUser */
@@ -1807,8 +2297,16 @@ export type Query = {
    */
   currentUserWorkoutStats: Array<Maybe<ClassStat>>;
   currentUserWorkoutStatsPaginated: PaginatedClassStats;
+  /** Admin only, ROLE_SUPER_ADMIN (the Twig nav's Pending Gift Cards). Paid gift card orders still waiting for an admin to issue their code and PDF, newest first. */
+  customerGiftCards: Array<CustomerGiftCard>;
+  /** Returns every VOD period of a customer, deleted ones included, newest start first. Admin only. Errors: customer.not_found. */
+  customerVodPeriods: Array<AdminCustomerVodPeriod>;
+  /** Returns a paginated list of customers, newest first, with the filters of the admin customer list. Admin only. */
+  customers: PaginatedAdminCustomers;
   /** Returns the list of all the available gift cards */
   giftCards: Array<GiftCard>;
+  /** Lists TemporalTransactions whose feedback was received but did not complete, most recently updated first. Admin only. */
+  incompleteTransactionFeedbacks: PaginatedIncompleteTransactionFeedbacks;
   /** Verifies whether an sms validation code is valid */
   isSMSValidationCodeValid?: Maybe<IsSmsValidationCodeValidUnion>;
   /**
@@ -1851,6 +2349,14 @@ export type Query = {
    * @deprecated TEMPORARY stop-gap. Delete when KAN-231-shopping-cart-integration merges.
    */
   legacySavedCards: Array<LegacySavedCard>;
+  /** Returns a single Mindbody client, or null when the id does not exist. ROLE_SUPER_ADMIN only. */
+  mindbodyClient?: Maybe<AdminMindbodyClient>;
+  /** Returns a paginated list of Mindbody clients. startDate and endDate are accepted and ignored. ROLE_SUPER_ADMIN only. */
+  mindbodyClients: PaginatedAdminMindbodyClients;
+  /** Returns a list of all MindbodyStaff records of a site. Admin only. */
+  mindbodyStaffs: Array<MindbodyStaffInfo>;
+  /** Returns all blacklisted mobile numbers. ROLE_STAFF only. */
+  mobileNumberBlacklist: Array<MobileNumberBlackListEntry>;
   /** Partner only (X-API-Key with canIssueUserTokens, granted this site). The packages the calling partner may sell on this site, at the partner's price and in the partner's currency, ordered for display. Scoped to the key: two partners see two different lists. A site the key was not granted is refused; a key with no packages on it gets an empty list. */
   partnerProducts: PartnerProductsResultUnion;
   /** Returns a single payment link by ID */
@@ -1875,6 +2381,12 @@ export type Query = {
   siteUser?: Maybe<IdentifiableSiteUser>;
   /** Exact match on email within a site. Indexed, unlike searchSiteUser — prefer this when the address is known. */
   siteUserByEmail?: Maybe<IdentifiableSiteUser>;
+  /** Returns the system settings, saving the defaults first if they were never saved. ROLE_SUPER_ADMIN only. */
+  systemSettings: SystemSettings;
+  /** Returns a single transaction record by ID, or null when there is none. Staff only (ROLE_STAFF). */
+  transactionRecord?: Maybe<TransactionRecord>;
+  /** Returns a paginated list of transaction records, newest first. Staff only (ROLE_STAFF). */
+  transactionRecords: PaginatedTransactionRecords;
   /** Returns a user */
   user?: Maybe<IdentifiableUser>;
   /** Returns the ranking of a user in a specific class */
@@ -1882,6 +2394,11 @@ export type Query = {
   /** Returns a list of workhout stats */
   userWorkoutStats: Array<Maybe<ClassStat>>;
   userWorkoutStatsPaginated: PaginatedClassStats;
+};
+
+
+export type QueryAdminProductsArgs = {
+  site: SiteEnum;
 };
 
 
@@ -1898,6 +2415,11 @@ export type QueryAvailableClassTypesArgs = {
 export type QueryCalendarClassesArgs = {
   params?: InputMaybe<CalendarClassesParams>;
   site: SiteEnum;
+};
+
+
+export type QueryChargeableProductsArgs = {
+  customerId: Scalars['ID']['input'];
 };
 
 
@@ -1963,6 +2485,23 @@ export type QueryCurrentUserWorkoutStatsPaginatedArgs = {
 };
 
 
+export type QueryCustomerVodPeriodsArgs = {
+  customerId: Scalars['ID']['input'];
+};
+
+
+export type QueryCustomersArgs = {
+  pagination?: InputMaybe<PaginationInput>;
+  params?: InputMaybe<AdminCustomersParams>;
+};
+
+
+export type QueryIncompleteTransactionFeedbacksArgs = {
+  filter?: InputMaybe<IncompleteTransactionFeedbackFilterInput>;
+  pagination?: InputMaybe<PaginationInput>;
+};
+
+
 export type QueryIsSmsValidationCodeValidArgs = {
   smsCode: Scalars['String']['input'];
 };
@@ -2006,6 +2545,22 @@ export type QueryLegacyProductsArgs = {
 
 
 export type QueryLegacySavedCardsArgs = {
+  site: SiteEnum;
+};
+
+
+export type QueryMindbodyClientArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryMindbodyClientsArgs = {
+  pagination?: InputMaybe<PaginationInput>;
+  params?: InputMaybe<AdminMindbodyClientsParams>;
+};
+
+
+export type QueryMindbodyStaffsArgs = {
   site: SiteEnum;
 };
 
@@ -2072,6 +2627,17 @@ export type QuerySiteUserArgs = {
 export type QuerySiteUserByEmailArgs = {
   email: Scalars['String']['input'];
   site: SiteEnum;
+};
+
+
+export type QueryTransactionRecordArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryTransactionRecordsArgs = {
+  filter?: InputMaybe<TransactionRecordFilterInput>;
+  pagination?: InputMaybe<PaginationInput>;
 };
 
 
@@ -2203,6 +2769,11 @@ export type RoomLayout = {
   matrix?: Maybe<Array<ClassPositionInterface>>;
   name: Scalars['String']['output'];
   rows: Scalars['Int']['output'];
+};
+
+export type RoomLayoutInUseError = Error & {
+  __typename: 'RoomLayoutInUseError';
+  code: Scalars['String']['output'];
 };
 
 export type RoomLayoutInput = {
@@ -2367,10 +2938,79 @@ export type SwapSpotSuccess = {
   selectedEnrollment: EnrollmentInfoInterface;
 };
 
+export type SystemSettings = {
+  __typename: 'SystemSettings';
+  id: Scalars['ID']['output'];
+  sendSuccessfulPurchaseEmail: Scalars['Boolean']['output'];
+  textBottomIndexPage?: Maybe<Scalars['String']['output']>;
+};
+
 export type TooManyResetPasswordLinkRequestsError = Error & {
   __typename: 'TooManyResetPasswordLinkRequestsError';
   availableAgainAt?: Maybe<Scalars['DateTime']['output']>;
   code: Scalars['String']['output'];
+};
+
+export type TransactionItem = {
+  __typename: 'TransactionItem';
+  amount?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['ID']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  quantity?: Maybe<Scalars['Int']['output']>;
+};
+
+/** A payment recorded by the Payfort checkout, as the admin sees it. */
+export type TransactionRecord = {
+  __typename: 'TransactionRecord';
+  amount?: Maybe<Scalars['String']['output']>;
+  /** Mindbody's payment code for the purchase. */
+  authorizationCode?: Maybe<Scalars['String']['output']>;
+  created?: Maybe<Scalars['DateTime']['output']>;
+  creditCardChargeId?: Maybe<Scalars['String']['output']>;
+  creditCardHolderName?: Maybe<Scalars['String']['output']>;
+  creditCardLastFourDigits?: Maybe<Scalars['String']['output']>;
+  customerEmail?: Maybe<Scalars['String']['output']>;
+  customerName?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  installments?: Maybe<Scalars['Int']['output']>;
+  /** Whether refundTransaction would accept it now: not refunded yet and, when there is an amount, within the refund window. */
+  isRefundable: Scalars['Boolean']['output'];
+  items: Array<TransactionItem>;
+  /** Mindbody's payment record id. */
+  merchantPurchaseId?: Maybe<Scalars['Int']['output']>;
+  /** The raw response Mindbody returned to the checkout. */
+  merchantResponse?: Maybe<Scalars['String']['output']>;
+  /** The payment went through but the Mindbody checkout failed. */
+  mindbodyCheckoutFail: Scalars['Boolean']['output'];
+  /** The authorization code in Payfort's response. */
+  payfortAuthorizationCode?: Maybe<Scalars['String']['output']>;
+  /** The raw response Payfort returned to the payment. */
+  paymentGatewayResponse?: Maybe<Scalars['String']['output']>;
+  /** creditCard, digitalWallet, applePay, AMEX or tabby, read from Payfort's response; null when there is no response. */
+  paymentMethod?: Maybe<Scalars['String']['output']>;
+  refundDate?: Maybe<Scalars['DateTime']['output']>;
+  /** The raw response Payfort returned to the refund. */
+  refundResponse?: Maybe<Scalars['String']['output']>;
+  serviceExpirationDate?: Maybe<Scalars['DateTime']['output']>;
+  siteCustomer?: Maybe<IdentifiableSiteUser>;
+  siteName?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  subTotal?: Maybe<Scalars['String']['output']>;
+  taxAmount?: Maybe<Scalars['String']['output']>;
+  userCountry?: Maybe<Scalars['String']['output']>;
+};
+
+export type TransactionRecordFilterInput = {
+  /** Until the end of this day. */
+  endDate?: InputMaybe<Scalars['Date']['input']>;
+  /** creditCard, digitalWallet, applePay, amex or tabby (or CREDIT_CARD, DIGITAL_WALLET, APPLE_PAY, AMEX, TABBY). */
+  paymentMethod?: InputMaybe<Scalars['String']['input']>;
+  /** Matches the customer's full name, phone number or email. */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** A site code, e.g. dubai. */
+  site?: InputMaybe<Scalars['String']['input']>;
+  /** From this day. Without endDate, until now. */
+  startDate?: InputMaybe<Scalars['Date']['input']>;
 };
 
 export type TryToSwitchToSameSpotError = Error & {
@@ -2401,11 +3041,25 @@ export type UpdateCurrentUserPasswordInput = {
   newPassword: Scalars['String']['input'];
 };
 
+export type UpdateCustomerGiftCardInput = {
+  /** The code Mindbody issued when the admin sold the card. */
+  giftCardCode: Scalars['String']['input'];
+  /** The gift card PDF the customer receives. A PDF of at most 2048 KB. */
+  pdfGiftCard: Scalars['File']['input'];
+};
+
+export type UpdateCustomerGiftCardResultUnion = CustomerGiftCard | CustomerGiftCardNotFoundError | GiftCardCodeRequiredError | InvalidGiftCardPdfError;
+
 export type UpdateGiftCardInput = {
   /** Whether CRANK offers this card for sale. Omit to leave it as it is. */
   enabled?: InputMaybe<Scalars['Boolean']['input']>;
   grandTotal?: InputMaybe<Scalars['Float']['input']>;
   id: Scalars['ID']['input'];
+};
+
+export type UpdateMobileNumberBlacklistInput = {
+  countryId: Scalars['ID']['input'];
+  mobilePhoneNumber: Scalars['String']['input'];
 };
 
 export type UpdatePaymentLinkInput = {
@@ -2416,6 +3070,31 @@ export type UpdatePaymentLinkInput = {
   notificationEmailAddress: Scalars['String']['input'];
   site?: InputMaybe<SiteEnum>;
   title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateProductInput = {
+  customTitle?: InputMaybe<Scalars['String']['input']>;
+  doesItRequireSmsVerification: Scalars['Boolean']['input'];
+  errorMessageWhenTryingToPurchase?: InputMaybe<Scalars['String']['input']>;
+  isClassPassPackage: Scalars['Boolean']['input'];
+  isMembership: Scalars['Boolean']['input'];
+  isTrialPackage: Scalars['Boolean']['input'];
+  isVisible: Scalars['Boolean']['input'];
+  muviEnabled: Scalars['Boolean']['input'];
+  muviNumberOfDays?: InputMaybe<Scalars['Int']['input']>;
+  popupDescriptionAfterClickOnBuy?: InputMaybe<Scalars['String']['input']>;
+  popupTitleAfterClickOnBuy?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  textPayButton?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateProductResultUnion = AdminProduct | InvalidProductVodDaysError | ProductNotFound;
+
+export type UpdateProductsOrderResultUnion = AdminProductList | ProductNotFound;
+
+export type UpdateSystemSettingsInput = {
+  sendSuccessfulPurchaseEmail: Scalars['Boolean']['input'];
+  textBottomIndexPage?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateUserPasswordInput = {
@@ -2441,6 +3120,8 @@ export type User = {
   firstName: Scalars['String']['output'];
   gender?: Maybe<GenderEnum>;
   hideMetrics?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the customer confirmed their phone number by SMS, or an admin verified it for them. */
+  isMobilePhoneVerified: Scalars['Boolean']['output'];
   lastName: Scalars['String']['output'];
   leaderboardUsername?: Maybe<Scalars['String']['output']>;
   phone: Scalars['String']['output'];
@@ -2561,6 +3242,104 @@ export type WaitlistFullError = Error & {
   code: Scalars['String']['output'];
 };
 
+export type BulkActivateVodMutationVariables = Exact<{
+  input: BulkActivateVodInput;
+}>;
+
+
+export type BulkActivateVodMutation = { __typename: 'Mutation', bulkActivateVod: { __typename: 'BulkVodResult', processedCount: number } };
+
+export type BulkDeactivateVodMutationVariables = Exact<{
+  mindbodyIds: Array<Scalars['Int']['input']> | Scalars['Int']['input'];
+}>;
+
+
+export type BulkDeactivateVodMutation = { __typename: 'Mutation', bulkDeactivateVod: { __typename: 'BulkVodResult', processedCount: number } };
+
+export type AdminCustomersQueryVariables = Exact<{
+  params?: InputMaybe<AdminCustomersParams>;
+  pagination?: InputMaybe<PaginationInput>;
+}>;
+
+
+export type AdminCustomersQuery = { __typename: 'Query', customers: { __typename: 'PaginatedAdminCustomers', totalCount: number, page: number, limit: number, items: Array<{ __typename: 'IdentifiableUser', id?: string | null, user?: { __typename: 'User', firstName: string, lastName: string, email: string, phone: string, isMobilePhoneVerified: boolean, siteUsers: Array<{ __typename: 'SimpleSiteUser', site: SiteEnum, externalUserId: string }> } | null }> } };
+
+export type IncompleteFeedbacksQueryVariables = Exact<{
+  filter?: InputMaybe<IncompleteTransactionFeedbackFilterInput>;
+  pagination?: InputMaybe<PaginationInput>;
+}>;
+
+
+export type IncompleteFeedbacksQuery = { __typename: 'Query', incompleteTransactionFeedbacks: { __typename: 'PaginatedIncompleteTransactionFeedbacks', totalCount: number, page: number, limit: number, items: Array<{ __typename: 'IncompleteTransactionFeedback', id: string, merchantReference?: number | null, status: string, feedbackTryNumber: number, feedbackStatusUpdatedAt?: any | null, created: any, siteCustomer?: { __typename: 'IdentifiableSiteUser', id?: string | null, siteUserInfo?: { __typename: 'SimpleSiteUser', site: SiteEnum, externalUserId: string } | null, identifiableUser?: { __typename: 'IdentifiableUser', id?: string | null, user?: { __typename: 'User', firstName: string, lastName: string, email: string } | null } | null } | null }> } };
+
+export type RetryTransactionFeedbackMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type RetryTransactionFeedbackMutation = { __typename: 'Mutation', retryTransactionFeedback: boolean };
+
+export type AdminMindbodyClientsQueryVariables = Exact<{
+  params?: InputMaybe<AdminMindbodyClientsParams>;
+  pagination?: InputMaybe<PaginationInput>;
+}>;
+
+
+export type AdminMindbodyClientsQuery = { __typename: 'Query', mindbodyClients: { __typename: 'PaginatedAdminMindbodyClients', totalCount: number, page: number, limit: number, items: Array<{ __typename: 'AdminMindbodyClient', id: string, clientId?: string | null, firstName?: string | null, lastName?: string | null, email?: string | null, mobilePhone?: string | null }> } };
+
+export type AdminMindbodyClientQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type AdminMindbodyClientQuery = { __typename: 'Query', mindbodyClient?: { __typename: 'AdminMindbodyClient', id: string, clientId?: string | null, firstName?: string | null, lastName?: string | null, email?: string | null, mobilePhone?: string | null } | null };
+
+export type MindbodyStaffsQueryVariables = Exact<{
+  site: SiteEnum;
+}>;
+
+
+export type MindbodyStaffsQuery = { __typename: 'Query', mindbodyStaffs: Array<{ __typename: 'MindbodyStaffInfo', id: string, firstName: string, lastName: string, email?: string | null }> };
+
+export type SyncAllMindbodyStaffMutationVariables = Exact<{
+  site: SiteEnum;
+}>;
+
+
+export type SyncAllMindbodyStaffMutation = { __typename: 'Mutation', syncAllMindbodyStaff: boolean };
+
+export type MobileNumberBlacklistQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MobileNumberBlacklistQuery = { __typename: 'Query', mobileNumberBlacklist: Array<{ __typename: 'MobileNumberBlackListEntry', id: string, mobilePhoneNumber: string, fullPhoneNumber: string, countryId: string, countryName: string, countryPhoneCode: string }> };
+
+export type CountriesWithPhoneCodesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CountriesWithPhoneCodesQuery = { __typename: 'Query', countriesWithPhoneCodes: Array<{ __typename: 'CountryWithPhoneCode', id: string, name: string, phoneCode: string, formattedPhoneCode: string }> };
+
+export type CreateMobileNumberBlacklistEntryMutationVariables = Exact<{
+  input: CreateMobileNumberBlacklistInput;
+}>;
+
+
+export type CreateMobileNumberBlacklistEntryMutation = { __typename: 'Mutation', createMobileNumberBlacklistEntry: { __typename: 'MobileNumberBlackListEntry', id: string, mobilePhoneNumber: string, fullPhoneNumber: string, countryId: string, countryName: string, countryPhoneCode: string } };
+
+export type UpdateMobileNumberBlacklistEntryMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  input: UpdateMobileNumberBlacklistInput;
+}>;
+
+
+export type UpdateMobileNumberBlacklistEntryMutation = { __typename: 'Mutation', updateMobileNumberBlacklistEntry: { __typename: 'MobileNumberBlackListEntry', id: string, mobilePhoneNumber: string, fullPhoneNumber: string, countryId: string, countryName: string, countryPhoneCode: string } };
+
+export type DeleteMobileNumberBlacklistEntryMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteMobileNumberBlacklistEntryMutation = { __typename: 'Mutation', deleteMobileNumberBlacklistEntry: boolean };
+
 export type CreatePaymentLinkMutationVariables = Exact<{
   input: CreatePaymentLinkInput;
 }>;
@@ -2600,6 +3379,55 @@ export type AdminAvailableSitesQueryVariables = Exact<{ [key: string]: never; }>
 
 
 export type AdminAvailableSitesQuery = { __typename: 'Query', availableSites?: Array<{ __typename: 'Site', name: string, code: SiteEnum }> | null };
+
+export type SystemSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SystemSettingsQuery = { __typename: 'Query', systemSettings: { __typename: 'SystemSettings', id: string, sendSuccessfulPurchaseEmail: boolean, textBottomIndexPage?: string | null } };
+
+export type UpdateSystemSettingsMutationVariables = Exact<{
+  input: UpdateSystemSettingsInput;
+}>;
+
+
+export type UpdateSystemSettingsMutation = { __typename: 'Mutation', updateSystemSettings: { __typename: 'SystemSettings', id: string, sendSuccessfulPurchaseEmail: boolean, textBottomIndexPage?: string | null } };
+
+export type ClearSystemCacheMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ClearSystemCacheMutation = { __typename: 'Mutation', clearSystemCache: boolean };
+
+export type TransactionRecordsQueryVariables = Exact<{
+  filter?: InputMaybe<TransactionRecordFilterInput>;
+  pagination?: InputMaybe<PaginationInput>;
+}>;
+
+
+export type TransactionRecordsQuery = { __typename: 'Query', transactionRecords: { __typename: 'PaginatedTransactionRecords', totalCount: number, page: number, limit: number, items: Array<(
+      { __typename: 'TransactionRecord', paymentMethod?: string | null }
+      & { ' $fragmentRefs'?: { 'TransactionRecordListFieldsFragment': TransactionRecordListFieldsFragment } }
+    )> } };
+
+export type TransactionRecordQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type TransactionRecordQuery = { __typename: 'Query', transactionRecord?: (
+    { __typename: 'TransactionRecord', paymentMethod?: string | null, payfortAuthorizationCode?: string | null, serviceExpirationDate?: any | null, userCountry?: string | null, mindbodyCheckoutFail: boolean, merchantResponse?: string | null, paymentGatewayResponse?: string | null, refundResponse?: string | null }
+    & { ' $fragmentRefs'?: { 'TransactionRecordDetailFieldsFragment': TransactionRecordDetailFieldsFragment } }
+  ) | null };
+
+export type TransactionRecordListFieldsFragment = { __typename: 'TransactionRecord', id: string, amount?: string | null, status?: string | null, created?: any | null, customerName?: string | null, customerEmail?: string | null, siteName?: string | null, isRefundable: boolean, creditCardLastFourDigits?: string | null, authorizationCode?: string | null, items: Array<{ __typename: 'TransactionItem', id?: string | null, name?: string | null, quantity?: number | null, amount?: string | null }> } & { ' $fragmentName'?: 'TransactionRecordListFieldsFragment' };
+
+export type TransactionRecordDetailFieldsFragment = { __typename: 'TransactionRecord', id: string, creditCardChargeId?: string | null, creditCardHolderName?: string | null, creditCardLastFourDigits?: string | null, amount?: string | null, taxAmount?: string | null, subTotal?: string | null, status?: string | null, created?: any | null, refundDate?: any | null, authorizationCode?: string | null, installments?: number | null, merchantPurchaseId?: number | null, customerName?: string | null, customerEmail?: string | null, siteName?: string | null, isRefundable: boolean, siteCustomer?: { __typename: 'IdentifiableSiteUser', identifiableUser?: { __typename: 'IdentifiableUser', id?: string | null } | null } | null, items: Array<{ __typename: 'TransactionItem', id?: string | null, name?: string | null, quantity?: number | null, amount?: string | null }> } & { ' $fragmentName'?: 'TransactionRecordDetailFieldsFragment' };
+
+export type RefundTransactionMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type RefundTransactionMutation = { __typename: 'Mutation', refundTransaction: boolean };
 
 export type SiteSettingsQueryVariables = Exact<{
   site: SiteEnum;
@@ -3103,13 +3931,42 @@ export type GetUserQuery = { __typename: 'Query', user?: { __typename: 'Identifi
       & { ' $fragmentRefs'?: { 'CustomerProfileFieldsFragment': CustomerProfileFieldsFragment } }
     ) | null } | null };
 
+export type SyncAllClassSchedulesMutationVariables = Exact<{
+  site: SiteEnum;
+}>;
+
+
+export type SyncAllClassSchedulesMutation = { __typename: 'Mutation', syncAllClassSchedules: boolean };
+
+export const TransactionRecordListFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TransactionRecordListFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TransactionRecord"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"customerName"}},{"kind":"Field","name":{"kind":"Name","value":"customerEmail"}},{"kind":"Field","name":{"kind":"Name","value":"siteName"}},{"kind":"Field","name":{"kind":"Name","value":"isRefundable"}},{"kind":"Field","name":{"kind":"Name","value":"creditCardLastFourDigits"}},{"kind":"Field","name":{"kind":"Name","value":"authorizationCode"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]}}]} as unknown as DocumentNode<TransactionRecordListFieldsFragment, unknown>;
+export const TransactionRecordDetailFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TransactionRecordDetailFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TransactionRecord"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"creditCardChargeId"}},{"kind":"Field","name":{"kind":"Name","value":"creditCardHolderName"}},{"kind":"Field","name":{"kind":"Name","value":"creditCardLastFourDigits"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"taxAmount"}},{"kind":"Field","name":{"kind":"Name","value":"subTotal"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"refundDate"}},{"kind":"Field","name":{"kind":"Name","value":"authorizationCode"}},{"kind":"Field","name":{"kind":"Name","value":"installments"}},{"kind":"Field","name":{"kind":"Name","value":"merchantPurchaseId"}},{"kind":"Field","name":{"kind":"Name","value":"siteCustomer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"identifiableUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"customerName"}},{"kind":"Field","name":{"kind":"Name","value":"customerEmail"}},{"kind":"Field","name":{"kind":"Name","value":"siteName"}},{"kind":"Field","name":{"kind":"Name","value":"isRefundable"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]}}]} as unknown as DocumentNode<TransactionRecordDetailFieldsFragment, unknown>;
 export const CustomerProfileFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CustomerProfileFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"leaderboardUsername"}},{"kind":"Field","name":{"kind":"Name","value":"weight"}},{"kind":"Field","name":{"kind":"Name","value":"gender"}},{"kind":"Field","name":{"kind":"Name","value":"birthdate"}},{"kind":"Field","name":{"kind":"Name","value":"country"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"state"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"address1"}},{"kind":"Field","name":{"kind":"Name","value":"address2"}},{"kind":"Field","name":{"kind":"Name","value":"zipCode"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"emergencyContactName"}},{"kind":"Field","name":{"kind":"Name","value":"emergencyContactPhone"}},{"kind":"Field","name":{"kind":"Name","value":"emergencyContactRelationship"}},{"kind":"Field","name":{"kind":"Name","value":"hideMetrics"}},{"kind":"Field","name":{"kind":"Name","value":"existsInSites"}},{"kind":"Field","name":{"kind":"Name","value":"siteUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"externalUserId"}},{"kind":"Field","name":{"kind":"Name","value":"site"}}]}}]}}]} as unknown as DocumentNode<CustomerProfileFieldsFragment, unknown>;
+export const BulkActivateVodDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"BulkActivateVod"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BulkActivateVodInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bulkActivateVod"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"processedCount"}}]}}]}}]} as unknown as DocumentNode<BulkActivateVodMutation, BulkActivateVodMutationVariables>;
+export const BulkDeactivateVodDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"BulkDeactivateVod"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mindbodyIds"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bulkDeactivateVod"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"mindbodyIds"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mindbodyIds"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"processedCount"}}]}}]}}]} as unknown as DocumentNode<BulkDeactivateVodMutation, BulkDeactivateVodMutationVariables>;
+export const AdminCustomersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AdminCustomers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"params"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"AdminCustomersParams"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PaginationInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"customers"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"params"},"value":{"kind":"Variable","name":{"kind":"Name","value":"params"}}},{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"isMobilePhoneVerified"}},{"kind":"Field","name":{"kind":"Name","value":"siteUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"site"}},{"kind":"Field","name":{"kind":"Name","value":"externalUserId"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"totalCount"}},{"kind":"Field","name":{"kind":"Name","value":"page"}},{"kind":"Field","name":{"kind":"Name","value":"limit"}}]}}]}}]} as unknown as DocumentNode<AdminCustomersQuery, AdminCustomersQueryVariables>;
+export const IncompleteFeedbacksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"IncompleteFeedbacks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"IncompleteTransactionFeedbackFilterInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PaginationInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"incompleteTransactionFeedbacks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}},{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"totalCount"}},{"kind":"Field","name":{"kind":"Name","value":"page"}},{"kind":"Field","name":{"kind":"Name","value":"limit"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"merchantReference"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"feedbackTryNumber"}},{"kind":"Field","name":{"kind":"Name","value":"feedbackStatusUpdatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"siteCustomer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"siteUserInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"site"}},{"kind":"Field","name":{"kind":"Name","value":"externalUserId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"identifiableUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<IncompleteFeedbacksQuery, IncompleteFeedbacksQueryVariables>;
+export const RetryTransactionFeedbackDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RetryTransactionFeedback"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"retryTransactionFeedback"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<RetryTransactionFeedbackMutation, RetryTransactionFeedbackMutationVariables>;
+export const AdminMindbodyClientsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AdminMindbodyClients"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"params"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"AdminMindbodyClientsParams"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PaginationInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mindbodyClients"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"params"},"value":{"kind":"Variable","name":{"kind":"Name","value":"params"}}},{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"clientId"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"mobilePhone"}}]}},{"kind":"Field","name":{"kind":"Name","value":"totalCount"}},{"kind":"Field","name":{"kind":"Name","value":"page"}},{"kind":"Field","name":{"kind":"Name","value":"limit"}}]}}]}}]} as unknown as DocumentNode<AdminMindbodyClientsQuery, AdminMindbodyClientsQueryVariables>;
+export const AdminMindbodyClientDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AdminMindbodyClient"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mindbodyClient"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"clientId"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"mobilePhone"}}]}}]}}]} as unknown as DocumentNode<AdminMindbodyClientQuery, AdminMindbodyClientQueryVariables>;
+export const MindbodyStaffsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MindbodyStaffs"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mindbodyStaffs"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<MindbodyStaffsQuery, MindbodyStaffsQueryVariables>;
+export const SyncAllMindbodyStaffDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SyncAllMindbodyStaff"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"syncAllMindbodyStaff"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}]}]}}]} as unknown as DocumentNode<SyncAllMindbodyStaffMutation, SyncAllMindbodyStaffMutationVariables>;
+export const MobileNumberBlacklistDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MobileNumberBlacklist"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mobileNumberBlacklist"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mobilePhoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"fullPhoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"countryId"}},{"kind":"Field","name":{"kind":"Name","value":"countryName"}},{"kind":"Field","name":{"kind":"Name","value":"countryPhoneCode"}}]}}]}}]} as unknown as DocumentNode<MobileNumberBlacklistQuery, MobileNumberBlacklistQueryVariables>;
+export const CountriesWithPhoneCodesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CountriesWithPhoneCodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"countriesWithPhoneCodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"phoneCode"}},{"kind":"Field","name":{"kind":"Name","value":"formattedPhoneCode"}}]}}]}}]} as unknown as DocumentNode<CountriesWithPhoneCodesQuery, CountriesWithPhoneCodesQueryVariables>;
+export const CreateMobileNumberBlacklistEntryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateMobileNumberBlacklistEntry"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateMobileNumberBlacklistInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createMobileNumberBlacklistEntry"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mobilePhoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"fullPhoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"countryId"}},{"kind":"Field","name":{"kind":"Name","value":"countryName"}},{"kind":"Field","name":{"kind":"Name","value":"countryPhoneCode"}}]}}]}}]} as unknown as DocumentNode<CreateMobileNumberBlacklistEntryMutation, CreateMobileNumberBlacklistEntryMutationVariables>;
+export const UpdateMobileNumberBlacklistEntryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateMobileNumberBlacklistEntry"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateMobileNumberBlacklistInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateMobileNumberBlacklistEntry"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mobilePhoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"fullPhoneNumber"}},{"kind":"Field","name":{"kind":"Name","value":"countryId"}},{"kind":"Field","name":{"kind":"Name","value":"countryName"}},{"kind":"Field","name":{"kind":"Name","value":"countryPhoneCode"}}]}}]}}]} as unknown as DocumentNode<UpdateMobileNumberBlacklistEntryMutation, UpdateMobileNumberBlacklistEntryMutationVariables>;
+export const DeleteMobileNumberBlacklistEntryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteMobileNumberBlacklistEntry"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteMobileNumberBlacklistEntry"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<DeleteMobileNumberBlacklistEntryMutation, DeleteMobileNumberBlacklistEntryMutationVariables>;
 export const CreatePaymentLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePaymentLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreatePaymentLinkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPaymentLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"notificationEmailAddress"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<CreatePaymentLinkMutation, CreatePaymentLinkMutationVariables>;
 export const DeletePaymentLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeletePaymentLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deletePaymentLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<DeletePaymentLinkMutation, DeletePaymentLinkMutationVariables>;
 export const PaymentLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PaymentLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"paymentLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"notificationEmailAddress"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<PaymentLinkQuery, PaymentLinkQueryVariables>;
 export const PaymentLinksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PaymentLinks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"paymentLinks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"notificationEmailAddress"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<PaymentLinksQuery, PaymentLinksQueryVariables>;
 export const UpdatePaymentLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePaymentLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdatePaymentLinkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePaymentLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"notificationEmailAddress"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<UpdatePaymentLinkMutation, UpdatePaymentLinkMutationVariables>;
 export const AdminAvailableSitesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AdminAvailableSites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"availableSites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]} as unknown as DocumentNode<AdminAvailableSitesQuery, AdminAvailableSitesQueryVariables>;
+export const SystemSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SystemSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"systemSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sendSuccessfulPurchaseEmail"}},{"kind":"Field","name":{"kind":"Name","value":"textBottomIndexPage"}}]}}]}}]} as unknown as DocumentNode<SystemSettingsQuery, SystemSettingsQueryVariables>;
+export const UpdateSystemSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateSystemSettings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateSystemSettingsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateSystemSettings"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sendSuccessfulPurchaseEmail"}},{"kind":"Field","name":{"kind":"Name","value":"textBottomIndexPage"}}]}}]}}]} as unknown as DocumentNode<UpdateSystemSettingsMutation, UpdateSystemSettingsMutationVariables>;
+export const ClearSystemCacheDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ClearSystemCache"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"clearSystemCache"}}]}}]} as unknown as DocumentNode<ClearSystemCacheMutation, ClearSystemCacheMutationVariables>;
+export const TransactionRecordsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TransactionRecords"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"TransactionRecordFilterInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PaginationInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"transactionRecords"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}},{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TransactionRecordListFields"}},{"kind":"Field","name":{"kind":"Name","value":"paymentMethod"}}]}},{"kind":"Field","name":{"kind":"Name","value":"totalCount"}},{"kind":"Field","name":{"kind":"Name","value":"page"}},{"kind":"Field","name":{"kind":"Name","value":"limit"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TransactionRecordListFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TransactionRecord"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"customerName"}},{"kind":"Field","name":{"kind":"Name","value":"customerEmail"}},{"kind":"Field","name":{"kind":"Name","value":"siteName"}},{"kind":"Field","name":{"kind":"Name","value":"isRefundable"}},{"kind":"Field","name":{"kind":"Name","value":"creditCardLastFourDigits"}},{"kind":"Field","name":{"kind":"Name","value":"authorizationCode"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]}}]} as unknown as DocumentNode<TransactionRecordsQuery, TransactionRecordsQueryVariables>;
+export const TransactionRecordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TransactionRecord"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"transactionRecord"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TransactionRecordDetailFields"}},{"kind":"Field","name":{"kind":"Name","value":"paymentMethod"}},{"kind":"Field","name":{"kind":"Name","value":"payfortAuthorizationCode"}},{"kind":"Field","name":{"kind":"Name","value":"serviceExpirationDate"}},{"kind":"Field","name":{"kind":"Name","value":"userCountry"}},{"kind":"Field","name":{"kind":"Name","value":"mindbodyCheckoutFail"}},{"kind":"Field","name":{"kind":"Name","value":"merchantResponse"}},{"kind":"Field","name":{"kind":"Name","value":"paymentGatewayResponse"}},{"kind":"Field","name":{"kind":"Name","value":"refundResponse"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TransactionRecordDetailFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TransactionRecord"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"creditCardChargeId"}},{"kind":"Field","name":{"kind":"Name","value":"creditCardHolderName"}},{"kind":"Field","name":{"kind":"Name","value":"creditCardLastFourDigits"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"taxAmount"}},{"kind":"Field","name":{"kind":"Name","value":"subTotal"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"refundDate"}},{"kind":"Field","name":{"kind":"Name","value":"authorizationCode"}},{"kind":"Field","name":{"kind":"Name","value":"installments"}},{"kind":"Field","name":{"kind":"Name","value":"merchantPurchaseId"}},{"kind":"Field","name":{"kind":"Name","value":"siteCustomer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"identifiableUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"customerName"}},{"kind":"Field","name":{"kind":"Name","value":"customerEmail"}},{"kind":"Field","name":{"kind":"Name","value":"siteName"}},{"kind":"Field","name":{"kind":"Name","value":"isRefundable"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]}}]} as unknown as DocumentNode<TransactionRecordQuery, TransactionRecordQueryVariables>;
+export const RefundTransactionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RefundTransaction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"refundTransaction"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<RefundTransactionMutation, RefundTransactionMutationVariables>;
 export const SiteSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"siteSettings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"siteSettings"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"siteDateTimeNow"}}]}}]}}]} as unknown as DocumentNode<SiteSettingsQuery, SiteSettingsQueryVariables>;
 export const ClassInfoAdminDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"classInfoAdmin"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"classInfo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}},{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"class"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"instructorName"}},{"kind":"Field","name":{"kind":"Name","value":"start"}},{"kind":"Field","name":{"kind":"Name","value":"startWithNoTimeZone"}},{"kind":"Field","name":{"kind":"Name","value":"duration"}},{"kind":"Field","name":{"kind":"Name","value":"waitListAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"showAsDisabled"}},{"kind":"Field","name":{"kind":"Name","value":"maxCapacity"}},{"kind":"Field","name":{"kind":"Name","value":"isSubstitute"}},{"kind":"Field","name":{"kind":"Name","value":"hasClassStats"}},{"kind":"Field","name":{"kind":"Name","value":"isSynchronizing"}}]}},{"kind":"Field","name":{"kind":"Name","value":"roomLayout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"matrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"x"}},{"kind":"Field","name":{"kind":"Name","value":"y"}},{"kind":"Field","name":{"kind":"Name","value":"icon"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"BookableSpot"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"enabled"}},{"kind":"Field","name":{"kind":"Name","value":"spotNumber"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"enrollments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"status"},"value":{"kind":"EnumValue","value":"active"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"enrollmentStatus"}},{"kind":"Field","name":{"kind":"Name","value":"enrollmentDateTime"}},{"kind":"Field","name":{"kind":"Name","value":"identifiableSiteUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"identifiableUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"leaderboardUsername"}},{"kind":"Field","name":{"kind":"Name","value":"gender"}}]}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EnrollmentInfo"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isCheckedIn"}},{"kind":"Field","name":{"kind":"Name","value":"spotNumber"}},{"kind":"Field","name":{"kind":"Name","value":"isBookedForFree"}},{"kind":"Field","name":{"kind":"Name","value":"hasStats"}},{"kind":"Field","name":{"kind":"Name","value":"isFirstTimeInThisTypeOfClass"}},{"kind":"Field","name":{"kind":"Name","value":"isFirstTimeWithThisInstructor"}},{"kind":"Field","name":{"kind":"Name","value":"isTodayUserBirthday"}},{"kind":"Field","name":{"kind":"Name","value":"isUserLeaderboardEnabled"}},{"kind":"Field","name":{"kind":"Name","value":"bookedViaClassPass"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"onHoldSpots"}},{"kind":"Field","name":{"kind":"Name","value":"orphanedClassStatsSpots"}}]}}]}}]} as unknown as DocumentNode<ClassInfoAdminQuery, ClassInfoAdminQueryVariables>;
 export const DisableSpotDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"disableSpot"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"DisableEnableSpotInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"disableSpot"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"DisableEnableSpotResult"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"result"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SpotNotFoundError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<DisableSpotMutation, DisableSpotMutationVariables>;
@@ -3169,3 +4026,4 @@ export const UpdateCurrentAdminUserFavoriteSiteDocument = {"kind":"Document","de
 export const UpdateCurrentAdminUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateCurrentAdminUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateCurrentAdminUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCurrentAdminUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"roles"}},{"kind":"Field","name":{"kind":"Name","value":"linkedInstructors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"site"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"linkedSites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"Field","name":{"kind":"Name","value":"favoriteSite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"Field","name":{"kind":"Name","value":"showCancelledClasses"}}]}}]}}]} as unknown as DocumentNode<UpdateCurrentAdminUserMutation, UpdateCurrentAdminUserMutationVariables>;
 export const GetShowCancelledClassesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetShowCancelledClasses"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentAdminUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"showCancelledClasses"}}]}}]}}]} as unknown as DocumentNode<GetShowCancelledClassesQuery, GetShowCancelledClassesQueryVariables>;
 export const GetUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CustomerProfileFields"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CustomerProfileFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"leaderboardUsername"}},{"kind":"Field","name":{"kind":"Name","value":"weight"}},{"kind":"Field","name":{"kind":"Name","value":"gender"}},{"kind":"Field","name":{"kind":"Name","value":"birthdate"}},{"kind":"Field","name":{"kind":"Name","value":"country"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"state"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"address1"}},{"kind":"Field","name":{"kind":"Name","value":"address2"}},{"kind":"Field","name":{"kind":"Name","value":"zipCode"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"emergencyContactName"}},{"kind":"Field","name":{"kind":"Name","value":"emergencyContactPhone"}},{"kind":"Field","name":{"kind":"Name","value":"emergencyContactRelationship"}},{"kind":"Field","name":{"kind":"Name","value":"hideMetrics"}},{"kind":"Field","name":{"kind":"Name","value":"existsInSites"}},{"kind":"Field","name":{"kind":"Name","value":"siteUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"externalUserId"}},{"kind":"Field","name":{"kind":"Name","value":"site"}}]}}]}}]} as unknown as DocumentNode<GetUserQuery, GetUserQueryVariables>;
+export const SyncAllClassSchedulesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"syncAllClassSchedules"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"syncAllClassSchedules"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}]}]}}]} as unknown as DocumentNode<SyncAllClassSchedulesMutation, SyncAllClassSchedulesMutationVariables>;

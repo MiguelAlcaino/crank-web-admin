@@ -5,12 +5,14 @@ import { newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { useTransactionRecords } from '../composables/useTransactionRecords'
 import { useAvailableSites } from '@/modules/shared/composables/useAvailableSites'
 import PaginationComponent from '@/modules/shared/components/PaginationComponent.vue'
+import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
 
 const gqlUrl = import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL
 const apolloClient = newAuthenticatedApolloClient(gqlUrl)
 const txn = useTransactionRecords(apolloClient)
 const { sites: availableSites, fetchSites } = useAvailableSites(apolloClient)
 const router = useRouter()
+const showPaymentMethod = isFeatureAvailable(AdminFeature.TransactionPaymentDetails)
 
 const search = ref('')
 const paymentMethod = ref('')
@@ -132,6 +134,7 @@ onMounted(async () => {
             <th>Date</th>
             <th>Payment Status</th>
             <th>Amount</th>
+            <th v-if="showPaymentMethod">Payment method</th>
             <th>Auth code</th>
             <th>Site</th>
             <th>Options</th>
@@ -139,7 +142,9 @@ onMounted(async () => {
         </thead>
         <tbody>
           <tr v-if="txn.listResult.value.items.length === 0">
-            <td colspan="8" class="text-center text-muted py-3">No transactions found</td>
+            <td :colspan="showPaymentMethod ? 9 : 8" class="text-center text-muted py-3">
+              No transactions found
+            </td>
           </tr>
           <tr v-for="t in txn.listResult.value.items" :key="t.id">
             <td>{{ t.customerName || '-' }}</td>
@@ -151,6 +156,7 @@ onMounted(async () => {
               </span>
             </td>
             <td>{{ t.shoppingCart?.currency }} {{ t.amount || '0' }}</td>
+            <td v-if="showPaymentMethod">{{ t.paymentMethod || '-' }}</td>
             <td>{{ t.authorizationCode || '-' }}</td>
             <td>{{ t.siteName || '-' }}</td>
             <td>

@@ -166,13 +166,12 @@ export const useBlacklistCrud = (apolloClient: ApolloClient<NormalizedCacheObjec
     isSaving.value = true
     hasError.value = false
     try {
-      const { data } = await apolloClient.mutate({
+      // false means the entry no longer exists, so it leaves the list either way.
+      await apolloClient.mutate({
         mutation: DELETE_MUTATION,
         variables: { id }
       })
-      if (data?.deleteMobileNumberBlacklistEntry) {
-        entries.value = entries.value.filter((e) => e.id !== id)
-      }
+      entries.value = entries.value.filter((e) => e.id !== id)
       return true
     } catch (e) {
       hasError.value = true

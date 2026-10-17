@@ -5,7 +5,8 @@ import { AdminFeature, isFeatureAvailableIn } from './src/config/features'
 /*
  * Codegen against crank-payments `main` (backend profile `main`).
  *
- * Schema: graphql.schema.main.graphql (`npm run schema:main` refreshes it). Output: src/gql-main/.
+ * Schema: graphql.schema.main.graphql (`npm run schema:main` refreshes it, from crank-payments
+ * `develop` by default). Output: src/gql-main/.
  * The KAN-231 codegen (codegen.ts, src/gql/, graphql.schema.json) is unaffected.
  *
  * Documents: every document in src/ except the ones of features that `main` does not support yet,
@@ -40,8 +41,8 @@ const config: CodegenConfig = {
     'src/**/*.graphql',
     '!src/gql/**',
     '!src/gql-main/**',
-    // KAN-231-only operations shared by modules that exist on both profiles.
-    '!src/services/documents/kan231.ts',
+    // KAN-231-only operations of modules that exist on both profiles.
+    '!src/**/documents/kan231.ts',
     ...excludedDocuments.map((glob) => `!${glob}`)
   ],
   generates: {
