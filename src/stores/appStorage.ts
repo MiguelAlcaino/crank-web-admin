@@ -4,8 +4,7 @@ import { SiteEnum } from '@/modules/shared/interfaces'
 
 dayjs.Ls.en.weekStart = 1
 
-export const appStore = defineStore({
-  id: 'appStore',
+export const appStore = defineStore('appStore', {
   state: () => ({
     site:
       localStorage.getItem('site') != null

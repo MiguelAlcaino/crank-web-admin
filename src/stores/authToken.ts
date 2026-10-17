@@ -5,8 +5,7 @@ interface State {
   refreshTokenTimeout: number | null
 }
 
-export const useAuthenticationStore = defineStore({
-  id: 'authToken',
+export const useAuthenticationStore = defineStore('authToken', {
   state: (): State => ({
     token: localStorage.getItem('authToken'),
     refreshTokenTimeout: null
