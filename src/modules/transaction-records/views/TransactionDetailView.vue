@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { useTransactionRecords } from '../composables/useTransactionRecords'
 import { useToast } from '@/modules/shared/composables/useToast'
+import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
 
 const gqlUrl = import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL
 const apolloClient = newAuthenticatedApolloClient(gqlUrl)
@@ -13,6 +14,7 @@ const route = useRoute()
 const router = useRouter()
 
 const confirmRefund = ref(false)
+const showPaymentDetails = isFeatureAvailable(AdminFeature.TransactionPaymentDetails)
 
 onMounted(() => {
   txn.fetchDetail(route.params.id as string)
@@ -49,6 +51,14 @@ function formatDate(dateStr: string | null): string {
     <div v-if="txn.hasError.value" class="alert alert-danger">{{ txn.errorMessage.value }}</div>
 
     <div v-if="txn.detail.value && !txn.isLoading.value">
+      <div
+        v-if="showPaymentDetails && txn.detail.value.mindbodyCheckoutFail"
+        class="alert alert-danger"
+      >
+        This transaction was paid but was not registered in Mindbody. Check the Mindbody response
+        below for details.
+      </div>
+
       <table class="table table-bordered">
         <tbody>
           <tr><th width="200">ID</th><td>{{ txn.detail.value.id }}</td></tr>
@@ -72,6 +82,22 @@ function formatDate(dateStr: string | null): string {
           <tr><th>Card Holder</th><td>{{ txn.detail.value.creditCardHolderName || '-' }}</td></tr>
           <tr><th>Last 4 Digits</th><td>{{ txn.detail.value.creditCardLastFourDigits || '-' }}</td></tr>
           <tr><th>Authorization Code</th><td>{{ txn.detail.value.authorizationCode || '-' }}</td></tr>
+          <template v-if="showPaymentDetails">
+            <tr><th>Payment Method</th><td>{{ txn.detail.value.paymentMethod || '-' }}</td></tr>
+            <tr>
+              <th>Payfort Authorization Code</th>
+              <td>{{ txn.detail.value.payfortAuthorizationCode || '-' }}</td>
+            </tr>
+            <tr><th>Country</th><td>{{ txn.detail.value.userCountry || '-' }}</td></tr>
+            <tr>
+              <th>Mindbody Payment Record ID</th>
+              <td>{{ txn.detail.value.merchantPurchaseId ?? '-' }}</td>
+            </tr>
+            <tr>
+              <th>Service Expiration</th>
+              <td>{{ formatDate(txn.detail.value.serviceExpirationDate ?? null) }}</td>
+            </tr>
+          </template>
           <tr><th>Installments</th><td>{{ txn.detail.value.installments }}</td></tr>
           <tr><th>Created</th><td>{{ formatDate(txn.detail.value.created) }}</td></tr>
           <tr v-if="txn.detail.value.refundDate"><th>Refund Date</th><td>{{ formatDate(txn.detail.value.refundDate) }}</td></tr>
@@ -101,6 +127,22 @@ function formatDate(dateStr: string | null): string {
           </template>
         </tbody>
       </table>
+
+      <!-- Raw gateway responses (main only) -->
+      <template v-if="showPaymentDetails">
+        <details v-if="txn.detail.value.merchantResponse" class="mb-2">
+          <summary>Mindbody response</summary>
+          <pre class="bg-light p-2 small text-wrap">{{ txn.detail.value.merchantResponse }}</pre>
+        </details>
+        <details v-if="txn.detail.value.paymentGatewayResponse" class="mb-2">
+          <summary>Payfort response</summary>
+          <pre class="bg-light p-2 small text-wrap">{{ txn.detail.value.paymentGatewayResponse }}</pre>
+        </details>
+        <details v-if="txn.detail.value.refundResponse" class="mb-2">
+          <summary>Payfort refund response</summary>
+          <pre class="bg-light p-2 small text-wrap">{{ txn.detail.value.refundResponse }}</pre>
+        </details>
+      </template>
 
       <!-- Refund -->
       <div v-if="txn.detail.value.isRefundable" class="mt-3">

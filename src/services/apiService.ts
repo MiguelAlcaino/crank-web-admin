@@ -102,6 +102,7 @@ import {
   GET_USER_WITH_SUBSCRIPTIONS_QUERY,
   SEARCH_USER_DOCUMENT
 } from '@/services/documents/kan231'
+import { SYNC_ALL_CLASS_SCHEDULES_MUTATION } from '@/services/documents/main'
 import { DomainError } from '@/utils/errors/domainError'
 import { ValidationError } from '@/utils/errors/saveUserErrors'
 import { ApolloError, gql } from '@apollo/client'
@@ -866,6 +867,17 @@ export class ApiService {
     })
 
     return result.data.syncAllClasses as boolean
+  }
+
+  /** main backend profile only (AdminFeature.SyncAllClassSchedules). */
+  async syncAllClassSchedules(site: SiteEnum): Promise<boolean> {
+    const result = await this.authApiClient.mutate({
+      mutation: SYNC_ALL_CLASS_SCHEDULES_MUTATION,
+      variables: { site },
+      fetchPolicy: 'no-cache'
+    })
+
+    return result.data.syncAllClassSchedules as boolean
   }
 
   async getCountries(): Promise<Country[]> {

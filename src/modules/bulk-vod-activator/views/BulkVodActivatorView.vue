@@ -41,7 +41,9 @@ async function handleSubmit() {
   }
 
   if (success) {
-    toast.success(`All ${ids.length} customers have been processed successfully`)
+    // processedCount is how many customers the Mindbody ids matched, which can be fewer than sent.
+    const processedCount = bulk.lastResult.value?.processedCount ?? ids.length
+    toast.success(`${processedCount} of ${ids.length} customers have been processed successfully`)
     mindbodyIdsText.value = ''
   }
 }

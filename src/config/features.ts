@@ -7,6 +7,8 @@
  * - `kan231`: the KAN-231 branch (Sylius shopping cart, subscription service). Default, so
  *   existing builds and the library build keep their behaviour.
  * - `main`: production crank-payments (`main`), which does not have every admin operation yet.
+ *   Its admin operations are ported to crank-payments `develop` first, so its codegen
+ *   (codegen.main.ts) validates against `develop`'s schema.
  *
  * Set at build time with `VITE_BACKEND_PROFILE`. Every admin module or optional feature is listed
  * in `FEATURE_PROFILES` with the profiles whose backend supports it; the router and the sidebar
@@ -59,8 +61,20 @@ export enum AdminFeature {
   // Features inside a module
   /** Subscriptions section of the customer profile (`User.subscriptions`). */
   CustomerProfileSubscriptions = 'customerProfileSubscriptions',
-  /** "Sync All" button of the class schedule config page. */
+  /** "Sync All" button of the class schedule config page (`syncAllClassSchedules` mutation). */
   SyncAllClassSchedules = 'syncAllClassSchedules',
+  /**
+   * "Sync All" link of the class schedule config page, to the URL the host page injects as
+   * `url-sync-all` (library build); the KAN-231 backend has no `syncAllClassSchedules` mutation.
+   */
+  SyncAllClassSchedulesLink = 'syncAllClassSchedulesLink',
+  /** Sylius shopping cart of a transaction record (`TransactionRecord.shoppingCart`). */
+  TransactionShoppingCart = 'transactionShoppingCart',
+  /**
+   * Payment details of a transaction record the Twig admin shows (payment method, Payfort
+   * authorization code, raw gateway responses...), which only `main` exposes.
+   */
+  TransactionPaymentDetails = 'transactionPaymentDetails',
   /**
    * The real Pending Gift Cards page (`customerGiftCards`, `updateCustomerGiftCard`). Without it the
    * Pending Gift Cards route shows a placeholder.
@@ -98,9 +112,9 @@ export const FEATURE_PROFILES: Record<AdminFeature, readonly BackendProfile[]> =
   [AdminFeature.AdminUsers]: ALL,
   [AdminFeature.MySettings]: ALL,
   [AdminFeature.Customer]: ALL,
-  [AdminFeature.CustomersList]: KAN231_ONLY, // TODO: main, crank-payments#967
-  [AdminFeature.Transactions]: KAN231_ONLY, // TODO: main, crank-payments#966
-  [AdminFeature.IncompleteFeedbacks]: KAN231_ONLY, // TODO: main, crank-payments#967
+  [AdminFeature.CustomersList]: ALL,
+  [AdminFeature.Transactions]: ALL,
+  [AdminFeature.IncompleteFeedbacks]: ALL,
   [AdminFeature.Subscriptions]: KAN231_ONLY, // TODO: main, crank-payments#968
   // Sylius page; main gets its own page for the local Product entity, crank-payments#970
   [AdminFeature.ClassPackages]: KAN231_ONLY,
@@ -108,17 +122,19 @@ export const FEATURE_PROFILES: Record<AdminFeature, readonly BackendProfile[]> =
   [AdminFeature.CustomerGiftCards]: ALL,
   [AdminFeature.SessionTypes]: KAN231_ONLY,
   [AdminFeature.InstructorProfiles]: KAN231_ONLY,
-  [AdminFeature.MindbodyStaff]: KAN231_ONLY, // TODO: main, crank-payments#969
-  [AdminFeature.MindbodyClients]: KAN231_ONLY, // TODO: main, crank-payments#969
+  [AdminFeature.MindbodyStaff]: ALL,
+  [AdminFeature.MindbodyClients]: ALL,
   [AdminFeature.WebhookEvents]: KAN231_ONLY,
-  [AdminFeature.SystemSettings]: KAN231_ONLY, // TODO: main, crank-payments#969
-  [AdminFeature.Blacklist]: KAN231_ONLY, // TODO: main, crank-payments#969
+  [AdminFeature.SystemSettings]: ALL,
+  [AdminFeature.Blacklist]: ALL,
   [AdminFeature.PushNotifications]: KAN231_ONLY,
-  [AdminFeature.BulkVod]: KAN231_ONLY, // TODO: main, crank-payments#967
-  [AdminFeature.AdminProducts]: MAIN_ONLY, // crank-payments#970
+  [AdminFeature.BulkVod]: ALL,
   [AdminFeature.CustomerProfileSubscriptions]: KAN231_ONLY, // TODO: main, crank-payments#968
-  // TODO: main, syncAllClassSchedules mutation, crank-payments#969
-  [AdminFeature.SyncAllClassSchedules]: KAN231_ONLY,
+  [AdminFeature.SyncAllClassSchedules]: MAIN_ONLY,
+  [AdminFeature.SyncAllClassSchedulesLink]: KAN231_ONLY,
+  [AdminFeature.TransactionShoppingCart]: KAN231_ONLY,
+  [AdminFeature.TransactionPaymentDetails]: MAIN_ONLY,
+  [AdminFeature.AdminProducts]: MAIN_ONLY, // crank-payments#970
   [AdminFeature.PendingGiftCardsPage]: MAIN_ONLY, // crank-payments#971
   [AdminFeature.CustomerVodPeriods]: MAIN_ONLY, // crank-payments#967
   [AdminFeature.CustomerActions]: MAIN_ONLY, // crank-payments#967

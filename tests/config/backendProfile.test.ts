@@ -32,22 +32,25 @@ describe('resolveBackendProfile', () => {
 })
 
 describe('FEATURE_PROFILES', () => {
-  // Built on operations only crank-payments main has.
-  const mainOnly = [
-    AdminFeature.AdminProducts,
-    AdminFeature.PendingGiftCardsPage,
-    AdminFeature.CustomerVodPeriods,
-    AdminFeature.CustomerActions,
-    AdminFeature.CustomerIncompletePurchases,
-    AdminFeature.ChargeClient,
-    AdminFeature.TransactionsExport,
-    AdminFeature.CustomerVodExport
-  ]
-
   it('keeps every feature but the main-only ones available on kan231', () => {
-    for (const feature of Object.values(AdminFeature)) {
-      expect(isFeatureAvailableIn(feature, 'kan231')).toBe(!mainOnly.includes(feature))
-    }
+    const notOnKan231 = Object.values(AdminFeature).filter(
+      (feature) => !isFeatureAvailableIn(feature, 'kan231')
+    )
+
+    expect(notOnKan231.sort()).toEqual(
+      [
+        AdminFeature.SyncAllClassSchedules,
+        AdminFeature.TransactionPaymentDetails,
+        AdminFeature.AdminProducts,
+        AdminFeature.PendingGiftCardsPage,
+        AdminFeature.CustomerVodPeriods,
+        AdminFeature.CustomerActions,
+        AdminFeature.CustomerIncompletePurchases,
+        AdminFeature.ChargeClient,
+        AdminFeature.TransactionsExport,
+        AdminFeature.CustomerVodExport
+      ].sort()
+    )
   })
 
   it('exposes only the modules main supports today', () => {
@@ -58,17 +61,50 @@ describe('FEATURE_PROFILES', () => {
     expect(onMain.sort()).toEqual(
       [
         AdminFeature.AdminUsers,
+        AdminFeature.Blacklist,
+        AdminFeature.BulkVod,
         AdminFeature.ClassScheduleConfig,
         AdminFeature.ClassesCalendar,
         AdminFeature.Customer,
         AdminFeature.CustomerGiftCards,
+        AdminFeature.CustomersList,
         AdminFeature.GiftCards,
+        AdminFeature.IncompleteFeedbacks,
+        AdminFeature.MindbodyClients,
+        AdminFeature.MindbodyStaff,
         AdminFeature.MySettings,
         AdminFeature.PaymentLinks,
         AdminFeature.RoomLayouts,
-        ...mainOnly
+        AdminFeature.SyncAllClassSchedules,
+        AdminFeature.SystemSettings,
+        AdminFeature.TransactionPaymentDetails,
+        AdminFeature.Transactions,
+        AdminFeature.AdminProducts,
+        AdminFeature.PendingGiftCardsPage,
+        AdminFeature.CustomerVodPeriods,
+        AdminFeature.CustomerActions,
+        AdminFeature.CustomerIncompletePurchases,
+        AdminFeature.ChargeClient,
+        AdminFeature.TransactionsExport,
+        AdminFeature.CustomerVodExport
       ].sort()
     )
+  })
+
+  it('gives each profile exactly one way to sync all class schedules', () => {
+    for (const profile of ['main', 'kan231'] as const) {
+      const ways = [
+        AdminFeature.SyncAllClassSchedules,
+        AdminFeature.SyncAllClassSchedulesLink
+      ].filter((feature) => isFeatureAvailableIn(feature, profile))
+
+      expect(ways).toHaveLength(1)
+    }
+  })
+
+  it('gives each profile exactly one set of transaction record documents', () => {
+    expect(isFeatureAvailableIn(AdminFeature.TransactionShoppingCart, 'kan231')).toBe(true)
+    expect(isFeatureAvailableIn(AdminFeature.TransactionShoppingCart, 'main')).toBe(false)
   })
 
   it('declares profiles for every feature', () => {

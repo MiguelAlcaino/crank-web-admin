@@ -2,6 +2,10 @@ import { readonly, ref } from 'vue'
 import { gql } from 'graphql-tag'
 import type { ApolloClient, NormalizedCacheObject } from '@apollo/client/core'
 
+import { retryResultFromError, type RetryResult } from '../retryResult'
+
+export type { RetryResult } from '../retryResult'
+
 export interface IncompleteTransactionFeedbackSiteCustomer {
   id: string
   siteUserInfo: { site: string; externalUserId: string } | null
@@ -27,8 +31,6 @@ export interface PaginatedIncompleteTransactionFeedbacks {
   page: number
   limit: number
 }
-
-export type RetryResult = 'success' | 'not_found' | 'already_done' | 'error'
 
 const LIST_QUERY = gql`
   query IncompleteFeedbacks(
@@ -113,12 +115,8 @@ export const useIncompleteTransactionFeedbacks = (
         variables: { id }
       })
       return 'success'
-    } catch (e: any) {
-      const debugMessage = e?.graphQLErrors?.[0]?.extensions?.debugMessage ?? ''
-      if (debugMessage === 'Temporal Transaction not found') return 'not_found'
-      if (debugMessage === 'This temporal transactions seemed to be processed successfully already')
-        return 'already_done'
-      return 'error'
+    } catch (e) {
+      return retryResultFromError(e)
     } finally {
       retryingId.value = null
     }

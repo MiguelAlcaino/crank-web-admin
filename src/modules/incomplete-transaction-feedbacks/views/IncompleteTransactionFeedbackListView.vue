@@ -59,6 +59,10 @@ async function handleRetry(id: string) {
     toast.warning('Record not found — it may have been completed already')
   } else if (result === 'already_done') {
     toast.info('Already processed successfully')
+  } else if (result === 'in_progress') {
+    toast.info('A delivery of this feedback is being processed right now')
+  } else if (result === 'already_sold') {
+    toast.warning('Mindbody has already sold this purchase; finish the rest by hand')
   } else {
     toast.error('Retry failed — please try again later')
   }
