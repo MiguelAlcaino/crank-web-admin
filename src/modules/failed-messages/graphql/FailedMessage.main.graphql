@@ -1,0 +1,18 @@
+query FailedMessage($queue: FailedMessageQueueEnum!, $id: ID!) {
+  failedMessage(queue: $queue, id: $id) {
+    id
+    queue
+    messageClass
+    summary
+    exceptionClass
+    errorMessage
+    failedAt
+    retryCount
+    originalTransport
+    payfortDetails {
+      merchantReference
+      amount
+      responseMessage
+    }
+  }
+}

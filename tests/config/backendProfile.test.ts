@@ -48,7 +48,8 @@ describe('FEATURE_PROFILES', () => {
         AdminFeature.CustomerIncompletePurchases,
         AdminFeature.ChargeClient,
         AdminFeature.TransactionsExport,
-        AdminFeature.CustomerVodExport
+        AdminFeature.CustomerVodExport,
+        AdminFeature.FailedMessages
       ].sort()
     )
   })
@@ -86,7 +87,8 @@ describe('FEATURE_PROFILES', () => {
         AdminFeature.CustomerIncompletePurchases,
         AdminFeature.ChargeClient,
         AdminFeature.TransactionsExport,
-        AdminFeature.CustomerVodExport
+        AdminFeature.CustomerVodExport,
+        AdminFeature.FailedMessages
       ].sort()
     )
   })

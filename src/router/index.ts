@@ -187,6 +187,12 @@ const router = createRouter({
             )
         },
         {
+          path: 'failed-messages',
+          name: 'admin_failed_messages',
+          meta: { feature: AdminFeature.FailedMessages, role: Role.ROLE_SUPER_ADMIN },
+          component: () => import('@/modules/failed-messages/views/FailedMessagesView.vue')
+        },
+        {
           path: 'subscriptions/:id',
           name: 'admin_subscription_detail',
           meta: { feature: AdminFeature.Subscriptions },
