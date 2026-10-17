@@ -187,6 +187,20 @@ function selectSpot() {
   </div>
 </template>
 
+<style>
+:root[data-bs-theme="light"] {
+  --spot-base-color: #000;
+  --spot-base-border: #000000;
+  --spot-empty-bg: #ffffff;
+}
+
+:root[data-bs-theme="dark"] {
+  --spot-base-color: rgba(255, 255, 255, 0.85);
+  --spot-base-border: rgba(255, 255, 255, 0.55);
+  --spot-empty-bg: #1e2035;
+}
+</style>
+
 <style scoped>
 .baseSpot {
   height: 90px;
@@ -195,10 +209,10 @@ function selectSpot() {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #000;
+  color: var(--spot-base-color);
   font-weight: bold;
   font-size: 9px;
-  border: 2px #000000 solid;
+  border: 2px var(--spot-base-border) solid;
   position: relative;
 }
 
@@ -214,16 +228,16 @@ function selectSpot() {
 }
 
 .enabledSpot {
-  background: #ffffff;
+  background: var(--spot-empty-bg);
   cursor: pointer;
 }
 
 .spotEnabledNotClickable {
-  background: #ffffff;
+  background: var(--spot-empty-bg);
 }
 
 .empty-spot-not-selectable {
-  background: #ffffff;
+  background: var(--spot-empty-bg);
 }
 
 .selectedSpot {
@@ -240,11 +254,11 @@ function selectSpot() {
 }
 
 .changeMemberSpot-bookedSpot {
-  background: #ffffff;
+  background: var(--spot-empty-bg);
 }
 
 .swapMemberSpot-bookedSpot {
-  background: #ffffff;
+  background: var(--spot-empty-bg);
   cursor: pointer;
 }
 

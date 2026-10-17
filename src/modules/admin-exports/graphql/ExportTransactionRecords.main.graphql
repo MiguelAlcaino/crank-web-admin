@@ -1,0 +1,7 @@
+mutation ExportTransactionRecords($filter: TransactionRecordFilterInput) {
+  exportTransactionRecords(filter: $filter) {
+    fileName
+    url
+    expiresAt
+  }
+}

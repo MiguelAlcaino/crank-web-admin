@@ -1,0 +1,28 @@
+query ClassPackages($site: SiteEnum!) {
+  products(site: $site, input: { type: classPackage }) {
+    ... on ClassPackageProduct {
+      id
+      title
+      subtitle
+      buttonText
+      currency
+      type
+      alertBeforePurchasing {
+        title
+        description
+      }
+      isVisible
+      position
+      isMembership
+      isTrialPackage
+      isCLassPassPackage
+      doesItRequireSmsAuth
+      doestItActivateVodForClients
+      vodAmountOfDays
+      billingInterval
+      variants {
+        price
+      }
+    }
+  }
+}

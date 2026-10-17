@@ -171,7 +171,7 @@ function itemProjectionFunction(item: IdentifiableSiteUser) {
     <div class="col-8">
       <vue3-simple-typeahead
         id="typeahead_users"
-        class="custom-select"
+        class="form-select"
         placeholder="Please enter 3 or more characters"
         :items="identifiableSiteUsers"
         :minInputLength="3"

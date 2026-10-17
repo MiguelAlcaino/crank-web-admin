@@ -1,0 +1,20 @@
+query FailedMessages($queue: FailedMessageQueueEnum!, $pagination: PaginationInput) {
+  failedMessages(queue: $queue, pagination: $pagination) {
+    total
+    failedMessages {
+      id
+      queue
+      messageClass
+      summary
+      exceptionClass
+      failedAt
+      retryCount
+      originalTransport
+      payfortDetails {
+        merchantReference
+        amount
+        responseMessage
+      }
+    }
+  }
+}

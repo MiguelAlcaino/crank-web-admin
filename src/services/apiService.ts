@@ -1,15 +1,43 @@
-import { ApolloError, gql } from '@apollo/client'
+import type {
+  CreateInstructorProfileInput,
+  CreateSessionTypeInput,
+  InstructorProfile,
+  MindbodySessionTypeInfo,
+  MindbodyStaffInfo,
+  SessionType,
+  SiteSetting,
+  UpdateInstructorProfileInput,
+  UpdateSessionTypeInput
+} from '@/gql/graphql'
 import {
+  ClassPackagesDocument,
+  CreateInstructorProfileDocument,
   CreatePaymentLinkDocument,
+  CreateSessionTypeDocument,
+  DeleteInstructorProfileDocument,
   DeletePaymentLinkDocument,
+  DeleteSessionTypeDocument,
+  InstructorProfilesDocument,
+  MindbodySessionTypesDocument,
+  MindbodyStaffsDocument,
   PaymentLinkDocument,
   PaymentLinksDocument,
+  RetryWebhookEventDocument,
+  SessionTypesDocument,
+  SyncAllPackagesBySiteDocument,
+  UpdateClassPackageDocument,
+  UpdateClassPackagesOrderDocument,
+  UpdateInstructorProfileDocument,
   UpdatePaymentLinkDocument,
+  UpdateSessionTypeDocument,
+  WebhookEventDocument,
+  WebhookEventsDocument,
   type AdminUser,
   type AdminUserDataInput,
   type AdminUserResultUnion,
   type BookUserIntoClassInput,
   type CalendarClassesParams,
+  type ClassPackageOrder,
   type CancelEnrollmentInput,
   type CheckinResultUnion,
   type CheckinUserInClass,
@@ -38,6 +66,7 @@ import {
   type PaginatedClassStats,
   type PaginationInput,
   type PaymentLink,
+  type ProductInput,
   type RegisterUserInput,
   type RemoveUserFromWaitlistInput,
   type RemoveUserFromWaitlistUnion,
@@ -64,10 +93,21 @@ import {
   type UserInput,
   type WaitlistEntry
 } from '@/gql/graphql'
-import type { SiteSetting } from '@/gql/graphql'
+import type { WebhookEvent } from '@/modules/webhook-events/interfaces'
+import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
+import { GET_USER_QUERY } from '@/services/documents/customerProfile'
+import {
+  ADMIN_SEND_LATE_CANCELLATION_NOTIFICATION_MUTATION,
+  ADMIN_SEND_WAITLIST_BOOKING_NOTIFICATION_MUTATION,
+  GET_USER_WITH_SUBSCRIPTIONS_QUERY,
+  SEARCH_USER_DOCUMENT
+} from '@/services/documents/kan231'
+import { SYNC_ALL_CLASS_SCHEDULES_MUTATION } from '@/services/documents/main'
+import { DomainError } from '@/utils/errors/domainError'
+import { ValidationError } from '@/utils/errors/saveUserErrors'
+import { ApolloError, gql } from '@apollo/client'
 import type { ApolloClient } from '@apollo/client/core'
 import dayjs from 'dayjs'
-import { ValidationError } from '@/utils/errors/saveUserErrors'
 
 export class ApiService {
   authApiClient: ApolloClient<any>
@@ -146,6 +186,7 @@ export class ApiService {
                   lastName
                   email
                   leaderboardUsername
+                  gender
                 }
               }
             }
@@ -540,6 +581,7 @@ export class ApiService {
                 user {
                   firstName
                   lastName
+                  email
                 }
               }
             }
@@ -748,44 +790,9 @@ export class ApiService {
   }
 
   async getUser(id: string): Promise<IdentifiableUser> {
-    const query = gql`
-      query getUser($id: ID!) {
-        user(id: $id) {
-          id
-          user {
-            firstName
-            lastName
-            email
-            leaderboardUsername
-            weight
-            gender
-            birthdate
-            country {
-              code
-              name
-            }
-            state {
-              code
-              name
-            }
-            city
-            address1
-            address2
-            zipCode
-            phone
-            emergencyContactName
-            emergencyContactPhone
-            emergencyContactRelationship
-            hideMetrics
-            existsInSites
-            siteUsers {
-              externalUserId
-              site
-            }
-          }
-        }
-      }
-    `
+    const query = isFeatureAvailable(AdminFeature.CustomerProfileSubscriptions)
+      ? GET_USER_WITH_SUBSCRIPTIONS_QUERY
+      : GET_USER_QUERY
 
     const queryResult = await this.authApiClient.query({
       query: query,
@@ -861,6 +868,17 @@ export class ApiService {
     })
 
     return result.data.syncAllClasses as boolean
+  }
+
+  /** main backend profile only (AdminFeature.SyncAllClassSchedules). */
+  async syncAllClassSchedules(site: SiteEnum): Promise<boolean> {
+    const result = await this.authApiClient.mutate({
+      mutation: SYNC_ALL_CLASS_SCHEDULES_MUTATION,
+      variables: { site },
+      fetchPolicy: 'no-cache'
+    })
+
+    return result.data.syncAllClassSchedules as boolean
   }
 
   async getCountries(): Promise<Country[]> {
@@ -2026,5 +2044,436 @@ export class ApiService {
       console.error('Error deleting payment link:', error)
       throw error
     }
+  }
+
+  // Session Types
+  async getSessionTypes(site: SiteEnum, activeOnly: boolean | null = null): Promise<SessionType[]> {
+    try {
+      const { data, errors } = await this.authApiClient.query({
+        query: SessionTypesDocument,
+        variables: { site: site, activeOnly: activeOnly },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.sessionTypes) {
+        throw new Error('No data returned from sessionTypes query')
+      }
+
+      return data.sessionTypes as SessionType[]
+    } catch (error) {
+      console.error('Error fetching session types:', error)
+      throw error
+    }
+  }
+
+  async createSessionType(input: CreateSessionTypeInput): Promise<SessionType> {
+    const { data, errors } = await this.authApiClient.mutate({
+      mutation: CreateSessionTypeDocument,
+      variables: { input: input },
+      fetchPolicy: 'network-only'
+    })
+
+    if (errors?.length) {
+      throw new Error(`GraphQL Error: ${errors[0].message}`)
+    }
+
+    const result = data?.createSessionType
+
+    if (!result) {
+      throw new Error('No data returned from createSessionType mutation')
+    }
+
+    if (result.__typename !== 'SessionType') {
+      throw new DomainError(result.code, 'Create session type failed')
+    }
+
+    return result
+  }
+
+  async updateSessionType(id: string, input: UpdateSessionTypeInput): Promise<SessionType> {
+    const { data, errors } = await this.authApiClient.mutate({
+      mutation: UpdateSessionTypeDocument,
+      variables: { id, input },
+      fetchPolicy: 'network-only'
+    })
+
+    if (errors?.length) {
+      throw new Error(`GraphQL Error: ${errors[0].message}`)
+    }
+
+    const result = data?.updateSessionType
+    if (!result) {
+      throw new Error('No data returned from updateSessionType mutation')
+    }
+
+    if (result.__typename !== 'SessionType') {
+      throw new DomainError(result.code, 'Update session type failed')
+    }
+
+    return result
+  }
+
+  async deleteSessionType(id: string): Promise<boolean> {
+    try {
+      const { data, errors } = await this.authApiClient.mutate({
+        mutation: DeleteSessionTypeDocument,
+        variables: { id: id },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || data.deleteSessionType === undefined) {
+        throw new Error('No data returned from deleteSessionType mutation')
+      }
+
+      return data.deleteSessionType as boolean
+    } catch (error) {
+      console.error('Error deleting session type:', error)
+      throw error
+    }
+  }
+
+  async getMindbodySessionTypes(site: SiteEnum): Promise<MindbodySessionTypeInfo[]> {
+    try {
+      const { data, errors } = await this.authApiClient.query({
+        query: MindbodySessionTypesDocument,
+        variables: { site: site },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.mindbodySessionTypes) {
+        throw new Error('No data returned from mindbodySessionTypes query')
+      }
+
+      return data.mindbodySessionTypes
+    } catch (error) {
+      console.error('Error fetching mindbody session types:', error)
+      throw error
+    }
+  }
+
+  // Instructor Profiles
+  async getInstructorProfiles(
+    site: SiteEnum,
+    activeOnly: boolean | null
+  ): Promise<InstructorProfile[]> {
+    try {
+      const { data, errors } = await this.authApiClient.query({
+        query: InstructorProfilesDocument,
+        variables: { site: site, activeOnly: activeOnly },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.instructorProfiles) {
+        throw new Error('No data returned from instructorProfiles query')
+      }
+
+      return data.instructorProfiles.map((profile: any) => ({
+        ...profile,
+        createdAt: new Date(profile.createdAt),
+        updatedAt: new Date(profile.updatedAt)
+      })) as InstructorProfile[]
+    } catch (error) {
+      console.error('Error fetching instructor profiles:', error)
+      throw error
+    }
+  }
+
+  async createInstructorProfile(input: CreateInstructorProfileInput): Promise<InstructorProfile> {
+    const { data, errors } = await this.authApiClient.mutate({
+      mutation: CreateInstructorProfileDocument,
+      variables: { input: input },
+      fetchPolicy: 'network-only'
+    })
+
+    if (errors?.length) {
+      throw new Error(`GraphQL Error: ${errors[0].message}`)
+    }
+
+    const result = data?.createInstructorProfile
+
+    if (!result) {
+      throw new Error('No data returned from createInstructorProfile mutation')
+    }
+
+    if (result.__typename !== 'InstructorProfile') {
+      throw new DomainError(result.code, 'Create instructor profile failed')
+    }
+
+    return result
+  }
+
+  async updateInstructorProfile(
+    id: string,
+    input: UpdateInstructorProfileInput
+  ): Promise<InstructorProfile> {
+    const { data, errors } = await this.authApiClient.mutate({
+      mutation: UpdateInstructorProfileDocument,
+      variables: { id, input },
+      fetchPolicy: 'network-only'
+    })
+
+    if (errors?.length) {
+      throw new Error(`GraphQL Error: ${errors[0].message}`)
+    }
+
+    const result = data?.updateInstructorProfile
+    if (!result) {
+      throw new Error('No data returned from updateInstructorProfile mutation')
+    }
+
+    if (result.__typename !== 'InstructorProfile') {
+      throw new DomainError(result.code, 'Update instructor profile failed')
+    }
+
+    return result
+  }
+
+  async deleteInstructorProfile(id: string): Promise<boolean> {
+    try {
+      const { data, errors } = await this.authApiClient.mutate({
+        mutation: DeleteInstructorProfileDocument,
+        variables: { id: id },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || data.deleteInstructorProfile === undefined) {
+        throw new Error('No data returned from deleteInstructorProfile mutation')
+      }
+
+      return data.deleteInstructorProfile as boolean
+    } catch (error) {
+      console.error('Error deleting instructor profile:', error)
+      throw error
+    }
+  }
+
+  async getMindbodyStaffs(site: SiteEnum): Promise<MindbodyStaffInfo[]> {
+    try {
+      const { data, errors } = await this.authApiClient.query({
+        query: MindbodyStaffsDocument,
+        variables: { site: site },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.mindbodyStaffs) {
+        throw new Error('No data returned from mindbodyStaffs query')
+      }
+
+      return data.mindbodyStaffs
+    } catch (error) {
+      console.error('Error fetching instructor profiles:', error)
+      throw error
+    }
+  }
+
+  async getClassPackages(site: SiteEnum) {
+    const queryResult = await this.authApiClient.query({
+      query: ClassPackagesDocument,
+      variables: { site },
+      fetchPolicy: 'network-only'
+    })
+
+    return queryResult.data.products.filter((p) => p.__typename === 'ClassPackageProduct') as Array<
+      Extract<(typeof queryResult.data.products)[number], { __typename: 'ClassPackageProduct' }>
+    >
+  }
+
+  async updateClassPackage(id: string, input: ProductInput) {
+    const result = await this.authApiClient.mutate({
+      mutation: UpdateClassPackageDocument,
+      variables: { id, input },
+      fetchPolicy: 'network-only'
+    })
+
+    const data = result.data?.updateClassPackage
+    if (!data) {
+      throw new Error('No data returned from updateClassPackage')
+    }
+
+    if (data.__typename === 'ClassPackageProduct') {
+      return data
+    }
+
+    throw new Error(`Update failed: ${data.code}`)
+  }
+
+  async updateClassPackagesOrder(orders: ClassPackageOrder[]): Promise<boolean> {
+    const result = await this.authApiClient.mutate({
+      mutation: UpdateClassPackagesOrderDocument,
+      variables: { input: { orders } },
+      fetchPolicy: 'network-only'
+    })
+
+    return result.data?.updateClassPackagesOrder ?? false
+  }
+
+  async syncAllPackagesBySite(site: SiteEnum) {
+    const result = await this.authApiClient.mutate({
+      mutation: SyncAllPackagesBySiteDocument,
+      variables: { site },
+      fetchPolicy: 'network-only'
+    })
+
+    return result.data?.syncAllPackagesBySite ?? []
+  }
+
+  // ── Webhook Events ──────────────────────────────────────────────────
+
+  async getWebhookEvents(
+    status?: string,
+    cursor?: string,
+    limit?: number
+  ): Promise<{
+    events: WebhookEvent[]
+    hasMore: boolean
+    nextCursor: string | null
+    limit: number
+  }> {
+    try {
+      const { data, errors } = await this.authApiClient.query({
+        query: WebhookEventsDocument,
+        variables: { status, cursor, limit },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.webhookEvents) {
+        throw new Error('No data returned from webhookEvents query')
+      }
+
+      return data.webhookEvents as {
+        events: WebhookEvent[]
+        hasMore: boolean
+        nextCursor: string | null
+        limit: number
+      }
+    } catch (error) {
+      console.error('Error fetching webhook events:', error)
+      throw error
+    }
+  }
+
+  async getWebhookEvent(id: string): Promise<WebhookEvent | null> {
+    try {
+      const { data, errors } = await this.authApiClient.query({
+        query: WebhookEventDocument,
+        variables: { id },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.webhookEvent) {
+        return null
+      }
+
+      return data.webhookEvent as WebhookEvent
+    } catch (error) {
+      console.error('Error fetching webhook event:', error)
+      throw error
+    }
+  }
+
+  async retryWebhookEvent(id: string, email: string): Promise<WebhookEvent | null> {
+    try {
+      const { data, errors } = await this.authApiClient.mutate({
+        mutation: RetryWebhookEventDocument,
+        variables: { input: { id, email } },
+        fetchPolicy: 'network-only'
+      })
+
+      if (errors && errors.length > 0) {
+        throw new Error(`GraphQL Error: ${errors[0].message}`)
+      }
+
+      if (!data || !data.retryWebhookEvent) {
+        throw new Error('No data returned from retryWebhookEvent mutation')
+      }
+
+      const result = data.retryWebhookEvent
+      if (result.__typename === 'RetryWebhookEventSuccess') {
+        return result.webhookEvent as WebhookEvent
+      }
+
+      throw new Error(`Retry failed: ${(result as { code: string }).code}`)
+    } catch (error) {
+      console.error('Error retrying webhook event:', error)
+      throw error
+    }
+  }
+
+  async searchUser(query: string): Promise<{ id: string; user: { firstName: string; lastName: string; email: string } }[]> {
+    if (query.length < 3) return []
+    try {
+      const result = await this.authApiClient.query({
+        query: SEARCH_USER_DOCUMENT,
+        variables: { query },
+        fetchPolicy: 'network-only'
+      })
+      return result.data.searchUser
+    } catch {
+      return []
+    }
+  }
+
+  async adminSendWaitlistBookingNotification(input: {
+    customerId: string
+    classStartsAt: string
+    className: string
+    site?: string
+  }): Promise<{ __typename: string }> {
+    const result = await this.authApiClient.mutate({
+      mutation: ADMIN_SEND_WAITLIST_BOOKING_NOTIFICATION_MUTATION,
+      variables: { input },
+      fetchPolicy: 'network-only'
+    })
+    return result.data.adminSendWaitlistBookingNotification
+  }
+
+  async adminSendLateCancellationNotification(input: {
+    customerId: string
+    expiresAt: string
+    classId: string
+    waitlistId: string
+    className: string
+    classStartsAt: string
+    instructorName: string
+    site?: string
+  }): Promise<{ __typename: string }> {
+    const result = await this.authApiClient.mutate({
+      mutation: ADMIN_SEND_LATE_CANCELLATION_NOTIFICATION_MUTATION,
+      variables: { input },
+      fetchPolicy: 'network-only'
+    })
+    return result.data.adminSendLateCancellationNotification
   }
 }

@@ -1,5 +1,6 @@
 import {
   startCalendarApp,
+  startClassPackagesApp,
   startCustomerCreateApp,
   startCustomerEditApp,
   startRoomLayoutCreateApp,
@@ -9,7 +10,10 @@ import {
   startGiftCardApp,
   startUserAdminApp,
   startMyAdminSettingsApp,
-  startPaymentLinksApp
+  startPaymentLinksApp,
+  startInstructorProfilesApp,
+  startSessionTypesApp,
+  startWebhookEventsApp
 } from '@/start-app-functions'
 
 export {
@@ -17,11 +21,15 @@ export {
   startRoomLayoutCreateApp,
   startRoomLayoutEditApp,
   startCalendarApp,
+  startClassPackagesApp,
   startCustomerEditApp,
   startClassScheduleApp,
   startCustomerProfileApp,
   startGiftCardApp,
   startUserAdminApp,
   startMyAdminSettingsApp,
-  startPaymentLinksApp
+  startPaymentLinksApp,
+  startInstructorProfilesApp,
+  startSessionTypesApp,
+  startWebhookEventsApp
 }

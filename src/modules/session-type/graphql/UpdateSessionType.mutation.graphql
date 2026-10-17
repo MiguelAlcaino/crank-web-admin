@@ -1,0 +1,24 @@
+mutation UpdateSessionType($id: ID!, $input: UpdateSessionTypeInput!) {
+  updateSessionType(id: $id, input: $input) {
+    ... on SessionType {
+      id
+      name
+      active
+      bannerImagePath
+      icon
+      color
+      position
+      mindbodySessionTypes {
+        id
+        name
+      }
+    }
+    ... on SessionTypeNotFoundError {
+      id
+      code
+    }
+    ... on UploadedFileIsNotAnImage {
+      code
+    }
+  }
+}

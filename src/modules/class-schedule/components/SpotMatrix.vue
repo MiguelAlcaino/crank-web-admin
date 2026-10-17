@@ -47,6 +47,7 @@ interface BookableSpotClickedEvent {
 interface User {
   firstName: string
   lastName: string
+  gender?: string | null
 }
 
 interface EnrollmentInfo {
@@ -98,7 +99,7 @@ const emits = defineEmits<{
 }>()
 
 const spotsTable = ref<Array<Array<SpotPosition>>>([])
-const sortKey = ref<keyof User>('firstName')
+const sortKey = ref<'firstName' | 'lastName' | 'spotNumber'>('firstName')
 const sortOrder = ref<'asc' | 'desc'>('asc')
 
 onMounted(() => {
@@ -131,13 +132,16 @@ watch(
 
 const sortedEnrollments = computed(() => {
   return [...props.enrollments].sort((a, b) => {
-    const aValue = a.identifiableSiteUser?.identifiableUser?.user?.[sortKey.value] || ''
-    const bValue = b.identifiableSiteUser?.identifiableUser?.user?.[sortKey.value] || ''
-    if (sortOrder.value === 'asc') {
-      return aValue.localeCompare(bValue)
-    } else {
-      return bValue.localeCompare(aValue)
+    if (sortKey.value === 'spotNumber') {
+      const aSpot = a.spotNumber ?? 0
+      const bSpot = b.spotNumber ?? 0
+      return sortOrder.value === 'asc' ? aSpot - bSpot : bSpot - aSpot
     }
+    const aValue = a.identifiableSiteUser?.identifiableUser?.user?.[sortKey.value] ?? ''
+    const bValue = b.identifiableSiteUser?.identifiableUser?.user?.[sortKey.value] ?? ''
+    return sortOrder.value === 'asc'
+      ? String(aValue).localeCompare(String(bValue))
+      : String(bValue).localeCompare(String(aValue))
   })
 })
 
@@ -291,7 +295,7 @@ function toggleSpotsModeView() {
   emits('afterToggleSpotsMode')
 }
 
-const sortBy = (key: keyof User) => {
+const sortBy = (key: 'firstName' | 'lastName' | 'spotNumber') => {
   if (sortKey.value === key) {
     sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
   } else {
@@ -379,7 +383,15 @@ const sortBy = (key: keyof User) => {
                   ></i>
                 </span>
               </th>
-              <th>Spot</th>
+              <th>Gender</th>
+              <th @click="sortBy('spotNumber')" style="cursor: pointer">
+                Spot
+                <span v-if="sortKey === 'spotNumber'">
+                  <i
+                    :class="sortOrder === 'asc' ? 'bi bi-caret-up-fill' : 'bi bi-caret-down-fill'"
+                  ></i>
+                </span>
+              </th>
               <th>Service</th>
               <th>Sign in</th>
               <th>View Profile</th>
@@ -390,6 +402,7 @@ const sortBy = (key: keyof User) => {
             <tr v-for="item in sortedEnrollments" :key="item.id">
               <td>{{ item.identifiableSiteUser?.identifiableUser?.user?.firstName }}</td>
               <td>{{ item.identifiableSiteUser?.identifiableUser?.user?.lastName }}</td>
+              <td>{{ item.identifiableSiteUser?.identifiableUser?.user?.gender ?? '—' }}</td>
               <td class="text-center">
                 <IconBookablePosition
                   :icon="getIcon(item.spotNumber!)"
@@ -441,7 +454,7 @@ const sortBy = (key: keyof User) => {
               </td>
             </tr>
             <tr v-if="sortedEnrollments.length === 0">
-              <td colspan="7" class="text-center">There are no users enrolled in this class</td>
+              <td colspan="8" class="text-center">There are no users enrolled in this class</td>
             </tr>
           </tbody>
         </table>

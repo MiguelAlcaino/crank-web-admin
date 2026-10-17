@@ -8,16 +8,24 @@ interface RoomLayout {
 </script>
 
 <script setup lang="ts">
-import { inject, onMounted, ref } from 'vue'
+import { computed, inject, onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import type { ApiService } from '@/services/apiService'
 import { appStore } from '@/stores/appStorage'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 import router from '@/router'
 
 const apiService = inject<ApiService>('gqlApiService')!
+const route = useRoute()
+const site = computed(() => (route.params.site as string) || appStore().site || 'dubai')
 
 onMounted(() => {
+  getRoomLayouts()
+})
+
+watch(site, () => {
   getRoomLayouts()
 })
 
@@ -27,7 +35,7 @@ const roomLayouts = ref<RoomLayout[]>([])
 async function getRoomLayouts() {
   isLoading.value = true
 
-  roomLayouts.value = (await apiService.roomLayouts(appStore().site, null)) as RoomLayout[]
+  roomLayouts.value = (await apiService.roomLayouts(site.value as SiteEnum, null)) as RoomLayout[]
 
   isLoading.value = false
 }

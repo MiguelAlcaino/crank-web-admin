@@ -52,7 +52,7 @@ async function login() {
           <!-- location -->
           <div class="form-row">
             <div class="col-md-12 mb-3">
-              <select class="custom-select" v-model="formData.location" required>
+              <select class="form-select" v-model="formData.location" required>
                 <option :value="SiteEnum.Dubai">Dubai</option>
                 <option :value="SiteEnum.AbuDhabi">Abu Dhabi</option>
                 <option :value="SiteEnum.TownSquare">Town Square</option>
@@ -100,7 +100,7 @@ async function login() {
           <div class="row">
             <div class="col-md-12 mb-3">
               <DefaultButtonComponent
-                class="btn-block"
+                class=""
                 type="submit"
                 text="Login"
               ></DefaultButtonComponent>

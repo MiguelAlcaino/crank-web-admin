@@ -1,0 +1,56 @@
+steps:
+  # Build Docker image with Vite build args
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '--build-arg'
+      - 'VITE_CRANK_REST_SERVER_URL=https://crank-payments-930523966479.me-central1.run.app/api/'
+      - '--build-arg'
+      - 'VITE_CRANK_GRAPHQL_SERVER_URL=https://crank-payments-930523966479.me-central1.run.app/api/graphql/'
+      - '--build-arg'
+      - 'VITE_BACKEND_PROFILE=${_BACKEND_PROFILE}'
+      - '-t'
+      - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank-web-admin/crank-web-admin:$COMMIT_SHA'
+      - '-t'
+      - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank-web-admin/crank-web-admin:latest'
+      - '.'
+
+  # Push Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank-web-admin/crank-web-admin:$COMMIT_SHA'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank-web-admin/crank-web-admin:latest'
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'crank-web-admin'
+      - '--image'
+      - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank-web-admin/crank-web-admin:$COMMIT_SHA'
+      - '--region'
+      - 'me-central1'
+      - '--platform'
+      - 'managed'
+      - '--port'
+      - '80'
+      - '--allow-unauthenticated'
+
+images:
+  - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank-web-admin/crank-web-admin:$COMMIT_SHA'
+  - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank-web-admin/crank-web-admin:latest'
+
+# Backend profile baked into the build (kan231 or main). Override per trigger with
+# --substitutions=_BACKEND_PROFILE=main; the default keeps this KAN-231 deployment unchanged.
+substitutions:
+  _BACKEND_PROFILE: kan231
+
+options:
+  logging: CLOUD_LOGGING_ONLY

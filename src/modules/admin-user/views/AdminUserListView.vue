@@ -63,7 +63,7 @@ function afterUpdateAdminUsers() {
                 </ul>
               </td>
               <td class="d-flex align-items-center justify-content-center">
-                <div class="mr-2">
+                <div class="me-2">
                   <AdminUserEdit
                     :admin-user="item"
                     @after-update="afterUpdateAdminUsers()"

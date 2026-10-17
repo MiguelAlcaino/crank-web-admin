@@ -117,9 +117,8 @@ function onSuccessOk() {
             <!-- Header -->
             <div class="modal-header border-0">
               <h5 class="modal-title">Edit payment link '{{ paymentLink?.title }}'</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true" @click="closeModal">&times;</span>
-              </button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
             </div>
 
             <!-- Body-->
@@ -151,7 +150,7 @@ function onSuccessOk() {
                   :is-loading="isSaving"
                   :disabled="isSaving"
                   @on-click="submitForm"
-                  class="ml-2"
+                  class="ms-2"
                 >
                 </DefaultButtonComponent>
               </div>

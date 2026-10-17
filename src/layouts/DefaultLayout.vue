@@ -2,7 +2,7 @@
   <nav class="navbar is-black mb-5">
     <div class="container">
       <div class="navbar-brand">
-        <div class="navbar-burger burger" data-target="navMenu"></div>
+        <div class="navbar-burger burger" data-bs-target="navMenu"></div>
       </div>
     </div>
   </nav>
@@ -20,7 +20,7 @@
             v-if="authService.isLoggedId()"
           >
             <div class="collapse navbar-collapse" id="navbarText">
-              <ul class="navbar-nav mr-auto">
+              <ul class="navbar-nav me-auto">
                 <li class="nav-item active">
                   <RouterLink class="nav-link" :to="{ name: 'calendar' }">Calendar</RouterLink>
                 </li>

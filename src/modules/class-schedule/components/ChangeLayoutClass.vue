@@ -104,9 +104,8 @@ async function assignRoomLayoutId() {
           <div class="modal-content">
             <div class="modal-header border-0">
               <h5 class="modal-title">CHANGE LAYOUT</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true" @click="modalIsVisible = false">&times;</span>
-              </button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
             </div>
             <div class="modal-body">
               <p>
@@ -114,7 +113,7 @@ async function assignRoomLayoutId() {
               </p>
               <label for="countryRegistration" class="input-label">Layout Options:</label>
               <select
-                class="custom-select"
+                class="form-select"
                 v-model="selectedRoomLayoutId"
                 id="countryRegistration"
                 required

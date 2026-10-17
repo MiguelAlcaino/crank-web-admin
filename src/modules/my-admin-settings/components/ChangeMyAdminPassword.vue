@@ -114,9 +114,8 @@ function closeModals() {
           <div class="modal-content">
             <div class="modal-header border-0">
               <h5 class="modal-title">Change Password</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true" @click="modalIsVisible = false">&times;</span>
-              </button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
             </div>
             <div class="modal-body">
               <form @submit.prevent="submitForm" autocomplete="off">
@@ -134,20 +133,10 @@ function closeModals() {
                         maxlength="50"
                         required
                       />
-                      <div
-                        class="input-group-prepend"
-                        @click="currentPasswordIsVisible = !currentPasswordIsVisible"
-                        style="cursor: pointer"
-                      >
-                        <span
-                          class="input-group-text"
-                          id="currentPasswordEye"
-                          style="background-color: transparent"
-                        >
+                      <span class="input-group-text" id="currentPasswordEye" @click="currentPasswordIsVisible = !currentPasswordIsVisible" style="cursor: pointer; background-color: transparent">
                           <i v-if="currentPasswordIsVisible" class="bi bi-eye-fill"></i>
                           <i v-else class="bi bi-eye-slash-fill"></i>
                         </span>
-                      </div>
                       <small
                         v-for="error in v$.currentPassword.$errors"
                         :key="error.$uid"
@@ -173,20 +162,10 @@ function closeModals() {
                         maxlength="50"
                         required
                       />
-                      <div
-                        class="input-group-prepend"
-                        @click="newPasswordIsVisible = !newPasswordIsVisible"
-                        style="cursor: pointer"
-                      >
-                        <span
-                          class="input-group-text"
-                          id="newPasswordEye"
-                          style="background-color: transparent"
-                        >
+                      <span class="input-group-text" id="newPasswordEye" @click="newPasswordIsVisible = !newPasswordIsVisible" style="cursor: pointer; background-color: transparent">
                           <i v-if="newPasswordIsVisible" class="bi bi-eye-fill"></i>
                           <i v-else class="bi bi-eye-slash-fill"></i>
                         </span>
-                      </div>
                     </div>
                     <small
                       v-for="error in v$.newPassword.$errors"
@@ -214,20 +193,10 @@ function closeModals() {
                         maxlength="50"
                         required
                       />
-                      <div
-                        class="input-group-prepend"
-                        @click="confirmNewPasswordIsVisible = !confirmNewPasswordIsVisible"
-                        style="cursor: pointer"
-                      >
-                        <span
-                          class="input-group-text"
-                          id="confirmNewPasswordEye"
-                          style="background-color: transparent"
-                        >
+                      <span class="input-group-text" id="confirmNewPasswordEye" @click="confirmNewPasswordIsVisible = !confirmNewPasswordIsVisible" style="cursor: pointer; background-color: transparent">
                           <i v-if="confirmNewPasswordIsVisible" class="bi bi-eye-fill"></i>
                           <i v-else class="bi bi-eye-slash-fill"></i>
                         </span>
-                      </div>
                     </div>
                     <small
                       v-for="error in v$.confirmNewPassword.$errors"

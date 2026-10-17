@@ -4,6 +4,17 @@ interface IdentifiableUser {
   user?: User
 }
 
+interface CustomerSubscription {
+  id: string
+  status: string
+  amountCents: number
+  billingInterval: string
+  creditCardLastFourDigits: string | null
+  createdAt: string
+  cancelledAt: string | null
+  nextBillingAt: string | null
+}
+
 interface User {
   address1: string
   address2?: string
@@ -25,6 +36,8 @@ interface User {
   weight?: number
   zipCode: string
   siteUsers: SimpleSiteUser[]
+  /** Only selected on backend profiles with AdminFeature.CustomerProfileSubscriptions. */
+  subscriptions?: CustomerSubscription[]
 }
 
 interface Country {
@@ -55,17 +68,20 @@ export enum GenderEnum {
 <script setup lang="ts">
 import { inject, onMounted, ref } from 'vue'
 import dayjs from 'dayjs'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import CustomerWorkoutStats from '@/modules/customer/components/CustomerWorkoutStats.vue'
+import CustomerAdminSections from '@/modules/customer/components/main/CustomerAdminSections.vue'
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 
 import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import type { SiteEnum } from '@/modules/shared/interfaces'
+import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
 
 const route = useRoute()
+const router = useRouter()
 const apiService = inject<ApiService>('gqlApiService')!
 
 const userId = ref<string>('')
@@ -73,6 +89,15 @@ const isLoading = ref<boolean>(false)
 const errorModalIsVisible = ref<boolean>(false)
 const identifiableUser = ref<IdentifiableUser | null>(null)
 const legacyViewUrl = ref<string | null>(null)
+// TODO: show on main once crank-payments#968 adds customer subscriptions there.
+const showSubscriptions = isFeatureAvailable(AdminFeature.CustomerProfileSubscriptions)
+// Client actions, charge client, VOD periods and incomplete purchases (crank-payments main only).
+const showAdminSections = [
+  AdminFeature.CustomerActions,
+  AdminFeature.ChargeClient,
+  AdminFeature.CustomerVodPeriods,
+  AdminFeature.CustomerIncompletePurchases
+].some(isFeatureAvailable)
 
 onMounted(() => {
   let _legacyViewUrl = inject<any | undefined>('legacyViewUrl')
@@ -108,6 +133,10 @@ async function goToLegacyView() {
   if (legacyViewUrl.value) {
     window.location.href = legacyViewUrl.value
   }
+}
+
+function formatAmount(amountCents: number): string {
+  return (amountCents / 100).toFixed(2)
 }
 </script>
 
@@ -242,6 +271,67 @@ async function goToLegacyView() {
       </CustomerWorkoutStats>
     </div>
   </div>
+
+  <CustomerAdminSections
+    v-if="showAdminSections && userId && identifiableUser?.user"
+    :customer-id="userId"
+    :first-name="identifiableUser.user.firstName"
+    :last-name="identifiableUser.user.lastName"
+    :email="identifiableUser.user.email"
+    @customer-changed="getUser(userId)"
+  />
+
+  <template v-if="showSubscriptions">
+    <hr />
+    <div class="row">
+      <div class="col-12">
+        <h6>Subscriptions</h6>
+        <div v-if="!identifiableUser?.user?.subscriptions?.length" class="text-muted">
+          No subscriptions found.
+        </div>
+        <table v-else class="table table-sm table-striped">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Plan</th>
+              <th>Card</th>
+              <th>Started</th>
+              <th>Next Billing</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="sub in identifiableUser.user.subscriptions ?? []" :key="sub.id">
+              <td>
+                <span
+                  class="badge"
+                  :class="sub.status === 'active' ? 'text-bg-success' : 'text-bg-warning'"
+                >
+                  {{ sub.status }}
+                </span>
+              </td>
+              <td>{{ sub.billingInterval }} — {{ formatAmount(sub.amountCents) }}</td>
+              <td>
+                {{ sub.creditCardLastFourDigits ? `****${sub.creditCardLastFourDigits}` : '—' }}
+              </td>
+              <td>{{ dayjs(sub.createdAt).format('DD/MM/YYYY') }}</td>
+              <td>{{ sub.nextBillingAt ? dayjs(sub.nextBillingAt).format('DD/MM/YYYY') : '—' }}</td>
+              <td>
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                  @click="
+                    router.push({ name: 'admin_subscription_detail', params: { id: sub.id } })
+                  "
+                >
+                  Details
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </template>
 
   <ModalComponent
     title="ERROR"

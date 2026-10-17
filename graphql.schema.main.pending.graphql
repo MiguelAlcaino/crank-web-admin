@@ -1,0 +1,75 @@
+# TEMPORARY extension of graphql.schema.main.graphql, read by codegen.main.ts.
+#
+# The failed-messages admin API (crank-payments PR #696, being ported to crank-payments develop for
+# MiguelAlcaino/crank-payments#910) is not on develop yet, so `npm run schema:main` does not bring
+# it in. This file adds exactly #696's SDL plus the partner purchase failure queue value
+# (`partnerPurchase`, the `partner_purchase_failed` transport).
+#
+# REMOVE THIS FILE once that backend PR merges into crank-payments develop, drop it from
+# codegen.main.ts, then run `npm run schema:main && npm run codegen:main`.
+
+extend type Query {
+    "Returns a paginated list of failed messenger messages in the given failure queue"
+    failedMessages(queue: FailedMessageQueueEnum!, pagination: PaginationInput): PaginatedFailedMessages!
+    "Returns a single failed messenger message by its id"
+    failedMessage(queue: FailedMessageQueueEnum!, id: ID!): FailedMessage
+}
+
+extend type Mutation {
+    "Re-dispatches a failed message to its original transport and removes it from the failure queue"
+    retryFailedMessage(input: FailedMessageActionInput!): FailedMessageActionResultUnion!
+    "Permanently discards a failed message from the failure queue"
+    discardFailedMessage(input: FailedMessageActionInput!): FailedMessageActionResultUnion!
+}
+
+union FailedMessageActionResultUnion = FailedMessageActionSuccess|FailedMessageNotFoundError
+
+enum FailedMessageQueueEnum{
+    default
+    payfortTransactionFeedback
+    partnerPurchase
+}
+
+input FailedMessageActionInput{
+    queue: FailedMessageQueueEnum!
+    id: ID!
+}
+
+"A messenger message that exhausted its retries and landed in a failure queue"
+type FailedMessage {
+    id: ID!
+    queue: FailedMessageQueueEnum!
+    "FQCN of the message"
+    messageClass: String!
+    "Human-readable one-line description of the message"
+    summary: String
+    "FQCN of the exception that caused the failure"
+    exceptionClass: String
+    errorMessage: String
+    failedAt: DateTime
+    "Number of delivery retries before the message was moved to the failure queue"
+    retryCount: Int!
+    "Name of the transport the message was originally consumed from"
+    originalTransport: String
+    "Payment details, only present for Payfort transaction feedback messages"
+    payfortDetails: PayfortFailedMessageDetails
+}
+
+type PayfortFailedMessageDetails {
+    merchantReference: String
+    amount: String
+    responseMessage: String
+}
+
+type PaginatedFailedMessages implements PaginatedResult{
+    failedMessages: [FailedMessage!]!
+    total: Int!
+}
+
+type FailedMessageActionSuccess{
+    success: Boolean!
+}
+
+type FailedMessageNotFoundError implements Error{
+    code: String!
+}

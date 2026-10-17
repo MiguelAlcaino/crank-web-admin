@@ -368,7 +368,7 @@ async function goToRoomLayoutList() {
 
   <form autocomplete="off">
     <div class="row">
-      <div class="form-group col-md-4 col-sm-12 col-xs-12">
+      <div class="col-md-4 col-sm-12 col-xs-12">
         <label for="roomLayoutName" class="input-label">Room Layout Name *</label>
         <div class="controls">
           <input
@@ -393,7 +393,7 @@ async function goToRoomLayoutList() {
     </div>
 
     <div class="row">
-      <div class="form-group col-md-6">
+      <div class="col-md-6">
         <label for="formControlRange">Rows - {{ layoutSize.rows }}</label>
         <Slider
           id="formControlRangeRows"
@@ -408,7 +408,7 @@ async function goToRoomLayoutList() {
       </div>
     </div>
     <div class="row">
-      <div class="form-group col-md-6">
+      <div class="col-md-6">
         <label for="formControlRange">Columns - {{ layoutSize.cols }}</label>
         <Slider
           id="formControlRangeCols"

@@ -1,0 +1,10 @@
+mutation CreateMobileNumberBlacklistEntry($input: CreateMobileNumberBlacklistInput!) {
+  createMobileNumberBlacklistEntry(input: $input) {
+    id
+    mobilePhoneNumber
+    fullPhoneNumber
+    countryId
+    countryName
+    countryPhoneCode
+  }
+}

@@ -66,7 +66,8 @@ import EnrollSelectedMemberComponent from '@/modules/class-schedule/components/E
 import SpotMatrixLegend from '@/modules/class-schedule/components/SpotMatrixLegend.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 
-import { PositionIconEnum, SiteEnum } from '@/modules/shared/interfaces'
+import type { SiteEnum } from '@/modules/shared/interfaces'
+import { PositionIconEnum } from '@/modules/shared/interfaces'
 
 import { type EnrollmentStatusEnum, SpotActionEnum } from '../interfaces'
 
@@ -406,14 +407,14 @@ function toggleSpotsModeView() {
         text="ASSIGN CLIENT"
         type="button"
         @on-click="spotAction = SpotActionEnum.asignUserToSpot"
-        class="mr-1"
+        class="me-1"
         :disabled="showClassAsDisabled === true"
       ></DefaultButtonComponent>
       <DefaultButtonComponent
         text="Put under maintenance"
         type="button"
         @on-click="clickPutUnderMaintenance"
-        class="mr-1"
+        class="me-1"
         :is-loading="isEnablingDisablingSpot"
         :disabled="showClassAsDisabled === true"
         v-if="putUnderMaintenanceIsVisible"
@@ -426,7 +427,7 @@ function toggleSpotsModeView() {
         text="Recover from maintenance"
         type="button"
         @on-click="clickRecoverFromMaintenance"
-        class="mr-1"
+        class="me-1"
         :is-loading="isEnablingDisablingSpot"
         :disabled="showClassAsDisabled === true"
       >
@@ -453,7 +454,7 @@ function toggleSpotsModeView() {
       text="CANCEL BOOKING"
       type="button"
       @on-click="clickCancelMembersReservation"
-      class="mr-1"
+      class="me-1"
       :disabled="showClassAsDisabled === true"
     >
     </DefaultButtonComponent>
@@ -469,7 +470,7 @@ function toggleSpotsModeView() {
         selectedSpot?.isBooked === true &&
         spotAction !== SpotActionEnum.swapSpot
       "
-      class="mr-1"
+      class="me-1"
     >
     </DefaultButtonComponent>
 
@@ -485,7 +486,7 @@ function toggleSpotsModeView() {
         spotAction !== SpotActionEnum.changeMemberSpot
       "
       @on-click="spotAction = SpotActionEnum.swapSpot"
-      class="mr-1"
+      class="me-1"
     >
     </DefaultButtonComponent>
 

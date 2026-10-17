@@ -1,0 +1,32 @@
+mutation UpdateProduct($id: ID!, $input: UpdateProductInput!) {
+  updateProduct(id: $id, input: $input) {
+    __typename
+    ... on AdminProduct {
+      id
+      mindbodyId
+      name
+      price
+      category
+      displayOrder
+      isVisible
+      customTitle
+      subtitle
+      textPayButton
+      errorMessageWhenTryingToPurchase
+      popupTitleAfterClickOnBuy
+      popupDescriptionAfterClickOnBuy
+      isMembership
+      isTrialPackage
+      isClassPassPackage
+      doesItRequireSmsVerification
+      muviEnabled
+      muviNumberOfDays
+    }
+    ... on ProductNotFound {
+      code
+    }
+    ... on InvalidProductVodDaysError {
+      code
+    }
+  }
+}

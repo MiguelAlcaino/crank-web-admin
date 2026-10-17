@@ -57,16 +57,16 @@ const handleCheckboxChange = async () => {
 </script>
 
 <template>
-  <div class="custom-control custom-switch">
+  <div class="form-check form-switch">
     <input
       type="checkbox"
-      class="custom-control-input"
+      class="form-check-input"
       id="toggleSwitch"
       v-model="showCancelledClasses"
       @change="handleCheckboxChange"
       :disabled="isLoading || props.disabled"
     />
-    <label class="custom-control-label" for="toggleSwitch">
+    <label class="form-check-label" for="toggleSwitch">
       {{ showCancelledClasses ? 'Hide cancelled classes' : 'Show cancelled classes' }}
     </label>
     <div v-if="isLoading" class="spinner"></div>
@@ -84,26 +84,26 @@ const handleCheckboxChange = async () => {
 </template>
 
 <style scoped>
-.custom-control-input:focus ~ .custom-control-label::before {
+.form-check-input:focus ~ .form-check-label::before {
   border-color: #ff6f60 !important;
   box-shadow: 0 0 0 0.2rem rgba(255, 47, 69, 0.25) !important;
 }
 
-.custom-control-input:checked ~ .custom-control-label::before {
+.form-check-input:checked ~ .form-check-label::before {
   border-color: #ff6f60 !important;
   background-color: #ff6f60 !important;
 }
 
-.custom-control-input:active ~ .custom-control-label::before {
+.form-check-input:active ~ .form-check-label::before {
   background-color: #ff6f60 !important;
   border-color: #ff6f60 !important;
 }
 
-.custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
+.form-check-input:focus:not(:checked) ~ .form-check-label::before {
   border-color: #ff6f60 !important;
 }
 
-.custom-control-input-green:not(:disabled):active ~ .custom-control-label::before {
+.form-check-input-green:not(:disabled):active ~ .form-check-label::before {
   background-color: #ff6f60 !important;
   border-color: #ff6f60 !important;
 }

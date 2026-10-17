@@ -1,12 +1,13 @@
-import { createHttpLink, Observable } from '@apollo/client'
+import { Observable } from '@apollo/client'
 import { ApolloClient, InMemoryCache } from '@apollo/client/core'
 import { setContext } from '@apollo/client/link/context'
 import { useAuthenticationStore } from '@/stores/authToken'
 import { onError } from '@apollo/client/link/error'
 import { authService } from '@/services/authService'
+import { createUploadLink } from 'apollo-upload-client'
 
 function newAnonymousClient(gqlUrl: string): ApolloClient<any> {
-  const httpLink2 = createHttpLink({
+  const httpLink2 = createUploadLink({
     uri: gqlUrl
   })
 
@@ -38,6 +39,12 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
             ;(async () => {
               try {
                 await authService.refreshToken()
+                operation.setContext({
+                  headers: {
+                    ...operation.getContext().headers,
+                    authorization: `Bearer ${useAuthenticationStore().token}`
+                  }
+                })
                 // Retry the failed request
                 const subscriber = {
                   next: observer.next.bind(observer),
@@ -47,6 +54,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
 
                 forward(operation).subscribe(subscriber)
               } catch (err) {
+                await authService.logout()
                 observer.error(err)
               }
             })()
@@ -59,7 +67,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) 
 })
 
 function newAuthenticatedApolloClient(gqlUrl: string): ApolloClient<any> {
-  const httpLink2 = createHttpLink({
+  const httpLink2 = createUploadLink({
     uri: gqlUrl
   })
   return new ApolloClient({

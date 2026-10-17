@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { appStore } from '@/stores/appStorage'
-import { inject, onMounted, ref } from 'vue'
+import { computed, inject, onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import dayjs from 'dayjs'
 
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
@@ -9,8 +10,14 @@ import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import type { ClassSchedule, RoomLayout } from '../interfaces'
+import type { SiteEnum } from '@/modules/shared/interfaces'
+import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
+import { authService } from '@/services/authService'
+import { Role } from '@/utils/userRoles'
 
 const apiService = inject<ApiService>('gqlApiService')!
+const route = useRoute()
+const site = computed(() => (route.params.site as string) || appStore().site || 'dubai')
 
 const isLoading = ref(false)
 const checked = ref(false)
@@ -34,6 +41,14 @@ const errorModalIsVisible = ref<boolean>(false)
 const successModalIsVisible = ref<boolean>(false)
 
 const urlSyncAll = ref<string>('#')
+// KAN-231 (and the library build) links to the URL the host page injects; main has the
+// syncAllClassSchedules mutation, which only super admins may run.
+const canSyncAllViaLink = isFeatureAvailable(AdminFeature.SyncAllClassSchedulesLink)
+const canSyncAllViaMutation =
+  isFeatureAvailable(AdminFeature.SyncAllClassSchedules) &&
+  authService.userHasRole(Role.ROLE_SUPER_ADMIN)
+const isSyncingAll = ref(false)
+const syncAllSuccessModalIsVisible = ref<boolean>(false)
 
 const isSaving = ref(false)
 
@@ -51,10 +66,16 @@ onMounted(() => {
   getClassSchedules()
 })
 
+watch(site, () => {
+  getAvailableClassTypes()
+  getRoomLayouts()
+  getClassSchedules()
+})
+
 async function getAvailableClassTypes() {
   isLoadingClassTypes.value = true
 
-  types.value = (await apiService.availableClassTypes(appStore().site)) as string[]
+  types.value = (await apiService.availableClassTypes(site.value as SiteEnum)) as string[]
 
   isLoadingClassTypes.value = false
 }
@@ -63,7 +84,7 @@ async function getClassSchedules() {
   isLoading.value = true
 
   allClassSchedules = (await apiService.classSchedules(
-    appStore().site
+    site.value as SiteEnum
   )) as unknown as ClassSchedule[]
 
   filteredClassSchedules.value = allClassSchedules
@@ -75,7 +96,7 @@ async function getClassSchedules() {
 async function getRoomLayouts() {
   isLoadingRoomLayouts.value = true
 
-  roomLayouts.value = (await apiService.roomLayouts(appStore().site, null)) as RoomLayout[]
+  roomLayouts.value = (await apiService.roomLayouts(site.value as SiteEnum, null)) as RoomLayout[]
 
   filteredRoomLayouts.value = roomLayouts.value
 
@@ -218,6 +239,19 @@ function applyFilters() {
   }
 }
 
+async function syncAllClassSchedules() {
+  isSyncingAll.value = true
+  try {
+    await apiService.syncAllClassSchedules(site.value as SiteEnum)
+    syncAllSuccessModalIsVisible.value = true
+    getClassSchedules()
+  } catch (error) {
+    errorModalIsVisible.value = true
+  } finally {
+    isSyncingAll.value = false
+  }
+}
+
 function extractDifferentCapacities(items: ClassSchedule[]) {
   const capacities = items.map((item) => item.capacity)
 
@@ -230,13 +264,20 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
 <template>
   <div class="row">
     <div class="col-12" style="text-align: right">
-      <a :href="urlSyncAll" class="btn btn-primary">Sync All</a>
+      <a v-if="canSyncAllViaLink" :href="urlSyncAll" class="btn btn-primary">Sync All</a>
+      <DefaultButtonComponent
+        v-else-if="canSyncAllViaMutation"
+        text="Sync All"
+        type="button"
+        :is-loading="isSyncingAll"
+        @on-click="syncAllClassSchedules"
+      ></DefaultButtonComponent>
     </div>
   </div>
   <div class="row">
     <div class="col-6 col-sm-6 col-md-6 col-lg-5 col-xl-3">
       <select
-        class="custom-select"
+        class="form-select"
         v-model="typeFilterSelected"
         id="typeFilter"
         required
@@ -250,7 +291,7 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
     </div>
     <div class="col-6 col-sm-6 col-md-6 col-lg-5 col-xl-3">
       <select
-        class="custom-select"
+        class="form-select"
         v-model="capacityFilterSelected"
         id="capacityFilter"
         required
@@ -267,7 +308,7 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
   <div class="row" v-if="setOfCheckedId.size > 0">
     <div class="col-6 col-sm-6 col-md-6 col-lg-5 col-xl-3">
       <select
-        class="custom-select"
+        class="form-select"
         v-model="selectedRoomLayoutId"
         id="countryRegistration"
         required
@@ -298,16 +339,16 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
           <thead>
             <tr>
               <th class="text-center">
-                <div class="custom-control custom-checkbox">
+                <div class="form-check">
                   <input
                     type="checkbox"
-                    class="custom-control-input"
+                    class="form-check-input"
                     id="checkboxSelectAll"
                     v-model="checked"
                     :indeterminate="indeterminate"
                     @change="onAllChecked($event)"
                   />
-                  <label class="custom-control-label" for="checkboxSelectAll"></label>
+                  <label class="form-check-label" for="checkboxSelectAll"></label>
                 </div>
               </th>
               <th class="text-center">ID</th>
@@ -327,15 +368,15 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
               v-bind:index="index"
             >
               <td class="text-center">
-                <div class="custom-control custom-checkbox">
+                <div class="form-check">
                   <input
                     type="checkbox"
-                    class="custom-control-input"
+                    class="form-check-input"
                     :id="'checkboxSelect' + item.id"
                     v-bind:checked="setOfCheckedId.has(item.id)"
                     @change="onItemChecked(item.id, $event)"
                   />
-                  <label class="custom-control-label" :for="'checkboxSelect' + item.id"></label>
+                  <label class="form-check-label" :for="'checkboxSelect' + item.id"></label>
                 </div>
               </td>
               <td class="text-center">{{ item.id }}</td>
@@ -399,6 +440,16 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
   <!-- SUCCESS Modal -->
   <ModalComponent
     title="SUCCESS"
+    message="THE CLASS SCHEDULES HAVE BEEN SYNCED FROM MINDBODY"
+    :closable="false"
+    @on-ok="syncAllSuccessModalIsVisible = false"
+    v-if="syncAllSuccessModalIsVisible"
+    :cancel-text="null"
+  >
+  </ModalComponent>
+
+  <ModalComponent
+    title="SUCCESS"
     message="THE CLASS SCHEDULES HAVE BEEN UPDATED SUCCESSFULLY"
     :closable="false"
     @on-ok="successModalIsVisible = false"
@@ -409,27 +460,27 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
 </template>
 
 <style scoped>
-.custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::before {
+. .form-check-input:indeterminate ~ .form-check-label::before {
   background-color: #ff7f61 !important;
   border-color: #ff7f61 !important;
 }
 
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+. .form-check-input:checked ~ .form-check-label::before {
   background-color: #ff7f61 !important;
   border-color: #ff7f61 !important;
 }
 
-.custom-checkbox .custom-control-input:checked:focus ~ .custom-control-label::before {
+. .form-check-input:checked:focus ~ .form-check-label::before {
   box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem #ff7f61;
   border-color: #ff7f61 !important;
 }
 
-.custom-checkbox .custom-control-input:focus ~ .custom-control-label::before {
+. .form-check-input:focus ~ .form-check-label::before {
   box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
   border-color: #ff7f61 !important;
 }
 
-.custom-checkbox .custom-control-input:active ~ .custom-control-label::before {
+. .form-check-input:active ~ .form-check-label::before {
   background-color: #ffc6b9;
   border-color: #ff7f61 !important;
 }

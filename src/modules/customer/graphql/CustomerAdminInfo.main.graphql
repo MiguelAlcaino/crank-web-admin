@@ -1,0 +1,20 @@
+# What the main-only sections of the customer profile need on top of getUser.
+query CustomerAdminInfo($id: ID!) {
+  user(id: $id) {
+    id
+    user {
+      firstName
+      lastName
+      email
+      phone
+      isMobilePhoneVerified
+      siteUsersNew {
+        id
+        externalUserId
+        siteUserInfo {
+          site
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,167 @@
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { newAuthenticatedApolloClient } from '@/services/graphqlClient'
+import { useTransactionRecords } from '../composables/useTransactionRecords'
+import { useToast } from '@/modules/shared/composables/useToast'
+import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
+
+const gqlUrl = import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL
+const apolloClient = newAuthenticatedApolloClient(gqlUrl)
+const txn = useTransactionRecords(apolloClient)
+const toast = useToast()
+const route = useRoute()
+const router = useRouter()
+
+const confirmRefund = ref(false)
+const showPaymentDetails = isFeatureAvailable(AdminFeature.TransactionPaymentDetails)
+
+onMounted(() => {
+  txn.fetchDetail(route.params.id as string)
+})
+
+async function handleRefund() {
+  const success = await txn.refund(route.params.id as string)
+  if (success) {
+    toast.success('The payment has been refunded')
+    confirmRefund.value = false
+    await txn.fetchDetail(route.params.id as string)
+  }
+}
+
+function formatDate(dateStr: string | null): string {
+  if (!dateStr) return '-'
+  return new Date(dateStr).toLocaleString()
+}
+</script>
+
+<template>
+  <div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4>Transaction Detail</h4>
+      <button class="btn btn-outline-secondary btn-sm" @click="router.push({ name: 'admin_transactions' })">
+        Back to list
+      </button>
+    </div>
+
+    <div v-if="txn.isLoading.value" class="text-center py-4">
+      <div class="spinner-border" role="status"></div>
+    </div>
+
+    <div v-if="txn.hasError.value" class="alert alert-danger">{{ txn.errorMessage.value }}</div>
+
+    <div v-if="txn.detail.value && !txn.isLoading.value">
+      <div
+        v-if="showPaymentDetails && txn.detail.value.mindbodyCheckoutFail"
+        class="alert alert-danger"
+      >
+        This transaction was paid but was not registered in Mindbody. Check the Mindbody response
+        below for details.
+      </div>
+
+      <table class="table table-bordered">
+        <tbody>
+          <tr><th width="200">ID</th><td>{{ txn.detail.value.id }}</td></tr>
+          <tr><th>Customer</th><td>
+            <router-link
+              v-if="txn.detail.value.siteCustomer?.identifiableUser?.id"
+              :to="{ name: 'admin_customer_profile', params: { id: txn.detail.value.siteCustomer.identifiableUser.id } }"
+            >{{ txn.detail.value.customerName || '-' }}</router-link>
+            <span v-else>{{ txn.detail.value.customerName || '-' }}</span>
+          </td></tr>
+          <tr><th>Email</th><td>{{ txn.detail.value.customerEmail || '-' }}</td></tr>
+          <tr><th>Site</th><td>{{ txn.detail.value.siteName || '-' }}</td></tr>
+          <tr><th>Status</th><td>
+            <span class="badge" :class="txn.detail.value.status === 'refunded' ? 'text-bg-warning' : 'text-bg-success'">
+              {{ txn.detail.value.status }}
+            </span>
+          </td></tr>
+          <tr><th>Amount</th><td>{{ txn.detail.value.shoppingCart?.currency }} {{ txn.detail.value.amount }}</td></tr>
+          <tr><th>Tax</th><td>{{ txn.detail.value.taxAmount }}</td></tr>
+          <tr><th>Sub Total</th><td>{{ txn.detail.value.shoppingCart?.currency }} {{ txn.detail.value.subTotal }}</td></tr>
+          <tr><th>Card Holder</th><td>{{ txn.detail.value.creditCardHolderName || '-' }}</td></tr>
+          <tr><th>Last 4 Digits</th><td>{{ txn.detail.value.creditCardLastFourDigits || '-' }}</td></tr>
+          <tr><th>Authorization Code</th><td>{{ txn.detail.value.authorizationCode || '-' }}</td></tr>
+          <template v-if="showPaymentDetails">
+            <tr><th>Payment Method</th><td>{{ txn.detail.value.paymentMethod || '-' }}</td></tr>
+            <tr>
+              <th>Payfort Authorization Code</th>
+              <td>{{ txn.detail.value.payfortAuthorizationCode || '-' }}</td>
+            </tr>
+            <tr><th>Country</th><td>{{ txn.detail.value.userCountry || '-' }}</td></tr>
+            <tr>
+              <th>Mindbody Payment Record ID</th>
+              <td>{{ txn.detail.value.merchantPurchaseId ?? '-' }}</td>
+            </tr>
+            <tr>
+              <th>Service Expiration</th>
+              <td>{{ formatDate(txn.detail.value.serviceExpirationDate ?? null) }}</td>
+            </tr>
+          </template>
+          <tr><th>Installments</th><td>{{ txn.detail.value.installments }}</td></tr>
+          <tr><th>Created</th><td>{{ formatDate(txn.detail.value.created) }}</td></tr>
+          <tr v-if="txn.detail.value.refundDate"><th>Refund Date</th><td>{{ formatDate(txn.detail.value.refundDate) }}</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Items -->
+      <h5>Items</h5>
+      <table class="table table-sm table-striped">
+        <thead>
+          <tr><th>Name</th><th>Quantity</th><th>Price</th></tr>
+        </thead>
+        <tbody>
+          <template v-if="txn.detail.value.shoppingCart">
+            <tr v-for="item in txn.detail.value.shoppingCart.items" :key="item.id">
+              <td>{{ item.variant.name ?? '-' }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ txn.detail.value.shoppingCart?.currency }} {{ item.subtotal ?? item.variant.price }}</td>
+            </tr>
+          </template>
+          <template v-else>
+            <tr v-for="item in txn.detail.value.items" :key="item.id ?? ''">
+              <td>{{ item.name }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.amount }}</td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+
+      <!-- Raw gateway responses (main only) -->
+      <template v-if="showPaymentDetails">
+        <details v-if="txn.detail.value.merchantResponse" class="mb-2">
+          <summary>Mindbody response</summary>
+          <pre class="bg-light p-2 small text-wrap">{{ txn.detail.value.merchantResponse }}</pre>
+        </details>
+        <details v-if="txn.detail.value.paymentGatewayResponse" class="mb-2">
+          <summary>Payfort response</summary>
+          <pre class="bg-light p-2 small text-wrap">{{ txn.detail.value.paymentGatewayResponse }}</pre>
+        </details>
+        <details v-if="txn.detail.value.refundResponse" class="mb-2">
+          <summary>Payfort refund response</summary>
+          <pre class="bg-light p-2 small text-wrap">{{ txn.detail.value.refundResponse }}</pre>
+        </details>
+      </template>
+
+      <!-- Refund -->
+      <div v-if="txn.detail.value.isRefundable" class="mt-3">
+        <div v-if="!confirmRefund">
+          <button class="btn btn-danger btn-sm" @click="confirmRefund = true">Refund</button>
+        </div>
+        <div v-else class="alert alert-warning">
+          <p>Are you sure you want to refund this transaction?</p>
+          <button
+            class="btn btn-danger btn-sm me-2"
+            @click="handleRefund"
+            :disabled="txn.isRefunding.value"
+          >
+            <span v-if="txn.isRefunding.value">Processing...</span>
+            <span v-else>Confirm Refund</span>
+          </button>
+          <button class="btn btn-secondary btn-sm" @click="confirmRefund = false">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

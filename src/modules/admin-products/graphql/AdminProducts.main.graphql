@@ -1,0 +1,23 @@
+query AdminProducts($site: SiteEnum!) {
+  adminProducts(site: $site) {
+    id
+    mindbodyId
+    name
+    price
+    category
+    displayOrder
+    isVisible
+    customTitle
+    subtitle
+    textPayButton
+    errorMessageWhenTryingToPurchase
+    popupTitleAfterClickOnBuy
+    popupDescriptionAfterClickOnBuy
+    isMembership
+    isTrialPackage
+    isClassPassPackage
+    doesItRequireSmsVerification
+    muviEnabled
+    muviNumberOfDays
+  }
+}

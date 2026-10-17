@@ -324,14 +324,14 @@ function onChangeCountry() {
     <!-- hideMetrics -->
     <div class="form-row">
       <div class="col-md-12 mb-3">
-        <div class="custom-control custom-switch">
+        <div class="form-check form-switch">
           <input
             type="checkbox"
-            class="custom-control-input"
+            class="form-check-input"
             v-model="formData.joinTheLeaderboard"
             id="joinTheLeaderboardMyProfile"
           />
-          <label class="custom-control-label" for="joinTheLeaderboardMyProfile"
+          <label class="form-check-label" for="joinTheLeaderboardMyProfile"
             >Join the Leaderboard?</label
           >
           <small
@@ -398,7 +398,7 @@ function onChangeCountry() {
       <div class="col-md-6 mb-3">
         <label for="genderMyProfile" class="input-label">Gender *</label>
         <select
-          class="custom-select"
+          class="form-select"
           v-model="formData.gender"
           id="genderMyProfile"
           placeholder="Gender"
@@ -482,9 +482,7 @@ function onChangeCountry() {
             @focus="weightInputMessageIsVisible = true"
             @blur="weightInputMessageIsVisible = false"
           />
-          <div class="input-group-append">
-            <span class="input-group-text" id="input-group-append-kg">kg</span>
-          </div>
+          <span class="input-group-text" id="input-group-append-kg">kg</span>
         </div>
         <small v-if="weightInputMessageIsVisible" class="form-text" style="color: #737373">
           Enter your weight to improve the accuracy of your class stats
@@ -509,7 +507,7 @@ function onChangeCountry() {
       <div class="col-md-6 mb-3">
         <label for="countryMyProfile" class="input-label">Country *</label>
         <select
-          class="custom-select"
+          class="form-select"
           v-model="formData.country"
           @change="onChangeCountry()"
           id="countryMyProfile"
@@ -531,7 +529,7 @@ function onChangeCountry() {
       <!-- cityState -->
       <div class="col-md-6 mb-3">
         <label for="cityStateMyProfile" class="input-label">City/State *</label>
-        <select class="custom-select" v-model="formData.cityState" id="cityStateMyProfile" required>
+        <select class="form-select" v-model="formData.cityState" id="cityStateMyProfile" required>
           <option v-for="(item, index) in countryStates" :key="index" :value="item.code">
             {{ item.name }}
           </option>
@@ -687,7 +685,7 @@ function onChangeCountry() {
           >Emergency Contact Relationship *</label
         >
         <select
-          class="custom-select"
+          class="form-select"
           v-model="formData.emergencyContactRelationship"
           id="emergencyContactRelationshipMyProfile"
           required
@@ -745,26 +743,26 @@ function onChangeCountry() {
 <style lang="css" scoped src="@/assets/main.css"></style>
 
 <style lang="css" scoped>
-.custom-control-input:focus ~ .custom-control-label::before {
+.form-check-input:focus ~ .form-check-label::before {
   border-color: #ff6f60 !important;
   box-shadow: 0 0 0 0.2rem rgba(255, 47, 69, 0.25) !important;
 }
 
-.custom-control-input:checked ~ .custom-control-label::before {
+.form-check-input:checked ~ .form-check-label::before {
   border-color: #ff6f60 !important;
   background-color: #ff6f60 !important;
 }
 
-.custom-control-input:active ~ .custom-control-label::before {
+.form-check-input:active ~ .form-check-label::before {
   background-color: #ff6f60 !important;
   border-color: #ff6f60 !important;
 }
 
-.custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
+.form-check-input:focus:not(:checked) ~ .form-check-label::before {
   border-color: #ff6f60 !important;
 }
 
-.custom-control-input-green:not(:disabled):active ~ .custom-control-label::before {
+.form-check-input-green:not(:disabled):active ~ .form-check-label::before {
   background-color: #ff6f60 !important;
   border-color: #ff6f60 !important;
 }
