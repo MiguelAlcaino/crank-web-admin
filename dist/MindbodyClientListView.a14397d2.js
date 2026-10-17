@@ -1,4 +1,4 @@
-import { O as R, r as h, P as _, d as L, H as M, c as q, I, b as s, e, f as x, i as $, w as f, g as r, j as y, t as i, F as P, h as w, A as C, o } from "./index.b0f32500.js";
+import { ac as R, r as h, ae as _, d as L, I as M, c as q, K as I, b as s, e, f as x, i as $, w as f, g as r, j as y, t as i, F as w, h as N, A as C, o } from "./index.cb70f358.js";
 const E = R`
   query AdminMindbodyClients($params: AdminMindbodyClientsParams, $pagination: PaginationInput) {
     mindbodyClients(params: $params, pagination: $pagination) {
@@ -80,10 +80,10 @@ const E = R`
   role: "status"
 }, null, -1), j = [
   V
-], O = {
+], Q = {
   key: 1,
   class: "alert alert-danger"
-}, Q = { key: 2 }, Y = { class: "text-muted small" }, z = { class: "table table-striped table-sm" }, H = /* @__PURE__ */ e("thead", null, [
+}, Y = { key: 2 }, z = { class: "text-muted small" }, K = { class: "table table-striped table-sm" }, O = /* @__PURE__ */ e("thead", null, [
   /* @__PURE__ */ e("tr", null, [
     /* @__PURE__ */ e("th", null, "ID"),
     /* @__PURE__ */ e("th", null, "Client ID"),
@@ -92,19 +92,19 @@ const E = R`
     /* @__PURE__ */ e("th", null, "Email"),
     /* @__PURE__ */ e("th", null, "Phone")
   ])
-], -1), G = { key: 0 }, J = /* @__PURE__ */ e("td", {
+], -1), G = { key: 0 }, H = /* @__PURE__ */ e("td", {
   colspan: "6",
   class: "text-center text-muted py-3"
-}, "No clients found", -1), K = [
-  J
-], W = { key: 0 }, X = { class: "pagination pagination-sm" }, Z = ["onClick"], N = 50, le = /* @__PURE__ */ L({
+}, "No clients found", -1), J = [
+  H
+], W = { key: 0 }, X = { class: "pagination pagination-sm" }, Z = ["onClick"], P = 50, le = /* @__PURE__ */ L({
   __name: "MindbodyClientListView",
   setup(g) {
-    const p = M("https://payments.crank-fit.com/api/graphql/"), t = D(p), a = h(""), n = h(1), d = q(() => t.listResult.value ? Math.ceil(t.listResult.value.totalCount / N) : 1);
+    const p = M("https://payments.crank-fit.com/api/graphql/"), t = D(p), a = h(""), n = h(1), d = q(() => t.listResult.value ? Math.ceil(t.listResult.value.totalCount / P) : 1);
     async function u() {
       await t.fetchList(
         a.value ? { search: a.value } : void 0,
-        { page: n.value, limit: N }
+        { page: n.value, limit: P }
       );
     }
     async function c() {
@@ -132,14 +132,14 @@ const E = R`
         ])
       ], 40, U),
       r(t).isLoading.value ? (o(), s("div", T, j)) : y("", !0),
-      r(t).hasError.value ? (o(), s("div", O, "Failed to load clients.")) : y("", !0),
-      r(t).listResult.value && !r(t).isLoading.value ? (o(), s("div", Q, [
-        e("p", Y, i(r(t).listResult.value.totalCount) + " clients found (page " + i(r(t).listResult.value.page) + " of " + i(d.value) + ") ", 1),
-        e("table", z, [
-          H,
+      r(t).hasError.value ? (o(), s("div", Q, "Failed to load clients.")) : y("", !0),
+      r(t).listResult.value && !r(t).isLoading.value ? (o(), s("div", Y, [
+        e("p", z, i(r(t).listResult.value.totalCount) + " clients found (page " + i(r(t).listResult.value.page) + " of " + i(d.value) + ") ", 1),
+        e("table", K, [
+          O,
           e("tbody", null, [
-            r(t).listResult.value.items.length === 0 ? (o(), s("tr", G, K)) : y("", !0),
-            (o(!0), s(P, null, w(r(t).listResult.value.items, (l) => (o(), s("tr", {
+            r(t).listResult.value.items.length === 0 ? (o(), s("tr", G, J)) : y("", !0),
+            (o(!0), s(w, null, N(r(t).listResult.value.items, (l) => (o(), s("tr", {
               key: l.id
             }, [
               e("td", null, i(l.id), 1),
@@ -162,7 +162,7 @@ const E = R`
                 onClick: v[1] || (v[1] = f((l) => m(n.value - 1), ["prevent"]))
               }, "Previous")
             ], 2),
-            (o(!0), s(P, null, w(Math.min(d.value, 10), (l) => (o(), s("li", {
+            (o(!0), s(w, null, N(Math.min(d.value, 10), (l) => (o(), s("li", {
               key: l,
               class: C(["page-item", { active: l === n.value }])
             }, [

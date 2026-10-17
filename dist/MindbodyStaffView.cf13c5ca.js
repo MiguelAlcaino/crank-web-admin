@@ -1,6 +1,4 @@
-import { O as b, r as u, P as f, d as k, H as w, s as N, J as L, I as M, b as n, e as t, g as o, B as E, k as q, a2 as x, j as y, F as A, h as F, o as l, t as m } from "./index.b0f32500.js";
-import { u as V } from "./useAvailableSites.68b5c8bf.js";
-import { u as C } from "./useToast.8f62be70.js";
+import { ac as b, r as u, ae as f, d as k, I as w, J as N, G as L, s as M, L as E, K as q, b as n, e as t, g as o, B as x, k as A, al as F, j as y, F as V, h as C, o as l, t as _ } from "./index.cb70f358.js";
 const T = b`
   query MindbodyStaffs($site: SiteEnum!) {
     mindbodyStaffs(site: $site) {
@@ -14,12 +12,12 @@ const T = b`
   mutation SyncAllMindbodyStaff($site: SiteEnum!) {
     syncAllMindbodyStaff(site: $site)
   }
-`, B = (_) => {
+`, B = (m) => {
   const h = u([]), r = u(!1), e = u(!1), a = u(!1);
   async function v(s) {
     r.value = !0, a.value = !1;
     try {
-      const { data: i } = await _.query({
+      const { data: i } = await m.query({
         query: T,
         variables: { site: s },
         fetchPolicy: "network-only"
@@ -34,7 +32,7 @@ const T = b`
   async function d(s) {
     e.value = !0, a.value = !1;
     try {
-      return await _.mutate({
+      return await m.mutate({
         mutation: U,
         variables: { site: s }
       }), !0;
@@ -52,24 +50,24 @@ const T = b`
     fetchStaff: v,
     syncStaff: d
   };
-}, $ = { class: "d-flex justify-content-between align-items-center mb-2" }, I = /* @__PURE__ */ t("h4", null, "Mindbody Staff", -1), j = ["disabled"], D = { key: 0 }, O = /* @__PURE__ */ t("span", {
+}, $ = { class: "d-flex justify-content-between align-items-center mb-2" }, I = /* @__PURE__ */ t("h4", null, "Mindbody Staff", -1), j = ["disabled"], D = { key: 0 }, Y = /* @__PURE__ */ t("span", {
   class: "spinner-border spinner-border-sm",
   role: "status"
-}, null, -1), P = { key: 1 }, Y = { class: "row mb-3" }, z = { class: "col-md-4 col-sm-6 col-12" }, H = {
+}, null, -1), z = { key: 1 }, G = { class: "row mb-3" }, J = { class: "col-md-4 col-sm-6 col-12" }, K = {
   key: 0,
   class: "text-center py-4"
-}, J = /* @__PURE__ */ t("div", {
+}, O = /* @__PURE__ */ t("div", {
   class: "spinner-border",
   role: "status"
-}, null, -1), Q = [
-  J
-], R = {
+}, null, -1), P = [
+  O
+], Q = {
   key: 1,
   class: "alert alert-danger"
-}, G = {
+}, R = {
   key: 2,
   class: "table table-striped table-sm"
-}, K = /* @__PURE__ */ t("thead", null, [
+}, H = /* @__PURE__ */ t("thead", null, [
   /* @__PURE__ */ t("tr", null, [
     /* @__PURE__ */ t("th", null, "ID"),
     /* @__PURE__ */ t("th", null, "First Name"),
@@ -81,10 +79,10 @@ const T = b`
   class: "text-center text-muted py-3"
 }, "No staff found", -1), Z = [
   X
-], at = /* @__PURE__ */ k({
+], et = /* @__PURE__ */ k({
   __name: "MindbodyStaffView",
-  setup(_) {
-    const r = w("https://payments.crank-fit.com/api/graphql/"), e = B(r), { sites: a, fetchSites: v } = V(r), d = C(), s = u(N().site || null);
+  setup(m) {
+    const r = w("https://payments.crank-fit.com/api/graphql/"), e = B(r), { sites: a, fetchSites: v } = N(r), d = L(), s = u(M().site || null);
     async function i() {
       !s.value || await e.fetchStaff(s.value);
     }
@@ -93,7 +91,7 @@ const T = b`
         return;
       await e.syncStaff(s.value) ? (d.success("Staff synchronized successfully from Mindbody"), await i()) : d.error("Failed to sync staff");
     }
-    return L(s, i), M(async () => {
+    return E(s, i), q(async () => {
       await v(), !s.value && a.value.length > 0 && (s.value = a.value[0].code), await i();
     }), (g, S) => (l(), n("div", null, [
       t("div", $, [
@@ -104,14 +102,14 @@ const T = b`
           disabled: o(e).isSyncing.value
         }, [
           o(e).isSyncing.value ? (l(), n("span", D, [
-            O,
-            E(" Syncing... ")
-          ])) : (l(), n("span", P, "Sync from Mindbody"))
+            Y,
+            x(" Syncing... ")
+          ])) : (l(), n("span", z, "Sync from Mindbody"))
         ], 8, j)
       ]),
-      t("div", Y, [
-        t("div", z, [
-          q(x, {
+      t("div", G, [
+        t("div", J, [
+          A(F, {
             "model-value": s.value,
             "onUpdate:modelValue": S[0] || (S[0] = (c) => s.value = c),
             sites: o(a),
@@ -119,19 +117,19 @@ const T = b`
           }, null, 8, ["model-value", "sites"])
         ])
       ]),
-      o(e).isLoading.value ? (l(), n("div", H, Q)) : y("", !0),
-      o(e).hasError.value ? (l(), n("div", R, "Failed to load staff.")) : y("", !0),
-      o(e).isLoading.value ? y("", !0) : (l(), n("table", G, [
-        K,
+      o(e).isLoading.value ? (l(), n("div", K, P)) : y("", !0),
+      o(e).hasError.value ? (l(), n("div", Q, "Failed to load staff.")) : y("", !0),
+      o(e).isLoading.value ? y("", !0) : (l(), n("table", R, [
+        H,
         t("tbody", null, [
           o(e).staffList.value.length === 0 ? (l(), n("tr", W, Z)) : y("", !0),
-          (l(!0), n(A, null, F(o(e).staffList.value, (c) => (l(), n("tr", {
+          (l(!0), n(V, null, C(o(e).staffList.value, (c) => (l(), n("tr", {
             key: c.id
           }, [
-            t("td", null, m(c.id), 1),
-            t("td", null, m(c.firstName), 1),
-            t("td", null, m(c.lastName), 1),
-            t("td", null, m(c.email || "-"), 1)
+            t("td", null, _(c.id), 1),
+            t("td", null, _(c.firstName), 1),
+            t("td", null, _(c.lastName), 1),
+            t("td", null, _(c.email || "-"), 1)
           ]))), 128))
         ])
       ]))
@@ -139,5 +137,5 @@ const T = b`
   }
 });
 export {
-  at as default
+  et as default
 };
