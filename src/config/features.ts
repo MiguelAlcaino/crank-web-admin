@@ -57,6 +57,8 @@ export enum AdminFeature {
   BulkVod = 'bulkVod',
   /** Packages on crank-payments main's local Product entity (`adminProducts`). */
   AdminProducts = 'adminProducts',
+  /** Messenger messages in the failure queues, with retry and discard (`failedMessages`). */
+  FailedMessages = 'failedMessages',
 
   // Features inside a module
   /** Subscriptions section of the customer profile (`User.subscriptions`). */
@@ -135,6 +137,7 @@ export const FEATURE_PROFILES: Record<AdminFeature, readonly BackendProfile[]> =
   [AdminFeature.TransactionShoppingCart]: KAN231_ONLY,
   [AdminFeature.TransactionPaymentDetails]: MAIN_ONLY,
   [AdminFeature.AdminProducts]: MAIN_ONLY, // crank-payments#970
+  [AdminFeature.FailedMessages]: MAIN_ONLY, // crank-payments#910
   [AdminFeature.PendingGiftCardsPage]: MAIN_ONLY, // crank-payments#971
   [AdminFeature.CustomerVodPeriods]: MAIN_ONLY, // crank-payments#967
   [AdminFeature.CustomerActions]: MAIN_ONLY, // crank-payments#967

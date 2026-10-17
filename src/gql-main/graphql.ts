@@ -705,6 +705,50 @@ export type ExpiredResetPasswordTokenError = Error & {
   code: Scalars['String']['output'];
 };
 
+/** A messenger message that exhausted its retries and landed in a failure queue */
+export type FailedMessage = {
+  __typename: 'FailedMessage';
+  errorMessage?: Maybe<Scalars['String']['output']>;
+  /** FQCN of the exception that caused the failure */
+  exceptionClass?: Maybe<Scalars['String']['output']>;
+  failedAt?: Maybe<Scalars['DateTime']['output']>;
+  id: Scalars['ID']['output'];
+  /** FQCN of the message */
+  messageClass: Scalars['String']['output'];
+  /** Name of the transport the message was originally consumed from */
+  originalTransport?: Maybe<Scalars['String']['output']>;
+  /** Payment details, only present for Payfort transaction feedback messages */
+  payfortDetails?: Maybe<PayfortFailedMessageDetails>;
+  queue: FailedMessageQueueEnum;
+  /** Number of delivery retries before the message was moved to the failure queue */
+  retryCount: Scalars['Int']['output'];
+  /** Human-readable one-line description of the message */
+  summary?: Maybe<Scalars['String']['output']>;
+};
+
+export type FailedMessageActionInput = {
+  id: Scalars['ID']['input'];
+  queue: FailedMessageQueueEnum;
+};
+
+export type FailedMessageActionResultUnion = FailedMessageActionSuccess | FailedMessageNotFoundError;
+
+export type FailedMessageActionSuccess = {
+  __typename: 'FailedMessageActionSuccess';
+  success: Scalars['Boolean']['output'];
+};
+
+export type FailedMessageNotFoundError = Error & {
+  __typename: 'FailedMessageNotFoundError';
+  code: Scalars['String']['output'];
+};
+
+export enum FailedMessageQueueEnum {
+  Default = 'default',
+  PartnerPurchase = 'partnerPurchase',
+  PayfortTransactionFeedback = 'payfortTransactionFeedback'
+}
+
 export enum GenderEnum {
   /** Feminine */
   F = 'F',
@@ -1260,6 +1304,8 @@ export type Mutation = {
   deleteRoomLayout: DeleteRoomLayoutResultUnion;
   /** Disables a spot in a class */
   disableSpot?: Maybe<DisableEnableSpotResultUnion>;
+  /** Permanently discards a failed message from the failure queue */
+  discardFailedMessage: FailedMessageActionResultUnion;
   /** Edits a class */
   editClass: EditClassResultUnion;
   /** Edits an enrollment made by the current user */
@@ -1403,6 +1449,8 @@ export type Mutation = {
    * @deprecated Accepts a bare JWT and never asks for the current password, so any holder of a customer's token can change it. Use resetPassword, which also requires the token from the reset email. Removed once the remaining caller has migrated.
    */
   resetPasswordForCurrentUser?: Maybe<ResetPasswordForCurrentUserUnion>;
+  /** Re-dispatches a failed message to its original transport and removes it from the failure queue */
+  retryFailedMessage: FailedMessageActionResultUnion;
   /** Re-dispatches the Payfort feedback message for an incomplete TemporalTransaction. Admin only. Errors: temporal_transaction.not_found, temporal_transaction.already_completed, temporal_transaction.feedback_in_progress, temporal_transaction.already_sold. */
   retryTransactionFeedback: Scalars['Boolean']['output'];
   /** Sends a single class stats to an email */
@@ -1604,6 +1652,11 @@ export type MutationDeleteRoomLayoutArgs = {
 
 export type MutationDisableSpotArgs = {
   input?: InputMaybe<DisableEnableSpotInput>;
+};
+
+
+export type MutationDiscardFailedMessageArgs = {
+  input: FailedMessageActionInput;
 };
 
 
@@ -1846,6 +1899,11 @@ export type MutationResetPasswordForCurrentUserArgs = {
 };
 
 
+export type MutationRetryFailedMessageArgs = {
+  input: FailedMessageActionInput;
+};
+
+
 export type MutationRetryTransactionFeedbackArgs = {
   id: Scalars['ID']['input'];
 };
@@ -2044,6 +2102,12 @@ export type PaginatedEnrollments = PaginatedResult & {
   total: Scalars['Int']['output'];
 };
 
+export type PaginatedFailedMessages = PaginatedResult & {
+  __typename: 'PaginatedFailedMessages';
+  failedMessages: Array<FailedMessage>;
+  total: Scalars['Int']['output'];
+};
+
 export type PaginatedIncompleteTransactionFeedbacks = {
   __typename: 'PaginatedIncompleteTransactionFeedbacks';
   items: Array<IncompleteTransactionFeedback>;
@@ -2153,6 +2217,13 @@ export type PartnerUserRegistered = {
 export type PasswordsDontMatchError = Error & {
   __typename: 'PasswordsDontMatchError';
   code: Scalars['String']['output'];
+};
+
+export type PayfortFailedMessageDetails = {
+  __typename: 'PayfortFailedMessageDetails';
+  amount?: Maybe<Scalars['String']['output']>;
+  merchantReference?: Maybe<Scalars['String']['output']>;
+  responseMessage?: Maybe<Scalars['String']['output']>;
 };
 
 export type PaymentLink = {
@@ -2303,6 +2374,10 @@ export type Query = {
   customerVodPeriods: Array<AdminCustomerVodPeriod>;
   /** Returns a paginated list of customers, newest first, with the filters of the admin customer list. Admin only. */
   customers: PaginatedAdminCustomers;
+  /** Returns a single failed messenger message by its id */
+  failedMessage?: Maybe<FailedMessage>;
+  /** Returns a paginated list of failed messenger messages in the given failure queue */
+  failedMessages: PaginatedFailedMessages;
   /** Returns the list of all the available gift cards */
   giftCards: Array<GiftCard>;
   /** Lists TemporalTransactions whose feedback was received but did not complete, most recently updated first. Admin only. */
@@ -2493,6 +2568,18 @@ export type QueryCustomerVodPeriodsArgs = {
 export type QueryCustomersArgs = {
   pagination?: InputMaybe<PaginationInput>;
   params?: InputMaybe<AdminCustomersParams>;
+};
+
+
+export type QueryFailedMessageArgs = {
+  id: Scalars['ID']['input'];
+  queue: FailedMessageQueueEnum;
+};
+
+
+export type QueryFailedMessagesArgs = {
+  pagination?: InputMaybe<PaginationInput>;
+  queue: FailedMessageQueueEnum;
 };
 
 
@@ -3424,6 +3511,42 @@ export type DeleteCustomerVodPeriodMutationVariables = Exact<{
 
 export type DeleteCustomerVodPeriodMutation = { __typename: 'Mutation', deleteCustomerVodPeriod: boolean };
 
+export type DiscardFailedMessageMutationVariables = Exact<{
+  input: FailedMessageActionInput;
+}>;
+
+
+export type DiscardFailedMessageMutation = { __typename: 'Mutation', discardFailedMessage:
+    | { __typename: 'FailedMessageActionSuccess', success: boolean }
+    | { __typename: 'FailedMessageNotFoundError', code: string }
+   };
+
+export type FailedMessageQueryVariables = Exact<{
+  queue: FailedMessageQueueEnum;
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type FailedMessageQuery = { __typename: 'Query', failedMessage?: { __typename: 'FailedMessage', id: string, queue: FailedMessageQueueEnum, messageClass: string, summary?: string | null, exceptionClass?: string | null, errorMessage?: string | null, failedAt?: any | null, retryCount: number, originalTransport?: string | null, payfortDetails?: { __typename: 'PayfortFailedMessageDetails', merchantReference?: string | null, amount?: string | null, responseMessage?: string | null } | null } | null };
+
+export type FailedMessagesQueryVariables = Exact<{
+  queue: FailedMessageQueueEnum;
+  pagination?: InputMaybe<PaginationInput>;
+}>;
+
+
+export type FailedMessagesQuery = { __typename: 'Query', failedMessages: { __typename: 'PaginatedFailedMessages', total: number, failedMessages: Array<{ __typename: 'FailedMessage', id: string, queue: FailedMessageQueueEnum, messageClass: string, summary?: string | null, exceptionClass?: string | null, failedAt?: any | null, retryCount: number, originalTransport?: string | null, payfortDetails?: { __typename: 'PayfortFailedMessageDetails', merchantReference?: string | null, amount?: string | null, responseMessage?: string | null } | null }> } };
+
+export type RetryFailedMessageMutationVariables = Exact<{
+  input: FailedMessageActionInput;
+}>;
+
+
+export type RetryFailedMessageMutation = { __typename: 'Mutation', retryFailedMessage:
+    | { __typename: 'FailedMessageActionSuccess', success: boolean }
+    | { __typename: 'FailedMessageNotFoundError', code: string }
+   };
+
 export type IncompleteFeedbacksQueryVariables = Exact<{
   filter?: InputMaybe<IncompleteTransactionFeedbackFilterInput>;
   pagination?: InputMaybe<PaginationInput>;
@@ -4124,6 +4247,10 @@ export const CustomerRetryTransactionFeedbackDocument = {"kind":"Document","defi
 export const CustomerVodPeriodsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CustomerVodPeriods"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"customerId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"customerVodPeriods"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"customerId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"customerId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"start"}},{"kind":"Field","name":{"kind":"Name","value":"end"}},{"kind":"Field","name":{"kind":"Name","value":"addedBy"}},{"kind":"Field","name":{"kind":"Name","value":"addedByAdmin"}},{"kind":"Field","name":{"kind":"Name","value":"isDeleted"}},{"kind":"Field","name":{"kind":"Name","value":"deletedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<CustomerVodPeriodsQuery, CustomerVodPeriodsQueryVariables>;
 export const CreateCustomerVodPeriodDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateCustomerVodPeriod"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"customerId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateCustomerVodPeriodInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createCustomerVodPeriod"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"customerId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"customerId"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateCustomerVodPeriodMutation, CreateCustomerVodPeriodMutationVariables>;
 export const DeleteCustomerVodPeriodDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteCustomerVodPeriod"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteCustomerVodPeriod"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<DeleteCustomerVodPeriodMutation, DeleteCustomerVodPeriodMutationVariables>;
+export const DiscardFailedMessageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DiscardFailedMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"FailedMessageActionInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"discardFailedMessage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"FailedMessageActionSuccess"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"FailedMessageNotFoundError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<DiscardFailedMessageMutation, DiscardFailedMessageMutationVariables>;
+export const FailedMessageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FailedMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"queue"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"FailedMessageQueueEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"failedMessage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"queue"},"value":{"kind":"Variable","name":{"kind":"Name","value":"queue"}}},{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"queue"}},{"kind":"Field","name":{"kind":"Name","value":"messageClass"}},{"kind":"Field","name":{"kind":"Name","value":"summary"}},{"kind":"Field","name":{"kind":"Name","value":"exceptionClass"}},{"kind":"Field","name":{"kind":"Name","value":"errorMessage"}},{"kind":"Field","name":{"kind":"Name","value":"failedAt"}},{"kind":"Field","name":{"kind":"Name","value":"retryCount"}},{"kind":"Field","name":{"kind":"Name","value":"originalTransport"}},{"kind":"Field","name":{"kind":"Name","value":"payfortDetails"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"merchantReference"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"responseMessage"}}]}}]}}]}}]} as unknown as DocumentNode<FailedMessageQuery, FailedMessageQueryVariables>;
+export const FailedMessagesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FailedMessages"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"queue"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"FailedMessageQueueEnum"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PaginationInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"failedMessages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"queue"},"value":{"kind":"Variable","name":{"kind":"Name","value":"queue"}}},{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"total"}},{"kind":"Field","name":{"kind":"Name","value":"failedMessages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"queue"}},{"kind":"Field","name":{"kind":"Name","value":"messageClass"}},{"kind":"Field","name":{"kind":"Name","value":"summary"}},{"kind":"Field","name":{"kind":"Name","value":"exceptionClass"}},{"kind":"Field","name":{"kind":"Name","value":"failedAt"}},{"kind":"Field","name":{"kind":"Name","value":"retryCount"}},{"kind":"Field","name":{"kind":"Name","value":"originalTransport"}},{"kind":"Field","name":{"kind":"Name","value":"payfortDetails"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"merchantReference"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"responseMessage"}}]}}]}}]}}]}}]} as unknown as DocumentNode<FailedMessagesQuery, FailedMessagesQueryVariables>;
+export const RetryFailedMessageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RetryFailedMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"FailedMessageActionInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"retryFailedMessage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"FailedMessageActionSuccess"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"FailedMessageNotFoundError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<RetryFailedMessageMutation, RetryFailedMessageMutationVariables>;
 export const IncompleteFeedbacksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"IncompleteFeedbacks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"IncompleteTransactionFeedbackFilterInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PaginationInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"incompleteTransactionFeedbacks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}},{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"totalCount"}},{"kind":"Field","name":{"kind":"Name","value":"page"}},{"kind":"Field","name":{"kind":"Name","value":"limit"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"merchantReference"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"feedbackTryNumber"}},{"kind":"Field","name":{"kind":"Name","value":"feedbackStatusUpdatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"siteCustomer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"siteUserInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"site"}},{"kind":"Field","name":{"kind":"Name","value":"externalUserId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"identifiableUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<IncompleteFeedbacksQuery, IncompleteFeedbacksQueryVariables>;
 export const RetryTransactionFeedbackDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RetryTransactionFeedback"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"retryTransactionFeedback"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<RetryTransactionFeedbackMutation, RetryTransactionFeedbackMutationVariables>;
 export const AdminMindbodyClientsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AdminMindbodyClients"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"params"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"AdminMindbodyClientsParams"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PaginationInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mindbodyClients"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"params"},"value":{"kind":"Variable","name":{"kind":"Name","value":"params"}}},{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"clientId"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"mobilePhone"}}]}},{"kind":"Field","name":{"kind":"Name","value":"totalCount"}},{"kind":"Field","name":{"kind":"Name","value":"page"}},{"kind":"Field","name":{"kind":"Name","value":"limit"}}]}}]}}]} as unknown as DocumentNode<AdminMindbodyClientsQuery, AdminMindbodyClientsQueryVariables>;

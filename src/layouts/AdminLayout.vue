@@ -147,6 +147,20 @@ async function logout() {
             </RouterLink>
           </li>
 
+          <!-- Failed Messages (SUPER_ADMIN) -->
+          <li
+            v-if="can(AdminFeature.FailedMessages) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
+            <RouterLink
+              class="nav-link"
+              :class="{ active: isActive('admin_failed_messages') }"
+              :to="{ name: 'admin_failed_messages' }"
+            >
+              Failed Messages
+            </RouterLink>
+          </li>
+
           <!-- Class Schedule Config dropdown (SUPER_ADMIN) -->
           <li
             v-if="can(AdminFeature.ClassScheduleConfig) && isSuperAdmin() && !sidebarCollapsed"
