@@ -1,6 +1,11 @@
 import { readonly, ref } from 'vue'
-import { gql } from 'graphql-tag'
 import type { ApolloClient, NormalizedCacheObject } from '@apollo/client/core'
+
+import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
+import * as kan231Documents from '../documents/kan231'
+import * as mainDocuments from '../documents/main'
+import { REFUND_TRANSACTION_MUTATION as REFUND_MUTATION } from '../documents/shared'
+import { refundErrorMessage } from '../refundErrorMessage'
 
 export interface TransactionItem {
   id: string | null
@@ -46,7 +51,17 @@ export interface TransactionRecord {
   siteName: string | null
   isRefundable: boolean
   items: TransactionItem[]
-  shoppingCart: ShoppingCart | null
+  /** KAN-231 only (AdminFeature.TransactionShoppingCart). */
+  shoppingCart?: ShoppingCart | null
+  /** main only (AdminFeature.TransactionPaymentDetails), as are the fields below. */
+  paymentMethod?: string | null
+  payfortAuthorizationCode?: string | null
+  serviceExpirationDate?: string | null
+  userCountry?: string | null
+  mindbodyCheckoutFail?: boolean
+  merchantResponse?: string | null
+  paymentGatewayResponse?: string | null
+  refundResponse?: string | null
 }
 
 export interface PaginatedTransactionRecords {
@@ -56,94 +71,12 @@ export interface PaginatedTransactionRecords {
   limit: number
 }
 
-const LIST_QUERY = gql`
-  query TransactionRecords(
-    $filter: TransactionRecordFilterInput
-    $pagination: PaginationInput
-  ) {
-    transactionRecords(filter: $filter, pagination: $pagination) {
-      items {
-        id
-        amount
-        status
-        created
-        customerName
-        customerEmail
-        siteName
-        isRefundable
-        creditCardLastFourDigits
-        authorizationCode
-        items {
-          id
-          name
-          quantity
-          amount
-        }
-        shoppingCart {
-          currency
-        }
-      }
-      totalCount
-      page
-      limit
-    }
-  }
-`
-
-const DETAIL_QUERY = gql`
-  query TransactionRecord($id: ID!) {
-    transactionRecord(id: $id) {
-      id
-      creditCardChargeId
-      creditCardHolderName
-      creditCardLastFourDigits
-      amount
-      taxAmount
-      subTotal
-      status
-      created
-      refundDate
-      authorizationCode
-      installments
-      merchantPurchaseId
-      siteCustomer {
-        identifiableUser {
-          id
-        }
-      }
-      customerName
-      customerEmail
-      siteName
-      isRefundable
-      items {
-        id
-        name
-        quantity
-        amount
-      }
-      shoppingCart {
-        id
-        currency
-        items {
-          id
-          quantity
-          subtotal
-          variant {
-            id
-            name
-            price
-          }
-        }
-      }
-    }
-  }
-`
-
-const REFUND_MUTATION = gql`
-  mutation RefundTransaction($id: ID!) {
-    refundTransaction(id: $id)
-  }
-`
+/*
+ * KAN-231 has the Sylius shopping cart of each transaction, main the payment details the Twig
+ * admin shows; each profile gets its own documents.
+ */
+const { TRANSACTION_RECORDS_QUERY: LIST_QUERY, TRANSACTION_RECORD_QUERY: DETAIL_QUERY } =
+  isFeatureAvailable(AdminFeature.TransactionShoppingCart) ? kan231Documents : mainDocuments
 
 export const useTransactionRecords = (apolloClient: ApolloClient<NormalizedCacheObject>) => {
   const listResult = ref<PaginatedTransactionRecords | null>(null)
@@ -153,13 +86,16 @@ export const useTransactionRecords = (apolloClient: ApolloClient<NormalizedCache
   const hasError = ref(false)
   const errorMessage = ref('')
 
-  async function fetchList(filter?: {
-    search?: string
-    paymentMethod?: string
-    site?: string
-    startDate?: string
-    endDate?: string
-  }, pagination?: { page?: number; limit?: number }) {
+  async function fetchList(
+    filter?: {
+      search?: string
+      paymentMethod?: string
+      site?: string
+      startDate?: string
+      endDate?: string
+    },
+    pagination?: { page?: number; limit?: number }
+  ) {
     isLoading.value = true
     hasError.value = false
     try {
@@ -210,7 +146,7 @@ export const useTransactionRecords = (apolloClient: ApolloClient<NormalizedCache
       return !!data?.refundTransaction
     } catch (e) {
       hasError.value = true
-      errorMessage.value = 'Failed to process refund'
+      errorMessage.value = refundErrorMessage(e)
       return false
     } finally {
       isRefunding.value = false

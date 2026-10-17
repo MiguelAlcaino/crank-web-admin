@@ -6,7 +6,13 @@ const env = loadEnv('development', process.cwd(), '')
 const config: CodegenConfig = {
   overwrite: true,
   schema: env.VITE_CRANK_GRAPHQL_SERVER_URL,
-  documents: ['src/**/*.ts', 'src/**/*.graphql', '!src/gql-main/**'],
+  documents: [
+    'src/**/*.ts',
+    'src/**/*.graphql',
+    '!src/gql-main/**',
+    // Operations of the main backend profile that KAN-231 does not have.
+    '!src/**/documents/main.ts'
+  ],
   generates: {
     './src/gql/': {
       preset: 'client',

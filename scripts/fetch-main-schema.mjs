@@ -1,16 +1,19 @@
-// Writes graphql.schema.main.graphql: the GraphQL schema of crank-payments `main`, used by
-// codegen.main.ts to generate and validate the documents of the `main` backend profile.
+// Writes graphql.schema.main.graphql: the GraphQL schema of the crank-payments backend of the `main`
+// profile, used by codegen.main.ts to generate and validate the documents of that profile.
+//
+// The admin operations reach crank-payments `develop` before `main`, so the default ref is
+// origin/develop; set CRANK_PAYMENTS_REF=origin/main to check a build against production.
 //
 // Reads the schema straight from a crank-payments git checkout (read-only, no checkout needed):
 //   CRANK_PAYMENTS_REPO  path to the clone (default: ../crank-payments)
-//   CRANK_PAYMENTS_REF   git ref to read (default: origin/main; run `git fetch` there first)
+//   CRANK_PAYMENTS_REF   git ref to read (default: origin/develop; run `git fetch` there first)
 import { execFileSync } from 'node:child_process'
 import { writeFileSync } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 
 const repo = path.resolve(process.env.CRANK_PAYMENTS_REPO ?? '../crank-payments')
-const ref = process.env.CRANK_PAYMENTS_REF ?? 'origin/main'
+const ref = process.env.CRANK_PAYMENTS_REF ?? 'origin/develop'
 const schemaPath = 'src/GraphQL/Resources/config/schema.graphql'
 
 const git = (...args) => execFileSync('git', ['-C', repo, ...args], { encoding: 'utf-8' })
