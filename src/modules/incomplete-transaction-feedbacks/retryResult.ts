@@ -1,4 +1,4 @@
-import { graphQLErrorCode } from '../../utils/errors/graphQLErrorCode'
+import { graphqlErrorCode as graphQLErrorCode } from '@/utils/errors/graphqlErrorCode'
 
 export type RetryResult =
   | 'success'

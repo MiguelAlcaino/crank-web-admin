@@ -1,0 +1,7 @@
+mutation ExportCustomerVod($params: AdminCustomersParams) {
+  exportCustomerVod(params: $params) {
+    fileName
+    url
+    expiresAt
+  }
+}

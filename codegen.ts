@@ -10,6 +10,8 @@ const config: CodegenConfig = {
     'src/**/*.ts',
     'src/**/*.graphql',
     '!src/gql-main/**',
+    // Documents of main-only features (src/config/features.ts), validated by codegen.main.ts.
+    '!src/**/*.main.graphql',
     // Operations of the main backend profile that KAN-231 does not have.
     '!src/**/documents/main.ts'
   ],

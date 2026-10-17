@@ -4,6 +4,8 @@ import { useRouter } from 'vue-router'
 import { newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { useAdminCustomers } from '../composables/useAdminCustomers'
 import PaginationComponent from '@/modules/shared/components/PaginationComponent.vue'
+import ExportCustomerVodButton from '@/modules/admin-exports/components/ExportCustomerVodButton.vue'
+import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
 
 const gqlUrl = import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL
 const apolloClient = newAuthenticatedApolloClient(gqlUrl)
@@ -18,6 +20,16 @@ const vodStartDate = ref('')
 const vodEndDate = ref('')
 const currentPage = ref(1)
 const limit = 50
+
+// VOD Excel export for the current filters (crank-payments main only).
+const canExportVod = isFeatureAvailable(AdminFeature.CustomerVodExport)
+const exportParams = computed(() => ({
+  search: search.value,
+  registrationStartDate: registrationStartDate.value,
+  registrationEndDate: registrationEndDate.value,
+  vodStartDate: vodStartDate.value,
+  vodEndDate: vodEndDate.value
+}))
 
 const totalPages = computed(() => {
   if (!crud.result.value) return 1
@@ -91,6 +103,10 @@ onMounted(loadCustomers)
           </button>
       </div>
     </form>
+
+    <div v-if="canExportVod" class="mb-3">
+      <ExportCustomerVodButton :apollo-client="apolloClient" :params="exportParams" />
+    </div>
 
     <!-- Advanced Filters -->
     <div v-if="showFilters" class="card mb-3">

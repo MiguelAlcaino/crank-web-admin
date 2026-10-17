@@ -1,4 +1,4 @@
-import { graphQLErrorCode } from '../../utils/errors/graphQLErrorCode'
+import { graphqlErrorCode as graphQLErrorCode } from '@/utils/errors/graphqlErrorCode'
 
 const REFUND_ERROR_MESSAGES: Record<string, string> = {
   'transaction_record.not_found': 'The transaction no longer exists',

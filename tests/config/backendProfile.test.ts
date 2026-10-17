@@ -38,7 +38,18 @@ describe('FEATURE_PROFILES', () => {
     )
 
     expect(notOnKan231.sort()).toEqual(
-      [AdminFeature.SyncAllClassSchedules, AdminFeature.TransactionPaymentDetails].sort()
+      [
+        AdminFeature.SyncAllClassSchedules,
+        AdminFeature.TransactionPaymentDetails,
+        AdminFeature.AdminProducts,
+        AdminFeature.PendingGiftCardsPage,
+        AdminFeature.CustomerVodPeriods,
+        AdminFeature.CustomerActions,
+        AdminFeature.CustomerIncompletePurchases,
+        AdminFeature.ChargeClient,
+        AdminFeature.TransactionsExport,
+        AdminFeature.CustomerVodExport
+      ].sort()
     )
   })
 
@@ -55,6 +66,7 @@ describe('FEATURE_PROFILES', () => {
         AdminFeature.ClassScheduleConfig,
         AdminFeature.ClassesCalendar,
         AdminFeature.Customer,
+        AdminFeature.CustomerGiftCards,
         AdminFeature.CustomersList,
         AdminFeature.GiftCards,
         AdminFeature.IncompleteFeedbacks,
@@ -66,7 +78,15 @@ describe('FEATURE_PROFILES', () => {
         AdminFeature.SyncAllClassSchedules,
         AdminFeature.SystemSettings,
         AdminFeature.TransactionPaymentDetails,
-        AdminFeature.Transactions
+        AdminFeature.Transactions,
+        AdminFeature.AdminProducts,
+        AdminFeature.PendingGiftCardsPage,
+        AdminFeature.CustomerVodPeriods,
+        AdminFeature.CustomerActions,
+        AdminFeature.CustomerIncompletePurchases,
+        AdminFeature.ChargeClient,
+        AdminFeature.TransactionsExport,
+        AdminFeature.CustomerVodExport
       ].sort()
     )
   })

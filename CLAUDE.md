@@ -54,6 +54,8 @@ The standalone app is built for one crank-payments backend, chosen with `VITE_BA
 
 Documents that only work on one profile go in a file named `documents/kan231.ts` or `documents/main.ts` (shared ones in `src/services/documents/`, module-specific ones in `src/modules/<module>/documents/`). `codegen.main.ts` skips every `documents/kan231.ts` and `codegen.ts` every `documents/main.ts`; pick between them at runtime with `isFeatureAvailable()`. `npm run schema:main` refreshes `graphql.schema.main.graphql` from a crank-payments clone (default ref `origin/develop`, where the admin operations land before `main`; override with `CRANK_PAYMENTS_REF`); `npm run codegen:main` generates `src/gql-main/` and fails if any document used on `main` does not match that schema.
 
+Operations that only exist on KAN-231 but are used by modules visible on both profiles go in `src/services/documents/kan231.ts`. Features built on operations only main has are `MAIN_ONLY` in `features.ts`; their documents go in `*.main.graphql` files (skipped by the KAN-231 `codegen.ts`) and are used through the typed documents in `src/gql-main/graphql.ts`. `npm run schema:main` refreshes `graphql.schema.main.graphql` from a crank-payments clone (`origin/develop` by default, `CRANK_PAYMENTS_REF` to change it); `npm run codegen:main` generates `src/gql-main/` and fails if any document used on `main` does not match main's schema.
+
 ### State Management
 
 - **Pinia** stores in `src/stores/`:

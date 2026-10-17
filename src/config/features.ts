@@ -14,7 +14,10 @@
  * in `FEATURE_PROFILES` with the profiles whose backend supports it; the router and the sidebar
  * hide whatever the current profile does not support. Enabling a feature on `main` once its
  * backend operations land is a one-line change in `FEATURE_PROFILES` (`KAN231_ONLY` -> `ALL`).
- * `MAIN_ONLY` marks the few features whose operations exist on `main` but not on KAN-231.
+ *
+ * Features built on operations only main has are `MAIN_ONLY`. Their GraphQL documents live in
+ * `*.main.graphql` files: codegen.main.ts validates them against main's schema and generates their
+ * typed documents into src/gql-main/, and the KAN-231 codegen (codegen.ts) skips them.
  */
 
 export const BACKEND_PROFILES = ['main', 'kan231'] as const
@@ -52,6 +55,8 @@ export enum AdminFeature {
   Blacklist = 'blacklist',
   PushNotifications = 'pushNotifications',
   BulkVod = 'bulkVod',
+  /** Packages on crank-payments main's local Product entity (`adminProducts`). */
+  AdminProducts = 'adminProducts',
 
   // Features inside a module
   /** Subscriptions section of the customer profile (`User.subscriptions`). */
@@ -69,11 +74,29 @@ export enum AdminFeature {
    * Payment details of a transaction record the Twig admin shows (payment method, Payfort
    * authorization code, raw gateway responses...), which only `main` exposes.
    */
-  TransactionPaymentDetails = 'transactionPaymentDetails'
+  TransactionPaymentDetails = 'transactionPaymentDetails',
+  /**
+   * The real Pending Gift Cards page (`customerGiftCards`, `updateCustomerGiftCard`). Without it the
+   * Pending Gift Cards route shows a placeholder.
+   */
+  PendingGiftCardsPage = 'pendingGiftCardsPage',
+  /** VOD periods section of the customer profile (`customerVodPeriods`). */
+  CustomerVodPeriods = 'customerVodPeriods',
+  /** Mindbody id edit, phone verification and Mindbody sync in the customer profile. */
+  CustomerActions = 'customerActions',
+  /** Incomplete purchases of the customer profile, with the feedback resend. */
+  CustomerIncompletePurchases = 'customerIncompletePurchases',
+  /** "Charge client" email of the customer profile (`createCustomTransactionRequest`). */
+  ChargeClient = 'chargeClient',
+  /** Excel export button of the transactions list (`exportTransactionRecords`). */
+  TransactionsExport = 'transactionsExport',
+  /** VOD Excel export button of the customers list (`exportCustomerVod`). */
+  CustomerVodExport = 'customerVodExport'
 }
 
 const ALL: readonly BackendProfile[] = BACKEND_PROFILES
 const KAN231_ONLY: readonly BackendProfile[] = ['kan231']
+/** Built for crank-payments main's own operations, which KAN-231 does not have. */
 const MAIN_ONLY: readonly BackendProfile[] = ['main']
 
 /**
@@ -95,7 +118,8 @@ export const FEATURE_PROFILES: Record<AdminFeature, readonly BackendProfile[]> =
   [AdminFeature.Subscriptions]: KAN231_ONLY, // TODO: main, crank-payments#968
   // Sylius page; main gets its own page for the local Product entity, crank-payments#970
   [AdminFeature.ClassPackages]: KAN231_ONLY,
-  [AdminFeature.CustomerGiftCards]: KAN231_ONLY, // TODO: main, crank-payments#971
+  // The menu entry. kan231 shows a placeholder; main gets PendingGiftCardsPage, crank-payments#971
+  [AdminFeature.CustomerGiftCards]: ALL,
   [AdminFeature.SessionTypes]: KAN231_ONLY,
   [AdminFeature.InstructorProfiles]: KAN231_ONLY,
   [AdminFeature.MindbodyStaff]: ALL,
@@ -109,7 +133,15 @@ export const FEATURE_PROFILES: Record<AdminFeature, readonly BackendProfile[]> =
   [AdminFeature.SyncAllClassSchedules]: MAIN_ONLY,
   [AdminFeature.SyncAllClassSchedulesLink]: KAN231_ONLY,
   [AdminFeature.TransactionShoppingCart]: KAN231_ONLY,
-  [AdminFeature.TransactionPaymentDetails]: MAIN_ONLY
+  [AdminFeature.TransactionPaymentDetails]: MAIN_ONLY,
+  [AdminFeature.AdminProducts]: MAIN_ONLY, // crank-payments#970
+  [AdminFeature.PendingGiftCardsPage]: MAIN_ONLY, // crank-payments#971
+  [AdminFeature.CustomerVodPeriods]: MAIN_ONLY, // crank-payments#967
+  [AdminFeature.CustomerActions]: MAIN_ONLY, // crank-payments#967
+  [AdminFeature.CustomerIncompletePurchases]: MAIN_ONLY, // crank-payments#967
+  [AdminFeature.ChargeClient]: MAIN_ONLY, // crank-payments#971
+  [AdminFeature.TransactionsExport]: MAIN_ONLY, // crank-payments#966
+  [AdminFeature.CustomerVodExport]: MAIN_ONLY // crank-payments#967
 }
 
 export function isFeatureAvailableIn(feature: AdminFeature, profile: BackendProfile): boolean {

@@ -71,6 +71,7 @@ import dayjs from 'dayjs'
 import { useRoute, useRouter } from 'vue-router'
 
 import CustomerWorkoutStats from '@/modules/customer/components/CustomerWorkoutStats.vue'
+import CustomerAdminSections from '@/modules/customer/components/main/CustomerAdminSections.vue'
 import DefaultButtonComponent from '@/modules/shared/components/DefaultButtonComponent.vue'
 import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 
@@ -90,6 +91,13 @@ const identifiableUser = ref<IdentifiableUser | null>(null)
 const legacyViewUrl = ref<string | null>(null)
 // TODO: show on main once crank-payments#968 adds customer subscriptions there.
 const showSubscriptions = isFeatureAvailable(AdminFeature.CustomerProfileSubscriptions)
+// Client actions, charge client, VOD periods and incomplete purchases (crank-payments main only).
+const showAdminSections = [
+  AdminFeature.CustomerActions,
+  AdminFeature.ChargeClient,
+  AdminFeature.CustomerVodPeriods,
+  AdminFeature.CustomerIncompletePurchases
+].some(isFeatureAvailable)
 
 onMounted(() => {
   let _legacyViewUrl = inject<any | undefined>('legacyViewUrl')
@@ -263,6 +271,15 @@ function formatAmount(amountCents: number): string {
       </CustomerWorkoutStats>
     </div>
   </div>
+
+  <CustomerAdminSections
+    v-if="showAdminSections && userId && identifiableUser?.user"
+    :customer-id="userId"
+    :first-name="identifiableUser.user.firstName"
+    :last-name="identifiableUser.user.lastName"
+    :email="identifiableUser.user.email"
+    @customer-changed="getUser(userId)"
+  />
 
   <template v-if="showSubscriptions">
     <hr />
