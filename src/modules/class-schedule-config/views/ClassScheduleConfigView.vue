@@ -11,6 +11,9 @@ import type { ApiService } from '@/services/apiService'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import type { ClassSchedule, RoomLayout } from '../interfaces'
 import type { SiteEnum } from '@/modules/shared/interfaces'
+import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
+import { authService } from '@/services/authService'
+import { Role } from '@/utils/userRoles'
 
 const apiService = inject<ApiService>('gqlApiService')!
 const route = useRoute()
@@ -38,6 +41,14 @@ const errorModalIsVisible = ref<boolean>(false)
 const successModalIsVisible = ref<boolean>(false)
 
 const urlSyncAll = ref<string>('#')
+// KAN-231 (and the library build) links to the URL the host page injects; main has the
+// syncAllClassSchedules mutation, which only super admins may run.
+const canSyncAllViaLink = isFeatureAvailable(AdminFeature.SyncAllClassSchedulesLink)
+const canSyncAllViaMutation =
+  isFeatureAvailable(AdminFeature.SyncAllClassSchedules) &&
+  authService.userHasRole(Role.ROLE_SUPER_ADMIN)
+const isSyncingAll = ref(false)
+const syncAllSuccessModalIsVisible = ref<boolean>(false)
 
 const isSaving = ref(false)
 
@@ -228,6 +239,19 @@ function applyFilters() {
   }
 }
 
+async function syncAllClassSchedules() {
+  isSyncingAll.value = true
+  try {
+    await apiService.syncAllClassSchedules(site.value as SiteEnum)
+    syncAllSuccessModalIsVisible.value = true
+    getClassSchedules()
+  } catch (error) {
+    errorModalIsVisible.value = true
+  } finally {
+    isSyncingAll.value = false
+  }
+}
+
 function extractDifferentCapacities(items: ClassSchedule[]) {
   const capacities = items.map((item) => item.capacity)
 
@@ -240,7 +264,14 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
 <template>
   <div class="row">
     <div class="col-12" style="text-align: right">
-      <a :href="urlSyncAll" class="btn btn-primary">Sync All</a>
+      <a v-if="canSyncAllViaLink" :href="urlSyncAll" class="btn btn-primary">Sync All</a>
+      <DefaultButtonComponent
+        v-else-if="canSyncAllViaMutation"
+        text="Sync All"
+        type="button"
+        :is-loading="isSyncingAll"
+        @on-click="syncAllClassSchedules"
+      ></DefaultButtonComponent>
     </div>
   </div>
   <div class="row">
@@ -407,6 +438,16 @@ function extractDifferentCapacities(items: ClassSchedule[]) {
   </ModalComponent>
 
   <!-- SUCCESS Modal -->
+  <ModalComponent
+    title="SUCCESS"
+    message="THE CLASS SCHEDULES HAVE BEEN SYNCED FROM MINDBODY"
+    :closable="false"
+    @on-ok="syncAllSuccessModalIsVisible = false"
+    v-if="syncAllSuccessModalIsVisible"
+    :cancel-text="null"
+  >
+  </ModalComponent>
+
   <ModalComponent
     title="SUCCESS"
     message="THE CLASS SCHEDULES HAVE BEEN UPDATED SUCCESSFULLY"

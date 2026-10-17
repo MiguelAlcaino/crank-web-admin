@@ -94,6 +94,15 @@ import {
   type WaitlistEntry
 } from '@/gql/graphql'
 import type { WebhookEvent } from '@/modules/webhook-events/interfaces'
+import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
+import { GET_USER_QUERY } from '@/services/documents/customerProfile'
+import {
+  ADMIN_SEND_LATE_CANCELLATION_NOTIFICATION_MUTATION,
+  ADMIN_SEND_WAITLIST_BOOKING_NOTIFICATION_MUTATION,
+  GET_USER_WITH_SUBSCRIPTIONS_QUERY,
+  SEARCH_USER_DOCUMENT
+} from '@/services/documents/kan231'
+import { SYNC_ALL_CLASS_SCHEDULES_MUTATION } from '@/services/documents/main'
 import { DomainError } from '@/utils/errors/domainError'
 import { ValidationError } from '@/utils/errors/saveUserErrors'
 import { ApolloError, gql } from '@apollo/client'
@@ -780,54 +789,9 @@ export class ApiService {
   }
 
   async getUser(id: string): Promise<IdentifiableUser> {
-    const query = gql`
-      query getUser($id: ID!) {
-        user(id: $id) {
-          id
-          user {
-            firstName
-            lastName
-            email
-            leaderboardUsername
-            weight
-            gender
-            birthdate
-            country {
-              code
-              name
-            }
-            state {
-              code
-              name
-            }
-            city
-            address1
-            address2
-            zipCode
-            phone
-            emergencyContactName
-            emergencyContactPhone
-            emergencyContactRelationship
-            hideMetrics
-            existsInSites
-            siteUsers {
-              externalUserId
-              site
-            }
-            subscriptions {
-              id
-              status
-              amountCents
-              billingInterval
-              creditCardLastFourDigits
-              createdAt
-              cancelledAt
-              nextBillingAt
-            }
-          }
-        }
-      }
-    `
+    const query = isFeatureAvailable(AdminFeature.CustomerProfileSubscriptions)
+      ? GET_USER_WITH_SUBSCRIPTIONS_QUERY
+      : GET_USER_QUERY
 
     const queryResult = await this.authApiClient.query({
       query: query,
@@ -903,6 +867,17 @@ export class ApiService {
     })
 
     return result.data.syncAllClasses as boolean
+  }
+
+  /** main backend profile only (AdminFeature.SyncAllClassSchedules). */
+  async syncAllClassSchedules(site: SiteEnum): Promise<boolean> {
+    const result = await this.authApiClient.mutate({
+      mutation: SYNC_ALL_CLASS_SCHEDULES_MUTATION,
+      variables: { site },
+      fetchPolicy: 'no-cache'
+    })
+
+    return result.data.syncAllClassSchedules as boolean
   }
 
   async getCountries(): Promise<Country[]> {
@@ -2457,21 +2432,9 @@ export class ApiService {
 
   async searchUser(query: string): Promise<{ id: string; user: { firstName: string; lastName: string; email: string } }[]> {
     if (query.length < 3) return []
-    const SEARCH_USER_QUERY = gql`
-      query searchUser($query: String) {
-        searchUser(query: $query) {
-          id
-          user {
-            firstName
-            lastName
-            email
-          }
-        }
-      }
-    `
     try {
       const result = await this.authApiClient.query({
-        query: SEARCH_USER_QUERY,
+        query: SEARCH_USER_DOCUMENT,
         variables: { query },
         fetchPolicy: 'network-only'
       })
@@ -2487,21 +2450,8 @@ export class ApiService {
     className: string
     site?: string
   }): Promise<{ __typename: string }> {
-    const mutation = gql`
-      mutation adminSendWaitlistBookingNotification($input: AdminSendWaitlistBookingNotificationInput!) {
-        adminSendWaitlistBookingNotification(input: $input) {
-          __typename
-          ... on AdminSendPushNotificationSuccess {
-            customerId
-          }
-          ... on CustomerNotFoundError {
-            code
-          }
-        }
-      }
-    `
     const result = await this.authApiClient.mutate({
-      mutation,
+      mutation: ADMIN_SEND_WAITLIST_BOOKING_NOTIFICATION_MUTATION,
       variables: { input },
       fetchPolicy: 'network-only'
     })
@@ -2518,21 +2468,8 @@ export class ApiService {
     instructorName: string
     site?: string
   }): Promise<{ __typename: string }> {
-    const mutation = gql`
-      mutation adminSendLateCancellationNotification($input: AdminSendLateCancellationNotificationInput!) {
-        adminSendLateCancellationNotification(input: $input) {
-          __typename
-          ... on AdminSendPushNotificationSuccess {
-            customerId
-          }
-          ... on CustomerNotFoundError {
-            code
-          }
-        }
-      }
-    `
     const result = await this.authApiClient.mutate({
-      mutation,
+      mutation: ADMIN_SEND_LATE_CANCELLATION_NOTIFICATION_MUTATION,
       variables: { input },
       fetchPolicy: 'network-only'
     })

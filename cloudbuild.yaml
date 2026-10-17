@@ -7,6 +7,8 @@ steps:
       - 'VITE_CRANK_REST_SERVER_URL=https://crank-payments-930523966479.me-central1.run.app/api/'
       - '--build-arg'
       - 'VITE_CRANK_GRAPHQL_SERVER_URL=https://crank-payments-930523966479.me-central1.run.app/api/graphql/'
+      - '--build-arg'
+      - 'VITE_BACKEND_PROFILE=${_BACKEND_PROFILE}'
       - '-t'
       - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank-web-admin/crank-web-admin:$COMMIT_SHA'
       - '-t'
@@ -44,6 +46,11 @@ steps:
 images:
   - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank-web-admin/crank-web-admin:$COMMIT_SHA'
   - 'me-central1-docker.pkg.dev/$PROJECT_ID/crank-web-admin/crank-web-admin:latest'
+
+# Backend profile baked into the build (kan231 or main). Override per trigger with
+# --substitutions=_BACKEND_PROFILE=main; the default keeps this KAN-231 deployment unchanged.
+substitutions:
+  _BACKEND_PROFILE: kan231
 
 options:
   logging: CLOUD_LOGGING_ONLY

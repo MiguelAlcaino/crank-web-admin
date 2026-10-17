@@ -1,0 +1,27 @@
+query ChargeableProducts($customerId: ID!) {
+  chargeableProducts(customerId: $customerId) {
+    id
+    name
+    price
+    site {
+      name
+      code
+    }
+  }
+}
+
+mutation CreateCustomTransactionRequest($input: CreateCustomTransactionRequestInput!) {
+  createCustomTransactionRequest(input: $input) {
+    __typename
+    ... on CustomTransactionRequestSent {
+      recipientEmail
+      paymentUrl
+    }
+    ... on CustomerNotFoundError {
+      code
+    }
+    ... on ProductNotFoundError {
+      code
+    }
+  }
+}

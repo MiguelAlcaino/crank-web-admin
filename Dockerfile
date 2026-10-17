@@ -5,10 +5,13 @@ FROM node:22-alpine AS builder
 
 ARG VITE_CRANK_REST_SERVER_URL
 ARG VITE_CRANK_GRAPHQL_SERVER_URL
+# Backend profile: kan231 (default) or main, see src/config/features.ts
+ARG VITE_BACKEND_PROFILE=kan231
 
 # Convert ARGs to ENV variables so Vite can access them during build
 ENV VITE_CRANK_REST_SERVER_URL=${VITE_CRANK_REST_SERVER_URL}
 ENV VITE_CRANK_GRAPHQL_SERVER_URL=${VITE_CRANK_GRAPHQL_SERVER_URL}
+ENV VITE_BACKEND_PROFILE=${VITE_BACKEND_PROFILE}
 
 # Set working directory
 WORKDIR /app

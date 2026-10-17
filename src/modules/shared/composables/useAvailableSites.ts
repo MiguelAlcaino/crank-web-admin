@@ -8,7 +8,7 @@ export interface AvailableSite {
 }
 
 const AVAILABLE_SITES_QUERY = gql`
-  query AvailableSites {
+  query AdminAvailableSites {
     availableSites {
       name
       code
