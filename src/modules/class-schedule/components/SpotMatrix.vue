@@ -64,6 +64,7 @@ interface EnrollmentInfo {
   isTodayUserBirthday: boolean
   isUserLeaderboardEnabled: boolean
   bookedViaClassPass: boolean
+  serviceName?: string | null
 }
 
 interface IdentifiableSiteUser {
@@ -391,6 +392,7 @@ const sortBy = (key: 'firstName' | 'lastName' | 'spotNumber') => {
                   ></i>
                 </span>
               </th>
+              <th>Service</th>
               <th>Sign in</th>
               <th>View Profile</th>
               <th></th>
@@ -408,6 +410,7 @@ const sortBy = (key: 'firstName' | 'lastName' | 'spotNumber') => {
                 ></IconBookablePosition>
                 {{ item.spotNumber }}
               </td>
+              <td>{{ item.serviceName }}</td>
               <td class="text-center">
                 <CheckInCheckOutUserInClass
                   v-if="item.id != null && item.isCheckedIn != null"
@@ -451,7 +454,7 @@ const sortBy = (key: 'firstName' | 'lastName' | 'spotNumber') => {
               </td>
             </tr>
             <tr v-if="sortedEnrollments.length === 0">
-              <td colspan="7" class="text-center">There are no users enrolled in this class</td>
+              <td colspan="8" class="text-center">There are no users enrolled in this class</td>
             </tr>
           </tbody>
         </table>

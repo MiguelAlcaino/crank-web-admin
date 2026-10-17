@@ -201,6 +201,7 @@ export class ApiService {
               isTodayUserBirthday
               isUserLeaderboardEnabled
               bookedViaClassPass
+              serviceName
             }
           }
           onHoldSpots

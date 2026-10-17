@@ -1,21 +1,21 @@
-import { d as f, W as x, G as E, c as g, I as A, J as C, r, b as e, e as t, k as N, g as d, _ as D, F as h, h as w, j as p, o, x as m, t as R, s as B } from "./index.b0f32500.js";
-const I = /* @__PURE__ */ t("h1", null, "Room Layouts", -1), O = { class: "row" }, T = { class: "col-12 text-right" }, V = /* @__PURE__ */ t("br", null, null, -1), S = { class: "row" }, $ = { class: "col-12" }, M = { class: "table" }, j = /* @__PURE__ */ t("thead", null, [
+import { d as f, a6 as x, H as E, c as g, K as A, L as C, r, b as e, e as t, k as N, g as d, _ as D, F as h, h as w, j as p, o, x as m, t as R, s as B } from "./index.cb70f358.js";
+const O = /* @__PURE__ */ t("h1", null, "Room Layouts", -1), T = { class: "row" }, V = { class: "col-12 text-right" }, I = /* @__PURE__ */ t("br", null, null, -1), S = { class: "row" }, $ = { class: "col-12" }, M = { class: "table" }, j = /* @__PURE__ */ t("thead", null, [
   /* @__PURE__ */ t("tr", null, [
     /* @__PURE__ */ t("th", { class: "text-center" }, "ROOM NAME"),
     /* @__PURE__ */ t("th", { class: "text-center" }, "EDIT"),
     /* @__PURE__ */ t("th", { class: "text-center" }, "DELETE")
   ])
-], -1), F = ["index"], G = { class: "text-center" }, q = ["onClick"], J = /* @__PURE__ */ t("i", { class: "bi bi-pencil-fill" }, null, -1), W = [
-  J
-], z = { class: "text-center" }, H = ["onClick"], K = /* @__PURE__ */ t("i", { class: "bi bi-trash3-fill" }, null, -1), P = [
-  K
-], Q = { key: 0 }, U = /* @__PURE__ */ t("td", {
+], -1), F = ["index"], q = { class: "text-center" }, G = ["onClick"], H = /* @__PURE__ */ t("i", { class: "bi bi-pencil-fill" }, null, -1), K = [
+  H
+], z = { class: "text-center" }, J = ["onClick"], P = /* @__PURE__ */ t("i", { class: "bi bi-trash3-fill" }, null, -1), Q = [
+  P
+], U = { key: 0 }, W = /* @__PURE__ */ t("td", {
   colspan: "3",
   class: "text-center"
 }, [
   /* @__PURE__ */ t("p", null, "NO DATA AVAILABLE IN TABLE")
 ], -1), X = [
-  U
+  W
 ], Y = { key: 1 }, Z = /* @__PURE__ */ t("td", {
   colspan: "3",
   class: "text-center"
@@ -40,9 +40,9 @@ const I = /* @__PURE__ */ t("h1", null, "Room Layouts", -1), O = { class: "row" 
     return (i, u) => {
       var _;
       return o(), e(h, null, [
-        I,
-        t("div", O, [
-          t("div", T, [
+        O,
+        t("div", T, [
+          t("div", V, [
             N(D, {
               text: "New Rom Layout",
               onOnClick: u[0] || (u[0] = (s) => d(m).push("/admin/room-layout/create")),
@@ -50,7 +50,7 @@ const I = /* @__PURE__ */ t("h1", null, "Room Layouts", -1), O = { class: "row" 
             })
           ])
         ]),
-        V,
+        I,
         t("div", S, [
           t("div", $, [
             t("table", M, [
@@ -61,22 +61,22 @@ const I = /* @__PURE__ */ t("h1", null, "Room Layouts", -1), O = { class: "row" 
                   index: L
                 }, [
                   t("td", null, R(s.name), 1),
-                  t("td", G, [
+                  t("td", q, [
                     t("button", {
                       type: "button",
                       class: "btn btn-link btn-sm",
                       onClick: (k) => d(m).push("/admin/room-layout/edit/" + s.id)
-                    }, W, 8, q)
+                    }, K, 8, G)
                   ]),
                   t("td", z, [
                     t("button", {
                       type: "button",
                       class: "btn btn-link btn-sm",
                       onClick: (k) => v(s)
-                    }, P, 8, H)
+                    }, Q, 8, J)
                   ])
                 ], 8, F))), 128)),
-                !n.value && ((_ = a.value) == null ? void 0 : _.length) === 0 ? (o(), e("tr", Q, X)) : p("", !0),
+                !n.value && ((_ = a.value) == null ? void 0 : _.length) === 0 ? (o(), e("tr", U, X)) : p("", !0),
                 n.value ? (o(), e("tr", Y, tt)) : p("", !0)
               ])
             ])
