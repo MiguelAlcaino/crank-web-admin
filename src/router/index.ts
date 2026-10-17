@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import { authService } from '@/services/authService'
-import HomeView from '@/views/HomeView.vue'
 import UnauthorizedView from '@/modules/auth/views/UnauthorizedView.vue'
 import { Role } from '@/utils/userRoles'
 import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
@@ -20,11 +19,11 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     // --- Public routes (no layout) ---
+    // The admin is the whole app: a signed-out visitor ends on the admin login through the guard.
     {
       path: '/',
       name: 'home',
-      meta: { requiresAuth: false },
-      component: HomeView
+      redirect: { name: 'admin_dashboard' }
     },
     {
       path: '/login',
@@ -167,15 +166,13 @@ const router = createRouter({
           path: 'transactions',
           name: 'admin_transactions',
           meta: { feature: AdminFeature.Transactions, role: Role.ROLE_SUPER_ADMIN },
-          component: () =>
-            import('@/modules/transaction-records/views/TransactionListView.vue')
+          component: () => import('@/modules/transaction-records/views/TransactionListView.vue')
         },
         {
           path: 'transactions/:id',
           name: 'admin_transaction_detail',
           meta: { feature: AdminFeature.Transactions, role: Role.ROLE_SUPER_ADMIN },
-          component: () =>
-            import('@/modules/transaction-records/views/TransactionDetailView.vue')
+          component: () => import('@/modules/transaction-records/views/TransactionDetailView.vue')
         },
         {
           path: 'incomplete-feedbacks',
@@ -196,8 +193,7 @@ const router = createRouter({
           path: 'subscriptions/:id',
           name: 'admin_subscription_detail',
           meta: { feature: AdminFeature.Subscriptions },
-          component: () =>
-            import('@/modules/subscription/views/SubscriptionDetailView.vue')
+          component: () => import('@/modules/subscription/views/SubscriptionDetailView.vue')
         },
         {
           path: 'customers',
@@ -209,8 +205,7 @@ const router = createRouter({
           path: 'bulk-vod-activator',
           name: 'admin_bulk_vod_activator',
           meta: { feature: AdminFeature.BulkVod },
-          component: () =>
-            import('@/modules/bulk-vod-activator/views/BulkVodActivatorView.vue')
+          component: () => import('@/modules/bulk-vod-activator/views/BulkVodActivatorView.vue')
         },
         {
           path: 'customer-gift-cards',
@@ -229,36 +224,31 @@ const router = createRouter({
           path: 'mindbody-clients',
           name: 'admin_mindbody_clients',
           meta: { feature: AdminFeature.MindbodyClients, role: Role.ROLE_SUPER_ADMIN },
-          component: () =>
-            import('@/modules/mindbody-clients/views/MindbodyClientListView.vue')
+          component: () => import('@/modules/mindbody-clients/views/MindbodyClientListView.vue')
         },
         {
           path: 'mindbody-staff',
           name: 'admin_mindbody_staff',
           meta: { feature: AdminFeature.MindbodyStaff, role: Role.ROLE_SUPER_ADMIN },
-          component: () =>
-            import('@/modules/mindbody-staff/views/MindbodyStaffView.vue')
+          component: () => import('@/modules/mindbody-staff/views/MindbodyStaffView.vue')
         },
         {
           path: 'settings',
           name: 'admin_settings',
           meta: { feature: AdminFeature.SystemSettings, role: Role.ROLE_SUPER_ADMIN },
-          component: () =>
-            import('@/modules/system-settings/views/SystemSettingsView.vue')
+          component: () => import('@/modules/system-settings/views/SystemSettingsView.vue')
         },
         {
           path: 'blacklisted-phones',
           name: 'admin_blacklisted_phones',
           meta: { feature: AdminFeature.Blacklist },
-          component: () =>
-            import('@/modules/mobile-number-blacklist/views/BlacklistView.vue')
+          component: () => import('@/modules/mobile-number-blacklist/views/BlacklistView.vue')
         },
         {
           path: 'send-notification',
           name: 'admin_send_notification',
           meta: { feature: AdminFeature.PushNotifications, role: Role.ROLE_SUPER_ADMIN },
-          component: () =>
-            import('@/modules/push-notifications/views/SendPushNotificationView.vue')
+          component: () => import('@/modules/push-notifications/views/SendPushNotificationView.vue')
         }
       ]
     },
@@ -304,8 +294,7 @@ const router = createRouter({
       path: '/class-schedules',
       name: 'class_schedules',
       meta: { feature: AdminFeature.ClassScheduleConfig, requiresAuth: true },
-      component: () =>
-        import('@/modules/class-schedule-config/views/ClassScheduleConfigView.vue')
+      component: () => import('@/modules/class-schedule-config/views/ClassScheduleConfigView.vue')
     },
     {
       path: '/customer-profile/:id',
@@ -364,6 +353,11 @@ const router = createRouter({
       name: 'class_packages',
       meta: { feature: AdminFeature.ClassPackages, requiresAuth: true },
       component: () => import('@/modules/products/views/ClassPackageListView.vue')
+    },
+    // An unknown path lands on the dashboard (or the admin login when signed out) instead of a blank page
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: { name: 'admin_dashboard' }
     }
   ]
 })
@@ -373,7 +367,7 @@ router.beforeEach(async (to, from, next) => {
     (record) => record.meta.feature !== undefined && !isFeatureAvailable(record.meta.feature)
   )
   if (unavailable) {
-    next(to.path.startsWith('/admin') ? { name: 'admin_dashboard' } : { name: 'home' })
+    next({ name: 'admin_dashboard' })
     return
   }
 
@@ -381,9 +375,8 @@ router.beforeEach(async (to, from, next) => {
   const user = authService.getUser()
 
   if (authRequired && !user) {
-    // Redirect to admin login for admin routes, legacy login for others
-    const loginRoute = to.path.startsWith('/admin') ? 'admin_login' : 'login'
-    next({ name: loginRoute, query: { redirect: to.fullPath } })
+    // The admin login brings the visitor back to the page they asked for
+    next({ name: 'admin_login', query: { redirect: to.fullPath } })
   } else if (authRequired && user) {
     const requiredRole = (to.meta.role || null) as Role | null
 
