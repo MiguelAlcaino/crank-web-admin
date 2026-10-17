@@ -106,6 +106,13 @@ const router = createRouter({
           component: () => import('@/modules/products/views/ClassPackageListView.vue')
         },
         {
+          // Packages on crank-payments main's local Product entity; class-packages is KAN-231's.
+          path: 'products/:site',
+          name: 'admin_products',
+          meta: { feature: AdminFeature.AdminProducts, role: Role.ROLE_SUPER_ADMIN },
+          component: () => import('@/modules/admin-products/views/AdminProductListView.vue')
+        },
+        {
           path: 'class-schedule-config/:site',
           name: 'admin_class_schedule_config',
           meta: { feature: AdminFeature.ClassScheduleConfig, role: Role.ROLE_SUPER_ADMIN },
@@ -207,7 +214,10 @@ const router = createRouter({
             role: Role.ROLE_SUPER_ADMIN,
             title: 'Pending Gift Cards'
           },
-          component: () => import('@/views/PlaceholderView.vue')
+          component: () =>
+            isFeatureAvailable(AdminFeature.PendingGiftCardsPage)
+              ? import('@/modules/customer-gift-cards/views/CustomerGiftCardListView.vue')
+              : import('@/views/PlaceholderView.vue')
         },
         {
           path: 'mindbody-clients',

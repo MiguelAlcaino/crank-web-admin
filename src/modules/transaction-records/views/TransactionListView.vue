@@ -5,6 +5,8 @@ import { newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { useTransactionRecords } from '../composables/useTransactionRecords'
 import { useAvailableSites } from '@/modules/shared/composables/useAvailableSites'
 import PaginationComponent from '@/modules/shared/components/PaginationComponent.vue'
+import ExportTransactionRecordsButton from '@/modules/admin-exports/components/ExportTransactionRecordsButton.vue'
+import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
 
 const gqlUrl = import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL
 const apolloClient = newAuthenticatedApolloClient(gqlUrl)
@@ -19,6 +21,16 @@ const startDate = ref('')
 const endDate = ref('')
 const currentPage = ref(1)
 const limit = 50
+
+// Excel export of the filtered list (crank-payments main only).
+const canExport = isFeatureAvailable(AdminFeature.TransactionsExport)
+const exportFilter = computed(() => ({
+  search: search.value,
+  paymentMethod: paymentMethod.value,
+  site: site.value,
+  startDate: startDate.value,
+  endDate: endDate.value
+}))
 
 const totalPages = computed(() => {
   if (!txn.listResult.value) return 1
@@ -112,6 +124,9 @@ onMounted(async () => {
     </div>
     <div class="mb-3">
       <button class="btn btn-outline-secondary btn-sm" @click="clearFilter">Clear filter</button>
+    </div>
+    <div v-if="canExport" class="mb-3">
+      <ExportTransactionRecordsButton :apollo-client="apolloClient" :filter="exportFilter" />
     </div>
 
     <!-- Loading -->

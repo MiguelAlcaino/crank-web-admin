@@ -6,7 +6,13 @@ const env = loadEnv('development', process.cwd(), '')
 const config: CodegenConfig = {
   overwrite: true,
   schema: env.VITE_CRANK_GRAPHQL_SERVER_URL,
-  documents: ['src/**/*.ts', 'src/**/*.graphql', '!src/gql-main/**'],
+  documents: [
+    'src/**/*.ts',
+    'src/**/*.graphql',
+    '!src/gql-main/**',
+    // Documents of main-only features (src/config/features.ts), validated by codegen.main.ts.
+    '!src/**/*.main.graphql'
+  ],
   generates: {
     './src/gql/': {
       preset: 'client',

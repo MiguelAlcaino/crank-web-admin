@@ -1,0 +1,31 @@
+mutation UpdateProductsOrder($site: SiteEnum!, $input: [ProductCategoryOrderInput!]!) {
+  updateProductsOrder(site: $site, input: $input) {
+    __typename
+    ... on AdminProductList {
+      products {
+        id
+        mindbodyId
+        name
+        price
+        category
+        displayOrder
+        isVisible
+        customTitle
+        subtitle
+        textPayButton
+        errorMessageWhenTryingToPurchase
+        popupTitleAfterClickOnBuy
+        popupDescriptionAfterClickOnBuy
+        isMembership
+        isTrialPackage
+        isClassPassPackage
+        doesItRequireSmsVerification
+        muviEnabled
+        muviNumberOfDays
+      }
+    }
+    ... on ProductNotFound {
+      code
+    }
+  }
+}

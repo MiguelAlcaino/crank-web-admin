@@ -52,7 +52,7 @@ The standalone app is built for one crank-payments backend, chosen with `VITE_BA
 
 `src/config/features.ts` lists every admin module/feature with the profiles that support it. Routes declare `meta.feature`; the router redirects away from unavailable ones and the sidebar hides them. Use `isFeatureAvailable()` from `src/config/backendProfile.ts` for anything finer-grained. Enabling a feature on `main` is a one-line change in `FEATURE_PROFILES`.
 
-Operations that only exist on KAN-231 but are used by modules visible on both profiles go in `src/services/documents/kan231.ts`. `npm run schema:main` refreshes `graphql.schema.main.graphql` from a crank-payments clone; `npm run codegen:main` generates `src/gql-main/` and fails if any document used on `main` does not match main's schema.
+Operations that only exist on KAN-231 but are used by modules visible on both profiles go in `src/services/documents/kan231.ts`. Features built on operations only main has are `MAIN_ONLY` in `features.ts`; their documents go in `*.main.graphql` files (skipped by the KAN-231 `codegen.ts`) and are used through the typed documents in `src/gql-main/graphql.ts`. `npm run schema:main` refreshes `graphql.schema.main.graphql` from a crank-payments clone (`origin/develop` by default, `CRANK_PAYMENTS_REF` to change it); `npm run codegen:main` generates `src/gql-main/` and fails if any document used on `main` does not match main's schema.
 
 ### State Management
 

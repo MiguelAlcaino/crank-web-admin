@@ -1,0 +1,22 @@
+query CustomerVodPeriods($customerId: ID!) {
+  customerVodPeriods(customerId: $customerId) {
+    id
+    start
+    end
+    addedBy
+    addedByAdmin
+    isDeleted
+    deletedAt
+    createdAt
+  }
+}
+
+mutation CreateCustomerVodPeriod($customerId: ID!, $input: CreateCustomerVodPeriodInput!) {
+  createCustomerVodPeriod(customerId: $customerId, input: $input) {
+    id
+  }
+}
+
+mutation DeleteCustomerVodPeriod($id: ID!) {
+  deleteCustomerVodPeriod(id: $id)
+}

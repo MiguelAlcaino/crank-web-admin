@@ -1,0 +1,20 @@
+mutation UpdateCustomerGiftCard($id: ID!, $input: UpdateCustomerGiftCardInput!) {
+  updateCustomerGiftCard(id: $id, input: $input) {
+    __typename
+    ... on CustomerGiftCard {
+      id
+      status
+      giftCardCode
+    }
+    ... on CustomerGiftCardNotFoundError {
+      code
+    }
+    ... on GiftCardCodeRequiredError {
+      code
+    }
+    ... on InvalidGiftCardPdfError {
+      code
+      message
+    }
+  }
+}

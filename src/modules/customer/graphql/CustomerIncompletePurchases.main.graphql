@@ -1,0 +1,25 @@
+query CustomerIncompletePurchases($email: String!) {
+  incompleteTransactionFeedbacks(filter: { email: $email }, pagination: { page: 1, limit: 50 }) {
+    items {
+      id
+      merchantReference
+      status
+      feedbackTryNumber
+      feedbackStatusUpdatedAt
+      created
+      siteCustomer {
+        id
+        siteUserInfo {
+          site
+        }
+        identifiableUser {
+          id
+        }
+      }
+    }
+  }
+}
+
+mutation CustomerRetryTransactionFeedback($id: ID!) {
+  retryTransactionFeedback(id: $id)
+}

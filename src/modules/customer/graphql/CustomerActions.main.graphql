@@ -1,0 +1,15 @@
+mutation UpdateSiteCustomerMindbodyId($siteCustomerId: ID!, $newMindbodyId: String!) {
+  updateSiteCustomerMindbodyId(siteCustomerId: $siteCustomerId, newMindbodyId: $newMindbodyId)
+}
+
+mutation VerifyCustomerPhoneNumber($customerId: ID!) {
+  verifyCustomerPhoneNumber(customerId: $customerId)
+}
+
+mutation RemoveCustomerPhoneVerification($customerId: ID!) {
+  removeCustomerPhoneVerification(customerId: $customerId)
+}
+
+mutation SyncCustomerWithMindbody($customerId: ID!, $site: SiteEnum!) {
+  syncCustomerWithMindbody(customerId: $customerId, site: $site)
+}

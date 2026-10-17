@@ -3,14 +3,15 @@
 //
 // Reads the schema straight from a crank-payments git checkout (read-only, no checkout needed):
 //   CRANK_PAYMENTS_REPO  path to the clone (default: ../crank-payments)
-//   CRANK_PAYMENTS_REF   git ref to read (default: origin/main; run `git fetch` there first)
+//   CRANK_PAYMENTS_REF   git ref to read (default: origin/develop, where the admin operations land
+//                        first; run `git fetch` there first)
 import { execFileSync } from 'node:child_process'
 import { writeFileSync } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 
 const repo = path.resolve(process.env.CRANK_PAYMENTS_REPO ?? '../crank-payments')
-const ref = process.env.CRANK_PAYMENTS_REF ?? 'origin/main'
+const ref = process.env.CRANK_PAYMENTS_REF ?? 'origin/develop'
 const schemaPath = 'src/GraphQL/Resources/config/schema.graphql'
 
 const git = (...args) => execFileSync('git', ['-C', repo, ...args], { encoding: 'utf-8' })

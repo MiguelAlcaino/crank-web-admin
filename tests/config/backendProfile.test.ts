@@ -32,9 +32,21 @@ describe('resolveBackendProfile', () => {
 })
 
 describe('FEATURE_PROFILES', () => {
-  it('keeps every feature available on kan231', () => {
+  // Built on operations only crank-payments main has.
+  const mainOnly = [
+    AdminFeature.AdminProducts,
+    AdminFeature.PendingGiftCardsPage,
+    AdminFeature.CustomerVodPeriods,
+    AdminFeature.CustomerActions,
+    AdminFeature.CustomerIncompletePurchases,
+    AdminFeature.ChargeClient,
+    AdminFeature.TransactionsExport,
+    AdminFeature.CustomerVodExport
+  ]
+
+  it('keeps every feature but the main-only ones available on kan231', () => {
     for (const feature of Object.values(AdminFeature)) {
-      expect(isFeatureAvailableIn(feature, 'kan231')).toBe(true)
+      expect(isFeatureAvailableIn(feature, 'kan231')).toBe(!mainOnly.includes(feature))
     }
   })
 
@@ -49,10 +61,12 @@ describe('FEATURE_PROFILES', () => {
         AdminFeature.ClassScheduleConfig,
         AdminFeature.ClassesCalendar,
         AdminFeature.Customer,
+        AdminFeature.CustomerGiftCards,
         AdminFeature.GiftCards,
         AdminFeature.MySettings,
         AdminFeature.PaymentLinks,
-        AdminFeature.RoomLayouts
+        AdminFeature.RoomLayouts,
+        ...mainOnly
       ].sort()
     )
   })

@@ -237,6 +237,36 @@ async function logout() {
             </div>
           </li>
 
+          <!-- Packages on main's local Product entity, per site (SUPER_ADMIN) -->
+          <li
+            v-if="can(AdminFeature.AdminProducts) && isSuperAdmin() && !sidebarCollapsed"
+            class="nav-item"
+          >
+            <a
+              class="nav-link dropdown-toggle"
+              :class="{ active: route.name === 'admin_products' }"
+              href="#"
+              @click.prevent="toggleDropdown('adminProducts')"
+            >
+              Packages
+              <template v-for="site in sites" :key="site.serviceKey">
+                <span v-if="isActiveWithParam('admin_products', 'site', site.serviceKey)">
+                  {{ site.name }}
+                </span>
+              </template>
+            </a>
+            <div v-show="openDropdown === 'adminProducts'" class="dropdown-menu show">
+              <RouterLink
+                v-for="site in sites"
+                :key="site.serviceKey"
+                class="dropdown-item"
+                :to="{ name: 'admin_products', params: { site: site.serviceKey } }"
+              >
+                Packages {{ site.name }}
+              </RouterLink>
+            </div>
+          </li>
+
           <!-- Gift Card (SUPER_ADMIN) -->
           <li
             v-if="can(AdminFeature.GiftCards) && isSuperAdmin() && !sidebarCollapsed"
