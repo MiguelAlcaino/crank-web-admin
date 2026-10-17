@@ -46,10 +46,7 @@ export const authService = {
   },
   async logout(): Promise<void> {
     useAuthenticationStore().deleteSession()
-    const loginRoute = router.currentRoute.value.path.startsWith('/admin')
-      ? 'admin_login'
-      : 'login'
-    await router.push({ name: loginRoute })
+    await router.push({ name: 'admin_login' })
   },
   userHasRole(role: Role): boolean {
     const token = useAuthenticationStore().token
