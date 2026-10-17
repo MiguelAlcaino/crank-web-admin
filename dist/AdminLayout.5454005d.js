@@ -1,5 +1,5 @@
-import { d as G, G as j, o as s, b as a, F as y, h as b, A as o, B as l, t as g, e as m, g as e, y as O, H as J, I as Q, J as X, c as F, K as Y, r as U, L as Z, M as V, k as _, N as r, j as i, w as A, f as R, O as T, R as $, P as d, Q as u, T as M, D as B } from "./index.cb70f358.js";
-import { u as ee } from "./themeStore.c6b7694c.js";
+import { d as G, G as j, o as s, b as a, F as y, h as b, A as o, B as l, t as g, e as m, g as e, y as O, H as J, I as Q, J as X, c as E, K as Y, r as U, L as Z, M as V, k as u, N as d, j as i, w as A, f as R, O as M, R as N, P as r, Q as _, T, D as $ } from "./index.dde1f821.js";
+import { u as ee } from "./themeStore.dfa86113.js";
 const se = { class: "toast-container" }, ae = ["onClick"], te = /* @__PURE__ */ G({
   __name: "AdminToast",
   setup(q) {
@@ -23,40 +23,40 @@ const se = { class: "toast-container" }, ae = ["onClick"], te = /* @__PURE__ */ 
           type: "button",
           class: "btn-close",
           "aria-label": "Close",
-          onClick: (E) => e(h).remove(w.id)
+          onClick: (B) => e(h).remove(w.id)
         }, null, 8, ae)
       ], 2))), 128))
     ]));
   }
 });
-const ne = /* @__PURE__ */ O(te, [["__scopeId", "data-v-bb686ea1"]]), ie = { class: "container-fluid" }, le = { class: "layout-row" }, oe = { class: "nav nav-pills flex-column" }, ce = { class: "nav-item" }, re = {
+const ne = /* @__PURE__ */ O(te, [["__scopeId", "data-v-bb686ea1"]]), ie = { class: "container-fluid" }, le = { class: "layout-row" }, oe = { class: "nav nav-pills flex-column" }, ce = { class: "nav-item" }, de = {
   key: 0,
   class: "nav-item"
-}, de = {
+}, re = {
   key: 1,
   class: "nav-item"
-}, ue = {
+}, _e = {
   key: 2,
   class: "nav-item"
-}, _e = {
+}, ue = {
   key: 3,
   class: "nav-item"
 }, me = {
   key: 4,
   class: "nav-item"
-}, ve = { key: 0 }, ke = { class: "dropdown-menu show" }, fe = {
+}, ve = {
   key: 5,
   class: "nav-item"
-}, ye = { key: 0 }, pe = { class: "dropdown-menu show" }, he = {
+}, ke = { key: 0 }, fe = { class: "dropdown-menu show" }, ye = {
   key: 6,
   class: "nav-item"
-}, ge = { key: 0 }, be = { class: "dropdown-menu show" }, Ce = {
+}, pe = { key: 0 }, he = { class: "dropdown-menu show" }, ge = {
   key: 7,
   class: "nav-item"
-}, we = { key: 0 }, Se = { class: "dropdown-menu show" }, Ae = {
+}, be = { key: 0 }, Ce = { class: "dropdown-menu show" }, we = {
   key: 8,
   class: "nav-item"
-}, Le = {
+}, Se = { key: 0 }, Ae = { class: "dropdown-menu show" }, Le = {
   key: 9,
   class: "nav-item"
 }, Ke = {
@@ -68,10 +68,10 @@ const ne = /* @__PURE__ */ O(te, [["__scopeId", "data-v-bb686ea1"]]), ie = { cla
 }, Re = {
   key: 12,
   class: "nav-item"
-}, Te = {
+}, Me = {
   key: 13,
   class: "nav-item"
-}, Me = {
+}, Te = {
   key: 14,
   class: "nav-item"
 }, xe = {
@@ -80,44 +80,47 @@ const ne = /* @__PURE__ */ O(te, [["__scopeId", "data-v-bb686ea1"]]), ie = { cla
 }, De = {
   key: 16,
   class: "nav-item"
-}, Ie = {
+}, Fe = {
   key: 17,
   class: "nav-item"
-}, Ne = {
+}, Ie = {
   key: 18,
   class: "nav-item"
-}, $e = {
+}, Ne = {
   key: 19,
   class: "nav-item"
-}, Be = {
+}, $e = {
   key: 20,
   class: "nav-item"
-}, Ee = {
+}, Be = {
   key: 21,
   class: "nav-item"
-}, Fe = {
+}, Ee = {
   key: 22,
   class: "nav-item"
-}, Ue = ["onClick"], Ve = {
+}, Ue = {
+  key: 23,
+  class: "nav-item"
+}, Ve = ["onClick"], Ge = {
   role: "main",
   class: "main-content pt-3"
-}, Ge = /* @__PURE__ */ G({
+}, Oe = /* @__PURE__ */ G({
   __name: "AdminLayout",
   setup(q) {
-    const h = J(), L = ee(), D = Q("https://payments.crank-fit.com/api/graphql/"), { sites: w, fetchSites: E } = X(D);
-    F(() => B.getUser());
-    const C = F(
+    const h = J(), L = ee(), D = Q("https://payments.crank-fit.com/api/graphql/"), { sites: w, fetchSites: B } = X(D);
+    E(() => $.getUser());
+    const C = E(
       () => w.value.map((f) => ({ serviceKey: f.code, name: f.name }))
     );
-    Y(E);
-    function I(f) {
-      return B.userHasRole(f);
+    Y(B);
+    function F(f) {
+      return $.userHasRole(f);
     }
     function v() {
-      return I($.ROLE_SUPER_ADMIN);
+      return F(N.ROLE_SUPER_ADMIN);
     }
-    function N() {
-      return I($.ROLE_STAFF) || I($.ROLE_SUPER_ADMIN);
+    function I() {
+      return F(N.ROLE_STAFF) || F(N.ROLE_SUPER_ADMIN);
     }
     function k(f) {
       return h.name === f;
@@ -141,7 +144,7 @@ const ne = /* @__PURE__ */ O(te, [["__scopeId", "data-v-bb686ea1"]]), ie = { cla
       n.value = !n.value;
     }
     async function z() {
-      await B.logout();
+      await $.logout();
     }
     return (f, p) => {
       const c = V("RouterLink"), H = V("RouterView");
@@ -162,51 +165,62 @@ const ne = /* @__PURE__ */ O(te, [["__scopeId", "data-v-bb686ea1"]]), ie = { cla
                   }, null, 2)
                 ])
               ]),
-              e(d)(e(u).CustomersList) && N() && !n.value ? (s(), a("li", re, [
-                _(c, {
+              e(r)(e(_).CustomersList) && I() && !n.value ? (s(), a("li", de, [
+                u(c, {
                   class: o(["nav-link", { active: k("admin_customers") }]),
                   to: { name: "admin_customers" }
                 }, {
-                  default: r(() => [
+                  default: d(() => [
                     l(" Clients ")
                   ]),
                   _: 1
                 }, 8, ["class"])
               ])) : i("", !0),
-              e(d)(e(u).ClassesCalendar) && N() && !n.value ? (s(), a("li", de, [
-                _(c, {
+              e(r)(e(_).ClassesCalendar) && I() && !n.value ? (s(), a("li", re, [
+                u(c, {
                   class: o(["nav-link", { active: k("admin_classes_calendar") }]),
                   to: { name: "admin_classes_calendar" }
                 }, {
-                  default: r(() => [
+                  default: d(() => [
                     l(" Class Schedule ")
                   ]),
                   _: 1
                 }, 8, ["class"])
               ])) : i("", !0),
-              e(d)(e(u).Transactions) && v() && !n.value ? (s(), a("li", ue, [
-                _(c, {
+              e(r)(e(_).Transactions) && v() && !n.value ? (s(), a("li", _e, [
+                u(c, {
                   class: o(["nav-link", { active: k("admin_transactions") }]),
                   to: { name: "admin_transactions" }
                 }, {
-                  default: r(() => [
+                  default: d(() => [
                     l(" Transactions ")
                   ]),
                   _: 1
                 }, 8, ["class"])
               ])) : i("", !0),
-              e(d)(e(u).IncompleteFeedbacks) && v() && !n.value ? (s(), a("li", _e, [
-                _(c, {
+              e(r)(e(_).IncompleteFeedbacks) && v() && !n.value ? (s(), a("li", ue, [
+                u(c, {
                   class: o(["nav-link", { active: k("admin_incomplete_feedbacks") }]),
                   to: { name: "admin_incomplete_feedbacks" }
                 }, {
-                  default: r(() => [
+                  default: d(() => [
                     l(" Incomplete Feedbacks ")
                   ]),
                   _: 1
                 }, 8, ["class"])
               ])) : i("", !0),
-              e(d)(e(u).ClassScheduleConfig) && v() && !n.value ? (s(), a("li", me, [
+              e(r)(e(_).FailedMessages) && v() && !n.value ? (s(), a("li", me, [
+                u(c, {
+                  class: o(["nav-link", { active: k("admin_failed_messages") }]),
+                  to: { name: "admin_failed_messages" }
+                }, {
+                  default: d(() => [
+                    l(" Failed Messages ")
+                  ]),
+                  _: 1
+                }, 8, ["class"])
+              ])) : i("", !0),
+              e(r)(e(_).ClassScheduleConfig) && v() && !n.value ? (s(), a("li", ve, [
                 m("a", {
                   class: o(["nav-link dropdown-toggle", { active: e(h).name === "admin_class_schedule_config" }]),
                   href: "#",
@@ -216,25 +230,25 @@ const ne = /* @__PURE__ */ O(te, [["__scopeId", "data-v-bb686ea1"]]), ie = { cla
                   (s(!0), a(y, null, b(C.value, (t) => (s(), a(y, {
                     key: t.serviceKey
                   }, [
-                    K("admin_class_schedule_config", "site", t.serviceKey) ? (s(), a("span", ve, g(t.name), 1)) : i("", !0)
+                    K("admin_class_schedule_config", "site", t.serviceKey) ? (s(), a("span", ke, g(t.name), 1)) : i("", !0)
                   ], 64))), 128))
                 ], 2),
-                R(m("div", ke, [
-                  (s(!0), a(y, null, b(C.value, (t) => (s(), M(c, {
+                R(m("div", fe, [
+                  (s(!0), a(y, null, b(C.value, (t) => (s(), T(c, {
                     key: t.serviceKey,
                     class: "dropdown-item",
                     to: { name: "admin_class_schedule_config", params: { site: t.serviceKey } }
                   }, {
-                    default: r(() => [
+                    default: d(() => [
                       l(" Class Schedule Config " + g(t.name), 1)
                     ]),
                     _: 2
                   }, 1032, ["to"]))), 128))
                 ], 512), [
-                  [T, S.value === "classScheduleConfig"]
+                  [M, S.value === "classScheduleConfig"]
                 ])
               ])) : i("", !0),
-              e(d)(e(u).RoomLayouts) && v() && !n.value ? (s(), a("li", fe, [
+              e(r)(e(_).RoomLayouts) && v() && !n.value ? (s(), a("li", ye, [
                 m("a", {
                   class: o(["nav-link dropdown-toggle", { active: e(h).name === "admin_room_layout_list" }]),
                   href: "#",
@@ -244,25 +258,25 @@ const ne = /* @__PURE__ */ O(te, [["__scopeId", "data-v-bb686ea1"]]), ie = { cla
                   (s(!0), a(y, null, b(C.value, (t) => (s(), a(y, {
                     key: t.serviceKey
                   }, [
-                    K("admin_room_layout_list", "site", t.serviceKey) ? (s(), a("span", ye, g(t.name), 1)) : i("", !0)
+                    K("admin_room_layout_list", "site", t.serviceKey) ? (s(), a("span", pe, g(t.name), 1)) : i("", !0)
                   ], 64))), 128))
                 ], 2),
-                R(m("div", pe, [
-                  (s(!0), a(y, null, b(C.value, (t) => (s(), M(c, {
+                R(m("div", he, [
+                  (s(!0), a(y, null, b(C.value, (t) => (s(), T(c, {
                     key: t.serviceKey,
                     class: "dropdown-item",
                     to: { name: "admin_room_layout_list", params: { site: t.serviceKey } }
                   }, {
-                    default: r(() => [
+                    default: d(() => [
                       l(" Room Layout Config " + g(t.name), 1)
                     ]),
                     _: 2
                   }, 1032, ["to"]))), 128))
                 ], 512), [
-                  [T, S.value === "roomLayout"]
+                  [M, S.value === "roomLayout"]
                 ])
               ])) : i("", !0),
-              e(d)(e(u).ClassPackages) && v() && !n.value ? (s(), a("li", he, [
+              e(r)(e(_).ClassPackages) && v() && !n.value ? (s(), a("li", ge, [
                 m("a", {
                   class: o(["nav-link dropdown-toggle", { active: e(h).name === "admin_class_packages" }]),
                   href: "#",
@@ -272,25 +286,25 @@ const ne = /* @__PURE__ */ O(te, [["__scopeId", "data-v-bb686ea1"]]), ie = { cla
                   (s(!0), a(y, null, b(C.value, (t) => (s(), a(y, {
                     key: t.serviceKey
                   }, [
-                    K("admin_class_packages", "site", t.serviceKey) ? (s(), a("span", ge, g(t.name), 1)) : i("", !0)
+                    K("admin_class_packages", "site", t.serviceKey) ? (s(), a("span", be, g(t.name), 1)) : i("", !0)
                   ], 64))), 128))
                 ], 2),
-                R(m("div", be, [
-                  (s(!0), a(y, null, b(C.value, (t) => (s(), M(c, {
+                R(m("div", Ce, [
+                  (s(!0), a(y, null, b(C.value, (t) => (s(), T(c, {
                     key: t.serviceKey,
                     class: "dropdown-item",
                     to: { name: "admin_class_packages", params: { site: t.serviceKey } }
                   }, {
-                    default: r(() => [
+                    default: d(() => [
                       l(" Packages " + g(t.name), 1)
                     ]),
                     _: 2
                   }, 1032, ["to"]))), 128))
                 ], 512), [
-                  [T, S.value === "packages"]
+                  [M, S.value === "packages"]
                 ])
               ])) : i("", !0),
-              e(d)(e(u).AdminProducts) && v() && !n.value ? (s(), a("li", Ce, [
+              e(r)(e(_).AdminProducts) && v() && !n.value ? (s(), a("li", we, [
                 m("a", {
                   class: o(["nav-link dropdown-toggle", { active: e(h).name === "admin_products" }]),
                   href: "#",
@@ -300,162 +314,162 @@ const ne = /* @__PURE__ */ O(te, [["__scopeId", "data-v-bb686ea1"]]), ie = { cla
                   (s(!0), a(y, null, b(C.value, (t) => (s(), a(y, {
                     key: t.serviceKey
                   }, [
-                    K("admin_products", "site", t.serviceKey) ? (s(), a("span", we, g(t.name), 1)) : i("", !0)
+                    K("admin_products", "site", t.serviceKey) ? (s(), a("span", Se, g(t.name), 1)) : i("", !0)
                   ], 64))), 128))
                 ], 2),
-                R(m("div", Se, [
-                  (s(!0), a(y, null, b(C.value, (t) => (s(), M(c, {
+                R(m("div", Ae, [
+                  (s(!0), a(y, null, b(C.value, (t) => (s(), T(c, {
                     key: t.serviceKey,
                     class: "dropdown-item",
                     to: { name: "admin_products", params: { site: t.serviceKey } }
                   }, {
-                    default: r(() => [
+                    default: d(() => [
                       l(" Packages " + g(t.name), 1)
                     ]),
                     _: 2
                   }, 1032, ["to"]))), 128))
                 ], 512), [
-                  [T, S.value === "adminProducts"]
+                  [M, S.value === "adminProducts"]
                 ])
               ])) : i("", !0),
-              e(d)(e(u).GiftCards) && v() && !n.value ? (s(), a("li", Ae, [
-                _(c, {
+              e(r)(e(_).GiftCards) && v() && !n.value ? (s(), a("li", Le, [
+                u(c, {
                   class: o(["nav-link", { active: k("admin_gift_cards") }]),
                   to: { name: "admin_gift_cards" }
                 }, {
-                  default: r(() => [
+                  default: d(() => [
                     l(" Gift Card ")
                   ]),
                   _: 1
                 }, 8, ["class"])
               ])) : i("", !0),
-              e(d)(e(u).CustomerGiftCards) && v() && !n.value ? (s(), a("li", Le, [
-                _(c, {
+              e(r)(e(_).CustomerGiftCards) && v() && !n.value ? (s(), a("li", Ke, [
+                u(c, {
                   class: o(["nav-link", { active: k("admin_customer_gift_cards") }]),
                   to: { name: "admin_customer_gift_cards" }
                 }, {
-                  default: r(() => [
+                  default: d(() => [
                     l(" Pending Gift Cards ")
                   ]),
                   _: 1
                 }, 8, ["class"])
               ])) : i("", !0),
-              e(d)(e(u).PaymentLinks) && v() && !n.value ? (s(), a("li", Ke, [
-                _(c, {
+              e(r)(e(_).PaymentLinks) && v() && !n.value ? (s(), a("li", Pe, [
+                u(c, {
                   class: o(["nav-link", { active: k("admin_payment_links") }]),
                   to: { name: "admin_payment_links" }
                 }, {
-                  default: r(() => [
+                  default: d(() => [
                     l(" Payment link ")
                   ]),
                   _: 1
                 }, 8, ["class"])
               ])) : i("", !0),
-              e(d)(e(u).SessionTypes) && v() && !n.value ? (s(), a("li", Pe, [
-                _(c, {
+              e(r)(e(_).SessionTypes) && v() && !n.value ? (s(), a("li", Re, [
+                u(c, {
                   class: o(["nav-link", { active: k("admin_session_types") }]),
                   to: { name: "admin_session_types" }
                 }, {
-                  default: r(() => [
+                  default: d(() => [
                     l(" Session Types ")
                   ]),
                   _: 1
                 }, 8, ["class"])
               ])) : i("", !0),
-              e(d)(e(u).InstructorProfiles) && v() && !n.value ? (s(), a("li", Re, [
-                _(c, {
+              e(r)(e(_).InstructorProfiles) && v() && !n.value ? (s(), a("li", Me, [
+                u(c, {
                   class: o(["nav-link", { active: k("admin_instructor_profiles") }]),
                   to: { name: "admin_instructor_profiles" }
                 }, {
-                  default: r(() => [
+                  default: d(() => [
                     l(" Instructor Profiles ")
                   ]),
                   _: 1
                 }, 8, ["class"])
               ])) : i("", !0),
-              e(d)(e(u).MindbodyStaff) && v() && !n.value ? (s(), a("li", Te, [
-                _(c, {
+              e(r)(e(_).MindbodyStaff) && v() && !n.value ? (s(), a("li", Te, [
+                u(c, {
                   class: o(["nav-link", { active: k("admin_mindbody_staff") }]),
                   to: { name: "admin_mindbody_staff" }
                 }, {
-                  default: r(() => [
+                  default: d(() => [
                     l(" Staff ")
                   ]),
                   _: 1
                 }, 8, ["class"])
               ])) : i("", !0),
-              e(d)(e(u).WebhookEvents) && v() && !n.value ? (s(), a("li", Me, [
-                _(c, {
+              e(r)(e(_).WebhookEvents) && v() && !n.value ? (s(), a("li", xe, [
+                u(c, {
                   class: o(["nav-link", { active: k("admin_webhook_events") }]),
                   to: { name: "admin_webhook_events" }
                 }, {
-                  default: r(() => [
+                  default: d(() => [
                     l(" Webhook Events ")
                   ]),
                   _: 1
                 }, 8, ["class"])
               ])) : i("", !0),
-              e(d)(e(u).AdminUsers) && v() && !n.value ? (s(), a("li", xe, [
-                _(c, {
+              e(r)(e(_).AdminUsers) && v() && !n.value ? (s(), a("li", De, [
+                u(c, {
                   class: o(["nav-link", { active: k("admin_users") }]),
                   to: { name: "admin_users" }
                 }, {
-                  default: r(() => [
+                  default: d(() => [
                     l(" Admins ")
                   ]),
                   _: 1
                 }, 8, ["class"])
               ])) : i("", !0),
-              e(d)(e(u).SystemSettings) && v() && !n.value ? (s(), a("li", De, [
-                _(c, {
+              e(r)(e(_).SystemSettings) && v() && !n.value ? (s(), a("li", Fe, [
+                u(c, {
                   class: o(["nav-link", { active: k("admin_settings") }]),
                   to: { name: "admin_settings" }
                 }, {
-                  default: r(() => [
+                  default: d(() => [
                     l(" Settings ")
                   ]),
                   _: 1
                 }, 8, ["class"])
               ])) : i("", !0),
-              e(d)(e(u).PushNotifications) && v() && !n.value ? (s(), a("li", Ie, [
-                _(c, {
+              e(r)(e(_).PushNotifications) && v() && !n.value ? (s(), a("li", Ie, [
+                u(c, {
                   class: o(["nav-link", { active: k("admin_send_notification") }]),
                   to: { name: "admin_send_notification" }
                 }, {
-                  default: r(() => [
+                  default: d(() => [
                     l(" Send Notification ")
                   ]),
                   _: 1
                 }, 8, ["class"])
               ])) : i("", !0),
-              e(d)(e(u).MySettings) && !n.value ? (s(), a("li", Ne, [
-                _(c, {
+              e(r)(e(_).MySettings) && !n.value ? (s(), a("li", Ne, [
+                u(c, {
                   class: o(["nav-link", { active: k("admin_my_settings") }]),
                   to: { name: "admin_my_settings" }
                 }, {
-                  default: r(() => [
+                  default: d(() => [
                     l(" My Settings ")
                   ]),
                   _: 1
                 }, 8, ["class"])
               ])) : i("", !0),
-              e(d)(e(u).Blacklist) && N() && !n.value ? (s(), a("li", $e, [
-                _(c, {
+              e(r)(e(_).Blacklist) && I() && !n.value ? (s(), a("li", $e, [
+                u(c, {
                   class: o(["nav-link", { active: k("admin_blacklisted_phones") }]),
                   to: { name: "admin_blacklisted_phones" }
                 }, {
-                  default: r(() => [
+                  default: d(() => [
                     l(" Blacklisted phones ")
                   ]),
                   _: 1
                 }, 8, ["class"])
               ])) : i("", !0),
-              e(d)(e(u).MindbodyClients) && v() && !n.value ? (s(), a("li", Be, [
-                _(c, {
+              e(r)(e(_).MindbodyClients) && v() && !n.value ? (s(), a("li", Be, [
+                u(c, {
                   class: o(["nav-link", { active: k("admin_mindbody_clients") }]),
                   to: { name: "admin_mindbody_clients" }
                 }, {
-                  default: r(() => [
+                  default: d(() => [
                     l(" Report - MB Clients ")
                   ]),
                   _: 1
@@ -473,25 +487,25 @@ const ne = /* @__PURE__ */ O(te, [["__scopeId", "data-v-bb686ea1"]]), ie = { cla
                   l(" " + g(e(L).isDark ? "Light Mode" : "Dark Mode"), 1)
                 ])
               ])),
-              n.value ? i("", !0) : (s(), a("li", Fe, [
+              n.value ? i("", !0) : (s(), a("li", Ue, [
                 m("a", {
                   class: "nav-link",
                   href: "#",
                   onClick: A(z, ["prevent"])
-                }, "Logout", 8, Ue)
+                }, "Logout", 8, Ve)
               ]))
             ])
           ], 2),
-          m("main", Ve, [
-            _(ne),
-            _(H)
+          m("main", Ge, [
+            u(ne),
+            u(H)
           ])
         ])
       ]);
     };
   }
 });
-const We = /* @__PURE__ */ O(Ge, [["__scopeId", "data-v-20f268cb"]]);
+const ze = /* @__PURE__ */ O(Oe, [["__scopeId", "data-v-cc9ef51d"]]);
 export {
-  We as default
+  ze as default
 };
