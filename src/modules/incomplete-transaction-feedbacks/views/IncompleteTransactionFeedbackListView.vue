@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { onMounted, ref, reactive } from 'vue'
 import { newAuthenticatedApolloClient } from '@/services/graphqlClient'
-import { useIncompleteTransactionFeedbacks } from '../composables/useIncompleteTransactionFeedbacks'
+import {
+  useIncompleteTransactionFeedbacks,
+  type IncompleteTransactionFeedback
+} from '../composables/useIncompleteTransactionFeedbacks'
 import { useToast } from '@/modules/shared/composables/useToast'
 import PaginationComponent from '@/modules/shared/components/PaginationComponent.vue'
+import RecordFromMindbodySaleModal from '../components/RecordFromMindbodySaleModal.vue'
+import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
 
 const gqlUrl = import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL
 const apolloClient = newAuthenticatedApolloClient(gqlUrl)
@@ -16,6 +21,15 @@ const currentPage = ref(1)
 const limit = 25
 
 const retryCountdowns = reactive<Record<string, number>>({})
+
+const canRecordFromMindbodySale = isFeatureAvailable(AdminFeature.RecordFromMindbodySale)
+const recordingFeedback = ref<IncompleteTransactionFeedback | null>(null)
+
+async function handleSaleRecorded() {
+  recordingFeedback.value = null
+  toast.success('Transaction completed from the Mindbody sale')
+  await loadList()
+}
 
 function formatDate(dateStr: string | null): string {
   if (!dateStr) return '-'
@@ -161,6 +175,13 @@ onMounted(loadList)
             <td>{{ item.siteCustomer?.siteUserInfo?.site ?? '-' }}</td>
             <td>
               <span class="badge text-bg-warning">{{ item.status }}</span>
+              <span
+                v-if="item.awaitingReview"
+                class="badge text-bg-danger ms-1"
+                title="Mindbody may already hold this sale: check it in Mindbody before acting"
+              >
+                Awaiting review
+              </span>
             </td>
             <td>{{ item.feedbackTryNumber }}</td>
             <td>{{ formatDate(item.feedbackStatusUpdatedAt) }}</td>
@@ -175,6 +196,13 @@ onMounted(loadList)
                 <span v-else-if="item.id in retryCountdowns">Wait {{ retryCountdowns[item.id] }}s</span>
                 <span v-else>Retry</span>
               </button>
+              <button
+                v-if="canRecordFromMindbodySale && item.awaitingReview"
+                class="btn btn-outline-success btn-sm ms-1"
+                @click="recordingFeedback = item"
+              >
+                Record from Mindbody sale
+              </button>
             </td>
           </tr>
         </tbody>
@@ -188,5 +216,13 @@ onMounted(loadList)
         @pageChanged="goToPage"
       />
     </div>
+
+    <RecordFromMindbodySaleModal
+      v-if="recordingFeedback"
+      :feedback="recordingFeedback"
+      :apollo-client="apolloClient"
+      @recorded="handleSaleRecorded"
+      @close="recordingFeedback = null"
+    />
   </div>
 </template>

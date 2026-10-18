@@ -823,6 +823,8 @@ export type IdentifiableUser = {
 /** A TemporalTransaction whose Payfort feedback was received but not fully processed (status != COMPLETED). Admin only. */
 export type IncompleteTransactionFeedback = {
   __typename: 'IncompleteTransactionFeedback';
+  /** Armed for its Mindbody purchase (readyForMindbodyProcessing) with no sale recorded: Mindbody may hold its sale, because the purchase died mid-way or a retry found a sale it could not record automatically. Check Mindbody, then either recordTransactionFromMindbodySale or, when Mindbody did not sell it, retryTransactionFeedback. */
+  awaitingReview: Scalars['Boolean']['output'];
   created: Scalars['DateTime']['output'];
   feedbackStatusUpdatedAt?: Maybe<Scalars['DateTime']['output']>;
   feedbackTryNumber: Scalars['Int']['output'];
@@ -1221,6 +1223,30 @@ export type LegacyThreeDSecureRequired = {
   redirectUrl: Scalars['String']['output'];
 };
 
+/** recordTransactionFromMindbodySale: a transaction record holds that Mindbody sale already. Code: mindbody_sale.already_recorded. */
+export type MindbodySaleAlreadyRecordedError = Error & {
+  __typename: 'MindbodySaleAlreadyRecordedError';
+  code: Scalars['String']['output'];
+};
+
+/** recordTransactionFromMindbodySale: Mindbody could not be asked for the customer's sales; nothing was recorded. Code: mindbody_sale.lookup_failed. */
+export type MindbodySaleLookupFailedError = Error & {
+  __typename: 'MindbodySaleLookupFailedError';
+  code: Scalars['String']['output'];
+};
+
+/** recordTransactionFromMindbodySale: the customer's sale cannot be this transaction's. Codes: mindbody_sale.returned, mindbody_sale.other_service, mindbody_sale.amount_mismatch, mindbody_sale.outside_transaction_window, mindbody_sale.other_transaction (its notes carry another transaction's crank: tag). */
+export type MindbodySaleMismatchError = Error & {
+  __typename: 'MindbodySaleMismatchError';
+  code: Scalars['String']['output'];
+};
+
+/** recordTransactionFromMindbodySale: the customer has no Mindbody sale with that id since shortly before the transaction was created. Code: mindbody_sale.not_found. */
+export type MindbodySaleNotFoundError = Error & {
+  __typename: 'MindbodySaleNotFoundError';
+  code: Scalars['String']['output'];
+};
+
 export type MindbodyStaffInfo = {
   __typename: 'MindbodyStaffInfo';
   email?: Maybe<Scalars['String']['output']>;
@@ -1417,6 +1443,8 @@ export type Mutation = {
   partnerIssueAccessToken: PartnerIssueAccessTokenResultUnion;
   /** Partner only (X-API-Key with canIssueUserTokens, granted this site). Registers a user of the calling partner without a password and returns the crankUserId the partner keys everything on afterwards. Idempotent per email for the key that created the customer; an email in use by anyone else answers UserAlreadyRegisteredError and creates nothing. Sends no email. */
   partnerRegisterUser: PartnerRegisterUserResultUnion;
+  /** Completes a transaction left for review (an incompleteTransactionFeedbacks row with awaitingReview) from the Mindbody sale with id mindbodySaleId, without buying it again, as a retry that finds the sale does. Use it only after checking in Mindbody that the sale is this customer's purchase of this package. The sale must be the customer's, of exactly the transaction's service, not returned, for its grand total, made since shortly before the transaction, not tagged for another transaction, and not recorded by another transaction. Admin only. Answers the TransactionRecord written. */
+  recordTransactionFromMindbodySale: RecordTransactionFromMindbodySaleResultUnion;
   /** Refunds a transaction. A paid one goes through Payfort; a zero-amount one is only marked refunded. Staff only (ROLE_STAFF). Errors: transaction_record.not_found, transaction_record.already_refunded, transaction_record.refund_window_expired, transaction_record.payfort_refund_failed. */
   refundTransaction: Scalars['Boolean']['output'];
   /** Registers a new user and returns an IdentifiableUser type */
@@ -1818,6 +1846,12 @@ export type MutationPartnerIssueAccessTokenArgs = {
 export type MutationPartnerRegisterUserArgs = {
   input: PartnerRegisterUserInput;
   site: SiteEnum;
+};
+
+
+export type MutationRecordTransactionFromMindbodySaleArgs = {
+  id: Scalars['ID']['input'];
+  mindbodySaleId: Scalars['ID']['input'];
 };
 
 
@@ -2752,6 +2786,8 @@ export type QueryUserWorkoutStatsPaginatedArgs = {
   userId: Scalars['ID']['input'];
 };
 
+export type RecordTransactionFromMindbodySaleResultUnion = MindbodySaleAlreadyRecordedError | MindbodySaleLookupFailedError | MindbodySaleMismatchError | MindbodySaleNotFoundError | TemporalTransactionAlreadyCompletedError | TemporalTransactionNotAwaitingReviewError | TemporalTransactionNotFoundError | TemporalTransactionPaidWithGiftCardError | TransactionRecord;
+
 export type RegisterUserInput = {
   address1?: InputMaybe<Scalars['String']['input']>;
   address2?: InputMaybe<Scalars['String']['input']>;
@@ -3031,6 +3067,30 @@ export type SystemSettings = {
   id: Scalars['ID']['output'];
   sendSuccessfulPurchaseEmail: Scalars['Boolean']['output'];
   textBottomIndexPage?: Maybe<Scalars['String']['output']>;
+};
+
+/** recordTransactionFromMindbodySale: nothing to record. Codes: temporal_transaction.already_completed, temporal_transaction.already_sold (Mindbody sold it and a step after the sale failed). */
+export type TemporalTransactionAlreadyCompletedError = Error & {
+  __typename: 'TemporalTransactionAlreadyCompletedError';
+  code: Scalars['String']['output'];
+};
+
+/** recordTransactionFromMindbodySale: not a transaction left for review. Codes: temporal_transaction.not_awaiting_review, temporal_transaction.feedback_in_progress (a delivery is processing it right now). */
+export type TemporalTransactionNotAwaitingReviewError = Error & {
+  __typename: 'TemporalTransactionNotAwaitingReviewError';
+  code: Scalars['String']['output'];
+};
+
+/** recordTransactionFromMindbodySale: the id names no TemporalTransaction. Code: temporal_transaction.not_found. */
+export type TemporalTransactionNotFoundError = Error & {
+  __typename: 'TemporalTransactionNotFoundError';
+  code: Scalars['String']['output'];
+};
+
+/** recordTransactionFromMindbodySale: a gift card paid part of the transaction, which a recorded sale would not account for; it has to be finished by hand. Code: temporal_transaction.paid_with_gift_card. */
+export type TemporalTransactionPaidWithGiftCardError = Error & {
+  __typename: 'TemporalTransactionPaidWithGiftCardError';
+  code: Scalars['String']['output'];
 };
 
 export type TooManyResetPasswordLinkRequestsError = Error & {
@@ -3566,6 +3626,32 @@ export type RetryTransactionFeedbackMutationVariables = Exact<{
 
 
 export type RetryTransactionFeedbackMutation = { __typename: 'Mutation', retryTransactionFeedback: boolean };
+
+export type IncompleteFeedbacksAwaitingReviewQueryVariables = Exact<{
+  filter?: InputMaybe<IncompleteTransactionFeedbackFilterInput>;
+  pagination?: InputMaybe<PaginationInput>;
+}>;
+
+
+export type IncompleteFeedbacksAwaitingReviewQuery = { __typename: 'Query', incompleteTransactionFeedbacks: { __typename: 'PaginatedIncompleteTransactionFeedbacks', totalCount: number, page: number, limit: number, items: Array<{ __typename: 'IncompleteTransactionFeedback', id: string, merchantReference?: number | null, status: string, feedbackTryNumber: number, feedbackStatusUpdatedAt?: any | null, created: any, awaitingReview: boolean, siteCustomer?: { __typename: 'IdentifiableSiteUser', id?: string | null, siteUserInfo?: { __typename: 'SimpleSiteUser', site: SiteEnum, externalUserId: string } | null, identifiableUser?: { __typename: 'IdentifiableUser', id?: string | null, user?: { __typename: 'User', firstName: string, lastName: string, email: string } | null } | null } | null }> } };
+
+export type RecordTransactionFromMindbodySaleMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  mindbodySaleId: Scalars['ID']['input'];
+}>;
+
+
+export type RecordTransactionFromMindbodySaleMutation = { __typename: 'Mutation', recordTransactionFromMindbodySale:
+    | { __typename: 'MindbodySaleAlreadyRecordedError', code: string }
+    | { __typename: 'MindbodySaleLookupFailedError', code: string }
+    | { __typename: 'MindbodySaleMismatchError', code: string }
+    | { __typename: 'MindbodySaleNotFoundError', code: string }
+    | { __typename: 'TemporalTransactionAlreadyCompletedError', code: string }
+    | { __typename: 'TemporalTransactionNotAwaitingReviewError', code: string }
+    | { __typename: 'TemporalTransactionNotFoundError', code: string }
+    | { __typename: 'TemporalTransactionPaidWithGiftCardError', code: string }
+    | { __typename: 'TransactionRecord', id: string, merchantPurchaseId?: number | null }
+   };
 
 export type AdminMindbodyClientsQueryVariables = Exact<{
   params?: InputMaybe<AdminMindbodyClientsParams>;
@@ -4258,6 +4344,8 @@ export const FailedMessagesDocument = {"kind":"Document","definitions":[{"kind":
 export const RetryFailedMessageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RetryFailedMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"FailedMessageActionInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"retryFailedMessage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"FailedMessageActionSuccess"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"FailedMessageNotFoundError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<RetryFailedMessageMutation, RetryFailedMessageMutationVariables>;
 export const IncompleteFeedbacksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"IncompleteFeedbacks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"IncompleteTransactionFeedbackFilterInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PaginationInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"incompleteTransactionFeedbacks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}},{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"totalCount"}},{"kind":"Field","name":{"kind":"Name","value":"page"}},{"kind":"Field","name":{"kind":"Name","value":"limit"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"merchantReference"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"feedbackTryNumber"}},{"kind":"Field","name":{"kind":"Name","value":"feedbackStatusUpdatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"siteCustomer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"siteUserInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"site"}},{"kind":"Field","name":{"kind":"Name","value":"externalUserId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"identifiableUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<IncompleteFeedbacksQuery, IncompleteFeedbacksQueryVariables>;
 export const RetryTransactionFeedbackDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RetryTransactionFeedback"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"retryTransactionFeedback"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<RetryTransactionFeedbackMutation, RetryTransactionFeedbackMutationVariables>;
+export const IncompleteFeedbacksAwaitingReviewDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"IncompleteFeedbacksAwaitingReview"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"IncompleteTransactionFeedbackFilterInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PaginationInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"incompleteTransactionFeedbacks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}},{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"totalCount"}},{"kind":"Field","name":{"kind":"Name","value":"page"}},{"kind":"Field","name":{"kind":"Name","value":"limit"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"merchantReference"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"feedbackTryNumber"}},{"kind":"Field","name":{"kind":"Name","value":"feedbackStatusUpdatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"awaitingReview"}},{"kind":"Field","name":{"kind":"Name","value":"siteCustomer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"siteUserInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"site"}},{"kind":"Field","name":{"kind":"Name","value":"externalUserId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"identifiableUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<IncompleteFeedbacksAwaitingReviewQuery, IncompleteFeedbacksAwaitingReviewQueryVariables>;
+export const RecordTransactionFromMindbodySaleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RecordTransactionFromMindbodySale"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mindbodySaleId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recordTransactionFromMindbodySale"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"mindbodySaleId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mindbodySaleId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TransactionRecord"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"merchantPurchaseId"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TemporalTransactionNotFoundError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TemporalTransactionAlreadyCompletedError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TemporalTransactionNotAwaitingReviewError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TemporalTransactionPaidWithGiftCardError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MindbodySaleNotFoundError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MindbodySaleMismatchError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MindbodySaleAlreadyRecordedError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MindbodySaleLookupFailedError"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}}]}}]}}]}}]} as unknown as DocumentNode<RecordTransactionFromMindbodySaleMutation, RecordTransactionFromMindbodySaleMutationVariables>;
 export const AdminMindbodyClientsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AdminMindbodyClients"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"params"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"AdminMindbodyClientsParams"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PaginationInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mindbodyClients"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"params"},"value":{"kind":"Variable","name":{"kind":"Name","value":"params"}}},{"kind":"Argument","name":{"kind":"Name","value":"pagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"clientId"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"mobilePhone"}}]}},{"kind":"Field","name":{"kind":"Name","value":"totalCount"}},{"kind":"Field","name":{"kind":"Name","value":"page"}},{"kind":"Field","name":{"kind":"Name","value":"limit"}}]}}]}}]} as unknown as DocumentNode<AdminMindbodyClientsQuery, AdminMindbodyClientsQueryVariables>;
 export const AdminMindbodyClientDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AdminMindbodyClient"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mindbodyClient"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"clientId"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"mobilePhone"}}]}}]}}]} as unknown as DocumentNode<AdminMindbodyClientQuery, AdminMindbodyClientQueryVariables>;
 export const MindbodyStaffsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MindbodyStaffs"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"site"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SiteEnum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mindbodyStaffs"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"site"},"value":{"kind":"Variable","name":{"kind":"Name","value":"site"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<MindbodyStaffsQuery, MindbodyStaffsQueryVariables>;
