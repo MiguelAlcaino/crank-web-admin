@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { useTransactionRecords } from '../composables/useTransactionRecords'
 import { useToast } from '@/modules/shared/composables/useToast'
+import PaymentLinkBadge from '../components/PaymentLinkBadge.vue'
 import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
 
 const gqlUrl = import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL
@@ -68,6 +69,11 @@ function formatDate(dateStr: string | null): string {
               :to="{ name: 'admin_customer_profile', params: { id: txn.detail.value.siteCustomer.identifiableUser.id } }"
             >{{ txn.detail.value.customerName || '-' }}</router-link>
             <span v-else>{{ txn.detail.value.customerName || '-' }}</span>
+            <PaymentLinkBadge
+              v-if="txn.detail.value.isPaymentLinkSale"
+              :title="txn.detail.value.paymentLinkTitle"
+              class="ms-1"
+            />
           </td></tr>
           <tr><th>Email</th><td>{{ txn.detail.value.customerEmail || '-' }}</td></tr>
           <tr><th>Site</th><td>{{ txn.detail.value.siteName || '-' }}</td></tr>

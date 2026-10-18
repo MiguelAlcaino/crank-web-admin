@@ -62,6 +62,10 @@ export interface TransactionRecord {
   merchantResponse?: string | null
   paymentGatewayResponse?: string | null
   refundResponse?: string | null
+  /** main only: a sale made through a payment link, which has no customer account. */
+  isPaymentLinkSale?: boolean
+  /** main only: the payment link's title as it read at checkout; null for any other record. */
+  paymentLinkTitle?: string | null
 }
 
 export interface PaginatedTransactionRecords {

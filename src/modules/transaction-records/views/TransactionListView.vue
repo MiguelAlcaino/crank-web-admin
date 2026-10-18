@@ -6,6 +6,7 @@ import { useTransactionRecords } from '../composables/useTransactionRecords'
 import { useAvailableSites } from '@/modules/shared/composables/useAvailableSites'
 import PaginationComponent from '@/modules/shared/components/PaginationComponent.vue'
 import ExportTransactionRecordsButton from '@/modules/admin-exports/components/ExportTransactionRecordsButton.vue'
+import PaymentLinkBadge from '../components/PaymentLinkBadge.vue'
 import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
 
 const gqlUrl = import.meta.env.VITE_CRANK_GRAPHQL_SERVER_URL
@@ -161,7 +162,10 @@ onMounted(async () => {
             </td>
           </tr>
           <tr v-for="t in txn.listResult.value.items" :key="t.id">
-            <td>{{ t.customerName || '-' }}</td>
+            <td>
+              {{ t.customerName || '-' }}
+              <PaymentLinkBadge v-if="t.isPaymentLinkSale" :title="t.paymentLinkTitle" class="ms-1" />
+            </td>
             <td>{{ t.customerEmail || '-' }}</td>
             <td>{{ formatDate(t.created) }}</td>
             <td>
