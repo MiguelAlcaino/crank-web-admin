@@ -1,0 +1,33 @@
+mutation RecordTransactionFromMindbodySale($id: ID!, $mindbodySaleId: ID!) {
+  recordTransactionFromMindbodySale(id: $id, mindbodySaleId: $mindbodySaleId) {
+    __typename
+    ... on TransactionRecord {
+      id
+      merchantPurchaseId
+    }
+    ... on TemporalTransactionNotFoundError {
+      code
+    }
+    ... on TemporalTransactionAlreadyCompletedError {
+      code
+    }
+    ... on TemporalTransactionNotAwaitingReviewError {
+      code
+    }
+    ... on TemporalTransactionPaidWithGiftCardError {
+      code
+    }
+    ... on MindbodySaleNotFoundError {
+      code
+    }
+    ... on MindbodySaleMismatchError {
+      code
+    }
+    ... on MindbodySaleAlreadyRecordedError {
+      code
+    }
+    ... on MindbodySaleLookupFailedError {
+      code
+    }
+  }
+}

@@ -1,0 +1,36 @@
+# The incomplete feedbacks list of the `main` profile: the shared list query plus awaitingReview,
+# which only crank-payments main has (crank-payments#998).
+query IncompleteFeedbacksAwaitingReview(
+  $filter: IncompleteTransactionFeedbackFilterInput
+  $pagination: PaginationInput
+) {
+  incompleteTransactionFeedbacks(filter: $filter, pagination: $pagination) {
+    totalCount
+    page
+    limit
+    items {
+      id
+      merchantReference
+      status
+      feedbackTryNumber
+      feedbackStatusUpdatedAt
+      created
+      awaitingReview
+      siteCustomer {
+        id
+        siteUserInfo {
+          site
+          externalUserId
+        }
+        identifiableUser {
+          id
+          user {
+            firstName
+            lastName
+            email
+          }
+        }
+      }
+    }
+  }
+}

@@ -2,6 +2,8 @@ import { readonly, ref } from 'vue'
 import { gql } from 'graphql-tag'
 import type { ApolloClient, NormalizedCacheObject } from '@apollo/client/core'
 
+import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
+import { IncompleteFeedbacksAwaitingReviewDocument } from '@/gql-main/graphql'
 import { retryResultFromError, type RetryResult } from '../retryResult'
 
 export type { RetryResult } from '../retryResult'
@@ -22,6 +24,11 @@ export interface IncompleteTransactionFeedback {
   feedbackTryNumber: number
   feedbackStatusUpdatedAt: string | null
   created: string
+  /**
+   * Left armed with no sale recorded, for an admin to check in Mindbody (crank-payments#998). Only
+   * the `main` profile asks for it; undefined elsewhere.
+   */
+  awaitingReview?: boolean
   siteCustomer: IncompleteTransactionFeedbackSiteCustomer | null
 }
 
@@ -74,8 +81,13 @@ const RETRY_MUTATION = gql`
   }
 `
 
+/**
+ * @param withAwaitingReview whether the backend has `awaitingReview` (crank-payments main), so the
+ *   list asks for it; follows the build's profile unless given.
+ */
 export const useIncompleteTransactionFeedbacks = (
-  apolloClient: ApolloClient<NormalizedCacheObject>
+  apolloClient: ApolloClient<NormalizedCacheObject>,
+  withAwaitingReview: boolean = isFeatureAvailable(AdminFeature.RecordFromMindbodySale)
 ) => {
   const listResult = ref<PaginatedIncompleteTransactionFeedbacks | null>(null)
   const isLoading = ref(false)
@@ -91,7 +103,7 @@ export const useIncompleteTransactionFeedbacks = (
     hasError.value = false
     try {
       const { data } = await apolloClient.query({
-        query: LIST_QUERY,
+        query: withAwaitingReview ? IncompleteFeedbacksAwaitingReviewDocument : LIST_QUERY,
         variables: {
           filter: filter && Object.keys(filter).length > 0 ? filter : undefined,
           pagination

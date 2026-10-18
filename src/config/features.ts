@@ -93,7 +93,12 @@ export enum AdminFeature {
   /** Excel export button of the transactions list (`exportTransactionRecords`). */
   TransactionsExport = 'transactionsExport',
   /** VOD Excel export button of the customers list (`exportCustomerVod`). */
-  CustomerVodExport = 'customerVodExport'
+  CustomerVodExport = 'customerVodExport',
+  /**
+   * "Record from Mindbody sale" action of the incomplete feedbacks list, for a transaction left for
+   * review (`IncompleteTransactionFeedback.awaitingReview`, `recordTransactionFromMindbodySale`).
+   */
+  RecordFromMindbodySale = 'recordFromMindbodySale'
 }
 
 const ALL: readonly BackendProfile[] = BACKEND_PROFILES
@@ -144,7 +149,8 @@ export const FEATURE_PROFILES: Record<AdminFeature, readonly BackendProfile[]> =
   [AdminFeature.CustomerIncompletePurchases]: MAIN_ONLY, // crank-payments#967
   [AdminFeature.ChargeClient]: MAIN_ONLY, // crank-payments#971
   [AdminFeature.TransactionsExport]: MAIN_ONLY, // crank-payments#966
-  [AdminFeature.CustomerVodExport]: MAIN_ONLY // crank-payments#967
+  [AdminFeature.CustomerVodExport]: MAIN_ONLY, // crank-payments#967
+  [AdminFeature.RecordFromMindbodySale]: MAIN_ONLY // crank-payments#998
 }
 
 export function isFeatureAvailableIn(feature: AdminFeature, profile: BackendProfile): boolean {

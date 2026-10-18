@@ -49,7 +49,8 @@ describe('FEATURE_PROFILES', () => {
         AdminFeature.ChargeClient,
         AdminFeature.TransactionsExport,
         AdminFeature.CustomerVodExport,
-        AdminFeature.FailedMessages
+        AdminFeature.FailedMessages,
+        AdminFeature.RecordFromMindbodySale
       ].sort()
     )
   })
@@ -88,7 +89,8 @@ describe('FEATURE_PROFILES', () => {
         AdminFeature.ChargeClient,
         AdminFeature.TransactionsExport,
         AdminFeature.CustomerVodExport,
-        AdminFeature.FailedMessages
+        AdminFeature.FailedMessages,
+        AdminFeature.RecordFromMindbodySale
       ].sort()
     )
   })
