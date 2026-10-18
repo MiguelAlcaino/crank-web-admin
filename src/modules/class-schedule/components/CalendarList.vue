@@ -286,7 +286,7 @@ function scrollToTodayClass() {
       </div>
     </div>
     <div id="ClassesSection" class="scrollable-div">
-      <div class="ClassDate" v-for="wd in weekDays" :key="wd.date.toISOString()">
+      <div class="ClassDate" v-for="wd in weekDays" :key="dayjs(wd.date).format('YYYY-MM-DD')">
         <span class="day" :id="`${dayjs(wd.date).format('YYYY-MM-DD')}`">{{
           dayjs(wd.date).format('ddd MMM D, YYYY')
         }}</span>
@@ -345,7 +345,7 @@ function scrollToTodayClass() {
 
 <style>
 /* Light mode defaults */
-:root[data-bs-theme="light"] {
+:root[data-bs-theme='light'] {
   --cal-container-bg: #f8f8f8;
   --cal-row-bg: #ffffff;
   --cal-day-header-bg: #888888;
@@ -357,7 +357,7 @@ function scrollToTodayClass() {
 }
 
 /* Dark mode — navy/near-black palette */
-:root[data-bs-theme="dark"] {
+:root[data-bs-theme='dark'] {
   --cal-container-bg: #13141f;
   --cal-row-bg: #1a1b2a;
   --cal-day-header-bg: #0e0f19;
