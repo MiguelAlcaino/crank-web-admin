@@ -15,7 +15,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const toast = useToast()
-const { purchases, isLoading, hasLoadError, retryingId, fetchPurchases, retry } =
+const { canView, purchases, isLoading, hasLoadError, retryingId, fetchPurchases, retry } =
   useCustomerIncompletePurchases(props.apolloClient, props.customerId, props.email)
 
 const errorMessage = ref<string | null>(null)
@@ -36,7 +36,7 @@ onMounted(fetchPurchases)
 </script>
 
 <template>
-  <div>
+  <div v-if="canView">
     <h6>Incomplete purchases</h6>
     <p class="small text-muted">
       Purchases whose payment feedback arrived but did not complete. Resending it retries the
