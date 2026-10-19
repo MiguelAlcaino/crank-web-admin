@@ -4,11 +4,18 @@ import { authService } from '@/services/authService'
 import UnauthorizedView from '@/modules/auth/views/UnauthorizedView.vue'
 import { Role } from '@/utils/userRoles'
 import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
+import { hasRequiredRoles } from '@/router/roleGuard'
 
 declare module 'vue-router' {
   interface RouteMeta {
     requiresAuth?: boolean
+    /** Admins without this role are sent to the unauthorized page. */
     role?: Role
+    /**
+     * Admins without this role do not see the page at all: they are sent to the dashboard, the
+     * same as an unavailable feature, and the sidebar hides its entry.
+     */
+    requiresRole?: Role
     title?: string
     /** Routes whose feature is not available on the current backend profile are not reachable. */
     feature?: AdminFeature
@@ -177,7 +184,7 @@ const router = createRouter({
         {
           path: 'incomplete-feedbacks',
           name: 'admin_incomplete_feedbacks',
-          meta: { feature: AdminFeature.IncompleteFeedbacks, role: Role.ROLE_SUPER_ADMIN },
+          meta: { feature: AdminFeature.IncompleteFeedbacks, requiresRole: Role.ROLE_DEVELOPER },
           component: () =>
             import(
               '@/modules/incomplete-transaction-feedbacks/views/IncompleteTransactionFeedbackListView.vue'
@@ -186,7 +193,7 @@ const router = createRouter({
         {
           path: 'failed-messages',
           name: 'admin_failed_messages',
-          meta: { feature: AdminFeature.FailedMessages, role: Role.ROLE_SUPER_ADMIN },
+          meta: { feature: AdminFeature.FailedMessages, requiresRole: Role.ROLE_DEVELOPER },
           component: () => import('@/modules/failed-messages/views/FailedMessagesView.vue')
         },
         {
@@ -377,6 +384,8 @@ router.beforeEach(async (to, from, next) => {
   if (authRequired && !user) {
     // The admin login brings the visitor back to the page they asked for
     next({ name: 'admin_login', query: { redirect: to.fullPath } })
+  } else if (!hasRequiredRoles(to.matched, user?.roles ?? [])) {
+    next({ name: 'admin_dashboard' })
   } else if (authRequired && user) {
     const requiredRole = (to.meta.role || null) as Role | null
 
