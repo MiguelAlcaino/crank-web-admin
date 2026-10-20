@@ -6,6 +6,8 @@ import {
   CustomerRetryTransactionFeedbackDocument,
   type CustomerIncompletePurchasesQuery
 } from '@/gql-main/graphql'
+import { authService } from '@/services/authService'
+import { Role } from '@/utils/userRoles'
 import { messageForGraphqlError } from '@/utils/errors/graphqlErrorCode'
 import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import { RETRY_FEEDBACK_ERRORS } from './customerAdminErrors'
@@ -28,6 +30,9 @@ export function purchasesOfCustomer(
  * The customer's purchases whose payment feedback arrived but did not complete
  * (`incompleteTransactionFeedbacks`), with the resend of the feedback (`retryTransactionFeedback`),
  * like "Send to Message bus" on the legacy Twig profile.
+ *
+ * Both operations require ROLE_DEVELOPER (crank-payments#1015), so for an admin without it
+ * `canView` is false and nothing is queried.
  */
 export const useCustomerIncompletePurchases = (
   apolloClient: ApolloClient<NormalizedCacheObject>,
@@ -38,8 +43,11 @@ export const useCustomerIncompletePurchases = (
   const isLoading = ref(false)
   const hasLoadError = ref(false)
   const retryingId = ref<string | null>(null)
+  const canView = authService.userHasRole(Role.ROLE_DEVELOPER)
 
   async function fetchPurchases() {
+    if (!canView) return
+
     isLoading.value = true
     hasLoadError.value = false
     try {
@@ -73,5 +81,5 @@ export const useCustomerIncompletePurchases = (
     }
   }
 
-  return { purchases, isLoading, hasLoadError, retryingId, fetchPurchases, retry }
+  return { canView, purchases, isLoading, hasLoadError, retryingId, fetchPurchases, retry }
 }

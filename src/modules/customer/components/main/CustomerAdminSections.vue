@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { newAuthenticatedApolloClient } from '@/services/graphqlClient'
 import { AdminFeature, isFeatureAvailable } from '@/config/backendProfile'
+import { authService } from '@/services/authService'
+import { Role } from '@/utils/userRoles'
 import CustomerActionsSection from './CustomerActionsSection.vue'
 import CustomerChargeClientSection from './CustomerChargeClientSection.vue'
 import CustomerIncompletePurchasesSection from './CustomerIncompletePurchasesSection.vue'
@@ -10,6 +12,7 @@ import CustomerVodPeriodsSection from './CustomerVodPeriodsSection.vue'
  * Sections of the customer profile built on crank-payments main's own admin operations (the
  * legacy Twig customer page): client actions, charge client, VOD periods and incomplete purchases.
  * Each is a main-only feature in src/config/features.ts and hidden on other backend profiles.
+ * Incomplete purchases also needs ROLE_DEVELOPER, which its operations require (crank-payments#1015).
  */
 interface Props {
   customerId: string
@@ -30,7 +33,9 @@ const apolloClient = newAuthenticatedApolloClient(import.meta.env.VITE_CRANK_GRA
 const showActions = isFeatureAvailable(AdminFeature.CustomerActions)
 const showChargeClient = isFeatureAvailable(AdminFeature.ChargeClient)
 const showVodPeriods = isFeatureAvailable(AdminFeature.CustomerVodPeriods)
-const showIncompletePurchases = isFeatureAvailable(AdminFeature.CustomerIncompletePurchases)
+const showIncompletePurchases =
+  isFeatureAvailable(AdminFeature.CustomerIncompletePurchases) &&
+  authService.userHasRole(Role.ROLE_DEVELOPER)
 </script>
 
 <template>
