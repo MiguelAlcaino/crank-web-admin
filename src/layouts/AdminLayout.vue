@@ -34,6 +34,11 @@ function isStaffOrAbove(): boolean {
   return hasRole(Role.ROLE_STAFF) || hasRole(Role.ROLE_SUPER_ADMIN)
 }
 
+/** ROLE_DEVELOPER is standalone: super admins do not carry it unless granted. */
+function isDeveloper(): boolean {
+  return hasRole(Role.ROLE_DEVELOPER)
+}
+
 function isInstructor(): boolean {
   return hasRole(Role.ROLE_INSTRUCTOR)
 }
@@ -133,9 +138,9 @@ async function logout() {
             </RouterLink>
           </li>
 
-          <!-- Incomplete Feedbacks (SUPER_ADMIN) -->
+          <!-- Incomplete Feedbacks (DEVELOPER) -->
           <li
-            v-if="can(AdminFeature.IncompleteFeedbacks) && isSuperAdmin() && !sidebarCollapsed"
+            v-if="can(AdminFeature.IncompleteFeedbacks) && isDeveloper() && !sidebarCollapsed"
             class="nav-item"
           >
             <RouterLink
@@ -147,9 +152,9 @@ async function logout() {
             </RouterLink>
           </li>
 
-          <!-- Failed Messages (SUPER_ADMIN) -->
+          <!-- Failed Messages (DEVELOPER) -->
           <li
-            v-if="can(AdminFeature.FailedMessages) && isSuperAdmin() && !sidebarCollapsed"
+            v-if="can(AdminFeature.FailedMessages) && isDeveloper() && !sidebarCollapsed"
             class="nav-item"
           >
             <RouterLink

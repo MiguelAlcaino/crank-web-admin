@@ -1,4 +1,5 @@
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { createPinia, setActivePinia } from 'pinia'
 import { ApolloError, type ApolloClient, type NormalizedCacheObject } from '@apollo/client/core'
 import { GraphQLError } from 'graphql'
 
@@ -23,6 +24,11 @@ import {
 } from '../../../src/modules/customer/composables/useCustomerIncompletePurchases'
 import { useCustomerAdminActions } from '../../../src/modules/customer/composables/useCustomerAdminActions'
 import { ERROR_UNKNOWN } from '../../../src/utils/errorMessages'
+import { useAuthenticationStore } from '../../../src/stores/authToken'
+import { adminToken } from '../../support/adminToken'
+import { useMemoryLocalStorage } from '../../support/memoryLocalStorage'
+
+vi.mock('@/router', () => ({ default: {} }))
 
 function apolloClient(client: { query?: unknown; mutate?: unknown }) {
   return client as unknown as ApolloClient<NormalizedCacheObject>
@@ -180,6 +186,16 @@ describe('charge client', () => {
 })
 
 describe('incomplete purchases', () => {
+  // The operations require ROLE_DEVELOPER; each test signs in with or without it.
+  function signInWith(roles: string[]) {
+    useAuthenticationStore().setSession(adminToken(roles))
+  }
+
+  beforeEach(() => {
+    useMemoryLocalStorage()
+    setActivePinia(createPinia())
+  })
+
   function purchase(id: string, customerId: string | null): IncompletePurchase {
     return {
       __typename: 'IncompleteTransactionFeedback',
@@ -210,7 +226,23 @@ describe('incomplete purchases', () => {
     ).toEqual(['1'])
   })
 
+  it('does not query for a super admin without ROLE_DEVELOPER', async () => {
+    signInWith(['ROLE_SUPER_ADMIN', 'ROLE_USER'])
+    const query = vi.fn()
+    const purchases = useCustomerIncompletePurchases(
+      apolloClient({ query }),
+      '42',
+      'ann@crank.test'
+    )
+
+    await purchases.fetchPurchases()
+
+    expect(purchases.canView).toBe(false)
+    expect(query).not.toHaveBeenCalled()
+  })
+
   it('maps a refused retry to its message', async () => {
+    signInWith(['ROLE_DEVELOPER'])
     const purchases = useCustomerIncompletePurchases(
       apolloClient({
         mutate: vi.fn().mockRejectedValue(graphqlError('temporal_transaction.already_completed'))
@@ -223,6 +255,7 @@ describe('incomplete purchases', () => {
   })
 
   it('retries and reloads the list', async () => {
+    signInWith(['ROLE_DEVELOPER'])
     const mutate = vi.fn().mockResolvedValue({ data: { retryTransactionFeedback: true } })
     const query = vi.fn().mockResolvedValue({
       data: {
@@ -235,6 +268,7 @@ describe('incomplete purchases', () => {
       'ann@crank.test'
     )
 
+    expect(purchases.canView).toBe(true)
     expect(await purchases.retry('1')).toBeNull()
     expect(query.mock.calls[0][0].variables).toEqual({ email: 'ann@crank.test' })
     expect(purchases.purchases.value.map((p) => p.id)).toEqual(['1'])
