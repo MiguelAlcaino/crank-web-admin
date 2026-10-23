@@ -54,9 +54,11 @@ import ModalComponent from '@/modules/shared/components/ModalComponent.vue'
 import { useRoute } from 'vue-router'
 import Slider from '@vueform/slider'
 import { PositionIconEnum } from '@/modules/shared/interfaces'
+import type { SiteEnum } from '@/modules/shared/interfaces'
 
 const route = useRoute()
 const apiService = inject<ApiService>('gqlApiService')!
+const site = computed(() => ((route.query.site as string) || appStore().site) as SiteEnum)
 
 const roomLayoutId = ref<string | null>(null)
 
@@ -120,7 +122,7 @@ async function getRoomLayout() {
   isLoading.value = true
 
   const _roomLayout = (await apiService.roomLayout(
-    appStore().site,
+    site.value,
     roomLayoutId.value!
   )) as RoomLayout | null
 
@@ -266,7 +268,7 @@ async function createRoomLayout() {
   }
 
   isSaving.value = true
-  const response = await apiService.createRoomLayout(appStore().site, roomlayoutInput)
+  const response = await apiService.createRoomLayout(site.value, roomlayoutInput)
   isSaving.value = false
 
   if (response) {
@@ -291,7 +293,7 @@ async function editRoomLayout() {
   }
 
   isSaving.value = true
-  const response = await apiService.editRoomLayout(appStore().site, editRoomLayoutInput)
+  const response = await apiService.editRoomLayout(site.value, editRoomLayoutInput)
   isSaving.value = false
 
   if (response) {
@@ -357,8 +359,10 @@ async function goToRoomLayoutList() {
   successModalIsVisible.value = false
   if (roomLayoutListUrl.value) {
     window.location.href = roomLayoutListUrl.value
-  } else {
+  } else if (route.name?.toString().startsWith('legacy_')) {
     await router.push('/admin/room-layout/list')
+  } else {
+    await router.push({ name: 'admin_room_layout_list', params: { site: site.value } })
   }
 }
 </script>
