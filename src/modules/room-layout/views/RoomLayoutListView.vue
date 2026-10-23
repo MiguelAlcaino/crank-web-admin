@@ -52,7 +52,7 @@ function onClickDeleteLayout(roomLayout: RoomLayout) {
     <div class="col-12 text-right">
       <DefaultButtonComponent
         text="New Rom Layout"
-        @on-click="router.push('/admin/room-layout/create')"
+        @on-click="router.push({ path: '/admin/room-layout/create', query: { site } })"
         type="button"
       >
       </DefaultButtonComponent>
@@ -76,7 +76,9 @@ function onClickDeleteLayout(roomLayout: RoomLayout) {
               <button
                 type="button"
                 class="btn btn-link btn-sm"
-                @click="router.push('/admin/room-layout/edit/' + item.id)"
+                @click="
+                  router.push({ path: '/admin/room-layout/edit/' + item.id, query: { site } })
+                "
               >
                 <i class="bi bi-pencil-fill"></i>
               </button>
