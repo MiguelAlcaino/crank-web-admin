@@ -133,7 +133,7 @@ function generatePagePositions() {
 <style scoped>
 a {
   font-family: 'Avenir', sans-serif;
-  color: black !important;
+  color: var(--bs-body-color) !important;
 }
 
 .page-item.active .page-link {

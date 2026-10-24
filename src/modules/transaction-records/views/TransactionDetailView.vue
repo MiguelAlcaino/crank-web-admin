@@ -138,15 +138,15 @@ function formatDate(dateStr: string | null): string {
       <template v-if="showPaymentDetails">
         <details v-if="txn.detail.value.merchantResponse" class="mb-2">
           <summary>Mindbody response</summary>
-          <pre class="bg-light p-2 small text-wrap">{{ txn.detail.value.merchantResponse }}</pre>
+          <pre class="bg-body-tertiary p-2 small text-wrap">{{ txn.detail.value.merchantResponse }}</pre>
         </details>
         <details v-if="txn.detail.value.paymentGatewayResponse" class="mb-2">
           <summary>Payfort response</summary>
-          <pre class="bg-light p-2 small text-wrap">{{ txn.detail.value.paymentGatewayResponse }}</pre>
+          <pre class="bg-body-tertiary p-2 small text-wrap">{{ txn.detail.value.paymentGatewayResponse }}</pre>
         </details>
         <details v-if="txn.detail.value.refundResponse" class="mb-2">
           <summary>Payfort refund response</summary>
-          <pre class="bg-light p-2 small text-wrap">{{ txn.detail.value.refundResponse }}</pre>
+          <pre class="bg-body-tertiary p-2 small text-wrap">{{ txn.detail.value.refundResponse }}</pre>
         </details>
       </template>
 

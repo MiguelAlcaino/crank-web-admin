@@ -125,7 +125,7 @@ function formatPayload(payload: string | null): string {
       <div v-if="event.payload" class="card-body border-top">
         <h6 class="fw-bold mb-2">Payload</h6>
         <pre
-          class="bg-light rounded p-3 mb-0"
+          class="bg-body-tertiary rounded p-3 mb-0"
           style="max-height: 400px; overflow: auto"
         ><code>{{ formatPayload(event.payload) }}</code></pre>
       </div>

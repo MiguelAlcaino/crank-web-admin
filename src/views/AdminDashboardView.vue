@@ -21,7 +21,7 @@ const isSuperAdmin = computed(() => authService.userHasRole(Role.ROLE_SUPER_ADMI
           class="card text-decoration-none"
         >
           <div class="card-body">
-            <h6 class="card-title text-dark">Transactions</h6>
+            <h6 class="card-title text-body">Transactions</h6>
             <p class="card-text text-muted small">View and manage payment transactions</p>
           </div>
         </RouterLink>
@@ -33,7 +33,7 @@ const isSuperAdmin = computed(() => authService.userHasRole(Role.ROLE_SUPER_ADMI
           class="card text-decoration-none"
         >
           <div class="card-body">
-            <h6 class="card-title text-dark">Clients</h6>
+            <h6 class="card-title text-body">Clients</h6>
             <p class="card-text text-muted small">Manage customer accounts</p>
           </div>
         </RouterLink>
@@ -45,7 +45,7 @@ const isSuperAdmin = computed(() => authService.userHasRole(Role.ROLE_SUPER_ADMI
           class="card text-decoration-none"
         >
           <div class="card-body">
-            <h6 class="card-title text-dark">Gift Cards</h6>
+            <h6 class="card-title text-body">Gift Cards</h6>
             <p class="card-text text-muted small">Manage gift card products</p>
           </div>
         </RouterLink>
