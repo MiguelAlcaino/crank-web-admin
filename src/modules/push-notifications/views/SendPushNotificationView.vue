@@ -388,7 +388,7 @@ const canSend = () => {
                   v-else-if="
                     showWaitlistDropdown && !isLoadingWaitlist && waitlistEntriesFetched && waitlistEntries.length === 0
                   "
-                  class="position-absolute w-100 bg-white border rounded p-2 text-muted small"
+                  class="position-absolute w-100 bg-body border rounded p-2 text-muted small"
                   style="z-index: 1000; top: 100%"
                 >
                   No waitlisted entries for this class — you can still enter an ID manually
