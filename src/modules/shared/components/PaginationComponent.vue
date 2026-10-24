@@ -106,9 +106,12 @@ function generatePagePositions() {
           :key="key"
           :class="{ active: page.pageNumber === currentPage, disabled: page.pageNumber === 0 }"
         >
-          <a class="page-link" href="#" @click.prevent="page.pageNumber !== 0 && changePage(page.pageNumber)">{{
-            page.pageLabel
-          }}</a>
+          <a
+            class="page-link"
+            href="#"
+            @click.prevent="page.pageNumber !== 0 && changePage(page.pageNumber)"
+            >{{ page.pageLabel }}</a
+          >
         </li>
 
         <!-- Next -->

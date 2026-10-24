@@ -137,7 +137,10 @@ async function onWaitlistFocus() {
   showWaitlistDropdown.value = true
   if (waitlistEntriesFetched.value) return
   isLoadingWaitlist.value = true
-  const entries = await apiService.getClassWaitlistEntries(selectedSite.value, selectedClass.value.id)
+  const entries = await apiService.getClassWaitlistEntries(
+    selectedSite.value,
+    selectedClass.value.id
+  )
   waitlistEntries.value = (entries ?? []) as WaitlistEntry[]
   waitlistEntriesFetched.value = true
   isLoadingWaitlist.value = false
@@ -220,7 +223,9 @@ const canSend = () => {
   if (notificationType.value === 'waitlist-booking') {
     return wlClassName.value.trim() !== '' && wlClassStartsAt.value !== ''
   }
-  return selectedClass.value !== null && lcWaitlistId.value.trim() !== '' && lcExpiresAt.value !== ''
+  return (
+    selectedClass.value !== null && lcWaitlistId.value.trim() !== '' && lcExpiresAt.value !== ''
+  )
 }
 </script>
 
@@ -270,8 +275,9 @@ const canSend = () => {
               ></div>
             </div>
             <div v-if="selectedUser" class="form-text text-success">
-              Selected: {{ selectedUser.user.firstName }} {{ selectedUser.user.lastName }}
-              ({{ selectedUser.user.email }})
+              Selected: {{ selectedUser.user.firstName }} {{ selectedUser.user.lastName }} ({{
+                selectedUser.user.email
+              }})
             </div>
           </div>
         </div>
@@ -283,7 +289,12 @@ const canSend = () => {
           <div class="row mb-3">
             <div class="col-md-5">
               <label class="form-label">Class Name</label>
-              <input type="text" class="form-control" v-model="wlClassName" placeholder="e.g. CrankFit Dubai" />
+              <input
+                type="text"
+                class="form-control"
+                v-model="wlClassName"
+                placeholder="e.g. CrankFit Dubai"
+              />
             </div>
             <div class="col-md-4">
               <label class="form-label">Class Starts At</label>
@@ -319,9 +330,8 @@ const canSend = () => {
                     :label="dayjs(day).format('dddd, D MMM YYYY')"
                   >
                     <option v-for="cls in dayClasses" :key="cls.id" :value="cls.id">
-                      {{ dayjs(cls.startWithNoTimeZone as string).format('HH:mm') }} — {{ cls.name }} ({{
-                        cls.instructorName
-                      }})
+                      {{ dayjs(cls.startWithNoTimeZone as string).format('HH:mm') }} —
+                      {{ cls.name }} ({{ cls.instructorName }})
                     </option>
                   </optgroup>
                 </select>
@@ -386,7 +396,10 @@ const canSend = () => {
                 </ul>
                 <div
                   v-else-if="
-                    showWaitlistDropdown && !isLoadingWaitlist && waitlistEntriesFetched && waitlistEntries.length === 0
+                    showWaitlistDropdown &&
+                    !isLoadingWaitlist &&
+                    waitlistEntriesFetched &&
+                    waitlistEntries.length === 0
                   "
                   class="position-absolute w-100 bg-body border rounded p-2 text-muted small"
                   style="z-index: 1000; top: 100%"
