@@ -40,7 +40,10 @@ function formatDate(dateStr: string | null): string {
   <div>
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h4>Transaction Detail</h4>
-      <button class="btn btn-outline-secondary btn-sm" @click="router.push({ name: 'admin_transactions' })">
+      <button
+        class="btn btn-outline-secondary btn-sm"
+        @click="router.push({ name: 'admin_transactions' })"
+      >
         Back to list
       </button>
     </div>
@@ -62,39 +65,87 @@ function formatDate(dateStr: string | null): string {
 
       <table class="table table-bordered">
         <tbody>
-          <tr><th width="200">ID</th><td>{{ txn.detail.value.id }}</td></tr>
-          <tr><th>Customer</th><td>
-            <router-link
-              v-if="txn.detail.value.siteCustomer?.identifiableUser?.id"
-              :to="{ name: 'admin_customer_profile', params: { id: txn.detail.value.siteCustomer.identifiableUser.id } }"
-            >{{ txn.detail.value.customerName || '-' }}</router-link>
-            <span v-else>{{ txn.detail.value.customerName || '-' }}</span>
-            <PaymentLinkBadge
-              v-if="txn.detail.value.isPaymentLinkSale"
-              :title="txn.detail.value.paymentLinkTitle"
-              class="ms-1"
-            />
-          </td></tr>
-          <tr><th>Email</th><td>{{ txn.detail.value.customerEmail || '-' }}</td></tr>
-          <tr><th>Site</th><td>{{ txn.detail.value.siteName || '-' }}</td></tr>
-          <tr><th>Status</th><td>
-            <span class="badge" :class="txn.detail.value.status === 'refunded' ? 'text-bg-warning' : 'text-bg-success'">
-              {{ txn.detail.value.status }}
-            </span>
-          </td></tr>
-          <tr><th>Amount</th><td>{{ txn.detail.value.shoppingCart?.currency }} {{ txn.detail.value.amount }}</td></tr>
-          <tr><th>Tax</th><td>{{ txn.detail.value.taxAmount }}</td></tr>
-          <tr><th>Sub Total</th><td>{{ txn.detail.value.shoppingCart?.currency }} {{ txn.detail.value.subTotal }}</td></tr>
-          <tr><th>Card Holder</th><td>{{ txn.detail.value.creditCardHolderName || '-' }}</td></tr>
-          <tr><th>Last 4 Digits</th><td>{{ txn.detail.value.creditCardLastFourDigits || '-' }}</td></tr>
-          <tr><th>Authorization Code</th><td>{{ txn.detail.value.authorizationCode || '-' }}</td></tr>
+          <tr>
+            <th width="200">ID</th>
+            <td>{{ txn.detail.value.id }}</td>
+          </tr>
+          <tr>
+            <th>Customer</th>
+            <td>
+              <router-link
+                v-if="txn.detail.value.siteCustomer?.identifiableUser?.id"
+                :to="{
+                  name: 'admin_customer_profile',
+                  params: { id: txn.detail.value.siteCustomer.identifiableUser.id }
+                }"
+                >{{ txn.detail.value.customerName || '-' }}</router-link
+              >
+              <span v-else>{{ txn.detail.value.customerName || '-' }}</span>
+              <PaymentLinkBadge
+                v-if="txn.detail.value.isPaymentLinkSale"
+                :title="txn.detail.value.paymentLinkTitle"
+                class="ms-1"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td>{{ txn.detail.value.customerEmail || '-' }}</td>
+          </tr>
+          <tr>
+            <th>Site</th>
+            <td>{{ txn.detail.value.siteName || '-' }}</td>
+          </tr>
+          <tr>
+            <th>Status</th>
+            <td>
+              <span
+                class="badge"
+                :class="
+                  txn.detail.value.status === 'refunded' ? 'text-bg-warning' : 'text-bg-success'
+                "
+              >
+                {{ txn.detail.value.status }}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <th>Amount</th>
+            <td>{{ txn.detail.value.shoppingCart?.currency }} {{ txn.detail.value.amount }}</td>
+          </tr>
+          <tr>
+            <th>Tax</th>
+            <td>{{ txn.detail.value.taxAmount }}</td>
+          </tr>
+          <tr>
+            <th>Sub Total</th>
+            <td>{{ txn.detail.value.shoppingCart?.currency }} {{ txn.detail.value.subTotal }}</td>
+          </tr>
+          <tr>
+            <th>Card Holder</th>
+            <td>{{ txn.detail.value.creditCardHolderName || '-' }}</td>
+          </tr>
+          <tr>
+            <th>Last 4 Digits</th>
+            <td>{{ txn.detail.value.creditCardLastFourDigits || '-' }}</td>
+          </tr>
+          <tr>
+            <th>Authorization Code</th>
+            <td>{{ txn.detail.value.authorizationCode || '-' }}</td>
+          </tr>
           <template v-if="showPaymentDetails">
-            <tr><th>Payment Method</th><td>{{ txn.detail.value.paymentMethod || '-' }}</td></tr>
+            <tr>
+              <th>Payment Method</th>
+              <td>{{ txn.detail.value.paymentMethod || '-' }}</td>
+            </tr>
             <tr>
               <th>Payfort Authorization Code</th>
               <td>{{ txn.detail.value.payfortAuthorizationCode || '-' }}</td>
             </tr>
-            <tr><th>Country</th><td>{{ txn.detail.value.userCountry || '-' }}</td></tr>
+            <tr>
+              <th>Country</th>
+              <td>{{ txn.detail.value.userCountry || '-' }}</td>
+            </tr>
             <tr>
               <th>Mindbody Payment Record ID</th>
               <td>{{ txn.detail.value.merchantPurchaseId ?? '-' }}</td>
@@ -104,9 +155,18 @@ function formatDate(dateStr: string | null): string {
               <td>{{ formatDate(txn.detail.value.serviceExpirationDate ?? null) }}</td>
             </tr>
           </template>
-          <tr><th>Installments</th><td>{{ txn.detail.value.installments }}</td></tr>
-          <tr><th>Created</th><td>{{ formatDate(txn.detail.value.created) }}</td></tr>
-          <tr v-if="txn.detail.value.refundDate"><th>Refund Date</th><td>{{ formatDate(txn.detail.value.refundDate) }}</td></tr>
+          <tr>
+            <th>Installments</th>
+            <td>{{ txn.detail.value.installments }}</td>
+          </tr>
+          <tr>
+            <th>Created</th>
+            <td>{{ formatDate(txn.detail.value.created) }}</td>
+          </tr>
+          <tr v-if="txn.detail.value.refundDate">
+            <th>Refund Date</th>
+            <td>{{ formatDate(txn.detail.value.refundDate) }}</td>
+          </tr>
         </tbody>
       </table>
 
@@ -114,14 +174,21 @@ function formatDate(dateStr: string | null): string {
       <h5>Items</h5>
       <table class="table table-sm table-striped">
         <thead>
-          <tr><th>Name</th><th>Quantity</th><th>Price</th></tr>
+          <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+          </tr>
         </thead>
         <tbody>
           <template v-if="txn.detail.value.shoppingCart">
             <tr v-for="item in txn.detail.value.shoppingCart.items" :key="item.id">
               <td>{{ item.variant.name ?? '-' }}</td>
               <td>{{ item.quantity }}</td>
-              <td>{{ txn.detail.value.shoppingCart?.currency }} {{ item.subtotal ?? item.variant.price }}</td>
+              <td>
+                {{ txn.detail.value.shoppingCart?.currency }}
+                {{ item.subtotal ?? item.variant.price }}
+              </td>
             </tr>
           </template>
           <template v-else>
@@ -138,15 +205,21 @@ function formatDate(dateStr: string | null): string {
       <template v-if="showPaymentDetails">
         <details v-if="txn.detail.value.merchantResponse" class="mb-2">
           <summary>Mindbody response</summary>
-          <pre class="bg-light p-2 small text-wrap">{{ txn.detail.value.merchantResponse }}</pre>
+          <pre class="bg-body-tertiary p-2 small text-wrap">{{
+            txn.detail.value.merchantResponse
+          }}</pre>
         </details>
         <details v-if="txn.detail.value.paymentGatewayResponse" class="mb-2">
           <summary>Payfort response</summary>
-          <pre class="bg-light p-2 small text-wrap">{{ txn.detail.value.paymentGatewayResponse }}</pre>
+          <pre class="bg-body-tertiary p-2 small text-wrap">{{
+            txn.detail.value.paymentGatewayResponse
+          }}</pre>
         </details>
         <details v-if="txn.detail.value.refundResponse" class="mb-2">
           <summary>Payfort refund response</summary>
-          <pre class="bg-light p-2 small text-wrap">{{ txn.detail.value.refundResponse }}</pre>
+          <pre class="bg-body-tertiary p-2 small text-wrap">{{
+            txn.detail.value.refundResponse
+          }}</pre>
         </details>
       </template>
 
