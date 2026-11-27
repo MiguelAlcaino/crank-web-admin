@@ -1,13 +1,18 @@
 <script lang="ts">
 interface SimpleSiteUserWithError {
-  site: string
+  // Rows added in this modal have no site until one is picked.
+  site: string | null
   externalUserId: string
   errorMessage?: string | null
+  siteErrorMessage?: string | null
+  // True for a site record created in this modal, false for one the customer already has.
+  isNew?: boolean
+  key: string
 }
 </script>
 
 <script setup lang="ts">
-import { inject, ref } from 'vue'
+import { computed, inject, ref } from 'vue'
 
 import type { ApiService } from '@/services/apiService'
 
@@ -17,7 +22,8 @@ import { ERROR_UNKNOWN } from '@/utils/errorMessages'
 import type {
   EditUserResultUnion,
   OtherUserHasThisExternalIdError,
-  SimpleSiteUser
+  SimpleSiteUser,
+  Site
 } from '@/gql/graphql'
 
 const apiService = inject<ApiService>('gqlApiService')!
@@ -34,6 +40,27 @@ const errorMessage = ref<string>('')
 const modalIsVisible = ref<boolean>(false)
 const isSaving = ref<boolean>(false)
 const siteUsers = ref<SimpleSiteUserWithError[]>([])
+const availableSites = ref<Site[]>([])
+let newRowCounter = 0
+
+// A customer has one record per site, so only sites not already used by a row can be added.
+const unusedSites = computed<Site[]>(() =>
+  availableSites.value.filter(
+    (site) => !siteUsers.value.some((siteUser) => siteUser.site === site.code)
+  )
+)
+
+function sitesSelectableFor(row: SimpleSiteUserWithError): Site[] {
+  return availableSites.value.filter(
+    (site) =>
+      site.code === row.site ||
+      !siteUsers.value.some((siteUser) => siteUser !== row && siteUser.site === site.code)
+  )
+}
+
+function siteName(code: string | null): string {
+  return availableSites.value.find((site) => site.code === code)?.name ?? code ?? ''
+}
 
 function onClickUpdateMindbodyIds() {
   getUserSites()
@@ -45,28 +72,67 @@ async function getUserSites() {
 
   isLoading.value = true
 
-  siteUsers.value = (await apiService.getUserSites(props.userId)) as SimpleSiteUserWithError[]
+  try {
+    const [userSites, sites] = await Promise.all([
+      apiService.getUserSites(props.userId),
+      apiService.getAvailableSites()
+    ])
 
-  isLoading.value = false
+    availableSites.value = sites ?? []
+    siteUsers.value = (userSites ?? []).map((siteUser) => ({
+      site: siteUser.site,
+      externalUserId: siteUser.externalUserId,
+      isNew: false,
+      key: 'existing-' + siteUser.site
+    }))
+  } finally {
+    isLoading.value = false
+  }
 }
 
-function onClickSave() {
+function onClickAddSite() {
+  newRowCounter++
+  siteUsers.value.push({
+    // Preselect when there is only one site left to add.
+    site: unusedSites.value.length === 1 ? unusedSites.value[0].code : null,
+    externalUserId: '',
+    isNew: true,
+    key: 'new-' + newRowCounter
+  })
+}
+
+function onClickRemoveRow(row: SimpleSiteUserWithError) {
+  siteUsers.value = siteUsers.value.filter((siteUser) => siteUser !== row)
+}
+
+function validate(): boolean {
   let isValid = true
 
-  for (let i = 0; i < siteUsers.value.length; i++) {
+  for (const siteUser of siteUsers.value) {
     if (
-      siteUsers.value[i].externalUserId === '' ||
-      siteUsers.value[i].externalUserId === null ||
-      siteUsers.value[i].externalUserId === undefined
+      siteUser.externalUserId === '' ||
+      siteUser.externalUserId === null ||
+      siteUser.externalUserId === undefined
     ) {
-      siteUsers.value[i].errorMessage = 'This field is required'
+      siteUser.errorMessage = 'This field is required'
       isValid = false
     } else {
-      siteUsers.value[i].errorMessage = ''
+      siteUser.errorMessage = ''
+    }
+
+    if (!siteUser.site) {
+      siteUser.siteErrorMessage = 'This field is required'
+      isValid = false
+    } else {
+      siteUser.siteErrorMessage = ''
     }
   }
 
-  if (isValid) {
+  return isValid
+}
+
+function onClickSave() {
+  if (validate()) {
     confirmationModalIsVisible.value = true
   }
 }
@@ -74,28 +140,16 @@ function onClickSave() {
 async function onClickConfirm() {
   confirmationModalIsVisible.value = false
 
-  let isValid = true
-
-  for (let i = 0; i < siteUsers.value.length; i++) {
-    if (
-      siteUsers.value[i].externalUserId === '' ||
-      siteUsers.value[i].externalUserId === null ||
-      siteUsers.value[i].externalUserId === undefined
-    ) {
-      siteUsers.value[i].errorMessage = 'This field is required'
-      isValid = false
-    } else {
-      siteUsers.value[i].errorMessage = ''
-    }
-  }
-
-  if (isValid) {
+  if (validate()) {
     isSaving.value = true
 
     try {
       var editUserResultUnion = (await apiService.editUserSites(
         props.userId,
-        siteUsers.value as SimpleSiteUser[]
+        siteUsers.value.map((siteUser) => ({
+          site: siteUser.site,
+          externalUserId: siteUser.externalUserId
+        })) as SimpleSiteUser[]
       )) as EditUserResultUnion
 
       if (editUserResultUnion.__typename === 'IdentifiableUser') {
@@ -140,8 +194,12 @@ function onClickSuccessModalOk() {
           <div class="modal-content">
             <div class="modal-header border-0">
               <h5 class="modal-title">Update mindbody Ids</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                </button>
+              <button
+                type="button"
+                class="btn-close"
+                aria-label="Close"
+                @click="modalIsVisible = false"
+              ></button>
             </div>
             <div class="modal-body">
               <div class="row">
@@ -151,18 +209,37 @@ function onClickSuccessModalOk() {
                       <tr>
                         <th class="text-center">SITE</th>
                         <th class="text-center">MINDBODY ID</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        v-for="(item, index) in siteUsers"
-                        v-bind:key="item.site"
-                        v-bind:index="index"
-                      >
-                        <td class="text-center">{{ item.site }}</td>
+                      <tr v-for="item in siteUsers" :key="item.key">
+                        <td class="text-center">
+                          <template v-if="item.isNew">
+                            <select
+                              :id="'site-' + item.key"
+                              class="form-select"
+                              v-model="item.site"
+                              required
+                            >
+                              <option :value="null" disabled>Select a site</option>
+                              <option
+                                v-for="site in sitesSelectableFor(item)"
+                                :key="site.code"
+                                :value="site.code"
+                              >
+                                {{ site.name }}
+                              </option>
+                            </select>
+                            <small class="form-text" style="color: red">
+                              {{ item.siteErrorMessage }}
+                            </small>
+                          </template>
+                          <template v-else>{{ siteName(item.site) }}</template>
+                        </td>
                         <td>
                           <input
-                            id="externalUserId{{ item.site }}"
+                            :id="'externalUserId-' + item.key"
                             class="form-control"
                             v-model="item.externalUserId"
                             type="number"
@@ -174,17 +251,36 @@ function onClickSuccessModalOk() {
                             {{ item.errorMessage }}
                           </small>
                         </td>
+                        <td class="text-center">
+                          <button
+                            v-if="item.isNew"
+                            type="button"
+                            class="btn btn-sm btn-outline-danger"
+                            aria-label="Remove site"
+                            @click="onClickRemoveRow(item)"
+                          >
+                            &times;
+                          </button>
+                        </td>
                       </tr>
                       <tr v-if="!isLoading && siteUsers?.length === 0">
-                        <td colspan="2" class="text-center">
+                        <td colspan="3" class="text-center">
                           <p>NO DATA AVAILABLE IN TABLE</p>
                         </td>
                       </tr>
                       <tr v-if="isLoading">
-                        <td colspan="2" class="text-center">LOADING...</td>
+                        <td colspan="3" class="text-center">LOADING...</td>
                       </tr>
                     </tbody>
                   </table>
+                  <DefaultButtonComponent
+                    v-if="!isLoading && unusedSites.length > 0"
+                    text="+ Add site"
+                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    @on-click="onClickAddSite"
+                  ></DefaultButtonComponent>
                 </div>
               </div>
             </div>
@@ -200,6 +296,7 @@ function onClickSuccessModalOk() {
                 text="SAVE"
                 type="button"
                 :is-loading="isSaving"
+                :disabled="isLoading || siteUsers.length === 0"
                 @on-click="onClickSave()"
               ></DefaultButtonComponent>
             </div>
@@ -226,7 +323,7 @@ function onClickSuccessModalOk() {
   <ModalComponent
     v-if="successModalIsVisible"
     title="SUCCESS"
-    :message="'MINDBODY ID WAS SUCCESSFULLY UPDATED.'"
+    :message="'MINDBODY IDS WERE SUCCESSFULLY SAVED.'"
     :closable="false"
     @on-ok="onClickSuccessModalOk"
     :cancel-text="null"
